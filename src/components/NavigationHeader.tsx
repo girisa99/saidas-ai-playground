@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import genieLogo from "@/assets/genie-logo-nav.png";
 
 export const NavigationHeader = () => {
@@ -37,33 +38,23 @@ export const NavigationHeader = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <button 
-              onClick={() => scrollToSection('about')}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
+            <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">
               About
-            </button>
-            <button 
-              onClick={() => scrollToSection('journey')}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <a href="/journey" className="text-muted-foreground hover:text-foreground transition-colors">
-                Journey
-              </a>
-            </button>
+            </Link>
+            <Link to="/journey" className="text-muted-foreground hover:text-foreground transition-colors">
+              Journey
+            </Link>
             <button 
               onClick={() => scrollToSection('documents')}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               Documentation
             </button>
-            <button 
-              onClick={() => scrollToSection('contact')}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+            <Button 
+              size="sm" 
+              className="bg-primary hover:bg-primary/90"
+              onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
             >
-              Contact
-            </button>
-            <Button size="sm" className="bg-primary hover:bg-primary/90">
               Connect
             </Button>
           </nav>
@@ -83,33 +74,34 @@ export const NavigationHeader = () => {
         {isMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t border-border/40 pt-4">
             <div className="flex flex-col space-y-4">
-              <button 
-                onClick={() => scrollToSection('about')}
+              <Link 
+                to="/about" 
+                onClick={() => setIsMenuOpen(false)}
                 className="text-left text-muted-foreground hover:text-foreground transition-colors"
               >
                 About
-              </button>
-              <button 
-                onClick={() => scrollToSection('journey')}
+              </Link>
+              <Link 
+                to="/journey" 
+                onClick={() => setIsMenuOpen(false)}
                 className="text-left text-muted-foreground hover:text-foreground transition-colors"
               >
-                <a href="/journey" className="text-left text-muted-foreground hover:text-foreground transition-colors">
-                  Journey
-                </a>
-              </button>
+                Journey
+              </Link>
               <button 
                 onClick={() => scrollToSection('documents')}
                 className="text-left text-muted-foreground hover:text-foreground transition-colors"
               >
                 Documentation
               </button>
-              <button 
-                onClick={() => scrollToSection('contact')}
-                className="text-left text-muted-foreground hover:text-foreground transition-colors"
+              <Button 
+                size="sm" 
+                className="bg-primary hover:bg-primary/90 w-fit"
+                onClick={() => {
+                  window.open('https://www.linkedin.com/in/saidas/', '_blank');
+                  setIsMenuOpen(false);
+                }}
               >
-                Contact
-              </button>
-              <Button size="sm" className="bg-primary hover:bg-primary/90 w-fit">
                 Connect
               </Button>
             </div>
