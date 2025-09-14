@@ -1,12 +1,36 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { NavigationHeader } from "@/components/NavigationHeader";
+import { HeroSection } from "@/components/HeroSection";
+import { AboutSection } from "@/components/AboutSection";
+import { DocumentsSection } from "@/components/DocumentsSection";
+import { Footer } from "@/components/Footer";
+import { useEffect } from "react";
 
 const Index = () => {
+  useEffect(() => {
+    // Update page metadata
+    document.title = "Genie AI Experimentation HUB - Transform Development with AI";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'AI Experimentation Hub by Saidas - Comprehensive guide to AI-driven development, enterprise transformation, and intelligent automation solutions.');
+    }
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <NavigationHeader />
+      <main>
+        <HeroSection />
+        <div id="about">
+          <AboutSection />
+        </div>
+        <div id="journey" className="bg-background">
+          {/* Journey content integrated in About */}
+        </div>
+        <div id="documents">
+          <DocumentsSection />
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };
