@@ -19,6 +19,8 @@ const Journey = () => {
 
   const milestones = [
     {
+      date: "June 2024",
+      month: "June",
       year: "2024",
       phase: "The Spark",
       icon: Lightbulb,
@@ -34,6 +36,8 @@ const Journey = () => {
       impact: "Foundation for AI-first development mindset"
     },
     {
+      date: "July 2024",
+      month: "July", 
       year: "2024",
       phase: "AI Engine Exploration", 
       icon: Brain,
@@ -49,7 +53,9 @@ const Journey = () => {
       impact: "Mastery of AI model capabilities and limitations"
     },
     {
-      year: "2024", 
+      date: "August 2024", 
+      month: "August",
+      year: "2024",
       phase: "Conceptualization & Design",
       icon: Target,
       title: "Mapping Complex AI Architectures",
@@ -64,6 +70,8 @@ const Journey = () => {
       impact: "Transformed abstract AI concepts into actionable blueprints"
     },
     {
+      date: "September 2024",
+      month: "September",
       year: "2024",
       phase: "Infrastructure Development",
       icon: Database,
@@ -79,6 +87,8 @@ const Journey = () => {
       impact: "Created foundation for rapid AI solution deployment"
     },
     {
+      date: "October 2024",
+      month: "October",
       year: "2024",
       phase: "Advanced System Engineering",
       icon: Shield,
@@ -94,6 +104,8 @@ const Journey = () => {
       impact: "Achieved enterprise-grade reliability and accuracy"
     },
     {
+      date: "November 2024",
+      month: "November",
       year: "2024",
       phase: "Agentic AI Revolution",
       icon: Network,
@@ -177,18 +189,26 @@ const Journey = () => {
                 A comprehensive 6-month intensive exploration resulting in breakthrough agentic AI capabilities, 
                 enterprise-grade infrastructure, and proven healthcare solution deployment methodologies.
               </p>
-              <div className="flex justify-center gap-8 mt-8">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-genie-primary">200+</div>
+              <div className="flex justify-center gap-12 mt-8 flex-wrap">
+                <div className="text-center p-4 bg-genie-primary/10 rounded-xl">
+                  <div className="text-3xl font-bold text-genie-primary mb-1">6</div>
+                  <div className="text-sm text-muted-foreground">Months Journey</div>
+                  <div className="text-xs text-genie-primary font-medium">Jun - Nov 2024</div>
+                </div>
+                <div className="text-center p-4 bg-genie-teal/10 rounded-xl">
+                  <div className="text-3xl font-bold text-genie-teal mb-1">200+</div>
                   <div className="text-sm text-muted-foreground">Hours Invested</div>
+                  <div className="text-xs text-genie-teal font-medium">Intensive Learning</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-genie-teal">15+</div>
-                  <div className="text-sm text-muted-foreground">Technologies Mastered</div>
+                <div className="text-center p-4 bg-genie-cyan/10 rounded-xl">
+                  <div className="text-3xl font-bold text-genie-cyan mb-1">15+</div>
+                  <div className="text-sm text-muted-foreground">Technologies</div>
+                  <div className="text-xs text-genie-cyan font-medium">Mastered</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-genie-cyan">6</div>
-                  <div className="text-sm text-muted-foreground">Major Milestones</div>
+                <div className="text-center p-4 bg-genie-primary/10 rounded-xl">
+                  <div className="text-3xl font-bold text-genie-primary mb-1">6</div>
+                  <div className="text-sm text-muted-foreground">Major Phases</div>
+                  <div className="text-xs text-genie-primary font-medium">Completed</div>
                 </div>
               </div>
             </div>
