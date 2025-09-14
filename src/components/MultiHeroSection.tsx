@@ -5,6 +5,7 @@ import aiNeuralBg from "@/assets/hero-ai-neural.jpg";
 import enterpriseBg from "@/assets/hero-enterprise.jpg";
 import growthBg from "@/assets/hero-growth.jpg";
 import ecosystemBg from "@/assets/hero-ecosystem.jpg";
+import genieAnimated from "@/assets/genie-animated.png";
 
 
 const heroSections = [
@@ -65,14 +66,39 @@ export const MultiHeroSection = () => {
   const IconComponent = currentSection.icon;
 
   return (
-    <section className="relative text-white py-24 lg:py-32 transition-all duration-1000 overflow-hidden">
-      {/* Background Image */}
+    <section className="relative text-white py-24 lg:py-32 transition-all duration-1000 overflow-hidden bg-gradient-to-br from-genie-dark via-genie-navy to-genie-primary/20">
+      {/* Animated Background Particles */}
+      <div className="absolute inset-0">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className={`absolute w-2 h-2 bg-genie-cyan/60 rounded-full animate-float genie-glow`}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 4}s`,
+              animationDuration: `${3 + Math.random() * 3}s`
+            }}
+          />
+        ))}
+      </div>
+      
+      {/* DNA Strands */}
+      <div className="absolute top-20 right-10 w-8 h-8 border-2 border-genie-cyan/50 rounded-full animate-dna" />
+      <div className="absolute bottom-20 left-10 w-6 h-6 border-2 border-genie-teal/50 rounded-full animate-dna" style={{ animationDelay: '2s' }} />
+      
+      {/* Floating Smoke Effects */}
+      <div className="absolute bottom-10 left-1/4 w-4 h-4 bg-genie-primary/30 rounded-full animate-smoke" />
+      <div className="absolute bottom-10 right-1/4 w-3 h-3 bg-genie-cyan/30 rounded-full animate-smoke" style={{ animationDelay: '1s' }} />
+      
+      {/* Background Image Overlay */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000 opacity-20"
         style={{ backgroundImage: `url(${currentSection.bgImage})` }}
       />
-      {/* Background Overlay */}
-      <div className="absolute inset-0 bg-black/50" />
+      
+      {/* Dark Overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-genie-dark/40 via-transparent to-genie-navy/60" />
       
       {/* Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
@@ -85,10 +111,16 @@ export const MultiHeroSection = () => {
             <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
           </div>
 
-          {/* Icon */}
-          <div className="mb-6 flex justify-center">
-            <div className="inline-flex p-4 bg-white/10 backdrop-blur-sm rounded-lg">
-              <IconComponent className="h-12 w-12 text-white" />
+          {/* Animated Genie Character */}
+          <div className="mb-8 flex justify-center">
+            <div className="relative">
+              <img 
+                src={genieAnimated} 
+                alt="Genie AI Technology Navigator" 
+                className="w-48 h-48 lg:w-64 lg:h-64 animate-pulse-glow object-contain"
+              />
+              {/* Glowing Aura */}
+              <div className="absolute inset-0 w-48 h-48 lg:w-64 lg:h-64 rounded-full bg-genie-cyan/20 blur-xl animate-pulse-glow" />
             </div>
           </div>
 
@@ -105,11 +137,11 @@ export const MultiHeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in justify-center">
-            <Button size="lg" className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+            <Button size="lg" className="bg-genie-primary text-white hover:bg-genie-teal px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 genie-glow">
               {currentSection.ctaPrimary}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold transition-all duration-300">
+            <Button variant="outline" size="lg" className="border-genie-cyan text-genie-cyan hover:bg-genie-cyan/10 px-8 py-4 text-lg font-semibold transition-all duration-300">
               {currentSection.ctaSecondary}
             </Button>
           </div>
@@ -123,45 +155,45 @@ export const MultiHeroSection = () => {
               onClick={() => setCurrentHero(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentHero 
-                  ? 'bg-white scale-125' 
-                  : 'bg-white/40 hover:bg-white/60'
+                  ? 'bg-genie-cyan scale-125 genie-glow' 
+                  : 'bg-genie-cyan/40 hover:bg-genie-cyan/60'
               }`}
               aria-label={`Go to hero section ${index + 1}`}
             />
           ))}
         </div>
 
-        {/* Professional Stats */}
-        <div className="border-t border-white/20 pt-12">
+        {/* Professional Stats with Genie Theme */}
+        <div className="border-t border-genie-cyan/30 pt-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-white mb-2">15+</div>
-              <div className="text-white/80">Years Experience</div>
+              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">15+</div>
+              <div className="text-genie-cyan/80">Years Experience</div>
             </div>
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-white mb-2">50+</div>
-              <div className="text-white/80">AI Implementations</div>
+              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">50+</div>
+              <div className="text-genie-cyan/80">AI Implementations</div>
             </div>
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-white mb-2">Enterprise</div>
-              <div className="text-white/80">Scale Solutions</div>
+              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">Enterprise</div>
+              <div className="text-genie-cyan/80">Scale Solutions</div>
             </div>
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-white mb-2">Global</div>
-              <div className="text-white/80">Impact & Reach</div>
+              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">Global</div>
+              <div className="text-genie-cyan/80">Impact & Reach</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+      {/* Additional Genie-themed Decorative Elements */}
+      <div className="absolute top-32 left-20 w-3 h-3 bg-genie-teal/60 rounded-full animate-float" style={{ animationDelay: '1s' }} />
+      <div className="absolute top-60 right-32 w-2 h-2 bg-genie-primary/70 rounded-full animate-float" style={{ animationDelay: '3s' }} />
+      <div className="absolute bottom-40 left-32 w-4 h-4 bg-genie-cyan/50 rounded-full animate-float" style={{ animationDelay: '2s' }} />
+      <div className="absolute bottom-60 right-20 w-3 h-3 bg-genie-teal/60 rounded-full animate-float" style={{ animationDelay: '4s' }} />
       
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-4 h-4 bg-white/30 rounded-full animate-pulse" />
-      <div className="absolute top-40 right-20 w-6 h-6 bg-white/20 rounded-full animate-pulse" />
-      <div className="absolute bottom-32 left-20 w-3 h-3 bg-white/40 rounded-full animate-pulse" />
-      <div className="absolute bottom-20 right-10 w-5 h-5 bg-white/25 rounded-full animate-pulse" />
+      {/* Neural Network Pattern Overlay */}
+      <div className="absolute inset-0 neural-pattern opacity-10" />
     </section>
   );
 };

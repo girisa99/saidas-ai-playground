@@ -57,10 +57,11 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        "ai-glow": "hsl(var(--ai-glow))",
-        "ai-secondary": "hsl(var(--ai-secondary))",
-        "ai-accent": "hsl(var(--ai-accent))",
-        "neural-bg": "hsl(var(--neural-bg))",
+        "genie-dark": "hsl(var(--genie-dark))",
+        "genie-primary": "hsl(var(--genie-primary))",
+        "genie-cyan": "hsl(var(--genie-cyan))",
+        "genie-teal": "hsl(var(--genie-teal))",
+        "genie-navy": "hsl(var(--genie-navy))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -92,13 +93,48 @@ export default {
           "100%": {
             opacity: "1",
             transform: "translateY(0)"
+        },
+        "float-particles": {
+          "0%, 100%": {
+            transform: "translateY(0px) translateX(0px)",
+            opacity: "0.7"
+          },
+          "25%": {
+            transform: "translateY(-20px) translateX(10px)",
+            opacity: "1"
+          },
+          "50%": {
+            transform: "translateY(-10px) translateX(-5px)",
+            opacity: "0.8"
+          },
+          "75%": {
+            transform: "translateY(-30px) translateX(15px)",
+            opacity: "0.9"
           }
+        },
+        "dna-rotate": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" }
+        },
+        "smoke-rise": {
+          "0%": {
+            transform: "translateY(0) scale(1)",
+            opacity: "0.8"
+          },
+          "100%": {
+            transform: "translateY(-100px) scale(1.5)",
+            opacity: "0"
+          }
+        }
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.6s ease-out",
+        "float": "float-particles 4s ease-in-out infinite",
+        "dna": "dna-rotate 8s linear infinite",
+        "smoke": "smoke-rise 3s ease-out infinite",
       },
     },
   },
