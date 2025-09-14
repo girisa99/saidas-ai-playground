@@ -8,45 +8,43 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 218 25% 8%;
-    --foreground: 220 15% 95%;
+    --background: 0 0% 100%;
+    --foreground: 220 13% 13%;
 
-    --card: 220 20% 10%;
-    --card-foreground: 220 15% 95%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 13%;
 
-    --popover: 220 20% 10%;
-    --popover-foreground: 220 15% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 13%;
 
-    --primary: 217 91% 60%;
-    --primary-foreground: 220 15% 95%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 215 25% 20%;
-    --secondary-foreground: 220 15% 95%;
+    --secondary: 210 40% 98%;
+    --secondary-foreground: 220 13% 13%;
 
-    --muted: 215 25% 15%;
-    --muted-foreground: 215 15% 70%;
+    --muted: 210 40% 98%;
+    --muted-foreground: 215 14% 34%;
 
-    --accent: 213 93% 68%;
-    --accent-foreground: 220 20% 10%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 220 13% 13%;
 
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 220 15% 95%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 215 25% 18%;
-    --input: 215 25% 18%;
-    --ring: 217 91% 60%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221 83% 53%;
 
-    /* Professional AI colors */
-    --ai-glow: 217 91% 60%;
-    --ai-secondary: 212 95% 68%;
-    --ai-accent: 204 94% 65%;
-    --neural-bg: 218 25% 8%;
-    --neural-border: 215 25% 18%;
+    /* Professional corporate colors */
+    --corporate-blue: 221 83% 53%;
+    --corporate-navy: 224 64% 33%;
+    --corporate-gray: 210 11% 71%;
+    --corporate-light: 210 40% 98%;
     
     /* Professional gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--ai-secondary)));
-    --gradient-neural: linear-gradient(135deg, hsl(var(--neural-bg)), hsl(var(--neural-border)));
-    --gradient-glow: linear-gradient(135deg, hsl(var(--ai-glow)), hsl(var(--ai-accent)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--corporate-blue)), hsl(var(--corporate-navy)));
+    --gradient-section: linear-gradient(180deg, hsl(var(--background)), hsl(var(--corporate-light)));
     
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -72,26 +70,26 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 0 0% 97%;
-    --foreground: 215 25% 15%;
+    --background: 224 71% 4%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 99%;
-    --card-foreground: 215 25% 15%;
+    --card: 224 71% 4%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 99%;
-    --popover-foreground: 215 25% 15%;
+    --popover: 224 71% 4%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 97%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 15% 92%;
-    --secondary-foreground: 215 25% 15%;
+    --secondary: 215 28% 17%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 15% 92%;
-    --muted-foreground: 215 15% 45%;
+    --muted: 215 28% 17%;
+    --muted-foreground: 217 11% 65%;
 
-    --accent: 213 93% 68%;
-    --accent-foreground: 0 0% 97%;
+    --accent: 215 28% 17%;
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;

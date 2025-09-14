@@ -1,5 +1,6 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { HeroSection } from "@/components/HeroSection";
+import { ValueProposition } from "@/components/ValueProposition";
 import { AboutSection } from "@/components/AboutSection";
 import { DocumentsSection } from "@/components/DocumentsSection";
 import { Footer } from "@/components/Footer";
@@ -20,11 +21,9 @@ const Index = () => {
       <NavigationHeader />
       <main>
         <HeroSection />
+        <ValueProposition />
         <div id="about">
           <AboutSection />
-        </div>
-        <div id="journey" className="bg-background">
-          {/* Journey content integrated in About */}
         </div>
         <div id="documents">
           <DocumentsSection />
