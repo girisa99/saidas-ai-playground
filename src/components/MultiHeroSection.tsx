@@ -5,7 +5,7 @@ import aiNeuralBg from "@/assets/hero-ai-neural.jpg";
 import enterpriseBg from "@/assets/hero-enterprise.jpg";
 import growthBg from "@/assets/hero-growth.jpg";
 import ecosystemBg from "@/assets/hero-ecosystem.jpg";
-import genieLogo from "@/assets/genie-logo.png";
+
 
 const heroSections = [
   {
@@ -77,15 +77,8 @@ export const MultiHeroSection = () => {
       {/* Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
-          {/* Logo and Brand Title */}
-          <div className="mb-8 flex flex-col items-center">
-            <div className="mb-6">
-              <img 
-                src={genieLogo} 
-                alt="Genie AI Experimentation Hub Logo" 
-                className="w-32 h-32 lg:w-40 lg:h-40 animate-fade-in"
-              />
-            </div>
+          {/* Main Brand Title */}
+          <div className="mb-8">
             <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-4 animate-fade-in text-center">
               Genie AI Experimentation HUB
             </h1>

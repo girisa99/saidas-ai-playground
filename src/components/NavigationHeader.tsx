@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Brain, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState } from "react";
+import genieLogo from "@/assets/genie-logo-nav.png";
 
 export const NavigationHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,14 +20,18 @@ export const NavigationHeader = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="p-2 bg-primary/10 rounded-lg ai-glow">
-              <Brain className="h-6 w-6 text-primary" />
+            <div className="w-12 h-12">
+              <img 
+                src={genieLogo} 
+                alt="Genie Cell and Gene Technology Navigator" 
+                className="w-full h-full object-contain"
+              />
             </div>
             <div>
               <h1 className="text-xl font-bold">
                 <span className="text-primary">Genie AI</span> Hub
               </h1>
-              <p className="text-xs text-muted-foreground">Experimentation & Innovation</p>
+              <p className="text-xs text-muted-foreground">I am your technology Navigator</p>
             </div>
           </div>
 
