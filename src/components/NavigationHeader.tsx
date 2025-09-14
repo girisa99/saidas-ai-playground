@@ -24,7 +24,7 @@ export const NavigationHeader = () => {
             <div className="w-12 h-12">
               <img 
                 src={genieLogo} 
-                alt="Genie Cell and Gene Technology Navigator" 
+                alt="Genie AI Digital Health Technology Navigator" 
                 className="w-full h-full object-contain"
               />
             </div>

@@ -20,9 +20,9 @@ const Journey = () => {
 
   const milestones = [
     {
-      date: "June 2024",
+      date: "June 2025",
       month: "June",
-      year: "2024",
+      year: "2025",
       phase: "The Spark",
       icon: Lightbulb,
       title: "The Conversation That Changed Everything",
@@ -37,9 +37,9 @@ const Journey = () => {
       impact: "Foundation for AI-first development mindset"
     },
     {
-      date: "July 2024",
+      date: "July 2025",
       month: "July", 
-      year: "2024",
+      year: "2025",
       phase: "AI Engine Exploration", 
       icon: Brain,
       title: "Building My Personal AI Laboratory",
@@ -54,9 +54,9 @@ const Journey = () => {
       impact: "Mastery of AI model capabilities and limitations"
     },
     {
-      date: "August 2024", 
+      date: "August 2025", 
       month: "August",
-      year: "2024",
+      year: "2025",
       phase: "Conceptualization & Design",
       icon: Target,
       title: "Mapping Complex AI Architectures",
@@ -71,9 +71,9 @@ const Journey = () => {
       impact: "Transformed abstract AI concepts into actionable blueprints"
     },
     {
-      date: "September 2024",
+      date: "September 2025",
       month: "September",
-      year: "2024",
+      year: "2025",
       phase: "Infrastructure Development",
       icon: Database,
       title: "Building Unshakeable Technical Foundations",
@@ -88,9 +88,9 @@ const Journey = () => {
       impact: "Created foundation for rapid AI solution deployment"
     },
     {
-      date: "October 2024",
+      date: "October 2025",
       month: "October",
-      year: "2024",
+      year: "2025",
       phase: "Advanced System Engineering",
       icon: Shield,
       title: "Building Production-Ready AI Systems",
@@ -105,9 +105,9 @@ const Journey = () => {
       impact: "Achieved enterprise-grade reliability and accuracy"
     },
     {
-      date: "November 2024",
+      date: "November 2025",
       month: "November",
-      year: "2024",
+      year: "2025",
       phase: "Agentic AI Revolution",
       icon: Network,
       title: "Dynamic Multi-Agent Platform Innovation",

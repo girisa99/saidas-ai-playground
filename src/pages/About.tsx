@@ -11,18 +11,18 @@ import statsInfographic from "@/assets/stats-infographic.jpg";
 
 const About = () => {
   useEffect(() => {
-    document.title = "About Sai Dasika - Technology Innovator & CGAT Visionary";
+    document.title = "About Sai Dasika - Technology Innovator & Digital Health Visionary";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Meet Sai Dasika, Technology Innovator with 21+ years bridging advanced technology solutions with complex business challenges in therapeutic development.');
+      metaDescription.setAttribute('content', 'Meet Sai Dasika, Technology Innovator with 21+ years bridging advanced technology solutions with complex business challenges in healthcare and digital therapeutics.');
     }
   }, []);
 
   const stats = [
     { number: "21+", label: "Years Experience", icon: Briefcase, color: "genie-primary" },
-    { number: "6+", label: "Industry Giants", icon: Users, color: "genie-teal" },
-    { number: "40+", label: "Tech Solutions", icon: Code, color: "genie-cyan" },
-    { number: "1000+", label: "Lives Impacted", icon: Heart, color: "genie-primary" }
+    { number: "45+", label: "Days Learning", icon: Users, color: "genie-teal" },
+    { number: "40-60%", label: "Dev Acceleration", icon: Code, color: "genie-cyan" },
+    { number: "60-80%", label: "Cost Reduction", icon: Heart, color: "genie-primary" }
   ];
 
   const highlights = [
@@ -89,12 +89,12 @@ const About = () => {
                 Meet <span className="text-genie-cyan">Sai Dasika</span>
               </h1>
               <p className="text-2xl lg:text-3xl text-genie-cyan font-medium mb-4">
-                Technology Innovator & CGAT Visionary
+                Technology Innovator & Digital Health Visionary
               </p>
               <p className="text-xl text-white/90 leading-relaxed mb-8">
-                Bridging advanced technology solutions with complex business challenges in therapeutic 
-                development. With 21+ years of experience across industry giants, I'm passionate about 
-                creating innovative platforms that transform how we approach cell and gene advanced therapies.
+                Bridging advanced technology solutions with complex business challenges in healthcare 
+                and digital therapeutics. With 21+ years of experience across industry giants, I'm passionate about 
+                creating innovative platforms that transform how we approach digital health solutions.
               </p>
               <Link to="/journey">
                 <Button size="lg" className="bg-genie-cyan hover:bg-genie-teal text-white px-8 py-4">
@@ -228,9 +228,9 @@ const About = () => {
                   </h3>
                   <p className="text-muted-foreground">
                     This platform serves as a learning laboratory for exploring how emerging technologies 
-                    can transform the CGAT landscape. Through hands-on experimentation with AI, automation, 
+                    can transform the digital health landscape. Through hands-on experimentation with AI, automation, 
                     and innovative digital solutions, we demonstrate practical applications that could 
-                    revolutionize therapeutic development.
+                    revolutionize healthcare delivery and digital therapeutics.
                   </p>
                 </div>
                 <div className="text-left">
@@ -238,10 +238,10 @@ const About = () => {
                     Multi-Technology Ecosystem
                   </h3>
                   <p className="text-muted-foreground">
-                    The CGAT value chain is complex and multifaceted—no single technology can address all 
+                    The healthcare value chain is complex and multifaceted—no single technology can address all 
                     challenges. This platform experiments with integrating diverse technological solutions, 
                     from AI-powered analytics to process automation, showcasing how multiple cutting-edge 
-                    technologies must work together to create meaningful impact.
+                    technologies must work together to create meaningful impact in digital health.
                   </p>
                 </div>
               </div>
