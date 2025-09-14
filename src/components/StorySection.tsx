@@ -11,14 +11,14 @@ export const StorySection = () => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-genie-primary/10 px-4 py-2 rounded-full text-genie-primary text-sm font-medium mb-4">
             <Lightbulb className="w-4 h-4" />
-            Our Story
+            My Story
           </div>
           <h2 className="text-3xl lg:text-5xl font-bold text-foreground mb-6">
             What is <span className="text-genie-primary">Genie AI Experimentation HUB</span>?
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Born from curiosity and driven by innovation, our journey began with a simple question: 
-            "How can we bridge the gap between AI research and practical business applications?"
+            Born from my curiosity and driven by personal innovation, this journey began with a simple question: 
+            "How can I bridge the gap between AI research and practical business applications?"
           </p>
         </div>
 
@@ -36,13 +36,13 @@ export const StorySection = () => {
               </div>
             </div>
             <p className="text-foreground/80 leading-relaxed mb-6">
-              Genie AI Experimentation HUB emerged from years of hands-on experience in enterprise AI transformation. 
-              We recognized that while AI technology was advancing rapidly, many organizations struggled to translate 
+              Genie AI Experimentation HUB emerged from my years of hands-on experience in enterprise AI transformation. 
+              I recognized that while AI technology was advancing rapidly, many organizations struggled to translate 
               theoretical potential into tangible business value.
             </p>
             <p className="text-foreground/80 leading-relaxed">
-              Our mission became clear: create a comprehensive ecosystem that empowers teams to experiment, learn, 
-              and implement AI solutions with confidence and strategic precision.
+              My mission became clear: create a comprehensive personal ecosystem that empowers me to experiment, learn, 
+              and implement AI solutions with confidence and strategic precision, then share this knowledge with others.
             </p>
           </Card>
 
@@ -53,18 +53,18 @@ export const StorySection = () => {
                 <Users className="w-6 h-6 text-genie-teal" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-2">Our Vision</h3>
-                <p className="text-muted-foreground">Democratizing AI for every organization</p>
+                <h3 className="text-2xl font-bold text-foreground mb-2">My Vision</h3>
+                <p className="text-muted-foreground">Democratizing AI through personal experimentation</p>
               </div>
             </div>
             <p className="text-foreground/80 leading-relaxed mb-6">
-              We envision a world where AI adoption is not limited by technical barriers or organizational silos. 
-              Every team, regardless of their technical background, should have access to AI tools and methodologies 
+              I envision a world where AI adoption is not limited by technical barriers or organizational silos. 
+              Every individual, regardless of their technical background, should have access to AI tools and methodologies 
               that enhance their capabilities.
             </p>
             <p className="text-foreground/80 leading-relaxed">
-              Through structured experimentation, proven frameworks, and continuous learning, we're building 
-              the bridge between AI possibility and business reality.
+              Through my structured experimentation, proven frameworks, and continuous learning, I'm building 
+              the bridge between AI possibility and business reality, sharing insights along the way.
             </p>
           </Card>
         </div>
@@ -77,7 +77,7 @@ export const StorySection = () => {
             </div>
             <h4 className="text-xl font-semibold text-foreground mb-2">Experimentation First</h4>
             <p className="text-muted-foreground">
-              We believe in learning through doing. Every AI initiative starts with controlled experimentation.
+              I believe in learning through doing. Every AI initiative starts with controlled experimentation.
             </p>
           </div>
           <div className="text-center p-6">
@@ -86,7 +86,7 @@ export const StorySection = () => {
             </div>
             <h4 className="text-xl font-semibold text-foreground mb-2">Human-Centered</h4>
             <p className="text-muted-foreground">
-              Technology serves people. Our solutions enhance human capabilities rather than replace them.
+              Technology serves people. My solutions enhance human capabilities rather than replace them.
             </p>
           </div>
           <div className="text-center p-6">
@@ -95,7 +95,7 @@ export const StorySection = () => {
             </div>
             <h4 className="text-xl font-semibold text-foreground mb-2">Scalable Impact</h4>
             <p className="text-muted-foreground">
-              From proof-of-concept to enterprise deployment, we ensure solutions grow with your needs.
+              From proof-of-concept to enterprise deployment, I ensure solutions grow with evolving needs.
             </p>
           </div>
         </div>
@@ -103,11 +103,11 @@ export const StorySection = () => {
         {/* CTA */}
         <div className="text-center">
           <p className="text-lg text-muted-foreground mb-6">
-            Ready to explore the complete journey behind Genie AI Experimentation HUB?
+            Ready to explore the complete journey behind my AI experimentation platform?
           </p>
           <Link to="/journey">
             <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white px-8 py-4 text-lg font-semibold genie-glow">
-              Discover Our Journey
+              Discover My Journey
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>

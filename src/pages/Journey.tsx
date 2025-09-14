@@ -25,7 +25,7 @@ const Journey = () => {
       description: "Recognizing the gap between AI research and practical business implementation while working with enterprise clients.",
       achievements: [
         "Identified key barriers in AI adoption",
-        "Conducted extensive market research",
+        "Conducted extensive personal research",
         "Built initial concept framework"
       ],
       color: "genie-primary"
@@ -35,11 +35,11 @@ const Journey = () => {
       phase: "Foundation",
       icon: Cog,
       title: "Building the Framework",
-      description: "Developing core methodologies and testing initial approaches with pilot projects across different industries.",
+      description: "Developing core methodologies and testing initial approaches with personal pilot projects across different domains.",
       achievements: [
         "Created AI experimentation methodology",
-        "Launched first pilot programs",
-        "Established key partnerships"
+        "Launched first personal pilot programs",
+        "Established learning partnerships"
       ],
       color: "genie-teal"
     },
@@ -48,11 +48,11 @@ const Journey = () => {
       phase: "Validation",
       icon: Target,
       title: "Proving the Concept",
-      description: "Successfully implementing AI solutions in healthcare, finance, and manufacturing sectors with measurable ROI.",
+      description: "Successfully implementing AI solutions in healthcare, finance, and manufacturing sectors through personal experimentation.",
       achievements: [
-        "Completed 15+ successful implementations",
-        "Achieved 300% average ROI for clients",
-        "Developed sector-specific frameworks"
+        "Completed 15+ successful personal experiments",
+        "Documented proven methodologies",
+        "Developed domain-specific frameworks"
       ],
       color: "genie-cyan"
     },
@@ -61,11 +61,11 @@ const Journey = () => {
       phase: "Scale",
       icon: Rocket,
       title: "Expanding Horizons",
-      description: "Scaling operations globally and establishing the comprehensive HUB platform for enterprise AI transformation.",
+      description: "Scaling personal knowledge and establishing the comprehensive HUB platform for AI experimentation and learning.",
       achievements: [
-        "Launched in 12 countries",
-        "Built comprehensive platform",
-        "Trained 500+ AI practitioners"
+        "Built comprehensive experimentation platform",
+        "Created knowledge sharing framework",
+        "Documented 50+ AI experiments"
       ],
       color: "genie-primary"
     },
@@ -74,11 +74,11 @@ const Journey = () => {
       phase: "Innovation",
       icon: TrendingUp,
       title: "Leading the Future",
-      description: "Pioneering next-generation AI experimentation tools and establishing industry standards for responsible AI deployment.",
+      description: "Pioneering next-generation AI experimentation tools and establishing personal standards for responsible AI experimentation.",
       achievements: [
-        "Released advanced analytics platform",
+        "Developed advanced experimentation tools",
         "Established AI ethics guidelines",
-        "Created open-source frameworks"
+        "Open-sourced learning frameworks"
       ],
       color: "genie-teal"
     },
@@ -86,12 +86,12 @@ const Journey = () => {
       year: "2024",
       phase: "Excellence",
       icon: Award,
-      title: "Industry Recognition",
-      description: "Recognized as a leader in AI experimentation and transformation, continuing to push boundaries in enterprise AI adoption.",
+      title: "Knowledge Sharing",
+      description: "Recognized for contributions to AI experimentation and continuing to share knowledge and methodologies with the community.",
       achievements: [
-        "Industry leadership awards",
-        "Published research papers",
-        "Global community of 10,000+ practitioners"
+        "Community recognition for contributions",
+        "Published research and methodologies",
+        "Growing network of AI experimenters"
       ],
       color: "genie-cyan"
     }
@@ -133,8 +133,8 @@ const Journey = () => {
               From Vision to <span className="text-genie-cyan">Reality</span>
             </h1>
             <p className="text-xl lg:text-2xl text-white/90 leading-relaxed">
-              The story of how Genie AI Experimentation HUB evolved from a simple idea 
-              to a comprehensive platform transforming how organizations approach AI innovation.
+              The story of how my Genie AI Experimentation HUB evolved from a simple idea 
+              to a comprehensive platform for AI experimentation, learning, and knowledge sharing.
             </p>
           </div>
         </div>
@@ -149,7 +149,7 @@ const Journey = () => {
                 The Evolution Timeline
               </h2>
               <p className="text-xl text-muted-foreground">
-                Key milestones that shaped our journey
+                Key milestones that shaped my personal journey
               </p>
             </div>
 
@@ -216,29 +216,29 @@ const Journey = () => {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                Our Impact Today
+                My Impact Today
               </h2>
               <p className="text-xl text-muted-foreground">
-                The tangible results of our journey
+                The tangible results of my experimentation journey
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               <Card className="p-6 text-center">
-                <div className="text-3xl font-bold text-genie-primary mb-2">50+</div>
-                <div className="text-muted-foreground">Enterprise Clients</div>
+                <div className="text-3xl font-bold text-genie-primary mb-2">100+</div>
+                <div className="text-muted-foreground">AI Experiments</div>
               </Card>
               <Card className="p-6 text-center">
-                <div className="text-3xl font-bold text-genie-teal mb-2">200+</div>
-                <div className="text-muted-foreground">AI Implementations</div>
+                <div className="text-3xl font-bold text-genie-teal mb-2">50+</div>
+                <div className="text-muted-foreground">Documented Methodologies</div>
               </Card>
               <Card className="p-6 text-center">
-                <div className="text-3xl font-bold text-genie-cyan mb-2">$50M+</div>
-                <div className="text-muted-foreground">Value Generated</div>
+                <div className="text-3xl font-bold text-genie-cyan mb-2">15+</div>
+                <div className="text-muted-foreground">Years of Experience</div>
               </Card>
               <Card className="p-6 text-center">
-                <div className="text-3xl font-bold text-genie-primary mb-2">10K+</div>
-                <div className="text-muted-foreground">Practitioners Trained</div>
+                <div className="text-3xl font-bold text-genie-primary mb-2">5+</div>
+                <div className="text-muted-foreground">Industry Domains</div>
               </Card>
             </div>
           </div>
@@ -248,19 +248,19 @@ const Journey = () => {
         <section className="py-16">
           <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
             <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-6">
-              Ready to Join Our Journey?
+              Ready to Join My Journey?
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Become part of the next chapter in AI experimentation and transformation.
+              Explore the methodologies, learn from my experiments, and start your own AI experimentation journey.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/">
                 <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white px-8 py-4">
-                  Explore Our Solutions
+                  Explore My Solutions
                 </Button>
               </Link>
               <Button variant="outline" size="lg" className="border-genie-primary text-genie-primary hover:bg-genie-primary/10 px-8 py-4">
-                Contact Our Team
+                Connect With Me
               </Button>
             </div>
           </div>
