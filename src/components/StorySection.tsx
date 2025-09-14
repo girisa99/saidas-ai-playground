@@ -17,8 +17,8 @@ export const StorySection = () => {
             What is <span className="text-genie-primary">Genie AI Experimentation HUB</span>?
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Born from my curiosity and driven by personal innovation, this journey began with a simple question: 
-            "How can I bridge the gap between AI research and practical business applications?"
+            Born from a conversation with my colleague Prashant, this journey began with a transformative question: 
+            "What if AI didn't just assist us, but truly transformed how we built solutions from the ground up?"
           </p>
         </div>
 
@@ -36,13 +36,14 @@ export const StorySection = () => {
               </div>
             </div>
             <p className="text-foreground/80 leading-relaxed mb-6">
-              Genie AI Experimentation HUB emerged from my years of hands-on experience in enterprise AI transformation. 
-              I recognized that while AI technology was advancing rapidly, many organizations struggled to translate 
-              theoretical potential into tangible business value.
+              What started as pure curiosity quickly transformed into an all-consuming personal mission. After two decades 
+              in this industry, I thought I'd seen every innovation imaginable, but the potential of AI felt profoundly 
+              different. This wasn't just about efficiency anymore; it was about unleashing innovation across the entire enterprise.
             </p>
             <p className="text-foreground/80 leading-relaxed">
-              My mission became clear: create a comprehensive personal ecosystem that empowers me to experiment, learn, 
-              and implement AI solutions with confidence and strategic precision, then share this knowledge with others.
+              I immediately set about establishing my own personal AI experimentation hub, involving countless hours of 
+              experimentation with foundational AI models, fine-tuning, and analyzing output across diverse use cases. 
+              This became my personal laboratory for methodical AI exploration and learning.
             </p>
           </Card>
 
@@ -58,13 +59,14 @@ export const StorySection = () => {
               </div>
             </div>
             <p className="text-foreground/80 leading-relaxed mb-6">
-              I envision a world where AI adoption is not limited by technical barriers or organizational silos. 
-              Every individual, regardless of their technical background, should have access to AI tools and methodologies 
-              that enhance their capabilities.
+              I discovered the profound potential for AI to empower business users directly—not just developers—and it was 
+              an absolute 'aha moment' that reshaped my entire perspective. The rigid technical barriers that once confined 
+              creation to specialized developers were simply dissolving.
             </p>
             <p className="text-foreground/80 leading-relaxed">
-              Through my structured experimentation, proven frameworks, and continuous learning, I'm building 
-              the bridge between AI possibility and business reality, sharing insights along the way.
+              Through methodical experimentation with various tools and platforms, I'm building comprehensive frameworks 
+              that transform abstract AI concepts into tangible, impactful solutions. This is my personal log of technical 
+              exploration and the tools that enabled it.
             </p>
           </Card>
         </div>

@@ -18,80 +18,80 @@ const Journey = () => {
 
   const milestones = [
     {
-      year: "2019",
+      year: "The Spark",
       phase: "Discovery",
       icon: Lightbulb,
-      title: "The Spark of Innovation",
-      description: "Recognizing the gap between AI research and practical business implementation while working with enterprise clients.",
+      title: "The Conversation That Changed Everything",
+      description: "A typical Tuesday afternoon coffee with my colleague Prashant sparked a revolutionary question: 'What if AI didn't just assist us, but truly transformed how we built solutions from the ground up?' That single question hit me like lightning.",
       achievements: [
-        "Identified key barriers in AI adoption",
-        "Conducted extensive personal research",
-        "Built initial concept framework"
+        "Initial curiosity ignited by transformative conversation",
+        "Recognized profound shift beyond incremental innovation", 
+        "Committed to personal quest for AI-driven development"
       ],
       color: "genie-primary"
     },
     {
-      year: "2020",
-      phase: "Foundation",
+      year: "Foundation",
+      phase: "AI Engine Exploration", 
       icon: Cog,
-      title: "Building the Framework",
-      description: "Developing core methodologies and testing initial approaches with personal pilot projects across different domains.",
+      title: "Building My Personal AI Laboratory",
+      description: "Established my personal AI experimentation hub with intensive exploration of foundational AI models - OpenAI's GPT series, Anthropic's Claude, and Google's Gemini. This involved countless hours of prompt engineering and analyzing output quality.",
       achievements: [
-        "Created AI experimentation methodology",
-        "Launched first personal pilot programs",
-        "Established learning partnerships"
+        "Systematically experimented with major LLMs",
+        "Discovered nuances of each model's architecture",
+        "Developed prompt engineering expertise"
       ],
       color: "genie-teal"
     },
     {
-      year: "2021",
-      phase: "Validation",
+      year: "Visualization", 
+      phase: "Conceptualization",
       icon: Target,
-      title: "Proving the Concept",
-      description: "Successfully implementing AI solutions in healthcare, finance, and manufacturing sectors through personal experimentation.",
+      title: "Mapping Complex AI Architectures",
+      description: "Overcame the complexity challenge through visualization tools like Visio, draw.io, Miro, and Figma. These became my trusted companions, transforming abstract AI concepts into tangible plans and making navigation through the intellectual complexity achievable.",
       achievements: [
-        "Completed 15+ successful personal experiments",
-        "Documented proven methodologies",
-        "Developed domain-specific frameworks"
+        "Mastered AI workflow visualization techniques",
+        "Transformed abstract concepts into actionable plans",
+        "Built foundation for systematic experimentation"
       ],
       color: "genie-cyan"
     },
     {
-      year: "2022",
-      phase: "Scale",
+      year: "Infrastructure",
+      phase: "Development",
       icon: Rocket,
-      title: "Expanding Horizons",
-      description: "Scaling personal knowledge and establishing the comprehensive HUB platform for AI experimentation and learning.",
+      title: "Building Unshakeable Foundations",
+      description: "Focused on building robust infrastructure using Cursor IDE, Replit, Docker, V0 by Vercel, and frameworks like Bolt, Loveable, and Solid with TypeScript. Established Supabase and PostgreSQL for data management with GitHub integrations.",
       achievements: [
-        "Built comprehensive experimentation platform",
-        "Created knowledge sharing framework",
-        "Documented 50+ AI experiments"
+        "Established versatile development environments",
+        "Mastered containerization with Docker",
+        "Built scalable TypeScript-based architecture"
       ],
       color: "genie-primary"
     },
     {
-      year: "2023",
-      phase: "Innovation",
+      year: "Resilience",
+      phase: "Advanced Systems",
       icon: TrendingUp,
-      title: "Leading the Future",
-      description: "Pioneering next-generation AI experimentation tools and establishing personal standards for responsible AI experimentation.",
+      title: "Building Resilient AI Systems",
+      description: "Tackled critical challenges: single source of truth architecture, duplicate detection, hallucination reduction, and multi-tenant stability. Implemented robust change protection mechanisms and external integrations with DocuSign and Twilio.",
       achievements: [
-        "Developed advanced experimentation tools",
-        "Established AI ethics guidelines",
-        "Open-sourced learning frameworks"
+        "Solved data consistency and noise problems",
+        "Implemented hallucination reduction techniques", 
+        "Built multi-tenant environment stability"
       ],
       color: "genie-teal"
     },
     {
-      year: "2024",
-      phase: "Excellence",
+      year: "Agentic AI",
+      phase: "Revolution",
       icon: Award,
-      title: "Knowledge Sharing",
-      description: "Recognized for contributions to AI experimentation and continuing to share knowledge and methodologies with the community.",
+      title: "Multi-Agent Platform Innovation",
+      description: "Achieved breakthrough in agentic AI by building a dynamic multi-agent platform where AI agents are generated and orchestrated on-the-fly through intelligent prompt engineering. Real-time workflow configuration with specialized agents working in perfect concert.",
       achievements: [
-        "Community recognition for contributions",
-        "Published research and methodologies",
-        "Growing network of AI experimenters"
+        "Built dynamic agent creation system",
+        "Achieved seamless multi-agent orchestration",
+        "Demonstrated real-world healthcare solutions at lightning speed"
       ],
       color: "genie-cyan"
     }
@@ -133,8 +133,8 @@ const Journey = () => {
               From Vision to <span className="text-genie-cyan">Reality</span>
             </h1>
             <p className="text-xl lg:text-2xl text-white/90 leading-relaxed">
-              The story of how my Genie AI Experimentation HUB evolved from a simple idea 
-              to a comprehensive platform for AI experimentation, learning, and knowledge sharing.
+              The chronological adventure through technical discoveries, unexpected hurdles, pivotal 'aha moments', 
+              and where this incredible journey of methodical AI experimentation is still heading.
             </p>
           </div>
         </div>
@@ -146,10 +146,10 @@ const Journey = () => {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                The Evolution Timeline
+                My AI Journey: From Curiosity to Breakthrough
               </h2>
               <p className="text-xl text-muted-foreground">
-                Key milestones that shaped my personal journey
+                The methodical experimentation journey that transformed how I build intelligent solutions
               </p>
             </div>
 
@@ -225,20 +225,20 @@ const Journey = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               <Card className="p-6 text-center">
-                <div className="text-3xl font-bold text-genie-primary mb-2">100+</div>
-                <div className="text-muted-foreground">AI Experiments</div>
+                <div className="text-3xl font-bold text-genie-primary mb-2">20+</div>
+                <div className="text-muted-foreground">AI Tools Mastered</div>
               </Card>
               <Card className="p-6 text-center">
-                <div className="text-3xl font-bold text-genie-teal mb-2">50+</div>
-                <div className="text-muted-foreground">Documented Methodologies</div>
+                <div className="text-3xl font-bold text-genie-teal mb-2">45+</div>
+                <div className="text-muted-foreground">Days of Intensive Learning</div>
               </Card>
               <Card className="p-6 text-center">
-                <div className="text-3xl font-bold text-genie-cyan mb-2">15+</div>
-                <div className="text-muted-foreground">Years of Experience</div>
+                <div className="text-3xl font-bold text-genie-cyan mb-2">3</div>
+                <div className="text-muted-foreground">Major LLMs Explored</div>
               </Card>
               <Card className="p-6 text-center">
-                <div className="text-3xl font-bold text-genie-primary mb-2">5+</div>
-                <div className="text-muted-foreground">Industry Domains</div>
+                <div className="text-3xl font-bold text-genie-primary mb-2">Healthcare</div>
+                <div className="text-muted-foreground">Real-World Solutions</div>
               </Card>
             </div>
           </div>
