@@ -7,6 +7,7 @@ import { ArrowLeft, Calendar, MapPin, Users, Lightbulb, Cog, Rocket, Target, Tre
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import journeyInfographicBg from "@/assets/journey-infographic-bg.jpg";
+import timelineVisual from "@/assets/timeline-visual.png";
 
 const Journey = () => {
   useEffect(() => {
@@ -169,7 +170,7 @@ const Journey = () => {
               journey that transformed how I approach technology solutions.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Badge className="bg-genie-cyan/20 text-genie-cyan border-genie-cyan/30">2024 Timeline</Badge>
+              <Badge className="bg-genie-cyan/20 text-genie-cyan border-genie-cyan/30">2025 Timeline</Badge>
               <Badge className="bg-white/10 text-white border-white/20">6 Major Phases</Badge>
               <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30">Enterprise Impact</Badge>
             </div>
@@ -189,28 +190,6 @@ const Journey = () => {
                 A comprehensive 6-month intensive exploration resulting in breakthrough agentic AI capabilities, 
                 enterprise-grade infrastructure, and proven healthcare solution deployment methodologies.
               </p>
-              <div className="flex justify-center gap-12 mt-8 flex-wrap">
-                <div className="text-center p-4 bg-genie-primary/10 rounded-xl">
-                  <div className="text-3xl font-bold text-genie-primary mb-1">6</div>
-                  <div className="text-sm text-muted-foreground">Months Journey</div>
-                  <div className="text-xs text-genie-primary font-medium">Jun - Nov 2024</div>
-                </div>
-                <div className="text-center p-4 bg-genie-teal/10 rounded-xl">
-                  <div className="text-3xl font-bold text-genie-teal mb-1">200+</div>
-                  <div className="text-sm text-muted-foreground">Hours Invested</div>
-                  <div className="text-xs text-genie-teal font-medium">Intensive Learning</div>
-                </div>
-                <div className="text-center p-4 bg-genie-cyan/10 rounded-xl">
-                  <div className="text-3xl font-bold text-genie-cyan mb-1">15+</div>
-                  <div className="text-sm text-muted-foreground">Technologies</div>
-                  <div className="text-xs text-genie-cyan font-medium">Mastered</div>
-                </div>
-                <div className="text-center p-4 bg-genie-primary/10 rounded-xl">
-                  <div className="text-3xl font-bold text-genie-primary mb-1">6</div>
-                  <div className="text-sm text-muted-foreground">Major Phases</div>
-                  <div className="text-xs text-genie-primary font-medium">Completed</div>
-                </div>
-              </div>
             </div>
 
             <div className="space-y-12">
