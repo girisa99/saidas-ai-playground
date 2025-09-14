@@ -75,17 +75,17 @@ export const MultiHeroSection = () => {
       
       {/* Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="max-w-5xl">
+        <div className="max-w-5xl mx-auto text-center">
           {/* Main Brand Title */}
           <div className="mb-8">
-            <h1 className="text-5xl lg:text-7xl font-bold tracking-tight mb-2 animate-fade-in">
+            <h1 className="text-5xl lg:text-7xl font-bold tracking-tight mb-4 animate-fade-in">
               Genie AI Experimentation HUB
             </h1>
-            <div className="w-24 h-1 bg-primary mb-6"></div>
+            <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
           </div>
 
           {/* Icon */}
-          <div className="mb-6">
+          <div className="mb-6 flex justify-center">
             <div className="inline-flex p-4 bg-white/10 backdrop-blur-sm rounded-lg">
               <IconComponent className="h-12 w-12 text-white" />
             </div>
@@ -98,12 +98,12 @@ export const MultiHeroSection = () => {
           <h3 className="text-xl lg:text-2xl text-white/90 mb-6 font-medium animate-fade-in">
             {currentSection.subtitle}
           </h3>
-          <p className="text-lg lg:text-xl text-white/80 mb-8 leading-relaxed max-w-4xl animate-fade-in">
+          <p className="text-lg lg:text-xl text-white/80 mb-8 leading-relaxed max-w-4xl mx-auto animate-fade-in">
             {currentSection.description}
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in">
+          <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in justify-center">
             <Button size="lg" className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
               {currentSection.ctaPrimary}
               <ArrowRight className="ml-2 h-5 w-5" />
