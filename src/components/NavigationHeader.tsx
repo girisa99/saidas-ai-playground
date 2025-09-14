@@ -47,7 +47,9 @@ export const NavigationHeader = () => {
               onClick={() => scrollToSection('journey')}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              Journey
+              <a href="/journey" className="text-muted-foreground hover:text-foreground transition-colors">
+                Journey
+              </a>
             </button>
             <button 
               onClick={() => scrollToSection('documents')}
@@ -91,7 +93,9 @@ export const NavigationHeader = () => {
                 onClick={() => scrollToSection('journey')}
                 className="text-left text-muted-foreground hover:text-foreground transition-colors"
               >
-                Journey
+                <a href="/journey" className="text-left text-muted-foreground hover:text-foreground transition-colors">
+                  Journey
+                </a>
               </button>
               <button 
                 onClick={() => scrollToSection('documents')}
