@@ -8,42 +8,42 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 218 25% 8%;
+    --foreground: 220 15% 95%;
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 20% 10%;
+    --card-foreground: 220 15% 95%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 20% 10%;
+    --popover-foreground: 220 15% 95%;
 
-    --primary: 282 100% 78%;
-    --primary-foreground: 240 10% 3.9%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 220 15% 95%;
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 215 25% 20%;
+    --secondary-foreground: 220 15% 95%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 215 25% 15%;
+    --muted-foreground: 215 15% 70%;
 
-    --accent: 282 100% 78%;
-    --accent-foreground: 240 10% 3.9%;
+    --accent: 213 93% 68%;
+    --accent-foreground: 220 20% 10%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 220 15% 95%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 282 100% 78%;
+    --border: 215 25% 18%;
+    --input: 215 25% 18%;
+    --ring: 217 91% 60%;
 
-    /* AI-themed colors */
-    --ai-glow: 282 100% 78%;
-    --ai-secondary: 258 90% 66%;
-    --ai-accent: 195 100% 70%;
-    --neural-bg: 240 10% 3.9%;
-    --neural-border: 240 3.7% 15.9%;
+    /* Professional AI colors */
+    --ai-glow: 217 91% 60%;
+    --ai-secondary: 212 95% 68%;
+    --ai-accent: 204 94% 65%;
+    --neural-bg: 218 25% 8%;
+    --neural-border: 215 25% 18%;
     
-    /* Gradients */
+    /* Professional gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--ai-secondary)));
     --gradient-neural: linear-gradient(135deg, hsl(var(--neural-bg)), hsl(var(--neural-border)));
     --gradient-glow: linear-gradient(135deg, hsl(var(--ai-glow)), hsl(var(--ai-accent)));
@@ -72,26 +72,26 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 0 0% 98%;
-    --foreground: 240 10% 3.9%;
+    --background: 0 0% 97%;
+    --foreground: 215 25% 15%;
 
-    --card: 0 0% 98%;
-    --card-foreground: 240 10% 3.9%;
+    --card: 0 0% 99%;
+    --card-foreground: 215 25% 15%;
 
-    --popover: 0 0% 98%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover: 0 0% 99%;
+    --popover-foreground: 215 25% 15%;
 
-    --primary: 282 100% 78%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 97%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 240 10% 3.9%;
+    --secondary: 210 15% 92%;
+    --secondary-foreground: 215 25% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 15% 92%;
+    --muted-foreground: 215 15% 45%;
 
-    --accent: 282 100% 78%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 213 93% 68%;
+    --accent-foreground: 0 0% 97%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;

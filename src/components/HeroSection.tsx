@@ -17,63 +17,69 @@ export const HeroSection = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
         <div className="space-y-8">
           {/* Main Heading */}
-          <div className="space-y-4">
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tight">
+          <div className="space-y-6">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight">
               <span className="bg-gradient-to-r from-primary via-ai-secondary to-ai-accent bg-clip-text text-transparent">
                 Genie AI
               </span>
               <br />
               <span className="text-foreground">Experimentation</span>
               <br />
-              <span className="text-primary animate-pulse-glow">HUB</span>
+              <span className="text-primary">HUB</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              Transform your development workflow with AI-accelerated solutions. 
-              From curiosity to reality - building the future of intelligent development.
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium">
+              Empowering organizations with AI-driven innovation and strategic implementation. 
+              Professional expertise in enterprise AI transformation and experimentation frameworks.
             </p>
           </div>
 
           {/* Key Features */}
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <Card className="p-6 bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-all ai-glow">
-              <div className="flex items-center space-x-3 mb-3">
-                <Brain className="h-8 w-8 text-primary" />
-                <h3 className="text-lg font-semibold">AI-Driven Innovation</h3>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <Card className="p-8 bg-card/70 backdrop-blur-sm border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="p-3 bg-primary/10 rounded-lg">
+                  <Brain className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">Strategic AI Implementation</h3>
               </div>
-              <p className="text-muted-foreground">
-                Harness the power of LLMs, agentic AI, and intelligent automation
+              <p className="text-muted-foreground leading-relaxed">
+                Enterprise-grade AI solutions with proven frameworks for LLMs, automation, and intelligent systems
               </p>
             </Card>
             
-            <Card className="p-6 bg-card/50 backdrop-blur-sm border-ai-secondary/20 hover:border-ai-secondary/40 transition-all">
-              <div className="flex items-center space-x-3 mb-3">
-                <Zap className="h-8 w-8 text-ai-secondary" />
-                <h3 className="text-lg font-semibold">Rapid Experimentation</h3>
+            <Card className="p-8 bg-card/70 backdrop-blur-sm border-border hover:border-ai-secondary/30 transition-all duration-300 hover:shadow-lg">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="p-3 bg-ai-secondary/10 rounded-lg">
+                  <Zap className="h-7 w-7 text-ai-secondary" />
+                </div>
+                <h3 className="text-xl font-semibold">Accelerated Development</h3>
               </div>
-              <p className="text-muted-foreground">
-                From concept to deployment in weeks, not months
+              <p className="text-muted-foreground leading-relaxed">
+                Transform concepts into production-ready solutions with proven methodologies and best practices
               </p>
             </Card>
             
-            <Card className="p-6 bg-card/50 backdrop-blur-sm border-ai-accent/20 hover:border-ai-accent/40 transition-all">
-              <div className="flex items-center space-x-3 mb-3">
-                <Target className="h-8 w-8 text-ai-accent" />
-                <h3 className="text-lg font-semibold">Enterprise Ready</h3>
+            <Card className="p-8 bg-card/70 backdrop-blur-sm border-border hover:border-ai-accent/30 transition-all duration-300 hover:shadow-lg">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="p-3 bg-ai-accent/10 rounded-lg">
+                  <Target className="h-7 w-7 text-ai-accent" />
+                </div>
+                <h3 className="text-xl font-semibold">Enterprise Excellence</h3>
               </div>
-              <p className="text-muted-foreground">
-                Security, governance, and scalability built-in
+              <p className="text-muted-foreground leading-relaxed">
+                Comprehensive governance, security protocols, and scalable architecture for business success
               </p>
             </Card>
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg ai-glow">
-              Explore the Journey
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+              Explore AI Solutions
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button variant="outline" size="lg" className="border-primary/30 hover:border-primary text-foreground px-8 py-4 text-lg">
-              View Documentation
+            <Button variant="outline" size="lg" className="border-border hover:border-primary/50 hover:bg-primary/5 text-foreground px-10 py-4 text-lg font-semibold transition-all duration-300">
+              View Research Papers
             </Button>
           </div>
         </div>
