@@ -1,6 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Target, TrendingUp, Zap } from "lucide-react";
 import { useState, useEffect } from "react";
+import aiNeuralBg from "@/assets/hero-ai-neural.jpg";
+import enterpriseBg from "@/assets/hero-enterprise.jpg";
+import growthBg from "@/assets/hero-growth.jpg";
+import ecosystemBg from "@/assets/hero-ecosystem.jpg";
 
 const heroSections = [
   {
@@ -11,7 +15,7 @@ const heroSections = [
     description: "Navigate the complete journey from AI experimentation to enterprise-scale deployment with proven frameworks and strategic guidance.",
     ctaPrimary: "Start Your AI Journey",
     ctaSecondary: "View Success Stories",
-    bgGradient: "from-primary to-primary/80"
+    bgImage: aiNeuralBg
   },
   {
     id: 2,
@@ -21,7 +25,7 @@ const heroSections = [
     description: "Unlock AI's transformative potential across all business functions with comprehensive implementation strategies and governance frameworks.",
     ctaPrimary: "Empower Your Teams",
     ctaSecondary: "Enterprise Solutions",
-    bgGradient: "from-blue-600 to-blue-500"
+    bgImage: enterpriseBg
   },
   {
     id: 3,
@@ -31,7 +35,7 @@ const heroSections = [
     description: "Drive sustainable growth through AI initiatives that deliver quantifiable results and competitive advantage in today's market.",
     ctaPrimary: "Calculate Your ROI",
     ctaSecondary: "Impact Case Studies",
-    bgGradient: "from-emerald-600 to-emerald-500"
+    bgImage: growthBg
   },
   {
     id: 4,
@@ -41,7 +45,7 @@ const heroSections = [
     description: "Master the comprehensive AI landscape with expert insights into emerging technologies, implementation best practices, and future-ready strategies.",
     ctaPrimary: "Explore AI Tools",
     ctaSecondary: "Technology Roadmap",
-    bgGradient: "from-purple-600 to-purple-500"
+    bgImage: ecosystemBg
   }
 ];
 
@@ -60,10 +64,26 @@ export const MultiHeroSection = () => {
   const IconComponent = currentSection.icon;
 
   return (
-    <section className={`relative bg-gradient-to-br ${currentSection.bgGradient} text-white py-24 lg:py-32 transition-all duration-1000`}>
+    <section className="relative text-white py-24 lg:py-32 transition-all duration-1000 overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000"
+        style={{ backgroundImage: `url(${currentSection.bgImage})` }}
+      />
+      {/* Background Overlay */}
+      <div className="absolute inset-0 bg-black/50" />
+      
       {/* Hero Content */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="max-w-5xl">
+          {/* Main Brand Title */}
+          <div className="mb-8">
+            <h1 className="text-5xl lg:text-7xl font-bold tracking-tight mb-2 animate-fade-in">
+              Genie AI Experimentation HUB
+            </h1>
+            <div className="w-24 h-1 bg-primary mb-6"></div>
+          </div>
+
           {/* Icon */}
           <div className="mb-6">
             <div className="inline-flex p-4 bg-white/10 backdrop-blur-sm rounded-lg">
@@ -71,14 +91,14 @@ export const MultiHeroSection = () => {
             </div>
           </div>
 
-          {/* Main Content */}
-          <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-4 animate-fade-in">
+          {/* Section Content */}
+          <h2 className="text-3xl lg:text-4xl font-bold tracking-tight mb-4 animate-fade-in">
             {currentSection.title}
-          </h1>
-          <h2 className="text-2xl lg:text-3xl text-white/90 mb-6 font-medium animate-fade-in">
-            {currentSection.subtitle}
           </h2>
-          <p className="text-xl lg:text-2xl text-white/80 mb-8 leading-relaxed max-w-4xl animate-fade-in">
+          <h3 className="text-xl lg:text-2xl text-white/90 mb-6 font-medium animate-fade-in">
+            {currentSection.subtitle}
+          </h3>
+          <p className="text-lg lg:text-xl text-white/80 mb-8 leading-relaxed max-w-4xl animate-fade-in">
             {currentSection.description}
           </p>
 
