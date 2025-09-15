@@ -127,7 +127,6 @@ export default {
             opacity: "0"
           }
         }
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
