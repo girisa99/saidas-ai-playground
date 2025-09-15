@@ -81,12 +81,27 @@
   }
 }
 
+@layer base {
+  .genie-glow {
+    box-shadow: 0 0 50px hsl(180 100% 70% / 0.5);
+  }
+  
+  .genie-teal-glow {
+    box-shadow: 0 0 30px hsl(174 100% 45% / 0.6);
+  }
+  
+  .neural-pattern {
+    background-image: radial-gradient(circle at 2px 2px, hsl(180 100% 70% / 0.15) 1px, transparent 0);
+    background-size: 20px 20px;
+  }
+}
+
 @keyframes pulse-glow {
   0%, 100% { 
-    box-shadow: 0 0 20px hsl(var(--genie-cyan) / 0.5); 
+    box-shadow: 0 0 20px hsl(180 100% 70% / 0.5); 
   }
   50% { 
-    box-shadow: 0 0 40px hsl(var(--genie-cyan) / 0.8); 
+    box-shadow: 0 0 40px hsl(180 100% 70% / 0.8); 
   }
 }
 
@@ -126,19 +141,6 @@
 }
 
 @layer utilities {
-  .genie-glow { 
-    box-shadow: var(--glow-cyan); 
-  }
-  
-  .genie-teal-glow { 
-    box-shadow: var(--glow-teal); 
-  }
-  
-  .neural-pattern {
-    background-image: radial-gradient(circle at 2px 2px, hsl(var(--genie-cyan) / 0.15) 1px, transparent 0);
-    background-size: 20px 20px;
-  }
-  
   .animate-pulse-glow { 
     animation: pulse-glow 2s ease-in-out infinite; 
   }
