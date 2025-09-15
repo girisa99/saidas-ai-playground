@@ -331,8 +331,149 @@ const Journey = () => {
               </Card>
             </div>
 
+            {/* Real-World Business Use Cases */}
+            <Card className="p-8 border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-genie-teal/5">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold text-foreground mb-4">
+                  Proven Business Use Cases & Outcomes
+                </h3>
+                <p className="text-muted-foreground max-w-3xl mx-auto">
+                  Real implementations demonstrating the transformation from AI experimentation to enterprise-grade healthcare solutions
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="p-6 bg-background/50 rounded-lg border border-genie-primary/20">
+                  <div className="w-12 h-12 bg-genie-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <Users className="w-6 h-6 text-genie-primary" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Patient Management Systems</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Developed robust systems for secure patient data handling, streamlining administrative tasks and improving care delivery.
+                  </p>
+                  <div className="text-xs text-genie-primary font-medium">
+                    ✓ Automated data handling ✓ Improved care workflows
+                  </div>
+                </div>
+
+                <div className="p-6 bg-background/50 rounded-lg border border-genie-teal/20">
+                  <div className="w-12 h-12 bg-genie-teal/10 rounded-lg flex items-center justify-center mb-4">
+                    <Shield className="w-6 h-6 text-genie-teal" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">User Management Modules</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Built flexible modules for managing diverse user roles and access within healthcare platforms, ensuring data security.
+                  </p>
+                  <div className="text-xs text-genie-teal font-medium">
+                    ✓ Secure role management ✓ Platform flexibility
+                  </div>
+                </div>
+
+                <div className="p-6 bg-background/50 rounded-lg border border-genie-cyan/20">
+                  <div className="w-12 h-12 bg-genie-cyan/10 rounded-lg flex items-center justify-center mb-4">
+                    <Database className="w-6 h-6 text-genie-cyan" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Module Management Frameworks</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Created foundational frameworks for rapid development and integration of new features across healthcare systems.
+                  </p>
+                  <div className="text-xs text-genie-cyan font-medium">
+                    ✓ Rapid development ✓ Feature integration
+                  </div>
+                </div>
+
+                <div className="p-6 bg-background/50 rounded-lg border border-genie-primary/20">
+                  <div className="w-12 h-12 bg-genie-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <TrendingUp className="w-6 h-6 text-genie-primary" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Treatment Center Workflows</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Designed automated workflows for quick and compliant onboarding of new treatment centers, accelerating network expansion.
+                  </p>
+                  <div className="text-xs text-genie-primary font-medium">
+                    ✓ Automated onboarding ✓ Network growth
+                  </div>
+                </div>
+
+                <div className="p-6 bg-background/50 rounded-lg border border-genie-teal/20">
+                  <div className="w-12 h-12 bg-genie-teal/10 rounded-lg flex items-center justify-center mb-4">
+                    <Cog className="w-6 h-6 text-genie-teal" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Manufacturing Integration</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Streamlined and accelerated onboarding of manufacturing partners, crucial for scaling production and distribution.
+                  </p>
+                  <div className="text-xs text-genie-teal font-medium">
+                    ✓ Partner integration ✓ Production scaling
+                  </div>
+                </div>
+
+                <div className="p-6 bg-background/50 rounded-lg border border-genie-cyan/20">
+                  <div className="w-12 h-12 bg-genie-cyan/10 rounded-lg flex items-center justify-center mb-4">
+                    <Award className="w-6 h-6 text-genie-cyan" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Patient Onboarding Systems</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Implemented intuitive systems to simplify patient onboarding, from registration to initial consultation workflows.
+                  </p>
+                  <div className="text-xs text-genie-cyan font-medium">
+                    ✓ Simplified registration ✓ Improved experience
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Quantifiable Business Impact */}
+            <Card className="p-8 mt-8 border-genie-teal/20 bg-gradient-to-br from-genie-teal/5 to-genie-cyan/5">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold text-foreground mb-4">
+                  Measurable Business Impact & ROI
+                </h3>
+                <p className="text-muted-foreground">
+                  Demonstrable results from systematic AI implementation with real-world healthcare transformation metrics
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-8">
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-genie-primary mb-2">300%</div>
+                  <div className="font-semibold text-foreground mb-2">Average ROI</div>
+                  <div className="text-sm text-muted-foreground">Within 12-18 months of strategic AI implementation across healthcare operations</div>
+                </div>
+                
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-genie-teal mb-2">60%</div>
+                  <div className="font-semibold text-foreground mb-2">Automated Inquiries</div>
+                  <div className="text-sm text-muted-foreground">Achieved in customer service, reducing support costs by $1.5M annually</div>
+                </div>
+                
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-genie-cyan mb-2">20%</div>
+                  <div className="font-semibold text-foreground mb-2">Time Savings</div>
+                  <div className="text-sm text-muted-foreground">Employee time freed up across sales, HR, and finance for higher-value work</div>
+                </div>
+              </div>
+
+              <div className="mt-8 p-6 bg-gradient-to-r from-genie-primary/10 to-genie-teal/10 rounded-lg border border-genie-primary/20">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-8 h-8 bg-genie-primary/20 rounded-lg flex items-center justify-center">
+                    <Target className="w-4 h-4 text-genie-primary" />
+                  </div>
+                  <h4 className="font-semibold text-foreground">AI-Accelerated Development Benefits</h4>
+                </div>
+                <div className="grid md:grid-cols-2 gap-4 text-sm text-muted-foreground">
+                  <div>• AI-accelerated development drastically reduced timelines</div>
+                  <div>• What once took months to build, can now be done in weeks</div>
+                  <div>• Significant cost savings by reducing need for large development teams</div>
+                  <div>• Rapid prototyping cuts down overheads and time-to-market</div>
+                  <div>• Unprecedented efficiency gains achieved through intelligent automation</div>
+                  <div>• Competitive advantage through faster innovation cycles</div>
+                </div>
+              </div>
+            </Card>
+
             {/* Key Capabilities */}
-            <Card className="p-8">
+            <Card className="p-8 mt-8">
               <h3 className="text-2xl font-bold text-foreground mb-6 text-center">
                 Core Capabilities Developed
               </h3>

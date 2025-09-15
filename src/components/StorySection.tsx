@@ -36,13 +36,14 @@ export const StorySection = () => {
               </div>
             </div>
             <p className="text-foreground/80 leading-relaxed mb-6">
-              25+ years in healthcare technology led to a pivotal realization: AI could revolutionize digital health 
-              and therapeutic solutions. This isn't about replacing human expertise—it's about amplifying our capacity 
-              to solve complex healthcare challenges.
+              21+ years in healthcare technology led to a pivotal realization: AI could revolutionize not just digital health, 
+              but fundamentally transform how we approach complex business challenges across healthcare and enterprise systems. 
+              This isn't about replacing human expertise—it's about amplifying our capacity to solve previously impossible problems.
             </p>
             <p className="text-foreground/80 leading-relaxed">
-              Through systematic experimentation, I've developed frameworks that transform AI concepts into practical 
-              healthcare solutions, from digital therapeutics to enterprise health platforms.
+              Through systematic 6-month experimentation journey, I've developed breakthrough frameworks that transform AI concepts 
+              into practical solutions: from patient management systems to manufacturing workflows, achieving 300% ROI and 
+              demonstrating real-world healthcare impact at enterprise scale.
             </p>
           </Card>
 
@@ -58,12 +59,14 @@ export const StorySection = () => {
               </div>
             </div>
             <p className="text-foreground/80 leading-relaxed mb-6">
-              The breakthrough came when I realized AI could empower healthcare professionals and business users directly—
-              democratizing innovation beyond technical teams. Traditional barriers were dissolving.
+              The breakthrough came when I witnessed AI experimentation translate directly into solving real-world business challenges. 
+              From mastering 15+ AI models to building dynamic multi-agent systems—traditional development barriers were not just dissolving, 
+              they were being revolutionized through systematic innovation.
             </p>
             <p className="text-foreground/80 leading-relaxed">
-              This hub documents my journey building practical AI solutions for digital health, therapeutic innovation, 
-              and enterprise transformation—making cutting-edge technology accessible to healthcare leaders.
+              This hub documents my journey from AI curiosity to enterprise-grade solutions: achieving 94% accuracy through RAG architecture, 
+              building patient management systems, treatment center workflows, and demonstrating measurable healthcare transformation—
+              making advanced AI accessible and practical for business leaders.
             </p>
           </Card>
         </div>

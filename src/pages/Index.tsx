@@ -2,6 +2,7 @@ import { NavigationHeader } from "@/components/NavigationHeader";
 import { MultiHeroSection } from "@/components/MultiHeroSection";
 import { StorySection } from "@/components/StorySection";
 import { ValueProposition } from "@/components/ValueProposition";
+import { TechnologyStackSection } from "@/components/TechnologyStackSection";
 import { AboutSection } from "@/components/AboutSection";
 import { DocumentsSection } from "@/components/DocumentsSection";
 import { Footer } from "@/components/Footer";
@@ -24,6 +25,7 @@ const Index = () => {
         <MultiHeroSection />
         <StorySection />
         <ValueProposition />
+        <TechnologyStackSection />
         <div id="about">
           <AboutSection />
         </div>

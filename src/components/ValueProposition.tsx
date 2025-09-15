@@ -1,5 +1,7 @@
 import { Card } from "@/components/ui/card";
-import { CheckCircle, Users, TrendingUp, Shield } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle, Users, TrendingUp, Shield, Brain, Zap, Database, Target, Award, Rocket } from "lucide-react";
+import healthcareImpact from "@/assets/healthcare-solutions-impact.png";
 
 export const ValueProposition = () => {
   return (
@@ -7,69 +9,228 @@ export const ValueProposition = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
+          <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
+            AI Experimentation Hub Technologies & Impact
+          </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Digital Health Innovation
+            Real-World Impact: Building Healthcare Solutions at Lightning Speed
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Proven frameworks for implementing AI in healthcare, digital therapeutics, 
-            and enterprise health platforms with measurable outcomes.
+          <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
+            Proven AI framework culminating in breakthrough implementations - from experimentation 
+            to real-world healthcare solutions with measurable business impact and accelerated development timelines.
           </p>
         </div>
 
-        {/* Value Cards */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-16">
-          <Card className="p-8 border border-border hover:border-primary/30 transition-colors">
+        {/* Technology Stack Highlights */}
+        <div className="grid md:grid-cols-4 gap-6 mb-16">
+          <Card className="p-6 text-center border-genie-primary/20 hover:border-genie-primary/40 transition-colors">
+            <div className="w-12 h-12 bg-genie-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <Brain className="w-6 h-6 text-genie-primary" />
+            </div>
+            <div className="text-2xl font-bold text-genie-primary mb-2">15+</div>
+            <div className="text-sm font-medium text-foreground mb-1">AI Models Mastered</div>
+            <div className="text-xs text-muted-foreground">GPT-4, Claude 3, Gemini Pro</div>
+          </Card>
+          
+          <Card className="p-6 text-center border-genie-teal/20 hover:border-genie-teal/40 transition-colors">
+            <div className="w-12 h-12 bg-genie-teal/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <Zap className="w-6 h-6 text-genie-teal" />
+            </div>
+            <div className="text-2xl font-bold text-genie-teal mb-2">94%</div>
+            <div className="text-sm font-medium text-foreground mb-1">Accuracy Rate</div>
+            <div className="text-xs text-muted-foreground">Hallucination reduction via RAG</div>
+          </Card>
+          
+          <Card className="p-6 text-center border-genie-cyan/20 hover:border-genie-cyan/40 transition-colors">
+            <div className="w-12 h-12 bg-genie-cyan/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <Rocket className="w-6 h-6 text-genie-cyan" />
+            </div>
+            <div className="text-2xl font-bold text-genie-cyan mb-2">12+</div>
+            <div className="text-sm font-medium text-foreground mb-1">Specialized AI Agents</div>
+            <div className="text-xs text-muted-foreground">Dynamic orchestration system</div>
+          </Card>
+          
+          <Card className="p-6 text-center border-genie-primary/20 hover:border-genie-primary/40 transition-colors">
+            <div className="w-12 h-12 bg-genie-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <Target className="w-6 h-6 text-genie-primary" />
+            </div>
+            <div className="text-2xl font-bold text-genie-primary mb-2">300%</div>
+            <div className="text-sm font-medium text-foreground mb-1">Average ROI</div>
+            <div className="text-xs text-muted-foreground">Within 12-18 months</div>
+          </Card>
+        </div>
+
+        {/* Healthcare Solutions Impact Showcase */}
+        <div className="mb-16">
+          <Card className="p-8 border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-genie-teal/5">
+            <div className="grid lg:grid-cols-2 gap-8 items-center">
+              <div>
+                <h3 className="text-2xl font-bold text-foreground mb-4">
+                  Proven Healthcare Solutions Development
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  Journey culminated in a true victory lap, witnessing how AI experimentation and learning translated 
+                  directly into solving real-world business challenges. The comprehensive toolkit I meticulously assembled 
+                  wasn't just a collection of technologies; it was a powerful engine enabling rapid development of 
+                  sophisticated, Healthcare-specific solutions.
+                </p>
+                
+                <div className="grid md:grid-cols-2 gap-4 mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-genie-primary rounded-full"></div>
+                    <span className="text-sm font-medium">AI-Accelerated Development</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-genie-teal rounded-full"></div>
+                    <span className="text-sm font-medium">Significant Cost Savings</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-genie-cyan rounded-full"></div>
+                    <span className="text-sm font-medium">Unprecedented Efficiency Gains</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-genie-primary rounded-full"></div>
+                    <span className="text-sm font-medium">Enterprise-Grade Solutions</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="relative">
+                <img 
+                  src={healthcareImpact} 
+                  alt="Healthcare Solutions Impact - Patient Management, User Management, Treatment Center Workflows, Manufacturing Processes"
+                  className="rounded-lg shadow-lg w-full"
+                />
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* Core Technology Stack */}
+        <div className="grid lg:grid-cols-3 gap-8 mb-16">
+          <Card className="p-8 border-genie-primary/20 hover:border-genie-primary/40 transition-colors">
             <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0 p-3 bg-primary/10 rounded-lg">
-                <TrendingUp className="h-8 w-8 text-primary" />
+              <div className="flex-shrink-0 p-3 bg-genie-primary/10 rounded-lg">
+                <Brain className="h-8 w-8 text-genie-primary" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-3">Healthcare AI Strategy</h3>
+                <h3 className="text-xl font-semibold mb-3 text-genie-primary">Agentic AI & LLMs</h3>
                 <p className="text-muted-foreground mb-4">
-                  Digital health transformation strategies focused on patient outcomes, 
-                  therapeutic innovation, and sustainable healthcare technology adoption.
+                  Advanced multi-agent systems with autonomous AI that interprets, reasons, plans, and executes actions independently.
+                </p>
+                <div className="space-y-2">
+                  <Badge variant="secondary" className="text-xs mr-2">GPT-4 & Claude 3</Badge>
+                  <Badge variant="secondary" className="text-xs mr-2">Gemini Pro</Badge>
+                  <Badge variant="secondary" className="text-xs mr-2">Agentic Orchestration</Badge>
+                  <Badge variant="secondary" className="text-xs">Multi-Agent Systems</Badge>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-8 border-genie-teal/20 hover:border-genie-teal/40 transition-colors">
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0 p-3 bg-genie-teal/10 rounded-lg">
+                <Database className="h-8 w-8 text-genie-teal" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-3 text-genie-teal">Enterprise Infrastructure</h3>
+                <p className="text-muted-foreground mb-4">
+                  Robust development ecosystem with containerization, real-time databases, and enterprise-grade architecture.
+                </p>
+                <div className="space-y-2">
+                  <Badge variant="secondary" className="text-xs mr-2">Docker & Kubernetes</Badge>
+                  <Badge variant="secondary" className="text-xs mr-2">Supabase & PostgreSQL</Badge>
+                  <Badge variant="secondary" className="text-xs mr-2">TypeScript</Badge>
+                  <Badge variant="secondary" className="text-xs">Vector Databases</Badge>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-8 border-genie-cyan/20 hover:border-genie-cyan/40 transition-colors">
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0 p-3 bg-genie-cyan/10 rounded-lg">
+                <Shield className="h-8 w-8 text-genie-cyan" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-3 text-genie-cyan">RAG & Security</h3>
+                <p className="text-muted-foreground mb-4">
+                  Advanced RAG implementation for hallucination reduction, enterprise security, and compliance frameworks.
+                </p>
+                <div className="space-y-2">
+                  <Badge variant="secondary" className="text-xs mr-2">RAG Architecture</Badge>
+                  <Badge variant="secondary" className="text-xs mr-2">94% Accuracy</Badge>
+                  <Badge variant="secondary" className="text-xs mr-2">Enterprise Security</Badge>
+                  <Badge variant="secondary" className="text-xs">Compliance Ready</Badge>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* Business Use Cases */}
+        <div className="grid lg:grid-cols-2 gap-8 mb-16">
+          <Card className="p-8 border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-background">
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0 p-3 bg-genie-primary/10 rounded-lg">
+                <TrendingUp className="h-8 w-8 text-genie-primary" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-3">Healthcare Digital Transformation</h3>
+                <p className="text-muted-foreground mb-4">
+                  Implemented comprehensive solutions including patient management systems, treatment center onboarding workflows, 
+                  and manufacturing process automation with measurable ROI.
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-center text-sm text-muted-foreground">
-                    <CheckCircle className="h-4 w-4 text-primary mr-2" />
-                    Digital therapeutics development
+                    <CheckCircle className="h-4 w-4 text-genie-primary mr-2" />
+                    Patient onboarding systems with automated workflows
                   </li>
                   <li className="flex items-center text-sm text-muted-foreground">
-                    <CheckCircle className="h-4 w-4 text-primary mr-2" />
-                    Healthcare AI integration
+                    <CheckCircle className="h-4 w-4 text-genie-primary mr-2" />
+                    Treatment center operational optimization
                   </li>
                   <li className="flex items-center text-sm text-muted-foreground">
-                    <CheckCircle className="h-4 w-4 text-primary mr-2" />
-                    Patient outcome optimization
+                    <CheckCircle className="h-4 w-4 text-genie-primary mr-2" />
+                    Manufacturing partner integration frameworks
+                  </li>
+                  <li className="flex items-center text-sm text-muted-foreground">
+                    <CheckCircle className="h-4 w-4 text-genie-primary mr-2" />
+                    User management modules with secure access control
                   </li>
                 </ul>
               </div>
             </div>
           </Card>
 
-          <Card className="p-8 border border-border hover:border-primary/30 transition-colors">
+          <Card className="p-8 border-genie-teal/20 bg-gradient-to-br from-genie-teal/5 to-background">
             <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0 p-3 bg-primary/10 rounded-lg">
-                <Shield className="h-8 w-8 text-primary" />
+              <div className="flex-shrink-0 p-3 bg-genie-teal/10 rounded-lg">
+                <Award className="h-8 w-8 text-genie-teal" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-3">Governance & Security</h3>
+                <h3 className="text-xl font-semibold mb-3">Enterprise AI Strategy & ROI</h3>
                 <p className="text-muted-foreground mb-4">
-                  Enterprise-grade security protocols, compliance frameworks, and 
-                  governance structures for responsible AI deployment.
+                  Strategic AI integration delivering 150-300% ROI within 12-18 months through automated workflows, 
+                  predictive analytics, and operational efficiency improvements.
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-center text-sm text-muted-foreground">
-                    <CheckCircle className="h-4 w-4 text-primary mr-2" />
-                    Regulatory compliance frameworks
+                    <CheckCircle className="h-4 w-4 text-genie-teal mr-2" />
+                    60% automated inquiry handling reducing support costs
                   </li>
                   <li className="flex items-center text-sm text-muted-foreground">
-                    <CheckCircle className="h-4 w-4 text-primary mr-2" />
-                    Data privacy and security protocols
+                    <CheckCircle className="h-4 w-4 text-genie-teal mr-2" />
+                    15-20% employee time savings across departments
                   </li>
                   <li className="flex items-center text-sm text-muted-foreground">
-                    <CheckCircle className="h-4 w-4 text-primary mr-2" />
-                    Risk management strategies
+                    <CheckCircle className="h-4 w-4 text-genie-teal mr-2" />
+                    30% reduction in research time with 25% decision accuracy improvement
+                  </li>
+                  <li className="flex items-center text-sm text-muted-foreground">
+                    <CheckCircle className="h-4 w-4 text-genie-teal mr-2" />
+                    Scalable frameworks for enterprise-wide deployment
                   </li>
                 </ul>
               </div>
@@ -78,12 +239,17 @@ export const ValueProposition = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="bg-secondary/50 rounded-lg p-8 text-center">
-          <Users className="h-12 w-12 text-primary mx-auto mb-4" />
-          <h3 className="text-2xl font-bold mb-4">Trusted Healthcare Innovation</h3>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Proven methodologies helping healthcare organizations implement AI solutions 
-            that improve patient outcomes and drive sustainable digital transformation.
+        <div className="bg-gradient-to-r from-genie-primary/10 via-genie-teal/10 to-genie-cyan/10 rounded-lg p-8 text-center border border-genie-primary/20">
+          <div className="flex justify-center gap-4 mb-4">
+            <Brain className="h-8 w-8 text-genie-primary" />
+            <Database className="h-8 w-8 text-genie-teal" />
+            <Zap className="h-8 w-8 text-genie-cyan" />
+          </div>
+          <h3 className="text-2xl font-bold mb-4">AI Experimentation Hub: From Vision to Enterprise Reality</h3>
+          <p className="text-muted-foreground max-w-3xl mx-auto">
+            Systematic 6-month journey culminating in breakthrough healthcare solutions with proven business impact. 
+            Advanced AI technologies, enterprise-grade infrastructure, and measurable ROI - transforming how organizations 
+            approach digital health innovation and therapeutic development.
           </p>
         </div>
       </div>
