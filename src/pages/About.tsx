@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import aboutHeroBg from "@/assets/about-hero-bg.jpg";
 import statsInfographic from "@/assets/stats-infographic.jpg";
+import saiProfile from "@/assets/sai-profile.jpg";
 
 const About = () => {
   useEffect(() => {
@@ -105,14 +106,13 @@ const About = () => {
             
             <div className="relative">
               <div className="w-80 h-80 mx-auto relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-genie-cyan to-genie-primary rounded-full animate-pulse" />
-                <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
-                  <div className="w-72 h-72 bg-gradient-to-br from-genie-primary to-genie-teal rounded-full flex items-center justify-center text-white">
-                    <div className="text-center">
-                      <div className="text-6xl font-bold">SD</div>
-                      <div className="text-lg font-medium">Technology Leader</div>
-                    </div>
-                  </div>
+                <div className="absolute inset-0 bg-gradient-to-r from-genie-cyan to-genie-primary rounded-full animate-pulse opacity-75" />
+                <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center shadow-2xl">
+                  <img 
+                    src={saiProfile} 
+                    alt="Sai Dasika - Technology Innovator & Digital Health Visionary"
+                    className="w-72 h-72 rounded-full object-cover object-center"
+                  />
                 </div>
               </div>
             </div>
