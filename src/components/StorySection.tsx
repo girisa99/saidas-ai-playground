@@ -11,14 +11,14 @@ export const StorySection = () => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-genie-primary/10 px-4 py-2 rounded-full text-genie-primary text-sm font-medium mb-4">
             <Lightbulb className="w-4 h-4" />
-            My Story
+            What is Genie AI Hub?
           </div>
           <h2 className="text-3xl lg:text-5xl font-bold text-foreground mb-6">
-            What is <span className="text-genie-primary">Genie AI Experimentation HUB</span>?
+            AI Innovation Made <span className="text-genie-primary">Accessible</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Born from a conversation with my colleague Prashant, this journey began with a transformative question: 
-            "What if AI didn't just assist us, but truly transformed how we built solutions from the ground up?"
+            A personal journey to democratize AI experimentation, transforming how enterprises 
+            approach digital health innovation and technology solutions.
           </p>
         </div>
 
@@ -36,14 +36,13 @@ export const StorySection = () => {
               </div>
             </div>
             <p className="text-foreground/80 leading-relaxed mb-6">
-              What started as pure curiosity quickly transformed into an all-consuming personal mission. After two decades 
-              in this industry, I thought I'd seen every innovation imaginable, but the potential of AI felt profoundly 
-              different. This wasn't just about efficiency anymore; it was about unleashing innovation across the entire enterprise.
+              25+ years in healthcare technology led to a pivotal realization: AI could revolutionize digital health 
+              and therapeutic solutions. This isn't about replacing human expertise—it's about amplifying our capacity 
+              to solve complex healthcare challenges.
             </p>
             <p className="text-foreground/80 leading-relaxed">
-              I immediately set about establishing my own personal AI experimentation hub, involving countless hours of 
-              experimentation with foundational AI models, fine-tuning, and analyzing output across diverse use cases. 
-              This became my personal laboratory for methodical AI exploration and learning.
+              Through systematic experimentation, I've developed frameworks that transform AI concepts into practical 
+              healthcare solutions, from digital therapeutics to enterprise health platforms.
             </p>
           </Card>
 
@@ -59,14 +58,12 @@ export const StorySection = () => {
               </div>
             </div>
             <p className="text-foreground/80 leading-relaxed mb-6">
-              I discovered the profound potential for AI to empower business users directly—not just developers—and it was 
-              an absolute 'aha moment' that reshaped my entire perspective. The rigid technical barriers that once confined 
-              creation to specialized developers were simply dissolving.
+              The breakthrough came when I realized AI could empower healthcare professionals and business users directly—
+              democratizing innovation beyond technical teams. Traditional barriers were dissolving.
             </p>
             <p className="text-foreground/80 leading-relaxed">
-              Through methodical experimentation with various tools and platforms, I'm building comprehensive frameworks 
-              that transform abstract AI concepts into tangible, impactful solutions. This is my personal log of technical 
-              exploration and the tools that enabled it.
+              This hub documents my journey building practical AI solutions for digital health, therapeutic innovation, 
+              and enterprise transformation—making cutting-edge technology accessible to healthcare leaders.
             </p>
           </Card>
         </div>

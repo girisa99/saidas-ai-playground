@@ -27,9 +27,9 @@ export const AboutSection = () => {
             <div className="space-y-6">
               <div>
                 <p className="text-muted-foreground leading-relaxed">
-                  Two decades in technology led to a pivotal conversation with my brilliant colleague Prashant, 
-                  who posed a transformative question: <em>"What if AI didn't just assist us, but truly transformed 
-                  how we built solutions from the ground up?"</em>
+                  25+ years in healthcare technology culminated in a transformative realization: 
+                  AI could revolutionize how we approach digital health, therapeutic innovation, 
+                  and patient care solutions from the ground up.
                 </p>
               </div>
               
@@ -41,9 +41,9 @@ export const AboutSection = () => {
                   The Spark of Discovery
                 </h4>
                 <p className="text-muted-foreground">
-                  That question ignited a deep, buzzing curiosity that pulled me into a personal quest 
-                  to uncover the revolutionary power of AI in development. What began as focused exploration 
-                  into streamlining daily processes evolved into something far more profound.
+                  This sparked an intensive exploration into AI's potential for healthcare transformation. 
+                  What began as process optimization evolved into revolutionary approaches to digital 
+                  therapeutics and enterprise health solutions.
                 </p>
               </div>
               
@@ -53,8 +53,9 @@ export const AboutSection = () => {
                   The Breakthrough Moment
                 </h4>
                 <p className="text-muted-foreground">
-                  The real shift happened when I discovered AI's potential to empower business users directly—not just developers. 
-                  This wasn't about efficiency anymore; it was about unleashing innovation across entire enterprises.
+                  The breakthrough: AI could empower healthcare professionals and business users directly. 
+                  This became about democratizing health innovation and making advanced AI accessible 
+                  to those closest to patient care.
                 </p>
               </div>
             </div>

@@ -27,9 +27,6 @@ const Index = () => {
         <div id="about">
           <AboutSection />
         </div>
-        <div id="documents">
-          <DocumentsSection />
-        </div>
       </main>
       <Footer />
     </div>

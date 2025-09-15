@@ -8,11 +8,11 @@ export const ValueProposition = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Enterprise AI Transformation
+            Digital Health Innovation
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Comprehensive AI solutions designed for enterprise-scale implementation, 
-            governance, and measurable business impact.
+            Proven frameworks for implementing AI in healthcare, digital therapeutics, 
+            and enterprise health platforms with measurable outcomes.
           </p>
         </div>
 
@@ -24,23 +24,23 @@ export const ValueProposition = () => {
                 <TrendingUp className="h-8 w-8 text-primary" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-3">Strategic Implementation</h3>
+                <h3 className="text-xl font-semibold mb-3">Healthcare AI Strategy</h3>
                 <p className="text-muted-foreground mb-4">
-                  Data-driven AI strategies aligned with business objectives, featuring 
-                  comprehensive roadmaps for sustainable transformation and growth.
+                  Digital health transformation strategies focused on patient outcomes, 
+                  therapeutic innovation, and sustainable healthcare technology adoption.
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-center text-sm text-muted-foreground">
                     <CheckCircle className="h-4 w-4 text-primary mr-2" />
-                    ROI-focused implementation frameworks
+                    Digital therapeutics development
                   </li>
                   <li className="flex items-center text-sm text-muted-foreground">
                     <CheckCircle className="h-4 w-4 text-primary mr-2" />
-                    Enterprise architecture planning
+                    Healthcare AI integration
                   </li>
                   <li className="flex items-center text-sm text-muted-foreground">
                     <CheckCircle className="h-4 w-4 text-primary mr-2" />
-                    Performance measurement systems
+                    Patient outcome optimization
                   </li>
                 </ul>
               </div>
@@ -80,10 +80,10 @@ export const ValueProposition = () => {
         {/* Bottom Section */}
         <div className="bg-secondary/50 rounded-lg p-8 text-center">
           <Users className="h-12 w-12 text-primary mx-auto mb-4" />
-          <h3 className="text-2xl font-bold mb-4">Trusted by Enterprise Leaders</h3>
+          <h3 className="text-2xl font-bold mb-4">Trusted Healthcare Innovation</h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Our proven methodologies have empowered organizations across industries to 
-            successfully implement AI solutions that drive measurable business outcomes.
+            Proven methodologies helping healthcare organizations implement AI solutions 
+            that improve patient outcomes and drive sustainable digital transformation.
           </p>
         </div>
       </div>
