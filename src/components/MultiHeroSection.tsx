@@ -167,16 +167,16 @@ export const MultiHeroSection = () => {
         <div className="border-t border-genie-cyan/30 pt-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">15+</div>
+              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">25+</div>
               <div className="text-genie-cyan/80">Years Experience</div>
             </div>
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">50+</div>
-              <div className="text-genie-cyan/80">AI Implementations</div>
+              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">150+</div>
+              <div className="text-genie-cyan/80">Digital Health Solutions</div>
             </div>
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">Enterprise</div>
-              <div className="text-genie-cyan/80">Scale Solutions</div>
+              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">95%</div>
+              <div className="text-genie-cyan/80">Success Rate</div>
             </div>
             <div className="animate-fade-in">
               <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">Global</div>
