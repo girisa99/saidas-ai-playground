@@ -90,12 +90,13 @@ const About = () => {
                 Meet <span className="text-genie-cyan">Sai Dasika</span>
               </h1>
               <p className="text-2xl lg:text-3xl text-genie-cyan font-medium mb-4">
-                Technology Innovator & Digital Health Visionary
+                Healthcare Transformation Through Technology Innovation
               </p>
               <p className="text-xl text-white/90 leading-relaxed mb-8">
-                Bridging advanced technology solutions with complex business challenges in healthcare 
-                and digital therapeutics. With 21+ years of experience across industry giants, I'm passionate about 
-                creating innovative platforms that transform how we approach digital health solutions.
+                <span className="font-semibold text-genie-cyan">21+ years</span> of pioneering technology solutions 
+                that revolutionize healthcare operations and accelerate therapeutic breakthroughs. From pharmaceutical 
+                giants to emerging digital platforms, I architect the intersection where advanced technology 
+                meets complex healthcare challenges, transforming how we develop, deliver, and optimize patient outcomes.
               </p>
               <Link to="/journey">
                 <Button size="lg" className="bg-genie-cyan hover:bg-genie-teal text-white px-8 py-4">
