@@ -2,6 +2,7 @@ import { NavigationHeader } from "@/components/NavigationHeader";
 import { MultiHeroSection } from "@/components/MultiHeroSection";
 import { StorySection } from "@/components/StorySection";
 import { ValueProposition } from "@/components/ValueProposition";
+import { AIEvolutionTimeline } from "@/components/AIEvolutionTimeline";
 import { TechnologyStackSection } from "@/components/TechnologyStackSection";
 import { AboutSection } from "@/components/AboutSection";
 import { DocumentsSection } from "@/components/DocumentsSection";
@@ -24,6 +25,7 @@ const Index = () => {
       <main>
         <MultiHeroSection />
         <StorySection />
+        <AIEvolutionTimeline />
         <ValueProposition />
         <TechnologyStackSection />
         <div id="about">

@@ -1,5 +1,6 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
+import { DevelopmentJourneyMap } from "@/components/DevelopmentJourneyMap";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -283,6 +284,9 @@ const Journey = () => {
             </div>
           </div>
         </section>
+
+        {/* Development Journey Map */}
+        <DevelopmentJourneyMap />
 
         {/* Executive Impact Summary */}
         <section className="py-16 bg-gradient-to-b from-genie-primary/5 to-background">

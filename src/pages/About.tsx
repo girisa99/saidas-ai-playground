@@ -1,5 +1,6 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
+import { BusinessImpactInfographic } from "@/components/BusinessImpactInfographic";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -328,6 +329,9 @@ const About = () => {
             </div>
           </div>
         </section>
+
+        {/* Business Impact Infographic */}
+        <BusinessImpactInfographic />
       </main>
 
       <Footer />
