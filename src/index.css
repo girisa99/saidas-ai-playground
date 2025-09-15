@@ -197,4 +197,5 @@ All colors MUST be HSL.
   .animate-smoke {
     animation: smoke-rise 3s ease-out infinite;
   }
+  }
 }
