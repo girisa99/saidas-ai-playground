@@ -54,6 +54,13 @@ export const NavigationHeader = () => {
               Documentation
             </button>
             <Button 
+              variant="outline"
+              size="sm" 
+              onClick={() => window.open('https://preview--cgat-patient-hcp-care-ecosystem.lovable.app/', '_blank')}
+            >
+              Login
+            </Button>
+            <Button 
               size="sm" 
               className="bg-primary hover:bg-primary/90"
               onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
@@ -104,6 +111,17 @@ export const NavigationHeader = () => {
               >
                 Documentation
               </button>
+              <Button 
+                variant="outline"
+                size="sm" 
+                className="w-fit"
+                onClick={() => {
+                  window.open('https://preview--cgat-patient-hcp-care-ecosystem.lovable.app/', '_blank');
+                  setIsMenuOpen(false);
+                }}
+              >
+                Login
+              </Button>
               <Button 
                 size="sm" 
                 className="bg-primary hover:bg-primary/90 w-fit"
