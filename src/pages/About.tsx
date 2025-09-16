@@ -98,57 +98,73 @@ const About = () => {
                   About Me
                 </Badge>
                 <h1 className="text-4xl lg:text-5xl font-bold mb-6 animate-fade-in">
-                  Meet the Human Behind the{" "}
-                  <span className="text-genie-cyan">AI Magic</span> 🪄
+                  From Healthcare Trenches to{" "}
+                  <span className="text-genie-cyan">AI Laboratory</span>
                 </h1>
                 <p className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed animate-fade-in">
-                  I'm Saidas - your friendly neighborhood AI experimenter who turned 21+ years of healthcare chaos into digital innovation gold. 
-                  <span className="block mt-4 text-genie-cyan font-medium">
-                    Spoiler alert: It wasn't always pretty! 😅
-                  </span>
+                  I'm <span className="text-genie-cyan font-semibold">Sai Dasika</span> - where 21+ years of pharmaceutical battlefields 
+                  meet cutting-edge AI experimentation. This platform is my digital laboratory, 
+                  transforming decades of healthcare complexity into innovative learning experiences.
+                </p>
+                <p className="text-lg text-white/80 mb-8 animate-fade-in">
+                  <span className="text-genie-cyan">The Mission:</span> Bridge the gap between enterprise experience and emerging AI possibilities, 
+                  one experiment at a time. Every failure teaches, every success scales.
                 </p>
                 <Link to="/journey">
                   <Button size="lg" className="bg-genie-cyan hover:bg-genie-teal text-white px-8 py-4">
-                    My Journey
+                    Explore My Journey
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
               </div>
             </div>
 
-            {/* Genie Character */}
+            {/* Professional Image & Genie */}
             <div className="flex justify-center lg:justify-end">
               <div className="relative">
-                <img 
-                  src={genieAnimated} 
-                  alt="Saidas - AI Innovation Genie" 
-                  className="w-80 h-80 lg:w-96 lg:h-96 animate-bounce-gentle object-contain relative z-10"
-                />
-                
-                {/* Magical Effects */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {[...Array(6)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="absolute w-3 h-3 bg-genie-cyan/60 rounded-full animate-float-particles"
-                      style={{
-                        left: `${30 + Math.random() * 40}%`,
-                        top: `${20 + Math.random() * 60}%`,
-                        animationDelay: `${i * 0.7}s`,
-                        animationDuration: `${2 + Math.random() * 2}s`
-                      }}
-                    />
-                  ))}
-                  
-                  {/* Wisdom Smoke */}
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-                    <div className="w-8 h-8 bg-genie-primary/40 rounded-full animate-smoke blur-sm" />
-                    <div className="w-6 h-6 bg-genie-teal/30 rounded-full animate-smoke blur-sm" style={{ animationDelay: "1s" }} />
-                  </div>
+                {/* Professional Image */}
+                <div className="relative z-20 mb-8">
+                  <img 
+                    src={saiProfile} 
+                    alt="Sai Dasika - AI Innovation Leader and Healthcare Technology Expert" 
+                    className="w-48 h-48 lg:w-56 lg:h-56 rounded-full object-cover border-4 border-genie-cyan/50 shadow-2xl mx-auto animate-fade-in"
+                  />
+                  <div className="absolute inset-0 w-48 h-48 lg:w-56 lg:h-56 rounded-full bg-genie-cyan/20 blur-xl animate-pulse-glow mx-auto" />
                 </div>
                 
-                {/* Glowing Aura */}
-                <div className="absolute inset-0 w-80 h-80 lg:w-96 lg:h-96 rounded-full bg-genie-cyan/20 blur-xl animate-pulse-glow" />
+                {/* Genie Character */}
+                <div className="relative">
+                  <img 
+                    src={genieAnimated} 
+                    alt="AI Innovation Genie - Digital Transformation Magic" 
+                    className="w-60 h-60 lg:w-72 lg:h-72 animate-bounce-gentle object-contain relative z-10 mx-auto"
+                  />
+                  
+                  {/* Magical Effects */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    {[...Array(6)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="absolute w-3 h-3 bg-genie-cyan/60 rounded-full animate-float-particles"
+                        style={{
+                          left: `${30 + Math.random() * 40}%`,
+                          top: `${20 + Math.random() * 60}%`,
+                          animationDelay: `${i * 0.7}s`,
+                          animationDuration: `${2 + Math.random() * 2}s`
+                        }}
+                      />
+                    ))}
+                    
+                    {/* Wisdom Smoke */}
+                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+                      <div className="w-8 h-8 bg-genie-primary/40 rounded-full animate-smoke blur-sm" />
+                      <div className="w-6 h-6 bg-genie-teal/30 rounded-full animate-smoke blur-sm" style={{ animationDelay: "1s" }} />
+                    </div>
+                  </div>
+                  
+                  {/* Glowing Aura */}
+                  <div className="absolute inset-0 w-60 h-60 lg:w-72 lg:h-72 rounded-full bg-genie-cyan/20 blur-xl animate-pulse-glow" />
+                </div>
               </div>
             </div>
           </div>
