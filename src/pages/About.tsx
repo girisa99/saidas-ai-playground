@@ -135,7 +135,7 @@ const About = () => {
                 
                 <h2 className="text-2xl lg:text-3xl font-bold text-genie-cyan mb-6">
                   <AnimatedTextEmergence 
-                    text="Healthcare Transformation Through Technology Innovation"
+                    text="Healthcare Technology AI Innovator and Product Leader"
                     startDelay={3500}
                     charDelay={80}
                     className="block font-bold"
@@ -144,11 +144,11 @@ const About = () => {
                   />
                 </h2>
                 
-                {/* Animated Description - Entrepreneurial Focus */}
+                {/* Animated Description - AI Innovation Focus */}
                 <div className="text-lg lg:text-xl text-white/90 mb-8 leading-relaxed">
                   <div className="mb-4">
                     <AnimatedTextEmergence 
-                      text="21+ years of pioneering technology solutions that revolutionize healthcare operations and accelerate therapeutic breakthroughs."
+                      text="21+ years transforming healthcare through cutting-edge technology solutions that accelerate therapeutic breakthroughs and revolutionize patient outcomes."
                       startDelay={5000}
                       charDelay={60}
                       className="block"
@@ -156,21 +156,11 @@ const About = () => {
                       bottlePosition={{ x: 75, y: 50 }}
                     />
                   </div>
-                  <div className="mb-4 text-genie-cyan/90">
-                    <AnimatedTextEmergence 
-                      text="From pharmaceutical giants to emerging digital platforms, I architect the intersection where advanced technology meets complex healthcare challenges."
-                      startDelay={6500}
-                      charDelay={50}
-                      className="block"
-                      flyFromBottle={true}
-                      bottlePosition={{ x: 75, y: 50 }}
-                    />
-                  </div>
                   <div className="text-white/80 font-medium">
                     <AnimatedTextEmergence 
-                      text="Driven by entrepreneurial passion and innovation mindset, I transform how we develop, deliver, and optimize patient outcomes."
-                      startDelay={8000}
-                      charDelay={40}
+                      text="Pioneering the intersection of AI, Healthcare Technology, and Digital Innovation, currently sharing knowledge and experience how some of the use cases can be addressed and disrupt through GenieAI Experimentation hub."
+                      startDelay={6500}
+                      charDelay={50}
                       className="block"
                       flyFromBottle={true}
                       bottlePosition={{ x: 75, y: 50 }}
