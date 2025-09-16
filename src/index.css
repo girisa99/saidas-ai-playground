@@ -266,26 +266,32 @@
     }
   }
 
-  @keyframes emerge-from-genie {
+  @keyframes emerge-from-bottle {
     0% {
-      transform: scale(0) translateY(-100px);
       opacity: 0;
-      filter: blur(10px);
+      transform: scale(0.2) translateX(30vw) translateY(-10vh);
+      filter: blur(15px);
     }
-    30% {
-      transform: scale(0.3) translateY(-60px);
-      opacity: 0.3;
+    50% {
+      opacity: 0.6;
+      transform: scale(0.7) translateX(15vw) translateY(-5vh);
       filter: blur(5px);
     }
-    70% {
-      transform: scale(0.8) translateY(-20px);
-      opacity: 0.8;
-      filter: blur(2px);
+    100% {
+      opacity: 1;
+      transform: scale(1) translateX(0) translateY(0);
+      filter: blur(0px);
+    }
+  }
+
+  @keyframes magical-stream-to-left {
+    0% {
+      opacity: 1;
+      transform: translateX(0) translateY(0) scale(1);
     }
     100% {
-      transform: scale(1) translateY(0);
-      opacity: 1;
-      filter: blur(0px);
+      opacity: 0;
+      transform: translateX(-50vw) translateY(-20vh) scale(0.1);
     }
   }
 
@@ -330,8 +336,12 @@
     animation: loading-bounce 1s ease-in-out infinite;
   }
 
-  .animate-emerge-from-genie {
-    animation: emerge-from-genie 2s ease-out forwards;
+  .animate-emerge-from-bottle {
+    animation: emerge-from-bottle 2s ease-out forwards;
+  }
+
+  .animate-magical-stream-to-left {
+    animation: magical-stream-to-left 2s ease-out forwards;
   }
 
   .animate-emergence-sparkle {

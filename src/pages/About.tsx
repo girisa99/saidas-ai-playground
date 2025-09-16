@@ -15,6 +15,7 @@ import genieBottle from "@/assets/genie-bottle.png";
 const About = () => {
   const [showPersonalImage, setShowPersonalImage] = useState(false);
   const [showGenieImage, setShowGenieImage] = useState(false);
+  const [showBottle, setShowBottle] = useState(false);
   const [currentPhase, setCurrentPhase] = useState(0);
 
   useEffect(() => {
@@ -26,9 +27,11 @@ const About = () => {
 
     // Animation sequence phases
     const phases = [
-      { delay: 1000, action: () => setCurrentPhase(1) }, // Genie appears
-      { delay: 2000, action: () => setCurrentPhase(2) }, // Text starts emerging
-      { delay: 12000, action: () => setShowPersonalImage(true) }, // Personal image emerges from genie
+      { delay: 1000, action: () => setShowBottle(true) }, // Bottle appears first
+      { delay: 2000, action: () => setCurrentPhase(1) }, // Text starts flying out
+      { delay: 8000, action: () => setShowPersonalImage(true) }, // Personal image emerges
+      { delay: 10000, action: () => setShowGenieImage(true) }, // Genie appears
+      { delay: 12000, action: () => setShowBottle(false) }, // Bottle disappears
     ];
 
     const timers = phases.map(phase => 
@@ -118,45 +121,58 @@ const About = () => {
                   About Me
                 </Badge>
                 
-                {/* Animated Title - More Powerful */}
+                {/* Animated Title - Entrepreneurial & Impactful */}
                 <h1 className="text-4xl lg:text-6xl font-bold mb-6">
                   <AnimatedTextEmergence 
-                    text="FROM PHARMA EXECUTIVE"
+                    text="Meet Sai Dasika"
                     startDelay={2000}
-                    charDelay={80}
+                    charDelay={120}
                     className="block text-white font-extrabold"
-                  />
-                  <AnimatedTextEmergence 
-                    text="TO AI REVOLUTIONARY"
-                    startDelay={4000}
-                    charDelay={100}
-                    className="text-genie-cyan block mt-2 font-extrabold"
+                    flyFromBottle={true}
+                    bottlePosition={{ x: 75, y: 50 }}
                   />
                 </h1>
                 
-                {/* Animated Description - More Impactful */}
-                <div className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed">
+                <h2 className="text-2xl lg:text-3xl font-bold text-genie-cyan mb-6">
                   <AnimatedTextEmergence 
-                    text="21 years building billion-dollar pharmaceutical empires."
-                    startDelay={6000}
+                    text="Healthcare Transformation Through Technology Innovation"
+                    startDelay={3500}
+                    charDelay={80}
+                    className="block font-bold"
+                    flyFromBottle={true}
+                    bottlePosition={{ x: 75, y: 50 }}
+                  />
+                </h2>
+                
+                {/* Animated Description - Entrepreneurial Focus */}
+                <div className="text-lg lg:text-xl text-white/90 mb-8 leading-relaxed">
+                  <AnimatedTextEmergence 
+                    text="21+ years of pioneering technology solutions that revolutionize healthcare operations and accelerate therapeutic breakthroughs."
+                    startDelay={5000}
                     charDelay={60}
-                    className="block mb-4 font-bold"
+                    className="block mb-4"
+                    flyFromBottle={true}
+                    bottlePosition={{ x: 75, y: 50 }}
                   />
                   <AnimatedTextEmergence 
-                    text="Now I'm unleashing that power through AI magic."
-                    startDelay={8000}
+                    text="From pharmaceutical giants to emerging digital platforms, I architect the intersection where advanced technology meets complex healthcare challenges."
+                    startDelay={6500}
                     charDelay={50}
-                    className="block text-genie-cyan font-bold"
+                    className="block mb-4 text-genie-cyan/90"
+                    flyFromBottle={true}
+                    bottlePosition={{ x: 75, y: 50 }}
                   />
                   <AnimatedTextEmergence 
-                    text="Welcome to the future of healthcare innovation."
-                    startDelay={10000}
+                    text="Driven by entrepreneurial passion and innovation mindset, I transform how we develop, deliver, and optimize patient outcomes."
+                    startDelay={8000}
                     charDelay={40}
-                    className="block mt-4 text-white/80"
+                    className="block text-white/80 font-medium"
+                    flyFromBottle={true}
+                    bottlePosition={{ x: 75, y: 50 }}
                   />
                 </div>
                 
-                <div className="opacity-0 animate-fade-in" style={{ animationDelay: "12s", animationFillMode: "forwards" }}>
+                <div className="opacity-0 animate-fade-in" style={{ animationDelay: "10s", animationFillMode: "forwards" }}>
                   <Link to="/journey">
                     <Button size="lg" className="bg-genie-cyan hover:bg-genie-teal text-white px-8 py-4 text-lg font-bold">
                       🚀 EXPERIENCE THE TRANSFORMATION
@@ -167,47 +183,47 @@ const About = () => {
               </div>
             </div>
 
-            {/* Magical Sequence: Genie → Personal Image Emerging */}
-            <div className="flex flex-col items-center justify-center space-y-8">
+            {/* Magical Sequence: Bottle → Text → Personal → Genie */}
+            <div className="flex flex-col items-center justify-center space-y-8 relative">
               
-              {/* Phase 1: Genie Character Appears First */}
-              <div className={`relative transition-all duration-1000 ${currentPhase >= 1 ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
-                <img 
-                  src={genieAnimated} 
-                  alt="AI Innovation Genie" 
-                  className="w-56 h-56 lg:w-64 lg:h-64 object-contain animate-genie-working"
-                />
-                
-                {/* Magical Energy from Genie */}
-                <div className="absolute top-8 left-1/2 transform -translate-x-1/2">
-                  <div className="w-20 h-24 bg-gradient-to-t from-genie-cyan/60 to-transparent rounded-full blur-sm animate-smoke" />
-                  <div className="w-16 h-20 bg-gradient-to-t from-genie-teal/40 to-transparent rounded-full blur-sm animate-smoke absolute top-2 left-2" 
-                       style={{ animationDelay: "0.5s" }} />
+              {/* Phase 1: Genie Bottle Appears First */}
+              {showBottle && (
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-scale-in z-20">
+                  <img 
+                    src={genieBottle} 
+                    alt="Magic Genie Bottle" 
+                    className="w-32 h-40 lg:w-40 lg:h-48 object-contain animate-genie-working"
+                  />
+                  
+                  {/* Magical Smoke from Bottle */}
+                  {currentPhase >= 1 && (
+                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2">
+                      <div className="w-16 h-20 bg-gradient-to-t from-genie-cyan/60 to-transparent rounded-full blur-sm animate-smoke" />
+                      <div className="w-12 h-16 bg-gradient-to-t from-genie-teal/40 to-transparent rounded-full blur-sm animate-smoke absolute top-2 left-2" 
+                           style={{ animationDelay: "0.3s" }} />
+                      
+                      {/* Characters streaming out */}
+                      {[...Array(30)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="absolute w-1 h-1 bg-genie-cyan rounded-full animate-magical-stream-to-left"
+                          style={{
+                            left: `${-10 + Math.random() * 20}px`,
+                            top: `${-20 - Math.random() * 30}px`,
+                            animationDelay: `${i * 60}ms`,
+                            animationDuration: `${1000 + Math.random() * 500}ms`
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
-                
-                {/* Characters Emerging from Genie */}
-                {currentPhase >= 2 && (
-                  <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-                    {[...Array(25)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="absolute w-1 h-1 bg-genie-cyan rounded-full animate-magical-stream"
-                        style={{
-                          left: `${-15 + Math.random() * 30}px`,
-                          top: `${-30 - Math.random() * 50}px`,
-                          animationDelay: `${i * 80}ms`,
-                          animationDuration: `${800 + Math.random() * 400}ms`
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
+              )}
 
-              {/* Phase 2: Personal Image Emerges from Genie */}
+              {/* Phase 2: Personal Image Emerges from Bottle */}
               {showPersonalImage && (
-                <div className="relative -mt-16 animate-emerge-from-genie">
-                  <div className="relative z-10">
+                <div className="relative animate-emerge-from-bottle z-10">
+                  <div className="relative">
                     <img 
                       src={saiProfile} 
                       alt="Sai Dasika - AI Innovation Leader and Healthcare Technology Expert" 
@@ -218,24 +234,37 @@ const About = () => {
                   
                   {/* Magical Emergence Effects */}
                   <div className="absolute inset-0">
-                    {[...Array(20)].map((_, i) => (
+                    {[...Array(15)].map((_, i) => (
                       <div
                         key={i}
                         className="absolute w-2 h-2 bg-genie-cyan rounded-full animate-emergence-sparkle"
                         style={{
-                          left: `${5 + Math.random() * 90}%`,
-                          top: `${5 + Math.random() * 90}%`,
-                          animationDelay: `${i * 100}ms`,
-                          animationDuration: `${500 + Math.random() * 300}ms`
+                          left: `${10 + Math.random() * 80}%`,
+                          top: `${10 + Math.random() * 80}%`,
+                          animationDelay: `${i * 80}ms`,
                         }}
                       />
                     ))}
                   </div>
+                </div>
+              )}
+
+              {/* Phase 3: Genie Character Appears */}
+              {showGenieImage && (
+                <div className="relative -mt-8 animate-emerge-from-bottle z-10" style={{ animationDelay: "0.5s" }}>
+                  <img 
+                    src={genieAnimated} 
+                    alt="AI Innovation Genie" 
+                    className="w-40 h-40 lg:w-48 lg:h-48 object-contain animate-genie-working"
+                  />
+                  
+                  {/* Genie Glow Effect */}
+                  <div className="absolute inset-0 w-40 h-40 lg:w-48 lg:h-48 bg-genie-teal/20 rounded-full blur-2xl animate-pulse-glow" />
                   
                   {/* Mission Complete Text */}
-                  <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
-                    <div className="text-genie-cyan text-lg font-bold animate-loading-bounce whitespace-nowrap">
-                      🎯 THE MASTERMIND REVEALED! 🎯
+                  <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
+                    <div className="text-genie-cyan text-sm lg:text-base font-bold animate-loading-bounce whitespace-nowrap">
+                      🎯 INNOVATION UNLEASHED! 🎯
                     </div>
                   </div>
                 </div>
