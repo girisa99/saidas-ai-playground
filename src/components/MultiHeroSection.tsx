@@ -12,41 +12,41 @@ const heroSections = [
   {
     id: 1,
     icon: MapPin,
-    title: "🧭 Lost in AI Land? Let's Navigate Together!",
-    subtitle: "From 'What's AI?' to 'Wow, That's AI!'",
-    description: "Join the adventure from AI newbie to AI ninja! I'll be your personal AI sherpa, guiding you through the mystical mountains of machine learning without the technical jargon headaches.",
+    title: "🌟 My AI Awakening - From Skeptic to Believer",
+    subtitle: "How I Stumbled Into AI and Never Looked Back",
+    description: "Join me as I share my personal transformation from a traditional healthcare professional to an AI enthusiast. Discover the 'aha!' moments, failures, and breakthroughs that shaped my 21+ year journey in digital health innovation.",
     ctaPrimary: "AI Journey",
-    ctaSecondary: "Start Adventure",
+    ctaSecondary: "My Story",
     bgImage: aiJourneyBg
   },
   {
     id: 2,
     icon: Trophy,
-    title: "🏆 Tales of AI Triumph (No Robots Were Harmed!)",
-    subtitle: "Real Stories, Real Results, Real Fun",
-    description: "Discover how ordinary businesses became AI superheroes! From healthcare heroes to finance wizards - these success stories will make you believe in AI magic (and maybe chuckle a bit).",
+    title: "🚀 Lessons from the Trenches - What Actually Worked",
+    subtitle: "Real Wins, Epic Fails, and Everything In Between",
+    description: "I've made every mistake in the book (and invented a few new ones!). Here are the honest stories of what worked, what didn't, and the surprising lessons I learned while implementing AI in healthcare and beyond.",
     ctaPrimary: "View Success Stories",
-    ctaSecondary: "Read Adventures",
+    ctaSecondary: "Learn from Failures",
     bgImage: successStoriesBg
   },
   {
     id: 3,
     icon: Wrench,
-    title: "🔧 AI Tools That Don't Bite (Promise!)",
-    subtitle: "Your AI Toolkit for World Domination",
-    description: "Explore the coolest AI tools in the galaxy! From chatty ChatGPTs to artistic AI Picassos - find your perfect AI sidekick without breaking the bank (or your brain).",
+    title: "🔮 The AI Tools That Changed My Game",
+    subtitle: "My Personal Arsenal of AI Companions",
+    description: "After testing hundreds of AI tools (yes, hundreds!), these are the ones that stuck. I'll share my personal favorites, why I love them, and how they've transformed my daily workflow and thinking process.",
     ctaPrimary: "Explore AI Tools",
-    ctaSecondary: "Tool Safari",
+    ctaSecondary: "My Recommendations",
     bgImage: aiToolsBg
   },
   {
     id: 4,
     icon: Rocket,
-    title: "🚀 The Future Called - It Wants Your Tech Roadmap!",
-    subtitle: "Building Tomorrow, One Algorithm at a Time",
-    description: "Chart your course to AI awesomeness! Our roadmap turns complex tech evolution into a fun journey - like GPS for your digital transformation (but way cooler).",
+    title: "🎯 Building Tomorrow - My Vision for AI's Future",
+    subtitle: "Where I Think We're Heading (Spoiler: It's Amazing!)",
+    description: "Based on my journey from healthcare innovation to AI experimentation, here's my roadmap for where AI is taking us. It's my personal take on the future we're building together - one experiment at a time.",
     ctaPrimary: "Technology Roadmap",
-    ctaSecondary: "Launch Mission",
+    ctaSecondary: "Future Vision",
     bgImage: techRoadmapBg
   }
 ];
