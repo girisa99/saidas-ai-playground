@@ -146,30 +146,36 @@ const About = () => {
                 
                 {/* Animated Description - Entrepreneurial Focus */}
                 <div className="text-lg lg:text-xl text-white/90 mb-8 leading-relaxed">
-                  <AnimatedTextEmergence 
-                    text="21+ years of pioneering technology solutions that revolutionize healthcare operations and accelerate therapeutic breakthroughs."
-                    startDelay={5000}
-                    charDelay={60}
-                    className="block mb-4"
-                    flyFromBottle={true}
-                    bottlePosition={{ x: 75, y: 50 }}
-                  />
-                  <AnimatedTextEmergence 
-                    text="From pharmaceutical giants to emerging digital platforms, I architect the intersection where advanced technology meets complex healthcare challenges."
-                    startDelay={6500}
-                    charDelay={50}
-                    className="block mb-4 text-genie-cyan/90"
-                    flyFromBottle={true}
-                    bottlePosition={{ x: 75, y: 50 }}
-                  />
-                  <AnimatedTextEmergence 
-                    text="Driven by entrepreneurial passion and innovation mindset, I transform how we develop, deliver, and optimize patient outcomes."
-                    startDelay={8000}
-                    charDelay={40}
-                    className="block text-white/80 font-medium"
-                    flyFromBottle={true}
-                    bottlePosition={{ x: 75, y: 50 }}
-                  />
+                  <div className="mb-4">
+                    <AnimatedTextEmergence 
+                      text="21+ years of pioneering technology solutions that revolutionize healthcare operations and accelerate therapeutic breakthroughs."
+                      startDelay={5000}
+                      charDelay={60}
+                      className="block"
+                      flyFromBottle={true}
+                      bottlePosition={{ x: 75, y: 50 }}
+                    />
+                  </div>
+                  <div className="mb-4 text-genie-cyan/90">
+                    <AnimatedTextEmergence 
+                      text="From pharmaceutical giants to emerging digital platforms, I architect the intersection where advanced technology meets complex healthcare challenges."
+                      startDelay={6500}
+                      charDelay={50}
+                      className="block"
+                      flyFromBottle={true}
+                      bottlePosition={{ x: 75, y: 50 }}
+                    />
+                  </div>
+                  <div className="text-white/80 font-medium">
+                    <AnimatedTextEmergence 
+                      text="Driven by entrepreneurial passion and innovation mindset, I transform how we develop, deliver, and optimize patient outcomes."
+                      startDelay={8000}
+                      charDelay={40}
+                      className="block"
+                      flyFromBottle={true}
+                      bottlePosition={{ x: 75, y: 50 }}
+                    />
+                  </div>
                 </div>
                 
                 <div className="opacity-0 animate-fade-in" style={{ animationDelay: "10s", animationFillMode: "forwards" }}>
