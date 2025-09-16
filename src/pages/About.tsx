@@ -118,38 +118,10 @@ const About = () => {
                 Back to Home
               </Button>
             </Link>
-            
-            {/* Professional Image - Top Left */}
-            {showPersonalImage && (
-              <div className="relative animate-emerge-from-bottle">
-                <div className="relative">
-                  <img 
-                    src={saiProfile} 
-                    alt="Sai Dasika - AI Innovation Leader and Healthcare Technology Expert" 
-                    className="w-24 h-24 lg:w-32 lg:h-32 rounded-full object-cover border-4 border-genie-cyan/50 shadow-2xl"
-                  />
-                  <div className="absolute inset-0 w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-genie-cyan/30 blur-xl animate-pulse-glow" />
-                </div>
-                
-                {/* Magical Emergence Effects */}
-                <div className="absolute inset-0">
-                  {[...Array(8)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="absolute w-1 h-1 bg-genie-cyan rounded-full animate-emergence-sparkle"
-                      style={{
-                        left: `${10 + Math.random() * 80}%`,
-                        top: `${10 + Math.random() * 80}%`,
-                        animationDelay: `${i * 80}ms`,
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
-          
-          <div className="text-center">
+
+          {/* Text Content Centered with side padding so images never block */}
+          <div className="relative z-20 text-center lg:px-40">
             <Badge className="bg-genie-primary/20 text-genie-cyan border-genie-cyan/30 mb-4 opacity-0 animate-fade-in" 
                    style={{ animationDelay: "2s", animationFillMode: "forwards" }}>
               About Me
@@ -214,34 +186,11 @@ const About = () => {
                 </Button>
               </Link>
             </div>
-            
-            {/* Genie Image - Bottom Right */}
-            <div className="flex justify-end">
-              {showGenieImage && (
-                <div className="relative animate-emerge-from-bottle" style={{ animationDelay: "0.5s" }}>
-                  <img 
-                    src={genieAnimated} 
-                    alt="AI Innovation Genie" 
-                    className="w-32 h-32 lg:w-40 lg:h-40 object-contain animate-genie-working"
-                  />
-                  
-                  {/* Genie Glow Effect */}
-                  <div className="absolute inset-0 w-32 h-32 lg:w-40 lg:h-40 bg-genie-teal/20 rounded-full blur-2xl animate-pulse-glow" />
-                  
-                  {/* Mission Complete Text */}
-                  <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
-                    <div className="text-genie-cyan text-sm lg:text-base font-bold animate-loading-bounce whitespace-nowrap">
-                      🎯 INNOVATION UNLEASHED! 🎯
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
 
           {/* Genie Bottle - Center for animation source */}
           {showBottle && (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-scale-in z-20">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-scale-in z-30">
               <img 
                 src={genieBottle} 
                 alt="Magic Genie Bottle" 
@@ -270,6 +219,38 @@ const About = () => {
                   ))}
                 </div>
               )}
+            </div>
+          )}
+
+          {/* Corner Images (appear only after text completes) */}
+          {showPersonalImage && (
+            <div className="pointer-events-none absolute top-24 left-6 z-10 hidden sm:block animate-emerge-from-bottle">
+              <div className="relative">
+                <img 
+                  src={saiProfile} 
+                  alt="Sai Dasika - AI Innovation Leader and Healthcare Technology Expert" 
+                  className="w-24 h-24 lg:w-32 lg:h-32 rounded-full object-cover border-4 border-genie-cyan/50 shadow-2xl"
+                />
+                <div className="absolute inset-0 w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-genie-cyan/30 blur-xl animate-pulse-glow" />
+              </div>
+            </div>
+          )}
+
+          {showGenieImage && (
+            <div className="pointer-events-none absolute bottom-6 right-6 z-10 hidden sm:block animate-emerge-from-bottle" style={{ animationDelay: "0.5s" }}>
+              <div className="relative">
+                <img 
+                  src={genieAnimated} 
+                  alt="AI Innovation Genie" 
+                  className="w-32 h-32 lg:w-40 lg:h-40 object-contain animate-genie-working"
+                />
+                <div className="absolute inset-0 w-32 h-32 lg:w-40 lg:h-40 bg-genie-teal/20 rounded-full blur-2xl animate-pulse-glow" />
+                <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
+                  <div className="text-genie-cyan text-sm lg:text-base font-bold animate-loading-bounce whitespace-nowrap">
+                    🎯 INNOVATION UNLEASHED! 🎯
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
