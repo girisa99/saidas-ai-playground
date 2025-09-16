@@ -72,7 +72,7 @@ export const AnimatedTextEmergence = ({
   };
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative inline-block whitespace-nowrap ${className}`}>
       {renderCharacters()}
     </div>
   );
