@@ -72,31 +72,79 @@ export const AnimatedTextEmergence = ({
   }, [fitToContainer, text, visibleChars]);
 
   const renderCharacters = () => {
+    // When wrapping is allowed, render by words to preserve spaces and avoid mid-word breaks
+    if (allowWrap) {
+      let globalIndex = -1;
+      const tokens = text.split(/(\s+)/);
+      return tokens.map((token, tIdx) => {
+        const isSpace = /^\s+$/.test(token);
+        if (isSpace) {
+          let revealed = '';
+          for (let i = 0; i < token.length; i++) {
+            globalIndex++;
+            if (globalIndex < visibleChars) revealed += ' ';
+          }
+          return <span key={`s-${tIdx}`}>{revealed}</span>;
+        }
+        const chars = token.split('');
+        return (
+          <span key={`w-${tIdx}`} className="inline-block whitespace-nowrap">
+            {chars.map((char, cIdx) => {
+              globalIndex++;
+              const isVisible = globalIndex < visibleChars;
+              const delay = `${globalIndex * 50}ms`;
+              const startX = flyFromBottle ? `${bottlePosition.x - 50}vw` : '0px';
+              const startY = flyFromBottle ? `${bottlePosition.y - 50}vh` : '-12px';
+              return (
+                <span
+                  key={cIdx}
+                  className={`inline-block transition-all duration-1000 ease-out ${
+                    isVisible
+                      ? 'opacity-100 transform translate-x-0 translate-y-0 scale-100'
+                      : 'opacity-0 transform scale-50'
+                  }`}
+                  style={{
+                    transitionDelay: delay,
+                    filter: isVisible ? 'blur(0px)' : 'blur(5px)',
+                    transform:
+                      !isVisible && flyFromBottle
+                        ? `translateX(${startX}) translateY(${startY}) scale(0.5)`
+                        : undefined,
+                  }}
+                >
+                  {char}
+                </span>
+              );
+            })}
+          </span>
+        );
+      });
+    }
+
+    // Default: per-character rendering
     return text.split('').map((char, index) => {
       const isVisible = index < visibleChars;
       const delay = `${index * 50}ms`;
-      
-      // Calculate starting position if flying from bottle
       const startX = flyFromBottle ? `${bottlePosition.x - 50}vw` : '0px';
       const startY = flyFromBottle ? `${bottlePosition.y - 50}vh` : '-12px';
-      
       return (
         <span
           key={index}
           className={`inline-block transition-all duration-1000 ease-out ${
-            isVisible 
-              ? 'opacity-100 transform translate-x-0 translate-y-0 scale-100' 
-              : `opacity-0 transform scale-50`
+            isVisible
+              ? 'opacity-100 transform translate-x-0 translate-y-0 scale-100'
+              : 'opacity-0 transform scale-50'
           }`}
           style={{
             transitionDelay: delay,
             filter: isVisible ? 'blur(0px)' : 'blur(5px)',
-            transform: !isVisible && flyFromBottle 
-              ? `translateX(${startX}) translateY(${startY}) scale(0.5)` 
-              : undefined,
+            transform:
+              !isVisible && flyFromBottle
+                ? `translateX(${startX}) translateY(${startY}) scale(0.5)`
+                : undefined,
           }}
         >
-          {allowWrap ? (char) : (char === ' ' ? '\u00A0' : char)}
+          {char === ' ' ? '\u00A0' : char}
         </span>
       );
     });
