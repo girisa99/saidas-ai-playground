@@ -19,8 +19,8 @@ export const NavigationHeader = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/40">
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
+          {/* Logo - Clickable to go home */}
+          <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
             <div className="w-12 h-12">
               <img 
                 src={genieLogo} 
@@ -34,10 +34,13 @@ export const NavigationHeader = () => {
               </h1>
               <p className="text-xs text-muted-foreground">I am your technology Navigator</p>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
+            <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
+              Home
+            </Link>
             <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">
               About
             </Link>
@@ -74,6 +77,13 @@ export const NavigationHeader = () => {
         {isMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t border-border/40 pt-4">
             <div className="flex flex-col space-y-4">
+              <Link 
+                to="/" 
+                onClick={() => setIsMenuOpen(false)}
+                className="text-left text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Home
+              </Link>
               <Link 
                 to="/about" 
                 onClick={() => setIsMenuOpen(false)}
