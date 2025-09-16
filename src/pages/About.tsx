@@ -132,11 +132,10 @@ const About = () => {
                   <AnimatedTextEmergence 
                     text="Meet Sai Dasika"
                     startDelay={2000}
-                    charDelay={120}
+                    charDelay={80}
                     className="block text-white font-extrabold"
                     flyFromBottle={true}
                     bottlePosition={{ x: 75, y: 50 }}
-                    fitToContainer={true}
                     onComplete={() => setTitleDone(true)}
                   />
                 </h1>
@@ -145,11 +144,10 @@ const About = () => {
                   <AnimatedTextEmergence 
                     text="Healthcare Technology AI Innovator and Product Leader"
                     startDelay={3500}
-                    charDelay={80}
+                    charDelay={50}
                     className="block font-bold"
                     flyFromBottle={true}
                     bottlePosition={{ x: 75, y: 50 }}
-                    fitToContainer={true}
                     onComplete={() => setSubtitleDone(true)}
                   />
                 </h2>
@@ -160,11 +158,10 @@ const About = () => {
                     <AnimatedTextEmergence 
                       text="21+ years transforming healthcare through cutting-edge technology solutions that accelerate therapeutic breakthroughs and revolutionize patient outcomes."
                       startDelay={5000}
-                      charDelay={60}
+                      charDelay={40}
                       className="block"
                       flyFromBottle={true}
                       bottlePosition={{ x: 75, y: 50 }}
-                      fitToContainer={true}
                       onComplete={() => setDesc1Done(true)}
                     />
                   </div>
@@ -172,11 +169,10 @@ const About = () => {
                     <AnimatedTextEmergence 
                       text="Pioneering the intersection of AI, Healthcare Technology, and Digital Innovation, currently sharing knowledge and experience how some of the use cases can be addressed and disrupt through GenieAI Experimentation hub."
                       startDelay={6500}
-                      charDelay={50}
+                      charDelay={30}
                       className="block"
                       flyFromBottle={true}
                       bottlePosition={{ x: 75, y: 50 }}
-                      fitToContainer={true}
                       onComplete={() => setDesc2Done(true)}
                     />
                   </div>
