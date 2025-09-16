@@ -1,53 +1,53 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Target, TrendingUp, Zap } from "lucide-react";
+import { ArrowRight, MapPin, Trophy, Wrench, Rocket } from "lucide-react";
 import { useState, useEffect } from "react";
-import aiNeuralBg from "@/assets/hero-ai-neural.jpg";
-import enterpriseBg from "@/assets/hero-enterprise.jpg";
-import growthBg from "@/assets/hero-growth.jpg";
-import ecosystemBg from "@/assets/hero-ecosystem.jpg";
+import aiJourneyBg from "@/assets/hero-ai-journey.jpg";
+import successStoriesBg from "@/assets/hero-success-stories.jpg";
+import aiToolsBg from "@/assets/hero-ai-tools.jpg";
+import techRoadmapBg from "@/assets/hero-tech-roadmap.jpg";
 import genieAnimated from "@/assets/genie-animated.png";
 
 
 const heroSections = [
   {
     id: 1,
-    icon: Sparkles,
-    title: "From Curiosity to Reality",
-    subtitle: "Transforming AI Vision into Business Impact",
-    description: "Navigate the complete journey from AI experimentation to enterprise-scale deployment with proven frameworks and strategic guidance.",
-    ctaPrimary: "Start Your AI Journey",
-    ctaSecondary: "View Success Stories",
-    bgImage: aiNeuralBg
+    icon: MapPin,
+    title: "🧭 Lost in AI Land? Let's Navigate Together!",
+    subtitle: "From 'What's AI?' to 'Wow, That's AI!'",
+    description: "Join the adventure from AI newbie to AI ninja! I'll be your personal AI sherpa, guiding you through the mystical mountains of machine learning without the technical jargon headaches.",
+    ctaPrimary: "AI Journey",
+    ctaSecondary: "Start Adventure",
+    bgImage: aiJourneyBg
   },
   {
     id: 2,
-    icon: Target,
-    title: "The AI Imperative",
-    subtitle: "Empowering Every Team Across Your Enterprise",
-    description: "Unlock AI's transformative potential across all business functions with comprehensive implementation strategies and governance frameworks.",
-    ctaPrimary: "Empower Your Teams",
-    ctaSecondary: "Enterprise Solutions",
-    bgImage: enterpriseBg
+    icon: Trophy,
+    title: "🏆 Tales of AI Triumph (No Robots Were Harmed!)",
+    subtitle: "Real Stories, Real Results, Real Fun",
+    description: "Discover how ordinary businesses became AI superheroes! From healthcare heroes to finance wizards - these success stories will make you believe in AI magic (and maybe chuckle a bit).",
+    ctaPrimary: "View Success Stories",
+    ctaSecondary: "Read Adventures",
+    bgImage: successStoriesBg
   },
   {
     id: 3,
-    icon: TrendingUp,
-    title: "Unlocking AI's Business Potential",
-    subtitle: "Measurable Impact & Strategic ROI",
-    description: "Drive sustainable growth through AI initiatives that deliver quantifiable results and competitive advantage in today's market.",
-    ctaPrimary: "Calculate Your ROI",
-    ctaSecondary: "Impact Case Studies",
-    bgImage: growthBg
+    icon: Wrench,
+    title: "🔧 AI Tools That Don't Bite (Promise!)",
+    subtitle: "Your AI Toolkit for World Domination",
+    description: "Explore the coolest AI tools in the galaxy! From chatty ChatGPTs to artistic AI Picassos - find your perfect AI sidekick without breaking the bank (or your brain).",
+    ctaPrimary: "Explore AI Tools",
+    ctaSecondary: "Tool Safari",
+    bgImage: aiToolsBg
   },
   {
     id: 4,
-    icon: Zap,
-    title: "Navigating the AI Ecosystem",
-    subtitle: "Tools, Trends & Transformation",
-    description: "Master the comprehensive AI landscape with expert insights into emerging technologies, implementation best practices, and future-ready strategies.",
-    ctaPrimary: "Explore AI Tools",
-    ctaSecondary: "Technology Roadmap",
-    bgImage: ecosystemBg
+    icon: Rocket,
+    title: "🚀 The Future Called - It Wants Your Tech Roadmap!",
+    subtitle: "Building Tomorrow, One Algorithm at a Time",
+    description: "Chart your course to AI awesomeness! Our roadmap turns complex tech evolution into a fun journey - like GPS for your digital transformation (but way cooler).",
+    ctaPrimary: "Technology Roadmap",
+    ctaSecondary: "Launch Mission",
+    bgImage: techRoadmapBg
   }
 ];
 
@@ -111,16 +111,44 @@ export const MultiHeroSection = () => {
             <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
           </div>
 
-          {/* Animated Genie Character */}
+          {/* Animated Genie Character with Magical Fumes */}
           <div className="mb-8 flex justify-center">
             <div className="relative">
               <img 
                 src={genieAnimated} 
                 alt="Genie AI Technology Navigator" 
-                className="w-48 h-48 lg:w-64 lg:h-64 animate-pulse-glow object-contain"
+                className="w-48 h-48 lg:w-64 lg:h-64 animate-bounce-gentle object-contain relative z-10"
               />
+              
+              {/* Magical Fumes Animation */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                {/* Floating magical particles */}
+                {[...Array(8)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-3 h-3 bg-genie-cyan/60 rounded-full animate-float-particles"
+                    style={{
+                      left: `${30 + Math.random() * 40}%`,
+                      top: `${20 + Math.random() * 60}%`,
+                      animationDelay: `${i * 0.5}s`,
+                      animationDuration: `${2 + Math.random() * 2}s`
+                    }}
+                  />
+                ))}
+                
+                {/* Swirling fumes */}
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+                  <div className="w-8 h-8 bg-genie-primary/40 rounded-full animate-smoke blur-sm" />
+                  <div className="w-6 h-6 bg-genie-teal/30 rounded-full animate-smoke blur-sm" style={{ animationDelay: '1s' }} />
+                  <div className="w-4 h-4 bg-genie-cyan/20 rounded-full animate-smoke blur-sm" style={{ animationDelay: '2s' }} />
+                </div>
+              </div>
+              
               {/* Glowing Aura */}
               <div className="absolute inset-0 w-48 h-48 lg:w-64 lg:h-64 rounded-full bg-genie-cyan/20 blur-xl animate-pulse-glow" />
+              
+              {/* Magic Circle */}
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-8 bg-genie-primary/10 rounded-full blur-md animate-pulse" />
             </div>
           </div>
 
