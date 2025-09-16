@@ -12,9 +12,9 @@ const heroSections = [
   {
     id: 1,
     icon: MapPin,
-    title: "🌟 My AI Awakening - From Skeptic to Believer",
-    subtitle: "How I Stumbled Into AI and Never Looked Back",
-    description: "Join me as I share my personal transformation from a traditional healthcare professional to an AI enthusiast. Discover the 'aha!' moments, failures, and breakthroughs that shaped my 21+ year journey in digital health innovation.",
+    title: "🌟 From Skeptic to AI Believer",
+    subtitle: "My 21-Year Digital Health Journey",
+    description: "Discover how I went from traditional healthcare to AI innovation through real experiments and breakthrough moments.",
     ctaPrimary: "AI Journey",
     ctaSecondary: "My Story",
     bgImage: aiJourneyBg
@@ -22,29 +22,29 @@ const heroSections = [
   {
     id: 2,
     icon: Trophy,
-    title: "🚀 Lessons from the Trenches - What Actually Worked",
-    subtitle: "Real Wins, Epic Fails, and Everything In Between",
-    description: "I've made every mistake in the book (and invented a few new ones!). Here are the honest stories of what worked, what didn't, and the surprising lessons I learned while implementing AI in healthcare and beyond.",
+    title: "🚀 What Actually Worked (& Failed)",
+    subtitle: "Honest Lessons from the Trenches",
+    description: "Real wins, epic fails, and surprising insights from implementing AI in healthcare and beyond.",
     ctaPrimary: "View Success Stories",
-    ctaSecondary: "Learn from Failures",
+    ctaSecondary: "Learn More",
     bgImage: successStoriesBg
   },
   {
     id: 3,
     icon: Wrench,
-    title: "🔮 The AI Tools That Changed My Game",
-    subtitle: "My Personal Arsenal of AI Companions",
-    description: "After testing hundreds of AI tools (yes, hundreds!), these are the ones that stuck. I'll share my personal favorites, why I love them, and how they've transformed my daily workflow and thinking process.",
+    title: "🔮 My AI Tool Arsenal",
+    subtitle: "Personal Favorites That Stuck",
+    description: "After testing hundreds of AI tools, these game-changers transformed my workflow and thinking.",
     ctaPrimary: "Explore AI Tools",
-    ctaSecondary: "My Recommendations",
+    ctaSecondary: "My Picks",
     bgImage: aiToolsBg
   },
   {
     id: 4,
     icon: Rocket,
-    title: "🎯 Building Tomorrow - My Vision for AI's Future",
-    subtitle: "Where I Think We're Heading (Spoiler: It's Amazing!)",
-    description: "Based on my journey from healthcare innovation to AI experimentation, here's my roadmap for where AI is taking us. It's my personal take on the future we're building together - one experiment at a time.",
+    title: "🎯 Building Tomorrow Together",
+    subtitle: "My Vision for AI's Future",
+    description: "Where AI is taking us next - based on real experiments and emerging possibilities.",
     ctaPrimary: "Technology Roadmap",
     ctaSecondary: "Future Vision",
     bgImage: techRoadmapBg

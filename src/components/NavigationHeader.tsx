@@ -42,7 +42,7 @@ export const NavigationHeader = () => {
               Home
             </Link>
             <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">
-              About
+              About Me
             </Link>
             <Link to="/journey" className="text-muted-foreground hover:text-foreground transition-colors">
               Journey
@@ -89,7 +89,7 @@ export const NavigationHeader = () => {
                 onClick={() => setIsMenuOpen(false)}
                 className="text-left text-muted-foreground hover:text-foreground transition-colors"
               >
-                About
+                About Me
               </Link>
               <Link 
                 to="/journey" 

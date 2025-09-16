@@ -4,19 +4,18 @@ import { BusinessImpactInfographic } from "@/components/BusinessImpactInfographi
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Briefcase, GraduationCap, Users, Heart, Globe, Camera, Bike, Code, Lightbulb, Target, Award } from "lucide-react";
+import { ArrowLeft, ArrowRight, Briefcase, GraduationCap, Users, Heart, Globe, Camera, Bike, Code, Lightbulb, Target, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import aboutHeroBg from "@/assets/about-hero-bg.jpg";
-import statsInfographic from "@/assets/stats-infographic.jpg";
 import saiProfile from "@/assets/sai-profile.jpg";
+import genieAnimated from "@/assets/genie-animated.png";
 
 const About = () => {
   useEffect(() => {
-    document.title = "About Sai Dasika - Technology Innovator & Digital Health Visionary";
-    const metaDescription = document.querySelector('meta[name="description"]');
+    document.title = "About Me - Saidas | AI Innovation Leader & Digital Health Pioneer";
+    const metaDescription = document.querySelector("meta[name=\"description\"]");
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Meet Sai Dasika, Technology Innovator with 21+ years bridging advanced technology solutions with complex business challenges in healthcare and digital therapeutics.');
+      metaDescription.setAttribute("content", "Meet Saidas - AI innovation leader with 21+ years in digital health. Discover my journey from healthcare to AI experimentation and transformation.");
     }
   }, []);
 
@@ -65,16 +64,25 @@ const About = () => {
     <div className="min-h-screen bg-background">
       <NavigationHeader />
       
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-16 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${aboutHeroBg})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-genie-dark/90 via-genie-navy/80 to-genie-primary/60" />
+      {/* Hero Section with Genie */}
+      <section className="relative bg-gradient-to-br from-genie-dark via-genie-navy to-genie-primary/20 text-white py-24 lg:py-32 overflow-hidden">
+        {/* Animated Background Effects */}
+        <div className="absolute inset-0">
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 bg-genie-cyan/60 rounded-full animate-float genie-glow"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 4}s`,
+                animationDuration: `${3 + Math.random() * 3}s`
+              }}
+            />
+          ))}
         </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-white">
+
+        <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8">
           <Link to="/">
             <Button variant="ghost" className="text-white hover:bg-white/10 mb-8">
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -83,39 +91,64 @@ const About = () => {
           </Link>
           
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <Badge className="bg-genie-primary/20 text-genie-cyan border-genie-cyan/30 mb-4">
-                About Me
-              </Badge>
-              <h1 className="text-5xl lg:text-7xl font-bold mb-6">
-                Meet <span className="text-genie-cyan">Sai Dasika</span>
-              </h1>
-              <p className="text-2xl lg:text-3xl text-genie-cyan font-medium mb-4">
-                Healthcare Transformation Through Technology Innovation
-              </p>
-              <p className="text-xl text-white/90 leading-relaxed mb-8">
-                <span className="font-semibold text-genie-cyan">21+ years</span> of pioneering technology solutions 
-                that revolutionize healthcare operations and accelerate therapeutic breakthroughs. From pharmaceutical 
-                giants to emerging digital platforms, I architect the intersection where advanced technology 
-                meets complex healthcare challenges, transforming how we develop, deliver, and optimize patient outcomes.
-              </p>
-              <Link to="/journey">
-                <Button size="lg" className="bg-genie-cyan hover:bg-genie-teal text-white px-8 py-4">
-                  Explore My Journey
-                </Button>
-              </Link>
+            {/* Content */}
+            <div className="space-y-8">
+              <div>
+                <Badge className="bg-genie-primary/20 text-genie-cyan border-genie-cyan/30 mb-4">
+                  About Me
+                </Badge>
+                <h1 className="text-4xl lg:text-5xl font-bold mb-6 animate-fade-in">
+                  Meet the Human Behind the{" "}
+                  <span className="text-genie-cyan">AI Magic</span> 🪄
+                </h1>
+                <p className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed animate-fade-in">
+                  I'm Saidas - your friendly neighborhood AI experimenter who turned 21+ years of healthcare chaos into digital innovation gold. 
+                  <span className="block mt-4 text-genie-cyan font-medium">
+                    Spoiler alert: It wasn't always pretty! 😅
+                  </span>
+                </p>
+                <Link to="/journey">
+                  <Button size="lg" className="bg-genie-cyan hover:bg-genie-teal text-white px-8 py-4">
+                    My Journey
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+              </div>
             </div>
-            
-            <div className="relative">
-              <div className="w-80 h-80 mx-auto relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-genie-cyan to-genie-primary rounded-full animate-pulse opacity-75" />
-                <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center shadow-2xl">
-                  <img 
-                    src={saiProfile} 
-                    alt="Sai Dasika - Technology Innovator & Digital Health Visionary"
-                    className="w-72 h-72 rounded-full object-cover object-center"
-                  />
+
+            {/* Genie Character */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative">
+                <img 
+                  src={genieAnimated} 
+                  alt="Saidas - AI Innovation Genie" 
+                  className="w-80 h-80 lg:w-96 lg:h-96 animate-bounce-gentle object-contain relative z-10"
+                />
+                
+                {/* Magical Effects */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  {[...Array(6)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-3 h-3 bg-genie-cyan/60 rounded-full animate-float-particles"
+                      style={{
+                        left: `${30 + Math.random() * 40}%`,
+                        top: `${20 + Math.random() * 60}%`,
+                        animationDelay: `${i * 0.7}s`,
+                        animationDuration: `${2 + Math.random() * 2}s`
+                      }}
+                    />
+                  ))}
+                  
+                  {/* Wisdom Smoke */}
+                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+                    <div className="w-8 h-8 bg-genie-primary/40 rounded-full animate-smoke blur-sm" />
+                    <div className="w-6 h-6 bg-genie-teal/30 rounded-full animate-smoke blur-sm" style={{ animationDelay: "1s" }} />
+                  </div>
                 </div>
+                
+                {/* Glowing Aura */}
+                <div className="absolute inset-0 w-80 h-80 lg:w-96 lg:h-96 rounded-full bg-genie-cyan/20 blur-xl animate-pulse-glow" />
               </div>
             </div>
           </div>
