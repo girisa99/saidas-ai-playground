@@ -26,10 +26,9 @@ const About = () => {
 
     // Animation sequence phases
     const phases = [
-      { delay: 1000, action: () => setCurrentPhase(1) }, // Bottle appears
-      { delay: 3000, action: () => setCurrentPhase(2) }, // Text starts emerging
-      { delay: 8000, action: () => setShowPersonalImage(true) }, // Personal image
-      { delay: 10000, action: () => setShowGenieImage(true) }, // Genie appears
+      { delay: 1000, action: () => setCurrentPhase(1) }, // Genie appears
+      { delay: 2000, action: () => setCurrentPhase(2) }, // Text starts emerging
+      { delay: 12000, action: () => setShowPersonalImage(true) }, // Personal image emerges from genie
     ];
 
     const timers = phases.map(phase => 
@@ -120,41 +119,47 @@ const About = () => {
                 </Badge>
                 
                 {/* Animated Title - More Powerful */}
-                <h1 className="text-4xl lg:text-5xl font-bold mb-6">
+                <h1 className="text-4xl lg:text-6xl font-bold mb-6">
                   <AnimatedTextEmergence 
-                    text="21 Years. Countless Breakthroughs."
-                    startDelay={3000}
+                    text="FROM PHARMA EXECUTIVE"
+                    startDelay={2000}
                     charDelay={80}
-                    className="block text-white"
+                    className="block text-white font-extrabold"
                   />
                   <AnimatedTextEmergence 
-                    text="Now Unleashing AI Magic."
-                    startDelay={4500}
+                    text="TO AI REVOLUTIONARY"
+                    startDelay={4000}
                     charDelay={100}
-                    className="text-genie-cyan block mt-2"
+                    className="text-genie-cyan block mt-2 font-extrabold"
                   />
                 </h1>
                 
                 {/* Animated Description - More Impactful */}
                 <div className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed">
                   <AnimatedTextEmergence 
-                    text="I'm Sai Dasika. Pharmaceutical veteran turned AI pioneer."
+                    text="21 years building billion-dollar pharmaceutical empires."
                     startDelay={6000}
                     charDelay={60}
-                    className="block mb-4 font-semibold"
+                    className="block mb-4 font-bold"
                   />
                   <AnimatedTextEmergence 
-                    text="This isn't just another tech platform—it's where decades of real-world healthcare battles meet tomorrow's AI revolution."
-                    startDelay={7500}
+                    text="Now I'm unleashing that power through AI magic."
+                    startDelay={8000}
                     charDelay={50}
-                    className="block"
+                    className="block text-genie-cyan font-bold"
+                  />
+                  <AnimatedTextEmergence 
+                    text="Welcome to the future of healthcare innovation."
+                    startDelay={10000}
+                    charDelay={40}
+                    className="block mt-4 text-white/80"
                   />
                 </div>
                 
-                <div className="opacity-0 animate-fade-in" style={{ animationDelay: "9s", animationFillMode: "forwards" }}>
+                <div className="opacity-0 animate-fade-in" style={{ animationDelay: "12s", animationFillMode: "forwards" }}>
                   <Link to="/journey">
-                    <Button size="lg" className="bg-genie-cyan hover:bg-genie-teal text-white px-8 py-4">
-                      Witness The Journey
+                    <Button size="lg" className="bg-genie-cyan hover:bg-genie-teal text-white px-8 py-4 text-lg font-bold">
+                      🚀 EXPERIENCE THE TRANSFORMATION
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
@@ -162,35 +167,35 @@ const About = () => {
               </div>
             </div>
 
-            {/* Magical Sequence: Bottle → Text → Personal Image → Genie */}
+            {/* Magical Sequence: Genie → Personal Image Emerging */}
             <div className="flex flex-col items-center justify-center space-y-8">
               
-              {/* Phase 1: Genie Bottle Appears */}
+              {/* Phase 1: Genie Character Appears First */}
               <div className={`relative transition-all duration-1000 ${currentPhase >= 1 ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
                 <img 
-                  src={genieBottle} 
-                  alt="Magical Genie Bottle" 
-                  className="w-32 h-32 lg:w-40 lg:h-40 object-contain animate-bounce-gentle"
+                  src={genieAnimated} 
+                  alt="AI Innovation Genie" 
+                  className="w-56 h-56 lg:w-64 lg:h-64 object-contain animate-genie-working"
                 />
                 
-                {/* Magical Smoke from Bottle */}
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="w-16 h-20 bg-gradient-to-t from-genie-cyan/60 to-transparent rounded-full blur-sm animate-smoke" />
-                  <div className="w-12 h-16 bg-gradient-to-t from-genie-teal/40 to-transparent rounded-full blur-sm animate-smoke absolute top-2 left-2" 
+                {/* Magical Energy from Genie */}
+                <div className="absolute top-8 left-1/2 transform -translate-x-1/2">
+                  <div className="w-20 h-24 bg-gradient-to-t from-genie-cyan/60 to-transparent rounded-full blur-sm animate-smoke" />
+                  <div className="w-16 h-20 bg-gradient-to-t from-genie-teal/40 to-transparent rounded-full blur-sm animate-smoke absolute top-2 left-2" 
                        style={{ animationDelay: "0.5s" }} />
                 </div>
                 
-                {/* Characters Emerging Effect */}
+                {/* Characters Emerging from Genie */}
                 {currentPhase >= 2 && (
-                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2">
-                    {[...Array(20)].map((_, i) => (
+                  <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
+                    {[...Array(25)].map((_, i) => (
                       <div
                         key={i}
                         className="absolute w-1 h-1 bg-genie-cyan rounded-full animate-magical-stream"
                         style={{
-                          left: `${-10 + Math.random() * 20}px`,
-                          top: `${-20 - Math.random() * 40}px`,
-                          animationDelay: `${i * 100}ms`,
+                          left: `${-15 + Math.random() * 30}px`,
+                          top: `${-30 - Math.random() * 50}px`,
+                          animationDelay: `${i * 80}ms`,
                           animationDuration: `${800 + Math.random() * 400}ms`
                         }}
                       />
@@ -199,50 +204,38 @@ const About = () => {
                 )}
               </div>
 
-              {/* Phase 3: Personal Image Grand Entrance */}
+              {/* Phase 2: Personal Image Emerges from Genie */}
               {showPersonalImage && (
-                <div className="relative animate-image-grand-entrance">
-                  <img 
-                    src={saiProfile} 
-                    alt="Sai Dasika - AI Innovation Leader and Healthcare Technology Expert" 
-                    className="w-48 h-48 lg:w-56 lg:h-56 rounded-full object-cover border-4 border-genie-cyan/50 shadow-2xl"
-                  />
-                  <div className="absolute inset-0 w-48 h-48 lg:w-56 lg:h-56 rounded-full bg-genie-cyan/30 blur-xl" />
+                <div className="relative -mt-16 animate-emerge-from-genie">
+                  <div className="relative z-10">
+                    <img 
+                      src={saiProfile} 
+                      alt="Sai Dasika - AI Innovation Leader and Healthcare Technology Expert" 
+                      className="w-48 h-48 lg:w-56 lg:h-56 rounded-full object-cover border-4 border-genie-cyan/50 shadow-2xl"
+                    />
+                    <div className="absolute inset-0 w-48 h-48 lg:w-56 lg:h-56 rounded-full bg-genie-cyan/30 blur-xl animate-pulse-glow" />
+                  </div>
                   
-                  {/* Success Aura */}
+                  {/* Magical Emergence Effects */}
                   <div className="absolute inset-0">
-                    {[...Array(12)].map((_, i) => (
+                    {[...Array(20)].map((_, i) => (
                       <div
                         key={i}
-                        className="absolute w-1 h-1 bg-white rounded-full animate-magical-stream"
+                        className="absolute w-2 h-2 bg-genie-cyan rounded-full animate-emergence-sparkle"
                         style={{
-                          left: `${10 + Math.random() * 80}%`,
-                          top: `${10 + Math.random() * 80}%`,
-                          animationDelay: `${i * 150}ms`,
-                          animationDuration: `${600 + Math.random() * 400}ms`
+                          left: `${5 + Math.random() * 90}%`,
+                          top: `${5 + Math.random() * 90}%`,
+                          animationDelay: `${i * 100}ms`,
+                          animationDuration: `${500 + Math.random() * 300}ms`
                         }}
                       />
                     ))}
                   </div>
-                </div>
-              )}
-
-              {/* Phase 4: Genie Character Final Reveal */}
-              {showGenieImage && (
-                <div className="relative animate-genie-appear">
-                  <img 
-                    src={genieAnimated} 
-                    alt="AI Innovation Genie - Mission Accomplished" 
-                    className="w-48 h-48 lg:w-56 lg:h-56 object-contain animate-genie-working"
-                  />
-                  
-                  {/* Victory Glow */}
-                  <div className="absolute inset-0 w-48 h-48 lg:w-56 lg:h-56 rounded-full bg-genie-cyan/20 blur-xl animate-pulse-glow" />
                   
                   {/* Mission Complete Text */}
-                  <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
-                    <div className="text-genie-cyan text-sm font-medium animate-loading-bounce whitespace-nowrap">
-                      ✨ Magic Complete! ✨
+                  <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
+                    <div className="text-genie-cyan text-lg font-bold animate-loading-bounce whitespace-nowrap">
+                      🎯 THE MASTERMIND REVEALED! 🎯
                     </div>
                   </div>
                 </div>
