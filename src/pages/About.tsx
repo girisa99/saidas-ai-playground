@@ -17,7 +17,10 @@ const About = () => {
   const [showGenieImage, setShowGenieImage] = useState(false);
   const [showBottle, setShowBottle] = useState(false);
   const [currentPhase, setCurrentPhase] = useState(0);
-
+  const [titleDone, setTitleDone] = useState(false);
+  const [subtitleDone, setSubtitleDone] = useState(false);
+  const [desc1Done, setDesc1Done] = useState(false);
+  const [desc2Done, setDesc2Done] = useState(false);
   useEffect(() => {
     document.title = "About Me - Saidas | AI Innovation Leader & Digital Health Pioneer";
     const metaDescription = document.querySelector("meta[name=\"description\"]");
@@ -25,21 +28,24 @@ const About = () => {
       metaDescription.setAttribute("content", "Meet Saidas - AI innovation leader with 21+ years in digital health. Discover my journey from healthcare to AI experimentation and transformation.");
     }
 
-    // Animation sequence phases
-    const phases = [
-      { delay: 1000, action: () => setShowBottle(true) }, // Bottle appears first
-      { delay: 2000, action: () => setCurrentPhase(1) }, // Text starts flying out
-      { delay: 8000, action: () => setShowPersonalImage(true) }, // Personal image emerges
-      { delay: 10000, action: () => setShowGenieImage(true) }, // Genie appears
-      { delay: 12000, action: () => setShowBottle(false) }, // Bottle disappears
-    ];
-
-    const timers = phases.map(phase => 
-      setTimeout(phase.action, phase.delay)
-    );
+    // Animation sequence phases (bottle shows first; text animation begins)
+    const timers: number[] = [];
+    timers.push(window.setTimeout(() => setShowBottle(true), 1000));
+    timers.push(window.setTimeout(() => setCurrentPhase(1), 2000));
 
     return () => timers.forEach(clearTimeout);
   }, []);
+
+  // After all text lines finish, reveal images and hide bottle
+  useEffect(() => {
+    const allDone = titleDone && subtitleDone && desc1Done && desc2Done;
+    if (!allDone) return;
+    const timers: number[] = [];
+    timers.push(window.setTimeout(() => setShowPersonalImage(true), 300));
+    timers.push(window.setTimeout(() => setShowGenieImage(true), 1200));
+    timers.push(window.setTimeout(() => setShowBottle(false), 2000));
+    return () => timers.forEach(clearTimeout);
+  }, [titleDone, subtitleDone, desc1Done, desc2Done]);
 
   const stats = [
     { number: "21+", label: "Years Experience", icon: Briefcase, color: "genie-primary" },
@@ -130,6 +136,8 @@ const About = () => {
                     className="block text-white font-extrabold"
                     flyFromBottle={true}
                     bottlePosition={{ x: 75, y: 50 }}
+                    fitToContainer={true}
+                    onComplete={() => setTitleDone(true)}
                   />
                 </h1>
                 
@@ -141,11 +149,13 @@ const About = () => {
                     className="block font-bold"
                     flyFromBottle={true}
                     bottlePosition={{ x: 75, y: 50 }}
+                    fitToContainer={true}
+                    onComplete={() => setSubtitleDone(true)}
                   />
                 </h2>
                 
                 {/* Animated Description - AI Innovation Focus */}
-                <div className="text-lg lg:text-xl text-white/90 mb-8 leading-relaxed">
+                <div className="text-lg lg:text-xl text-white/90 mb-8 leading-relaxed max-w-2xl">
                   <div className="mb-4">
                     <AnimatedTextEmergence 
                       text="21+ years transforming healthcare through cutting-edge technology solutions that accelerate therapeutic breakthroughs and revolutionize patient outcomes."
@@ -154,6 +164,8 @@ const About = () => {
                       className="block"
                       flyFromBottle={true}
                       bottlePosition={{ x: 75, y: 50 }}
+                      fitToContainer={true}
+                      onComplete={() => setDesc1Done(true)}
                     />
                   </div>
                   <div className="text-white/80 font-medium">
@@ -164,6 +176,8 @@ const About = () => {
                       className="block"
                       flyFromBottle={true}
                       bottlePosition={{ x: 75, y: 50 }}
+                      fitToContainer={true}
+                      onComplete={() => setDesc2Done(true)}
                     />
                   </div>
                 </div>

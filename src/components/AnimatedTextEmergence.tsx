@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface AnimatedTextEmergenceProps {
   text: string;
@@ -7,6 +7,8 @@ interface AnimatedTextEmergenceProps {
   charDelay?: number;
   bottlePosition?: { x: number; y: number };
   flyFromBottle?: boolean;
+  onComplete?: () => void;
+  fitToContainer?: boolean;
 }
 
 export const AnimatedTextEmergence = ({ 
@@ -15,11 +17,15 @@ export const AnimatedTextEmergence = ({
   startDelay = 0, 
   charDelay = 150,
   bottlePosition = { x: 50, y: 50 },
-  flyFromBottle = false
+  flyFromBottle = false,
+  onComplete,
+  fitToContainer = false,
 }: AnimatedTextEmergenceProps) => {
   const [visibleChars, setVisibleChars] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
-
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLSpanElement>(null);
+  const [scale, setScale] = useState(1);
   useEffect(() => {
     const startTimer = setTimeout(() => {
       setIsStarted(true);
@@ -39,6 +45,29 @@ export const AnimatedTextEmergence = ({
       return () => clearTimeout(timer);
     }
   }, [visibleChars, text.length, isStarted, charDelay]);
+
+  useEffect(() => {
+    if (!onComplete) return;
+    if (isStarted && visibleChars >= text.length) {
+      onComplete();
+    }
+  }, [visibleChars, text.length, isStarted, onComplete]);
+
+  useEffect(() => {
+    if (!fitToContainer) return;
+    const recalc = () => {
+      const container = containerRef.current;
+      const content = contentRef.current;
+      if (!container || !content) return;
+      const containerWidth = container.clientWidth;
+      const contentWidth = content.scrollWidth;
+      const nextScale = contentWidth > 0 ? Math.min(1, containerWidth / contentWidth) : 1;
+      setScale(nextScale);
+    };
+    recalc();
+    window.addEventListener('resize', recalc);
+    return () => window.removeEventListener('resize', recalc);
+  }, [fitToContainer, text, visibleChars]);
 
   const renderCharacters = () => {
     return text.split('').map((char, index) => {
@@ -72,8 +101,10 @@ export const AnimatedTextEmergence = ({
   };
 
   return (
-    <div className={`relative inline-block whitespace-nowrap ${className}`}>
-      {renderCharacters()}
+    <div ref={containerRef} className={`relative block w-full overflow-visible ${className}`}>
+      <span ref={contentRef} className="inline-block whitespace-nowrap" style={{ transform: fitToContainer ? `scale(${scale})` : undefined, transformOrigin: 'left center' }}>
+        {renderCharacters()}
+      </span>
     </div>
   );
 };
