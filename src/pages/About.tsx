@@ -1,22 +1,52 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { BusinessImpactInfographic } from "@/components/BusinessImpactInfographic";
+import { AnimatedTextEmergence } from "@/components/AnimatedTextEmergence";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, Briefcase, GraduationCap, Users, Heart, Globe, Camera, Bike, Code, Lightbulb, Target, Award } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import saiProfile from "@/assets/sai-profile.jpg";
 import genieAnimated from "@/assets/genie-animated.png";
 
 const About = () => {
+  const [showImage, setShowImage] = useState(false);
+  const [loadingText, setLoadingText] = useState("🧞‍♂️ Genie warming up...");
+
   useEffect(() => {
     document.title = "About Me - Saidas | AI Innovation Leader & Digital Health Pioneer";
     const metaDescription = document.querySelector("meta[name=\"description\"]");
     if (metaDescription) {
       metaDescription.setAttribute("content", "Meet Saidas - AI innovation leader with 21+ years in digital health. Discover my journey from healthcare to AI experimentation and transformation.");
     }
+
+    // Humorous loading sequence
+    const loadingMessages = [
+      "🧞‍♂️ Genie warming up...",
+      "✨ Mixing pharmaceutical experience with AI magic...",
+      "🔮 Conjuring 21+ years of wisdom...",
+      "🚀 Preparing epic transformation story...",
+      "🎭 Adding a dash of humor...",
+      "💫 Ready to blow your mind!"
+    ];
+
+    let messageIndex = 0;
+    const messageInterval = setInterval(() => {
+      messageIndex = (messageIndex + 1) % loadingMessages.length;
+      setLoadingText(loadingMessages[messageIndex]);
+    }, 2000);
+
+    // Show image after text animation completes
+    const imageTimer = setTimeout(() => {
+      setShowImage(true);
+    }, 8000);
+
+    return () => {
+      clearInterval(messageInterval);
+      clearTimeout(imageTimer);
+    };
   }, []);
 
   const stats = [
@@ -94,23 +124,47 @@ const About = () => {
             {/* Content */}
             <div className="space-y-8">
               <div>
-                <Badge className="bg-genie-primary/20 text-genie-cyan border-genie-cyan/30 mb-4 animate-text-emerge">
+                <Badge className="bg-genie-primary/20 text-genie-cyan border-genie-cyan/30 mb-4 animate-fade-in">
                   About Me
                 </Badge>
-                <h1 className="text-4xl lg:text-5xl font-bold mb-6 animate-text-emerge">
-                  From Healthcare Trenches to{" "}
-                  <span className="text-genie-cyan">AI Laboratory</span>
+                
+                {/* Animated Title */}
+                <h1 className="text-4xl lg:text-5xl font-bold mb-6">
+                  <AnimatedTextEmergence 
+                    text="From Healthcare Trenches to "
+                    startDelay={2000}
+                    charDelay={80}
+                    className="block"
+                  />
+                  <AnimatedTextEmergence 
+                    text="AI Laboratory"
+                    startDelay={4000}
+                    charDelay={100}
+                    className="text-genie-cyan block"
+                  />
                 </h1>
-                <p className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed animate-text-emerge">
-                  I'm <span className="text-genie-cyan font-semibold">Sai Dasika</span> - where 21+ years of pharmaceutical battlefields 
-                  meet cutting-edge AI experimentation. This platform is my digital laboratory, 
-                  transforming decades of healthcare complexity into innovative learning experiences.
-                </p>
-                <p className="text-lg text-white/80 mb-8 animate-text-emerge">
-                  <span className="text-genie-cyan">The Mission:</span> Bridge the gap between enterprise experience and emerging AI possibilities, 
-                  one experiment at a time. Every failure teaches, every success scales.
-                </p>
-                <div className="animate-text-emerge">
+                
+                {/* Animated Description */}
+                <div className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed">
+                  <AnimatedTextEmergence 
+                    text="I'm Sai Dasika - where 21+ years of pharmaceutical battlefields meet cutting-edge AI experimentation."
+                    startDelay={5500}
+                    charDelay={60}
+                    className="block mb-4"
+                  />
+                  <AnimatedTextEmergence 
+                    text="This platform is my digital laboratory, transforming decades of healthcare complexity into innovative learning experiences."
+                    startDelay={6500}
+                    charDelay={50}
+                  />
+                </div>
+                
+                {/* Loading Text with Humor */}
+                <div className="text-lg text-genie-cyan mb-8 animate-loading-bounce">
+                  {loadingText}
+                </div>
+                
+                <div className="opacity-0 animate-fade-in" style={{ animationDelay: "7s", animationFillMode: "forwards" }}>
                   <Link to="/journey">
                     <Button size="lg" className="bg-genie-cyan hover:bg-genie-teal text-white px-8 py-4">
                       Explore My Journey
@@ -124,62 +178,69 @@ const About = () => {
             {/* Professional Image & Genie */}
             <div className="flex justify-center lg:justify-end">
               <div className="relative">
-                {/* Genie Character - Appears First */}
+                {/* Genie Character - Working Hard */}
                 <div className="relative animate-genie-appear">
                   <img 
                     src={genieAnimated} 
                     alt="AI Innovation Genie - Digital Transformation Magic" 
-                    className="w-60 h-60 lg:w-72 lg:h-72 object-contain relative z-10 mx-auto animate-genie-glow-pulse"
+                    className="w-60 h-60 lg:w-72 lg:h-72 object-contain relative z-10 mx-auto animate-genie-working"
                   />
                   
-                  {/* Magical Particles Coming from Genie */}
+                  {/* Magic Stream from Genie to Text */}
+                  <div className="absolute left-0 top-1/2 transform -translate-y-1/2">
+                    <div className="w-32 h-1 bg-gradient-to-l from-genie-cyan/80 via-genie-teal/60 to-transparent rounded-full animate-magical-stream" 
+                         style={{ animationDelay: "2s" }} />
+                    <div className="w-24 h-0.5 bg-gradient-to-l from-white/60 to-transparent rounded-full animate-magical-stream mt-1" 
+                         style={{ animationDelay: "2.5s" }} />
+                  </div>
+                  
+                  {/* Continuous Magical Particles */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    {[...Array(8)].map((_, i) => (
+                    {[...Array(12)].map((_, i) => (
                       <div
                         key={i}
-                        className="absolute w-2 h-2 bg-genie-cyan/80 rounded-full animate-magical-particles"
+                        className="absolute w-2 h-2 bg-genie-cyan/80 rounded-full animate-magical-stream"
                         style={{
-                          left: `${40 + Math.random() * 20}%`,
-                          top: `${30 + Math.random() * 40}%`,
-                          animationDelay: `${i * 0.3}s`,
-                          animationDuration: `${1.5 + Math.random() * 1}s`
+                          left: `${35 + Math.random() * 30}%`,
+                          top: `${25 + Math.random() * 50}%`,
+                          animationDelay: `${i * 0.3 + 2}s`,
+                          animationDuration: `${1.2 + Math.random() * 0.8}s`
                         }}
                       />
                     ))}
-                    
-                    {/* Magic Trail from Genie to Text */}
-                    <div className="absolute left-0 top-1/2 w-20 h-1 bg-gradient-to-l from-genie-cyan/60 to-transparent rounded-full animate-text-emerge" />
                   </div>
                   
                   {/* Genie Glow Effect */}
                   <div className="absolute inset-0 w-60 h-60 lg:w-72 lg:h-72 rounded-full bg-genie-cyan/20 blur-xl animate-pulse-glow" />
                 </div>
                 
-                {/* Professional Image - Emerges from Magic */}
-                <div className="relative z-20 -mt-16 animate-image-emerge">
-                  <img 
-                    src={saiProfile} 
-                    alt="Sai Dasika - AI Innovation Leader and Healthcare Technology Expert" 
-                    className="w-48 h-48 lg:w-56 lg:h-56 rounded-full object-cover border-4 border-genie-cyan/50 shadow-2xl mx-auto"
-                  />
-                  <div className="absolute inset-0 w-48 h-48 lg:w-56 lg:h-56 rounded-full bg-genie-cyan/30 blur-xl mx-auto" />
-                  
-                  {/* Emergence Sparkles */}
-                  <div className="absolute inset-0">
-                    {[...Array(6)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="absolute w-1 h-1 bg-white rounded-full animate-magical-particles"
-                        style={{
-                          left: `${20 + Math.random() * 60}%`,
-                          top: `${20 + Math.random() * 60}%`,
-                          animationDelay: `${2 + i * 0.2}s`,
-                          animationDuration: `${1 + Math.random() * 0.5}s`
-                        }}
-                      />
-                    ))}
+                {/* Professional Image - Grand Entrance */}
+                {showImage && (
+                  <div className="relative z-20 -mt-20 animate-image-grand-entrance">
+                    <img 
+                      src={saiProfile} 
+                      alt="Sai Dasika - AI Innovation Leader and Healthcare Technology Expert" 
+                      className="w-48 h-48 lg:w-56 lg:h-56 rounded-full object-cover border-4 border-genie-cyan/50 shadow-2xl mx-auto"
+                    />
+                    <div className="absolute inset-0 w-48 h-48 lg:w-56 lg:h-56 rounded-full bg-genie-cyan/30 blur-xl mx-auto" />
+                    
+                    {/* Success Sparkles */}
+                    <div className="absolute inset-0">
+                      {[...Array(8)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="absolute w-1 h-1 bg-white rounded-full animate-magical-stream"
+                          style={{
+                            left: `${15 + Math.random() * 70}%`,
+                            top: `${15 + Math.random() * 70}%`,
+                            animationDelay: `${i * 0.2 + 1}s`,
+                            animationDuration: `${0.8 + Math.random() * 0.4}s`
+                          }}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
