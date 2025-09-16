@@ -94,76 +94,91 @@ const About = () => {
             {/* Content */}
             <div className="space-y-8">
               <div>
-                <Badge className="bg-genie-primary/20 text-genie-cyan border-genie-cyan/30 mb-4">
+                <Badge className="bg-genie-primary/20 text-genie-cyan border-genie-cyan/30 mb-4 animate-text-emerge">
                   About Me
                 </Badge>
-                <h1 className="text-4xl lg:text-5xl font-bold mb-6 animate-fade-in">
+                <h1 className="text-4xl lg:text-5xl font-bold mb-6 animate-text-emerge">
                   From Healthcare Trenches to{" "}
                   <span className="text-genie-cyan">AI Laboratory</span>
                 </h1>
-                <p className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed animate-fade-in">
+                <p className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed animate-text-emerge">
                   I'm <span className="text-genie-cyan font-semibold">Sai Dasika</span> - where 21+ years of pharmaceutical battlefields 
                   meet cutting-edge AI experimentation. This platform is my digital laboratory, 
                   transforming decades of healthcare complexity into innovative learning experiences.
                 </p>
-                <p className="text-lg text-white/80 mb-8 animate-fade-in">
+                <p className="text-lg text-white/80 mb-8 animate-text-emerge">
                   <span className="text-genie-cyan">The Mission:</span> Bridge the gap between enterprise experience and emerging AI possibilities, 
                   one experiment at a time. Every failure teaches, every success scales.
                 </p>
-                <Link to="/journey">
-                  <Button size="lg" className="bg-genie-cyan hover:bg-genie-teal text-white px-8 py-4">
-                    Explore My Journey
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
+                <div className="animate-text-emerge">
+                  <Link to="/journey">
+                    <Button size="lg" className="bg-genie-cyan hover:bg-genie-teal text-white px-8 py-4">
+                      Explore My Journey
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
 
             {/* Professional Image & Genie */}
             <div className="flex justify-center lg:justify-end">
               <div className="relative">
-                {/* Professional Image */}
-                <div className="relative z-20 mb-8">
-                  <img 
-                    src={saiProfile} 
-                    alt="Sai Dasika - AI Innovation Leader and Healthcare Technology Expert" 
-                    className="w-48 h-48 lg:w-56 lg:h-56 rounded-full object-cover border-4 border-genie-cyan/50 shadow-2xl mx-auto animate-fade-in"
-                  />
-                  <div className="absolute inset-0 w-48 h-48 lg:w-56 lg:h-56 rounded-full bg-genie-cyan/20 blur-xl animate-pulse-glow mx-auto" />
-                </div>
-                
-                {/* Genie Character */}
-                <div className="relative">
+                {/* Genie Character - Appears First */}
+                <div className="relative animate-genie-appear">
                   <img 
                     src={genieAnimated} 
                     alt="AI Innovation Genie - Digital Transformation Magic" 
-                    className="w-60 h-60 lg:w-72 lg:h-72 animate-bounce-gentle object-contain relative z-10 mx-auto"
+                    className="w-60 h-60 lg:w-72 lg:h-72 object-contain relative z-10 mx-auto animate-genie-glow-pulse"
                   />
                   
-                  {/* Magical Effects */}
+                  {/* Magical Particles Coming from Genie */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    {[...Array(6)].map((_, i) => (
+                    {[...Array(8)].map((_, i) => (
                       <div
                         key={i}
-                        className="absolute w-3 h-3 bg-genie-cyan/60 rounded-full animate-float-particles"
+                        className="absolute w-2 h-2 bg-genie-cyan/80 rounded-full animate-magical-particles"
                         style={{
-                          left: `${30 + Math.random() * 40}%`,
-                          top: `${20 + Math.random() * 60}%`,
-                          animationDelay: `${i * 0.7}s`,
-                          animationDuration: `${2 + Math.random() * 2}s`
+                          left: `${40 + Math.random() * 20}%`,
+                          top: `${30 + Math.random() * 40}%`,
+                          animationDelay: `${i * 0.3}s`,
+                          animationDuration: `${1.5 + Math.random() * 1}s`
                         }}
                       />
                     ))}
                     
-                    {/* Wisdom Smoke */}
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-                      <div className="w-8 h-8 bg-genie-primary/40 rounded-full animate-smoke blur-sm" />
-                      <div className="w-6 h-6 bg-genie-teal/30 rounded-full animate-smoke blur-sm" style={{ animationDelay: "1s" }} />
-                    </div>
+                    {/* Magic Trail from Genie to Text */}
+                    <div className="absolute left-0 top-1/2 w-20 h-1 bg-gradient-to-l from-genie-cyan/60 to-transparent rounded-full animate-text-emerge" />
                   </div>
                   
-                  {/* Glowing Aura */}
+                  {/* Genie Glow Effect */}
                   <div className="absolute inset-0 w-60 h-60 lg:w-72 lg:h-72 rounded-full bg-genie-cyan/20 blur-xl animate-pulse-glow" />
+                </div>
+                
+                {/* Professional Image - Emerges from Magic */}
+                <div className="relative z-20 -mt-16 animate-image-emerge">
+                  <img 
+                    src={saiProfile} 
+                    alt="Sai Dasika - AI Innovation Leader and Healthcare Technology Expert" 
+                    className="w-48 h-48 lg:w-56 lg:h-56 rounded-full object-cover border-4 border-genie-cyan/50 shadow-2xl mx-auto"
+                  />
+                  <div className="absolute inset-0 w-48 h-48 lg:w-56 lg:h-56 rounded-full bg-genie-cyan/30 blur-xl mx-auto" />
+                  
+                  {/* Emergence Sparkles */}
+                  <div className="absolute inset-0">
+                    {[...Array(6)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="absolute w-1 h-1 bg-white rounded-full animate-magical-particles"
+                        style={{
+                          left: `${20 + Math.random() * 60}%`,
+                          top: `${20 + Math.random() * 60}%`,
+                          animationDelay: `${2 + i * 0.2}s`,
+                          animationDuration: `${1 + Math.random() * 0.5}s`
+                        }}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

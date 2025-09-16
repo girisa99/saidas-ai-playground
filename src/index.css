@@ -157,4 +157,99 @@
   .animate-pulse-glow {
     animation: pulse-glow 2s ease-in-out infinite;
   }
+
+  /* Genie Magic Emergence Animations */
+  @keyframes genie-appear {
+    0% {
+      opacity: 0;
+      transform: scale(0.3) rotate(-10deg);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.1) rotate(5deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+
+  @keyframes text-emerge {
+    0% {
+      opacity: 0;
+      transform: translateX(100px) scale(0.8);
+    }
+    50% {
+      opacity: 0.5;
+      transform: translateX(20px) scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+
+  @keyframes image-emerge {
+    0% {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.5) rotate(-15deg);
+      filter: blur(10px);
+    }
+    50% {
+      opacity: 0.7;
+      transform: translateY(-10px) scale(0.8) rotate(-5deg);
+      filter: blur(5px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1) rotate(0deg);
+      filter: blur(0px);
+    }
+  }
+
+  @keyframes magical-particles {
+    0% {
+      opacity: 0;
+      transform: scale(0) translateY(0px);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1) translateY(-20px);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.5) translateY(-40px);
+    }
+  }
+
+  @keyframes genie-glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--genie-cyan) / 0.4);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(var(--genie-cyan) / 0.8);
+    }
+  }
+
+  .animate-genie-appear {
+    animation: genie-appear 1.5s ease-out forwards;
+  }
+
+  .animate-text-emerge {
+    animation: text-emerge 1.2s ease-out 1s forwards;
+    opacity: 0;
+  }
+
+  .animate-image-emerge {
+    animation: image-emerge 1.5s ease-out 2s forwards;
+    opacity: 0;
+  }
+
+  .animate-magical-particles {
+    animation: magical-particles 2s ease-out infinite;
+  }
+
+  .animate-genie-glow-pulse {
+    animation: genie-glow-pulse 3s ease-in-out infinite;
+  }
 }
