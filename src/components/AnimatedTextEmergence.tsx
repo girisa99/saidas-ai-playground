@@ -5,27 +5,29 @@ interface AnimatedTextEmergenceProps {
   className?: string;
   startDelay?: number;
   charDelay?: number;
+  bottlePosition?: { x: number; y: number };
 }
 
 export const AnimatedTextEmergence = ({ 
   text, 
   className = "", 
   startDelay = 0, 
-  charDelay = 100 
+  charDelay = 150,
+  bottlePosition = { x: 50, y: 50 }
 }: AnimatedTextEmergenceProps) => {
   const [visibleChars, setVisibleChars] = useState(0);
-  const [showText, setShowText] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowText(true);
+    const startTimer = setTimeout(() => {
+      setIsStarted(true);
     }, startDelay);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(startTimer);
   }, [startDelay]);
 
   useEffect(() => {
-    if (!showText) return;
+    if (!isStarted) return;
 
     if (visibleChars < text.length) {
       const timer = setTimeout(() => {
@@ -34,19 +36,24 @@ export const AnimatedTextEmergence = ({
 
       return () => clearTimeout(timer);
     }
-  }, [visibleChars, text.length, showText, charDelay]);
+  }, [visibleChars, text.length, isStarted, charDelay]);
 
   const renderCharacters = () => {
     return text.split('').map((char, index) => {
       const isVisible = index < visibleChars;
-      const delay = index * charDelay;
+      const delay = `${index * 50}ms`;
       
       return (
         <span
           key={index}
-          className={`inline-block ${isVisible ? 'animate-char-emerge' : 'opacity-0'}`}
+          className={`inline-block transition-all duration-700 ${
+            isVisible 
+              ? 'opacity-100 transform translate-y-0 scale-100' 
+              : 'opacity-0 transform -translate-y-12 scale-50'
+          }`}
           style={{
-            animationDelay: `${delay}ms`,
+            transitionDelay: delay,
+            filter: isVisible ? 'blur(0px)' : 'blur(5px)',
           }}
         >
           {char === ' ' ? '\u00A0' : char}
@@ -56,7 +63,7 @@ export const AnimatedTextEmergence = ({
   };
 
   return (
-    <div className={className}>
+    <div className={`relative ${className}`}>
       {renderCharacters()}
     </div>
   );
