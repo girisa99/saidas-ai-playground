@@ -121,14 +121,14 @@ const About = () => {
           </div>
 
           {/* Text Content Centered with proper spacing to avoid cutoff */}
-          <div className="relative z-20 text-center px-4 lg:px-20">
+          <div className="relative z-20 text-center lg:text-left px-4 lg:px-16">
             <Badge className="bg-genie-primary/20 text-genie-cyan border-genie-cyan/30 mb-4 opacity-0 animate-fade-in" 
                    style={{ animationDelay: "2s", animationFillMode: "forwards" }}>
               About Me
             </Badge>
             
             {/* Animated Title - Entrepreneurial & Impactful */}
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 max-w-4xl mx-auto">
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 max-w-4xl mx-auto lg:mx-0">
               <AnimatedTextEmergence 
                 text="Meet Sai Dasika"
                 startDelay={2000}
@@ -140,7 +140,7 @@ const About = () => {
               />
             </h1>
             
-            <h2 className="text-2xl lg:text-3xl font-bold text-genie-cyan mb-6 max-w-5xl mx-auto">
+            <h2 className="text-2xl lg:text-3xl font-bold text-genie-cyan mb-6 max-w-5xl mx-auto lg:mx-0">
               <AnimatedTextEmergence 
                 text="Healthcare Technology AI Innovator and Product Leader"
                 startDelay={3500}
@@ -153,7 +153,7 @@ const About = () => {
             </h2>
             
             {/* Animated Description - AI Innovation Focus */}
-            <div className="text-lg lg:text-xl text-white/90 mb-8 leading-relaxed max-w-6xl mx-auto">
+            <div className="text-lg lg:text-xl text-white/90 mb-8 leading-relaxed max-w-6xl mx-auto lg:mx-0">
               <div className="mb-4">
                 <AnimatedTextEmergence 
                   text="21+ years transforming healthcare through cutting-edge technology solutions that accelerate therapeutic breakthroughs and revolutionize patient outcomes."
@@ -236,23 +236,23 @@ const About = () => {
             </div>
           )}
 
-          {showGenieImage && (
-            <div className="pointer-events-none absolute bottom-16 right-8 z-10 hidden lg:block animate-emerge-from-bottle" style={{ animationDelay: "0.5s" }}>
-              <div className="relative">
-                <img 
-                  src={genieAnimated} 
-                  alt="AI Innovation Genie" 
-                  className="w-28 h-28 lg:w-36 lg:h-36 object-contain animate-genie-working"
-                />
-                <div className="absolute inset-0 w-28 h-28 lg:w-36 lg:h-36 bg-genie-teal/20 rounded-full blur-2xl animate-pulse-glow" />
-                <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
-                  <div className="text-genie-cyan text-xs lg:text-sm font-bold animate-loading-bounce whitespace-nowrap">
-                    🎯 INNOVATION UNLEASHED! 🎯
+            {showGenieImage && (
+              <div className="mt-6 flex justify-end">
+                <div className="relative pointer-events-none animate-emerge-from-bottle" style={{ animationDelay: "0.5s" }}>
+                  <img 
+                    src={genieAnimated} 
+                    alt="AI Innovation Genie" 
+                    className="w-24 h-24 lg:w-32 lg:h-32 object-contain animate-genie-working"
+                  />
+                  <div className="absolute inset-0 w-24 h-24 lg:w-32 lg:h-32 bg-genie-teal/20 rounded-full blur-2xl animate-pulse-glow" />
+                  <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2">
+                    <div className="text-genie-cyan text-xs lg:text-sm font-bold animate-loading-bounce whitespace-nowrap">
+                      🎯 INNOVATION UNLEASHED! 🎯
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
         </div>
       </section>
 

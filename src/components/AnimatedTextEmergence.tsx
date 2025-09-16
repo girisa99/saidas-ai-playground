@@ -9,6 +9,7 @@ interface AnimatedTextEmergenceProps {
   flyFromBottle?: boolean;
   onComplete?: () => void;
   fitToContainer?: boolean;
+  allowWrap?: boolean;
 }
 
 export const AnimatedTextEmergence = ({ 
@@ -20,6 +21,7 @@ export const AnimatedTextEmergence = ({
   flyFromBottle = false,
   onComplete,
   fitToContainer = false,
+  allowWrap = true,
 }: AnimatedTextEmergenceProps) => {
   const [visibleChars, setVisibleChars] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
@@ -102,7 +104,7 @@ export const AnimatedTextEmergence = ({
 
   return (
     <div ref={containerRef} className={`relative block w-full overflow-visible ${className}`}>
-      <span ref={contentRef} className="inline-block whitespace-nowrap" style={{ transform: fitToContainer ? `scale(${scale})` : undefined, transformOrigin: 'left center' }}>
+      <span ref={contentRef} className={`inline-block ${allowWrap ? 'whitespace-normal break-words' : 'whitespace-nowrap'}`} style={{ transform: fitToContainer ? `scale(${scale})` : undefined, transformOrigin: 'left center' }}>
         {renderCharacters()}
       </span>
     </div>
