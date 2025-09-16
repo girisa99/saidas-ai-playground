@@ -121,7 +121,7 @@ const About = () => {
           </div>
 
           {/* Text Content Centered with proper spacing to avoid cutoff */}
-          <div className="relative z-20 text-center lg:text-left px-4 lg:px-16">
+          <div className="relative z-20 text-center lg:text-left px-4 lg:pl-44 lg:pr-16">
             <Badge className="bg-genie-primary/20 text-genie-cyan border-genie-cyan/30 mb-4 opacity-0 animate-fade-in" 
                    style={{ animationDelay: "2s", animationFillMode: "forwards" }}>
               About Me

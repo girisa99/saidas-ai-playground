@@ -96,7 +96,7 @@ export const AnimatedTextEmergence = ({
               : undefined,
           }}
         >
-          {char === ' ' ? '\u00A0' : char}
+          {allowWrap ? (char) : (char === ' ' ? '\u00A0' : char)}
         </span>
       );
     });
@@ -104,7 +104,7 @@ export const AnimatedTextEmergence = ({
 
   return (
     <div ref={containerRef} className={`relative block w-full overflow-visible ${className}`}>
-      <span ref={contentRef} className={`inline-block ${allowWrap ? 'whitespace-normal break-words' : 'whitespace-nowrap'}`} style={{ transform: fitToContainer ? `scale(${scale})` : undefined, transformOrigin: 'left center' }}>
+      <span ref={contentRef} className={`inline-block ${allowWrap ? 'whitespace-normal break-normal hyphens-none' : 'whitespace-nowrap'}`} style={{ transform: fitToContainer ? `scale(${scale})` : undefined, transformOrigin: 'left center' }}>
         {renderCharacters()}
       </span>
     </div>
