@@ -175,19 +175,38 @@ export const MultiHeroSection = () => {
           </div>
         </div>
 
-        {/* Hero Navigation Dots */}
-        <div className="flex justify-center space-x-3 mb-8">
-          {heroSections.map((_, index) => (
+        {/* Enhanced Hero Navigation Indicators */}
+        <div className="flex justify-center mb-8">
+          <div className="flex items-center space-x-3 bg-black/20 backdrop-blur-md rounded-full px-6 py-3">
+            {heroSections.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentHero(index)}
+                className={`transition-all duration-300 rounded-full border-2 ${
+                  index === currentHero 
+                    ? 'w-12 h-4 bg-genie-cyan border-genie-cyan scale-110 genie-glow' 
+                    : 'w-4 h-4 bg-genie-cyan/40 border-genie-cyan/50 hover:bg-genie-cyan/60 hover:border-genie-cyan'
+                }`}
+                aria-label={`Go to hero section ${index + 1}: ${heroSections[index].title}`}
+              />
+            ))}
+          </div>
+        </div>
+        
+        {/* Hero Section Thumbnails */}
+        <div className="flex justify-center space-x-2 mb-8">
+          {heroSections.map((section, index) => (
             <button
               key={index}
               onClick={() => setCurrentHero(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentHero 
-                  ? 'bg-genie-cyan scale-125 genie-glow' 
-                  : 'bg-genie-cyan/40 hover:bg-genie-cyan/60'
+              className={`px-3 py-1 text-sm rounded-full transition-all duration-300 ${
+                index === currentHero
+                  ? 'bg-genie-cyan text-black font-medium'
+                  : 'bg-genie-dark/40 text-genie-cyan/80 hover:bg-genie-dark/60'
               }`}
-              aria-label={`Go to hero section ${index + 1}`}
-            />
+            >
+              {section.ctaPrimary}
+            </button>
           ))}
         </div>
 

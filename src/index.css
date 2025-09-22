@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  /* Improved base font size for accessibility (WCAG AA) */
+  html {
+    font-size: 18px; /* Increased from 16px for better readability */
+  }
+  
   :root {
     --background: 0 0% 100%;
     --foreground: 220 13% 13%;

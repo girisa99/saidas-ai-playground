@@ -2,9 +2,6 @@ import { NavigationHeader } from "@/components/NavigationHeader";
 import { MultiHeroSection } from "@/components/MultiHeroSection";
 import { StorySection } from "@/components/StorySection";
 import { ValueProposition } from "@/components/ValueProposition";
-import { AIEvolutionTimeline } from "@/components/AIEvolutionTimeline";
-import { TechnologyStackSection } from "@/components/TechnologyStackSection";
-import { AboutSection } from "@/components/AboutSection";
 import { DocumentsSection } from "@/components/DocumentsSection";
 import { Footer } from "@/components/Footer";
 import { useEffect } from "react";
@@ -25,12 +22,9 @@ const Index = () => {
       <main>
         <MultiHeroSection />
         <StorySection />
-        <AIEvolutionTimeline />
         <ValueProposition />
-        <TechnologyStackSection />
-        <div id="about">
-          <AboutSection />
-        </div>
+        {/* Simplified homepage - detailed sections moved to dedicated pages per UI/UX audit */}
+        <DocumentsSection />
       </main>
       <Footer />
     </div>
