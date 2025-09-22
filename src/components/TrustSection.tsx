@@ -30,29 +30,6 @@ export const TrustSection = () => {
     }
   ];
 
-  const testimonials = [
-    {
-      name: "Dr. Sarah Chen",
-      role: "Chief Medical Officer",
-      company: "Metro Health System",
-      content: "Saidas' AI implementation roadmap saved us 18 months of trial and error. The ROI was evident within 3 months.",
-      rating: 5
-    },
-    {
-      name: "Michael Rodriguez",
-      role: "CTO",
-      company: "TechCorp Solutions",
-      content: "The practical insights from real healthcare implementations were exactly what we needed for our AI strategy.",
-      rating: 5
-    },
-    {
-      name: "Dr. James Park",
-      role: "Innovation Director",
-      company: "Regional Medical Center",
-      content: "Finally, an AI consultant who speaks both technology and healthcare. Results exceeded our expectations.",
-      rating: 5
-    }
-  ];
 
   return (
     <section className="py-16 bg-gradient-to-b from-background to-background/50">
@@ -83,37 +60,6 @@ export const TrustSection = () => {
           </div>
         </div>
 
-        {/* Testimonials */}
-        <div className="mb-16">
-          <h3 className="text-2xl lg:text-3xl font-bold text-center text-foreground mb-12">
-            What Healthcare Leaders Say
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-6 border border-primary/20">
-                <div className="flex mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                <blockquote className="text-muted-foreground mb-4 italic">
-                  "{testimonial.content}"
-                </blockquote>
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                    <Users className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-foreground">{testimonial.name}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.company}</div>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
 
         {/* Security & Compliance */}
         <div className="text-center">
