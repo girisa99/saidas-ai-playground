@@ -26,7 +26,7 @@ export const HeroSection = () => {
             Strategic AI implementation and enterprise transformation solutions. 
             Empowering organizations to harness AI's full potential through proven frameworks and expert guidance.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 max-w-5xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl">
             <Button 
               size="lg" 
               className="bg-white text-primary hover:bg-gray-50 px-6 py-4 text-base font-semibold"
@@ -40,7 +40,7 @@ export const HeroSection = () => {
               variant="outline" 
               size="lg" 
               className="border-white text-white hover:bg-white/10 px-6 py-4 text-base font-semibold"
-              onClick={() => scrollToSection('story')}
+              onClick={() => navigate('/about')}
             >
               <User className="mr-2 h-5 w-5" />
               My Story
@@ -50,17 +50,7 @@ export const HeroSection = () => {
               variant="outline" 
               size="lg" 
               className="border-white text-white hover:bg-white/10 px-6 py-4 text-base font-semibold"
-              onClick={() => scrollToSection('about')}
-            >
-              <BookOpen className="mr-2 h-5 w-5" />
-              Learn More
-            </Button>
-
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-white text-white hover:bg-white/10 px-6 py-4 text-base font-semibold"
-              onClick={() => scrollToSection('technology')}
+              onClick={() => navigate('/technology')}
             >
               <Wrench className="mr-2 h-5 w-5" />
               AI Tools
@@ -70,10 +60,10 @@ export const HeroSection = () => {
               variant="outline" 
               size="lg" 
               className="border-white text-white hover:bg-white/10 px-6 py-4 text-base font-semibold"
-              onClick={() => scrollToSection('timeline')}
+              onClick={() => navigate('/case-studies')}
             >
               <Lightbulb className="mr-2 h-5 w-5" />
-              Roadmap
+              Case Studies
             </Button>
           </div>
         </div>
