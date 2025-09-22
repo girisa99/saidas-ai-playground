@@ -111,75 +111,59 @@ export const MultiHeroSection = () => {
       {/* Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
-          {/* Main Brand Title */}
-          <div className="mb-8">
-            <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-4 animate-fade-in text-center">
+          {/* Clear Value Proposition */}
+          <div className="mb-12">
+            <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-6 animate-fade-in text-center">
               Genie AI Experimentation HUB
             </h1>
-            <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
-          </div>
-
-          {/* Animated Genie Character with Magical Fumes */}
-          <div className="mb-8 flex justify-center">
-            <div className="relative">
-              <img 
-                src={genieAnimated} 
-                alt="Genie AI Technology Navigator" 
-                className="w-48 h-48 lg:w-64 lg:h-64 animate-bounce-gentle object-contain relative z-10"
-              />
-              
-              {/* Magical Fumes Animation */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                {/* Floating magical particles */}
-                {[...Array(8)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="absolute w-3 h-3 bg-genie-cyan/60 rounded-full animate-float-particles"
-                    style={{
-                      left: `${30 + Math.random() * 40}%`,
-                      top: `${20 + Math.random() * 60}%`,
-                      animationDelay: `${i * 0.5}s`,
-                      animationDuration: `${2 + Math.random() * 2}s`
-                    }}
-                  />
-                ))}
-                
-                {/* Swirling fumes */}
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-                  <div className="w-8 h-8 bg-genie-primary/40 rounded-full animate-smoke blur-sm" />
-                  <div className="w-6 h-6 bg-genie-teal/30 rounded-full animate-smoke blur-sm" style={{ animationDelay: '1s' }} />
-                  <div className="w-4 h-4 bg-genie-cyan/20 rounded-full animate-smoke blur-sm" style={{ animationDelay: '2s' }} />
-                </div>
+            <div className="w-24 h-1 bg-primary mx-auto mb-8"></div>
+            
+            {/* Clear Purpose Statement */}
+            <h2 className="text-2xl lg:text-3xl text-white/90 mb-6 font-medium max-w-4xl mx-auto">
+              Transform Your Business with Proven AI Implementation Strategies
+            </h2>
+            <p className="text-lg lg:text-xl text-white/80 mb-8 leading-relaxed max-w-4xl mx-auto">
+              21 years of healthcare technology expertise condensed into actionable AI strategies. 
+              Learn from real implementations, avoid costly mistakes, and accelerate your AI journey.
+            </p>
+            
+            {/* What You'll Get */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <MapPin className="h-8 w-8 text-genie-cyan mx-auto mb-3" />
+                <h3 className="font-semibold text-white mb-2">Proven Roadmaps</h3>
+                <p className="text-white/80 text-sm">Step-by-step guides from real AI implementations</p>
               </div>
-              
-              {/* Glowing Aura */}
-              <div className="absolute inset-0 w-48 h-48 lg:w-64 lg:h-64 rounded-full bg-genie-cyan/20 blur-xl animate-pulse-glow" />
-              
-              {/* Magic Circle */}
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-8 bg-genie-primary/10 rounded-full blur-md animate-pulse" />
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <Trophy className="h-8 w-8 text-genie-cyan mx-auto mb-3" />
+                <h3 className="font-semibold text-white mb-2">Real Case Studies</h3>
+                <p className="text-white/80 text-sm">Honest wins, failures, and lessons learned</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <Wrench className="h-8 w-8 text-genie-cyan mx-auto mb-3" />
+                <h3 className="font-semibold text-white mb-2">Tested AI Tools</h3>
+                <p className="text-white/80 text-sm">Curated arsenal of tools that actually work</p>
+              </div>
             </div>
           </div>
 
-          {/* Section Content */}
-          <h2 className="text-3xl lg:text-4xl font-bold tracking-tight mb-4 animate-fade-in">
-            {currentSection.title}
-          </h2>
-          <h3 className="text-xl lg:text-2xl text-white/90 mb-6 font-medium animate-fade-in">
-            {currentSection.subtitle}
-          </h3>
-          <p className="text-lg lg:text-xl text-white/80 mb-8 leading-relaxed max-w-4xl mx-auto animate-fade-in">
-            {currentSection.description}
-          </p>
-
-          {/* CTA Buttons */}
+          {/* Primary CTA */}
           <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in justify-center">
             <Button 
               size="lg" 
               className="bg-genie-primary text-white hover:bg-genie-teal px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 genie-glow"
-              onClick={() => navigate(primaryCtaPathMap[currentSection.id])}
+              onClick={() => navigate('/journey')}
             >
-              {currentSection.ctaPrimary}
+              Start Your AI Journey
               <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-white text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold"
+              onClick={() => navigate('/about')}
+            >
+              Learn My Story
             </Button>
           </div>
         </div>

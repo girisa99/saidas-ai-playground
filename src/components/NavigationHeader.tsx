@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, Home, User, Map, Wrench, FileText, Trophy } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { SearchBar } from "./SearchBar";
 import genieLogo from "@/assets/genie-logo-nav.png";
 
 export const NavigationHeader = () => {
@@ -37,49 +38,59 @@ export const NavigationHeader = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
-              <Home className="w-4 h-4" />
-              <span className="text-sm font-medium">Home</span>
-            </Link>
-            <Link to="/about" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
-              <User className="w-4 h-4" />
-              <span className="text-sm font-medium">About Me</span>
-            </Link>
-            <Link to="/journey" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
-              <Map className="w-4 h-4" />
-              <span className="text-sm font-medium">Journey</span>
-            </Link>
-            <Link to="/technology" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
-              <Wrench className="w-4 h-4" />
-              <span className="text-sm font-medium">Tech Stack</span>
-            </Link>
-            <Link to="/case-studies" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
-              <Trophy className="w-4 h-4" />
-              <span className="text-sm font-medium">Case Studies</span>
-            </Link>
-            <button 
-              onClick={() => scrollToSection('documents')}
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
-            >
-              <FileText className="w-4 h-4" />
-              <span className="text-sm font-medium">Docs</span>
-            </button>
-            <Button 
-              variant="outline"
-              size="sm" 
-              onClick={() => window.open('https://preview--cgat-patient-hcp-care-ecosystem.lovable.app/', '_blank')}
-            >
-              Login
-            </Button>
-            <Button 
-              size="sm" 
-              className="bg-primary hover:bg-primary/90"
-              onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
-            >
-              Connect
-            </Button>
-          </nav>
+          <div className="hidden lg:flex items-center space-x-6">
+            <nav className="flex items-center space-x-6">
+              <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
+                <Home className="w-4 h-4" />
+                <span className="text-sm font-medium">Home</span>
+              </Link>
+              <Link to="/about" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
+                <User className="w-4 h-4" />
+                <span className="text-sm font-medium">About Me</span>
+              </Link>
+              <Link to="/journey" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
+                <Map className="w-4 h-4" />
+                <span className="text-sm font-medium">Journey</span>
+              </Link>
+              <Link to="/technology" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
+                <Wrench className="w-4 h-4" />
+                <span className="text-sm font-medium">Tech Stack</span>
+              </Link>
+              <Link to="/case-studies" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
+                <Trophy className="w-4 h-4" />
+                <span className="text-sm font-medium">Case Studies</span>
+              </Link>
+              <button 
+                onClick={() => scrollToSection('documents')}
+                className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
+              >
+                <FileText className="w-4 h-4" />
+                <span className="text-sm font-medium">Docs</span>
+              </button>
+            </nav>
+            
+            {/* Search Bar */}
+            <div className="mx-4">
+              <SearchBar />
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Button 
+                variant="outline"
+                size="sm" 
+                onClick={() => window.open('https://preview--cgat-patient-hcp-care-ecosystem.lovable.app/', '_blank')}
+              >
+                Login
+              </Button>
+              <Button 
+                size="sm" 
+                className="bg-primary hover:bg-primary/90"
+                onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
+              >
+                Connect
+              </Button>
+            </div>
+          </div>
 
           {/* Mobile Menu Button */}
           <Button

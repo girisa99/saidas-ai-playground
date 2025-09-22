@@ -1,5 +1,6 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { BusinessImpactInfographic } from "@/components/BusinessImpactInfographic";
 import { AnimatedTextEmergence } from "@/components/AnimatedTextEmergence";
 import { Button } from "@/components/ui/button";
@@ -91,6 +92,7 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavigationHeader />
+      <Breadcrumbs />
       
       {/* Hero Section with Genie */}
       <section className="relative bg-gradient-to-br from-genie-dark via-genie-navy to-genie-primary/20 text-white py-24 lg:py-32 overflow-hidden">
