@@ -6,7 +6,6 @@ import { ValueProposition } from "@/components/ValueProposition";
 
 import { QuickStart } from "@/components/QuickStart";
 import { FAQ } from "@/components/FAQ";
-import { DocumentsSection } from "@/components/DocumentsSection";
 import { Footer } from "@/components/Footer";
 import { useEffect } from "react";
 
@@ -32,7 +31,6 @@ const Index = () => {
         <QuickStart />
         <FAQ />
         {/* Simplified homepage - detailed sections moved to dedicated pages per UI/UX audit */}
-        <DocumentsSection />
       </main>
       <Footer />
     </div>
