@@ -5,28 +5,28 @@ import { CheckCircle, Award, Briefcase, GraduationCap, Brain } from "lucide-reac
 export const TrustSection = () => {
   const features = [
     {
-      icon: Briefcase,
-      title: "AI Strategy Consulting",
-      description: "Expert guidance on AI implementation roadmaps",
-      highlight: "Strategic Planning"
+      icon: Brain,
+      title: "AI Experimentation",
+      description: "Hands-on exploration of cutting-edge AI technologies",
+      highlight: "Learning by Doing"
     },
     {
       icon: Award,
-      title: "Proof of Concept Development",
-      description: "Rapid prototyping and validation of AI solutions",
-      highlight: "MVP Development"
+      title: "Knowledge Sharing",
+      description: "Documenting learnings and insights from AI experiments",
+      highlight: "Open Learning"
     },
     {
-      icon: Brain,
-      title: "Healthcare-Focused AI",
-      description: "Specialized solutions for healthcare organizations",
-      highlight: "Domain Expertise"
+      icon: Briefcase,
+      title: "Healthcare Focus",
+      description: "Exploring AI applications in healthcare contexts",
+      highlight: "Domain Passion"
     },
     {
       icon: GraduationCap,
-      title: "Training & Workshops",
-      description: "Upskill your team with hands-on AI training",
-      highlight: "Knowledge Transfer"
+      title: "Continuous Learning",
+      description: "Always exploring new AI tools, models, and techniques",
+      highlight: "Growth Mindset"
     }
   ];
 
@@ -39,9 +39,9 @@ export const TrustSection = () => {
             What is Geni AI Experimentation Hub?
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto mb-12">
-            A specialized consulting platform that helps healthcare organizations and enterprises 
-            experiment with, implement, and scale AI solutions. We bridge the gap between AI potential 
-            and practical healthcare applications through expert guidance and hands-on experimentation.
+            A personal learning space where an AI enthusiast explores, experiments with, and shares insights about 
+            artificial intelligence implementation. This hub documents the journey of discovering practical AI applications, 
+            with a special focus on healthcare innovations through hands-on experimentation and knowledge sharing.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
