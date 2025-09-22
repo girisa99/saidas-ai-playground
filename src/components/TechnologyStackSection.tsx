@@ -21,87 +21,87 @@ import { Link } from "react-router-dom";
 export const TechnologyStackSection = () => {
   const technologies = [
     {
-      category: "Agentic AI & LLMs",
+      category: "No-Code/Low-Code Platforms",
       icon: Brain,
       color: "genie-primary",
-      description: "Advanced multi-agent systems with autonomous reasoning and orchestration capabilities",
+      description: "Democratizing AI development with platforms that enable rapid innovation without deep technical expertise",
       items: [
-        { name: "GPT-4 Turbo", type: "Large Language Model" },
-        { name: "Claude 3 Opus", type: "Anthropic AI" },
-        { name: "Gemini Pro", type: "Google AI" },
-        { name: "Multi-Agent Orchestration", type: "Custom Framework" },
-        { name: "Dynamic Agent Generation", type: "Specialized Roles" },
-        { name: "Prompt Engineering", type: "Advanced Techniques" }
+        { name: "Loveable", type: "Full-Stack Development" },
+        { name: "Bolt AI", type: "Rapid Prototyping" },
+        { name: "Bubble", type: "Web Applications" },
+        { name: "Softgen", type: "AI-Powered Building" },
+        { name: "Horizons", type: "Business Applications" },
+        { name: "V0 by Vercel", type: "UI Generation" }
       ]
     },
     {
-      category: "Development Infrastructure",
+      category: "Coding Platforms & Tools",
       icon: Code2,
       color: "genie-teal",
-      description: "Enterprise-grade development ecosystem with AI-assisted coding and rapid prototyping",
+      description: "Advanced development platforms that streamline workflows and boost developer productivity by 30%",
       items: [
         { name: "Cursor IDE", type: "AI-Assisted Development" },
-        { name: "Replit", type: "Rapid Prototyping" },
-        { name: "V0 by Vercel", type: "UI Generation" },
+        { name: "Replit", type: "Collaborative Coding" },
+        { name: "GitHub Copilot", type: "Code Suggestions" },
         { name: "TypeScript", type: "Type-Safe Development" },
         { name: "Docker", type: "Containerization" },
         { name: "Kubernetes", type: "Orchestration" }
       ]
     },
     {
-      category: "Data & Architecture",
-      icon: Database,
+      category: "Large Language Models (LLMs)",
+      icon: Brain,
       color: "genie-cyan",
-      description: "Robust data infrastructure with real-time synchronization and enterprise scalability",
+      description: "Core AI models revolutionizing content generation, summarization, and complex problem-solving",
       items: [
-        { name: "Supabase", type: "Backend-as-a-Service" },
-        { name: "PostgreSQL", type: "Relational Database" },
-        { name: "Vector Databases", type: "Embedding Storage" },
-        { name: "Redis", type: "Caching & Sessions" },
-        { name: "RAG Architecture", type: "Retrieval-Augmented Generation" },
-        { name: "Real-time Sync", type: "Data Consistency" }
+        { name: "GPT-4 Turbo", type: "OpenAI Language Model" },
+        { name: "Claude 3 Opus", type: "Anthropic AI" },
+        { name: "Gemini Pro", type: "Google AI" },
+        { name: "Llama 3", type: "Meta AI" },
+        { name: "Small Language Models", type: "Edge Optimization" },
+        { name: "Fine-tuned Models", type: "Domain-Specific" }
       ]
     },
     {
-      category: "Security & Governance",
-      icon: Shield,
+      category: "Agentic AI & Orchestration",
+      icon: Network,
       color: "genie-primary",
-      description: "Enterprise security frameworks with compliance and governance structures",
+      description: "Autonomous systems that plan and execute complex tasks, reducing operational costs by up to 40%",
+      items: [
+        { name: "Multi-Agent Systems", type: "Task Orchestration" },
+        { name: "Dynamic Agent Generation", type: "Specialized Roles" },
+        { name: "Workflow Automation", type: "Process Intelligence" },
+        { name: "Model Context Protocols", type: "Integration Layer" },
+        { name: "Agent Communication", type: "Collaborative AI" },
+        { name: "Decision Trees", type: "Logic Frameworks" }
+      ]
+    },
+    {
+      category: "Data Infrastructure & ML",
+      icon: Database,
+      color: "genie-teal",
+      description: "Integrated machine learning development from data preparation to deployment with enterprise scalability",
+      items: [
+        { name: "Vertex AI", type: "Google ML Platform" },
+        { name: "Vector Databases", type: "Embedding Storage" },
+        { name: "RAG Architecture", type: "Retrieval-Augmented Generation" },
+        { name: "Labeling Studio", type: "Data Annotation" },
+        { name: "MLflow", type: "Model Management" },
+        { name: "Apache Airflow", type: "Workflow Orchestration" }
+      ]
+    },
+    {
+      category: "Security & Compliance",
+      icon: Shield,
+      color: "genie-cyan",
+      description: "Enterprise security frameworks ensuring ethical AI deployment and regulatory compliance",
       items: [
         { name: "Multi-tenant Isolation", type: "Security Architecture" },
-        { name: "Enterprise SSO", type: "Authentication" },
-        { name: "Data Governance", type: "Compliance Framework" },
-        { name: "Audit Trails", type: "Security Monitoring" },
-        { name: "RBAC", type: "Role-Based Access" },
-        { name: "Encryption", type: "Data Protection" }
-      ]
-    },
-    {
-      category: "Integration & APIs",
-      icon: Network,
-      color: "genie-teal",
-      description: "Comprehensive integration layer with external services and workflow automation",
-      items: [
-        { name: "DocuSign API", type: "Document Workflows" },
-        { name: "Twilio", type: "Communications" },
-        { name: "REST & GraphQL", type: "API Standards" },
-        { name: "Webhook Architecture", type: "Event-Driven" },
-        { name: "Microservices", type: "Service Architecture" },
-        { name: "API Gateway", type: "Traffic Management" }
-      ]
-    },
-    {
-      category: "Analytics & Monitoring",
-      icon: BarChart3,
-      color: "genie-cyan",
-      description: "Advanced analytics and monitoring for performance optimization and insights",
-      items: [
-        { name: "Real-time Analytics", type: "Performance Metrics" },
-        { name: "Error Tracking", type: "System Monitoring" },
-        { name: "Usage Analytics", type: "User Behavior" },
-        { name: "Cost Optimization", type: "Resource Management" },
-        { name: "A/B Testing", type: "Experimentation" },
-        { name: "Health Checks", type: "System Reliability" }
+        { name: "Ethical AI Guidelines", type: "Governance Framework" },
+        { name: "Data Governance", type: "Privacy Protection" },
+        { name: "Audit Trails", type: "Compliance Monitoring" },
+        { name: "SOC 2 Compliance", type: "Security Standards" },
+        { name: "GDPR Compliance", type: "Data Protection" }
       ]
     }
   ];
