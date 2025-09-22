@@ -10,53 +10,54 @@ export const ValueProposition = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
-            AI Experimentation Hub Technologies & Impact
+            AI Experimentation Hub: From Vision to Enterprise Reality
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
             Real-World Impact: Building Healthcare Solutions at Lightning Speed
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-            Proven AI framework culminating in breakthrough implementations - from experimentation 
-            to real-world healthcare solutions with measurable business impact and accelerated development timelines.
+            Systematic 6-month journey culminating in breakthrough healthcare solutions with proven business impact. 
+            Advanced AI technologies, enterprise-grade infrastructure, and measurable ROI - transforming how organizations 
+            approach digital health innovation and therapeutic development.
           </p>
         </div>
 
-        {/* Technology Stack Highlights */}
+        {/* Strategic Impact Metrics */}
         <div className="grid md:grid-cols-4 gap-6 mb-16">
           <Card className="p-6 text-center border-genie-primary/20 hover:border-genie-primary/40 transition-colors">
             <div className="w-12 h-12 bg-genie-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <Brain className="w-6 h-6 text-genie-primary" />
+              <TrendingUp className="w-6 h-6 text-genie-primary" />
             </div>
-            <div className="text-2xl font-bold text-genie-primary mb-2">15+</div>
-            <div className="text-sm font-medium text-foreground mb-1">AI Models Mastered</div>
-            <div className="text-xs text-muted-foreground">GPT-4, Claude 3, Gemini Pro</div>
+            <div className="text-2xl font-bold text-genie-primary mb-2">70%</div>
+            <div className="text-sm font-medium text-foreground mb-1">AI-Driven Business Value</div>
+            <div className="text-xs text-muted-foreground">Projected increase by 2030</div>
           </Card>
           
           <Card className="p-6 text-center border-genie-teal/20 hover:border-genie-teal/40 transition-colors">
             <div className="w-12 h-12 bg-genie-teal/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <Zap className="w-6 h-6 text-genie-teal" />
+              <Target className="w-6 h-6 text-genie-teal" />
             </div>
-            <div className="text-2xl font-bold text-genie-teal mb-2">94%</div>
-            <div className="text-sm font-medium text-foreground mb-1">Accuracy Rate</div>
-            <div className="text-xs text-muted-foreground">Hallucination reduction via RAG</div>
+            <div className="text-2xl font-bold text-genie-teal mb-2">$1.3B</div>
+            <div className="text-sm font-medium text-foreground mb-1">Global AI Market</div>
+            <div className="text-xs text-muted-foreground">USD value by 2029</div>
           </Card>
           
           <Card className="p-6 text-center border-genie-cyan/20 hover:border-genie-cyan/40 transition-colors">
             <div className="w-12 h-12 bg-genie-cyan/10 rounded-lg flex items-center justify-center mx-auto mb-4">
               <Rocket className="w-6 h-6 text-genie-cyan" />
             </div>
-            <div className="text-2xl font-bold text-genie-cyan mb-2">12+</div>
-            <div className="text-sm font-medium text-foreground mb-1">Specialized AI Agents</div>
-            <div className="text-xs text-muted-foreground">Dynamic orchestration system</div>
+            <div className="text-2xl font-bold text-genie-cyan mb-2">25%</div>
+            <div className="text-sm font-medium text-foreground mb-1">Productivity Boost</div>
+            <div className="text-xs text-muted-foreground">Average in early adopters</div>
           </Card>
           
           <Card className="p-6 text-center border-genie-primary/20 hover:border-genie-primary/40 transition-colors">
             <div className="w-12 h-12 bg-genie-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <Target className="w-6 h-6 text-genie-primary" />
+              <Award className="w-6 h-6 text-genie-primary" />
             </div>
-            <div className="text-2xl font-bold text-genie-primary mb-2">300%</div>
-            <div className="text-sm font-medium text-foreground mb-1">Average ROI</div>
-            <div className="text-xs text-muted-foreground">Within 12-18 months</div>
+            <div className="text-2xl font-bold text-genie-primary mb-2">88%</div>
+            <div className="text-sm font-medium text-foreground mb-1">Executive Agreement</div>
+            <div className="text-xs text-muted-foreground">AI critical for competitive advantage</div>
           </Card>
         </div>
 
@@ -66,32 +67,30 @@ export const ValueProposition = () => {
             {/* Left Column - Text Content */}
             <div className="space-y-6">
               <h3 className="text-3xl font-bold text-foreground">
-                Proven Healthcare Solutions Development
+                Strategic AI Implementation Framework
               </h3>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Journey culminated in a true victory lap, witnessing how AI experimentation 
-                and learning translated directly into solving real-world business challenges. 
-                The comprehensive toolkit I meticulously assembled wasn't just a collection of 
-                technologies; it was a powerful engine enabling rapid development of 
-                sophisticated, Healthcare-specific solutions.
+                Systematic 4-phase approach transforming theoretical AI potential into tangible business value. 
+                Each phase builds strategic alignment, validated learning, and sustainable growth - culminating 
+                in breakthrough healthcare solutions that revolutionize digital health innovation and therapeutic development.
               </p>
               
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-genie-primary rounded-full"></div>
-                  <span className="text-sm font-medium">AI-Accelerated Development</span>
+                  <span className="text-sm font-medium">Strategic Agility & Innovation</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-genie-teal rounded-full"></div>
-                  <span className="text-sm font-medium">Significant Cost Savings</span>
+                  <span className="text-sm font-medium">Sustainable Growth Models</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-genie-cyan rounded-full"></div>
-                  <span className="text-sm font-medium">Unprecedented Efficiency Gains</span>
+                  <span className="text-sm font-medium">Enhanced Operational Resilience</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-genie-primary rounded-full"></div>
-                  <span className="text-sm font-medium">Enterprise-Grade Solutions</span>
+                  <span className="text-sm font-medium">Future-Proof Capabilities</span>
                 </div>
               </div>
             </div>
@@ -100,138 +99,106 @@ export const ValueProposition = () => {
             <div className="relative">
               <div className="bg-gradient-to-br from-genie-primary/10 to-genie-teal/5 p-6 rounded-lg border border-genie-primary/20">
                 <h4 className="text-xl font-bold text-foreground mb-6">
-                  Real-World Impact: Building Healthcare Solutions at Lightning Speed
+                  Strategic 4-Phase AI Implementation Roadmap
                 </h4>
                 <p className="text-sm text-muted-foreground mb-8">
-                  This journey culminated in a true victory lap, witnessing how AI experimentation and learning translated 
-                  directly into solving real-world business challenges. The comprehensive toolkit I had meticulously assembled 
-                  wasn't just a collection of technologies; it was a powerful engine enabling the rapid development of 
-                  sophisticated, healthcare-specific solutions. It was incredibly rewarding to see these tools come together, 
-                  proving their immense potential.
+                  Structured approach guiding organizations through systematic AI adoption, transforming theoretical potential 
+                  into tangible business value. Each phase builds upon strategic alignment, validated learning, and sustainable 
+                  growth - culminating in breakthrough healthcare solutions with measurable impact.
                 </p>
                 
                 {/* Timeline Flow */}
                 <div className="space-y-4">
-                  {/* Step 1 */}
+                  {/* Phase 1: Assess */}
                   <div className="relative">
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0 w-8 h-8 bg-genie-primary text-white rounded-full flex items-center justify-center text-sm font-bold">
                         1
                       </div>
                       <div className="bg-white/50 p-4 rounded-lg flex-1 border border-genie-primary/20">
-                        <h5 className="font-semibold text-foreground mb-1">Patient Management Systems</h5>
+                        <h5 className="font-semibold text-foreground mb-1">Phase 1: Assess (Weeks 1-4)</h5>
                         <p className="text-sm text-muted-foreground">
-                          Developed robust systems for secure patient data handling, streamlining administrative tasks and 
-                          improving care coordination.
+                          Comprehensive understanding of current capabilities and identification of high-impact AI opportunities 
+                          aligned with core business objectives.
                         </p>
                       </div>
                     </div>
                     <div className="w-px h-6 bg-genie-primary/40 ml-4 mt-2"></div>
                   </div>
                   
-                  {/* Step 2 */}
+                  {/* Phase 2: Pilot */}
                   <div className="relative">
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0 w-8 h-8 bg-genie-teal text-white rounded-full flex items-center justify-center text-sm font-bold">
                         2
                       </div>
                       <div className="bg-white/50 p-4 rounded-lg flex-1 border border-genie-teal/20">
-                        <h5 className="font-semibold text-foreground mb-1">User Management Modules</h5>
+                        <h5 className="font-semibold text-foreground mb-1">Phase 2: Pilot (Weeks 5-12)</h5>
                         <p className="text-sm text-muted-foreground">
-                          Built flexible modules for managing diverse user roles and access within healthcare platforms, ensuring 
-                          data security.
+                          Validation of AI concepts through focused experimentation, generating empirical data and practical 
+                          insights for strategic decision-making.
                         </p>
                       </div>
                     </div>
                     <div className="w-px h-6 bg-genie-teal/40 ml-4 mt-2"></div>
                   </div>
                   
-                  {/* Step 3 */}
+                  {/* Phase 3: Scale */}
                   <div className="relative">
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0 w-8 h-8 bg-genie-cyan text-white rounded-full flex items-center justify-center text-sm font-bold">
                         3
                       </div>
                       <div className="bg-white/50 p-4 rounded-lg flex-1 border border-genie-cyan/20">
-                        <h5 className="font-semibold text-foreground mb-1">Module Management Frameworks</h5>
+                        <h5 className="font-semibold text-foreground mb-1">Phase 3: Scale (Months 4-9)</h5>
                         <p className="text-sm text-muted-foreground">
-                          Created foundational frameworks for rapid development and integration of new features.
+                          Expansion of successful pilots, seamless integration of AI solutions into core operations, and 
+                          development of robust internal AI capabilities.
                         </p>
                       </div>
                     </div>
                     <div className="w-px h-6 bg-genie-cyan/40 ml-4 mt-2"></div>
                   </div>
                   
-                  {/* Step 4 */}
+                  {/* Phase 4: Transform */}
                   <div className="relative">
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0 w-8 h-8 bg-genie-primary text-white rounded-full flex items-center justify-center text-sm font-bold">
                         4
                       </div>
                       <div className="bg-white/50 p-4 rounded-lg flex-1 border border-genie-primary/20">
-                        <h5 className="font-semibold text-foreground mb-1">Treatment Center Onboarding Workflows</h5>
+                        <h5 className="font-semibold text-foreground mb-1">Phase 4: Transform (Months 10+)</h5>
                         <p className="text-sm text-muted-foreground">
-                          Designed automated workflows for quick and compliant onboarding of new treatment centers, 
-                          accelerating network expansion.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="w-px h-6 bg-genie-primary/40 ml-4 mt-2"></div>
-                  </div>
-                  
-                  {/* Step 5 */}
-                  <div className="relative">
-                    <div className="flex items-start gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-genie-teal text-white rounded-full flex items-center justify-center text-sm font-bold">
-                        5
-                      </div>
-                      <div className="bg-white/50 p-4 rounded-lg flex-1 border border-genie-teal/20">
-                        <h5 className="font-semibold text-foreground mb-1">Manufacturing Onboarding Processes</h5>
-                        <p className="text-sm text-muted-foreground">
-                          Streamlined and accelerated onboarding of manufacturing partners, crucial for scaling production and 
-                          distribution.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="w-px h-6 bg-genie-teal/40 ml-4 mt-2"></div>
-                  </div>
-                  
-                  {/* Step 6 */}
-                  <div className="relative">
-                    <div className="flex items-start gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-genie-cyan text-white rounded-full flex items-center justify-center text-sm font-bold">
-                        6
-                      </div>
-                      <div className="bg-white/50 p-4 rounded-lg flex-1 border border-genie-cyan/20">
-                        <h5 className="font-semibold text-foreground mb-1">Patient Onboarding Systems</h5>
-                        <p className="text-sm text-muted-foreground">
-                          Implemented intuitive systems to simplify patient onboarding, from registration to initial consultation.
+                          Cultivating an AI-first culture that drives continuous innovation, unlocks new business models, 
+                          and secures long-term market leadership.
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
                 
+                
                 {/* Bottom Summary */}
                 <div className="grid grid-cols-2 gap-4 mt-8 pt-6 border-t border-genie-primary/20">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-genie-primary" />
                     <div>
-                      <div className="text-sm font-semibold">AI-Accelerated Development</div>
-                      <div className="text-xs text-muted-foreground">Accelerated development drastically reduced timelines. What once took months now takes weeks or even days.</div>
+                      <div className="text-sm font-semibold">Rapid Innovation & Growth</div>
+                      <div className="text-xs text-muted-foreground">Accelerated development enables quick adaptation to market changes and emerging trends.</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <TrendingUp className="w-4 h-4 text-genie-teal" />
                     <div>
-                      <div className="text-sm font-semibold">Significant Cost Savings</div>
-                      <div className="text-xs text-muted-foreground">The accelerated pace led to significant cost savings, freeing resources for bigger, traditional development and quicker time to market.</div>
+                      <div className="text-sm font-semibold">Sustainable Competitive Edge</div>
+                      <div className="text-xs text-muted-foreground">Building foundational AI capabilities for long-term innovation and market leadership.</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <Zap className="w-4 h-4 text-genie-cyan" />
                     <div>
-                      <div className="text-sm font-semibold">Unprecedented Efficiency Gains</div>
+                      <div className="text-sm font-semibold">Strategic Business Value</div>
+                      <div className="text-xs text-muted-foreground">Measurable ROI through enhanced efficiency, new revenue streams, and data-driven insights.</div>
                     </div>
                   </div>
                 </div>
