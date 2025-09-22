@@ -1,65 +1,65 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Users, CheckCircle, Award, Briefcase, GraduationCap } from "lucide-react";
+import { CheckCircle, Award, Briefcase, GraduationCap, Brain } from "lucide-react";
 
 export const TrustSection = () => {
-  const credentials = [
+  const features = [
     {
       icon: Briefcase,
-      title: "21+ Years Experience",
-      description: "Healthcare Technology Leadership",
-      highlight: "Fortune 500 Experience"
+      title: "AI Strategy Consulting",
+      description: "Expert guidance on AI implementation roadmaps",
+      highlight: "Strategic Planning"
     },
     {
       icon: Award,
-      title: "95% Success Rate",
-      description: "AI Project Implementation",
-      highlight: "Enterprise Scale"
+      title: "Proof of Concept Development",
+      description: "Rapid prototyping and validation of AI solutions",
+      highlight: "MVP Development"
     },
     {
-      icon: Users,
-      title: "500K+ Lives Impacted",
-      description: "Through Healthcare AI Solutions",
-      highlight: "Real Patient Outcomes"
+      icon: Brain,
+      title: "Healthcare-Focused AI",
+      description: "Specialized solutions for healthcare organizations",
+      highlight: "Domain Expertise"
     },
     {
       icon: GraduationCap,
-      title: "AI/ML Certified",
-      description: "Stanford, MIT, Google Coursework",
-      highlight: "Continuous Learning"
+      title: "Training & Workshops",
+      description: "Upskill your team with hands-on AI training",
+      highlight: "Knowledge Transfer"
     }
   ];
-
 
   return (
     <section className="py-16 bg-gradient-to-b from-background to-background/50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Trust Signals */}
+        {/* What is Geni AI */}
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Trusted by Healthcare Leaders
+            What is Geni AI Experimentation Hub?
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
-            21 years of proven expertise in transforming healthcare organizations through strategic AI implementation
+          <p className="text-xl text-muted-foreground max-w-4xl mx-auto mb-12">
+            A specialized consulting platform that helps healthcare organizations and enterprises 
+            experiment with, implement, and scale AI solutions. We bridge the gap between AI potential 
+            and practical healthcare applications through expert guidance and hands-on experimentation.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {credentials.map((credential, index) => {
-              const IconComponent = credential.icon;
+            {features.map((feature, index) => {
+              const IconComponent = feature.icon;
               return (
                 <Card key={index} className="p-6 text-center border border-primary/20 hover:border-primary/40 transition-all duration-300">
                   <IconComponent className="h-12 w-12 text-primary mx-auto mb-4" />
                   <Badge variant="secondary" className="mb-3">
-                    {credential.highlight}
+                    {feature.highlight}
                   </Badge>
-                  <h3 className="font-bold text-foreground mb-2">{credential.title}</h3>
-                  <p className="text-muted-foreground text-sm">{credential.description}</p>
+                  <h3 className="font-bold text-foreground mb-2">{feature.title}</h3>
+                  <p className="text-muted-foreground text-sm">{feature.description}</p>
                 </Card>
               );
             })}
           </div>
         </div>
-
 
         {/* Security & Compliance */}
         <div className="text-center">
