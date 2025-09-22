@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MapPin, Trophy, Wrench, Rocket } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import aiJourneyBg from "@/assets/hero-ai-journey.jpg";
 import successStoriesBg from "@/assets/hero-success-stories.jpg";
 import aiToolsBg from "@/assets/hero-ai-tools.jpg";
@@ -53,6 +54,13 @@ const heroSections = [
 
 export const MultiHeroSection = () => {
   const [currentHero, setCurrentHero] = useState(0);
+  const navigate = useNavigate();
+  const primaryCtaPathMap: Record<number, string> = {
+    1: "/journey",
+    2: "/case-studies",
+    3: "/technology",
+    4: "/journey",
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -165,12 +173,13 @@ export const MultiHeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in justify-center">
-            <Button size="lg" className="bg-genie-primary text-white hover:bg-genie-teal px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 genie-glow">
+            <Button 
+              size="lg" 
+              className="bg-genie-primary text-white hover:bg-genie-teal px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 genie-glow"
+              onClick={() => navigate(primaryCtaPathMap[currentSection.id])}
+            >
               {currentSection.ctaPrimary}
               <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button variant="outline" size="lg" className="border-genie-cyan text-genie-cyan hover:bg-genie-cyan/10 px-8 py-4 text-lg font-semibold transition-all duration-300">
-              {currentSection.ctaSecondary}
             </Button>
           </div>
         </div>
