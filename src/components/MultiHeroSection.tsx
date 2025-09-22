@@ -200,7 +200,7 @@ export const MultiHeroSection = () => {
             </div>
             <div className="animate-fade-in">
               <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">95%</div>
-              <div className="text-genie-cyan/80">Success Rate</div>
+              <div className="text-genie-cyan/80">Project Success Rate</div>
             </div>
             <div className="animate-fade-in">
               <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">Global</div>

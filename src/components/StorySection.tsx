@@ -38,7 +38,7 @@ export const StorySection = () => {
             <p className="text-foreground/80 leading-relaxed mb-6">
               21+ years in healthcare technology led to a pivotal realization: AI could revolutionize not just digital health, 
               but fundamentally transform how we approach complex business challenges across healthcare and enterprise systems. 
-              This isn't about replacing human expertise—it's about amplifying our capacity to solve previously impossible problems.
+              This isn't about replacing human expertise. It's about amplifying our capacity to solve previously impossible problems.
             </p>
             <p className="text-foreground/80 leading-relaxed">
               Through systematic 6-month experimentation journey, I've developed breakthrough frameworks that transform AI concepts 
@@ -60,13 +60,13 @@ export const StorySection = () => {
             </div>
             <p className="text-foreground/80 leading-relaxed mb-6">
               The breakthrough came when I witnessed AI experimentation translate directly into solving real-world business challenges. 
-              From mastering 15+ AI models to building dynamic multi-agent systems—traditional development barriers were not just dissolving, 
-              they were being revolutionized through systematic innovation.
+              From mastering 15+ AI models to building dynamic multi-agent systems, traditional development barriers were not just dissolving. 
+              They were being revolutionized through systematic innovation.
             </p>
             <p className="text-foreground/80 leading-relaxed">
               This hub documents my journey from AI curiosity to enterprise-grade solutions: achieving 94% accuracy through RAG architecture, 
-              building patient management systems, treatment center workflows, and demonstrating measurable healthcare transformation—
-              making advanced AI accessible and practical for business leaders.
+              building patient management systems, treatment center workflows, and demonstrating measurable healthcare transformation. 
+              Making advanced AI accessible and practical for business leaders.
             </p>
           </Card>
         </div>

@@ -374,7 +374,7 @@ const About = () => {
                     Multi-Technology Ecosystem
                   </h3>
                   <p className="text-muted-foreground">
-                    The healthcare value chain is complex and multifaceted—no single technology can address all 
+                    The healthcare value chain is complex and multifaceted. No single technology can address all 
                     challenges. This platform experiments with integrating diverse technological solutions, 
                     from AI-powered analytics to process automation, showcasing how multiple cutting-edge 
                     technologies must work together to create meaningful impact in digital health.
