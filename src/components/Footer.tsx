@@ -103,7 +103,7 @@ export const Footer = () => {
         
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p className="text-sm text-muted-foreground">
-            © 2024 Genie AI Experimentation Hub. Powered by innovation and curiosity.
+            © 2025 Genie AI Experimentation Hub. Powered by innovation and curiosity.
           </p>
           <div className="flex space-x-6 text-sm text-muted-foreground">
             <button className="hover:text-foreground transition-colors">Privacy</button>
