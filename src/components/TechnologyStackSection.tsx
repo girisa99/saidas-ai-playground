@@ -107,7 +107,7 @@ export const TechnologyStackSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-background to-genie-dark/5">
+    <section id="technology" className="py-20 bg-gradient-to-b from-background to-genie-dark/5">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">

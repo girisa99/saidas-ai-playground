@@ -1,9 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Brain, Zap, Target } from "lucide-react";
+import { ArrowRight, Brain, Zap, Target, BookOpen, User, Lightbulb, Wrench, Map } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import heroBackground from "@/assets/hero-ai-background.jpg";
 
 export const HeroSection = () => {
+  const navigate = useNavigate();
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative bg-gradient-to-br from-primary to-primary/80 text-white py-24 lg:py-32">
       {/* Hero Content */}
@@ -16,13 +26,54 @@ export const HeroSection = () => {
             Strategic AI implementation and enterprise transformation solutions. 
             Empowering organizations to harness AI's full potential through proven frameworks and expert guidance.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button size="lg" className="bg-white text-primary hover:bg-gray-50 px-8 py-4 text-lg font-semibold">
-              Explore Solutions
-              <ArrowRight className="ml-2 h-5 w-5" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 max-w-5xl">
+            <Button 
+              size="lg" 
+              className="bg-white text-primary hover:bg-gray-50 px-6 py-4 text-base font-semibold"
+              onClick={() => navigate('/journey')}
+            >
+              <Map className="mr-2 h-5 w-5" />
+              AI Journey
             </Button>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold">
-              View Research
+            
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-white text-white hover:bg-white/10 px-6 py-4 text-base font-semibold"
+              onClick={() => scrollToSection('story')}
+            >
+              <User className="mr-2 h-5 w-5" />
+              My Story
+            </Button>
+
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-white text-white hover:bg-white/10 px-6 py-4 text-base font-semibold"
+              onClick={() => scrollToSection('about')}
+            >
+              <BookOpen className="mr-2 h-5 w-5" />
+              Learn More
+            </Button>
+
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-white text-white hover:bg-white/10 px-6 py-4 text-base font-semibold"
+              onClick={() => scrollToSection('technology')}
+            >
+              <Wrench className="mr-2 h-5 w-5" />
+              AI Tools
+            </Button>
+
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-white text-white hover:bg-white/10 px-6 py-4 text-base font-semibold"
+              onClick={() => scrollToSection('timeline')}
+            >
+              <Lightbulb className="mr-2 h-5 w-5" />
+              Roadmap
             </Button>
           </div>
         </div>
