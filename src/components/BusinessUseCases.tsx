@@ -21,7 +21,18 @@ import {
   CheckCircle,
   Clock,
   Target,
-  TrendingUp
+  TrendingUp,
+  AlertTriangle,
+  Lightbulb,
+  Star,
+  ArrowUp,
+  ArrowDown,
+  User,
+  Heart,
+  Brain,
+  Smartphone,
+  Monitor,
+  Database
 } from "lucide-react";
 
 interface WorkflowStep {
@@ -261,8 +272,224 @@ const workflowSteps: WorkflowStep[] = [
   }
 ];
 
+// Journey touchpoints with emotional mapping
+interface JourneyTouchpoint {
+  id: number;
+  time: string;
+  title: string;
+  description: string;
+  emotion: "positive" | "neutral" | "negative" | "critical";
+  step: number;
+  recommendations: string[];
+  currentPainPoints: string[];
+  improvementOpportunity: string;
+}
+
+const journeyTouchpoints: JourneyTouchpoint[] = [
+  {
+    id: 1,
+    time: "Day 0",
+    title: "Referral Received",
+    description: "Physician sends cancer referral - patient anxiety begins",
+    emotion: "critical",
+    step: 1,
+    recommendations: [
+      "Implement instant acknowledgment automation",
+      "Send immediate patient communication within 2 hours",
+      "Auto-assign case manager for high-risk cases"
+    ],
+    currentPainPoints: [
+      "Referrals sit in queue for 24-48 hours",
+      "No patient communication about next steps",
+      "Manual data entry delays processing"
+    ],
+    improvementOpportunity: "Reduce patient anxiety through immediate response and clear next steps"
+  },
+  {
+    id: 2,
+    time: "Day 1",
+    title: "Initial Contact Attempt",
+    description: "Navigator calls patient for first time - often reaches voicemail",
+    emotion: "negative",
+    step: 2,
+    recommendations: [
+      "AI-powered multi-channel outreach (SMS, email, phone)",
+      "Personalized messaging based on referral urgency",
+      "Intelligent scheduling with patient preferences"
+    ],
+    currentPainPoints: [
+      "Multiple failed contact attempts",
+      "Patients don't recognize hospital numbers",
+      "No preference tracking for contact times"
+    ],
+    improvementOpportunity: "Increase contact success rate from 45% to 85% on first attempt"
+  },
+  {
+    id: 3,
+    time: "Day 2-3",
+    title: "Data Collection",
+    description: "Patient provides demographics and insurance - often incomplete",
+    emotion: "neutral",
+    step: 3,
+    recommendations: [
+      "Smart form pre-population from EHR data",
+      "Real-time insurance verification",
+      "Progressive disclosure to reduce form abandonment"
+    ],
+    currentPainPoints: [
+      "Patients overwhelmed by lengthy forms",
+      "Insurance verification delays",
+      "Missing required documentation"
+    ],
+    improvementOpportunity: "Reduce data collection time from 45 minutes to 15 minutes"
+  },
+  {
+    id: 4,
+    time: "Day 4-7",
+    title: "Records Chase",
+    description: "Waiting for medical records from multiple providers",
+    emotion: "negative",
+    step: 4,
+    recommendations: [
+      "Automated record requests to common providers",
+      "AI-powered document analysis and summarization",
+      "Predictive timeline communication to patients"
+    ],
+    currentPainPoints: [
+      "Records requests sit for weeks",
+      "No visibility into collection progress",
+      "Patients feel forgotten in the system"
+    ],
+    improvementOpportunity: "Reduce records collection time from 2 weeks to 3 days"
+  },
+  {
+    id: 5,
+    time: "Day 8-10",
+    title: "Insurance Authorization",
+    description: "Benefit verification and pre-authorization process",
+    emotion: "critical",
+    step: 5,
+    recommendations: [
+      "AI-powered medical necessity letter generation",
+      "Predictive approval modeling",
+      "Automated appeals for denials"
+    ],
+    currentPainPoints: [
+      "High denial rates for complex cases",
+      "Manual appeals process takes weeks",
+      "Patients fear financial burden"
+    ],
+    improvementOpportunity: "Increase approval rate from 72% to 90% with faster processing"
+  },
+  {
+    id: 6,
+    time: "Day 11-14",
+    title: "Clinical Review",
+    description: "Oncologist reviews case and determines treatment plan",
+    emotion: "positive",
+    step: 6,
+    recommendations: [
+      "AI-powered case summaries for physicians",
+      "Risk stratification and urgency scoring",
+      "Treatment pathway recommendations"
+    ],
+    currentPainPoints: [
+      "Physicians spend 30+ minutes reviewing cases",
+      "Incomplete clinical picture",
+      "Delayed treatment decisions"
+    ],
+    improvementOpportunity: "Reduce physician review time by 60% while improving decision quality"
+  },
+  {
+    id: 7,
+    time: "Day 15-18",
+    title: "Genomic Testing Authorization",
+    description: "Specialized testing requires additional pre-authorization",
+    emotion: "neutral",
+    step: 7,
+    recommendations: [
+      "Automated test ordering based on tumor type",
+      "AI-generated clinical justification",
+      "Real-time approval tracking"
+    ],
+    currentPainPoints: [
+      "Complex prior authorization requirements",
+      "Delays in test ordering",
+      "Unclear coverage policies"
+    ],
+    improvementOpportunity: "Reduce testing delays from 1 week to 2 days"
+  },
+  {
+    id: 8,
+    time: "Day 19-21",
+    title: "Appointment Scheduling",
+    description: "First appointment scheduled - relief and anticipation",
+    emotion: "positive",
+    step: 8,
+    recommendations: [
+      "AI-optimized scheduling based on urgency and preferences",
+      "Automated appointment preparation",
+      "Predictive no-show prevention"
+    ],
+    currentPainPoints: [
+      "Limited appointment availability",
+      "Patients unprepared for visits",
+      "High no-show rates for new patients"
+    ],
+    improvementOpportunity: "Reduce time to first appointment from 3 weeks to 1 week"
+  },
+  {
+    id: 9,
+    time: "Day 22-25",
+    title: "Pre-Visit Preparation",
+    description: "Patient receives visit preparation materials and instructions",
+    emotion: "positive",
+    step: 9,
+    recommendations: [
+      "Personalized education based on diagnosis",
+      "Interactive preparation checklists",
+      "AI-powered anxiety management support"
+    ],
+    currentPainPoints: [
+      "Generic, overwhelming information packets",
+      "Patients arrive unprepared",
+      "High anxiety levels before first visit"
+    ],
+    improvementOpportunity: "Improve patient preparedness scores from 60% to 95%"
+  }
+];
+
+const scenarios = [
+  {
+    id: 1,
+    title: "High-Urgency Leukemia Referral",
+    description: "45-year-old patient with suspected acute leukemia",
+    timeline: "Critical - 48 hour target",
+    challenges: ["Complex insurance", "Multiple comorbidities", "High anxiety"],
+    outcome: "Patient seen within 36 hours with AI-optimized workflow"
+  },
+  {
+    id: 2,
+    title: "Routine Breast Cancer Screening Follow-up",
+    description: "62-year-old patient with abnormal mammogram",
+    timeline: "Standard - 14 day target",
+    challenges: ["Prior authorization needed", "Records from 3 providers"],
+    outcome: "Automated workflow completed in 8 days"
+  },
+  {
+    id: 3,
+    title: "Pediatric Oncology Complex Case",
+    description: "8-year-old with rare tumor requiring specialized care",
+    timeline: "Urgent - 72 hour target",
+    challenges: ["Rare condition", "Specialized insurance", "Family coordination"],
+    outcome: "AI-powered case routing and family support coordination"
+  }
+];
+
 const BusinessUseCases = () => {
+  const [activeView, setActiveView] = useState<"journey" | "scenarios" | "recommendations">("journey");
   const [activeStep, setActiveStep] = useState(1);
+  const [activeTouchpoint, setActiveTouchpoint] = useState<number | null>(null);
   const [showDetails, setShowDetails] = useState(false);
 
   const getApproachIcon = (approach: string, primary: string) => {
@@ -292,268 +519,352 @@ const BusinessUseCases = () => {
 
   const currentStep = workflowSteps.find(step => step.id === activeStep);
 
+  const getEmotionColor = (emotion: string) => {
+    switch (emotion) {
+      case "positive": return "bg-green-100 border-green-300 text-green-800";
+      case "neutral": return "bg-yellow-100 border-yellow-300 text-yellow-800";
+      case "negative": return "bg-orange-100 border-orange-300 text-orange-800";
+      case "critical": return "bg-red-100 border-red-300 text-red-800";
+      default: return "bg-gray-100 border-gray-300 text-gray-800";
+    }
+  };
+
+  const getEmotionIcon = (emotion: string) => {
+    switch (emotion) {
+      case "positive": return <Star className="h-4 w-4" />;
+      case "neutral": return <Clock className="h-4 w-4" />;
+      case "negative": return <ArrowDown className="h-4 w-4" />;
+      case "critical": return <AlertTriangle className="h-4 w-4" />;
+      default: return <Target className="h-4 w-4" />;
+    }
+  };
+
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Header */}
       <div className="text-center space-y-4 animate-scale-in">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          Automation vs Agentic AI
+          Patient Journey & Technology Strategy
         </h1>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Strategic Technology Selection for Oncology Workflows - Patient Onboarding & Referral Use Cases
+          Visual Journey Mapping with Scenarios, Touchpoints & Strategic Recommendations
         </p>
       </div>
 
-      {/* Decision Framework Cards */}
-      <div className="grid md:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-        <div className="border-blue-200 bg-blue-50 rounded-lg p-6 hover-scale transition-all duration-300 border">
-          <div className="flex items-center gap-2 text-blue-700 mb-4">
-            <Settings className="h-6 w-6" />
-            <h3 className="text-xl font-bold">When to Use Automation</h3>
-          </div>
-          <ul className="space-y-3 text-sm">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-              Structured, predictable processes with clear rules
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-              High-volume, repetitive tasks
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-              Data transfer and validation
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-              Time-sensitive processes
-            </li>
-          </ul>
-        </div>
-
-        <div className="border-purple-200 bg-purple-50 rounded-lg p-6 hover-scale transition-all duration-300 border">
-          <div className="flex items-center gap-2 text-purple-700 mb-4">
-            <Bot className="h-6 w-6" />
-            <h3 className="text-xl font-bold">When to Use Agentic AI</h3>
-          </div>
-          <ul className="space-y-3 text-sm">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-              Complex decision-making requiring reasoning
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-              Unstructured data processing
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-              Personalization and adaptation
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-              Human-like interaction
-            </li>
-          </ul>
-        </div>
-
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-6 hover-scale transition-all duration-300 border border-gradient">
-          <div className="flex items-center gap-2 mb-4">
-            <Zap className="h-6 w-6 text-blue-600" />
-            <Bot className="h-6 w-6 text-purple-600" />
-            <h3 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Hybrid Approach</h3>
-          </div>
-          <ul className="space-y-3 text-sm">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-              Complex workflows with mixed elements
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-              Multi-step processes
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-              Quality assurance workflows
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-              Scalable solutions
-            </li>
-          </ul>
-        </div>
+      {/* Navigation Tabs */}
+      <div className="flex justify-center">
+        <Tabs value={activeView} onValueChange={(value) => setActiveView(value as any)} className="w-full max-w-2xl">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="journey" className="flex items-center gap-2">
+              <Target className="h-4 w-4" />
+              Journey Flow
+            </TabsTrigger>
+            <TabsTrigger value="scenarios" className="flex items-center gap-2">
+              <User className="h-4 w-4" />
+              Use Case Scenarios
+            </TabsTrigger>
+            <TabsTrigger value="recommendations" className="flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" />
+              Recommendations
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
-      {/* Visual Journey Flow */}
-      <Card className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
-        <CardHeader>
-          <CardTitle className="text-2xl">Patient Onboarding & Referral Journey</CardTitle>
-          <p className="text-muted-foreground">Interactive workflow showing technology selection for each step</p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            {workflowSteps.map((step, index) => (
-              <div key={step.id} className="relative">
-                <Card 
-                  className={`cursor-pointer transition-all duration-300 hover-scale ${
-                    activeStep === step.id 
-                      ? `${getApproachColor(step.approach, step.primary)} ring-2 ring-blue-400 shadow-lg` 
-                      : "hover:shadow-md"
-                  }`}
-                  onClick={() => {
-                    setActiveStep(step.id);
-                    setShowDetails(true);
-                  }}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <step.icon className="h-5 w-5" />
-                        <span className="font-medium text-sm">Step {step.id}</span>
+
+      {/* Journey Flow View */}
+      {activeView === "journey" && (
+        <div className="space-y-8">
+          {/* Emotional Journey Map */}
+          <Card className="animate-fade-in">
+            <CardHeader>
+              <CardTitle className="text-2xl flex items-center gap-2">
+                <Heart className="h-6 w-6 text-red-500" />
+                Patient Emotional Journey
+              </CardTitle>
+              <p className="text-muted-foreground">Track patient experience and identify improvement opportunities</p>
+            </CardHeader>
+            <CardContent>
+              <div className="relative">
+                {/* Journey Timeline */}
+                <div className="flex justify-between items-center mb-8 overflow-x-auto">
+                  {journeyTouchpoints.map((touchpoint, index) => (
+                    <div 
+                      key={touchpoint.id}
+                      className="flex flex-col items-center min-w-32 cursor-pointer group"
+                      onClick={() => setActiveTouchpoint(touchpoint.id)}
+                    >
+                      {/* Timeline Node */}
+                      <div className={`
+                        w-16 h-16 rounded-full border-4 flex items-center justify-center transition-all duration-300
+                        ${activeTouchpoint === touchpoint.id ? 'scale-110 shadow-lg' : 'group-hover:scale-105'}
+                        ${getEmotionColor(touchpoint.emotion)}
+                      `}>
+                        {getEmotionIcon(touchpoint.emotion)}
                       </div>
-                      {getApproachIcon(step.approach, step.primary)}
+                      
+                      {/* Time Label */}
+                      <div className="text-xs font-medium mt-2 text-center">
+                        {touchpoint.time}
+                      </div>
+                      
+                      {/* Title */}
+                      <div className="text-xs text-muted-foreground text-center max-w-24">
+                        {touchpoint.title}
+                      </div>
+                      
+                      {/* Connection Line */}
+                      {index < journeyTouchpoints.length - 1 && (
+                        <div className="absolute top-8 left-1/2 w-full h-1 bg-gradient-to-r from-gray-300 to-gray-300 -z-10" 
+                             style={{ left: `${(index + 0.5) * (100 / journeyTouchpoints.length)}%`, width: `${100 / journeyTouchpoints.length}%` }} />
+                      )}
                     </div>
-                    <h3 className="font-semibold text-sm mb-2">{step.title}</h3>
-                    <Badge variant="outline">
-                      {step.primary === "automation" ? "Automation Primary" : 
-                       step.primary === "ai" ? "AI Primary" : "Equal Partnership"}
-                    </Badge>
-                  </CardContent>
-                </Card>
-                {index < workflowSteps.length - 1 && (
-                  <ChevronRight className="h-4 w-4 text-muted-foreground absolute -right-2 top-1/2 transform -translate-y-1/2 hidden md:block" />
+                  ))}
+                </div>
+
+                {/* Touchpoint Details */}
+                {activeTouchpoint && (
+                  <Card className={`mt-6 animate-scale-in ${getEmotionColor(journeyTouchpoints.find(t => t.id === activeTouchpoint)?.emotion || "neutral")}`}>
+                    <CardContent className="p-6">
+                      {(() => {
+                        const touchpoint = journeyTouchpoints.find(t => t.id === activeTouchpoint);
+                        if (!touchpoint) return null;
+                        
+                        return (
+                          <div className="space-y-4">
+                            <div>
+                              <h3 className="text-xl font-bold">{touchpoint.title}</h3>
+                              <p className="text-sm opacity-90">{touchpoint.description}</p>
+                            </div>
+                            
+                            <div className="grid md:grid-cols-3 gap-4">
+                              <Card className="bg-red-50 border-red-200">
+                                <CardContent className="p-4">
+                                  <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
+                                    <AlertTriangle className="h-4 w-4" />
+                                    Current Pain Points
+                                  </h4>
+                                  <ul className="space-y-1 text-sm text-red-700">
+                                    {touchpoint.currentPainPoints.map((pain, index) => (
+                                      <li key={index} className="flex items-start gap-2">
+                                        <div className="w-1 h-1 bg-red-500 rounded-full mt-2 flex-shrink-0" />
+                                        {pain}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </CardContent>
+                              </Card>
+                              
+                              <Card className="bg-blue-50 border-blue-200">
+                                <CardContent className="p-4">
+                                  <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">
+                                    <Lightbulb className="h-4 w-4" />
+                                    Recommendations
+                                  </h4>
+                                  <ul className="space-y-1 text-sm text-blue-700">
+                                    {touchpoint.recommendations.map((rec, index) => (
+                                      <li key={index} className="flex items-start gap-2">
+                                        <CheckCircle className="h-3 w-3 text-blue-500 mt-1 flex-shrink-0" />
+                                        {rec}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </CardContent>
+                              </Card>
+                              
+                              <Card className="bg-green-50 border-green-200">
+                                <CardContent className="p-4">
+                                  <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                                    <TrendingUp className="h-4 w-4" />
+                                    Improvement Opportunity
+                                  </h4>
+                                  <p className="text-sm text-green-700">{touchpoint.improvementOpportunity}</p>
+                                </CardContent>
+                              </Card>
+                            </div>
+                          </div>
+                        );
+                      })()}
+                    </CardContent>
+                  </Card>
                 )}
               </div>
-            ))}
-          </div>
-          
-          {/* Progress Bar */}
-          <div className="mb-6">
-            <div className="flex justify-between text-sm text-muted-foreground mb-2">
-              <span>Journey Progress</span>
-              <span>{Math.round((activeStep / workflowSteps.length) * 100)}%</span>
-            </div>
-            <Progress value={(activeStep / workflowSteps.length) * 100} className="transition-all duration-500" />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Detailed Step View - Conditionally shown */}
-      {showDetails && currentStep && (
-        <Card className="animate-scale-in">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3">
-              <currentStep.icon className="h-6 w-6" />
-              Step {currentStep.id}: {currentStep.title}
-              {getApproachIcon(currentStep.approach, currentStep.primary)}
-            </CardTitle>
-            <Badge variant="outline">
-              {currentStep.primary === "automation" ? "Automation Primary" : 
-               currentStep.primary === "ai" ? "AI Primary" : "Equal Partnership"}
-            </Badge>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <h4 className="font-semibold text-blue-700 mb-3 flex items-center gap-2">
-                  <Settings className="h-4 w-4" />
-                  Automation Features
-                </h4>
-                <ul className="space-y-2">
-                  {currentStep.automationFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-2 text-sm animate-fade-in" style={{ animationDelay: `${0.1 + index * 0.1}s` }}>
-                      <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                <h4 className="font-semibold text-purple-700 mb-3 flex items-center gap-2">
-                  <Bot className="h-4 w-4" />
-                  AI Features
-                </h4>
-                <ul className="space-y-2">
-                  {currentStep.aiFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-2 text-sm animate-fade-in" style={{ animationDelay: `${0.2 + index * 0.1}s` }}>
-                      <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <Separator />
-
-            <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              <h4 className="font-semibold mb-3 flex items-center gap-2">
-                <TrendingUp className="h-4 w-4" />
-                Implementation Strategy
-              </h4>
-              <div className="space-y-2">
-                {currentStep.implementation.map((phase, index) => (
-                  <div key={index} className="flex items-start gap-2 text-sm animate-fade-in" style={{ animationDelay: `${0.3 + index * 0.1}s` }}>
-                    <Clock className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
-                    {phase}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 animate-scale-in" style={{ animationDelay: '0.4s' }}>
-              <h5 className="font-semibold text-green-800 mb-2">Expected ROI</h5>
-              <p className="text-green-700 text-sm">{currentStep.roi}</p>
-            </div>
-
-            {/* Navigation */}
-            <div className="flex justify-between animate-fade-in" style={{ animationDelay: '0.5s' }}>
-              <Button 
-                variant="outline" 
-                onClick={() => setActiveStep(Math.max(1, activeStep - 1))}
-                disabled={activeStep === 1}
-                className="hover-scale"
-              >
-                Previous Step
-              </Button>
-              <Button 
-                variant="ghost"
-                onClick={() => setShowDetails(false)}
-                className="hover-scale"
-              >
-                Hide Details
-              </Button>
-              <Button 
-                onClick={() => setActiveStep(Math.min(workflowSteps.length, activeStep + 1))}
-                disabled={activeStep === workflowSteps.length}
-                className="hover-scale"
-              >
-                Next Step
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
       )}
 
-      {/* Call to Action */}
-      <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-none animate-fade-in" style={{ animationDelay: '0.6s' }}>
-        <CardContent className="p-8 text-center">
-          <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Ready to Implement Your AI Strategy?
-          </h3>
-          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Transform your oncology workflows with the right mix of automation and agentic AI. 
-            Start with high-impact, low-risk automation and gradually introduce AI where it adds the most value.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="hover-scale bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-              Schedule Strategy Session
-            </Button>
-            <Button variant="outline" className="hover-scale">
-              Download Implementation Guide
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Scenarios View */}
+      {activeView === "scenarios" && (
+        <div className="space-y-6">
+          <Card className="animate-fade-in">
+            <CardHeader>
+              <CardTitle className="text-2xl flex items-center gap-2">
+                <User className="h-6 w-6 text-blue-500" />
+                Real-World Use Case Scenarios
+              </CardTitle>
+              <p className="text-muted-foreground">How different patient cases flow through the optimized system</p>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-6">
+                {scenarios.map((scenario) => (
+                  <Card key={scenario.id} className="hover-scale transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="grid md:grid-cols-4 gap-4">
+                        <div>
+                          <h3 className="font-bold text-lg mb-2">{scenario.title}</h3>
+                          <p className="text-sm text-muted-foreground">{scenario.description}</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold mb-2 text-blue-700">Timeline</h4>
+                          <Badge variant="outline">{scenario.timeline}</Badge>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold mb-2 text-orange-700">Challenges</h4>
+                          <ul className="space-y-1">
+                            {scenario.challenges.map((challenge, index) => (
+                              <li key={index} className="text-sm flex items-center gap-2">
+                                <AlertTriangle className="h-3 w-3 text-orange-500" />
+                                {challenge}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold mb-2 text-green-700">Outcome</h4>
+                          <p className="text-sm text-green-600 flex items-start gap-2">
+                            <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                            {scenario.outcome}
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Recommendations View */}
+      {activeView === "recommendations" && (
+        <div className="space-y-6">
+          <Card className="animate-fade-in">
+            <CardHeader>
+              <CardTitle className="text-2xl flex items-center gap-2">
+                <Brain className="h-6 w-6 text-purple-500" />
+                Strategic Technology Recommendations
+              </CardTitle>
+              <p className="text-muted-foreground">Prioritized implementation roadmap for maximum impact</p>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                {/* High Impact Quick Wins */}
+                <div>
+                  <h3 className="text-xl font-bold mb-4 text-green-700">🚀 High Impact Quick Wins (0-3 months)</h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <Card className="bg-green-50 border-green-200">
+                      <CardContent className="p-4">
+                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <Smartphone className="h-4 w-4" />
+                          Automated Patient Communication
+                        </h4>
+                        <p className="text-sm mb-3">Implement multi-channel outreach with SMS, email, and phone integration</p>
+                        <div className="flex justify-between text-xs">
+                          <span className="text-green-600">ROI: 300%</span>
+                          <span className="text-gray-600">Implementation: 4-6 weeks</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card className="bg-green-50 border-green-200">
+                      <CardContent className="p-4">
+                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <Database className="h-4 w-4" />
+                          Insurance Verification Automation
+                        </h4>
+                        <p className="text-sm mb-3">Real-time API integration for eligibility and benefit verification</p>
+                        <div className="flex justify-between text-xs">
+                          <span className="text-green-600">ROI: 250%</span>
+                          <span className="text-gray-600">Implementation: 6-8 weeks</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+
+                {/* Medium Term Strategic Improvements */}
+                <div>
+                  <h3 className="text-xl font-bold mb-4 text-blue-700">⚡ Strategic Improvements (3-9 months)</h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <Card className="bg-blue-50 border-blue-200">
+                      <CardContent className="p-4">
+                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <Bot className="h-4 w-4" />
+                          AI-Powered Document Processing
+                        </h4>
+                        <p className="text-sm mb-3">Intelligent extraction and analysis of unstructured medical records</p>
+                        <div className="flex justify-between text-xs">
+                          <span className="text-blue-600">ROI: 400%</span>
+                          <span className="text-gray-600">Implementation: 12-16 weeks</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card className="bg-blue-50 border-blue-200">
+                      <CardContent className="p-4">
+                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <Brain className="h-4 w-4" />
+                          Predictive Risk Stratification
+                        </h4>
+                        <p className="text-sm mb-3">AI models for patient urgency assessment and resource allocation</p>
+                        <div className="flex justify-between text-xs">
+                          <span className="text-blue-600">ROI: 350%</span>
+                          <span className="text-gray-600">Implementation: 16-20 weeks</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+
+                {/* Long Term Transformational */}
+                <div>
+                  <h3 className="text-xl font-bold mb-4 text-purple-700">🎯 Transformational Initiatives (9+ months)</h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <Card className="bg-purple-50 border-purple-200">
+                      <CardContent className="p-4">
+                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <Monitor className="h-4 w-4" />
+                          Integrated Care Orchestration
+                        </h4>
+                        <p className="text-sm mb-3">End-to-end AI agents managing entire patient journey</p>
+                        <div className="flex justify-between text-xs">
+                          <span className="text-purple-600">ROI: 500%</span>
+                          <span className="text-gray-600">Implementation: 24+ weeks</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card className="bg-purple-50 border-purple-200">
+                      <CardContent className="p-4">
+                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <TrendingUp className="h-4 w-4" />
+                          Predictive Analytics Platform
+                        </h4>
+                        <p className="text-sm mb-3">Machine learning for outcome prediction and resource optimization</p>
+                        <div className="flex justify-between text-xs">
+                          <span className="text-purple-600">ROI: 600%</span>
+                          <span className="text-gray-600">Implementation: 30+ weeks</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 };
