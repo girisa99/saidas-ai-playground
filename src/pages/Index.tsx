@@ -27,10 +27,9 @@ const Index = () => {
         <MultiHeroSection />
         <TrustSection />
         <StorySection />
+        <QuickStart />
         <AIExperimentationBanner />
         <ValueProposition />
-        
-        <QuickStart />
         <FAQ />
         {/* Simplified homepage - detailed sections moved to dedicated pages per UI/UX audit */}
       </main>
