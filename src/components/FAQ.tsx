@@ -90,7 +90,7 @@ export const FAQ = () => {
               </div>
               <div className="text-center">
                 <Users className="w-8 h-8 text-primary mx-auto mb-2" />
-                <h4 className="font-semibold text-foreground mb-1">Community Learning</h4>
+                <h4 className="font-semibold text-foreground mb-1">Connect and Share</h4>
                 <p className="text-sm text-muted-foreground">Connect with other AI experimenters and share discoveries</p>
               </div>
               <div className="text-center">
@@ -102,31 +102,6 @@ export const FAQ = () => {
           </Card>
         </div>
 
-        {/* Learning Focus Section */}
-        <div className="mt-12 max-w-4xl mx-auto">
-          <Card className="p-6 border border-primary/20 hover:shadow-lg transition-shadow">
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-primary/10 rounded-lg">
-                <Lightbulb className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <h4 className="font-semibold text-foreground mb-2">Want to Share Your AI Experiments?</h4>
-                <p className="text-muted-foreground text-sm mb-4">
-                  I'm always interested in learning what's working for others. Share your AI experiments, 
-                  failed attempts, or interesting discoveries. Let's learn together!
-                </p>
-                <Button 
-                  variant="outline" 
-                  className="border-primary text-primary hover:bg-primary/10"
-                  onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
-                >
-                  Connect & Share
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-          </Card>
-        </div>
       </div>
     </section>
   );
