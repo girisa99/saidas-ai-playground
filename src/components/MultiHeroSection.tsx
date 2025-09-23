@@ -107,7 +107,7 @@ export const MultiHeroSection = () => {
         <div className="max-w-5xl mx-auto text-center">
             {/* Clear Value Proposition */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6 animate-fade-in text-center text-white">
-              AI Development <span className="text-genie-accent">Experimentation</span>
+              Genie AI Development <span className="text-genie-accent">Experimentation</span>
             </h1>
             <div className="w-16 sm:w-20 md:w-24 h-1 bg-genie-accent mx-auto mb-6 sm:mb-8"></div>
             
