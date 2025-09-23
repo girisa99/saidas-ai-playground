@@ -49,46 +49,7 @@ import {
   Frown
 } from "lucide-react";
 
-// Decision Framework Data
-const decisionFramework = {
-  automation: {
-    title: "When to Use Automation",
-    icon: Wrench,
-    color: "blue",
-    criteria: [
-      "Structured, predictable processes with clear rules",
-      "High-volume, repetitive tasks that follow consistent patterns", 
-      "Data transfer and validation where accuracy is paramount",
-      "Time-sensitive processes requiring immediate response",
-      "Cost-effective solutions for straightforward problems"
-    ]
-  },
-  agentic: {
-    title: "When to Use Agentic AI",
-    icon: Bot,
-    color: "purple", 
-    criteria: [
-      "Complex decision-making requiring reasoning and context",
-      "Unstructured data processing (natural language, images, documents)",
-      "Personalization and adaptation based on individual circumstances",
-      "Learning and improvement from patterns and outcomes",
-      "Human-like interaction requiring empathy and understanding"
-    ]
-  },
-  hybrid: {
-    title: "When to Use Both (Hybrid Approach)",
-    icon: Layers,
-    color: "indigo",
-    criteria: [
-      "Complex workflows with both structured and unstructured elements",
-      "Multi-step processes requiring different capabilities at each stage",
-      "Quality assurance where automation handles routine tasks and AI provides oversight",
-      "Scalable solutions that can grow in sophistication over time"
-    ]
-  }
-};
-
-// Visual Journey Steps with detailed analysis
+// Journey steps data
 const journeySteps = [
   {
     id: 1,
@@ -99,365 +60,408 @@ const journeySteps = [
     emotion: "critical",
     emotionIcon: AlertTriangle,
     approach: "hybrid",
+    description: "Initial referral received and triaged for urgency and completeness",
     automationPrimary: true,
-    description: "Physician sends cancer referral - immediate processing begins",
+    roi: "60% efficiency gain",
     automationTasks: [
-      "Digital intake forms - Structured data collection",
-      "API integrations - System-to-system data transfer", 
-      "Data validation - Format checking, required field verification",
-      "Automatic routing - Rule-based assignment to departments"
+      "Automated intake form parsing and data extraction",
+      "Insurance eligibility verification",
+      "Basic medical history review and flagging",
+      "Appointment slot identification based on urgency"
     ],
     aiTasks: [
-      "Unstructured document processing - Extracting data from physician notes, faxes",
-      "Intelligent routing - Complex decision-making for specialist assignment",
-      "Quality enhancement - Understanding context and filling gaps"
+      "Complex case pattern recognition and risk stratification",
+      "Personalized communication generation for patients",
+      "Care team coordination and specialist matching",
+      "Predictive timeline estimation for patient journey"
     ],
-    whyAutomation: "High-volume, structured data transfer with clear validation rules",
-    whyAI: "Handles the messiness of real-world medical documents and complex routing decisions",
+    whyAutomation: "High-volume, standardized processes that require speed and accuracy for basic verification tasks",
+    whyAI: "Complex decision-making around care coordination and personalized patient engagement strategies",
     phases: [
-      "Phase 1: Automation foundation (digital forms, APIs)",
-      "Phase 2: AI overlay for unstructured content processing", 
-      "Phase 3: AI-driven intelligent routing and quality checks"
+      "Implement basic automation for data parsing and verification",
+      "Deploy AI for complex case analysis and risk assessment",
+      "Integrate with existing EHR systems for seamless data flow"
     ],
-    currentIssues: ["Referrals sit in queue for 24-48 hours", "Manual data entry delays processing"],
-    improvement: "Reduce processing time from 48 hours to 2 hours",
-    roi: "250% ROI through reduced labor costs and faster patient engagement"
+    currentIssues: [
+      "Manual data entry errors leading to 15% rework rate",
+      "Delayed response times averaging 4-6 hours",
+      "Inconsistent triage decisions across staff members"
+    ],
+    improvement: "Automated processing reduces response time to under 30 minutes with 95% accuracy in data extraction and consistent AI-driven triage decisions."
   },
   {
     id: 2,
-    title: "Patient Outreach",
-    icon: MessageCircle,
-    time: "Day 0 - 4 hours", 
-    position: { x: 30, y: 15 },
-    emotion: "negative",
-    emotionIcon: Frown,
-    approach: "hybrid",
-    automationPrimary: false,
-    description: "First attempt to contact patient about their referral",
-    automationTasks: [
-      "Multi-channel messaging - SMS, email delivery systems",
-      "Appointment scheduling - Calendar integration and booking",
-      "Reminder systems - Scheduled follow-up communications",
-      "Contact tracking - Logging attempts and responses"
-    ],
-    aiTasks: [
-      "Personalized communication - Adapting tone and content to patient needs",
-      "Conversation management - Understanding patient responses and context",
-      "Emotional intelligence - Detecting anxiety, confusion, or urgency",
-      "Dynamic scheduling - Optimizing based on multiple patient and provider factors"
-    ],
-    whyAutomation: "Reliable delivery mechanisms and scheduling infrastructure",
-    whyAI: "Patient communication requires empathy, personalization, and complex reasoning",
-    phases: [
-      "Phase 1: Automated messaging infrastructure",
-      "Phase 2: AI-powered personalization and conversation management",
-      "Phase 3: Advanced emotional intelligence and predictive outreach"
-    ],
-    currentIssues: ["45% contact failure rate on first attempt", "Patients don't recognize hospital numbers"],
-    improvement: "Increase successful contact rate from 45% to 85%",
-    roi: "300% ROI through reduced no-shows and faster onboarding"
-  },
-  {
-    id: 3,
     title: "Data Collection",
     icon: ClipboardCheck,
     time: "Day 1",
-    position: { x: 50, y: 15 },
+    position: { x: 30, y: 15 },
     emotion: "neutral",
     emotionIcon: Meh,
     approach: "automation",
+    description: "Systematic collection of patient information and medical history",
     automationPrimary: true,
-    description: "Patient provides personal and insurance information",
+    roi: "75% time reduction",
     automationTasks: [
-      "Digital forms - Structured data collection",
-      "EHR integration - Direct data synchronization",
-      "Real-time validation - Immediate error checking",
-      "Insurance verification - API-based eligibility checking"
+      "Digital form pre-population from referral data",
+      "Automated reminder sequences for incomplete forms",
+      "Integration with patient portals for seamless submission",
+      "Real-time validation and error checking"
     ],
     aiTasks: [
-      "Predictive pre-fill - Using historical data patterns",
-      "Form optimization - Dynamic form adaptation",
-      "Anomaly detection - Identifying unusual data patterns"
+      "Intelligent form customization based on condition type",
+      "Natural language processing of patient narratives",
+      "Risk factor identification from unstructured data",
+      "Personalized follow-up scheduling recommendations"
     ],
-    whyAutomation: "Highly structured process with clear data formats and validation rules",
-    whyAI: "The structured nature of this process doesn't require complex AI reasoning",
+    whyAutomation: "Standardized data collection processes benefit from consistent, error-free automation",
+    whyAI: "Dynamic form adaptation and complex data interpretation require intelligent decision-making",
     phases: [
-      "Phase 1: Full automation implementation (highest ROI)",
-      "Phase 2: Consider AI enhancements if significant data quality issues persist"
+      "Deploy automated form systems with basic validation",
+      "Implement AI for dynamic form customization",
+      "Integrate advanced NLP for narrative analysis"
     ],
-    currentIssues: ["45-minute average completion time", "High form abandonment rate"],
-    improvement: "Reduce completion time from 45 to 15 minutes",
-    roi: "400% ROI - highest impact automation opportunity"
-  },
-  {
-    id: 4,
-    title: "Records Acquisition",
-    icon: Stethoscope,
-    time: "Day 2-5",
-    position: { x: 70, y: 15 },
-    emotion: "negative",
-    emotionIcon: ThumbsDown,
-    approach: "hybrid", 
-    automationPrimary: true,
-    description: "Collecting comprehensive medical history from multiple providers",
-    automationTasks: [
-      "HIE connections - Electronic record exchange",
-      "Automated requests - System-generated record requests",
-      "Digital consolidation - Aggregating records in central location",
-      "Status tracking - Real-time progress monitoring"
+    currentIssues: [
+      "Paper-based forms causing 2-day processing delays",
+      "30% incomplete submissions requiring multiple follow-ups",
+      "Staff spending 40% of time on data entry tasks"
     ],
-    aiTasks: [
-      "Document analysis - Understanding diverse medical document formats",
-      "Information extraction - Pulling relevant clinical data",
-      "Medical timeline creation - Synthesizing chronological patient story",
-      "Gap identification - Recognizing missing critical information"
-    ],
-    whyAutomation: "Structured request processes and data movement",
-    whyAI: "Medical records are highly unstructured and require clinical understanding",
-    phases: [
-      "Phase 1: Automation for record acquisition and aggregation",
-      "Phase 2: AI for document processing and analysis",
-      "Phase 3: Advanced AI for predictive analysis and clinical insights"
-    ],
-    currentIssues: ["2-week average collection time", "Incomplete record sets"],
-    improvement: "Reduce collection time from 2 weeks to 3 days",
-    roi: "350% ROI through faster clinical decisions and reduced labor"
-  },
-  {
-    id: 5,
-    title: "Insurance Authorization",
-    icon: Shield,
-    time: "Day 3-7",
-    position: { x: 90, y: 15 },
-    emotion: "critical",
-    emotionIcon: AlertTriangle,
-    approach: "hybrid",
-    automationPrimary: true,
-    description: "Verifying coverage and obtaining necessary pre-authorizations",
-    automationTasks: [
-      "Real-time API verification - Direct insurance system queries",
-      "Benefit calculation - Automated cost estimation",
-      "Coverage tracking - Monitoring benefit changes",
-      "Standard reporting - Generating coverage summaries"
-    ],
-    aiTasks: [
-      "Approval prediction - Analyzing historical patterns for coverage likelihood",
-      "Appeal generation - Creating compelling medical necessity arguments",
-      "Alternative identification - Finding better coverage options",
-      "Financial assistance matching - Identifying applicable programs"
-    ],
-    whyAutomation: "Insurance verification follows structured rules and APIs",
-    whyAI: "Most cases are straightforward; AI adds value for denials and complex situations",
-    phases: [
-      "Phase 1: Automation for standard verification (80% of cases)",
-      "Phase 2: AI for complex cases, denials, and appeals (20% of cases)",
-      "Phase 3: Predictive analytics to prevent denials"
-    ],
-    currentIssues: ["72% initial approval rate", "3-week appeal process"],
-    improvement: "Increase approval rate from 72% to 90%",
-    roi: "280% ROI through faster approvals and reduced denials"
-  },
-  {
-    id: 6,
-    title: "Clinical Review",
-    icon: Target,
-    time: "Day 7-10",
-    position: { x: 10, y: 55 },
-    emotion: "positive",
-    emotionIcon: ThumbsUp,
-    approach: "agentic",
-    automationPrimary: false,
-    description: "Oncologist reviews case and determines optimal treatment approach",
-    automationTasks: [
-      "Data aggregation - Collecting all patient information",
-      "Alert systems - Flagging critical values",
-      "Workflow routing - Moving cases through review process",
-      "Documentation templates - Structured note creation"
-    ],
-    aiTasks: [
-      "Clinical analysis - Understanding complex medical data",
-      "Risk stratification - Calculating personalized risk scores",
-      "Treatment recommendations - Suggesting optimal care pathways",
-      "Decision support - Providing evidence-based guidance"
-    ],
-    whyAutomation: "Infrastructure for data management and workflow",
-    whyAI: "Clinical decision-making requires medical knowledge, reasoning, and pattern recognition",
-    phases: [
-      "Phase 1: Automation for data aggregation and basic alerts",
-      "Phase 2: AI for clinical analysis and risk assessment",
-      "Phase 3: Advanced AI for treatment optimization and outcome prediction"
-    ],
-    currentIssues: ["30+ minutes per case review", "Incomplete clinical picture"],
-    improvement: "Reduce physician review time by 60% while improving decision quality",
-    roi: "450% ROI through physician efficiency and better outcomes"
-  },
-  {
-    id: 7,
-    title: "Genomic Testing",
-    icon: Dna,
-    time: "Day 10-15",
-    position: { x: 30, y: 55 },
-    emotion: "neutral",
-    emotionIcon: Meh,
-    approach: "hybrid",
-    automationPrimary: true,
-    description: "Specialized testing requires additional pre-authorization",
-    automationTasks: [
-      "Digital submission - Electronic form processing",
-      "Status tracking - Real-time approval monitoring",
-      "Document management - Organizing supporting materials",
-      "Workflow automation - Moving requests through approval process"
-    ],
-    aiTasks: [
-      "Medical necessity writing - Creating compelling clinical narratives",
-      "Approval prediction - Analyzing likelihood of coverage",
-      "Appeal automation - Generating evidence-based appeals",
-      "Clinical correlation - Connecting genomic tests to treatment options"
-    ],
-    whyAutomation: "Structured submission processes and tracking",
-    whyAI: "Combines structured process management with complex medical reasoning",
-    phases: [
-      "Phase 1: Automation for submission and tracking infrastructure",
-      "Phase 2: AI for documentation generation and approval prediction",
-      "Phase 3: Integrated system with AI-powered appeals and optimization"
-    ],
-    currentIssues: ["Complex prior authorization requirements", "Delays in test ordering"],
-    improvement: "Reduce testing delays from 1 week to 2 days",
-    roi: "320% ROI through faster testing and higher approval rates"
-  },
-  {
-    id: 8,
-    title: "Appointment Scheduling",
-    icon: Calendar,
-    time: "Day 12-18",
-    position: { x: 50, y: 55 },
-    emotion: "positive",
-    emotionIcon: ThumbsUp,
-    approach: "hybrid",
-    automationPrimary: true,
-    description: "First appointment scheduled - relief and anticipation",
-    automationTasks: [
-      "Online scheduling - Self-service appointment booking",
-      "Calendar integration - Real-time availability checking",
-      "Automated reminders - SMS/email confirmations",
-      "Resource coordination - Room and equipment booking"
-    ],
-    aiTasks: [
-      "Intelligent scheduling - Optimizing based on multiple factors",
-      "Preference learning - Adapting to patient and provider patterns",
-      "Predictive modeling - Anticipating no-shows and conflicts",
-      "Dynamic optimization - Real-time schedule adjustments"
-    ],
-    whyAutomation: "Scheduling follows logical rules and constraints",
-    whyAI: "Optimization requires complex reasoning about multiple variables",
-    phases: [
-      "Phase 1: Full automation implementation (immediate efficiency gains)",
-      "Phase 2: AI optimization layer (enhanced patient satisfaction)",
-      "Phase 3: Predictive analytics for proactive management"
-    ],
-    currentIssues: ["Limited appointment availability", "High no-show rates for new patients"],
-    improvement: "Reduce time to first appointment from 3 weeks to 1 week",
-    roi: "380% ROI through improved efficiency and reduced no-shows"
-  },
-  {
-    id: 9,
-    title: "Pre-Visit Preparation",
-    icon: CheckCircle,
-    time: "Day 15-20",
-    position: { x: 70, y: 55 },
-    emotion: "positive",
-    emotionIcon: Star,
-    approach: "agentic",
-    automationPrimary: false,
-    description: "Patient receives visit preparation materials and instructions",
-    automationTasks: [
-      "Content delivery - Sending materials via multiple channels",
-      "Progress tracking - Monitoring completion of tasks",
-      "Reminder scheduling - Automated follow-up communications",
-      "Checklist management - Tracking required pre-visit tasks"
-    ],
-    aiTasks: [
-      "Personalized education - Adapting content to patient understanding",
-      "Interactive guidance - Conversational support for preparation",
-      "Anxiety management - Emotional support and reassurance",
-      "Dynamic adaptation - Adjusting based on patient engagement"
-    ],
-    whyAutomation: "Reliable delivery and tracking infrastructure",
-    whyAI: "Patient education and support require empathy and personalization",
-    phases: [
-      "Phase 1: Automation for content delivery and tracking",
-      "Phase 2: AI for personalization and interactive support",
-      "Phase 3: Advanced AI for emotional intelligence and behavioral insights"
-    ],
-    currentIssues: ["Generic, overwhelming information packets", "Patients arrive unprepared"],
-    improvement: "Improve patient preparedness scores from 60% to 95%",
-    roi: "280% ROI through better prepared patients and improved outcomes"
-  }
-];
-
-// Visual scenario data with patient personas
-const visualScenarios = [
-  {
-    id: 1,
-    title: "Critical Leukemia Case",
-    patientType: "High-Urgency",
-    avatar: "👨‍⚕️",
-    timeline: "24 hours",
-    complexity: "high",
-    technologyMix: { automation: 40, ai: 60 },
-    outcome: "Success: 18-hour resolution",
-    journeyPath: [1, 2, 5, 6, 7],
-    keyDecisions: [
-      { step: 1, decision: "AI Priority", reason: "Urgent clinical triage needed" },
-      { step: 2, decision: "AI-Led", reason: "Emotional support critical" },
-      { step: 5, decision: "AI-Enhanced", reason: "Complex approval required" },
-      { step: 6, decision: "AI-Primary", reason: "Clinical complexity assessment" },
-      { step: 7, decision: "AI-Enhanced", reason: "Complex genomic testing authorization" }
-    ]
-  },
-  {
-    id: 2,
-    title: "Routine Breast Cancer",
-    patientType: "Standard Process",
-    avatar: "👩‍🦳",
-    timeline: "10 days",
-    complexity: "medium",
-    technologyMix: { automation: 70, ai: 30 },
-    outcome: "Success: 6-day completion",
-    journeyPath: [1, 2, 3, 4, 5, 8, 9],
-    keyDecisions: [
-      { step: 1, decision: "Automation", reason: "Standard referral processing" },
-      { step: 2, decision: "Hybrid", reason: "Personalized but predictable" },
-      { step: 3, decision: "Automation", reason: "Structured data collection" },
-      { step: 4, decision: "Automation", reason: "Standard record requests" },
-      { step: 8, decision: "Automation+", reason: "Efficient scheduling with AI optimization" },
-      { step: 9, decision: "AI-Enhanced", reason: "Personalized preparation materials" }
-    ]
+    improvement: "Digital automation reduces processing time from 2 days to 2 hours, with AI ensuring 95% form completion rates through intelligent prompting."
   },
   {
     id: 3,
-    title: "Pediatric Complex Case",
-    patientType: "Specialized Care",
-    avatar: "👶",
-    timeline: "48 hours",
-    complexity: "high",
-    technologyMix: { automation: 30, ai: 70 },
-    outcome: "Success: 36-hour coordination",
-    journeyPath: [1, 2, 4, 6, 7, 8, 9],
+    title: "Records Acquisition",
+    icon: Stethoscope,
+    time: "Day 2-5",
+    position: { x: 50, y: 15 },
+    emotion: "negative",
+    emotionIcon: ThumbsDown,
+    approach: "hybrid",
+    description: "Obtaining comprehensive medical records from multiple sources",
+    automationPrimary: false,
+    roi: "50% faster acquisition",
+    automationTasks: [
+      "Automated record requests to common healthcare systems",
+      "Digital fax and secure messaging coordination",
+      "Document status tracking and follow-up reminders",
+      "OCR processing for scanned documents"
+    ],
+    aiTasks: [
+      "Intelligent prioritization of critical records",
+      "Complex healthcare network navigation",
+      "Medical record summarization and key finding extraction",
+      "Quality assessment of received documentation"
+    ],
+    whyAutomation: "Routine communication and document processing tasks that follow standard protocols",
+    whyAI: "Complex decision-making about record prioritization and quality assessment requires contextual understanding",
+    phases: [
+      "Automate basic record request workflows",
+      "Deploy AI for record prioritization and quality assessment",
+      "Implement advanced summarization capabilities"
+    ],
+    currentIssues: [
+      "Manual follow-ups causing 5-7 day delays",
+      "25% of records received are incomplete or poor quality",
+      "Staff unable to identify critical information quickly"
+    ],
+    improvement: "Automated requests with AI prioritization reduce acquisition time by 50% while ensuring 90% completeness through intelligent quality checks."
+  },
+  {
+    id: 4,
+    title: "Insurance Authorization",
+    icon: Shield,
+    time: "Day 3-7",
+    position: { x: 70, y: 15 },
+    emotion: "critical",
+    emotionIcon: AlertTriangle,
+    approach: "hybrid",
+    description: "Securing insurance approvals and managing prior authorizations",
+    automationPrimary: true,
+    roi: "40% approval rate increase",
+    automationTasks: [
+      "Automated prior authorization form completion",
+      "Real-time insurance eligibility verification",
+      "Standardized appeal letter generation",
+      "Status tracking and deadline monitoring"
+    ],
+    aiTasks: [
+      "Complex case documentation and justification",
+      "Appeal strategy optimization based on historical data",
+      "Personalized communication with insurance representatives",
+      "Predictive approval likelihood assessment"
+    ],
+    whyAutomation: "Form submission and status tracking processes that follow standard insurance protocols",
+    whyAI: "Complex case justification and appeal strategies that require nuanced understanding of medical necessity",
+    phases: [
+      "Implement automated form submission systems",
+      "Deploy AI for case documentation and appeal strategies",
+      "Integrate predictive analytics for approval optimization"
+    ],
+    currentIssues: [
+      "40% initial denial rate due to incomplete documentation",
+      "Appeal process taking 2-3 weeks with manual intervention",
+      "Staff unable to predict approval likelihood effectively"
+    ],
+    improvement: "AI-optimized documentation increases initial approval rates to 75%, while automated appeals reduce processing time to 5-7 days."
+  },
+  {
+    id: 5,
+    title: "Clinical Review",
+    icon: Target,
+    time: "Day 7-10",
+    position: { x: 90, y: 15 },
+    emotion: "positive",
+    emotionIcon: ThumbsUp,
+    approach: "agentic",
+    description: "Comprehensive clinical assessment and treatment planning",
+    automationPrimary: false,
+    roi: "30% improved outcomes",
+    automationTasks: [
+      "Clinical data aggregation and standardization",
+      "Guideline compliance checking",
+      "Risk score calculations",
+      "Report template generation"
+    ],
+    aiTasks: [
+      "Complex case analysis and differential diagnosis support",
+      "Personalized treatment plan recommendations",
+      "Multi-disciplinary care coordination",
+      "Evidence-based therapy selection optimization"
+    ],
+    whyAutomation: "Data aggregation and standard compliance checks that follow established clinical protocols",
+    whyAI: "Complex clinical reasoning and personalized treatment planning that require deep medical knowledge",
+    phases: [
+      "Automate data aggregation and basic compliance checking",
+      "Deploy AI for clinical decision support",
+      "Implement advanced treatment optimization algorithms"
+    ],
+    currentIssues: [
+      "Manual chart review taking 3-4 hours per case",
+      "Inconsistent treatment recommendations across providers",
+      "Limited consideration of patient-specific factors"
+    ],
+    improvement: "AI-assisted clinical review reduces time to 1 hour while improving treatment personalization and consistency across care teams."
+  },
+  {
+    id: 6,
+    title: "Genomic Testing",
+    icon: Dna,
+    time: "Day 10-15",
+    position: { x: 10, y: 55 },
+    emotion: "neutral",
+    emotionIcon: Meh,
+    approach: "hybrid",
+    description: "Coordinating genetic testing and biomarker analysis",
+    automationPrimary: true,
+    roi: "25% cost reduction",
+    automationTasks: [
+      "Test ordering and sample tracking",
+      "Results processing and quality control",
+      "Insurance coverage verification",
+      "Laboratory communication coordination"
+    ],
+    aiTasks: [
+      "Intelligent test selection based on clinical presentation",
+      "Complex genomic data interpretation",
+      "Treatment matching based on biomarker profiles",
+      "Family history analysis for hereditary risk assessment"
+    ],
+    whyAutomation: "Laboratory coordination and sample tracking processes that follow standardized protocols",
+    whyAI: "Complex genomic interpretation and treatment matching that require specialized knowledge",
+    phases: [
+      "Automate test ordering and tracking systems",
+      "Deploy AI for genomic data interpretation",
+      "Implement advanced treatment matching algorithms"
+    ],
+    currentIssues: [
+      "Manual test selection leading to 20% inappropriate orders",
+      "Result interpretation taking 2-3 days",
+      "Limited integration between genomic and clinical data"
+    ],
+    improvement: "AI-guided test selection reduces inappropriate orders by 80%, while automated interpretation provides results in 4-6 hours."
+  },
+  {
+    id: 7,
+    title: "Appointment Scheduling",
+    icon: Calendar,
+    time: "Day 12-18",
+    position: { x: 30, y: 55 },
+    emotion: "positive",
+    emotionIcon: ThumbsUp,
+    approach: "hybrid",
+    description: "Coordinating multi-disciplinary appointments and care timeline",
+    automationPrimary: true,
+    roi: "60% scheduling efficiency",
+    automationTasks: [
+      "Availability checking across multiple providers",
+      "Automated appointment confirmation and reminders",
+      "Resource allocation and room scheduling",
+      "Transportation and logistics coordination"
+    ],
+    aiTasks: [
+      "Intelligent scheduling optimization for care continuity",
+      "Personalized appointment timing based on patient preferences",
+      "Complex multi-provider coordination",
+      "Predictive scheduling for follow-up care needs"
+    ],
+    whyAutomation: "Calendar management and confirmation processes that can be standardized and scaled",
+    whyAI: "Complex optimization problems and personalized scheduling that require intelligent coordination",
+    phases: [
+      "Implement automated scheduling and confirmation systems",
+      "Deploy AI for optimization and personalization",
+      "Integrate predictive scheduling for care coordination"
+    ],
+    currentIssues: [
+      "Manual scheduling causing 2-week delays",
+      "30% no-show rate due to poor timing",
+      "Inefficient provider utilization and resource allocation"
+    ],
+    improvement: "AI-optimized scheduling reduces delays to 3-5 days while improving show rates to 85% through personalized timing."
+  },
+  {
+    id: 8,
+    title: "Pre-Visit Preparation",
+    icon: CheckCircle,
+    time: "Day 15-20",
+    position: { x: 50, y: 55 },
+    emotion: "positive",
+    emotionIcon: Star,
+    approach: "agentic",
+    description: "Comprehensive preparation for patient consultation",
+    automationPrimary: false,
+    roi: "45% visit productivity",
+    automationTasks: [
+      "Document preparation and chart organization",
+      "Patient education material compilation",
+      "Consent form preparation and e-signature",
+      "Pre-visit questionnaire processing"
+    ],
+    aiTasks: [
+      "Personalized education content curation",
+      "Complex case summarization for providers",
+      "Intelligent question generation for consultation",
+      "Risk assessment and discussion point prioritization"
+    ],
+    whyAutomation: "Document preparation and standard questionnaire processing that follow established workflows",
+    whyAI: "Personalized content curation and complex case analysis that require contextual understanding",
+    phases: [
+      "Automate document preparation and questionnaire processing",
+      "Deploy AI for personalized content and case summarization",
+      "Implement intelligent consultation planning tools"
+    ],
+    currentIssues: [
+      "Manual preparation taking 2-3 hours per patient",
+      "Generic education materials with poor engagement",
+      "Providers unprepared for complex case discussions"
+    ],
+    improvement: "AI-driven preparation reduces time to 30 minutes while increasing patient engagement by 70% through personalized materials."
+  },
+  {
+    id: 9,
+    title: "Care Coordination",
+    icon: Users,
+    time: "Day 18-25",
+    position: { x: 70, y: 55 },
+    emotion: "positive",
+    emotionIcon: ThumbsUp,
+    approach: "agentic",
+    description: "Orchestrating ongoing care across multiple specialties",
+    automationPrimary: false,
+    roi: "35% coordination efficiency",
+    automationTasks: [
+      "Communication routing and tracking",
+      "Task assignment and deadline monitoring",
+      "Status reporting and dashboard updates",
+      "Basic care plan distribution"
+    ],
+    aiTasks: [
+      "Intelligent care team assembly",
+      "Dynamic care plan optimization",
+      "Complex communication prioritization",
+      "Proactive issue identification and resolution"
+    ],
+    whyAutomation: "Communication routing and task tracking that can be systematized and monitored",
+    whyAI: "Complex care team coordination and dynamic plan optimization that require strategic thinking",
+    phases: [
+      "Automate communication routing and task tracking",
+      "Deploy AI for care team optimization",
+      "Implement proactive care management capabilities"
+    ],
+    currentIssues: [
+      "Poor communication causing 25% care delays",
+      "Fragmented care plans with limited coordination",
+      "Reactive approach to patient issues and complications"
+    ],
+    improvement: "AI-orchestrated care coordination reduces delays by 60% while enabling proactive issue resolution through predictive analytics."
+  }
+];
+
+// Visual scenarios data
+const visualScenarios = [
+  {
+    id: 1,
+    avatar: "👩‍⚕️",
+    title: "Sarah Chen - Routine Breast Cancer",
+    patientType: "Early-stage breast cancer, otherwise healthy",
+    complexity: "low",
+    timeline: "18 days",
+    technologyMix: { automation: 75, ai: 25 },
+    journeyPath: [1, 2, 4, 5, 7, 8],
     keyDecisions: [
-      { step: 1, decision: "AI-Enhanced", reason: "Rare condition recognition" },
-      { step: 2, decision: "AI-Primary", reason: "Family support coordination" },
+      { step: 1, decision: "Automation-Primary", reason: "Standard referral processing" },
+      { step: 2, decision: "Automation-Standard", reason: "Routine data collection" },
+      { step: 4, decision: "Automation-Insurance", reason: "Standard authorization process" },
+      { step: 5, decision: "AI-Standard", reason: "Standard treatment protocols" },
+      { step: 7, decision: "Automation-Simple", reason: "Straightforward scheduling" },
+      { step: 8, decision: "AI-Education", reason: "Personalized patient education" }
+    ],
+    outcome: "Completed journey in 18 days with high patient satisfaction and efficient resource utilization."
+  },
+  {
+    id: 2,
+    avatar: "👨‍💼",
+    title: "Michael Rodriguez - Complex Pancreatic",
+    patientType: "Advanced pancreatic cancer with comorbidities",
+    complexity: "high",
+    timeline: "25 days",
+    technologyMix: { automation: 40, ai: 60 },
+    journeyPath: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    keyDecisions: [
+      { step: 1, decision: "AI-Complex", reason: "Multi-comorbidity assessment" },
+      { step: 2, decision: "AI-Adaptive", reason: "Complex medical history" },
+      { step: 3, decision: "AI-Priority", reason: "Critical record prioritization" },
+      { step: 4, decision: "AI-Appeal", reason: "Complex case justification needed" },
+      { step: 5, decision: "AI-Multi", reason: "Multi-disciplinary planning" },
+      { step: 6, decision: "AI-Genomic", reason: "Advanced biomarker analysis" },
+      { step: 7, decision: "AI-Coordinate", reason: "Multi-specialist scheduling" },
+      { step: 8, decision: "AI-Complex", reason: "Extensive preparation needed" },
+      { step: 9, decision: "AI-Orchestrate", reason: "Complex care coordination" }
+    ],
+    outcome: "Successfully navigated complex care pathway with optimized treatment plan and coordinated multi-specialty care."
+  },
+  {
+    id: 3,
+    avatar: "👶",
+    title: "Emma Thompson - Pediatric Leukemia",
+    patientType: "7-year-old with acute lymphoblastic leukemia",
+    complexity: "high",
+    timeline: "22 days",
+    technologyMix: { automation: 30, ai: 70 },
+    journeyPath: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    keyDecisions: [
+      { step: 1, decision: "AI-Pediatric", reason: "Specialized pediatric protocols" },
+      { step: 2, decision: "AI-Family", reason: "Family-centered data collection" },
+      { step: 3, decision: "AI-Pediatric", reason: "Specialized records needed" },
       { step: 4, decision: "AI-Heavy", reason: "Specialist record analysis" },
       { step: 6, decision: "AI-Expert", reason: "Multi-disciplinary planning" },
       { step: 7, decision: "AI-Complex", reason: "Specialized pediatric testing" },
       { step: 8, decision: "AI-Coordinated", reason: "Multi-specialist scheduling" },
       { step: 9, decision: "AI-Family", reason: "Age-appropriate education and family support" }
-    ]
+    ],
+    outcome: "Delivered family-centered care with age-appropriate communication and comprehensive support systems."
   }
 ];
 
 const BusinessUseCases = () => {
-  const [activeView, setActiveView] = useState<"journey" | "scenarios">("journey");
   const [selectedStep, setSelectedStep] = useState<number | null>(null);
   const [selectedScenario, setSelectedScenario] = useState<number | null>(null);
   const [showDecisionFramework, setShowDecisionFramework] = useState(true);
@@ -468,38 +472,33 @@ const BusinessUseCases = () => {
       case "neutral": return "bg-yellow-100 border-yellow-300 text-yellow-800";
       case "negative": return "bg-orange-100 border-orange-300 text-orange-800";
       case "critical": return "bg-red-100 border-red-300 text-red-800";
-      default: return "bg-gray-100 border-gray-300 text-gray-800";
-    }
-  };
-
-  const getApproachIcon = (approach: string) => {
-    switch (approach) {
-      case "automation": return <Wrench className="h-4 w-4 text-blue-500" />;
-      case "agentic": return <Bot className="h-4 w-4 text-purple-500" />;
-      case "hybrid": return (
-        <div className="flex items-center gap-1">
-          <Wrench className="h-3 w-3 text-blue-500" />
-          <Bot className="h-3 w-3 text-purple-500" />
-        </div>
-      );
-      default: return <Target className="h-4 w-4 text-gray-500" />;
+      default: return "border-gray-300 bg-gray-50";
     }
   };
 
   const getApproachColor = (approach: string) => {
     switch (approach) {
-      case "automation": return "border-blue-200 bg-blue-50";
-      case "agentic": return "border-purple-200 bg-purple-50";
-      case "hybrid": return "border-indigo-200 bg-gradient-to-br from-blue-50 to-purple-50";
-      default: return "border-gray-200 bg-gray-50";
+      case "automation": return "bg-blue-100 border-blue-300 text-blue-800";
+      case "agentic": return "bg-purple-100 border-purple-300 text-purple-800";
+      case "hybrid": return "bg-indigo-100 border-indigo-300 text-indigo-800";
+      default: return "border-gray-300 bg-gray-50";
+    }
+  };
+
+  const getApproachIcon = (approach: string) => {
+    switch (approach) {
+      case "automation": return <Cog className="h-3 w-3" />;
+      case "agentic": return <Brain className="h-3 w-3" />;
+      case "hybrid": return <Layers className="h-3 w-3" />;
+      default: return <Settings className="h-3 w-3" />;
     }
   };
 
   const getComplexityColor = (complexity: string) => {
     switch (complexity) {
-      case "high": return "border-red-300 bg-red-50";
-      case "medium": return "border-orange-300 bg-orange-50";  
-      case "low": return "border-green-300 bg-green-50";
+      case "low": return "bg-green-100 border-green-300 text-green-800";
+      case "medium": return "bg-yellow-100 border-yellow-300 text-yellow-800";
+      case "high": return "bg-red-100 border-red-300 text-red-800";
       default: return "border-gray-300 bg-gray-50";
     }
   };
@@ -521,32 +520,74 @@ const BusinessUseCases = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-2xl flex items-center gap-2">
-              <Brain className="h-6 w-6 text-indigo-500" />
-              Technology Selection Framework
+              <Target className="h-6 w-6 text-blue-500" />
+              Strategic Technology Decision Framework
             </CardTitle>
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="outline"
               size="sm"
               onClick={() => setShowDecisionFramework(!showDecisionFramework)}
+              className="flex items-center gap-2"
             >
-              {showDecisionFramework ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+              {showDecisionFramework ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />}
+              {showDecisionFramework ? "Hide" : "Show"} Framework
             </Button>
           </div>
+          <p className="text-muted-foreground">
+            Core principles for choosing between automation and agentic AI approaches in healthcare workflows
+          </p>
         </CardHeader>
         {showDecisionFramework && (
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
-              {Object.entries(decisionFramework).map(([key, framework]) => (
-                <Card key={key} className={`hover-scale transition-all duration-300 ${getApproachColor(key)}`}>
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <framework.icon className="h-8 w-8" />
-                      <h3 className="text-lg font-bold">{framework.title}</h3>
-                    </div>
-                    <ul className="space-y-3 text-sm">
-                      {framework.criteria.map((criterion, index) => (
+              {[
+                {
+                  title: "Automation-First Scenarios",
+                  icon: Cog,
+                  color: "blue",
+                  criteria: [
+                    "High-volume, repetitive tasks",
+                    "Standardized workflows with clear rules",
+                    "Data entry and validation processes",
+                    "Scheduled communications and reminders",
+                    "Basic compliance and guideline checking"
+                  ]
+                },
+                {
+                  title: "AI-First Scenarios", 
+                  icon: Brain,
+                  color: "purple",
+                  criteria: [
+                    "Complex decision-making with multiple variables",
+                    "Personalized patient interactions",
+                    "Clinical reasoning and diagnostic support",
+                    "Dynamic care plan optimization",
+                    "Unstructured data analysis and interpretation"
+                  ]
+                },
+                {
+                  title: "Hybrid Approaches",
+                  icon: Layers,
+                  color: "indigo", 
+                  criteria: [
+                    "Workflows requiring both efficiency and intelligence",
+                    "Processes with standard and exception paths",
+                    "Quality assurance with automated checking + AI oversight",
+                    "Patient engagement with automation + personalization",
+                    "Care coordination with task automation + strategic AI"
+                  ]
+                }
+              ].map((category) => (
+                <Card key={category.title} className={`bg-${category.color}-50 border-${category.color}-200`}>
+                  <CardContent className="p-4">
+                    <h3 className={`font-semibold text-${category.color}-800 mb-3 flex items-center gap-2`}>
+                      <category.icon className="h-5 w-5" />
+                      {category.title}
+                    </h3>
+                    <ul className={`space-y-2 text-sm text-${category.color}-700`}>
+                      {category.criteria.map((criterion, index) => (
                         <li key={index} className="flex items-start gap-2">
-                          <CheckCircle className="h-4 w-4 mt-0.5 flex-shrink-0 text-green-600" />
+                          <CheckCircle className={`h-3 w-3 text-${category.color}-500 mt-1 flex-shrink-0`} />
                           {criterion}
                         </li>
                       ))}
@@ -559,364 +600,326 @@ const BusinessUseCases = () => {
         )}
       </Card>
 
-      {/* Navigation Tabs */}
-      <div className="flex justify-center">
-        <Tabs value={activeView} onValueChange={(value) => setActiveView(value as any)} className="w-full max-w-xl">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="journey" className="flex items-center gap-2">
-              <Workflow className="h-4 w-4" />
-              Visual Journey Flow
-            </TabsTrigger>
-            <TabsTrigger value="scenarios" className="flex items-center gap-2">
-              <Activity className="h-4 w-4" />
-              Patient Scenarios
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </div>
-
       {/* Visual Journey Flow */}
-      {activeView === "journey" && (
-        <div className="space-y-8">
-          <Card className="animate-fade-in">
-            <CardHeader>
-              <CardTitle className="text-2xl flex items-center gap-2">
-                <Network className="h-6 w-6 text-blue-500" />
-                Interactive Patient Journey Map
-              </CardTitle>
-              <p className="text-muted-foreground">Click on any step to see detailed technology analysis</p>
-            </CardHeader>
-            <CardContent>
-              {/* Non-linear Journey Visualization */}
-              <div className="relative h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-6 overflow-hidden">
-                {/* Connection Lines */}
-                <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
-                  {journeySteps.map((step, index) => {
-                    if (index < journeySteps.length - 1) {
-                      const nextStep = journeySteps[index + 1];
-                      return (
-                        <line
-                          key={`line-${step.id}`}
-                          x1={`${step.position.x}%`}
-                          y1={`${step.position.y}%`}
-                          x2={`${nextStep.position.x}%`}
-                          y2={`${nextStep.position.y}%`}
-                          stroke="#e5e7eb"
-                          strokeWidth="2"
-                          strokeDasharray="5,5"
-                        />
-                      );
-                    }
-                    return null;
-                  })}
-                </svg>
+      <div className="space-y-8">
+        <Card className="animate-fade-in">
+          <CardHeader>
+            <CardTitle className="text-2xl flex items-center gap-2">
+              <Network className="h-6 w-6 text-blue-500" />
+              Interactive Patient Journey Map
+            </CardTitle>
+            <p className="text-muted-foreground">Click on any step to see detailed technology analysis and scenarios</p>
+          </CardHeader>
+          <CardContent>
+            {/* Non-linear Journey Visualization */}
+            <div className="relative h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-6 overflow-hidden">
+              {/* Connection Lines */}
+              <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
+                {journeySteps.map((step, index) => {
+                  if (index < journeySteps.length - 1) {
+                    const nextStep = journeySteps[index + 1];
+                    return (
+                      <line
+                        key={`line-${step.id}`}
+                        x1={`${step.position.x}%`}
+                        y1={`${step.position.y}%`}
+                        x2={`${nextStep.position.x}%`}
+                        y2={`${nextStep.position.y}%`}
+                        stroke="#e5e7eb"
+                        strokeWidth="2"
+                        strokeDasharray="5,5"
+                      />
+                    );
+                  }
+                  return null;
+                })}
+              </svg>
 
-                {/* Journey Steps */}
-                {journeySteps.map((step) => (
-                  <div 
-                    key={step.id}
-                    className={`absolute cursor-pointer transition-all duration-300 hover:scale-110 ${
-                      selectedStep === step.id ? 'scale-110 z-20' : 'z-10'
-                    }`}
-                    style={{
-                      left: `${step.position.x}%`,
-                      top: `${step.position.y}%`,
-                      transform: 'translate(-50%, -50%)'
-                    }}
-                    onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}
-                  >
-                    <Card className={`w-32 ${getApproachColor(step.approach)} ${
-                      selectedStep === step.id ? 'ring-2 ring-blue-400 shadow-xl' : 'shadow-md'
-                    }`}>
-                      <CardContent className="p-3 text-center">
-                        <div className="flex justify-center mb-2">
-                          <step.icon className="h-6 w-6" />
-                        </div>
-                        <div className="text-xs font-medium mb-1">{step.title}</div>
-                        <div className="text-xs text-muted-foreground mb-2">{step.time}</div>
-                        <div className="flex justify-center items-center gap-1">
-                          {getApproachIcon(step.approach)}
-                          <step.emotionIcon className={`h-3 w-3 ${
-                            step.emotion === 'positive' ? 'text-green-500' :
-                            step.emotion === 'negative' ? 'text-orange-500' :
-                            step.emotion === 'critical' ? 'text-red-500' : 'text-yellow-500'
-                          }`} />
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                ))}
-              </div>
-
-              {/* Selected Step Details */}
-              {selectedStep && (
-                <Card className="mt-6 animate-scale-in">
-                  <CardContent className="p-6">
-                    {(() => {
-                      const step = journeySteps.find(s => s.id === selectedStep);
-                      if (!step) return null;
-                      
-                      return (
-                        <div className="space-y-6">
-                          {/* Step Header */}
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h3 className="text-2xl font-bold flex items-center gap-3">
-                                <step.icon className="h-8 w-8" />
-                                {step.title}
-                              </h3>
-                              <p className="text-muted-foreground mt-1">{step.description}</p>
-                            </div>
-                            <div className="text-right">
-                              <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${getApproachColor(step.approach)}`}>
-                                {getApproachIcon(step.approach)}
-                                <span className="capitalize">{step.approach} Approach</span>
-                                {step.automationPrimary ? " (Automation Primary)" : " (AI Primary)"}
-                              </div>
-                              <div className="text-xs text-muted-foreground mt-1">{step.roi}</div>
-                            </div>
-                          </div>
-
-                          {/* Technology Analysis */}
-                          <div className="grid md:grid-cols-2 gap-6">
-                            <Card className="bg-blue-50 border-blue-200">
-                              <CardContent className="p-4">
-                                <h4 className="font-semibold text-blue-800 mb-3 flex items-center gap-2">
-                                  <Wrench className="h-4 w-4" />
-                                  Automation Tasks
-                                </h4>
-                                <ul className="space-y-2 text-sm text-blue-700">
-                                  {step.automationTasks.map((task, index) => (
-                                    <li key={index} className="flex items-start gap-2">
-                                      <Cog className="h-3 w-3 text-blue-500 mt-1 flex-shrink-0" />
-                                      {task}
-                                    </li>
-                                  ))}
-                                </ul>
-                                <div className="mt-3 p-2 bg-blue-100 rounded text-xs">
-                                  <strong>Why Automation:</strong> {step.whyAutomation}
-                                </div>
-                              </CardContent>
-                            </Card>
-                            
-                            <Card className="bg-purple-50 border-purple-200">
-                              <CardContent className="p-4">
-                                <h4 className="font-semibold text-purple-800 mb-3 flex items-center gap-2">
-                                  <Bot className="h-4 w-4" />
-                                  Agentic AI Tasks
-                                </h4>
-                                <ul className="space-y-2 text-sm text-purple-700">
-                                  {step.aiTasks.map((task, index) => (
-                                    <li key={index} className="flex items-start gap-2">
-                                      <Brain className="h-3 w-3 text-purple-500 mt-1 flex-shrink-0" />
-                                      {task}
-                                    </li>
-                                  ))}
-                                </ul>
-                                <div className="mt-3 p-2 bg-purple-100 rounded text-xs">
-                                  <strong>Why AI:</strong> {step.whyAI}
-                                </div>
-                              </CardContent>
-                            </Card>
-                          </div>
-
-                          {/* Implementation Phases */}
-                          <Card className="bg-green-50 border-green-200">
-                            <CardContent className="p-4">
-                              <h4 className="font-semibold text-green-800 mb-3 flex items-center gap-2">
-                                <Clock className="h-4 w-4" />
-                                Implementation Strategy
-                              </h4>
-                              <div className="space-y-2">
-                                {step.phases.map((phase, index) => (
-                                  <div key={index} className="flex items-start gap-3 text-sm text-green-700">
-                                    <div className="w-6 h-6 rounded-full bg-green-200 text-green-800 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-                                      {index + 1}
-                                    </div>
-                                    {phase}
-                                  </div>
-                                ))}
-                              </div>
-                            </CardContent>
-                          </Card>
-
-                          {/* Current vs Future */}
-                          <div className="grid md:grid-cols-2 gap-4">
-                            <Card className="bg-red-50 border-red-200">
-                              <CardContent className="p-4">
-                                <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
-                                  <AlertTriangle className="h-4 w-4" />
-                                  Current Issues
-                                </h4>
-                                <ul className="space-y-1 text-sm text-red-700">
-                                  {step.currentIssues.map((issue, index) => (
-                                    <li key={index} className="flex items-start gap-2">
-                                      <div className="w-1 h-1 bg-red-500 rounded-full mt-2 flex-shrink-0" />
-                                      {issue}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </CardContent>
-                            </Card>
-                            
-                            <Card className="bg-green-50 border-green-200">
-                              <CardContent className="p-4">
-                                <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                                  <TrendingUp className="h-4 w-4" />
-                                  Expected Improvement
-                                </h4>
-                                <p className="text-sm text-green-700">{step.improvement}</p>
-                              </CardContent>
-                            </Card>
-                          </div>
-                        </div>
-                      );
-                    })()}
-                  </CardContent>
-                </Card>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      {/* Patient Scenarios View */}
-      {activeView === "scenarios" && (
-        <div className="space-y-6">
-          <Card className="animate-fade-in">
-            <CardHeader>
-              <CardTitle className="text-2xl flex items-center gap-2">
-                <Users className="h-6 w-6 text-blue-500" />
-                Patient Journey Scenarios with Technology Decisions
-              </CardTitle>
-              <p className="text-muted-foreground">See how different patient types navigate the journey with optimal technology approaches</p>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-8">
-                {visualScenarios.map((scenario) => (
-                  <Card 
-                    key={scenario.id} 
-                    className={`hover-scale transition-all duration-300 cursor-pointer ${
-                      selectedScenario === scenario.id ? 'ring-2 ring-blue-400 shadow-lg' : ''
-                    }`}
-                    onClick={() => setSelectedScenario(selectedScenario === scenario.id ? null : scenario.id)}
-                  >
-                    <CardContent className="p-6">
-                      <div className="space-y-6">
-                        {/* Scenario Header */}
-                        <div className="grid md:grid-cols-4 gap-4">
-                          <div className="md:col-span-2">
-                            <div className="flex items-center gap-3 mb-2">
-                              <div className="text-4xl">{scenario.avatar}</div>
-                              <div>
-                                <h3 className="font-bold text-xl">{scenario.title}</h3>
-                                <p className="text-sm text-muted-foreground">{scenario.patientType}</p>
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <Card className={`${getComplexityColor(scenario.complexity)}`}>
-                            <CardContent className="p-4 text-center">
-                              <h4 className="font-semibold mb-1">Timeline</h4>
-                              <div className="text-lg font-bold">{scenario.timeline}</div>
-                            </CardContent>
-                          </Card>
-                          
-                          <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-indigo-200">
-                            <CardContent className="p-4 text-center">
-                              <h4 className="font-semibold mb-2">Technology Mix</h4>
-                              <div className="flex justify-between text-xs">
-                                <span>Auto: {scenario.technologyMix.automation}%</span>
-                                <span>AI: {scenario.technologyMix.ai}%</span>
-                              </div>
-                              <Progress value={scenario.technologyMix.automation} className="mt-2" />
-                            </CardContent>
-                          </Card>
-                        </div>
-
-                        {/* Journey Path Visualization */}
-                        <div className="bg-gray-50 rounded-lg p-4">
-                          <h4 className="font-semibold mb-3">Patient Journey Path</h4>
-                          <div className="flex items-center gap-2 overflow-x-auto">
-                            {scenario.journeyPath.map((stepId, index) => {
-                              const step = journeySteps.find(s => s.id === stepId);
-                              if (!step) return null;
-                              
-                              return (
-                                <div key={stepId} className="flex items-center gap-2">
-                                  <Card className={`${getApproachColor(step.approach)} min-w-24`}>
-                                    <CardContent className="p-2 text-center">
-                                      <step.icon className="h-4 w-4 mx-auto mb-1" />
-                                      <div className="text-xs font-medium">{step.title}</div>
-                                    </CardContent>
-                                  </Card>
-                                  {index < scenario.journeyPath.length - 1 && (
-                                    <ArrowRight className="h-4 w-4 text-muted-foreground" />
-                                  )}
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-
-                        {/* Expanded Details */}
-                        {selectedScenario === scenario.id && (
-                          <div className="animate-scale-in space-y-4">
-                            <Separator />
-                            
-                            {/* Key Technology Decisions */}
-                            <div>
-                              <h4 className="font-semibold mb-4">Key Technology Decisions at Each Step</h4>
-                              <div className="grid md:grid-cols-2 gap-4">
-                                {scenario.keyDecisions.map((decision, index) => {
-                                  const step = journeySteps.find(s => s.id === decision.step);
-                                  if (!step) return null;
-                                  
-                                  return (
-                                    <Card key={index} className="bg-amber-50 border-amber-200">
-                                      <CardContent className="p-4">
-                                        <div className="flex items-center gap-2 mb-2">
-                                          <step.icon className="h-4 w-4" />
-                                          <span className="font-semibold text-sm">{step.title}</span>
-                                        </div>
-                                        <div className="space-y-2">
-                                          <div className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium ${
-                                            decision.decision.includes('AI') ? 'bg-purple-100 text-purple-800' : 
-                                            decision.decision.includes('Automation') ? 'bg-blue-100 text-blue-800' :
-                                            'bg-indigo-100 text-indigo-800'
-                                          }`}>
-                                            {decision.decision}
-                                          </div>
-                                          <p className="text-xs text-amber-700">{decision.reason}</p>
-                                        </div>
-                                      </CardContent>
-                                    </Card>
-                                  );
-                                })}
-                              </div>
-                            </div>
-
-                            {/* Outcome */}
-                            <Card className="bg-green-50 border-green-200">
-                              <CardContent className="p-4">
-                                <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                                  <CheckCircle className="h-4 w-4" />
-                                  Achieved Outcome
-                                </h4>
-                                <p className="text-sm text-green-700">{scenario.outcome}</p>
-                              </CardContent>
-                            </Card>
-                          </div>
-                        )}
+              {/* Journey Steps */}
+              {journeySteps.map((step) => (
+                <div 
+                  key={step.id}
+                  className={`absolute cursor-pointer transition-all duration-300 hover:scale-110 ${
+                    selectedStep === step.id ? 'scale-110 z-20' : 'z-10'
+                  }`}
+                  style={{
+                    left: `${step.position.x}%`,
+                    top: `${step.position.y}%`,
+                    transform: 'translate(-50%, -50%)'
+                  }}
+                  onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}
+                >
+                  <Card className={`w-32 ${getApproachColor(step.approach)} ${
+                    selectedStep === step.id ? 'ring-2 ring-blue-400 shadow-xl' : 'shadow-md'
+                  }`}>
+                    <CardContent className="p-3 text-center">
+                      <div className="flex justify-center mb-2">
+                        <step.icon className="h-6 w-6" />
+                      </div>
+                      <div className="text-xs font-medium mb-1">{step.title}</div>
+                      <div className="text-xs text-muted-foreground mb-2">{step.time}</div>
+                      <div className="flex justify-center items-center gap-1">
+                        {getApproachIcon(step.approach)}
+                        <step.emotionIcon className={`h-3 w-3 ${
+                          step.emotion === 'positive' ? 'text-green-500' :
+                          step.emotion === 'negative' ? 'text-orange-500' :
+                          step.emotion === 'critical' ? 'text-red-500' : 'text-yellow-500'
+                        }`} />
                       </div>
                     </CardContent>
                   </Card>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+                </div>
+              ))}
+            </div>
+
+            {/* Step Details with Tabs */}
+            {selectedStep && (
+              <Card className="mt-8 animate-scale-in">
+                <CardContent className="p-6">
+                  {(() => {
+                    const step = journeySteps.find(s => s.id === selectedStep);
+                    if (!step) return null;
+
+                    return (
+                      <div className="space-y-6">
+                        {/* Step Header */}
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h3 className="text-2xl font-bold text-foreground flex items-center gap-3">
+                              <step.icon className="h-8 w-8 text-primary" />
+                              {step.title}
+                            </h3>
+                            <p className="text-muted-foreground mt-1">{step.description}</p>
+                          </div>
+                          <div className="text-right">
+                            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${getApproachColor(step.approach)}`}>
+                              {getApproachIcon(step.approach)}
+                              <span className="capitalize">{step.approach} Approach</span>
+                              {step.automationPrimary ? " (Automation Primary)" : " (AI Primary)"}
+                            </div>
+                            <div className="text-xs text-muted-foreground mt-1">{step.roi}</div>
+                          </div>
+                        </div>
+
+                        {/* Technology Analysis Tabs */}
+                        <Tabs defaultValue="analysis" className="w-full">
+                          <TabsList className="grid w-full grid-cols-2">
+                            <TabsTrigger value="analysis" className="flex items-center gap-2">
+                              <Wrench className="h-4 w-4" />
+                              Technology Analysis
+                            </TabsTrigger>
+                            <TabsTrigger value="scenarios" className="flex items-center gap-2">
+                              <Users className="h-4 w-4" />
+                              Patient Scenarios
+                            </TabsTrigger>
+                          </TabsList>
+
+                          <TabsContent value="analysis" className="space-y-6 mt-6">
+                            {/* Technology Analysis */}
+                            <div className="grid md:grid-cols-2 gap-6">
+                              <Card className="bg-blue-50 border-blue-200">
+                                <CardContent className="p-4">
+                                  <h4 className="font-semibold text-blue-800 mb-3 flex items-center gap-2">
+                                    <Wrench className="h-4 w-4" />
+                                    Automation Tasks
+                                  </h4>
+                                  <ul className="space-y-2 text-sm text-blue-700">
+                                    {step.automationTasks.map((task, index) => (
+                                      <li key={index} className="flex items-start gap-2">
+                                        <Cog className="h-3 w-3 text-blue-500 mt-1 flex-shrink-0" />
+                                        {task}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                  <div className="mt-3 p-2 bg-blue-100 rounded text-xs">
+                                    <strong>Why Automation:</strong> {step.whyAutomation}
+                                  </div>
+                                </CardContent>
+                              </Card>
+                              
+                              <Card className="bg-purple-50 border-purple-200">
+                                <CardContent className="p-4">
+                                  <h4 className="font-semibold text-purple-800 mb-3 flex items-center gap-2">
+                                    <Bot className="h-4 w-4" />
+                                    Agentic AI Tasks
+                                  </h4>
+                                  <ul className="space-y-2 text-sm text-purple-700">
+                                    {step.aiTasks.map((task, index) => (
+                                      <li key={index} className="flex items-start gap-2">
+                                        <Brain className="h-3 w-3 text-purple-500 mt-1 flex-shrink-0" />
+                                        {task}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                  <div className="mt-3 p-2 bg-purple-100 rounded text-xs">
+                                    <strong>Why AI:</strong> {step.whyAI}
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            </div>
+
+                            {/* Implementation Phases */}
+                            <Card className="bg-green-50 border-green-200">
+                              <CardContent className="p-4">
+                                <h4 className="font-semibold text-green-800 mb-3 flex items-center gap-2">
+                                  <Clock className="h-4 w-4" />
+                                  Implementation Strategy
+                                </h4>
+                                <div className="space-y-2">
+                                  {step.phases.map((phase, index) => (
+                                    <div key={index} className="flex items-start gap-3 text-sm text-green-700">
+                                      <div className="w-6 h-6 rounded-full bg-green-200 text-green-800 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                                        {index + 1}
+                                      </div>
+                                      {phase}
+                                    </div>
+                                  ))}
+                                </div>
+                              </CardContent>
+                            </Card>
+
+                            {/* Current vs Future */}
+                            <div className="grid md:grid-cols-2 gap-4">
+                              <Card className="bg-red-50 border-red-200">
+                                <CardContent className="p-4">
+                                  <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
+                                    <AlertTriangle className="h-4 w-4" />
+                                    Current Issues
+                                  </h4>
+                                  <ul className="space-y-1 text-sm text-red-700">
+                                    {step.currentIssues.map((issue, index) => (
+                                      <li key={index} className="flex items-start gap-2">
+                                        <div className="w-1 h-1 bg-red-500 rounded-full mt-2 flex-shrink-0" />
+                                        {issue}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </CardContent>
+                              </Card>
+                              
+                              <Card className="bg-green-50 border-green-200">
+                                <CardContent className="p-4">
+                                  <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                                    <TrendingUp className="h-4 w-4" />
+                                    Expected Improvement
+                                  </h4>
+                                  <p className="text-sm text-green-700">{step.improvement}</p>
+                                </CardContent>
+                              </Card>
+                            </div>
+                          </TabsContent>
+
+                          <TabsContent value="scenarios" className="space-y-6 mt-6">
+                            {/* Patient Scenarios for this step */}
+                            <div className="space-y-6">
+                              {visualScenarios
+                                .filter(scenario => scenario.journeyPath.includes(selectedStep))
+                                .map((scenario) => (
+                                <Card 
+                                  key={scenario.id} 
+                                  className={`hover-scale transition-all duration-300 cursor-pointer ${
+                                    selectedScenario === scenario.id ? 'ring-2 ring-blue-400 shadow-lg' : ''
+                                  }`}
+                                  onClick={() => setSelectedScenario(selectedScenario === scenario.id ? null : scenario.id)}
+                                >
+                                  <CardContent className="p-6">
+                                    <div className="space-y-6">
+                                      {/* Scenario Header */}
+                                      <div className="grid md:grid-cols-4 gap-4">
+                                        <div className="md:col-span-2">
+                                          <div className="flex items-center gap-3 mb-2">
+                                            <div className="text-4xl">{scenario.avatar}</div>
+                                            <div>
+                                              <h3 className="font-bold text-xl">{scenario.title}</h3>
+                                              <p className="text-sm text-muted-foreground">{scenario.patientType}</p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        
+                                        <Card className={`${getComplexityColor(scenario.complexity)}`}>
+                                          <CardContent className="p-4 text-center">
+                                            <h4 className="font-semibold mb-1">Timeline</h4>
+                                            <div className="text-lg font-bold">{scenario.timeline}</div>
+                                          </CardContent>
+                                        </Card>
+                                        
+                                        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-indigo-200">
+                                          <CardContent className="p-4 text-center">
+                                            <h4 className="font-semibold mb-2">Technology Mix</h4>
+                                            <div className="flex justify-between text-xs">
+                                              <span>Auto: {scenario.technologyMix.automation}%</span>
+                                              <span>AI: {scenario.technologyMix.ai}%</span>
+                                            </div>
+                                            <Progress value={scenario.technologyMix.automation} className="mt-2" />
+                                          </CardContent>
+                                        </Card>
+                                      </div>
+
+                                      {/* Specific decision for this step */}
+                                      {selectedScenario === scenario.id && (() => {
+                                        const stepDecision = scenario.keyDecisions.find(d => d.step === selectedStep);
+                                        if (!stepDecision) return null;
+                                        
+                                        return (
+                                          <div className="animate-scale-in space-y-4">
+                                            <Separator />
+                                            <Card className="bg-amber-50 border-amber-200">
+                                              <CardContent className="p-4">
+                                                <div className="flex items-center gap-2 mb-2">
+                                                  <step.icon className="h-4 w-4" />
+                                                  <span className="font-semibold text-sm">Decision for {step.title}</span>
+                                                </div>
+                                                <div className="space-y-2">
+                                                  <div className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium ${
+                                                    stepDecision.decision.includes('AI') ? 'bg-purple-100 text-purple-800' : 
+                                                    stepDecision.decision.includes('Automation') ? 'bg-blue-100 text-blue-800' :
+                                                    'bg-indigo-100 text-indigo-800'
+                                                  }`}>
+                                                    {stepDecision.decision}
+                                                  </div>
+                                                  <p className="text-xs text-amber-700">{stepDecision.reason}</p>
+                                                </div>
+                                              </CardContent>
+                                            </Card>
+
+                                            <Card className="bg-green-50 border-green-200">
+                                              <CardContent className="p-4">
+                                                <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                                                  <CheckCircle className="h-4 w-4" />
+                                                  Expected Outcome for this Patient Type
+                                                </h4>
+                                                <p className="text-sm text-green-700">{scenario.outcome}</p>
+                                              </CardContent>
+                                            </Card>
+                                          </div>
+                                        );
+                                      })()}
+                                    </div>
+                                  </CardContent>
+                                </Card>
+                              ))}
+                              
+                              {visualScenarios.filter(scenario => scenario.journeyPath.includes(selectedStep)).length === 0 && (
+                                <Card className="bg-gray-50 border-gray-200">
+                                  <CardContent className="p-8 text-center">
+                                    <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                                    <h3 className="text-lg font-medium text-gray-600 mb-2">No Specific Scenarios</h3>
+                                    <p className="text-sm text-gray-500">This step doesn't have specific patient scenarios defined yet.</p>
+                                  </CardContent>
+                                </Card>
+                              )}
+                            </div>
+                          </TabsContent>
+                        </Tabs>
+                      </div>
+                    );
+                  })()}
+                </CardContent>
+              </Card>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
