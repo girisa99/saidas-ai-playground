@@ -2,6 +2,7 @@ import { NavigationHeader } from "@/components/NavigationHeader";
 import { MultiHeroSection } from "@/components/MultiHeroSection";
 import { TrustSection } from "@/components/TrustSection";
 import { StorySection } from "@/components/StorySection";
+import { AIExperimentationBanner } from "@/components/AIExperimentationBanner";
 import { ValueProposition } from "@/components/ValueProposition";
 
 import { QuickStart } from "@/components/QuickStart";
@@ -26,6 +27,7 @@ const Index = () => {
         <MultiHeroSection />
         <TrustSection />
         <StorySection />
+        <AIExperimentationBanner />
         <ValueProposition />
         
         <QuickStart />
