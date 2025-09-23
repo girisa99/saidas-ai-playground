@@ -1,8 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Users, TrendingUp, Shield, Brain, Zap, Database, Target, Award, Rocket, ArrowRight, Book, Map } from "lucide-react";
+import { CheckCircle, Users, TrendingUp, Shield, Brain, Zap, Database, Target, Award, Rocket, ArrowRight, Book, Map, Sparkles, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { VisualTextBlock } from "./VisualTextBlock";
 import healthcareImpact from "@/assets/healthcare-solutions-impact.png";
 
 export const ValueProposition = () => {
@@ -34,24 +35,40 @@ export const ValueProposition = () => {
           </div>
         </div>
 
-        {/* Compact Impact Metrics */}
-        <div className="grid md:grid-cols-4 gap-4 mb-12 max-w-4xl mx-auto">
-          <div className="text-center p-4 bg-card rounded-lg border">
-            <div className="text-2xl font-bold text-genie-primary mb-1">70%</div>
-            <div className="text-sm text-muted-foreground">Business Value Increase</div>
-          </div>
-          <div className="text-center p-4 bg-card rounded-lg border">
-            <div className="text-2xl font-bold text-genie-teal mb-1">$1.3B</div>
-            <div className="text-sm text-muted-foreground">Global AI Market</div>
-          </div>
-          <div className="text-center p-4 bg-card rounded-lg border">
-            <div className="text-2xl font-bold text-genie-cyan mb-1">25%</div>
-            <div className="text-sm text-muted-foreground">Productivity Boost</div>
-          </div>
-          <div className="text-center p-4 bg-card rounded-lg border">
-            <div className="text-2xl font-bold text-genie-primary mb-1">88%</div>
-            <div className="text-sm text-muted-foreground">Executive Agreement</div>
-          </div>
+        {/* Enhanced Impact Metrics */}
+        <div className="grid md:grid-cols-4 gap-4 mb-16 max-w-5xl mx-auto">
+          <Card className="text-center p-6 bg-gradient-to-br from-genie-primary/5 to-genie-primary/10 border-genie-primary/20 hover:shadow-lg transition-all duration-300">
+            <div className="w-12 h-12 mx-auto mb-3 bg-genie-primary/10 rounded-full flex items-center justify-center">
+              <TrendingUp className="w-6 h-6 text-genie-primary" />
+            </div>
+            <div className="text-3xl font-bold text-genie-primary mb-2">70%</div>
+            <div className="text-sm font-medium text-foreground mb-1">Business Value</div>
+            <div className="text-xs text-muted-foreground">Average Increase</div>
+          </Card>
+          <Card className="text-center p-6 bg-gradient-to-br from-genie-secondary/5 to-genie-secondary/10 border-genie-secondary/20 hover:shadow-lg transition-all duration-300">
+            <div className="w-12 h-12 mx-auto mb-3 bg-genie-secondary/10 rounded-full flex items-center justify-center">
+              <BarChart3 className="w-6 h-6 text-genie-secondary" />
+            </div>
+            <div className="text-3xl font-bold text-genie-secondary mb-2">$1.3B</div>
+            <div className="text-sm font-medium text-foreground mb-1">Market Size</div>
+            <div className="text-xs text-muted-foreground">Global AI Revenue</div>
+          </Card>
+          <Card className="text-center p-6 bg-gradient-to-br from-genie-accent/5 to-genie-accent/10 border-genie-accent/20 hover:shadow-lg transition-all duration-300">
+            <div className="w-12 h-12 mx-auto mb-3 bg-genie-accent/10 rounded-full flex items-center justify-center">
+              <Zap className="w-6 h-6 text-genie-accent" />
+            </div>
+            <div className="text-3xl font-bold text-genie-accent mb-2">25%</div>
+            <div className="text-sm font-medium text-foreground mb-1">Productivity</div>
+            <div className="text-xs text-muted-foreground">Performance Boost</div>
+          </Card>
+          <Card className="text-center p-6 bg-gradient-to-br from-genie-primary/5 to-genie-accent/5 border-genie-primary/20 hover:shadow-lg transition-all duration-300">
+            <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-genie-primary/10 to-genie-accent/10 rounded-full flex items-center justify-center">
+              <Award className="w-6 h-6 text-genie-primary" />
+            </div>
+            <div className="text-3xl font-bold text-genie-primary mb-2">88%</div>
+            <div className="text-sm font-medium text-foreground mb-1">Executive Buy-in</div>
+            <div className="text-xs text-muted-foreground">Leadership Support</div>
+          </Card>
         </div>
 
 
@@ -126,58 +143,49 @@ export const ValueProposition = () => {
           </div>
         </Card>
 
-        {/* Technology Highlights */}
-        <div className="grid lg:grid-cols-3 gap-6 mb-12">
-          <Card className="p-6 border-genie-primary/20 hover:border-genie-primary/40 transition-colors">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-2 bg-genie-primary/10 rounded-lg">
-                <Brain className="h-6 w-6 text-genie-primary" />
-              </div>
-              <h3 className="font-semibold text-genie-primary">Advanced AI & LLMs</h3>
-            </div>
-            <p className="text-sm text-muted-foreground mb-3">
-              Multi-agent systems with GPT-4, Claude 3, and autonomous reasoning capabilities.
-            </p>
-            <Button asChild variant="ghost" size="sm" className="p-0 h-auto">
-              <Link to="/technology" className="text-genie-primary hover:text-genie-primary/80">
-                Learn More <ArrowRight className="ml-1 h-3 w-3" />
-              </Link>
-            </Button>
-          </Card>
+        {/* Enhanced Technology Highlights */}
+        <div className="grid lg:grid-cols-3 gap-6 mb-16">
+          <VisualTextBlock
+            badge="AI CORE"
+            title="Advanced AI & LLMs"
+            subtitle="Next-Gen Intelligence"
+            description="Multi-agent systems powered by GPT-4, Claude 3, and autonomous reasoning capabilities for enterprise-scale decision making."
+            highlights={[
+              "Multi-modal AI processing",
+              "Real-time learning systems",
+              "Custom model fine-tuning"
+            ]}
+            icon={<Brain className="h-6 w-6" />}
+            variant="gradient"
+          />
 
-          <Card className="p-6 border-genie-teal/20 hover:border-genie-teal/40 transition-colors">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-2 bg-genie-teal/10 rounded-lg">
-                <Database className="h-6 w-6 text-genie-teal" />
-              </div>
-              <h3 className="font-semibold text-genie-teal">Enterprise Infrastructure</h3>
-            </div>
-            <p className="text-sm text-muted-foreground mb-3">
-              Docker, Kubernetes, Supabase with enterprise-grade scalability and security.
-            </p>
-            <Button asChild variant="ghost" size="sm" className="p-0 h-auto">
-              <Link to="/technology" className="text-genie-teal hover:text-genie-teal/80">
-                Learn More <ArrowRight className="ml-1 h-3 w-3" />
-              </Link>
-            </Button>
-          </Card>
+          <VisualTextBlock
+            badge="INFRASTRUCTURE"
+            title="Enterprise Cloud"
+            subtitle="Scalable & Secure"
+            description="Production-ready architecture with Docker, Kubernetes, and Supabase delivering 99.9% uptime and enterprise security."
+            highlights={[
+              "Auto-scaling infrastructure",
+              "Zero-downtime deployments", 
+              "Multi-region redundancy"
+            ]}
+            icon={<Database className="h-6 w-6" />}
+            variant="default"
+          />
 
-          <Card className="p-6 border-genie-cyan/20 hover:border-genie-cyan/40 transition-colors">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-2 bg-genie-cyan/10 rounded-lg">
-                <Shield className="h-6 w-6 text-genie-cyan" />
-              </div>
-              <h3 className="font-semibold text-genie-cyan">Security & Compliance</h3>
-            </div>
-            <p className="text-sm text-muted-foreground mb-3">
-              Advanced RAG implementation with 94% accuracy and enterprise security frameworks.
-            </p>
-            <Button asChild variant="ghost" size="sm" className="p-0 h-auto">
-              <Link to="/technology" className="text-genie-cyan hover:text-genie-cyan/80">
-                Learn More <ArrowRight className="ml-1 h-3 w-3" />
-              </Link>
-            </Button>
-          </Card>
+          <VisualTextBlock
+            badge="SECURITY"
+            title="Compliance Ready"
+            subtitle="Enterprise Grade"
+            description="Advanced RAG implementation achieving 94% accuracy with comprehensive security frameworks and audit trails."
+            highlights={[
+              "HIPAA/GDPR compliance",
+              "End-to-end encryption",
+              "Advanced threat detection"
+            ]}
+            icon={<Shield className="h-6 w-6" />}
+            variant="accent"
+          />
         </div>
 
         {/* Success Stories Preview */}

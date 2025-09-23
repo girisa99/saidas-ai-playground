@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { Menu, Home, User, Map, Wrench, FileText, Trophy } from "lucide-react";
+import { Menu, X, Home, User, Map, Wrench, FileText, Trophy, Search, ExternalLink } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
 import genieLogo from "@/assets/genie-logo-nav.png";
 
 export const NavigationHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -16,78 +17,99 @@ export const NavigationHeader = () => {
     setIsMenuOpen(false);
   };
 
+  const navItems = [
+    { to: "/", label: "Home", icon: Home },
+    { to: "/about", label: "About", icon: User },
+    { to: "/journey", label: "Journey", icon: Map },
+    { to: "/technology", label: "Tech Stack", icon: Wrench },
+    { to: "/case-studies", label: "Case Studies", icon: Trophy },
+  ];
+
+  const isActivePath = (path: string) => {
+    if (path === "/") return location.pathname === "/";
+    return location.pathname.startsWith(path);
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/40">
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo - Clickable to go home */}
-          <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-            <div className="w-12 h-12">
-              <img 
-                src={genieLogo} 
-                alt="Genie AI Digital Health Technology Navigator" 
-                className="w-full h-full object-contain"
-              />
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-lg border-b border-border shadow-sm">
+      <div className="container mx-auto">
+        <div className="flex h-16 items-center justify-between px-4">
+          {/* Logo & Brand */}
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="relative">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-genie-primary to-genie-secondary p-1 shadow-lg group-hover:shadow-genie-primary/20 transition-all duration-300">
+                <img 
+                  src={genieLogo} 
+                  alt="Genie AI" 
+                  className="w-full h-full object-contain filter brightness-0 invert"
+                />
+              </div>
             </div>
-            <div>
-              <h1 className="text-xl font-bold">
-                <span className="text-primary">Genie AI</span> Hub
-              </h1>
-              <p className="text-xs text-muted-foreground">I am your technology Navigator</p>
+            <div className="hidden sm:block">
+              <div className="flex items-center space-x-2">
+                <span className="text-xl font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent">
+                  Genie AI
+                </span>
+                <span className="text-lg font-semibold text-foreground">Hub</span>
+              </div>
+              <p className="text-xs text-muted-foreground font-medium">Enterprise AI Solutions</p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-6">
-            <nav className="flex items-center space-x-6">
-              <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
-                <Home className="w-4 h-4" />
-                <span className="text-sm font-medium">Home</span>
-              </Link>
-              <Link to="/about" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
-                <User className="w-4 h-4" />
-                <span className="text-sm font-medium">About Me</span>
-              </Link>
-              <Link to="/journey" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
-                <Map className="w-4 h-4" />
-                <span className="text-sm font-medium">Journey</span>
-              </Link>
-              <Link to="/technology" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
-                <Wrench className="w-4 h-4" />
-                <span className="text-sm font-medium">Tech Stack</span>
-              </Link>
-              <Link to="/case-studies" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50">
-                <Trophy className="w-4 h-4" />
-                <span className="text-sm font-medium">Case Studies</span>
-              </Link>
-              <button 
-                onClick={() => scrollToSection('documents')}
-                className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
-              >
-                <FileText className="w-4 h-4" />
-                <span className="text-sm font-medium">Docs</span>
-              </button>
-            </nav>
-            
-            {/* Search Bar */}
-            <div className="mx-4">
+          <nav className="hidden lg:flex items-center space-x-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = isActivePath(item.to);
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    isActive
+                      ? 'bg-primary text-primary-foreground shadow-md'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
+            <button 
+              onClick={() => scrollToSection('documents')}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
+            >
+              <FileText className="w-4 h-4" />
+              <span>Docs</span>
+            </button>
+          </nav>
+
+          {/* Desktop Actions */}
+          <div className="hidden lg:flex items-center space-x-3">
+            {/* Search */}
+            <div className="relative">
               <SearchBar />
             </div>
             
-            <div className="flex items-center space-x-2">
+            {/* Action Buttons */}
+            <div className="flex items-center space-x-2 pl-3 border-l border-border">
               <Button 
                 variant="outline"
                 size="sm" 
+                className="text-sm font-medium hover:bg-muted/80"
                 onClick={() => window.open('https://preview--cgat-patient-hcp-care-ecosystem.lovable.app/', '_blank')}
               >
+                <ExternalLink className="w-4 h-4 mr-2" />
                 Login
               </Button>
               <Button 
                 size="sm" 
-                className="bg-primary hover:bg-primary/90"
+                className="bg-gradient-to-r from-genie-primary to-genie-secondary hover:from-genie-primary/90 hover:to-genie-secondary/90 text-white font-medium shadow-lg hover:shadow-genie-primary/25 transition-all duration-300"
                 onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
               >
                 Connect
+                <ExternalLink className="w-4 h-4 ml-2" />
               </Button>
             </div>
           </div>
@@ -96,89 +118,84 @@ export const NavigationHeader = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="md:hidden"
+            className="lg:hidden p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <Menu className="h-5 w-5" />
+            {isMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </Button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="md:hidden mt-4 pb-4 border-t border-border/40 pt-4">
-            <div className="flex flex-col space-y-2">
-              <Link 
-                to="/" 
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 text-left text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
-              >
-                <Home className="w-4 h-4" />
-                <span>Home</span>
-              </Link>
-              <Link 
-                to="/about" 
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 text-left text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
-              >
-                <User className="w-4 h-4" />
-                <span>About Me</span>
-              </Link>
-              <Link 
-                to="/journey" 
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 text-left text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
-              >
-                <Map className="w-4 h-4" />
-                <span>Journey</span>
-              </Link>
-              <Link 
-                to="/technology" 
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 text-left text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
-              >
-                <Wrench className="w-4 h-4" />
-                <span>Tech Stack</span>
-              </Link>
-              <Link 
-                to="/case-studies" 
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 text-left text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
-              >
-                <Trophy className="w-4 h-4" />
-                <span>Case Studies</span>
-              </Link>
-              <button 
-                onClick={() => scrollToSection('documents')}
-                className="flex items-center gap-3 text-left text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
-              >
-                <FileText className="w-4 h-4" />
-                <span>Documentation</span>
-              </button>
-              <div className="pt-4 border-t border-border/40 space-y-2">
+          <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-lg">
+            <div className="px-4 py-6 space-y-6">
+              {/* Mobile Search */}
+              <div className="relative">
+                <SearchBar />
+              </div>
+              
+              {/* Mobile Nav Items */}
+              <nav className="space-y-2">
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = isActivePath(item.to);
+                  return (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                        isActive
+                          ? 'bg-primary text-primary-foreground shadow-md'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      }`}
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span className="font-medium">{item.label}</span>
+                    </Link>
+                  );
+                })}
+                <button 
+                  onClick={() => scrollToSection('documents')}
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 w-full text-left"
+                >
+                  <FileText className="w-5 h-5" />
+                  <span className="font-medium">Documentation</span>
+                </button>
+              </nav>
+              
+              {/* Mobile Action Buttons */}
+              <div className="pt-4 border-t border-border space-y-3">
                 <Button 
                   variant="outline"
-                  size="sm" 
-                  className="w-full justify-start"
+                  size="lg" 
+                  className="w-full justify-center font-medium"
                   onClick={() => {
                     window.open('https://preview--cgat-patient-hcp-care-ecosystem.lovable.app/', '_blank');
                     setIsMenuOpen(false);
                   }}
                 >
-                  Login
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Login to Platform
                 </Button>
                 <Button 
-                  size="sm" 
-                  className="bg-primary hover:bg-primary/90 w-full"
+                  size="lg" 
+                  className="w-full bg-gradient-to-r from-genie-primary to-genie-secondary hover:from-genie-primary/90 hover:to-genie-secondary/90 text-white font-medium shadow-lg"
                   onClick={() => {
                     window.open('https://www.linkedin.com/in/saidas/', '_blank');
                     setIsMenuOpen(false);
                   }}
                 >
-                  Connect
+                  Connect with Me
+                  <ExternalLink className="w-4 h-4 ml-2" />
                 </Button>
               </div>
             </div>
-          </nav>
+          </div>
         )}
       </div>
     </header>

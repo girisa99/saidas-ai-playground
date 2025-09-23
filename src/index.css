@@ -9,69 +9,122 @@
   }
   
   :root {
-    --background: 0 0% 100%;
-    --foreground: 220 13% 13%;
+    /* Modern Enterprise Palette */
+    --background: 220 20% 97%;
+    --foreground: 220 15% 15%;
     --card: 0 0% 100%;
-    --card-foreground: 220 13% 13%;
+    --card-foreground: 220 15% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 13%;
-    --primary: 221 83% 53%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 98%;
-    --secondary-foreground: 220 13% 13%;
-    --muted: 210 40% 98%;
-    --muted-foreground: 215 14% 34%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 220 13% 13%;
+    --popover-foreground: 220 15% 15%;
+    
+    /* Professional Primary - Deep Blue */
+    --primary: 217 91% 24%;
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: 217 91% 30%;
+    
+    /* Sophisticated Secondary - Warm Gray */
+    --secondary: 215 25% 92%;
+    --secondary-foreground: 220 15% 15%;
+    
+    /* Premium Accent - Gold/Amber */
+    --accent: 45 100% 51%;
+    --accent-foreground: 220 15% 15%;
+    --accent-muted: 45 50% 88%;
+    
+    /* Modern Muted Tones */
+    --muted: 220 15% 95%;
+    --muted-foreground: 220 10% 50%;
+    
+    /* Alerts & Status */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
-    --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 45 100% 51%;
+    --warning-foreground: 220 15% 15%;
+    
+    /* UI Elements */
+    --border: 220 15% 88%;
+    --input: 220 15% 94%;
+    --ring: 217 91% 24%;
+    --radius: 8px;
+    
+    /* Sidebar */
+    --sidebar-background: 220 20% 97%;
+    --sidebar-foreground: 220 15% 15%;
+    --sidebar-primary: 217 91% 24%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-    --genie-dark: 214 100% 12%;
-    --genie-primary: 194 100% 50%;
-    --genie-cyan: 180 100% 70%;
-    --genie-teal: 174 100% 45%;
-    --genie-navy: 214 64% 20%;
+    --sidebar-accent: 220 15% 92%;
+    --sidebar-accent-foreground: 220 15% 15%;
+    --sidebar-border: 220 15% 88%;
+    --sidebar-ring: 217 91% 24%;
+    
+    /* Enhanced Genie Theme - More Enterprise */
+    --genie-dark: 217 91% 15%;
+    --genie-primary: 217 91% 24%;
+    --genie-accent: 45 100% 51%;
+    --genie-secondary: 200 100% 45%;
+    --genie-muted: 220 15% 85%;
+    --genie-gradient: linear-gradient(135deg, hsl(217 91% 24%), hsl(200 100% 45%));
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 210 40% 98%;
-    --card: 224 71% 4%;
-    --card-foreground: 210 40% 98%;
-    --popover: 224 71% 4%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 215 28% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 215 28% 17%;
-    --muted-foreground: 217 11% 65%;
-    --accent: 215 28% 17%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 282 100% 78%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Dark Enterprise Theme */
+    --background: 220 15% 8%;
+    --foreground: 220 15% 92%;
+    --card: 220 15% 10%;
+    --card-foreground: 220 15% 92%;
+    --popover: 220 15% 10%;
+    --popover-foreground: 220 15% 92%;
+    
+    /* Dark Primary */
+    --primary: 217 91% 45%;
+    --primary-foreground: 220 15% 8%;
+    --primary-hover: 217 91% 55%;
+    
+    /* Dark Secondary */
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 220 15% 85%;
+    
+    /* Dark Accent */
+    --accent: 45 100% 65%;
+    --accent-foreground: 220 15% 8%;
+    --accent-muted: 45 50% 25%;
+    
+    /* Dark Muted */
+    --muted: 220 15% 15%;
+    --muted-foreground: 220 10% 65%;
+    
+    /* Dark Alerts */
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 220 15% 8%;
+    --success: 142 76% 45%;
+    --success-foreground: 220 15% 8%;
+    --warning: 45 100% 65%;
+    --warning-foreground: 220 15% 8%;
+    
+    /* Dark UI Elements */
+    --border: 220 15% 20%;
+    --input: 220 15% 15%;
+    --ring: 217 91% 45%;
+    
+    /* Dark Sidebar */
+    --sidebar-background: 220 15% 8%;
+    --sidebar-foreground: 220 15% 85%;
+    --sidebar-primary: 217 91% 45%;
+    --sidebar-primary-foreground: 220 15% 8%;
+    --sidebar-accent: 220 15% 18%;
+    --sidebar-accent-foreground: 220 15% 85%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 217 91% 45%;
+    
+    /* Dark Genie Theme */
+    --genie-dark: 220 15% 5%;
+    --genie-primary: 217 91% 45%;
+    --genie-accent: 45 100% 65%;
+    --genie-secondary: 200 100% 55%;
+    --genie-muted: 220 15% 25%;
+    --genie-gradient: linear-gradient(135deg, hsl(217 91% 35%), hsl(200 100% 45%));
   }
 
   * {
