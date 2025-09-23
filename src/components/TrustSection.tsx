@@ -61,28 +61,6 @@ export const TrustSection = () => {
           </div>
         </div>
 
-        {/* Security & Compliance */}
-        <div className="text-center">
-          <Card className="p-8 bg-primary/5 border border-primary/20">
-            <div className="flex justify-center items-center gap-8 mb-6">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-green-500" />
-                <span className="font-semibold">HIPAA Compliant</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-green-500" />
-                <span className="font-semibold">SOC 2 Certified</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-green-500" />
-                <span className="font-semibold">Enterprise Security</span>
-              </div>
-            </div>
-            <p className="text-muted-foreground">
-              Your data privacy and security are paramount. All implementations follow healthcare industry standards.
-            </p>
-          </Card>
-        </div>
       </div>
     </section>
   );
