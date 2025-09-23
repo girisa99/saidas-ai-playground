@@ -49,7 +49,6 @@ import {
   Frown
 } from "lucide-react";
 
-// Journey steps data
 const journeySteps = [
   {
     id: 1,
@@ -62,7 +61,7 @@ const journeySteps = [
     approach: "hybrid",
     description: "Initial referral received and triaged for urgency and completeness",
     automationPrimary: true,
-    roi: "60% efficiency gain",
+    roi: "≈ 60% efficiency gain",
     automationTasks: [
       "Automated intake form parsing and data extraction",
       "Insurance eligibility verification via API calls",
@@ -89,15 +88,7 @@ const journeySteps = [
       "Delayed response times averaging 4-6 hours",
       "Inconsistent triage decisions across staff members"
     ],
-    improvement: "Automated processing reduces response time to under 30 minutes with approx. 95% accuracy in data extraction and consistent AI-driven triage decisions.",
-    detailedSubsteps: [
-      { id: 1, title: "Referral Document Receipt", description: "Physical or electronic referral document arrives from referring physician", technology: "Document management system with OCR capabilities" },
-      { id: 2, title: "Initial Data Extraction", description: "Extract patient demographics, insurance info, and clinical summary", technology: "AI-powered document parsing and data extraction" },
-      { id: 3, title: "Insurance Verification", description: "Verify patient insurance eligibility and coverage", technology: "Automated insurance API integration" },
-      { id: 4, title: "Medical Urgency Assessment", description: "Analyze clinical indicators to determine urgency level", technology: "AI triage algorithms with clinical decision support" },
-      { id: 5, title: "Specialist Assignment", description: "Route to appropriate oncology specialist based on cancer type", technology: "Intelligent routing based on specialty matching" },
-      { id: 6, title: "Initial Appointment Scheduling", description: "Schedule initial consultation within appropriate timeframe", technology: "Automated scheduling with urgency-based prioritization" }
-    ]
+    improvement: "Automated processing reduces response time to under 30 minutes with approx. 95% accuracy in data extraction and consistent AI-driven triage decisions."
   },
   {
     id: 2,
@@ -446,18 +437,54 @@ const visualScenarios = [
     title: "Sarah Chen - Routine Breast Cancer",
     patientType: "Early-stage breast cancer, otherwise healthy",
     complexity: "low",
-    timeline: "18 days",
+    timeline: "≈ 18 days",
     technologyMix: { automation: 75, ai: 25 },
     journeyPath: [1, 2, 4, 5, 7, 8],
     keyDecisions: [
-      { step: 1, decision: "Automation-Primary", reason: "Standard referral processing", detailedExplanation: "Sarah's referral contains standard breast cancer screening results. Automation handles intake form parsing, insurance verification, and basic triage. No complex comorbidities require AI intervention at this stage." },
-      { step: 2, decision: "Automation-Standard", reason: "Routine data collection", detailedExplanation: "Digital forms auto-populate with referral data. Standard breast cancer questionnaire deployed. Patient completes forms easily online. No adaptive questioning needed due to straightforward presentation." },
-      { step: 4, decision: "Automation-Insurance", reason: "Standard authorization process", detailedExplanation: "Breast cancer treatment protocols are well-established with insurance. Automated prior authorization submission using standard templates. High approval likelihood (85%) based on clear guidelines." },
-      { step: 5, decision: "AI-Standard", reason: "Treatment planning benefits from personalization", detailedExplanation: "While straightforward, AI personalizes treatment sequence based on patient age, lifestyle, and preferences. Recommends optimal surgery timing and adjuvant therapy options tailored to Sarah's specific tumor characteristics." },
-      { step: 7, decision: "Automation-Simple", reason: "Straightforward scheduling", detailedExplanation: "Oncology and surgery appointments scheduled automatically. Clear availability patterns. Patient preferences (mornings) easily accommodated. No complex multi-specialist coordination required." },
-      { step: 8, decision: "AI-Education", reason: "Personalized patient education", detailedExplanation: "AI curates education materials based on Sarah's professional background (teacher), learning preferences, and specific treatment plan. Generates personalized pre-visit checklist and family communication guide." }
+      { 
+        step: 1, 
+        decision: "Automation-Primary", 
+        reason: "Standard referral processing", 
+        detailedExplanation: "Sarah's referral contains standard breast cancer screening results. Automation handles intake form parsing, insurance verification, and basic triage. No complex comorbidities require AI intervention at this stage.",
+        processBreakdown: [
+          { id: 1, title: "Referral Document Receipt", description: "Standard mammography report with suspicious findings received electronically", technology: "Document management system" },
+          { id: 2, title: "Basic Data Extraction", description: "Extract patient demographics and simple clinical findings", technology: "OCR + template matching" },
+          { id: 3, title: "Insurance Quick Check", description: "Verify active coverage for breast cancer services", technology: "Standard eligibility API" },
+          { id: 4, title: "Routine Triage", description: "Apply standard breast cancer urgency protocols", technology: "Rule-based triage system" },
+          { id: 5, title: "Oncologist Assignment", description: "Route to available breast cancer specialist", technology: "Automated routing by specialty" },
+          { id: 6, title: "Standard Appointment", description: "Schedule within 7-day target for suspicious findings", technology: "Calendar automation" }
+        ]
+      },
+      { 
+        step: 2, 
+        decision: "Automation-Standard", 
+        reason: "Routine data collection", 
+        detailedExplanation: "Digital forms auto-populate with referral data. Standard breast cancer questionnaire deployed. Patient completes forms easily online. No adaptive questioning needed due to straightforward presentation.",
+        processBreakdown: [
+          { id: 1, title: "Form Template Selection", description: "Deploy standard breast cancer intake forms", technology: "Template library system" },
+          { id: 2, title: "Auto-Population", description: "Fill known fields from referral data", technology: "Data mapping engine" },
+          { id: 3, title: "Patient Portal Access", description: "Send secure login credentials to Sarah", technology: "Patient portal + SMS notification" },
+          { id: 4, title: "Form Completion", description: "Patient completes straightforward health history", technology: "Web forms with basic validation" },
+          { id: 5, title: "Quality Check", description: "Automated validation for completeness", technology: "Form validation rules" },
+          { id: 6, title: "EHR Integration", description: "Import completed data into medical record", technology: "EHR API integration" }
+        ]
+      },
+      { 
+        step: 4, 
+        decision: "Automation-Insurance", 
+        reason: "Standard authorization process", 
+        detailedExplanation: "Breast cancer treatment protocols are well-established with insurance. Automated prior authorization submission using standard templates. High approval likelihood (~85%) based on clear guidelines.",
+        processBreakdown: [
+          { id: 1, title: "Coverage Rules Check", description: "Apply standard breast cancer coverage guidelines", technology: "Payer rules engine" },
+          { id: 2, title: "PA Form Generation", description: "Auto-complete standard prior auth forms", technology: "Template-based form generator" },
+          { id: 3, title: "Clinical Justification", description: "Insert standard medical necessity language", technology: "Template library for breast cancer" },
+          { id: 4, title: "Submission", description: "Submit via payer portal or EDI", technology: "Multi-channel submission API" },
+          { id: 5, title: "Status Monitoring", description: "Track approval status automatically", technology: "Payer portal integration" },
+          { id: 6, title: "Approval Processing", description: "Route approval back to scheduling team", technology: "Workflow automation" }
+        ]
+      }
     ],
-    outcome: "Completed journey in 18 days with high patient satisfaction and efficient resource utilization."
+    outcome: "Completed journey in ≈18 days with high patient satisfaction and efficient resource utilization."
   },
   {
     id: 2,
@@ -465,19 +492,52 @@ const visualScenarios = [
     title: "Michael Rodriguez - Complex Pancreatic",
     patientType: "Advanced pancreatic cancer with comorbidities",
     complexity: "high",
-    timeline: "25 days",
+    timeline: "≈ 25 days",
     technologyMix: { automation: 40, ai: 60 },
     journeyPath: [1, 2, 3, 4, 5, 6, 7, 8, 9],
     keyDecisions: [
-      { step: 1, decision: "AI-Complex", reason: "Multi-comorbidity assessment", detailedExplanation: "Michael's case involves pancreatic cancer with diabetes and cardiac issues. AI analyzes complex interaction patterns, identifies critical care sequencing needs, and flags urgent coordination requirements between oncology, endocrinology, and cardiology." },
-      { step: 2, decision: "AI-Adaptive", reason: "Complex medical history", detailedExplanation: "AI dynamically adjusts intake forms based on multiple conditions. Generates specialized questionnaires for drug interactions, treatment tolerance concerns, and quality of life priorities. Identifies potential contraindications early." },
-      { step: 3, decision: "AI-Priority", reason: "Critical record prioritization", detailedExplanation: "AI prioritizes cardiac function tests, diabetes management records, and previous cancer treatments. Identifies gaps in multi-specialty records and triggers urgent requests to cardiology for recent stress test results." },
-      { step: 4, decision: "AI-Appeal", reason: "Complex case justification needed", detailedExplanation: "Insurance initially denies advanced immunotherapy due to comorbidities. AI generates comprehensive case justification highlighting treatment benefits vs. risks, creates compelling medical necessity documentation." },
-      { step: 5, decision: "AI-Multi", reason: "Multi-disciplinary planning", detailedExplanation: "AI facilitates virtual tumor board coordination between oncology, cardiology, and endocrinology. Analyzes treatment interaction impacts, optimal sequencing of interventions, and creates integrated care timeline." },
-      { step: 6, decision: "AI-Genomic", reason: "Advanced biomarker analysis", detailedExplanation: "AI analyzes complex genomic profile in context of comorbidities. Identifies targeted therapy options that avoid cardiac toxicity. Provides drug interaction analysis with diabetes medications." },
-      { step: 7, decision: "AI-Coordinate", reason: "Multi-specialist scheduling", detailedExplanation: "AI coordinates appointments across three departments, optimizing for treatment sequencing, Michael's work schedule, and clinical requirements. Ensures cardiac clearance before each treatment cycle." },
-      { step: 8, decision: "AI-Complex", reason: "Extensive preparation needed", detailedExplanation: "AI generates comprehensive pre-visit materials covering cancer treatment, diabetes management during therapy, cardiac monitoring requirements, and family caregiver instructions. Creates integrated medication schedule." },
-      { step: 9, decision: "AI-Orchestrate", reason: "Complex care coordination", detailedExplanation: "AI continuously monitors treatment responses across all conditions, coordinates care adjustments between specialties, manages drug interactions, and proactively identifies emerging issues requiring multi-disciplinary intervention." }
+      { 
+        step: 1, 
+        decision: "AI-Complex", 
+        reason: "Multi-comorbidity assessment", 
+        detailedExplanation: "Michael's case involves pancreatic cancer with diabetes and cardiac issues. AI analyzes complex interaction patterns, identifies critical care sequencing needs, and flags urgent coordination requirements between oncology, endocrinology, and cardiology.",
+        processBreakdown: [
+          { id: 1, title: "Multi-Source Referral Analysis", description: "AI processes referrals from multiple specialists with complex medical history", technology: "AI document analysis + medical NLP" },
+          { id: 2, title: "Comorbidity Risk Assessment", description: "AI evaluates interaction risks between cancer, diabetes, and cardiac conditions", technology: "AI risk stratification engine" },
+          { id: 3, title: "Care Team Identification", description: "AI identifies optimal specialist combination based on case complexity", technology: "AI care team optimizer" },
+          { id: 4, title: "Urgency Prioritization", description: "AI determines critical care sequencing needs", technology: "AI clinical decision support" },
+          { id: 5, title: "Multi-Specialist Coordination", description: "AI initiates coordination between oncology, cardiology, endocrinology", technology: "AI orchestration platform" },
+          { id: 6, title: "Integrated Care Plan Draft", description: "AI creates preliminary integrated care timeline", technology: "AI care planning assistant" }
+        ]
+      },
+      { 
+        step: 2, 
+        decision: "AI-Adaptive", 
+        reason: "Complex medical history", 
+        detailedExplanation: "AI dynamically adjusts intake forms based on multiple conditions. Generates specialized questionnaires for drug interactions, treatment tolerance concerns, and quality of life priorities. Identifies potential contraindications early.",
+        processBreakdown: [
+          { id: 1, title: "Adaptive Form Generation", description: "AI creates customized forms based on cancer type + comorbidities", technology: "AI form builder + medical ontology" },
+          { id: 2, title: "Drug Interaction Screening", description: "AI generates questions about current diabetes/cardiac medications", technology: "AI pharmaceutical database" },
+          { id: 3, title: "Functional Assessment", description: "AI tailors performance status questions for complex patients", technology: "AI assessment customizer" },
+          { id: 4, title: "Quality of Life Prioritization", description: "AI identifies patient-specific concerns and goals", technology: "AI preference analyzer" },
+          { id: 5, title: "Contraindication Detection", description: "AI flags potential treatment limitations early", technology: "AI clinical rules engine" },
+          { id: 6, title: "Care Gap Analysis", description: "AI identifies missing critical information for complex case", technology: "AI completeness checker" }
+        ]
+      },
+      { 
+        step: 3, 
+        decision: "AI-Priority", 
+        reason: "Critical record prioritization", 
+        detailedExplanation: "AI prioritizes cardiac function tests, diabetes management records, and previous cancer treatments. Identifies gaps in multi-specialty records and triggers urgent requests to cardiology for recent stress test results.",
+        processBreakdown: [
+          { id: 1, title: "Multi-Specialty Record Mapping", description: "AI identifies all relevant record sources across specialties", technology: "AI provider network analysis" },
+          { id: 2, title: "Critical Information Prioritization", description: "AI ranks cardiac, endocrine, and oncology records by urgency", technology: "AI priority scoring" },
+          { id: 3, title: "Gap Analysis", description: "AI identifies missing critical tests and consultations", technology: "AI completeness assessment" },
+          { id: 4, title: "Urgent Request Generation", description: "AI generates specific requests for missing critical data", technology: "AI request generator" },
+          { id: 5, title: "Multi-Channel Communication", description: "AI coordinates record requests across different systems", technology: "AI communication orchestrator" },
+          { id: 6, title: "Quality Assessment", description: "AI evaluates received records for clinical relevance", technology: "AI record quality scorer" }
+        ]
+      }
     ],
     outcome: "Successfully navigated complex care pathway with optimized treatment plan and coordinated multi-specialty care."
   },
@@ -876,33 +936,43 @@ const BusinessUseCases = () => {
                               </Card>
                             </div>
 
-                            {/* Detailed Substeps */}
+                            {/* Detailed Substeps - moved to Patient Scenarios */}
                             <Card className="bg-gray-50 border-gray-200">
                               <CardContent className="p-4">
                                 <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
                                   <Target className="h-4 w-4" />
-                                  Detailed Process Breakdown
+                                  Technology Stack Overview
                                 </h4>
-                                <div className="space-y-3">
-                                  {step.detailedSubsteps?.map((substep, index) => (
-                                    <div key={substep.id} className="border border-gray-200 rounded-lg p-3 bg-white">
-                                      <div className="flex items-start gap-3">
-                                        <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-                                          {substep.id}
-                                        </div>
-                                        <div className="flex-1">
-                                          <h5 className="font-medium text-gray-800 mb-1">{substep.title}</h5>
-                                          <p className="text-sm text-gray-600 mb-2">{substep.description}</p>
-                                          <div className="bg-blue-50 border border-blue-200 rounded px-2 py-1">
-                                            <span className="text-xs font-medium text-blue-800">Tech: </span>
-                                            <span className="text-xs text-blue-700">{substep.technology}</span>
-                                          </div>
-                                        </div>
-                                      </div>
+                                <div className="space-y-4">
+                                  <div className="grid md:grid-cols-2 gap-4">
+                                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                                      <h5 className="font-medium text-blue-800 mb-2">Automation Technologies</h5>
+                                      <ul className="text-xs text-blue-700 space-y-1">
+                                        <li>• Document processing & OCR systems</li>
+                                        <li>• API integrations & data mapping</li>
+                                        <li>• Workflow automation platforms</li>
+                                        <li>• Template & form generation systems</li>
+                                      </ul>
                                     </div>
-                                  )) || (
-                                    <p className="text-sm text-gray-500 italic">Detailed substeps will be added for this journey step.</p>
-                                  )}
+                                    <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+                                      <h5 className="font-medium text-purple-800 mb-2">AI Technologies</h5>
+                                      <ul className="text-xs text-purple-700 space-y-1">
+                                        <li>• Natural language processing (NLP)</li>
+                                        <li>• Clinical decision support systems</li>
+                                        <li>• Predictive analytics & ML models</li>
+                                        <li>• Intelligent orchestration platforms</li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                  <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3">
+                                    <h5 className="font-medium text-indigo-800 mb-2">Integration Layer</h5>
+                                    <ul className="text-xs text-indigo-700 space-y-1">
+                                      <li>• EHR systems integration (Epic, Cerner, etc.)</li>
+                                      <li>• Payer API connections & eligibility systems</li>
+                                      <li>• Laboratory & imaging system interfaces</li>
+                                      <li>• Patient portal & communication platforms</li>
+                                    </ul>
+                                  </div>
                                 </div>
                               </CardContent>
                             </Card>
@@ -986,10 +1056,10 @@ const BusinessUseCases = () => {
                                         </div>
                                         
                                         <Card className={`${getComplexityColor(scenario.complexity)}`}>
-                                          <CardContent className="p-4 text-center">
-                                            <h4 className="font-semibold mb-1">Timeline</h4>
-                                            <div className="text-lg font-bold">≈ {scenario.timeline}</div>
-                                          </CardContent>
+                                           <CardContent className="p-4 text-center">
+                                             <h4 className="font-semibold mb-1">Timeline</h4>
+                                             <div className="text-lg font-bold">{scenario.timeline}</div>
+                                           </CardContent>
                                         </Card>
                                         
                                         <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-indigo-200">
@@ -1004,38 +1074,70 @@ const BusinessUseCases = () => {
                                         </Card>
                                       </div>
 
-                                      {/* Specific decision for this step */}
-                                      {selectedScenario === scenario.id && (() => {
-                                        const stepDecision = scenario.keyDecisions.find(d => d.step === selectedStep);
-                                        if (!stepDecision) return null;
-                                        
-                                        return (
-                                          <div className="animate-scale-in space-y-4">
-                                            <Separator />
-                                            <Card className="bg-amber-50 border-amber-200">
-                                              <CardContent className="p-4">
-                                                <div className="flex items-center gap-2 mb-2">
-                                                  <step.icon className="h-4 w-4" />
-                                                  <span className="font-semibold text-sm">Decision for {step.title}</span>
-                                                </div>
-                                                <div className="space-y-2">
-                                                  <div className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium ${
-                                                    stepDecision.decision.includes('AI') ? 'bg-purple-100 text-purple-800' : 
-                                                    stepDecision.decision.includes('Automation') ? 'bg-blue-100 text-blue-800' :
-                                                    'bg-indigo-100 text-indigo-800'
-                                                  }`}>
-                                                    {stepDecision.decision}
-                                                  </div>
-                                                  <p className="text-xs text-amber-700 mb-2">{stepDecision.reason}</p>
-                                                  {(stepDecision as any).detailedExplanation && (
-                                                    <div className="mt-2 p-2 bg-amber-25 rounded text-xs">
-                                                      <strong>Detailed Analysis:</strong>
-                                                      <p className="mt-1 text-amber-800">{(stepDecision as any).detailedExplanation}</p>
-                                                    </div>
-                                                  )}
-                                                </div>
-                                              </CardContent>
-                                            </Card>
+                                       {/* Specific decision for this step */}
+                                       {selectedScenario === scenario.id && (() => {
+                                         const stepDecision = scenario.keyDecisions.find(d => d.step === selectedStep);
+                                         if (!stepDecision) return null;
+                                         
+                                         return (
+                                           <div className="animate-scale-in space-y-4">
+                                             <Separator />
+                                             
+                                             {/* Process Breakdown for this Patient */}
+                                             {(stepDecision as any).processBreakdown && (
+                                               <Card className="bg-indigo-50 border-indigo-200">
+                                                 <CardContent className="p-4">
+                                                   <h4 className="font-semibold text-indigo-800 mb-3 flex items-center gap-2">
+                                                     <Target className="h-4 w-4" />
+                                                     Process Breakdown for {scenario.title.split(' - ')[0]}
+                                                   </h4>
+                                                   <div className="space-y-3">
+                                                     {(stepDecision as any).processBreakdown.map((substep: any, index: number) => (
+                                                       <div key={substep.id} className="border border-indigo-200 rounded-lg p-3 bg-white">
+                                                         <div className="flex items-start gap-3">
+                                                           <div className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                                                             {substep.id}
+                                                           </div>
+                                                           <div className="flex-1">
+                                                             <h5 className="font-medium text-indigo-800 mb-1">{substep.title}</h5>
+                                                             <p className="text-sm text-indigo-700 mb-2">{substep.description}</p>
+                                                             <div className="bg-indigo-100 border border-indigo-300 rounded px-2 py-1">
+                                                               <span className="text-xs font-medium text-indigo-800">Tech: </span>
+                                                               <span className="text-xs text-indigo-700">{substep.technology}</span>
+                                                             </div>
+                                                           </div>
+                                                         </div>
+                                                       </div>
+                                                     ))}
+                                                   </div>
+                                                 </CardContent>
+                                               </Card>
+                                             )}
+
+                                             <Card className="bg-amber-50 border-amber-200">
+                                               <CardContent className="p-4">
+                                                 <div className="flex items-center gap-2 mb-2">
+                                                   <step.icon className="h-4 w-4" />
+                                                   <span className="font-semibold text-sm">Decision for {step.title}</span>
+                                                 </div>
+                                                 <div className="space-y-2">
+                                                   <div className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium ${
+                                                     stepDecision.decision.includes('AI') ? 'bg-purple-100 text-purple-800' : 
+                                                     stepDecision.decision.includes('Automation') ? 'bg-blue-100 text-blue-800' :
+                                                     'bg-indigo-100 text-indigo-800'
+                                                   }`}>
+                                                     {stepDecision.decision}
+                                                   </div>
+                                                   <p className="text-xs text-amber-700 mb-2">{stepDecision.reason}</p>
+                                                   {(stepDecision as any).detailedExplanation && (
+                                                     <div className="mt-2 p-2 bg-amber-25 rounded text-xs">
+                                                       <strong>Detailed Analysis:</strong>
+                                                       <p className="mt-1 text-amber-800">{(stepDecision as any).detailedExplanation}</p>
+                                                     </div>
+                                                   )}
+                                                 </div>
+                                               </CardContent>
+                                             </Card>
 
                                             <Card className="bg-green-50 border-green-200">
                                               <CardContent className="p-4">
