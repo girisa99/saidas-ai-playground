@@ -86,8 +86,7 @@ export const ValueProposition = () => {
               </h3>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Systematic 4-phase approach transforming theoretical AI potential into tangible business value. 
-                Each phase builds strategic alignment, validated learning, and sustainable growth - culminating 
-                in breakthrough healthcare solutions that revolutionize digital health innovation and therapeutic development.
+                Each phase builds strategic alignment, validated learning, and sustainable growth for long-term success.
               </p>
               
               <div className="grid grid-cols-2 gap-4">
@@ -117,9 +116,7 @@ export const ValueProposition = () => {
                   Strategic 4-Phase AI Implementation Roadmap
                 </h4>
                 <p className="text-sm text-muted-foreground mb-8">
-                  Structured approach guiding organizations through systematic AI adoption, transforming theoretical potential 
-                  into tangible business value. Each phase builds upon strategic alignment, validated learning, and sustainable 
-                  growth - culminating in breakthrough healthcare solutions with measurable impact.
+                  Structured approach guiding organizations through systematic AI adoption with clear milestones and measurable outcomes.
                 </p>
                 
                 {/* Timeline Flow */}
