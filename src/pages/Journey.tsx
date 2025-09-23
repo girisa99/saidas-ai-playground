@@ -157,60 +157,60 @@ const Journey = () => {
           ))}
         </div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back Button */}
           <Link to="/">
-            <Button variant="ghost" className="text-white hover:bg-white/10 mb-8">
+            <Button variant="ghost" className="text-white hover:bg-white/10 mb-6 sm:mb-8">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Home
             </Button>
           </Link>
           
           <div className="max-w-5xl">
-            <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-4">
-              <MapPin className="w-4 h-4 mr-2" />
+            <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-3 sm:mb-4">
+              <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
               My Learning Journey
             </Badge>
             
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
               AI Development <span className="text-genie-accent">Discovery</span>
             </h1>
             
-            <p className="text-xl lg:text-2xl text-white/90 leading-relaxed mb-8">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
               From a simple conversation to building complex applications with AI - follow my 6-month journey 
               discovering how AI tools are democratizing software development for everyone.
             </p>
             
-            {/* Journey Highlights Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <Calendar className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Learning Timeline</h3>
+            {/* Journey Highlights Grid - Mobile Responsive */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 px-2">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Learning Timeline</h3>
                 <p className="text-white/80 text-xs">6 months of experimentation</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <Users className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">AI Collaboration</h3>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                <Users className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">AI Collaboration</h3>
                 <p className="text-white/80 text-xs">Human-AI development partnership</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <TrendingUp className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Accessibility Growth</h3>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Accessibility Growth</h3>
                 <p className="text-white/80 text-xs">No-code to advanced development</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <Award className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Knowledge Sharing</h3>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                <Award className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Knowledge Sharing</h3>
                 <p className="text-white/80 text-xs">Open experimentation results</p>
               </div>
             </div>
             
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            {/* Action Buttons - Mobile Responsive */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 px-2">
               <Button 
                 variant="default"
                 size="lg"
-                className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl"
+                className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl w-full sm:w-auto"
               >
                 <Calendar className="w-4 h-4 mr-2" />
                 Follow My Timeline
@@ -218,7 +218,7 @@ const Journey = () => {
               <Button 
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10 hover:border-white/50"
+                className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 w-full sm:w-auto"
                 asChild
               >
                 <Link to="/case-studies">

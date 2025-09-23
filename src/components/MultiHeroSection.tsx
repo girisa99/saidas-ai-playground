@@ -74,7 +74,7 @@ export const MultiHeroSection = () => {
   const IconComponent = currentSection.icon;
 
   return (
-    <section className="relative text-white py-24 lg:py-32 transition-all duration-1000 overflow-hidden">
+    <section className="relative text-white py-12 sm:py-16 md:py-20 lg:py-32 transition-all duration-1000 overflow-hidden min-h-screen">
       {/* Background Image with Transition */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000"
@@ -103,57 +103,57 @@ export const MultiHeroSection = () => {
       </div>
       
       {/* Hero Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
             {/* Clear Value Proposition */}
-            <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-6 animate-fade-in text-center text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6 animate-fade-in text-center text-white">
               AI Development <span className="text-genie-accent">Experimentation</span>
             </h1>
-            <div className="w-24 h-1 bg-genie-accent mx-auto mb-8"></div>
+            <div className="w-16 sm:w-20 md:w-24 h-1 bg-genie-accent mx-auto mb-6 sm:mb-8"></div>
             
             {/* Clear Purpose Statement */}
-            <h2 className="text-2xl lg:text-3xl text-white/90 mb-6 font-medium max-w-4xl mx-auto">
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mb-4 sm:mb-6 font-medium max-w-4xl mx-auto px-2">
               Sharing How AI is Democratizing Software Development for Everyone
             </h2>
-            <p className="text-lg lg:text-xl text-white/80 mb-8 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto px-2">
               Join my exploration of how AI tools are making software development accessible to business professionals 
               with little to no coding experience. Real experiments, honest discoveries, and practical insights.
             </p>
             
             {/* What You'll Discover - Knowledge focused */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <MapPin className="h-8 w-8 text-genie-accent mx-auto mb-3" />
-                <h3 className="font-semibold text-white mb-2">Learning Journey</h3>
-                <p className="text-white/80 text-sm">Follow my step-by-step exploration of AI development tools</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 max-w-4xl mx-auto px-2">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                <MapPin className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
+                <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Learning Journey</h3>
+                <p className="text-white/80 text-xs sm:text-sm">Follow my step-by-step exploration of AI development tools</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <Trophy className="h-8 w-8 text-genie-accent mx-auto mb-3" />
-                <h3 className="font-semibold text-white mb-2">Real Experiments</h3>
-                <p className="text-white/80 text-sm">Honest results from testing no-code and AI-powered platforms</p>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                <Trophy className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
+                <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Real Experiments</h3>
+                <p className="text-white/80 text-xs sm:text-sm">Honest results from testing no-code and AI-powered platforms</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <Wrench className="h-8 w-8 text-genie-accent mx-auto mb-3" />
-                <h3 className="font-semibold text-white mb-2">Accessible Tools</h3>
-                <p className="text-white/80 text-sm">Discover AI tools that require minimal technical background</p>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20 sm:col-span-2 md:col-span-1">
+                <Wrench className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
+                <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Accessible Tools</h3>
+                <p className="text-white/80 text-xs sm:text-sm">Discover AI tools that require minimal technical background</p>
               </div>
             </div>
 
           {/* Primary CTA - Learning focused */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12 animate-fade-in justify-center px-2">
             <Button 
               variant="default"
-              size="xl" 
-              className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              size="lg" 
+              className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
               onClick={() => navigate('/journey')}
             >
               Explore My Learning Path
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
             <Button 
               variant="outline" 
-              size="xl" 
-              className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 backdrop-blur-sm"
+              size="lg" 
+              className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 backdrop-blur-sm w-full sm:w-auto"
               onClick={() => navigate('/about')}
             >
               About My Background
@@ -161,17 +161,17 @@ export const MultiHeroSection = () => {
           </div>
         </div>
 
-        {/* Enhanced Hero Navigation Indicators - Consistent styling */}
-        <div className="flex justify-center mb-8">
-          <div className="flex items-center space-x-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 border border-white/20">
+        {/* Enhanced Hero Navigation Indicators - Mobile Responsive */}
+        <div className="flex justify-center mb-6 sm:mb-8 px-2">
+          <div className="flex items-center space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-md rounded-full px-3 sm:px-6 py-2 sm:py-3 border border-white/20">
             {heroSections.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentHero(index)}
                 className={`transition-all duration-300 rounded-full border-2 ${
                   index === currentHero 
-                    ? 'w-12 h-4 bg-genie-accent border-genie-accent scale-110' 
-                    : 'w-4 h-4 bg-genie-accent/40 border-genie-accent/50 hover:bg-genie-accent/60 hover:border-genie-accent'
+                    ? 'w-8 sm:w-12 h-3 sm:h-4 bg-genie-accent border-genie-accent scale-110' 
+                    : 'w-3 sm:w-4 h-3 sm:h-4 bg-genie-accent/40 border-genie-accent/50 hover:bg-genie-accent/60 hover:border-genie-accent'
                 }`}
                 aria-label={`Go to hero section ${index + 1}: ${heroSections[index].title}`}
               />
@@ -179,13 +179,13 @@ export const MultiHeroSection = () => {
           </div>
         </div>
         
-        {/* Hero Section Thumbnails - Consistent styling */}
-        <div className="flex justify-center space-x-2 mb-8">
+        {/* Hero Section Thumbnails - Mobile Responsive */}
+        <div className="flex justify-center flex-wrap gap-2 mb-6 sm:mb-8 px-2">
           {heroSections.map((section, index) => (
             <button
               key={index}
               onClick={() => setCurrentHero(index)}
-              className={`px-3 py-1 text-sm rounded-full transition-all duration-300 ${
+              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-full transition-all duration-300 ${
                 index === currentHero
                   ? 'bg-genie-accent text-genie-dark font-medium'
                   : 'bg-white/10 text-white/80 hover:bg-white/20 backdrop-blur-sm border border-white/20'
@@ -196,20 +196,20 @@ export const MultiHeroSection = () => {
           ))}
         </div>
 
-        {/* Professional Stats with Consistent Styling */}
-        <div className="border-t border-white/20 pt-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        {/* Professional Stats with Mobile Responsive Styling */}
+        <div className="border-t border-white/20 pt-8 sm:pt-12 px-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-genie-accent mb-2">25+</div>
-              <div className="text-white/80">Years Experience</div>
+              <div className="text-2xl sm:text-3xl font-bold text-genie-accent mb-1 sm:mb-2">25+</div>
+              <div className="text-white/80 text-sm sm:text-base">Years Experience</div>
             </div>
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-genie-accent mb-2">95%</div>
-              <div className="text-white/80">Project Success Rate</div>
+              <div className="text-2xl sm:text-3xl font-bold text-genie-accent mb-1 sm:mb-2">95%</div>
+              <div className="text-white/80 text-sm sm:text-base">Project Success Rate</div>
             </div>
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-genie-accent mb-2">Global</div>
-              <div className="text-white/80">Impact & Reach</div>
+              <div className="text-2xl sm:text-3xl font-bold text-genie-accent mb-1 sm:mb-2">Global</div>
+              <div className="text-white/80 text-sm sm:text-base">Impact & Reach</div>
             </div>
           </div>
         </div>
