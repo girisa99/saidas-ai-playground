@@ -65,18 +65,20 @@ const journeySteps = [
     roi: "60% efficiency gain",
     automationTasks: [
       "Automated intake form parsing and data extraction",
-      "Insurance eligibility verification",
+      "Insurance eligibility verification via API calls",
       "Basic medical history review and flagging",
-      "Appointment slot identification based on urgency"
+      "Appointment slot identification based on urgency protocols",
+      "Standard communication templates for common scenarios"
     ],
     aiTasks: [
       "Complex case pattern recognition and risk stratification",
-      "Personalized communication generation for patients",
-      "Care team coordination and specialist matching",
-      "Predictive timeline estimation for patient journey"
+      "Personalized communication generation for unique situations",
+      "Care team coordination and specialist matching based on case complexity",
+      "Predictive timeline estimation considering patient-specific factors",
+      "Intelligent routing to appropriate feedback loops when incomplete data detected"
     ],
-    whyAutomation: "High-volume, standardized processes that require speed and accuracy for basic verification tasks",
-    whyAI: "Complex decision-making around care coordination and personalized patient engagement strategies",
+    whyAutomation: "High-volume, standardized intake processes benefit from consistent automation for speed and accuracy in basic verification tasks",
+    whyAI: "Complex decision-making around care coordination, risk assessment, and determining when feedback loops are needed requires contextual intelligence",
     phases: [
       "Implement basic automation for data parsing and verification",
       "Deploy AI for complex case analysis and risk assessment",
@@ -189,8 +191,8 @@ const journeySteps = [
       "Personalized communication with insurance representatives",
       "Predictive approval likelihood assessment"
     ],
-    whyAutomation: "Form submission and status tracking processes that follow standard insurance protocols",
-    whyAI: "Complex case justification and appeal strategies that require nuanced understanding of medical necessity",
+    whyAutomation: "Form submission and status tracking follow standard insurance protocols, but automation must trigger feedback loops to Data Collection when missing information is detected",
+    whyAI: "Complex case justification and appeal strategies require understanding of medical necessity, plus intelligent coordination with Clinical Review for additional documentation when needed",
     phases: [
       "Implement automated form submission systems",
       "Deploy AI for case documentation and appeal strategies",
@@ -374,13 +376,14 @@ const journeySteps = [
       "Basic care plan distribution"
     ],
     aiTasks: [
-      "Intelligent care team assembly",
-      "Dynamic care plan optimization",
-      "Complex communication prioritization",
-      "Proactive issue identification and resolution"
+      "Intelligent care team assembly based on Clinical Review insights",
+      "Dynamic care plan optimization using Genomic Testing results",
+      "Complex communication prioritization across multiple care touchpoints",
+      "Proactive issue identification by monitoring all connected workflow steps",
+      "Synthesis of information from Appointment Scheduling and Pre-Visit Preparation for seamless care transitions"
     ],
-    whyAutomation: "Communication routing and task tracking that can be systematized and monitored",
-    whyAI: "Complex care team coordination and dynamic plan optimization that require strategic thinking",
+    whyAutomation: "Communication routing and task tracking across multiple departments can be systematized, but must integrate data from Clinical Review, Genomic Testing, and Scheduling steps",
+    whyAI: "Strategic care orchestration requires intelligent synthesis of information from multiple workflow connections (Clinical Review insights, Genomic results, scheduling data) to make complex coordination decisions",
     phases: [
       "Automate communication routing and task tracking",
       "Deploy AI for care team optimization",
@@ -688,33 +691,33 @@ const BusinessUseCases = () => {
                 {/* Feedback Loops - When steps need additional information */}
                 {/* Insurance Authorization (4) → Data Collection (2) for additional info */}
                 <path
-                  d={`M 70 20 Q 50 30 30 20`}
+                  d={`M 75 20 Q 55 35 35 20`}
                   stroke="#f59e0b"
-                  strokeWidth="3"
+                  strokeWidth="4"
                   fill="none"
-                  strokeDasharray="8,4"
+                  strokeDasharray="12,6"
                   markerEnd="url(#arrow-feedback)"
-                  opacity="0.8"
+                  opacity="0.9"
                 />
                 
                 {/* Clinical Review (5) → Records Acquisition (3) for additional records */}
                 <path
-                  d={`M 90 10 Q 70 5 50 10`}
+                  d={`M 85 10 Q 70 0 55 10`}
                   stroke="#f59e0b"
-                  strokeWidth="3"
+                  strokeWidth="4"
                   fill="none"
-                  strokeDasharray="8,4"
+                  strokeDasharray="12,6"
                   markerEnd="url(#arrow-feedback)"
-                  opacity="0.8"
+                  opacity="0.9"
                 />
                 
                 {/* Results Flow - Genomic Testing (6) → Clinical Review (5) */}
                 <path
-                  d={`M 15 50 Q 50 35 85 20`}
+                  d={`M 20 45 Q 55 30 80 25`}
                   stroke="#10b981"
-                  strokeWidth="3"
+                  strokeWidth="4"
                   fill="none"
-                  strokeDasharray="6,3"
+                  strokeDasharray="10,5"
                   markerEnd="url(#arrow-results)"
                   opacity="0.9"
                 />
@@ -722,60 +725,64 @@ const BusinessUseCases = () => {
                 {/* Care Coordination (9) connects to multiple steps */}
                 {/* Care Coordination (9) ← Clinical Review (5) */}
                 <path
-                  d={`M 85 25 Q 80 40 65 50`}
+                  d={`M 80 30 Q 75 45 65 55`}
                   stroke="#8b5cf6"
-                  strokeWidth="3"
+                  strokeWidth="4"
                   fill="none"
-                  strokeDasharray="10,5"
+                  strokeDasharray="15,8"
                   markerEnd="url(#arrow-coordination)"
-                  opacity="0.8"
+                  opacity="0.9"
                 />
                 
                 {/* Care Coordination (9) ← Genomic Testing (6) */}
-                <line
-                  x1="15"
-                  y1="60"
-                  x2="65"
-                  y2="60"
+                <path
+                  d={`M 20 60 Q 45 65 60 60`}
                   stroke="#8b5cf6"
-                  strokeWidth="3"
-                  strokeDasharray="10,5"
+                  strokeWidth="4"
+                  strokeDasharray="15,8"
                   markerEnd="url(#arrow-coordination)"
-                  opacity="0.8"
+                  opacity="0.9"
                 />
                 
                 {/* Care Coordination (9) ← Appointment Scheduling (7) */}
-                <line
-                  x1="35"
-                  y1="60"
-                  x2="65"
-                  y2="60"
+                <path
+                  d={`M 40 60 Q 55 65 65 60`}
                   stroke="#8b5cf6"
-                  strokeWidth="3"
-                  strokeDasharray="10,5"
+                  strokeWidth="4"
+                  strokeDasharray="15,8"
                   markerEnd="url(#arrow-coordination)"
-                  opacity="0.8"
+                  opacity="0.9"
+                />
+                
+                {/* Care Coordination (9) ← Pre-Visit Preparation (8) */}
+                <path
+                  d={`M 60 60 Q 65 62 65 60`}
+                  stroke="#8b5cf6"
+                  strokeWidth="4"
+                  strokeDasharray="15,8"
+                  markerEnd="url(#arrow-coordination)"
+                  opacity="0.9"
                 />
               </svg>
               
-              {/* Connection Legend - Positioned with high z-index */}
-              <div className="absolute top-4 right-4 z-50 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-xl border-2 border-gray-300 text-xs">
+              {/* Connection Legend - Positioned below the journey map */}
+              <div className="absolute bottom-4 left-4 z-30 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-xl border-2 border-gray-300 text-xs">
                 <h4 className="font-semibold mb-3 text-gray-800 flex items-center gap-2">
                   <Network className="h-4 w-4" />
-                  Connection Types
+                  Workflow Connections
                 </h4>
-                <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-3">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-1 bg-blue-500 rounded-full"></div>
                     <span className="text-gray-700 font-medium">Sequential Flow</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #f59e0b 0, #f59e0b 4px, transparent 4px, transparent 8px)'}}></div>
-                    <span className="text-gray-700 font-medium">Feedback Request</span>
+                    <span className="text-gray-700 font-medium">Feedback Loop</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #10b981 0, #10b981 3px, transparent 3px, transparent 6px)'}}></div>
-                    <span className="text-gray-700 font-medium">Results Flow</span>
+                    <span className="text-gray-700 font-medium">Results Share</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #8b5cf6 0, #8b5cf6 5px, transparent 5px, transparent 10px)'}}></div>
