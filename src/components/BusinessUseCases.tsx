@@ -664,8 +664,12 @@ const BusinessUseCases = () => {
                   >
                     <polygon points="0 0, 12 4, 0 8" />
                   </marker>
+                <filter id="line-glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#ffffff" flood-opacity="0.9" />
+                </filter>
                 </defs>
                 
+                <g filter="url(#line-glow)">
                 {/* Primary Sequential Flow: 1→2→3→4→5→6→7→8→9 */}
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((stepId) => {
                   const currentStep = journeySteps.find(s => s.id === stepId);
@@ -763,33 +767,9 @@ const BusinessUseCases = () => {
                   markerEnd="url(#arrow-coordination)"
                   opacity="0.9"
                 />
+              </g>
               </svg>
               
-              {/* Connection Legend - Positioned below the journey map */}
-              <div className="absolute bottom-4 left-4 z-30 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-xl border-2 border-gray-300 text-xs">
-                <h4 className="font-semibold mb-3 text-gray-800 flex items-center gap-2">
-                  <Network className="h-4 w-4" />
-                  Workflow Connections
-                </h4>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-1 bg-blue-500 rounded-full"></div>
-                    <span className="text-gray-700 font-medium">Sequential Flow</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #f59e0b 0, #f59e0b 4px, transparent 4px, transparent 8px)'}}></div>
-                    <span className="text-gray-700 font-medium">Feedback Loop</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #10b981 0, #10b981 3px, transparent 3px, transparent 6px)'}}></div>
-                    <span className="text-gray-700 font-medium">Results Share</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #8b5cf6 0, #8b5cf6 5px, transparent 5px, transparent 10px)'}}></div>
-                    <span className="text-gray-700 font-medium">Care Coordination</span>
-                  </div>
-                </div>
-              </div>
 
               {/* Journey Steps */}
               {journeySteps.map((step) => (
@@ -828,6 +808,32 @@ const BusinessUseCases = () => {
               ))}
             </div>
 
+            {/* Legend below the map */}
+            <div className="mt-4 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-xl border border-gray-200 text-xs">
+              <h4 className="font-semibold mb-3 text-gray-800 flex items-center gap-2">
+                <Network className="h-4 w-4" />
+                Workflow Connections
+              </h4>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-1 bg-blue-500 rounded-full"></div>
+                  <span className="text-gray-700 font-medium">Sequential Flow</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #f59e0b 0, #f59e0b 4px, transparent 4px, transparent 8px)'}}></div>
+                  <span className="text-gray-700 font-medium">Feedback Loop</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #10b981 0, #10b981 3px, transparent 3px, transparent 6px)'}}></div>
+                  <span className="text-gray-700 font-medium">Results Share</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #8b5cf6 0, #8b5cf6 5px, transparent 5px, transparent 10px)'}}></div>
+                  <span className="text-gray-700 font-medium">Care Coordination</span>
+                </div>
+              </div>
+            </div>
+
             {/* Step Details with Tabs */}
             {selectedStep && (
               <Card className="mt-8 animate-scale-in">
@@ -855,6 +861,40 @@ const BusinessUseCases = () => {
                             </div>
                             <div className="text-xs text-muted-foreground mt-1">{step.roi}</div>
                           </div>
+                        </div>
+
+                        {/* Connections impacting this step */}
+                        <div className="flex flex-wrap gap-2">
+                          {(() => {
+                            const items: {label: string; className: string}[] = [];
+                            switch (selectedStep) {
+                              case 4:
+                                items.push({label:'Feedback to Data Collection', className:'bg-amber-100 text-amber-800 border border-amber-300'});
+                                break;
+                              case 5:
+                                items.push({label:'Feedback to Records Acquisition', className:'bg-amber-100 text-amber-800 border border-amber-300'});
+                                items.push({label:'Receives Results from Genomic Testing', className:'bg-emerald-100 text-emerald-800 border border-emerald-300'});
+                                items.push({label:'Coordinates with Care Coordination', className:'bg-purple-100 text-purple-800 border border-purple-300'});
+                                break;
+                              case 6:
+                                items.push({label:'Sends Results to Clinical Review', className:'bg-emerald-100 text-emerald-800 border border-emerald-300'});
+                                items.push({label:'Coordinates with Care Coordination', className:'bg-purple-100 text-purple-800 border border-purple-300'});
+                                break;
+                              case 7:
+                              case 8:
+                                items.push({label:'Coordinates with Care Coordination', className:'bg-purple-100 text-purple-800 border border-purple-300'});
+                                break;
+                              case 9:
+                                items.push({label:'Receives from Clinical Review', className:'bg-purple-100 text-purple-800 border border-purple-300'});
+                                items.push({label:'Receives from Genomic Testing', className:'bg-purple-100 text-purple-800 border border-purple-300'});
+                                items.push({label:'Receives from Appointment Scheduling', className:'bg-purple-100 text-purple-800 border border-purple-300'});
+                                items.push({label:'Receives from Pre-Visit Preparation', className:'bg-purple-100 text-purple-800 border border-purple-300'});
+                                break;
+                            }
+                            return items.map((it, idx) => (
+                              <span key={idx} className={`px-2 py-1 rounded-full text-xs font-medium ${it.className}`}>{it.label}</span>
+                            ));
+                          })()}
                         </div>
 
                         {/* Technology Analysis Tabs */}
