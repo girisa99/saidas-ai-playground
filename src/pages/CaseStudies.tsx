@@ -3,9 +3,20 @@ import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, TrendingUp, Users, Zap, Target, Shield, Activity } from "lucide-react";
+import { ArrowRight, TrendingUp, Users, Zap, Target, Shield, Activity, ArrowLeft, Award, BarChart3 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import successStoriesBg from "@/assets/hero-success-stories.jpg";
 
 const CaseStudies = () => {
+  useEffect(() => {
+    document.title = "Case Studies - Genie AI Experimentation HUB";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Real AI implementation success stories - proven results across healthcare, manufacturing, and enterprise environments.');
+    }
+  }, []);
+
   const caseStudies = [
     {
       id: 1,
@@ -68,26 +79,111 @@ const CaseStudies = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavigationHeader />
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="py-16 lg:py-24 bg-gradient-to-br from-primary/10 to-genie-teal/5">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
+      
+      {/* Enhanced Hero Section */}
+      <section className="relative pt-24 pb-16 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${successStoriesBg})` }}
+        />
+        
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-genie-dark/90 via-genie-primary/75 to-genie-secondary/80" />
+        
+        {/* Success Metrics Floating Elements */}
+        <div className="absolute inset-0">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute bg-genie-accent/30 rounded-full animate-pulse"
+              style={{
+                width: `${Math.random() * 6 + 3}px`,
+                height: `${Math.random() * 6 + 3}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${2 + Math.random() * 2}s`
+              }}
+            />
+          ))}
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Back Button */}
+          <Link to="/">
+            <Button variant="ghost" className="text-white hover:bg-white/10 mb-8">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Home
+            </Button>
+          </Link>
+          
+          <div className="max-w-5xl">
+            <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-4">
+              <Award className="w-4 h-4 mr-2" />
+              Proven Results
+            </Badge>
+            
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white">
+              AI Success <span className="text-genie-accent">Stories</span>
+            </h1>
+            
+            <p className="text-xl lg:text-2xl text-white/90 leading-relaxed mb-8">
+              Real metrics, honest insights, and measurable impact from implementing AI solutions 
+              across healthcare, manufacturing, and enterprise environments.
+            </p>
+            
+            {/* Impact Metrics Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <BarChart3 className="h-6 w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-sm">ROI Achieved</h3>
+                <p className="text-white/80 text-xs">Up to 300% in 6 months</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <Target className="h-6 w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-sm">Accuracy Rate</h3>
+                <p className="text-white/80 text-xs">94% AI processing accuracy</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <Zap className="h-6 w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-sm">Efficiency Gains</h3>
+                <p className="text-white/80 text-xs">5x faster processing</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <Shield className="h-6 w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-sm">Enterprise Scale</h3>
+                <p className="text-white/80 text-xs">15+ integrated models</p>
+              </div>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                variant="default"
+                size="lg"
+                className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl"
+              >
                 <TrendingUp className="w-4 h-4 mr-2" />
-                Real-World Impact
-              </Badge>
-              <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6">
-                AI Success <span className="text-genie-primary">Stories</span>
-              </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Proven results from implementing AI solutions across healthcare, manufacturing, 
-                and enterprise environments. Real metrics, honest insights, and measurable impact.
-              </p>
+                View All Results
+              </Button>
+              <Button 
+                variant="outline"
+                size="lg"
+                className="border-white/30 text-white hover:bg-white/10 hover:border-white/50"
+                asChild
+              >
+                <Link to="/journey">
+                  <ArrowRight className="w-4 h-4 mr-2" />
+                  Our Journey
+                </Link>
+              </Button>
             </div>
           </div>
-        </section>
-
+        </div>
+      </section>
+      
+      <main>
         {/* Case Studies Grid */}
         <section className="py-16 lg:py-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -113,39 +209,33 @@ const CaseStudies = () => {
                       </div>
                     </div>
                     
-                    <p className="text-muted-foreground leading-relaxed mb-6">
+                    <p className="text-muted-foreground mb-6 leading-relaxed">
                       {study.description}
                     </p>
-
-                    {/* Metrics */}
-                    <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-genie-primary/5 rounded-lg">
-                      {study.metrics.map((metric, metricIndex) => (
-                        <div key={metricIndex} className="text-center">
-                          <div className="text-lg font-bold text-genie-primary">
-                            {metric.value}
+                    
+                    <div className="mb-6">
+                      <h4 className="font-semibold text-foreground mb-3">Key Metrics</h4>
+                      <div className="grid grid-cols-3 gap-4">
+                        {study.metrics.map((metric, i) => (
+                          <div key={i} className="text-center p-3 bg-muted/50 rounded-lg">
+                            <div className="text-xl font-bold text-genie-primary">{metric.value}</div>
+                            <div className="text-xs text-muted-foreground">{metric.label}</div>
                           </div>
-                          <div className="text-xs text-muted-foreground">
-                            {metric.label}
-                          </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-
-                    {/* Tags */}
+                    
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {study.tags.map((tag, tagIndex) => (
-                        <Badge key={tagIndex} variant="secondary" className="text-xs">
+                      {study.tags.map((tag, i) => (
+                        <Badge key={i} variant="secondary" className="text-xs">
                           {tag}
                         </Badge>
                       ))}
                     </div>
-
-                    <Button 
-                      variant="outline" 
-                      className="w-full border-genie-primary/30 text-genie-primary hover:bg-genie-primary/10"
-                    >
-                      Learn More About This Project
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                    
+                    <Button variant="outline" className="w-full">
+                      <ArrowRight className="w-4 h-4 mr-2" />
+                      Learn More
                     </Button>
                   </Card>
                 );
@@ -154,43 +244,33 @@ const CaseStudies = () => {
           </div>
         </section>
 
-        {/* Impact Summary */}
-        <section className="py-16 bg-gradient-to-b from-genie-dark/5 to-background">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-6">
-                Collective Impact Metrics
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Measurable results across all AI implementation projects
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-4 gap-8 text-center">
-              <Card className="p-6">
-                <Zap className="w-8 h-8 text-genie-primary mx-auto mb-4" />
-                <div className="text-3xl font-bold text-genie-primary mb-2">15+</div>
-                <div className="text-muted-foreground">AI Models Deployed</div>
-              </Card>
-              <Card className="p-6">
-                <TrendingUp className="w-8 h-8 text-genie-teal mx-auto mb-4" />
-                <div className="text-3xl font-bold text-genie-teal mb-2">300%</div>
-                <div className="text-muted-foreground">Average ROI</div>
-              </Card>
-              <Card className="p-6">
-                <Target className="w-8 h-8 text-genie-cyan mx-auto mb-4" />
-                <div className="text-3xl font-bold text-genie-cyan mb-2">94%</div>
-                <div className="text-muted-foreground">Peak Accuracy Rate</div>
-              </Card>
-              <Card className="p-6">
-                <Shield className="w-8 h-8 text-genie-primary mx-auto mb-4" />
-                <div className="text-3xl font-bold text-genie-primary mb-2">100%</div>
-                <div className="text-muted-foreground">Enterprise Compliance</div>
-              </Card>
+        {/* Call to Action */}
+        <section className="py-16 bg-gradient-to-br from-genie-primary/5 to-genie-secondary/5">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              Ready to Transform Your Business?
+            </h2>
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              See how these proven AI strategies can be adapted for your organization's unique challenges and opportunities.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button variant="gradient" size="lg" asChild>
+                <Link to="/journey">
+                  <ArrowRight className="w-4 h-4 mr-2" />
+                  Start Your Journey
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild>
+                <Link to="/technology">
+                  <Zap className="w-4 h-4 mr-2" />
+                  Explore Technology
+                </Link>
+              </Button>
             </div>
           </div>
         </section>
       </main>
+      
       <Footer />
     </div>
   );
