@@ -253,6 +253,8 @@ const Journey = () => {
                 title="AI Journey Timeline"
                 description="Generate interactive presentation of my complete AI learning journey with milestones, achievements, and technology evolution"
                 data={milestones}
+                autoGenerate={false}
+                showInstructions={true}
               />
             </div>
 

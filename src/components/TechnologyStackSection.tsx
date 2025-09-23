@@ -130,6 +130,8 @@ export const TechnologyStackSection = () => {
             title="Technology Stack Infographic"
             description="Create comprehensive visual diagram of the complete AI technology stack with categories, tools, and integration patterns"
             data={technologies}
+            autoGenerate={true}
+            showInstructions={false}
           />
         </div>
 

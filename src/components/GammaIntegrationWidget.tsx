@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,7 +10,8 @@ import {
   Download,
   Workflow,
   Map,
-  TrendingUp
+  TrendingUp,
+  Info
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -20,6 +21,8 @@ interface GammaIntegrationWidgetProps {
   description: string;
   data?: any;
   onGenerate?: (type: string) => void;
+  autoGenerate?: boolean;
+  showInstructions?: boolean;
 }
 
 export const GammaIntegrationWidget = ({ 
@@ -27,10 +30,19 @@ export const GammaIntegrationWidget = ({
   title, 
   description, 
   data,
-  onGenerate 
+  onGenerate,
+  autoGenerate = false,
+  showInstructions = true
 }: GammaIntegrationWidgetProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isViewing, setIsViewing] = useState(false);
+  const [isGenerated, setIsGenerated] = useState(false);
+
+  useEffect(() => {
+    if (autoGenerate && !isGenerated) {
+      handleGenerate();
+    }
+  }, [autoGenerate]);
 
   const getContentIcon = () => {
     switch (contentType) {
@@ -82,6 +94,7 @@ export const GammaIntegrationWidget = ({
       }, 1000);
 
       onGenerate?.(contentType);
+      setIsGenerated(true);
       
     } catch (error) {
       toast.error(`Failed to generate ${contentType}. Please try again.`);
@@ -117,6 +130,20 @@ export const GammaIntegrationWidget = ({
       <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
         {description}
       </p>
+      
+      {showInstructions && (
+        <div className="mb-4 p-3 bg-background/50 rounded-lg border border-border/30">
+          <div className="flex items-start gap-2">
+            <Info className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
+            <div className="text-xs text-muted-foreground">
+              <p className="font-medium text-foreground mb-1">How to use:</p>
+              <p>• Click <strong>Generate</strong> to create AI presentation</p>
+              <p>• Use <strong>Preview</strong> to review content</p>
+              <p>• <strong>Export</strong> when ready to download</p>
+            </div>
+          </div>
+        </div>
+      )}
       
       <div className="flex gap-2">
         <Button 
