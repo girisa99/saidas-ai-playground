@@ -630,6 +630,7 @@ const BusinessUseCases = () => {
               Interactive Patient Journey Map
             </CardTitle>
             <p className="text-muted-foreground">Click on any step to see detailed technology analysis and scenarios</p>
+            <p className="text-xs text-muted-foreground mt-1">All times, percentages, and improvements shown are approximate estimations for illustration.</p>
           </CardHeader>
           <CardContent>
             {/* Non-linear Journey Visualization */}
@@ -637,8 +638,8 @@ const BusinessUseCases = () => {
               {/* Connection Lines */}
               <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ zIndex: 5 }}>
                 <defs>
-                  <marker id="arrow-primary" markerWidth="12" markerHeight="8" refX="10" refY="4" orient="auto" fill="#3b82f6">
-                    <polygon points="0 0, 12 4, 0 8" />
+                  <marker id="arrow-primary" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="#3b82f6">
+                    <polygon points="0 0, 8 3, 0 6" />
                   </marker>
                   <marker id="arrow-feedback" markerWidth="12" markerHeight="8" refX="10" refY="4" orient="auto" fill="#f59e0b">
                     <polygon points="0 0, 12 4, 0 8" />
@@ -765,7 +766,7 @@ const BusinessUseCases = () => {
                         <step.icon className="h-6 w-6" />
                       </div>
                       <div className="text-xs font-medium mb-1">{step.title}</div>
-                      <div className="text-xs text-muted-foreground mb-2">{step.time}</div>
+                      <div className="text-xs text-muted-foreground mb-2">≈ {step.time}</div>
                       <div className="flex justify-center items-center gap-1">
                         {getApproachIcon(step.approach)}
                         <step.emotionIcon className={`h-3 w-3 ${
@@ -806,7 +807,7 @@ const BusinessUseCases = () => {
                               <span className="capitalize">{step.approach} Approach</span>
                               {step.automationPrimary ? " (Automation Primary)" : " (AI Primary)"}
                             </div>
-                            <div className="text-xs text-muted-foreground mt-1">{step.roi}</div>
+                            <div className="text-xs text-muted-foreground mt-1">Approx. {step.roi}</div>
                           </div>
                         </div>
 
@@ -982,7 +983,7 @@ const BusinessUseCases = () => {
                                         <Card className={`${getComplexityColor(scenario.complexity)}`}>
                                           <CardContent className="p-4 text-center">
                                             <h4 className="font-semibold mb-1">Timeline</h4>
-                                            <div className="text-lg font-bold">{scenario.timeline}</div>
+                                            <div className="text-lg font-bold">≈ {scenario.timeline}</div>
                                           </CardContent>
                                         </Card>
                                         
@@ -990,8 +991,8 @@ const BusinessUseCases = () => {
                                           <CardContent className="p-4 text-center">
                                             <h4 className="font-semibold mb-2">Technology Mix</h4>
                                             <div className="flex justify-between text-xs">
-                                              <span>Auto: {scenario.technologyMix.automation}%</span>
-                                              <span>AI: {scenario.technologyMix.ai}%</span>
+                                              <span>Auto: ≈{scenario.technologyMix.automation}%</span>
+                                              <span>AI: ≈{scenario.technologyMix.ai}%</span>
                                             </div>
                                             <Progress value={scenario.technologyMix.automation} className="mt-2" />
                                           </CardContent>
