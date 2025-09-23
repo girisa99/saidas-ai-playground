@@ -675,8 +675,8 @@ const BusinessUseCases = () => {
                     );
                   })}
 
-                  {/* Context flows (only when a step is selected to avoid clutter) */}
-                  {selectedStep && (
+                  {/* Supplemental flows moved to scenarios */}
+                  {false && (
                     <>
                       {feedbackEdges.filter(([from,to]) => from === selectedStep || to === selectedStep).map(([from, to]) => {
                         const a = journeySteps.find(s => s.id === from)?.position;
@@ -780,31 +780,6 @@ const BusinessUseCases = () => {
               ))}
             </div>
 
-            {/* Legend below the map */}
-            <div className="mt-4 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-xl border border-gray-200 text-xs">
-              <h4 className="font-semibold mb-3 text-gray-800 flex items-center gap-2">
-                <Network className="h-4 w-4" />
-                Workflow Connections
-              </h4>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-1 bg-blue-500 rounded-full"></div>
-                  <span className="text-gray-700 font-medium">Sequential Flow</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #f59e0b 0, #f59e0b 4px, transparent 4px, transparent 8px)'}}></div>
-                  <span className="text-gray-700 font-medium">Feedback Loop</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #10b981 0, #10b981 3px, transparent 3px, transparent 6px)'}}></div>
-                  <span className="text-gray-700 font-medium">Results Share</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #8b5cf6 0, #8b5cf6 5px, transparent 5px, transparent 10px)'}}></div>
-                  <span className="text-gray-700 font-medium">Care Coordination</span>
-                </div>
-              </div>
-            </div>
 
             {/* Step Details with Tabs */}
             {selectedStep && (
