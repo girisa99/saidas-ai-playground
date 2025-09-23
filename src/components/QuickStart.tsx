@@ -211,18 +211,14 @@ export const QuickStart = () => {
         </div>
 
         {/* Journey Impact Metrics */}
-        <div className="mt-16 grid md:grid-cols-3 gap-8">
+        <div className="mt-16 grid md:grid-cols-2 gap-8">
           <Card className="p-6 text-center bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
-            <div className="text-3xl font-bold text-green-600 mb-2">2 Months</div>
+            <div className="text-3xl font-bold text-green-600 mb-2">3+ Months</div>
             <p className="text-muted-foreground">Focused Experimentation</p>
           </Card>
           <Card className="p-6 text-center bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200">
-            <div className="text-3xl font-bold text-blue-600 mb-2">Multiple</div>
-            <p className="text-muted-foreground">Use Cases Validated</p>
-          </Card>
-          <Card className="p-6 text-center bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200">
-            <div className="text-3xl font-bold text-purple-600 mb-2">Real</div>
-            <p className="text-muted-foreground">Results Coming Soon!</p>
+            <div className="text-3xl font-bold text-blue-600 mb-2">8+</div>
+            <p className="text-muted-foreground">Use Cases Addressed</p>
           </Card>
         </div>
 
