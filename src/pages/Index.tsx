@@ -28,7 +28,6 @@ const Index = () => {
         <TrustSection />
         <StorySection />
         <QuickStart />
-        <AIExperimentationBanner />
         <ValueProposition />
         <FAQ />
         {/* Simplified homepage - detailed sections moved to dedicated pages per UI/UX audit */}
