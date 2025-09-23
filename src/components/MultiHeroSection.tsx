@@ -150,8 +150,9 @@ export const MultiHeroSection = () => {
           {/* Primary CTA */}
           <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in justify-center">
             <Button 
-              size="lg" 
-              className="bg-genie-primary text-white hover:bg-genie-teal px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 genie-glow"
+              variant="gradient"
+              size="xl" 
+              className="px-8 py-4 shadow-lg hover:shadow-xl hover:shadow-genie-primary/25 transform hover:scale-105 transition-all duration-300"
               onClick={() => navigate('/journey')}
             >
               Start Your AI Journey
@@ -159,8 +160,8 @@ export const MultiHeroSection = () => {
             </Button>
             <Button 
               variant="outline" 
-              size="lg" 
-              className="border-white text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold"
+              size="xl" 
+              className="border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 backdrop-blur-sm"
               onClick={() => navigate('/about')}
             >
               Learn My Story

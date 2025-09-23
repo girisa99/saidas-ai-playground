@@ -32,11 +32,11 @@ export const NavigationHeader = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-lg border-b border-border shadow-sm">
-      <div className="container mx-auto">
-        <div className="flex h-16 items-center justify-between px-4">
-          {/* Logo & Brand */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="relative">
+      <div className="container mx-auto max-w-7xl">
+        <div className="flex h-16 items-center justify-between px-4 lg:px-6">
+          {/* Logo & Brand - Fixed width to prevent wrapping */}
+          <Link to="/" className="flex items-center space-x-3 group min-w-0 flex-shrink-0">
+            <div className="relative flex-shrink-0">
               <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-genie-primary to-genie-secondary p-1 shadow-lg group-hover:shadow-genie-primary/20 transition-all duration-300">
                 <img 
                   src={genieLogo} 
@@ -45,48 +45,58 @@ export const NavigationHeader = () => {
                 />
               </div>
             </div>
-            <div className="hidden sm:block">
+            <div className="hidden md:block min-w-0">
               <div className="flex items-center space-x-2">
-                <span className="text-xl font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent">
+                <span className="text-xl font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
                   Genie AI
                 </span>
-                <span className="text-lg font-semibold text-foreground">Hub</span>
+                <span className="text-lg font-semibold text-foreground whitespace-nowrap">Hub</span>
               </div>
-              <p className="text-xs text-muted-foreground font-medium">Enterprise AI Solutions</p>
+              <p className="text-xs text-muted-foreground font-medium whitespace-nowrap leading-tight">
+                Enterprise AI Solutions
+              </p>
+            </div>
+            {/* Mobile-only simplified brand */}
+            <div className="md:hidden">
+              <span className="text-lg font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent">
+                Genie AI
+              </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = isActivePath(item.to);
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    isActive
-                      ? 'bg-primary text-primary-foreground shadow-md'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
-            <button 
-              onClick={() => scrollToSection('documents')}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
-            >
-              <FileText className="w-4 h-4" />
-              <span>Docs</span>
-            </button>
+          {/* Desktop Navigation - Centered */}
+          <nav className="hidden lg:flex items-center justify-center flex-1 max-w-2xl mx-8">
+            <div className="flex items-center space-x-1">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = isActivePath(item.to);
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                      isActive
+                        ? 'bg-primary text-primary-foreground shadow-md'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4 flex-shrink-0" />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+              <button 
+                onClick={() => scrollToSection('documents')}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 whitespace-nowrap"
+              >
+                <FileText className="w-4 h-4 flex-shrink-0" />
+                <span>Docs</span>
+              </button>
+            </div>
           </nav>
 
-          {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center space-x-3">
+          {/* Desktop Actions - Right aligned */}
+          <div className="hidden lg:flex items-center space-x-3 flex-shrink-0">
             {/* Search */}
             <div className="relative">
               <SearchBar />
@@ -97,19 +107,19 @@ export const NavigationHeader = () => {
               <Button 
                 variant="outline"
                 size="sm" 
-                className="text-sm font-medium hover:bg-muted/80"
+                className="text-sm font-medium hover:bg-muted/80 whitespace-nowrap h-9 px-4"
                 onClick={() => window.open('https://preview--cgat-patient-hcp-care-ecosystem.lovable.app/', '_blank')}
               >
-                <ExternalLink className="w-4 h-4 mr-2" />
+                <ExternalLink className="w-4 h-4 mr-2 flex-shrink-0" />
                 Login
               </Button>
               <Button 
                 size="sm" 
-                className="bg-gradient-to-r from-genie-primary to-genie-secondary hover:from-genie-primary/90 hover:to-genie-secondary/90 text-white font-medium shadow-lg hover:shadow-genie-primary/25 transition-all duration-300"
+                className="bg-gradient-to-r from-genie-primary to-genie-secondary hover:from-genie-primary/90 hover:to-genie-secondary/90 text-white font-medium shadow-lg hover:shadow-genie-primary/25 transition-all duration-300 whitespace-nowrap h-9 px-4"
                 onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
               >
                 Connect
-                <ExternalLink className="w-4 h-4 ml-2" />
+                <ExternalLink className="w-4 h-4 ml-2 flex-shrink-0" />
               </Button>
             </div>
           </div>
@@ -118,7 +128,7 @@ export const NavigationHeader = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="lg:hidden p-2"
+            className="lg:hidden p-2 flex-shrink-0"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
@@ -154,7 +164,7 @@ export const NavigationHeader = () => {
                           : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                       }`}
                     >
-                      <Icon className="w-5 h-5" />
+                      <Icon className="w-5 h-5 flex-shrink-0" />
                       <span className="font-medium">{item.label}</span>
                     </Link>
                   );
@@ -163,7 +173,7 @@ export const NavigationHeader = () => {
                   onClick={() => scrollToSection('documents')}
                   className="flex items-center gap-3 px-4 py-3 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 w-full text-left"
                 >
-                  <FileText className="w-5 h-5" />
+                  <FileText className="w-5 h-5 flex-shrink-0" />
                   <span className="font-medium">Documentation</span>
                 </button>
               </nav>
@@ -173,25 +183,25 @@ export const NavigationHeader = () => {
                 <Button 
                   variant="outline"
                   size="lg" 
-                  className="w-full justify-center font-medium"
+                  className="w-full justify-center font-medium h-12"
                   onClick={() => {
                     window.open('https://preview--cgat-patient-hcp-care-ecosystem.lovable.app/', '_blank');
                     setIsMenuOpen(false);
                   }}
                 >
-                  <ExternalLink className="w-4 h-4 mr-2" />
+                  <ExternalLink className="w-4 h-4 mr-2 flex-shrink-0" />
                   Login to Platform
                 </Button>
                 <Button 
                   size="lg" 
-                  className="w-full bg-gradient-to-r from-genie-primary to-genie-secondary hover:from-genie-primary/90 hover:to-genie-secondary/90 text-white font-medium shadow-lg"
+                  className="w-full bg-gradient-to-r from-genie-primary to-genie-secondary hover:from-genie-primary/90 hover:to-genie-secondary/90 text-white font-medium shadow-lg h-12"
                   onClick={() => {
                     window.open('https://www.linkedin.com/in/saidas/', '_blank');
                     setIsMenuOpen(false);
                   }}
                 >
                   Connect with Me
-                  <ExternalLink className="w-4 h-4 ml-2" />
+                  <ExternalLink className="w-4 h-4 ml-2 flex-shrink-0" />
                 </Button>
               </div>
             </div>
