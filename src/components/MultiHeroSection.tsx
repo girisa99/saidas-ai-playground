@@ -74,14 +74,25 @@ export const MultiHeroSection = () => {
   const IconComponent = currentSection.icon;
 
   return (
-    <section className="relative text-white py-24 lg:py-32 transition-all duration-1000 overflow-hidden bg-gradient-to-br from-genie-dark via-genie-navy to-genie-primary/20">
+    <section className="relative text-white py-24 lg:py-32 transition-all duration-1000 overflow-hidden">
+      {/* Background Image with Transition */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000"
+        style={{ backgroundImage: `url(${currentSection.bgImage})` }}
+      />
+      
+      {/* Consistent Dark Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-genie-dark/90 via-genie-primary/75 to-genie-secondary/80" />
+
       {/* Animated Background Particles */}
       <div className="absolute inset-0">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(25)].map((_, i) => (
           <div
             key={i}
-            className={`absolute w-2 h-2 bg-genie-cyan/60 rounded-full animate-float genie-glow`}
+            className={`absolute bg-genie-accent/40 rounded-full animate-float`}
             style={{
+              width: `${Math.random() * 4 + 2}px`,
+              height: `${Math.random() * 4 + 2}px`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 4}s`,
@@ -91,32 +102,15 @@ export const MultiHeroSection = () => {
         ))}
       </div>
       
-      {/* DNA Strands */}
-      <div className="absolute top-20 right-10 w-8 h-8 border-2 border-genie-cyan/50 rounded-full animate-dna" />
-      <div className="absolute bottom-20 left-10 w-6 h-6 border-2 border-genie-teal/50 rounded-full animate-dna" style={{ animationDelay: '2s' }} />
-      
-      {/* Floating Smoke Effects */}
-      <div className="absolute bottom-10 left-1/4 w-4 h-4 bg-genie-primary/30 rounded-full animate-smoke" />
-      <div className="absolute bottom-10 right-1/4 w-3 h-3 bg-genie-cyan/30 rounded-full animate-smoke" style={{ animationDelay: '1s' }} />
-      
-      {/* Background Image Overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000 opacity-20"
-        style={{ backgroundImage: `url(${currentSection.bgImage})` }}
-      />
-      
-      {/* Dark Overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-genie-dark/40 via-transparent to-genie-navy/60" />
-      
       {/* Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
           {/* Clear Value Proposition */}
           <div className="mb-12">
-            <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-6 animate-fade-in text-center">
-              Genie AI Experimentation HUB
+            <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-6 animate-fade-in text-center text-white">
+              Genie AI Experimentation <span className="text-genie-accent">HUB</span>
             </h1>
-            <div className="w-24 h-1 bg-primary mx-auto mb-8"></div>
+            <div className="w-24 h-1 bg-genie-accent mx-auto mb-8"></div>
             
             {/* Clear Purpose Statement */}
             <h2 className="text-2xl lg:text-3xl text-white/90 mb-6 font-medium max-w-4xl mx-auto">
@@ -127,32 +121,32 @@ export const MultiHeroSection = () => {
               Learn from real implementations, avoid costly mistakes, and accelerate your AI journey.
             </p>
             
-            {/* What You'll Get */}
+            {/* What You'll Get - Consistent with other pages */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <MapPin className="h-8 w-8 text-genie-cyan mx-auto mb-3" />
+                <MapPin className="h-8 w-8 text-genie-accent mx-auto mb-3" />
                 <h3 className="font-semibold text-white mb-2">Proven Roadmaps</h3>
                 <p className="text-white/80 text-sm">Step-by-step guides from real AI implementations</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <Trophy className="h-8 w-8 text-genie-cyan mx-auto mb-3" />
+                <Trophy className="h-8 w-8 text-genie-accent mx-auto mb-3" />
                 <h3 className="font-semibold text-white mb-2">Real Case Studies</h3>
                 <p className="text-white/80 text-sm">Honest wins, failures, and lessons learned</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <Wrench className="h-8 w-8 text-genie-cyan mx-auto mb-3" />
+                <Wrench className="h-8 w-8 text-genie-accent mx-auto mb-3" />
                 <h3 className="font-semibold text-white mb-2">Tested AI Tools</h3>
                 <p className="text-white/80 text-sm">Curated arsenal of tools that actually work</p>
               </div>
             </div>
           </div>
 
-          {/* Primary CTA */}
+          {/* Primary CTA - Consistent styling */}
           <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in justify-center">
             <Button 
-              variant="gradient"
+              variant="default"
               size="xl" 
-              className="px-8 py-4 shadow-lg hover:shadow-xl hover:shadow-genie-primary/25 transform hover:scale-105 transition-all duration-300"
+              className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               onClick={() => navigate('/journey')}
             >
               Start Your AI Journey
@@ -161,7 +155,7 @@ export const MultiHeroSection = () => {
             <Button 
               variant="outline" 
               size="xl" 
-              className="border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 backdrop-blur-sm"
+              className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 backdrop-blur-sm"
               onClick={() => navigate('/about')}
             >
               Learn My Story
@@ -169,17 +163,17 @@ export const MultiHeroSection = () => {
           </div>
         </div>
 
-        {/* Enhanced Hero Navigation Indicators */}
+        {/* Enhanced Hero Navigation Indicators - Consistent styling */}
         <div className="flex justify-center mb-8">
-          <div className="flex items-center space-x-3 bg-black/20 backdrop-blur-md rounded-full px-6 py-3">
+          <div className="flex items-center space-x-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 border border-white/20">
             {heroSections.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentHero(index)}
                 className={`transition-all duration-300 rounded-full border-2 ${
                   index === currentHero 
-                    ? 'w-12 h-4 bg-genie-cyan border-genie-cyan scale-110 genie-glow' 
-                    : 'w-4 h-4 bg-genie-cyan/40 border-genie-cyan/50 hover:bg-genie-cyan/60 hover:border-genie-cyan'
+                    ? 'w-12 h-4 bg-genie-accent border-genie-accent scale-110' 
+                    : 'w-4 h-4 bg-genie-accent/40 border-genie-accent/50 hover:bg-genie-accent/60 hover:border-genie-accent'
                 }`}
                 aria-label={`Go to hero section ${index + 1}: ${heroSections[index].title}`}
               />
@@ -187,7 +181,7 @@ export const MultiHeroSection = () => {
           </div>
         </div>
         
-        {/* Hero Section Thumbnails */}
+        {/* Hero Section Thumbnails - Consistent styling */}
         <div className="flex justify-center space-x-2 mb-8">
           {heroSections.map((section, index) => (
             <button
@@ -195,8 +189,8 @@ export const MultiHeroSection = () => {
               onClick={() => setCurrentHero(index)}
               className={`px-3 py-1 text-sm rounded-full transition-all duration-300 ${
                 index === currentHero
-                  ? 'bg-genie-cyan text-black font-medium'
-                  : 'bg-genie-dark/40 text-genie-cyan/80 hover:bg-genie-dark/60'
+                  ? 'bg-genie-accent text-genie-dark font-medium'
+                  : 'bg-white/10 text-white/80 hover:bg-white/20 backdrop-blur-sm border border-white/20'
               }`}
             >
               {section.ctaPrimary}
@@ -204,20 +198,20 @@ export const MultiHeroSection = () => {
           ))}
         </div>
 
-        {/* Professional Stats with Genie Theme */}
-        <div className="border-t border-genie-cyan/30 pt-12">
+        {/* Professional Stats with Consistent Styling */}
+        <div className="border-t border-white/20 pt-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">25+</div>
-              <div className="text-genie-cyan/80">Years Experience</div>
+              <div className="text-3xl font-bold text-genie-accent mb-2">25+</div>
+              <div className="text-white/80">Years Experience</div>
             </div>
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">95%</div>
-              <div className="text-genie-cyan/80">Project Success Rate</div>
+              <div className="text-3xl font-bold text-genie-accent mb-2">95%</div>
+              <div className="text-white/80">Project Success Rate</div>
             </div>
             <div className="animate-fade-in">
-              <div className="text-3xl font-bold text-genie-cyan mb-2 genie-teal-glow">Global</div>
-              <div className="text-genie-cyan/80">Impact & Reach</div>
+              <div className="text-3xl font-bold text-genie-accent mb-2">Global</div>
+              <div className="text-white/80">Impact & Reach</div>
             </div>
           </div>
         </div>
