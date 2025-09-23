@@ -615,32 +615,10 @@ const BusinessUseCases = () => {
             <div className="relative h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-6 overflow-hidden">
               {/* Connection Lines */}
               <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
-                {/* Connect steps in proper sequence: 1→2→3→4→5→6→7→8→9 */}
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((stepId) => {
-                  const currentStep = journeySteps.find(s => s.id === stepId);
-                  const nextStep = journeySteps.find(s => s.id === stepId + 1);
-                  
-                  if (!currentStep || !nextStep) return null;
-                  
-                  return (
-                    <line
-                      key={`line-${stepId}`}
-                      x1={`${currentStep.position.x}%`}
-                      y1={`${currentStep.position.y}%`}
-                      x2={`${nextStep.position.x}%`}
-                      y2={`${nextStep.position.y}%`}
-                      stroke="#3b82f6"
-                      strokeWidth="3"
-                      strokeDasharray="8,4"
-                      className="animate-pulse"
-                    />
-                  );
-                })}
-                
-                {/* Add arrow markers for direction */}
                 <defs>
+                  {/* Arrow markers for different connection types */}
                   <marker
-                    id="arrowhead"
+                    id="arrow-primary"
                     markerWidth="10"
                     markerHeight="7"
                     refX="9"
@@ -650,9 +628,42 @@ const BusinessUseCases = () => {
                   >
                     <polygon points="0 0, 10 3.5, 0 7" />
                   </marker>
+                  <marker
+                    id="arrow-feedback"
+                    markerWidth="10"
+                    markerHeight="7"
+                    refX="9"
+                    refY="3.5"
+                    orient="auto"
+                    fill="#f59e0b"
+                  >
+                    <polygon points="0 0, 10 3.5, 0 7" />
+                  </marker>
+                  <marker
+                    id="arrow-coordination"
+                    markerWidth="10"
+                    markerHeight="7"
+                    refX="9"
+                    refY="3.5"
+                    orient="auto"
+                    fill="#8b5cf6"
+                  >
+                    <polygon points="0 0, 10 3.5, 0 7" />
+                  </marker>
+                  <marker
+                    id="arrow-results"
+                    markerWidth="10"
+                    markerHeight="7"
+                    refX="9"
+                    refY="3.5"
+                    orient="auto"
+                    fill="#10b981"
+                  >
+                    <polygon points="0 0, 10 3.5, 0 7" />
+                  </marker>
                 </defs>
                 
-                {/* Connection lines with arrows */}
+                {/* Primary Sequential Flow: 1→2→3→4→5→6→7→8→9 */}
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((stepId) => {
                   const currentStep = journeySteps.find(s => s.id === stepId);
                   const nextStep = journeySteps.find(s => s.id === stepId + 1);
@@ -661,19 +672,148 @@ const BusinessUseCases = () => {
                   
                   return (
                     <line
-                      key={`arrow-line-${stepId}`}
+                      key={`primary-${stepId}`}
                       x1={`${currentStep.position.x}%`}
                       y1={`${currentStep.position.y}%`}
                       x2={`${nextStep.position.x}%`}
                       y2={`${nextStep.position.y}%`}
                       stroke="#3b82f6"
-                      strokeWidth="2"
-                      markerEnd="url(#arrowhead)"
-                      opacity="0.7"
+                      strokeWidth="3"
+                      markerEnd="url(#arrow-primary)"
+                      opacity="0.8"
                     />
                   );
                 })}
+                
+                {/* Feedback Loops - When steps need additional information */}
+                {/* Insurance Authorization (4) → Data Collection (2) for additional info */}
+                {(() => {
+                  const step4 = journeySteps.find(s => s.id === 4);
+                  const step2 = journeySteps.find(s => s.id === 2);
+                  if (!step4 || !step2) return null;
+                  
+                  return (
+                    <path
+                      key="feedback-4-2"
+                      d={`M ${step4.position.x}% ${step4.position.y + 3}% Q ${(step4.position.x + step2.position.x) / 2}% ${step4.position.y + 8}% ${step2.position.x}% ${step2.position.y + 3}%`}
+                      stroke="#f59e0b"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeDasharray="6,3"
+                      markerEnd="url(#arrow-feedback)"
+                      opacity="0.7"
+                    />
+                  );
+                })()}
+                
+                {/* Clinical Review (5) → Records Acquisition (3) for additional records */}
+                {(() => {
+                  const step5 = journeySteps.find(s => s.id === 5);
+                  const step3 = journeySteps.find(s => s.id === 3);
+                  if (!step5 || !step3) return null;
+                  
+                  return (
+                    <path
+                      key="feedback-5-3"
+                      d={`M ${step5.position.x}% ${step5.position.y - 3}% Q ${(step5.position.x + step3.position.x) / 2}% ${step5.position.y - 8}% ${step3.position.x}% ${step3.position.y - 3}%`}
+                      stroke="#f59e0b"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeDasharray="6,3"
+                      markerEnd="url(#arrow-feedback)"
+                      opacity="0.7"
+                    />
+                  );
+                })()}
+                
+                {/* Results Flow - Genomic Testing (6) → Clinical Review (5) */}
+                {(() => {
+                  const step6 = journeySteps.find(s => s.id === 6);
+                  const step5 = journeySteps.find(s => s.id === 5);
+                  if (!step6 || !step5) return null;
+                  
+                  return (
+                    <line
+                      key="results-6-5"
+                      x1={`${step6.position.x + 2}%`}
+                      y1={`${step6.position.y - 2}%`}
+                      x2={`${step5.position.x + 2}%`}
+                      y2={`${step5.position.y + 2}%`}
+                      stroke="#10b981"
+                      strokeWidth="2"
+                      strokeDasharray="4,4"
+                      markerEnd="url(#arrow-results)"
+                      opacity="0.8"
+                    />
+                  );
+                })()}
+                
+                {/* Care Coordination (9) connects to multiple steps */}
+                {/* Care Coordination (9) ← Clinical Review (5) */}
+                {(() => {
+                  const step9 = journeySteps.find(s => s.id === 9);
+                  const step5 = journeySteps.find(s => s.id === 5);
+                  if (!step9 || !step5) return null;
+                  
+                  return (
+                    <path
+                      key="coord-5-9"
+                      d={`M ${step5.position.x + 3}% ${step5.position.y + 3}% Q ${(step5.position.x + step9.position.x) / 2}% ${(step5.position.y + step9.position.y) / 2 + 5}% ${step9.position.x - 3}% ${step9.position.y - 3}%`}
+                      stroke="#8b5cf6"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeDasharray="5,2"
+                      markerEnd="url(#arrow-coordination)"
+                      opacity="0.7"
+                    />
+                  );
+                })()}
+                
+                {/* Care Coordination (9) ← Genomic Testing (6) */}
+                {(() => {
+                  const step9 = journeySteps.find(s => s.id === 9);
+                  const step6 = journeySteps.find(s => s.id === 6);
+                  if (!step9 || !step6) return null;
+                  
+                  return (
+                    <line
+                      key="coord-6-9"
+                      x1={`${step6.position.x + 3}%`}
+                      y1={`${step6.position.y + 3}%`}
+                      x2={`${step9.position.x - 3}%`}
+                      y2={`${step9.position.y - 3}%`}
+                      stroke="#8b5cf6"
+                      strokeWidth="2"
+                      strokeDasharray="5,2"
+                      markerEnd="url(#arrow-coordination)"
+                      opacity="0.7"
+                    />
+                  );
+                })()}
               </svg>
+              
+              {/* Connection Legend */}
+              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-gray-200 text-xs">
+                <h4 className="font-semibold mb-2 text-gray-700">Connection Types</h4>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-0.5 bg-blue-500"></div>
+                    <span className="text-gray-600">Sequential Flow</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-0.5 bg-amber-500 border-dashed border-t"></div>
+                    <span className="text-gray-600">Feedback Request</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-0.5 bg-green-500 border-dashed border-t"></div>
+                    <span className="text-gray-600">Results Flow</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-0.5 bg-purple-500 border-dashed border-t"></div>
+                    <span className="text-gray-600">Care Coordination</span>
+                  </div>
+                </div>
+              </div>
 
               {/* Journey Steps */}
               {journeySteps.map((step) => (
