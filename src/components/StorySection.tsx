@@ -22,53 +22,123 @@ export const StorySection = () => {
           </p>
         </div>
 
-        {/* Story Cards */}
+        {/* Value Cards */}
         <div className="grid lg:grid-cols-2 gap-8 mb-16">
-          {/* Main Story Card */}
-          <Card className="p-8 border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-genie-teal/5">
-            <div className="flex items-start gap-4 mb-6">
+          {/* Business Impact Card */}
+          <Card className="p-8 border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-genie-teal/5 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-genie-primary/10 rounded-full -translate-y-16 translate-x-16"></div>
+            <div className="flex items-start gap-4 mb-6 relative z-10">
               <div className="p-3 bg-genie-primary/10 rounded-lg">
                 <Rocket className="w-6 h-6 text-genie-primary" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-2">The Genesis</h3>
-                <p className="text-muted-foreground">Where innovation meets experimentation</p>
+                <h3 className="text-2xl font-bold text-foreground mb-2">Strategic Genesis</h3>
+                <p className="text-muted-foreground">Accelerating innovation through AI experimentation</p>
               </div>
             </div>
-            <p className="text-foreground/80 leading-relaxed mb-6">
-              21+ years in healthcare technology led to a pivotal realization: AI could revolutionize not just digital health, 
-              but fundamentally transform how we approach complex business challenges across healthcare and enterprise systems. 
-              This isn't about replacing human expertise. It's about amplifying our capacity to solve previously impossible problems.
-            </p>
-            <p className="text-foreground/80 leading-relaxed">
-              Through systematic 6-month experimentation journey, I've developed breakthrough frameworks that transform AI concepts 
-              into practical solutions: from patient management systems to manufacturing workflows, achieving 300% ROI and 
-              demonstrating real-world healthcare impact at enterprise scale.
-            </p>
+            <div className="space-y-4 relative z-10">
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-genie-primary rounded-full"></div>
+                <span className="text-foreground/80">Self-service AI creation for business users</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-genie-primary rounded-full"></div>
+                <span className="text-foreground/80">Faster time-to-market for AI solutions</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-genie-primary rounded-full"></div>
+                <span className="text-foreground/80">Reduced dependency on IT resources</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-genie-primary rounded-full"></div>
+                <span className="text-foreground/80">Direct access to AI insights for decision-making</span>
+              </div>
+            </div>
           </Card>
 
-          {/* Vision Card */}
-          <Card className="p-8 border-genie-teal/20 bg-gradient-to-br from-genie-teal/5 to-genie-cyan/5">
-            <div className="flex items-start gap-4 mb-6">
+          {/* Technical Excellence Card */}
+          <Card className="p-8 border-genie-teal/20 bg-gradient-to-br from-genie-teal/5 to-genie-cyan/5 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-genie-teal/10 rounded-full -translate-y-16 translate-x-16"></div>
+            <div className="flex items-start gap-4 mb-6 relative z-10">
               <div className="p-3 bg-genie-teal/10 rounded-lg">
                 <Users className="w-6 h-6 text-genie-teal" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-2">My Vision</h3>
-                <p className="text-muted-foreground">Democratizing AI through personal experimentation</p>
+                <h3 className="text-2xl font-bold text-foreground mb-2">Technical Vision</h3>
+                <p className="text-muted-foreground">Empowering developers with AI-assisted frameworks</p>
               </div>
             </div>
-            <p className="text-foreground/80 leading-relaxed mb-6">
-              The breakthrough came when I witnessed AI experimentation translate directly into solving real-world business challenges. 
-              From mastering 15+ AI models to building dynamic multi-agent systems, traditional development barriers were not just dissolving. 
-              They were being revolutionized through systematic innovation.
-            </p>
-            <p className="text-foreground/80 leading-relaxed">
-              This hub documents my journey from AI curiosity to enterprise-grade solutions: achieving 94% accuracy through RAG architecture, 
-              building patient management systems, treatment center workflows, and demonstrating measurable healthcare transformation. 
-              Making advanced AI accessible and practical for business leaders.
-            </p>
+            <div className="space-y-4 relative z-10">
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-genie-teal rounded-full"></div>
+                <span className="text-foreground/80">AI-assisted coding for developer productivity</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-genie-teal rounded-full"></div>
+                <span className="text-foreground/80">Standardized development frameworks</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-genie-teal rounded-full"></div>
+                <span className="text-foreground/80">Enhanced security through built-in governance</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-genie-teal rounded-full"></div>
+                <span className="text-foreground/80">Scalable infrastructure for enterprise deployment</span>
+              </div>
+            </div>
           </Card>
+        </div>
+
+        {/* Market Opportunity Section */}
+        <div className="bg-gradient-to-r from-genie-primary/10 to-genie-teal/10 rounded-2xl p-8 mb-16">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-foreground mb-4">Why AI Experimentation Hub Now?</h3>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Strategic AI integration is no longer optional. The competitive edge demands rapid AI adoption.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                <Zap className="w-5 h-5 text-genie-primary" />
+                Seizing Market Opportunity
+              </h4>
+              <div className="space-y-3">
+                {[
+                  "Operational Efficiency: Automate tasks & optimize workflows",
+                  "Enhanced Decision-Making: Data-driven strategic insights",
+                  "New Revenue Streams: Innovative AI-powered products",
+                  "Superior Customer Experience: Personalized interactions"
+                ].map((item, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 bg-genie-primary rounded-full mt-2"></div>
+                    <span className="text-foreground/80 text-sm">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                <Rocket className="w-5 h-5 text-genie-teal" />
+                Competitive Advantage
+              </h4>
+              <div className="space-y-3">
+                {[
+                  "Accelerated Innovation: Rapid AI prototype deployment",
+                  "Data-Driven Edge: Leverage proprietary data capabilities",
+                  "Talent Attraction: Leading AI development positioning",
+                  "Industry Leadership: Define standards & disrupt markets"
+                ].map((item, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <div className="w-1.5 h-1.5 bg-genie-teal rounded-full mt-2"></div>
+                    <span className="text-foreground/80 text-sm">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Key Principles */}
