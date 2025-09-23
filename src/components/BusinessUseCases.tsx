@@ -202,7 +202,7 @@ const journeySteps = [
     approach: "hybrid",
     description: "Securing insurance approvals and managing prior authorizations",
     automationPrimary: true,
-    roi: "40% approval rate increase",
+    roi: "≈ 40% approval rate increase",
     automationTasks: [
       "Automated prior authorization form completion",
       "Real-time insurance eligibility verification",
@@ -223,11 +223,19 @@ const journeySteps = [
       "Integrate predictive analytics for approval optimization"
     ],
     currentIssues: [
-      "40% initial denial rate due to incomplete documentation",
-      "Appeal process taking 2-3 weeks with manual intervention",
-      "Staff unable to predict approval likelihood effectively"
+      "Approx. 40% initial denial rate due to incomplete documentation",
+      "Appeal process taking approx. 2–3 weeks with manual intervention",
+      "Staff unable to predict approval likelihood accurately"
     ],
-    improvement: "AI-optimized documentation increases initial approval rates to 75%, while automated appeals reduce processing time to 5-7 days."
+    improvement: "AI-optimized documentation increases initial approval rates to approx. 75%, while automated appeals reduce processing time to ~5–7 days.",
+    detailedSubsteps: [
+      { id: 1, title: "PA Requirement Detection", description: "Identify prior authorization and coverage rules for ordered services", technology: "Payer rules engine + eligibility APIs" },
+      { id: 2, title: "Form Auto-Completion", description: "Populate payer-specific PA forms with available clinical and demographic data", technology: "Form automation with EHR data mapping" },
+      { id: 3, title: "Clinical Justification Draft", description: "Assemble medical necessity language and attach supporting documents", technology: "AI justification generator + document assembler" },
+      { id: 4, title: "Submission & Tracking", description: "Submit PA and track status across payer portals/channels", technology: "Workflow automation with status webhooks" },
+      { id: 5, title: "Exception Handling", description: "Detect missing data and trigger feedback loop to Data Collection", technology: "Rules + AI-driven checklist validation" },
+      { id: 6, title: "Appeals Preparation", description: "Generate appeal packages when denials occur, re-submit with enhancements", technology: "AI appeal strategy + template library" }
+    ]
   },
   {
     id: 5,
@@ -392,7 +400,7 @@ const journeySteps = [
     approach: "agentic",
     description: "Orchestrating ongoing care across multiple specialties",
     automationPrimary: false,
-    roi: "35% coordination efficiency",
+    roi: "≈ 35% coordination efficiency",
     automationTasks: [
       "Communication routing and tracking",
       "Task assignment and deadline monitoring",
@@ -414,12 +422,20 @@ const journeySteps = [
       "Implement proactive care management capabilities"
     ],
     currentIssues: [
-      "Poor communication causing 25% care delays",
+      "Poor communication causing approx. 25% care delays",
       "Fragmented care plans with limited coordination",
       "Reactive approach to patient issues and complications"
     ],
-    improvement: "AI-orchestrated care coordination reduces delays by 60% while enabling proactive issue resolution through predictive analytics."
-  }
+    improvement: "AI-orchestrated care coordination reduces delays by approx. 60% while enabling proactive issue resolution through predictive analytics.",
+    detailedSubsteps: [
+      { id: 1, title: "Team Assembly", description: "Identify and invite the right participants across specialties", technology: "Role graph + availability" },
+      { id: 2, title: "Task Routing", description: "Create and route tasks with SLAs and owners", technology: "Workflow + queueing" },
+      { id: 3, title: "Handoffs", description: "Structure handoffs between steps with checklists", technology: "Standardized handoff templates" },
+      { id: 4, title: "Follow-ups", description: "Schedule follow-ups and ensure closure", technology: "Automated tracking + reminders" },
+      { id: 5, title: "Issue Triage", description: "Detect and escalate risks proactively", technology: "Signal monitoring + AI triage" },
+      { id: 6, title: "Outcome Tracking", description: "Track outcomes and feed learnings back into process", technology: "Analytics + feedback loops" }
+    ]
+  },
 ];
 
 // Visual scenarios data
@@ -679,8 +695,8 @@ const BusinessUseCases = () => {
                   </filter>
                 </defs>
 
-                <g>
-                  {/* Simple sequential flow only */}
+                <g className="text-muted-foreground/50">
+                  {/* Simple sequential flow only - thin connectors */}
                   {sequentialEdges.map(([from, to]) => {
                     const a = journeySteps.find(s => s.id === from)?.position;
                     const b = journeySteps.find(s => s.id === to)?.position;
@@ -692,10 +708,9 @@ const BusinessUseCases = () => {
                         y1={`${a.y}%`}
                         x2={`${b.x}%`}
                         y2={`${b.y}%`}
-                        stroke="#3b82f6"
-                        strokeWidth={2}
-                        markerEnd="url(#arrow-primary)"
-                        opacity={0.8}
+                        stroke="currentColor"
+                        strokeWidth={1.5}
+                        strokeLinecap="round"
                       />
                     );
                   })}
@@ -805,17 +820,17 @@ const BusinessUseCases = () => {
                         </div>
 
                         {/* Technology Analysis Tabs */}
-                        <Tabs defaultValue="analysis" className="w-full">
-                          <TabsList className="grid w-full grid-cols-2">
-                            <TabsTrigger value="analysis" className="flex items-center gap-2">
-                              <Wrench className="h-4 w-4" />
-                              Technology Analysis
-                            </TabsTrigger>
-                            <TabsTrigger value="scenarios" className="flex items-center gap-2">
-                              <Users className="h-4 w-4" />
-                              Patient Scenarios
-                            </TabsTrigger>
-                          </TabsList>
+                          <Tabs defaultValue="scenarios" className="w-full">
+                            <TabsList className="grid w-full grid-cols-2">
+                              <TabsTrigger value="scenarios" className="flex items-center gap-2">
+                                <Users className="h-4 w-4" />
+                                Patient Scenarios
+                              </TabsTrigger>
+                              <TabsTrigger value="analysis" className="flex items-center gap-2">
+                                <Wrench className="h-4 w-4" />
+                                Technology Analysis
+                              </TabsTrigger>
+                            </TabsList>
 
                           <TabsContent value="analysis" className="space-y-6 mt-6">
                             {/* Technology Analysis */}
