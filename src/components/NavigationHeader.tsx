@@ -37,11 +37,11 @@ export const NavigationHeader = () => {
           {/* Logo & Brand - Fixed width to prevent wrapping */}
           <Link to="/" className="flex items-center space-x-3 group min-w-0 flex-shrink-0">
             <div className="relative flex-shrink-0">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-genie-primary to-genie-secondary p-1 shadow-lg group-hover:shadow-genie-primary/20 transition-all duration-300">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-genie-primary/10 to-genie-secondary/10 p-1 shadow-lg group-hover:shadow-genie-primary/20 transition-all duration-300 border border-genie-primary/20">
                 <img 
                   src={genieLogo} 
-                  alt="Genie AI" 
-                  className="w-full h-full object-contain filter brightness-0 invert"
+                  alt="Genie AI Experimentation Hub" 
+                  className="w-full h-full object-contain"
                 />
               </div>
             </div>
@@ -50,7 +50,7 @@ export const NavigationHeader = () => {
                 <span className="text-xl font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
                   Genie AI
                 </span>
-                <span className="text-lg font-semibold text-foreground whitespace-nowrap">Hub</span>
+                <span className="text-lg font-semibold text-foreground whitespace-nowrap">Experimentation Hub</span>
               </div>
               <p className="text-xs text-muted-foreground font-medium whitespace-nowrap leading-tight">
                 Enterprise AI Solutions
@@ -59,7 +59,7 @@ export const NavigationHeader = () => {
             {/* Mobile-only simplified brand */}
             <div className="md:hidden">
               <span className="text-lg font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent">
-                Genie AI
+                Genie AI Hub
               </span>
             </div>
           </Link>
