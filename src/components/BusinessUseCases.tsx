@@ -619,47 +619,47 @@ const BusinessUseCases = () => {
                   {/* Arrow markers for different connection types */}
                   <marker
                     id="arrow-primary"
-                    markerWidth="10"
-                    markerHeight="7"
-                    refX="9"
-                    refY="3.5"
+                    markerWidth="12"
+                    markerHeight="8"
+                    refX="10"
+                    refY="4"
                     orient="auto"
                     fill="#3b82f6"
                   >
-                    <polygon points="0 0, 10 3.5, 0 7" />
+                    <polygon points="0 0, 12 4, 0 8" />
                   </marker>
                   <marker
                     id="arrow-feedback"
-                    markerWidth="10"
-                    markerHeight="7"
-                    refX="9"
-                    refY="3.5"
+                    markerWidth="12"
+                    markerHeight="8"
+                    refX="10"
+                    refY="4"
                     orient="auto"
                     fill="#f59e0b"
                   >
-                    <polygon points="0 0, 10 3.5, 0 7" />
+                    <polygon points="0 0, 12 4, 0 8" />
                   </marker>
                   <marker
                     id="arrow-coordination"
-                    markerWidth="10"
-                    markerHeight="7"
-                    refX="9"
-                    refY="3.5"
+                    markerWidth="12"
+                    markerHeight="8"
+                    refX="10"
+                    refY="4"
                     orient="auto"
                     fill="#8b5cf6"
                   >
-                    <polygon points="0 0, 10 3.5, 0 7" />
+                    <polygon points="0 0, 12 4, 0 8" />
                   </marker>
                   <marker
                     id="arrow-results"
-                    markerWidth="10"
-                    markerHeight="7"
-                    refX="9"
-                    refY="3.5"
+                    markerWidth="12"
+                    markerHeight="8"
+                    refX="10"
+                    refY="4"
                     orient="auto"
                     fill="#10b981"
                   >
-                    <polygon points="0 0, 10 3.5, 0 7" />
+                    <polygon points="0 0, 12 4, 0 8" />
                   </marker>
                 </defs>
                 
@@ -678,139 +678,108 @@ const BusinessUseCases = () => {
                       x2={`${nextStep.position.x}%`}
                       y2={`${nextStep.position.y}%`}
                       stroke="#3b82f6"
-                      strokeWidth="3"
+                      strokeWidth="4"
                       markerEnd="url(#arrow-primary)"
-                      opacity="0.8"
+                      opacity="0.9"
                     />
                   );
                 })}
                 
                 {/* Feedback Loops - When steps need additional information */}
                 {/* Insurance Authorization (4) → Data Collection (2) for additional info */}
-                {(() => {
-                  const step4 = journeySteps.find(s => s.id === 4);
-                  const step2 = journeySteps.find(s => s.id === 2);
-                  if (!step4 || !step2) return null;
-                  
-                  return (
-                    <path
-                      key="feedback-4-2"
-                      d={`M ${step4.position.x}% ${step4.position.y + 3}% Q ${(step4.position.x + step2.position.x) / 2}% ${step4.position.y + 8}% ${step2.position.x}% ${step2.position.y + 3}%`}
-                      stroke="#f59e0b"
-                      strokeWidth="2"
-                      fill="none"
-                      strokeDasharray="6,3"
-                      markerEnd="url(#arrow-feedback)"
-                      opacity="0.7"
-                    />
-                  );
-                })()}
+                <path
+                  d={`M 70 20 Q 50 30 30 20`}
+                  stroke="#f59e0b"
+                  strokeWidth="3"
+                  fill="none"
+                  strokeDasharray="8,4"
+                  markerEnd="url(#arrow-feedback)"
+                  opacity="0.8"
+                />
                 
                 {/* Clinical Review (5) → Records Acquisition (3) for additional records */}
-                {(() => {
-                  const step5 = journeySteps.find(s => s.id === 5);
-                  const step3 = journeySteps.find(s => s.id === 3);
-                  if (!step5 || !step3) return null;
-                  
-                  return (
-                    <path
-                      key="feedback-5-3"
-                      d={`M ${step5.position.x}% ${step5.position.y - 3}% Q ${(step5.position.x + step3.position.x) / 2}% ${step5.position.y - 8}% ${step3.position.x}% ${step3.position.y - 3}%`}
-                      stroke="#f59e0b"
-                      strokeWidth="2"
-                      fill="none"
-                      strokeDasharray="6,3"
-                      markerEnd="url(#arrow-feedback)"
-                      opacity="0.7"
-                    />
-                  );
-                })()}
+                <path
+                  d={`M 90 10 Q 70 5 50 10`}
+                  stroke="#f59e0b"
+                  strokeWidth="3"
+                  fill="none"
+                  strokeDasharray="8,4"
+                  markerEnd="url(#arrow-feedback)"
+                  opacity="0.8"
+                />
                 
                 {/* Results Flow - Genomic Testing (6) → Clinical Review (5) */}
-                {(() => {
-                  const step6 = journeySteps.find(s => s.id === 6);
-                  const step5 = journeySteps.find(s => s.id === 5);
-                  if (!step6 || !step5) return null;
-                  
-                  return (
-                    <line
-                      key="results-6-5"
-                      x1={`${step6.position.x + 2}%`}
-                      y1={`${step6.position.y - 2}%`}
-                      x2={`${step5.position.x + 2}%`}
-                      y2={`${step5.position.y + 2}%`}
-                      stroke="#10b981"
-                      strokeWidth="2"
-                      strokeDasharray="4,4"
-                      markerEnd="url(#arrow-results)"
-                      opacity="0.8"
-                    />
-                  );
-                })()}
+                <path
+                  d={`M 15 50 Q 50 35 85 20`}
+                  stroke="#10b981"
+                  strokeWidth="3"
+                  fill="none"
+                  strokeDasharray="6,3"
+                  markerEnd="url(#arrow-results)"
+                  opacity="0.9"
+                />
                 
                 {/* Care Coordination (9) connects to multiple steps */}
                 {/* Care Coordination (9) ← Clinical Review (5) */}
-                {(() => {
-                  const step9 = journeySteps.find(s => s.id === 9);
-                  const step5 = journeySteps.find(s => s.id === 5);
-                  if (!step9 || !step5) return null;
-                  
-                  return (
-                    <path
-                      key="coord-5-9"
-                      d={`M ${step5.position.x + 3}% ${step5.position.y + 3}% Q ${(step5.position.x + step9.position.x) / 2}% ${(step5.position.y + step9.position.y) / 2 + 5}% ${step9.position.x - 3}% ${step9.position.y - 3}%`}
-                      stroke="#8b5cf6"
-                      strokeWidth="2"
-                      fill="none"
-                      strokeDasharray="5,2"
-                      markerEnd="url(#arrow-coordination)"
-                      opacity="0.7"
-                    />
-                  );
-                })()}
+                <path
+                  d={`M 85 25 Q 80 40 65 50`}
+                  stroke="#8b5cf6"
+                  strokeWidth="3"
+                  fill="none"
+                  strokeDasharray="10,5"
+                  markerEnd="url(#arrow-coordination)"
+                  opacity="0.8"
+                />
                 
                 {/* Care Coordination (9) ← Genomic Testing (6) */}
-                {(() => {
-                  const step9 = journeySteps.find(s => s.id === 9);
-                  const step6 = journeySteps.find(s => s.id === 6);
-                  if (!step9 || !step6) return null;
-                  
-                  return (
-                    <line
-                      key="coord-6-9"
-                      x1={`${step6.position.x + 3}%`}
-                      y1={`${step6.position.y + 3}%`}
-                      x2={`${step9.position.x - 3}%`}
-                      y2={`${step9.position.y - 3}%`}
-                      stroke="#8b5cf6"
-                      strokeWidth="2"
-                      strokeDasharray="5,2"
-                      markerEnd="url(#arrow-coordination)"
-                      opacity="0.7"
-                    />
-                  );
-                })()}
+                <line
+                  x1="15"
+                  y1="60"
+                  x2="65"
+                  y2="60"
+                  stroke="#8b5cf6"
+                  strokeWidth="3"
+                  strokeDasharray="10,5"
+                  markerEnd="url(#arrow-coordination)"
+                  opacity="0.8"
+                />
+                
+                {/* Care Coordination (9) ← Appointment Scheduling (7) */}
+                <line
+                  x1="35"
+                  y1="60"
+                  x2="65"
+                  y2="60"
+                  stroke="#8b5cf6"
+                  strokeWidth="3"
+                  strokeDasharray="10,5"
+                  markerEnd="url(#arrow-coordination)"
+                  opacity="0.8"
+                />
               </svg>
               
-              {/* Connection Legend */}
-              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-gray-200 text-xs">
-                <h4 className="font-semibold mb-2 text-gray-700">Connection Types</h4>
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-0.5 bg-blue-500"></div>
-                    <span className="text-gray-600">Sequential Flow</span>
+              {/* Connection Legend - Positioned with high z-index */}
+              <div className="absolute top-4 right-4 z-50 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-xl border-2 border-gray-300 text-xs">
+                <h4 className="font-semibold mb-3 text-gray-800 flex items-center gap-2">
+                  <Network className="h-4 w-4" />
+                  Connection Types
+                </h4>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-1 bg-blue-500 rounded-full"></div>
+                    <span className="text-gray-700 font-medium">Sequential Flow</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-0.5 bg-amber-500 border-dashed border-t"></div>
-                    <span className="text-gray-600">Feedback Request</span>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #f59e0b 0, #f59e0b 4px, transparent 4px, transparent 8px)'}}></div>
+                    <span className="text-gray-700 font-medium">Feedback Request</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-0.5 bg-green-500 border-dashed border-t"></div>
-                    <span className="text-gray-600">Results Flow</span>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #10b981 0, #10b981 3px, transparent 3px, transparent 6px)'}}></div>
+                    <span className="text-gray-700 font-medium">Results Flow</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-0.5 bg-purple-500 border-dashed border-t"></div>
-                    <span className="text-gray-600">Care Coordination</span>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-1 rounded-full" style={{background: 'repeating-linear-gradient(to right, #8b5cf6 0, #8b5cf6 5px, transparent 5px, transparent 10px)'}}></div>
+                    <span className="text-gray-700 font-medium">Care Coordination</span>
                   </div>
                 </div>
               </div>
