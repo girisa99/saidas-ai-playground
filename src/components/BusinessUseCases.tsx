@@ -410,12 +410,12 @@ const visualScenarios = [
     technologyMix: { automation: 75, ai: 25 },
     journeyPath: [1, 2, 4, 5, 7, 8],
     keyDecisions: [
-      { step: 1, decision: "Automation-Primary", reason: "Standard referral processing" },
-      { step: 2, decision: "Automation-Standard", reason: "Routine data collection" },
-      { step: 4, decision: "Automation-Insurance", reason: "Standard authorization process" },
-      { step: 5, decision: "AI-Standard", reason: "Standard treatment protocols" },
-      { step: 7, decision: "Automation-Simple", reason: "Straightforward scheduling" },
-      { step: 8, decision: "AI-Education", reason: "Personalized patient education" }
+      { step: 1, decision: "Automation-Primary", reason: "Standard referral processing", detailedExplanation: "Sarah's referral contains standard breast cancer screening results. Automation handles intake form parsing, insurance verification, and basic triage. No complex comorbidities require AI intervention at this stage." },
+      { step: 2, decision: "Automation-Standard", reason: "Routine data collection", detailedExplanation: "Digital forms auto-populate with referral data. Standard breast cancer questionnaire deployed. Patient completes forms easily online. No adaptive questioning needed due to straightforward presentation." },
+      { step: 4, decision: "Automation-Insurance", reason: "Standard authorization process", detailedExplanation: "Breast cancer treatment protocols are well-established with insurance. Automated prior authorization submission using standard templates. High approval likelihood (85%) based on clear guidelines." },
+      { step: 5, decision: "AI-Standard", reason: "Treatment planning benefits from personalization", detailedExplanation: "While straightforward, AI personalizes treatment sequence based on patient age, lifestyle, and preferences. Recommends optimal surgery timing and adjuvant therapy options tailored to Sarah's specific tumor characteristics." },
+      { step: 7, decision: "Automation-Simple", reason: "Straightforward scheduling", detailedExplanation: "Oncology and surgery appointments scheduled automatically. Clear availability patterns. Patient preferences (mornings) easily accommodated. No complex multi-specialist coordination required." },
+      { step: 8, decision: "AI-Education", reason: "Personalized patient education", detailedExplanation: "AI curates education materials based on Sarah's professional background (teacher), learning preferences, and specific treatment plan. Generates personalized pre-visit checklist and family communication guide." }
     ],
     outcome: "Completed journey in 18 days with high patient satisfaction and efficient resource utilization."
   },
@@ -429,15 +429,15 @@ const visualScenarios = [
     technologyMix: { automation: 40, ai: 60 },
     journeyPath: [1, 2, 3, 4, 5, 6, 7, 8, 9],
     keyDecisions: [
-      { step: 1, decision: "AI-Complex", reason: "Multi-comorbidity assessment" },
-      { step: 2, decision: "AI-Adaptive", reason: "Complex medical history" },
-      { step: 3, decision: "AI-Priority", reason: "Critical record prioritization" },
-      { step: 4, decision: "AI-Appeal", reason: "Complex case justification needed" },
-      { step: 5, decision: "AI-Multi", reason: "Multi-disciplinary planning" },
-      { step: 6, decision: "AI-Genomic", reason: "Advanced biomarker analysis" },
-      { step: 7, decision: "AI-Coordinate", reason: "Multi-specialist scheduling" },
-      { step: 8, decision: "AI-Complex", reason: "Extensive preparation needed" },
-      { step: 9, decision: "AI-Orchestrate", reason: "Complex care coordination" }
+      { step: 1, decision: "AI-Complex", reason: "Multi-comorbidity assessment", detailedExplanation: "Michael's case involves pancreatic cancer with diabetes and cardiac issues. AI analyzes complex interaction patterns, identifies critical care sequencing needs, and flags urgent coordination requirements between oncology, endocrinology, and cardiology." },
+      { step: 2, decision: "AI-Adaptive", reason: "Complex medical history", detailedExplanation: "AI dynamically adjusts intake forms based on multiple conditions. Generates specialized questionnaires for drug interactions, treatment tolerance concerns, and quality of life priorities. Identifies potential contraindications early." },
+      { step: 3, decision: "AI-Priority", reason: "Critical record prioritization", detailedExplanation: "AI prioritizes cardiac function tests, diabetes management records, and previous cancer treatments. Identifies gaps in multi-specialty records and triggers urgent requests to cardiology for recent stress test results." },
+      { step: 4, decision: "AI-Appeal", reason: "Complex case justification needed", detailedExplanation: "Insurance initially denies advanced immunotherapy due to comorbidities. AI generates comprehensive case justification highlighting treatment benefits vs. risks, creates compelling medical necessity documentation." },
+      { step: 5, decision: "AI-Multi", reason: "Multi-disciplinary planning", detailedExplanation: "AI facilitates virtual tumor board coordination between oncology, cardiology, and endocrinology. Analyzes treatment interaction impacts, optimal sequencing of interventions, and creates integrated care timeline." },
+      { step: 6, decision: "AI-Genomic", reason: "Advanced biomarker analysis", detailedExplanation: "AI analyzes complex genomic profile in context of comorbidities. Identifies targeted therapy options that avoid cardiac toxicity. Provides drug interaction analysis with diabetes medications." },
+      { step: 7, decision: "AI-Coordinate", reason: "Multi-specialist scheduling", detailedExplanation: "AI coordinates appointments across three departments, optimizing for treatment sequencing, Michael's work schedule, and clinical requirements. Ensures cardiac clearance before each treatment cycle." },
+      { step: 8, decision: "AI-Complex", reason: "Extensive preparation needed", detailedExplanation: "AI generates comprehensive pre-visit materials covering cancer treatment, diabetes management during therapy, cardiac monitoring requirements, and family caregiver instructions. Creates integrated medication schedule." },
+      { step: 9, decision: "AI-Orchestrate", reason: "Complex care coordination", detailedExplanation: "AI continuously monitors treatment responses across all conditions, coordinates care adjustments between specialties, manages drug interactions, and proactively identifies emerging issues requiring multi-disciplinary intervention." }
     ],
     outcome: "Successfully navigated complex care pathway with optimized treatment plan and coordinated multi-specialty care."
   },
@@ -451,14 +451,14 @@ const visualScenarios = [
     technologyMix: { automation: 30, ai: 70 },
     journeyPath: [1, 2, 3, 4, 5, 6, 7, 8, 9],
     keyDecisions: [
-      { step: 1, decision: "AI-Pediatric", reason: "Specialized pediatric protocols" },
-      { step: 2, decision: "AI-Family", reason: "Family-centered data collection" },
-      { step: 3, decision: "AI-Pediatric", reason: "Specialized records needed" },
-      { step: 4, decision: "AI-Heavy", reason: "Specialist record analysis" },
-      { step: 6, decision: "AI-Expert", reason: "Multi-disciplinary planning" },
-      { step: 7, decision: "AI-Complex", reason: "Specialized pediatric testing" },
-      { step: 8, decision: "AI-Coordinated", reason: "Multi-specialist scheduling" },
-      { step: 9, decision: "AI-Family", reason: "Age-appropriate education and family support" }
+      { step: 1, decision: "AI-Pediatric", reason: "Specialized pediatric protocols", detailedExplanation: "Emma's case requires pediatric oncology expertise and family-centered approach. AI identifies specialized pediatric protocols, coordinates with child life services, and ensures age-appropriate communication strategies." },
+      { step: 2, decision: "AI-Family", reason: "Family-centered data collection", detailedExplanation: "AI adapts forms for pediatric context, generates parent/guardian questionnaires, creates child-friendly assessment tools, and coordinates family availability for comprehensive intake. Addresses school coordination needs." },
+      { step: 3, decision: "AI-Pediatric", reason: "Specialized records needed", detailedExplanation: "AI prioritizes pediatric growth charts, vaccination records, school health information, and previous developmental assessments. Coordinates with pediatrician for growth trajectory analysis and treatment impact predictions." },
+      { step: 4, decision: "AI-Heavy", reason: "Specialist record analysis", detailedExplanation: "AI navigates complex pediatric coverage requirements, coordinates with insurance for specialized children's hospital authorization, and ensures coverage for child life services, family accommodation, and educational support." },
+      { step: 6, decision: "AI-Expert", reason: "Multi-disciplinary planning", detailedExplanation: "AI coordinates with pediatric oncology team, child life specialists, and nutritionists. Develops age-appropriate treatment plan considering Emma's developmental stage, school schedule, and family dynamics." },
+      { step: 7, decision: "AI-Complex", reason: "Specialized pediatric testing", detailedExplanation: "AI coordinates gentle testing approaches, minimal blood draw protocols, and child life support during procedures. Analyzes genomic results in context of pediatric physiology and growth considerations." },
+      { step: 8, decision: "AI-Coordinated", reason: "Multi-specialist scheduling", detailedExplanation: "AI optimizes scheduling around school hours, coordinates with hospital teachers, arranges family accommodation, and ensures treatments align with Emma's energy patterns and developmental needs." },
+      { step: 9, decision: "AI-Family", reason: "Age-appropriate education and family support", detailedExplanation: "AI generates age-appropriate treatment explanations for Emma, comprehensive guides for parents, sibling support resources, and school communication templates. Creates visual treatment calendars and reward systems." }
     ],
     outcome: "Delivered family-centered care with age-appropriate communication and comprehensive support systems."
   }
@@ -615,9 +615,9 @@ const BusinessUseCases = () => {
           </CardHeader>
           <CardContent>
             {/* Non-linear Journey Visualization */}
-            <div className="relative h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-6 overflow-hidden">
+            <div className="relative h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-6 overflow-visible">{/* Changed overflow to visible */}
               {/* Connection Lines */}
-              <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
+              <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 5 }}>{/* Increased z-index */}
                 <defs>
                   {/* Arrow markers for different connection types */}
                   <marker
@@ -695,77 +695,77 @@ const BusinessUseCases = () => {
                 {/* Feedback Loops - When steps need additional information */}
                 {/* Insurance Authorization (4) → Data Collection (2) for additional info */}
                 <path
-                  d={`M 75 20 Q 55 35 35 20`}
+                  d={`M 70 20 Q 52 32 30 20`}
                   stroke="#f59e0b"
-                  strokeWidth="4"
+                  strokeWidth="6"
                   fill="none"
-                  strokeDasharray="12,6"
+                  strokeDasharray="15,8"
                   markerEnd="url(#arrow-feedback)"
-                  opacity="0.9"
+                  opacity="1"
                 />
                 
                 {/* Clinical Review (5) → Records Acquisition (3) for additional records */}
                 <path
-                  d={`M 85 10 Q 70 0 55 10`}
+                  d={`M 90 18 Q 72 5 50 15`}
                   stroke="#f59e0b"
-                  strokeWidth="4"
+                  strokeWidth="6"
                   fill="none"
-                  strokeDasharray="12,6"
+                  strokeDasharray="15,8"
                   markerEnd="url(#arrow-feedback)"
-                  opacity="0.9"
+                  opacity="1"
                 />
                 
                 {/* Results Flow - Genomic Testing (6) → Clinical Review (5) */}
                 <path
-                  d={`M 20 45 Q 55 30 80 25`}
+                  d={`M 18 48 Q 52 32 85 22`}
                   stroke="#10b981"
-                  strokeWidth="4"
+                  strokeWidth="6"
                   fill="none"
-                  strokeDasharray="10,5"
+                  strokeDasharray="12,6"
                   markerEnd="url(#arrow-results)"
-                  opacity="0.9"
+                  opacity="1"
                 />
                 
                 {/* Care Coordination (9) connects to multiple steps */}
                 {/* Care Coordination (9) ← Clinical Review (5) */}
                 <path
-                  d={`M 80 30 Q 75 45 65 55`}
+                  d={`M 88 28 Q 78 42 68 52`}
                   stroke="#8b5cf6"
-                  strokeWidth="4"
+                  strokeWidth="6"
                   fill="none"
-                  strokeDasharray="15,8"
+                  strokeDasharray="18,10"
                   markerEnd="url(#arrow-coordination)"
-                  opacity="0.9"
+                  opacity="1"
                 />
                 
                 {/* Care Coordination (9) ← Genomic Testing (6) */}
                 <path
-                  d={`M 20 60 Q 45 65 60 60`}
+                  d={`M 18 58 Q 42 62 65 58`}
                   stroke="#8b5cf6"
-                  strokeWidth="4"
-                  strokeDasharray="15,8"
+                  strokeWidth="6"
+                  strokeDasharray="18,10"
                   markerEnd="url(#arrow-coordination)"
-                  opacity="0.9"
+                  opacity="1"
                 />
                 
                 {/* Care Coordination (9) ← Appointment Scheduling (7) */}
                 <path
-                  d={`M 40 60 Q 55 65 65 60`}
+                  d={`M 38 58 Q 52 62 65 58`}
                   stroke="#8b5cf6"
-                  strokeWidth="4"
-                  strokeDasharray="15,8"
+                  strokeWidth="6"
+                  strokeDasharray="18,10"
                   markerEnd="url(#arrow-coordination)"
-                  opacity="0.9"
+                  opacity="1"
                 />
                 
                 {/* Care Coordination (9) ← Pre-Visit Preparation (8) */}
                 <path
-                  d={`M 60 60 Q 65 62 65 60`}
+                  d={`M 58 58 Q 62 60 65 58`}
                   stroke="#8b5cf6"
-                  strokeWidth="4"
-                  strokeDasharray="15,8"
+                  strokeWidth="6"
+                  strokeDasharray="18,10"
                   markerEnd="url(#arrow-coordination)"
-                  opacity="0.9"
+                  opacity="1"
                 />
               </g>
               </svg>
@@ -776,7 +776,7 @@ const BusinessUseCases = () => {
                 <div 
                   key={step.id}
                   className={`absolute cursor-pointer transition-all duration-300 hover:scale-110 ${
-                    selectedStep === step.id ? 'scale-110 z-20' : 'z-10'
+                    selectedStep === step.id ? 'scale-110 z-30' : 'z-20'
                   }`}
                   style={{
                     left: `${step.position.x}%`,
@@ -1073,7 +1073,13 @@ const BusinessUseCases = () => {
                                                   }`}>
                                                     {stepDecision.decision}
                                                   </div>
-                                                  <p className="text-xs text-amber-700">{stepDecision.reason}</p>
+                                                  <p className="text-xs text-amber-700 mb-2">{stepDecision.reason}</p>
+                                                  {(stepDecision as any).detailedExplanation && (
+                                                    <div className="mt-2 p-2 bg-amber-25 rounded text-xs">
+                                                      <strong>Detailed Analysis:</strong>
+                                                      <p className="mt-1 text-amber-800">{(stepDecision as any).detailedExplanation}</p>
+                                                    </div>
+                                                  )}
                                                 </div>
                                               </CardContent>
                                             </Card>
