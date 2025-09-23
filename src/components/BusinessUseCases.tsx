@@ -263,7 +263,7 @@ const workflowSteps: WorkflowStep[] = [
 
 const BusinessUseCases = () => {
   const [activeStep, setActiveStep] = useState(1);
-  const [activePhase, setActivePhase] = useState("overview");
+  const [showDetails, setShowDetails] = useState(false);
 
   const getApproachIcon = (approach: string, primary: string) => {
     if (approach === "both") {
@@ -293,9 +293,9 @@ const BusinessUseCases = () => {
   const currentStep = workflowSteps.find(step => step.id === activeStep);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="text-center space-y-4">
+      <div className="text-center space-y-4 animate-scale-in">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Automation vs Agentic AI
         </h1>
@@ -304,300 +304,256 @@ const BusinessUseCases = () => {
         </p>
       </div>
 
-      <Tabs value={activePhase} onValueChange={setActivePhase} className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="overview">Decision Framework</TabsTrigger>
-          <TabsTrigger value="journey">Journey Flow</TabsTrigger>
-          <TabsTrigger value="detailed">Step Details</TabsTrigger>
-          <TabsTrigger value="implementation">Implementation</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="overview" className="space-y-6">
-          {/* Decision Framework */}
-          <div className="grid md:grid-cols-3 gap-6">
-            <Card className="border-blue-200 bg-blue-50">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-blue-700">
-                  <Settings className="h-5 w-5" />
-                  When to Use Automation
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                    Structured, predictable processes with clear rules
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                    High-volume, repetitive tasks
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                    Data transfer and validation
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                    Time-sensitive processes
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="border-purple-200 bg-purple-50">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-purple-700">
-                  <Bot className="h-5 w-5" />
-                  When to Use Agentic AI
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-                    Complex decision-making requiring reasoning
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-                    Unstructured data processing
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-                    Personalization and adaptation
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-                    Human-like interaction
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="border-gradient bg-gradient-to-br from-blue-50 to-purple-50">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-gradient">
-                  <Zap className="h-5 w-5 text-blue-600" />
-                  <Bot className="h-5 w-5 text-purple-600" />
-                  Hybrid Approach
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                    Complex workflows with mixed elements
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-                    Multi-step processes
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                    Quality assurance workflows
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-                    Scalable solutions
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+      {/* Decision Framework Cards */}
+      <div className="grid md:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+        <div className="border-blue-200 bg-blue-50 rounded-lg p-6 hover-scale transition-all duration-300 border">
+          <div className="flex items-center gap-2 text-blue-700 mb-4">
+            <Settings className="h-6 w-6" />
+            <h3 className="text-xl font-bold">When to Use Automation</h3>
           </div>
-        </TabsContent>
+          <ul className="space-y-3 text-sm">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              Structured, predictable processes with clear rules
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              High-volume, repetitive tasks
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              Data transfer and validation
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              Time-sensitive processes
+            </li>
+          </ul>
+        </div>
 
-        <TabsContent value="journey" className="space-y-6">
-          {/* Journey Flow Visualization */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Patient Onboarding & Referral Journey</CardTitle>
-              <p className="text-muted-foreground">Interactive workflow showing technology selection for each step</p>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {workflowSteps.map((step, index) => (
-                  <div key={step.id} className="relative">
-                    <Card 
-                      className={`cursor-pointer transition-all duration-200 ${
-                        activeStep === step.id 
-                          ? `${getApproachColor(step.approach, step.primary)} ring-2 ring-blue-400` 
-                          : "hover:shadow-md"
-                      }`}
-                      onClick={() => setActiveStep(step.id)}
-                    >
-                      <CardContent className="p-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <step.icon className="h-5 w-5" />
-                            <span className="font-medium text-sm">Step {step.id}</span>
-                          </div>
-                          {getApproachIcon(step.approach, step.primary)}
-                        </div>
-                        <h3 className="font-semibold text-sm mb-2">{step.title}</h3>
-                        <Badge variant="outline">
-                          {step.primary === "automation" ? "Automation Primary" : 
-                           step.primary === "ai" ? "AI Primary" : "Equal Partnership"}
-                        </Badge>
-                      </CardContent>
-                    </Card>
-                    {index < workflowSteps.length - 1 && (
-                      <ChevronRight className="h-4 w-4 text-muted-foreground absolute -right-2 top-1/2 transform -translate-y-1/2 hidden md:block" />
-                    )}
+        <div className="border-purple-200 bg-purple-50 rounded-lg p-6 hover-scale transition-all duration-300 border">
+          <div className="flex items-center gap-2 text-purple-700 mb-4">
+            <Bot className="h-6 w-6" />
+            <h3 className="text-xl font-bold">When to Use Agentic AI</h3>
+          </div>
+          <ul className="space-y-3 text-sm">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
+              Complex decision-making requiring reasoning
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
+              Unstructured data processing
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
+              Personalization and adaptation
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
+              Human-like interaction
+            </li>
+          </ul>
+        </div>
+
+        <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-6 hover-scale transition-all duration-300 border border-gradient">
+          <div className="flex items-center gap-2 mb-4">
+            <Zap className="h-6 w-6 text-blue-600" />
+            <Bot className="h-6 w-6 text-purple-600" />
+            <h3 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Hybrid Approach</h3>
+          </div>
+          <ul className="space-y-3 text-sm">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              Complex workflows with mixed elements
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
+              Multi-step processes
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              Quality assurance workflows
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
+              Scalable solutions
+            </li>
+          </ul>
+        </div>
+      </div>
+      {/* Visual Journey Flow */}
+      <Card className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
+        <CardHeader>
+          <CardTitle className="text-2xl">Patient Onboarding & Referral Journey</CardTitle>
+          <p className="text-muted-foreground">Interactive workflow showing technology selection for each step</p>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            {workflowSteps.map((step, index) => (
+              <div key={step.id} className="relative">
+                <Card 
+                  className={`cursor-pointer transition-all duration-300 hover-scale ${
+                    activeStep === step.id 
+                      ? `${getApproachColor(step.approach, step.primary)} ring-2 ring-blue-400 shadow-lg` 
+                      : "hover:shadow-md"
+                  }`}
+                  onClick={() => {
+                    setActiveStep(step.id);
+                    setShowDetails(true);
+                  }}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <step.icon className="h-5 w-5" />
+                        <span className="font-medium text-sm">Step {step.id}</span>
+                      </div>
+                      {getApproachIcon(step.approach, step.primary)}
+                    </div>
+                    <h3 className="font-semibold text-sm mb-2">{step.title}</h3>
+                    <Badge variant="outline">
+                      {step.primary === "automation" ? "Automation Primary" : 
+                       step.primary === "ai" ? "AI Primary" : "Equal Partnership"}
+                    </Badge>
+                  </CardContent>
+                </Card>
+                {index < workflowSteps.length - 1 && (
+                  <ChevronRight className="h-4 w-4 text-muted-foreground absolute -right-2 top-1/2 transform -translate-y-1/2 hidden md:block" />
+                )}
+              </div>
+            ))}
+          </div>
+          
+          {/* Progress Bar */}
+          <div className="mb-6">
+            <div className="flex justify-between text-sm text-muted-foreground mb-2">
+              <span>Journey Progress</span>
+              <span>{Math.round((activeStep / workflowSteps.length) * 100)}%</span>
+            </div>
+            <Progress value={(activeStep / workflowSteps.length) * 100} className="transition-all duration-500" />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Detailed Step View - Conditionally shown */}
+      {showDetails && currentStep && (
+        <Card className="animate-scale-in">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <currentStep.icon className="h-6 w-6" />
+              Step {currentStep.id}: {currentStep.title}
+              {getApproachIcon(currentStep.approach, currentStep.primary)}
+            </CardTitle>
+            <Badge variant="outline">
+              {currentStep.primary === "automation" ? "Automation Primary" : 
+               currentStep.primary === "ai" ? "AI Primary" : "Equal Partnership"}
+            </Badge>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+                <h4 className="font-semibold text-blue-700 mb-3 flex items-center gap-2">
+                  <Settings className="h-4 w-4" />
+                  Automation Features
+                </h4>
+                <ul className="space-y-2">
+                  {currentStep.automationFeatures.map((feature, index) => (
+                    <li key={index} className="flex items-start gap-2 text-sm animate-fade-in" style={{ animationDelay: `${0.1 + index * 0.1}s` }}>
+                      <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                <h4 className="font-semibold text-purple-700 mb-3 flex items-center gap-2">
+                  <Bot className="h-4 w-4" />
+                  AI Features
+                </h4>
+                <ul className="space-y-2">
+                  {currentStep.aiFeatures.map((feature, index) => (
+                    <li key={index} className="flex items-start gap-2 text-sm animate-fade-in" style={{ animationDelay: `${0.2 + index * 0.1}s` }}>
+                      <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <Separator />
+
+            <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <h4 className="font-semibold mb-3 flex items-center gap-2">
+                <TrendingUp className="h-4 w-4" />
+                Implementation Strategy
+              </h4>
+              <div className="space-y-2">
+                {currentStep.implementation.map((phase, index) => (
+                  <div key={index} className="flex items-start gap-2 text-sm animate-fade-in" style={{ animationDelay: `${0.3 + index * 0.1}s` }}>
+                    <Clock className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
+                    {phase}
                   </div>
                 ))}
               </div>
-              
-              {/* Progress Bar */}
-              <div className="mt-6">
-                <div className="flex justify-between text-sm text-muted-foreground mb-2">
-                  <span>Journey Progress</span>
-                  <span>{Math.round((activeStep / workflowSteps.length) * 100)}%</span>
-                </div>
-                <Progress value={(activeStep / workflowSteps.length) * 100} />
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+            </div>
 
-        <TabsContent value="detailed" className="space-y-6">
-          {/* Detailed Step View */}
-          {currentStep && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <currentStep.icon className="h-6 w-6" />
-                  Step {currentStep.id}: {currentStep.title}
-                  {getApproachIcon(currentStep.approach, currentStep.primary)}
-                </CardTitle>
-                <Badge variant="outline">
-                  {currentStep.primary === "automation" ? "Automation Primary" : 
-                   currentStep.primary === "ai" ? "AI Primary" : "Equal Partnership"}
-                </Badge>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-semibold text-blue-700 mb-3 flex items-center gap-2">
-                      <Settings className="h-4 w-4" />
-                      Automation Features
-                    </h4>
-                    <ul className="space-y-2">
-                      {currentStep.automationFeatures.map((feature, index) => (
-                        <li key={index} className="flex items-start gap-2 text-sm">
-                          <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-semibold text-purple-700 mb-3 flex items-center gap-2">
-                      <Bot className="h-4 w-4" />
-                      AI Features
-                    </h4>
-                    <ul className="space-y-2">
-                      {currentStep.aiFeatures.map((feature, index) => (
-                        <li key={index} className="flex items-start gap-2 text-sm">
-                          <CheckCircle className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 animate-scale-in" style={{ animationDelay: '0.4s' }}>
+              <h5 className="font-semibold text-green-800 mb-2">Expected ROI</h5>
+              <p className="text-green-700 text-sm">{currentStep.roi}</p>
+            </div>
 
-                <Separator />
+            {/* Navigation */}
+            <div className="flex justify-between animate-fade-in" style={{ animationDelay: '0.5s' }}>
+              <Button 
+                variant="outline" 
+                onClick={() => setActiveStep(Math.max(1, activeStep - 1))}
+                disabled={activeStep === 1}
+                className="hover-scale"
+              >
+                Previous Step
+              </Button>
+              <Button 
+                variant="ghost"
+                onClick={() => setShowDetails(false)}
+                className="hover-scale"
+              >
+                Hide Details
+              </Button>
+              <Button 
+                onClick={() => setActiveStep(Math.min(workflowSteps.length, activeStep + 1))}
+                disabled={activeStep === workflowSteps.length}
+                className="hover-scale"
+              >
+                Next Step
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
-                <div>
-                  <h4 className="font-semibold mb-3 flex items-center gap-2">
-                    <TrendingUp className="h-4 w-4" />
-                    Implementation Strategy
-                  </h4>
-                  <div className="space-y-2">
-                    {currentStep.implementation.map((phase, index) => (
-                      <div key={index} className="flex items-start gap-2 text-sm">
-                        <Clock className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
-                        {phase}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <h5 className="font-semibold text-green-800 mb-2">Expected ROI</h5>
-                  <p className="text-green-700 text-sm">{currentStep.roi}</p>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Navigation */}
-          <div className="flex justify-between">
-            <Button 
-              variant="outline" 
-              onClick={() => setActiveStep(Math.max(1, activeStep - 1))}
-              disabled={activeStep === 1}
-            >
-              Previous Step
+      {/* Call to Action */}
+      <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-none animate-fade-in" style={{ animationDelay: '0.6s' }}>
+        <CardContent className="p-8 text-center">
+          <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Ready to Implement Your AI Strategy?
+          </h3>
+          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+            Transform your oncology workflows with the right mix of automation and agentic AI. 
+            Start with high-impact, low-risk automation and gradually introduce AI where it adds the most value.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button className="hover-scale bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+              Schedule Strategy Session
             </Button>
-            <Button 
-              onClick={() => setActiveStep(Math.min(workflowSteps.length, activeStep + 1))}
-              disabled={activeStep === workflowSteps.length}
-            >
-              Next Step
+            <Button variant="outline" className="hover-scale">
+              Download Implementation Guide
             </Button>
           </div>
-        </TabsContent>
-
-        <TabsContent value="implementation" className="space-y-6">
-          {/* Implementation Timeline */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Strategic Implementation Timeline</CardTitle>
-              <p className="text-muted-foreground">Phased approach to maximize ROI and minimize risk</p>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid gap-6">
-                <div className="border-l-4 border-blue-500 pl-4">
-                  <h3 className="font-semibold text-blue-700">Phase 1: Automation Foundation (Months 1-6)</h3>
-                  <p className="text-sm text-muted-foreground mb-2">Focus on high-volume, structured processes</p>
-                  <ul className="text-sm space-y-1">
-                    <li>• Digital forms and data collection</li>
-                    <li>• API integrations and data transfer</li>
-                    <li>• Basic workflow automation</li>
-                    <li>• Automated reminders and notifications</li>
-                  </ul>
-                  <Badge variant="outline" className="mt-2">ROI: Immediate efficiency gains</Badge>
-                </div>
-
-                <div className="border-l-4 border-purple-500 pl-4">
-                  <h3 className="font-semibold text-purple-700">Phase 2: Selective AI Implementation (Months 6-12)</h3>
-                  <p className="text-sm text-muted-foreground mb-2">Add AI where human-like reasoning adds most value</p>
-                  <ul className="text-sm space-y-1">
-                    <li>• Document processing and analysis</li>
-                    <li>• Clinical decision support</li>
-                    <li>• Patient communication and education</li>
-                    <li>• Complex case handling</li>
-                  </ul>
-                  <Badge variant="outline" className="mt-2">ROI: Improved quality, enhanced patient experience</Badge>
-                </div>
-
-                <div className="border-l-4 border-green-500 pl-4">
-                  <h3 className="font-semibold text-green-700">Phase 3: Advanced AI Integration (Months 12-18)</h3>
-                  <p className="text-sm text-muted-foreground mb-2">Implement sophisticated AI capabilities</p>
-                  <ul className="text-sm space-y-1">
-                    <li>• Predictive analytics</li>
-                    <li>• Emotional intelligence</li>
-                    <li>• Complex optimization</li>
-                    <li>• Continuous learning systems</li>
-                  </ul>
-                  <Badge variant="outline" className="mt-2">ROI: Competitive advantage, clinical outcome improvements</Badge>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+        </CardContent>
+      </Card>
     </div>
   );
 };
