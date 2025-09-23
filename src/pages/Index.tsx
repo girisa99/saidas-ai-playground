@@ -4,7 +4,7 @@ import { TrustSection } from "@/components/TrustSection";
 import { StorySection } from "@/components/StorySection";
 import { AIExperimentationBanner } from "@/components/AIExperimentationBanner";
 import { ValueProposition } from "@/components/ValueProposition";
-
+import GammaPresentationHub from "@/components/GammaPresentationHub";
 import { QuickStart } from "@/components/QuickStart";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
@@ -29,6 +29,7 @@ const Index = () => {
         <StorySection />
         <QuickStart />
         <ValueProposition />
+        <GammaPresentationHub />
         <FAQ />
         {/* Simplified homepage - detailed sections moved to dedicated pages per UI/UX audit */}
       </main>

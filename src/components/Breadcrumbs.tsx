@@ -11,7 +11,11 @@ export const Breadcrumbs = () => {
     'journey': 'AI Journey',
     'about': 'About Me',
     'technology': 'Technology Stack',
-    'case-studies': 'Case Studies'
+    'case-studies': 'Case Studies',
+    'presentations': 'AI Presentations',
+    'faq': 'FAQ',
+    'docs': 'Documentation',
+    'privacy': 'Privacy Policy'
   };
 
   if (pathnames.length === 0) return null;
