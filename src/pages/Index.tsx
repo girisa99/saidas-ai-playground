@@ -8,6 +8,7 @@ import GammaPresentationHub from "@/components/GammaPresentationHub";
 import { QuickStart } from "@/components/QuickStart";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
+import { IntelligentContentHub } from "@/components/IntelligentContentHub";
 import { useEffect } from "react";
 
 const Index = () => {
@@ -26,6 +27,7 @@ const Index = () => {
       <main>
         <MultiHeroSection />
         
+        <IntelligentContentHub />
         <TrustSection />
         <StorySection />
         <QuickStart />
