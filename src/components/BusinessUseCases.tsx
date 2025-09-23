@@ -469,6 +469,24 @@ const BusinessUseCases = () => {
   const [selectedScenario, setSelectedScenario] = useState<number | null>(null);
   const [showDecisionFramework, setShowDecisionFramework] = useState(true);
 
+  // Connection definitions (fromStep -> toStep)
+  const sequentialEdges: [number, number][] = [
+    [1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9]
+  ];
+  const feedbackEdges: [number, number][] = [
+    [4,2], // Insurance Authorization requests more info from Data Collection
+    [5,3]  // Clinical Review requests records from Records Acquisition
+  ];
+  const resultsEdges: [number, number][] = [
+    [6,5]  // Genomic Testing results to Clinical Review
+  ];
+  const coordinationEdges: [number, number][] = [
+    [5,9], // Clinical Review to Care Coordination
+    [6,9], // Genomic Testing to Care Coordination
+    [7,9], // Appointment Scheduling to Care Coordination
+    [8,9]  // Pre-Visit Preparation to Care Coordination
+  ];
+
   const getEmotionColor = (emotion: string) => {
     switch (emotion) {
       case "positive": return "bg-green-100 border-green-300 text-green-800";
@@ -617,157 +635,111 @@ const BusinessUseCases = () => {
             {/* Non-linear Journey Visualization */}
             <div className="relative h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-6 overflow-visible">{/* Changed overflow to visible */}
               {/* Connection Lines */}
-              <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 5 }}>{/* Increased z-index */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ zIndex: 5 }}>
                 <defs>
-                  {/* Arrow markers for different connection types */}
-                  <marker
-                    id="arrow-primary"
-                    markerWidth="12"
-                    markerHeight="8"
-                    refX="10"
-                    refY="4"
-                    orient="auto"
-                    fill="#3b82f6"
-                  >
+                  <marker id="arrow-primary" markerWidth="12" markerHeight="8" refX="10" refY="4" orient="auto" fill="#3b82f6">
                     <polygon points="0 0, 12 4, 0 8" />
                   </marker>
-                  <marker
-                    id="arrow-feedback"
-                    markerWidth="12"
-                    markerHeight="8"
-                    refX="10"
-                    refY="4"
-                    orient="auto"
-                    fill="#f59e0b"
-                  >
+                  <marker id="arrow-feedback" markerWidth="12" markerHeight="8" refX="10" refY="4" orient="auto" fill="#f59e0b">
                     <polygon points="0 0, 12 4, 0 8" />
                   </marker>
-                  <marker
-                    id="arrow-coordination"
-                    markerWidth="12"
-                    markerHeight="8"
-                    refX="10"
-                    refY="4"
-                    orient="auto"
-                    fill="#8b5cf6"
-                  >
+                  <marker id="arrow-coordination" markerWidth="12" markerHeight="8" refX="10" refY="4" orient="auto" fill="#8b5cf6">
                     <polygon points="0 0, 12 4, 0 8" />
                   </marker>
-                  <marker
-                    id="arrow-results"
-                    markerWidth="12"
-                    markerHeight="8"
-                    refX="10"
-                    refY="4"
-                    orient="auto"
-                    fill="#10b981"
-                  >
+                  <marker id="arrow-results" markerWidth="12" markerHeight="8" refX="10" refY="4" orient="auto" fill="#10b981">
                     <polygon points="0 0, 12 4, 0 8" />
                   </marker>
-                <filter id="line-glow" x="-50%" y="-50%" width="200%" height="200%">
-                  <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#ffffff" flood-opacity="0.9" />
-                </filter>
+                  <filter id="line-glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#ffffff" flood-opacity="0.9" />
+                  </filter>
                 </defs>
-                
+
                 <g filter="url(#line-glow)">
-                {/* Primary Sequential Flow: 1→2→3→4→5→6→7→8→9 */}
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((stepId) => {
-                  const currentStep = journeySteps.find(s => s.id === stepId);
-                  const nextStep = journeySteps.find(s => s.id === stepId + 1);
-                  
-                  if (!currentStep || !nextStep) return null;
-                  
-                  return (
-                    <line
-                      key={`primary-${stepId}`}
-                      x1={`${currentStep.position.x}%`}
-                      y1={`${currentStep.position.y}%`}
-                      x2={`${nextStep.position.x}%`}
-                      y2={`${nextStep.position.y}%`}
-                      stroke="#3b82f6"
-                      strokeWidth="4"
-                      markerEnd="url(#arrow-primary)"
-                      opacity="0.9"
-                    />
-                  );
-                })}
-                
-                {/* Feedback Loops - When steps need additional information */}
-                {/* Insurance Authorization (4) → Data Collection (2) for additional info */}
-                <path
-                  d={`M 70 20 Q 52 32 30 20`}
-                  stroke="#f59e0b"
-                  strokeWidth="6"
-                  fill="none"
-                  strokeDasharray="15,8"
-                  markerEnd="url(#arrow-feedback)"
-                  opacity="1"
-                />
-                
-                {/* Clinical Review (5) → Records Acquisition (3) for additional records */}
-                <path
-                  d={`M 90 18 Q 72 5 50 15`}
-                  stroke="#f59e0b"
-                  strokeWidth="6"
-                  fill="none"
-                  strokeDasharray="15,8"
-                  markerEnd="url(#arrow-feedback)"
-                  opacity="1"
-                />
-                
-                {/* Results Flow - Genomic Testing (6) → Clinical Review (5) */}
-                <path
-                  d={`M 18 48 Q 52 32 85 22`}
-                  stroke="#10b981"
-                  strokeWidth="6"
-                  fill="none"
-                  strokeDasharray="12,6"
-                  markerEnd="url(#arrow-results)"
-                  opacity="1"
-                />
-                
-                {/* Care Coordination (9) connects to multiple steps */}
-                {/* Care Coordination (9) ← Clinical Review (5) */}
-                <path
-                  d={`M 88 28 Q 78 42 68 52`}
-                  stroke="#8b5cf6"
-                  strokeWidth="6"
-                  fill="none"
-                  strokeDasharray="18,10"
-                  markerEnd="url(#arrow-coordination)"
-                  opacity="1"
-                />
-                
-                {/* Care Coordination (9) ← Genomic Testing (6) */}
-                <path
-                  d={`M 18 58 Q 42 62 65 58`}
-                  stroke="#8b5cf6"
-                  strokeWidth="6"
-                  strokeDasharray="18,10"
-                  markerEnd="url(#arrow-coordination)"
-                  opacity="1"
-                />
-                
-                {/* Care Coordination (9) ← Appointment Scheduling (7) */}
-                <path
-                  d={`M 38 58 Q 52 62 65 58`}
-                  stroke="#8b5cf6"
-                  strokeWidth="6"
-                  strokeDasharray="18,10"
-                  markerEnd="url(#arrow-coordination)"
-                  opacity="1"
-                />
-                
-                {/* Care Coordination (9) ← Pre-Visit Preparation (8) */}
-                <path
-                  d={`M 58 58 Q 62 60 65 58`}
-                  stroke="#8b5cf6"
-                  strokeWidth="6"
-                  strokeDasharray="18,10"
-                  markerEnd="url(#arrow-coordination)"
-                  opacity="1"
-                />
-              </g>
+                  {/* Primary sequential flow (always visible) */}
+                  {sequentialEdges.map(([from, to]) => {
+                    const a = journeySteps.find(s => s.id === from)?.position;
+                    const b = journeySteps.find(s => s.id === to)?.position;
+                    if (!a || !b) return null;
+                    return (
+                      <line
+                        key={`seq-${from}-${to}`}
+                        x1={a.x}
+                        y1={a.y}
+                        x2={b.x}
+                        y2={b.y}
+                        stroke="#3b82f6"
+                        strokeWidth={2.5}
+                        markerEnd="url(#arrow-primary)"
+                        opacity={0.95}
+                      />
+                    );
+                  })}
+
+                  {/* Context flows (only when a step is selected to avoid clutter) */}
+                  {selectedStep && (
+                    <>
+                      {feedbackEdges.filter(([from,to]) => from === selectedStep || to === selectedStep).map(([from, to]) => {
+                        const a = journeySteps.find(s => s.id === from)?.position;
+                        const b = journeySteps.find(s => s.id === to)?.position;
+                        if (!a || !b) return null;
+                        return (
+                          <line
+                            key={`fb-${from}-${to}`}
+                            x1={a.x}
+                            y1={a.y}
+                            x2={b.x}
+                            y2={b.y}
+                            stroke="#f59e0b"
+                            strokeWidth={3.5}
+                            strokeDasharray="10 6"
+                            markerEnd="url(#arrow-feedback)"
+                            opacity={0.95}
+                          />
+                        );
+                      })}
+
+                      {resultsEdges.filter(([from,to]) => from === selectedStep || to === selectedStep).map(([from, to]) => {
+                        const a = journeySteps.find(s => s.id === from)?.position;
+                        const b = journeySteps.find(s => s.id === to)?.position;
+                        if (!a || !b) return null;
+                        return (
+                          <line
+                            key={`rs-${from}-${to}`}
+                            x1={a.x}
+                            y1={a.y}
+                            x2={b.x}
+                            y2={b.y}
+                            stroke="#10b981"
+                            strokeWidth={3.5}
+                            strokeDasharray="8 6"
+                            markerEnd="url(#arrow-results)"
+                            opacity={0.95}
+                          />
+                        );
+                      })}
+
+                      {coordinationEdges.filter(([from,to]) => from === selectedStep || to === selectedStep).map(([from, to]) => {
+                        const a = journeySteps.find(s => s.id === from)?.position;
+                        const b = journeySteps.find(s => s.id === to)?.position;
+                        if (!a || !b) return null;
+                        return (
+                          <line
+                            key={`cc-${from}-${to}`}
+                            x1={a.x}
+                            y1={a.y}
+                            x2={b.x}
+                            y2={b.y}
+                            stroke="#8b5cf6"
+                            strokeWidth={3.5}
+                            strokeDasharray="12 8"
+                            markerEnd="url(#arrow-coordination)"
+                            opacity={0.95}
+                          />
+                        );
+                      })}
+                    </>
+                  )}
+                </g>
               </svg>
               
 
