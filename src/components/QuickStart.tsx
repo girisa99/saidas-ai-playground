@@ -222,29 +222,6 @@ export const QuickStart = () => {
           </Card>
         </div>
 
-        {/* Call to Action */}
-        <div className="mt-20 text-center">
-          <Card className="p-8 bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
-            <h3 className="text-2xl font-bold mb-4">Ready to Start Your AI Journey?</h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Explore detailed documentation, learn from my experiments, and discover the tools and techniques 
-              that can transform your own projects and workflows.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/docs">
-                <Button size="lg" className="bg-primary hover:bg-primary/90">
-                  Explore Documentation
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link to="/journey">
-                <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10">
-                  View Full Journey
-                </Button>
-              </Link>
-            </div>
-          </Card>
-        </div>
       </div>
     </section>
   );
