@@ -29,7 +29,7 @@ export const BusinessImpactInfographic = () => {
       color: "genie-primary",
       metrics: [
         { value: "150-300%", label: "Average ROI", timeframe: "12-18 months" },
-        { value: "$1.5M", label: "Annual Cost Savings", timeframe: "Customer service automation" },
+        { value: "35-50%", label: "Annual Cost Savings", timeframe: "Customer service automation" },
         { value: "70%", label: "Development Cost Reduction", timeframe: "AI-accelerated processes" }
       ]
     },
