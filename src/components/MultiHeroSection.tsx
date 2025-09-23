@@ -13,41 +13,41 @@ const heroSections = [
   {
     id: 1,
     icon: MapPin,
-    title: "🌟 From Skeptic to AI Believer",
-    subtitle: "My 21-Year Digital Health Journey",
-    description: "Discover how I went from traditional healthcare to AI innovation through real experiments and breakthrough moments.",
-    ctaPrimary: "AI Journey",
-    ctaSecondary: "My Story",
+    title: "🌟 From Traditional to AI-Powered Development",
+    subtitle: "My Personal Discovery Journey",
+    description: "How I discovered that AI tools are democratizing software development, making it accessible to anyone willing to experiment and learn.",
+    ctaPrimary: "Learning Journey",
+    ctaSecondary: "My Discovery",
     bgImage: aiJourneyBg
   },
   {
     id: 2,
     icon: Trophy,
-    title: "🚀 What Actually Worked (& Failed)",
-    subtitle: "Honest Lessons from the Trenches",
-    description: "Real wins, epic fails, and surprising insights from implementing AI in healthcare and beyond.",
-    ctaPrimary: "View Success Stories",
+    title: "🚀 What Works (& What Doesn't)",
+    subtitle: "Honest Experimentation Results",
+    description: "Real results from testing AI development tools - the breakthroughs, the failures, and the surprising insights I gained along the way.",
+    ctaPrimary: "Experiment Results", 
     ctaSecondary: "Learn More",
     bgImage: successStoriesBg
   },
   {
     id: 3,
     icon: Wrench,
-    title: "🔮 My AI Tool Arsenal",
-    subtitle: "Personal Favorites That Stuck",
-    description: "After testing hundreds of AI tools, these game-changers transformed my workflow and thinking.",
-    ctaPrimary: "Explore AI Tools",
-    ctaSecondary: "My Picks",
+    title: "🔮 AI Tools That Actually Work",
+    subtitle: "No-Code to Advanced Development",
+    description: "Exploring how AI tools are bridging the gap between business ideas and working software, no computer science degree required.",
+    ctaPrimary: "Tool Exploration",
+    ctaSecondary: "My Findings",
     bgImage: aiToolsBg
   },
   {
     id: 4,
     icon: Rocket,
-    title: "🎯 Building Tomorrow Together",
-    subtitle: "My Vision for AI's Future",
-    description: "Where AI is taking us next - based on real experiments and emerging possibilities.",
-    ctaPrimary: "Technology Roadmap",
-    ctaSecondary: "Future Vision",
+    title: "🎯 The Future is Accessible",
+    subtitle: "AI-Powered Development for Everyone",
+    description: "Sharing insights on how AI is making software development accessible to business professionals and domain experts worldwide.",
+    ctaPrimary: "Future Insights",
+    ctaSecondary: "Accessibility Vision",
     bgImage: techRoadmapBg
   }
 ];
@@ -105,43 +105,41 @@ export const MultiHeroSection = () => {
       {/* Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
-          {/* Clear Value Proposition */}
-          <div className="mb-12">
+            {/* Clear Value Proposition */}
             <h1 className="text-4xl lg:text-6xl font-bold tracking-tight mb-6 animate-fade-in text-center text-white">
-              Genie AI Experimentation <span className="text-genie-accent">HUB</span>
+              AI Development <span className="text-genie-accent">Experimentation</span>
             </h1>
             <div className="w-24 h-1 bg-genie-accent mx-auto mb-8"></div>
             
             {/* Clear Purpose Statement */}
             <h2 className="text-2xl lg:text-3xl text-white/90 mb-6 font-medium max-w-4xl mx-auto">
-              Transform Your Business with Proven AI Implementation Strategies
+              Sharing How AI is Democratizing Software Development for Everyone
             </h2>
             <p className="text-lg lg:text-xl text-white/80 mb-8 leading-relaxed max-w-4xl mx-auto">
-              21 years of healthcare technology expertise condensed into actionable AI strategies. 
-              Learn from real implementations, avoid costly mistakes, and accelerate your AI journey.
+              Join my exploration of how AI tools are making software development accessible to business professionals 
+              with little to no coding experience. Real experiments, honest discoveries, and practical insights.
             </p>
             
-            {/* What You'll Get - Consistent with other pages */}
+            {/* What You'll Discover - Knowledge focused */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <MapPin className="h-8 w-8 text-genie-accent mx-auto mb-3" />
-                <h3 className="font-semibold text-white mb-2">Proven Roadmaps</h3>
-                <p className="text-white/80 text-sm">Step-by-step guides from real AI implementations</p>
+                <h3 className="font-semibold text-white mb-2">Learning Journey</h3>
+                <p className="text-white/80 text-sm">Follow my step-by-step exploration of AI development tools</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <Trophy className="h-8 w-8 text-genie-accent mx-auto mb-3" />
-                <h3 className="font-semibold text-white mb-2">Real Case Studies</h3>
-                <p className="text-white/80 text-sm">Honest wins, failures, and lessons learned</p>
+                <h3 className="font-semibold text-white mb-2">Real Experiments</h3>
+                <p className="text-white/80 text-sm">Honest results from testing no-code and AI-powered platforms</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <Wrench className="h-8 w-8 text-genie-accent mx-auto mb-3" />
-                <h3 className="font-semibold text-white mb-2">Tested AI Tools</h3>
-                <p className="text-white/80 text-sm">Curated arsenal of tools that actually work</p>
+                <h3 className="font-semibold text-white mb-2">Accessible Tools</h3>
+                <p className="text-white/80 text-sm">Discover AI tools that require minimal technical background</p>
               </div>
             </div>
-          </div>
 
-          {/* Primary CTA - Consistent styling */}
+          {/* Primary CTA - Learning focused */}
           <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in justify-center">
             <Button 
               variant="default"
@@ -149,7 +147,7 @@ export const MultiHeroSection = () => {
               className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               onClick={() => navigate('/journey')}
             >
-              Start Your AI Journey
+              Explore My Learning Path
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button 
@@ -158,7 +156,7 @@ export const MultiHeroSection = () => {
               className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 backdrop-blur-sm"
               onClick={() => navigate('/about')}
             >
-              Learn My Story
+              About My Background
             </Button>
           </div>
         </div>

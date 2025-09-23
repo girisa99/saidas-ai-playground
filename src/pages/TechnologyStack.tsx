@@ -62,39 +62,39 @@ const TechnologyStack = () => {
           <div className="max-w-5xl">
             <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-4">
               <Code2 className="w-4 h-4 mr-2" />
-              Technology Arsenal
+              Tool Exploration
             </Badge>
             
             <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white">
-              AI Technology <span className="text-genie-accent">Stack</span>
+              AI Development <span className="text-genie-accent">Tools</span>
             </h1>
             
             <p className="text-xl lg:text-2xl text-white/90 leading-relaxed mb-8">
-              From no-code platforms to enterprise infrastructure - discover the comprehensive 
-              technology arsenal powering our AI innovations and transformations.
+              Discover the AI-powered tools and platforms that are making software development accessible 
+              to business professionals without deep technical backgrounds.
             </p>
             
             {/* Tech Highlights Grid */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <Brain className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">AI Models</h3>
-                <p className="text-white/80 text-xs">GPT-4, Claude 3, Gemini</p>
+                <h3 className="font-semibold text-white text-sm">No-Code Platforms</h3>
+                <p className="text-white/80 text-xs">Loveable, Bolt AI, Bubble</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <Database className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Infrastructure</h3>
-                <p className="text-white/80 text-xs">Docker, Kubernetes, Cloud</p>
+                <h3 className="font-semibold text-white text-sm">AI Assistants</h3>
+                <p className="text-white/80 text-xs">GPT-4, Claude, Cursor IDE</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <Shield className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Security</h3>
-                <p className="text-white/80 text-xs">Enterprise-grade, Compliant</p>
+                <h3 className="font-semibold text-white text-sm">Accessibility</h3>
+                <p className="text-white/80 text-xs">Business-friendly, intuitive</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <Zap className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Performance</h3>
-                <p className="text-white/80 text-xs">High-speed, Scalable</p>
+                <h3 className="font-semibold text-white text-sm">Learning Curve</h3>
+                <p className="text-white/80 text-xs">Minimal technical requirements</p>
               </div>
             </div>
             
@@ -106,7 +106,7 @@ const TechnologyStack = () => {
                 className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl"
               >
                 <Database className="w-4 h-4 mr-2" />
-                Explore Stack
+                Explore Tools
               </Button>
               <Button 
                 variant="outline"
@@ -116,7 +116,7 @@ const TechnologyStack = () => {
               >
                 <Link to="/case-studies">
                   <ArrowRight className="w-4 h-4 mr-2" />
-                  See Results
+                  See What I Built
                 </Link>
               </Button>
             </div>

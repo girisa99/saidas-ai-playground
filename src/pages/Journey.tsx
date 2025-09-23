@@ -169,39 +169,39 @@ const Journey = () => {
           <div className="max-w-5xl">
             <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-4">
               <MapPin className="w-4 h-4 mr-2" />
-              Our Journey
+              My Learning Journey
             </Badge>
             
             <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white">
-              My AI Innovation <span className="text-genie-accent">Journey</span>
+              AI Development <span className="text-genie-accent">Discovery</span>
             </h1>
             
             <p className="text-xl lg:text-2xl text-white/90 leading-relaxed mb-8">
-              From a simple conversation to revolutionary AI systems - the methodical experimentation 
-              journey that transformed how I approach technology solutions.
+              From a simple conversation to building complex applications with AI - follow my 6-month journey 
+              discovering how AI tools are democratizing software development for everyone.
             </p>
             
             {/* Journey Highlights Grid */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <Calendar className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Timeline</h3>
-                <p className="text-white/80 text-xs">6 months of innovation</p>
+                <h3 className="font-semibold text-white text-sm">Learning Timeline</h3>
+                <p className="text-white/80 text-xs">6 months of experimentation</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <Users className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Collaboration</h3>
-                <p className="text-white/80 text-xs">Multi-agent systems</p>
+                <h3 className="font-semibold text-white text-sm">AI Collaboration</h3>
+                <p className="text-white/80 text-xs">Human-AI development partnership</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <TrendingUp className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Growth</h3>
-                <p className="text-white/80 text-xs">Enterprise transformation</p>
+                <h3 className="font-semibold text-white text-sm">Accessibility Growth</h3>
+                <p className="text-white/80 text-xs">No-code to advanced development</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <Award className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Achievement</h3>
-                <p className="text-white/80 text-xs">94% accuracy milestone</p>
+                <h3 className="font-semibold text-white text-sm">Knowledge Sharing</h3>
+                <p className="text-white/80 text-xs">Open experimentation results</p>
               </div>
             </div>
             
@@ -213,7 +213,7 @@ const Journey = () => {
                 className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl"
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                View Timeline
+                Follow My Timeline
               </Button>
               <Button 
                 variant="outline"
@@ -223,7 +223,7 @@ const Journey = () => {
               >
                 <Link to="/case-studies">
                   <Award className="w-4 h-4 mr-2" />
-                  See Results
+                  See What I Built
                 </Link>
               </Button>
             </div>

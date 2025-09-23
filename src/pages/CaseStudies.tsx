@@ -121,39 +121,39 @@ const CaseStudies = () => {
           <div className="max-w-5xl">
             <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-4">
               <Award className="w-4 h-4 mr-2" />
-              Proven Results
+              Learning Outcomes
             </Badge>
             
             <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white">
-              AI Success <span className="text-genie-accent">Stories</span>
+              What I <span className="text-genie-accent">Built</span>
             </h1>
             
             <p className="text-xl lg:text-2xl text-white/90 leading-relaxed mb-8">
-              Real metrics, honest insights, and measurable impact from implementing AI solutions 
-              across healthcare, manufacturing, and enterprise environments.
+              Real applications and experiments showcasing how AI tools enable rapid development 
+              and innovation - from healthcare solutions to business applications.
             </p>
             
             {/* Impact Metrics Grid */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <BarChart3 className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">ROI Achieved</h3>
-                <p className="text-white/80 text-xs">Up to 300% in 6 months</p>
+                <h3 className="font-semibold text-white text-sm">Development Speed</h3>
+                <p className="text-white/80 text-xs">10x faster with AI tools</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <Target className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Accuracy Rate</h3>
-                <p className="text-white/80 text-xs">94% AI processing accuracy</p>
+                <h3 className="font-semibold text-white text-sm">Learning Curve</h3>
+                <p className="text-white/80 text-xs">Accessible to non-developers</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <Zap className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Efficiency Gains</h3>
-                <p className="text-white/80 text-xs">5x faster processing</p>
+                <h3 className="font-semibold text-white text-sm">Experimentation</h3>
+                <p className="text-white/80 text-xs">Rapid prototyping enabled</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                 <Shield className="h-6 w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-sm">Enterprise Scale</h3>
-                <p className="text-white/80 text-xs">15+ integrated models</p>
+                <h3 className="font-semibold text-white text-sm">Knowledge Sharing</h3>
+                <p className="text-white/80 text-xs">Open source insights</p>
               </div>
             </div>
             
@@ -165,7 +165,7 @@ const CaseStudies = () => {
                 className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl"
               >
                 <TrendingUp className="w-4 h-4 mr-2" />
-                View All Results
+                Explore My Projects
               </Button>
               <Button 
                 variant="outline"
@@ -175,7 +175,7 @@ const CaseStudies = () => {
               >
                 <Link to="/journey">
                   <ArrowRight className="w-4 h-4 mr-2" />
-                  Our Journey
+                  See My Learning Path
                 </Link>
               </Button>
             </div>
