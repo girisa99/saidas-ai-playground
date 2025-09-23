@@ -290,6 +290,108 @@ const journeySteps = [
     currentIssues: ["30+ minutes per case review", "Incomplete clinical picture"],
     improvement: "Reduce physician review time by 60% while improving decision quality",
     roi: "450% ROI through physician efficiency and better outcomes"
+  },
+  {
+    id: 7,
+    title: "Genomic Testing",
+    icon: Dna,
+    time: "Day 10-15",
+    position: { x: 60, y: 55 },
+    emotion: "neutral",
+    emotionIcon: Meh,
+    approach: "hybrid",
+    automationPrimary: true,
+    description: "Specialized testing requires additional pre-authorization",
+    automationTasks: [
+      "Digital submission - Electronic form processing",
+      "Status tracking - Real-time approval monitoring",
+      "Document management - Organizing supporting materials",
+      "Workflow automation - Moving requests through approval process"
+    ],
+    aiTasks: [
+      "Medical necessity writing - Creating compelling clinical narratives",
+      "Approval prediction - Analyzing likelihood of coverage",
+      "Appeal automation - Generating evidence-based appeals",
+      "Clinical correlation - Connecting genomic tests to treatment options"
+    ],
+    whyAutomation: "Structured submission processes and tracking",
+    whyAI: "Combines structured process management with complex medical reasoning",
+    phases: [
+      "Phase 1: Automation for submission and tracking infrastructure",
+      "Phase 2: AI for documentation generation and approval prediction",
+      "Phase 3: Integrated system with AI-powered appeals and optimization"
+    ],
+    currentIssues: ["Complex prior authorization requirements", "Delays in test ordering"],
+    improvement: "Reduce testing delays from 1 week to 2 days",
+    roi: "320% ROI through faster testing and higher approval rates"
+  },
+  {
+    id: 8,
+    title: "Appointment Scheduling",
+    icon: Calendar,
+    time: "Day 12-18",
+    position: { x: 40, y: 65 },
+    emotion: "positive",
+    emotionIcon: ThumbsUp,
+    approach: "hybrid",
+    automationPrimary: true,
+    description: "First appointment scheduled - relief and anticipation",
+    automationTasks: [
+      "Online scheduling - Self-service appointment booking",
+      "Calendar integration - Real-time availability checking",
+      "Automated reminders - SMS/email confirmations",
+      "Resource coordination - Room and equipment booking"
+    ],
+    aiTasks: [
+      "Intelligent scheduling - Optimizing based on multiple factors",
+      "Preference learning - Adapting to patient and provider patterns",
+      "Predictive modeling - Anticipating no-shows and conflicts",
+      "Dynamic optimization - Real-time schedule adjustments"
+    ],
+    whyAutomation: "Scheduling follows logical rules and constraints",
+    whyAI: "Optimization requires complex reasoning about multiple variables",
+    phases: [
+      "Phase 1: Full automation implementation (immediate efficiency gains)",
+      "Phase 2: AI optimization layer (enhanced patient satisfaction)",
+      "Phase 3: Predictive analytics for proactive management"
+    ],
+    currentIssues: ["Limited appointment availability", "High no-show rates for new patients"],
+    improvement: "Reduce time to first appointment from 3 weeks to 1 week",
+    roi: "380% ROI through improved efficiency and reduced no-shows"
+  },
+  {
+    id: 9,
+    title: "Pre-Visit Preparation",
+    icon: CheckCircle,
+    time: "Day 15-20",
+    position: { x: 20, y: 75 },
+    emotion: "positive",
+    emotionIcon: Star,
+    approach: "agentic",
+    automationPrimary: false,
+    description: "Patient receives visit preparation materials and instructions",
+    automationTasks: [
+      "Content delivery - Sending materials via multiple channels",
+      "Progress tracking - Monitoring completion of tasks",
+      "Reminder scheduling - Automated follow-up communications",
+      "Checklist management - Tracking required pre-visit tasks"
+    ],
+    aiTasks: [
+      "Personalized education - Adapting content to patient understanding",
+      "Interactive guidance - Conversational support for preparation",
+      "Anxiety management - Emotional support and reassurance",
+      "Dynamic adaptation - Adjusting based on patient engagement"
+    ],
+    whyAutomation: "Reliable delivery and tracking infrastructure",
+    whyAI: "Patient education and support require empathy and personalization",
+    phases: [
+      "Phase 1: Automation for content delivery and tracking",
+      "Phase 2: AI for personalization and interactive support",
+      "Phase 3: Advanced AI for emotional intelligence and behavioral insights"
+    ],
+    currentIssues: ["Generic, overwhelming information packets", "Patients arrive unprepared"],
+    improvement: "Improve patient preparedness scores from 60% to 95%",
+    roi: "280% ROI through better prepared patients and improved outcomes"
   }
 ];
 
@@ -304,12 +406,13 @@ const visualScenarios = [
     complexity: "high",
     technologyMix: { automation: 40, ai: 60 },
     outcome: "Success: 18-hour resolution",
-    journeyPath: [1, 2, 5, 6],
+    journeyPath: [1, 2, 5, 6, 7],
     keyDecisions: [
       { step: 1, decision: "AI Priority", reason: "Urgent clinical triage needed" },
       { step: 2, decision: "AI-Led", reason: "Emotional support critical" },
       { step: 5, decision: "AI-Enhanced", reason: "Complex approval required" },
-      { step: 6, decision: "AI-Primary", reason: "Clinical complexity assessment" }
+      { step: 6, decision: "AI-Primary", reason: "Clinical complexity assessment" },
+      { step: 7, decision: "AI-Enhanced", reason: "Complex genomic testing authorization" }
     ]
   },
   {
@@ -321,12 +424,14 @@ const visualScenarios = [
     complexity: "medium",
     technologyMix: { automation: 70, ai: 30 },
     outcome: "Success: 6-day completion",
-    journeyPath: [1, 2, 3, 4, 5],
+    journeyPath: [1, 2, 3, 4, 5, 8, 9],
     keyDecisions: [
       { step: 1, decision: "Automation", reason: "Standard referral processing" },
       { step: 2, decision: "Hybrid", reason: "Personalized but predictable" },
       { step: 3, decision: "Automation", reason: "Structured data collection" },
-      { step: 4, decision: "Automation", reason: "Standard record requests" }
+      { step: 4, decision: "Automation", reason: "Standard record requests" },
+      { step: 8, decision: "Automation+", reason: "Efficient scheduling with AI optimization" },
+      { step: 9, decision: "AI-Enhanced", reason: "Personalized preparation materials" }
     ]
   },
   {
@@ -338,12 +443,15 @@ const visualScenarios = [
     complexity: "high",
     technologyMix: { automation: 30, ai: 70 },
     outcome: "Success: 36-hour coordination",
-    journeyPath: [1, 2, 4, 6],
+    journeyPath: [1, 2, 4, 6, 7, 8, 9],
     keyDecisions: [
       { step: 1, decision: "AI-Enhanced", reason: "Rare condition recognition" },
       { step: 2, decision: "AI-Primary", reason: "Family support coordination" },
       { step: 4, decision: "AI-Heavy", reason: "Specialist record analysis" },
-      { step: 6, decision: "AI-Expert", reason: "Multi-disciplinary planning" }
+      { step: 6, decision: "AI-Expert", reason: "Multi-disciplinary planning" },
+      { step: 7, decision: "AI-Complex", reason: "Specialized pediatric testing" },
+      { step: 8, decision: "AI-Coordinated", reason: "Multi-specialist scheduling" },
+      { step: 9, decision: "AI-Family", reason: "Age-appropriate education and family support" }
     ]
   }
 ];
