@@ -19,7 +19,7 @@ export const NavigationHeader = () => {
 
   const navItems = [
     { to: "/", label: "Home", icon: Home },
-    { to: "/about", label: "About", icon: User },
+    { to: "/about", label: "About Me", icon: User },
     { to: "/journey", label: "Journey", icon: Map },
     { to: "/technology", label: "Tech Stack", icon: Wrench },
     { to: "/case-studies", label: "Case Studies", icon: Trophy },

@@ -153,10 +153,10 @@ export const MultiHeroSection = () => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 backdrop-blur-sm w-full sm:w-auto"
+              className="border-white text-white hover:bg-white hover:text-genie-dark backdrop-blur-sm w-full sm:w-auto transition-all duration-300"
               onClick={() => navigate('/about')}
             >
-              About My Background
+              About Me
             </Button>
           </div>
         </div>
