@@ -21,7 +21,7 @@ export const NavigationHeader = () => {
     { to: "/", label: "Home", icon: Home },
     { to: "/about", label: "About Me", icon: User },
     { to: "/journey", label: "Journey", icon: Map },
-    { to: "/technology", label: "Tech Stack", icon: Wrench },
+    { to: "/technology", label: "Tech Exploration", icon: Wrench },
     { to: "/business-use-cases", label: "Business Use Cases", icon: Briefcase },
     { to: "/case-studies", label: "Case Studies", icon: Trophy },
   ];
