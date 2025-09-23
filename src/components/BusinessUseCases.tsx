@@ -615,23 +615,63 @@ const BusinessUseCases = () => {
             <div className="relative h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-6 overflow-hidden">
               {/* Connection Lines */}
               <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
-                {journeySteps.map((step, index) => {
-                  if (index < journeySteps.length - 1) {
-                    const nextStep = journeySteps[index + 1];
-                    return (
-                      <line
-                        key={`line-${step.id}`}
-                        x1={`${step.position.x}%`}
-                        y1={`${step.position.y}%`}
-                        x2={`${nextStep.position.x}%`}
-                        y2={`${nextStep.position.y}%`}
-                        stroke="#e5e7eb"
-                        strokeWidth="2"
-                        strokeDasharray="5,5"
-                      />
-                    );
-                  }
-                  return null;
+                {/* Connect steps in proper sequence: 1→2→3→4→5→6→7→8→9 */}
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((stepId) => {
+                  const currentStep = journeySteps.find(s => s.id === stepId);
+                  const nextStep = journeySteps.find(s => s.id === stepId + 1);
+                  
+                  if (!currentStep || !nextStep) return null;
+                  
+                  return (
+                    <line
+                      key={`line-${stepId}`}
+                      x1={`${currentStep.position.x}%`}
+                      y1={`${currentStep.position.y}%`}
+                      x2={`${nextStep.position.x}%`}
+                      y2={`${nextStep.position.y}%`}
+                      stroke="#3b82f6"
+                      strokeWidth="3"
+                      strokeDasharray="8,4"
+                      className="animate-pulse"
+                    />
+                  );
+                })}
+                
+                {/* Add arrow markers for direction */}
+                <defs>
+                  <marker
+                    id="arrowhead"
+                    markerWidth="10"
+                    markerHeight="7"
+                    refX="9"
+                    refY="3.5"
+                    orient="auto"
+                    fill="#3b82f6"
+                  >
+                    <polygon points="0 0, 10 3.5, 0 7" />
+                  </marker>
+                </defs>
+                
+                {/* Connection lines with arrows */}
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((stepId) => {
+                  const currentStep = journeySteps.find(s => s.id === stepId);
+                  const nextStep = journeySteps.find(s => s.id === stepId + 1);
+                  
+                  if (!currentStep || !nextStep) return null;
+                  
+                  return (
+                    <line
+                      key={`arrow-line-${stepId}`}
+                      x1={`${currentStep.position.x}%`}
+                      y1={`${currentStep.position.y}%`}
+                      x2={`${nextStep.position.x}%`}
+                      y2={`${nextStep.position.y}%`}
+                      stroke="#3b82f6"
+                      strokeWidth="2"
+                      markerEnd="url(#arrowhead)"
+                      opacity="0.7"
+                    />
+                  );
                 })}
               </svg>
 
