@@ -128,20 +128,23 @@ const Journey = () => {
     <div className="min-h-screen bg-background">
       <NavigationHeader />
       
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-16 overflow-hidden">
+      {/* Enhanced Hero Section with Better Readability */}
+      <section className="relative pt-24 pb-16 overflow-hidden bg-gradient-to-br from-background via-muted/30 to-genie-primary/5">
+        {/* Background Image with Light Overlay */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
           style={{ backgroundImage: `url(${journeyInfographicBg})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-genie-dark/95 via-genie-navy/90 to-genie-primary/70" />
-        </div>
+        />
         
+        {/* Light overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-genie-primary/5" />
+        
+        {/* Animated particles - subtle and light */}
         <div className="absolute inset-0">
-          {[...Array(20)].map((_, i) => (
+          {[...Array(15)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-1 h-1 bg-genie-cyan/30 rounded-full animate-pulse"
+              className="absolute w-1 h-1 bg-genie-primary/20 rounded-full animate-pulse"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -152,28 +155,65 @@ const Journey = () => {
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Back Button */}
           <Link to="/">
-            <Button variant="ghost" className="text-white hover:bg-white/10 mb-8">
+            <Button 
+              variant="outline" 
+              className="mb-8 border-border hover:bg-muted/50 text-foreground hover:text-foreground"
+            >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Home
             </Button>
           </Link>
           
           <div className="max-w-4xl">
-            <Badge className="bg-genie-primary/20 text-genie-cyan border-genie-cyan/30 mb-4">
+            <Badge className="bg-genie-primary/10 text-genie-primary border-genie-primary/20 mb-4">
               Our Journey
             </Badge>
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-              My AI Innovation <span className="text-genie-cyan">Journey</span>
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-foreground">
+              My AI Innovation <span className="bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent">Journey</span>
             </h1>
-            <p className="text-xl lg:text-2xl text-white/90 leading-relaxed mb-6">
+            <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed mb-8">
               From a simple conversation to revolutionary AI systems - the methodical experimentation 
               journey that transformed how I approach technology solutions.
             </p>
+            
+            {/* Enhanced Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+              <Button 
+                variant="gradient"
+                size="lg"
+                className="shadow-lg hover:shadow-xl hover:shadow-genie-primary/25"
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+                View Timeline
+              </Button>
+              <Button 
+                variant="outline"
+                size="lg"
+                asChild
+              >
+                <Link to="/case-studies">
+                  <Award className="w-4 h-4 mr-2" />
+                  See Results
+                </Link>
+              </Button>
+            </div>
+            
+            {/* Improved badges */}
             <div className="flex flex-wrap gap-3">
-              <Badge className="bg-genie-cyan/20 text-genie-cyan border-genie-cyan/30">2025 Timeline</Badge>
-              <Badge className="bg-white/10 text-white border-white/20">6 Major Phases</Badge>
-              <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30">Enterprise Impact</Badge>
+              <Badge className="bg-genie-primary/10 text-genie-primary border-genie-primary/20">
+                <Calendar className="w-3 h-3 mr-1" />
+                2025 Timeline
+              </Badge>
+              <Badge className="bg-secondary text-secondary-foreground border-border">
+                <MapPin className="w-3 h-3 mr-1" />
+                6 Major Phases
+              </Badge>
+              <Badge className="bg-accent/10 text-accent border-accent/20">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                Enterprise Impact
+              </Badge>
             </div>
           </div>
         </div>
