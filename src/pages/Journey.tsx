@@ -288,50 +288,137 @@ const Journey = () => {
         {/* Development Journey Map */}
         <DevelopmentJourneyMap />
 
-        {/* Executive Impact Summary */}
+        {/* Strategic Value for Enterprise Leadership */}
         <section className="py-16 bg-gradient-to-b from-genie-primary/5 to-background">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                Quantifiable Impact & ROI
+                Strategic Value for Enterprise Leadership
               </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Demonstrable results from systematic AI experimentation with measurable business impact potential
+              <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
+                This journey demonstrates proven methodologies for AI transformation that can be scaled across 
+                enterprise environments with measurable ROI and risk mitigation.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            {/* Executive Takeaways */}
+            <div className="grid md:grid-cols-3 gap-8 mb-16">
+              <Card className="p-8 border-genie-primary/20 hover:shadow-xl transition-all duration-300">
+                <div className="w-12 h-12 bg-genie-primary/10 rounded-lg flex items-center justify-center mb-6">
+                  <Target className="w-6 h-6 text-genie-primary" />
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-4">Proven Methodology</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Systematic approach to AI integration with measurable milestones and risk mitigation strategies
+                </p>
+              </Card>
+              
+              <Card className="p-8 border-genie-teal/20 hover:shadow-xl transition-all duration-300">
+                <div className="w-12 h-12 bg-genie-teal/10 rounded-lg flex items-center justify-center mb-6">
+                  <Shield className="w-6 h-6 text-genie-teal" />
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-4">Enterprise Readiness</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Production-grade architecture with security, compliance, and scalability built-in
+                </p>
+              </Card>
+              
+              <Card className="p-8 border-genie-cyan/20 hover:shadow-xl transition-all duration-300">
+                <div className="w-12 h-12 bg-genie-cyan/10 rounded-lg flex items-center justify-center mb-6">
+                  <Zap className="w-6 h-6 text-genie-cyan" />
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-4">Rapid Time-to-Value</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Demonstrated ability to deliver complex solutions in accelerated timeframes
+                </p>
+              </Card>
+            </div>
+
+            {/* AI Experimentation Hub Framework */}
+            <div className="bg-gradient-to-r from-genie-primary/10 to-genie-teal/10 rounded-2xl p-8 mb-16">
+              <h3 className="text-2xl font-bold text-foreground mb-6 text-center">
+                AI Experimentation Hub Framework
+              </h3>
+              
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
+                  <div className="w-12 h-12 bg-genie-primary/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <Brain className="w-6 h-6 text-genie-primary" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Cross-Functional</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Supporting multiple business functions with unified AI capabilities
+                  </p>
+                </div>
+                
+                <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
+                  <div className="w-12 h-12 bg-genie-teal/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <Rocket className="w-6 h-6 text-genie-teal" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Rapid Prototyping</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Quick-to-build, quick-to-fail approach minimizing time investment
+                  </p>
+                </div>
+                
+                <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
+                  <div className="w-12 h-12 bg-genie-cyan/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <Code2 className="w-6 h-6 text-genie-cyan" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Reusable Components</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Shared component library enabling rapid cross-functional deployment
+                  </p>
+                </div>
+                
+                <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
+                  <div className="w-12 h-12 bg-genie-primary/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <TrendingUp className="w-6 h-6 text-genie-primary" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-2">Quick Wins</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Demonstrable value and ROI through targeted pilot implementations
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Key Metrics */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               <Card className="p-8 text-center hover:shadow-lg transition-shadow">
                 <div className="w-12 h-12 bg-genie-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Brain className="w-6 h-6 text-genie-primary" />
+                  <Users className="w-6 h-6 text-genie-primary" />
                 </div>
                 <div className="text-3xl font-bold text-genie-primary mb-2">15+</div>
-                <div className="text-muted-foreground font-medium">AI Technologies Mastered</div>
-                <div className="text-xs text-muted-foreground mt-2">GPT-4, Claude, Gemini, etc.</div>
+                <div className="text-muted-foreground font-medium">Business Functions Supported</div>
+                <div className="text-xs text-muted-foreground mt-2">HR, Finance, Operations, etc.</div>
               </Card>
+              
               <Card className="p-8 text-center hover:shadow-lg transition-shadow">
                 <div className="w-12 h-12 bg-genie-teal/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <Rocket className="w-6 h-6 text-genie-teal" />
                 </div>
-                <div className="text-3xl font-bold text-genie-teal mb-2">200+</div>
-                <div className="text-muted-foreground font-medium">Hours Intensive Development</div>
-                <div className="text-xs text-muted-foreground mt-2">Structured learning & building</div>
+                <div className="text-3xl font-bold text-genie-teal mb-2">2-4 Hrs</div>
+                <div className="text-muted-foreground font-medium">Prototype to Demo</div>
+                <div className="text-xs text-muted-foreground mt-2">Rapid validation cycles</div>
               </Card>
+              
               <Card className="p-8 text-center hover:shadow-lg transition-shadow">
                 <div className="w-12 h-12 bg-genie-cyan/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <Network className="w-6 h-6 text-genie-cyan" />
                 </div>
-                <div className="text-3xl font-bold text-genie-cyan mb-2">12+</div>
-                <div className="text-muted-foreground font-medium">Specialized AI Agents</div>
-                <div className="text-xs text-muted-foreground mt-2">Dynamic orchestration system</div>
+                <div className="text-3xl font-bold text-genie-cyan mb-2">50+</div>
+                <div className="text-muted-foreground font-medium">Reusable Components</div>
+                <div className="text-xs text-muted-foreground mt-2">Cross-functional library</div>
               </Card>
+              
               <Card className="p-8 text-center hover:shadow-lg transition-shadow">
                 <div className="w-12 h-12 bg-genie-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <Award className="w-6 h-6 text-genie-primary" />
                 </div>
-                <div className="text-3xl font-bold text-genie-primary mb-2">94%</div>
-                <div className="text-muted-foreground font-medium">Accuracy Achievement</div>
-                <div className="text-xs text-muted-foreground mt-2">Hallucination reduction</div>
+                <div className="text-3xl font-bold text-genie-primary mb-2">80%</div>
+                <div className="text-muted-foreground font-medium">Success Rate</div>
+                <div className="text-xs text-muted-foreground mt-2">Pilot to production</div>
               </Card>
             </div>
 
