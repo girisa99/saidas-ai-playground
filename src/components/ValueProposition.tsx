@@ -13,12 +13,12 @@ export const ValueProposition = () => {
             AI Experimentation Hub: From Vision to Enterprise Reality
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Real-World Impact: Building Healthcare Solutions at Lightning Speed
+            Strategic AI Implementation Framework
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-            Systematic 6-month journey culminating in breakthrough healthcare solutions with proven business impact. 
-            Advanced AI technologies, enterprise-grade infrastructure, and measurable ROI - transforming how organizations 
-            approach digital health innovation and therapeutic development.
+            Systematic 6-month journey transforming theoretical AI potential into tangible business value. 
+            Advanced AI technologies, enterprise-grade infrastructure, and proven methodologies for 
+            organizational AI transformation and digital innovation.
           </p>
         </div>
 
