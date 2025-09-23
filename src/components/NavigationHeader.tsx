@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Menu, X, Home, User, Map, Wrench, FileText, Trophy, Search, ExternalLink } from "lucide-react";
+import { Menu, X, Home, User, Map, Wrench, FileText, Trophy, Search, ExternalLink, Presentation } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
@@ -22,6 +22,7 @@ export const NavigationHeader = () => {
     { to: "/about", label: "About Me", icon: User },
     { to: "/journey", label: "Journey", icon: Map },
     { to: "/technology", label: "Tech Stack", icon: Wrench },
+    { to: "/presentations", label: "Presentations", icon: Presentation },
     { to: "/case-studies", label: "Case Studies", icon: Trophy },
   ];
 

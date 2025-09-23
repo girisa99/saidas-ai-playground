@@ -1,6 +1,7 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { DevelopmentJourneyMap } from "@/components/DevelopmentJourneyMap";
+import { GammaIntegrationWidget } from "@/components/GammaIntegrationWidget";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -243,6 +244,16 @@ const Journey = () => {
                 A comprehensive 6-month intensive exploration resulting in breakthrough agentic AI capabilities, 
                 enterprise-grade infrastructure, and proven healthcare solution deployment methodologies.
               </p>
+            </div>
+
+            {/* Gamma Integration Widget for Journey Timeline */}
+            <div className="mb-12 max-w-md mx-auto">
+              <GammaIntegrationWidget
+                contentType="journey"
+                title="AI Journey Timeline"
+                description="Generate interactive presentation of my complete AI learning journey with milestones, achievements, and technology evolution"
+                data={milestones}
+              />
             </div>
 
             <div className="space-y-12">
