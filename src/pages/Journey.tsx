@@ -128,27 +128,30 @@ const Journey = () => {
     <div className="min-h-screen bg-background">
       <NavigationHeader />
       
-      {/* Enhanced Hero Section with Better Readability */}
-      <section className="relative pt-24 pb-16 overflow-hidden bg-gradient-to-br from-background via-muted/30 to-genie-primary/5">
-        {/* Background Image with Light Overlay */}
+      {/* Enhanced Hero Section - Consistent with other pages */}
+      <section className="relative pt-24 pb-16 overflow-hidden">
+        {/* Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${journeyInfographicBg})` }}
         />
         
-        {/* Light overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-genie-primary/5" />
+        {/* Dark Gradient Overlay - matching other pages */}
+        <div className="absolute inset-0 bg-gradient-to-br from-genie-dark/90 via-genie-primary/75 to-genie-secondary/80" />
         
-        {/* Animated particles - subtle and light */}
+        {/* Journey-themed floating particles */}
         <div className="absolute inset-0">
-          {[...Array(15)].map((_, i) => (
+          {[...Array(20)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-1 h-1 bg-genie-primary/20 rounded-full animate-pulse"
+              className="absolute bg-genie-accent/30 rounded-full animate-pulse"
               style={{
+                width: `${Math.random() * 5 + 2}px`,
+                height: `${Math.random() * 5 + 2}px`,
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
                 animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${2 + Math.random() * 2}s`
               }}
             />
           ))}
@@ -157,33 +160,57 @@ const Journey = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           {/* Back Button */}
           <Link to="/">
-            <Button 
-              variant="outline" 
-              className="mb-8 border-border hover:bg-muted/50 text-foreground hover:text-foreground"
-            >
+            <Button variant="ghost" className="text-white hover:bg-white/10 mb-8">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Home
             </Button>
           </Link>
           
-          <div className="max-w-4xl">
-            <Badge className="bg-genie-primary/10 text-genie-primary border-genie-primary/20 mb-4">
+          <div className="max-w-5xl">
+            <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-4">
+              <MapPin className="w-4 h-4 mr-2" />
               Our Journey
             </Badge>
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-foreground">
-              My AI Innovation <span className="bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent">Journey</span>
+            
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white">
+              My AI Innovation <span className="text-genie-accent">Journey</span>
             </h1>
-            <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed mb-8">
+            
+            <p className="text-xl lg:text-2xl text-white/90 leading-relaxed mb-8">
               From a simple conversation to revolutionary AI systems - the methodical experimentation 
               journey that transformed how I approach technology solutions.
             </p>
             
-            {/* Enhanced Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            {/* Journey Highlights Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <Calendar className="h-6 w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-sm">Timeline</h3>
+                <p className="text-white/80 text-xs">6 months of innovation</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <Users className="h-6 w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-sm">Collaboration</h3>
+                <p className="text-white/80 text-xs">Multi-agent systems</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <TrendingUp className="h-6 w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-sm">Growth</h3>
+                <p className="text-white/80 text-xs">Enterprise transformation</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <Award className="h-6 w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-sm">Achievement</h3>
+                <p className="text-white/80 text-xs">94% accuracy milestone</p>
+              </div>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
               <Button 
-                variant="gradient"
+                variant="default"
                 size="lg"
-                className="shadow-lg hover:shadow-xl hover:shadow-genie-primary/25"
+                className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl"
               >
                 <Calendar className="w-4 h-4 mr-2" />
                 View Timeline
@@ -191,6 +218,7 @@ const Journey = () => {
               <Button 
                 variant="outline"
                 size="lg"
+                className="border-white/30 text-white hover:bg-white/10 hover:border-white/50"
                 asChild
               >
                 <Link to="/case-studies">
@@ -198,22 +226,6 @@ const Journey = () => {
                   See Results
                 </Link>
               </Button>
-            </div>
-            
-            {/* Improved badges */}
-            <div className="flex flex-wrap gap-3">
-              <Badge className="bg-genie-primary/10 text-genie-primary border-genie-primary/20">
-                <Calendar className="w-3 h-3 mr-1" />
-                2025 Timeline
-              </Badge>
-              <Badge className="bg-secondary text-secondary-foreground border-border">
-                <MapPin className="w-3 h-3 mr-1" />
-                6 Major Phases
-              </Badge>
-              <Badge className="bg-accent/10 text-accent border-accent/20">
-                <TrendingUp className="w-3 h-3 mr-1" />
-                Enterprise Impact
-              </Badge>
             </div>
           </div>
         </div>
