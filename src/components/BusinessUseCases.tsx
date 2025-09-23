@@ -85,11 +85,19 @@ const journeySteps = [
       "Integrate with existing EHR systems for seamless data flow"
     ],
     currentIssues: [
-      "Manual data entry errors leading to 15% rework rate",
+      "Approx. 15% manual data entry errors leading to rework",
       "Delayed response times averaging 4-6 hours",
       "Inconsistent triage decisions across staff members"
     ],
-    improvement: "Automated processing reduces response time to under 30 minutes with 95% accuracy in data extraction and consistent AI-driven triage decisions."
+    improvement: "Automated processing reduces response time to under 30 minutes with approx. 95% accuracy in data extraction and consistent AI-driven triage decisions.",
+    detailedSubsteps: [
+      { id: 1, title: "Referral Document Receipt", description: "Physical or electronic referral document arrives from referring physician", technology: "Document management system with OCR capabilities" },
+      { id: 2, title: "Initial Data Extraction", description: "Extract patient demographics, insurance info, and clinical summary", technology: "AI-powered document parsing and data extraction" },
+      { id: 3, title: "Insurance Verification", description: "Verify patient insurance eligibility and coverage", technology: "Automated insurance API integration" },
+      { id: 4, title: "Medical Urgency Assessment", description: "Analyze clinical indicators to determine urgency level", technology: "AI triage algorithms with clinical decision support" },
+      { id: 5, title: "Specialist Assignment", description: "Route to appropriate oncology specialist based on cancer type", technology: "Intelligent routing based on specialty matching" },
+      { id: 6, title: "Initial Appointment Scheduling", description: "Schedule initial consultation within appropriate timeframe", technology: "Automated scheduling with urgency-based prioritization" }
+    ]
   },
   {
     id: 2,
@@ -123,11 +131,19 @@ const journeySteps = [
       "Integrate advanced NLP for narrative analysis"
     ],
     currentIssues: [
-      "Paper-based forms causing 2-day processing delays",
-      "30% incomplete submissions requiring multiple follow-ups",
-      "Staff spending 40% of time on data entry tasks"
+      "Paper-based forms causing approx. 2-day processing delays",
+      "Approx. 30% incomplete submissions requiring multiple follow-ups",
+      "Staff spending roughly 40% of time on data entry tasks"
     ],
-    improvement: "Digital automation reduces processing time from 2 days to 2 hours, with AI ensuring 95% form completion rates through intelligent prompting."
+    improvement: "Digital automation reduces processing time from 2 days to approx. 2 hours, with AI ensuring ~95% form completion rates through intelligent prompting.",
+    detailedSubsteps: [
+      { id: 1, title: "Digital Form Generation", description: "Create customized intake forms based on referral information", technology: "Dynamic form builder with conditional logic" },
+      { id: 2, title: "Patient Portal Access", description: "Send secure portal credentials and form links to patient", technology: "Patient engagement platform with SMS/email notifications" },
+      { id: 3, title: "Guided Form Completion", description: "Patient completes forms with real-time validation and help", technology: "Interactive forms with AI-powered assistance" },
+      { id: 4, title: "Medical History Integration", description: "Auto-populate known medical history from previous records", technology: "EHR integration with data mapping algorithms" },
+      { id: 5, title: "Quality Review", description: "Automated review for completeness and accuracy", technology: "AI-powered form validation and error detection" },
+      { id: 6, title: "Follow-up Management", description: "Automated reminders for incomplete or missing information", technology: "Workflow automation with personalized messaging" }
+    ]
   },
   {
     id: 3,
@@ -161,11 +177,19 @@ const journeySteps = [
       "Implement advanced summarization capabilities"
     ],
     currentIssues: [
-      "Manual follow-ups causing 5-7 day delays",
-      "25% of records received are incomplete or poor quality",
+      "Manual follow-ups causing approx. 5-7 day delays",
+      "Roughly 25% of records received are incomplete or poor quality",
       "Staff unable to identify critical information quickly"
     ],
-    improvement: "Automated requests with AI prioritization reduce acquisition time by 50% while ensuring 90% completeness through intelligent quality checks."
+    improvement: "Automated requests with AI prioritization reduce acquisition time by approx. 50% while ensuring ~90% completeness through intelligent quality checks.",
+    detailedSubsteps: [
+      { id: 1, title: "Records Request Generation", description: "Automatically generate comprehensive records requests to all relevant providers", technology: "Template-based request generation with provider directory integration" },
+      { id: 2, title: "Multi-Channel Communication", description: "Send requests via fax, secure email, and patient portal simultaneously", technology: "Multi-modal communication platform with delivery tracking" },
+      { id: 3, title: "Follow-up Scheduling", description: "Automated follow-up sequences based on urgency and response patterns", technology: "Workflow automation with escalation protocols" },
+      { id: 4, title: "Document Receipt Processing", description: "Process incoming records and validate completeness", technology: "AI-powered document classification and completeness checking" },
+      { id: 5, title: "Quality Assessment", description: "Evaluate record quality and identify missing critical information", technology: "AI quality scoring with clinical relevance algorithms" },
+      { id: 6, title: "Clinical Summarization", description: "Generate concise clinical summaries highlighting key findings", technology: "Natural language processing for medical document summarization" }
+    ]
   },
   {
     id: 4,
@@ -655,8 +679,8 @@ const BusinessUseCases = () => {
                   </filter>
                 </defs>
 
-                <g filter="url(#line-glow)">
-                  {/* Primary sequential flow (always visible) */}
+                <g>
+                  {/* Simple sequential flow only */}
                   {sequentialEdges.map(([from, to]) => {
                     const a = journeySteps.find(s => s.id === from)?.position;
                     const b = journeySteps.find(s => s.id === to)?.position;
@@ -664,82 +688,17 @@ const BusinessUseCases = () => {
                     return (
                       <line
                         key={`seq-${from}-${to}`}
-                        x1={a.x}
-                        y1={a.y}
-                        x2={b.x}
-                        y2={b.y}
+                        x1={`${a.x}%`}
+                        y1={`${a.y}%`}
+                        x2={`${b.x}%`}
+                        y2={`${b.y}%`}
                         stroke="#3b82f6"
-                        strokeWidth={2.5}
+                        strokeWidth={2}
                         markerEnd="url(#arrow-primary)"
-                        opacity={0.95}
+                        opacity={0.8}
                       />
                     );
                   })}
-
-                  {/* Supplemental flows moved to scenarios */}
-                  {false && (
-                    <>
-                      {feedbackEdges.filter(([from,to]) => from === selectedStep || to === selectedStep).map(([from, to]) => {
-                        const a = journeySteps.find(s => s.id === from)?.position;
-                        const b = journeySteps.find(s => s.id === to)?.position;
-                        if (!a || !b) return null;
-                        return (
-                          <line
-                            key={`fb-${from}-${to}`}
-                            x1={a.x}
-                            y1={a.y}
-                            x2={b.x}
-                            y2={b.y}
-                            stroke="#f59e0b"
-                            strokeWidth={3.5}
-                            strokeDasharray="10 6"
-                            markerEnd="url(#arrow-feedback)"
-                            opacity={0.95}
-                          />
-                        );
-                      })}
-
-                      {resultsEdges.filter(([from,to]) => from === selectedStep || to === selectedStep).map(([from, to]) => {
-                        const a = journeySteps.find(s => s.id === from)?.position;
-                        const b = journeySteps.find(s => s.id === to)?.position;
-                        if (!a || !b) return null;
-                        return (
-                          <line
-                            key={`rs-${from}-${to}`}
-                            x1={a.x}
-                            y1={a.y}
-                            x2={b.x}
-                            y2={b.y}
-                            stroke="#10b981"
-                            strokeWidth={3.5}
-                            strokeDasharray="8 6"
-                            markerEnd="url(#arrow-results)"
-                            opacity={0.95}
-                          />
-                        );
-                      })}
-
-                      {coordinationEdges.filter(([from,to]) => from === selectedStep || to === selectedStep).map(([from, to]) => {
-                        const a = journeySteps.find(s => s.id === from)?.position;
-                        const b = journeySteps.find(s => s.id === to)?.position;
-                        if (!a || !b) return null;
-                        return (
-                          <line
-                            key={`cc-${from}-${to}`}
-                            x1={a.x}
-                            y1={a.y}
-                            x2={b.x}
-                            y2={b.y}
-                            stroke="#8b5cf6"
-                            strokeWidth={3.5}
-                            strokeDasharray="12 8"
-                            markerEnd="url(#arrow-coordination)"
-                            opacity={0.95}
-                          />
-                        );
-                      })}
-                    </>
-                  )}
                 </g>
               </svg>
               
@@ -901,6 +860,37 @@ const BusinessUseCases = () => {
                                 </CardContent>
                               </Card>
                             </div>
+
+                            {/* Detailed Substeps */}
+                            <Card className="bg-gray-50 border-gray-200">
+                              <CardContent className="p-4">
+                                <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                                  <Target className="h-4 w-4" />
+                                  Detailed Process Breakdown
+                                </h4>
+                                <div className="space-y-3">
+                                  {step.detailedSubsteps?.map((substep, index) => (
+                                    <div key={substep.id} className="border border-gray-200 rounded-lg p-3 bg-white">
+                                      <div className="flex items-start gap-3">
+                                        <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                                          {substep.id}
+                                        </div>
+                                        <div className="flex-1">
+                                          <h5 className="font-medium text-gray-800 mb-1">{substep.title}</h5>
+                                          <p className="text-sm text-gray-600 mb-2">{substep.description}</p>
+                                          <div className="bg-blue-50 border border-blue-200 rounded px-2 py-1">
+                                            <span className="text-xs font-medium text-blue-800">Tech: </span>
+                                            <span className="text-xs text-blue-700">{substep.technology}</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )) || (
+                                    <p className="text-sm text-gray-500 italic">Detailed substeps will be added for this journey step.</p>
+                                  )}
+                                </div>
+                              </CardContent>
+                            </Card>
 
                             {/* Implementation Phases */}
                             <Card className="bg-green-50 border-green-200">
