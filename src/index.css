@@ -3,9 +3,21 @@
 @tailwind utilities;
 
 @layer base {
-  /* Improved base font size for accessibility (WCAG AA) */
+  /* Responsive base font size for optimal readability across devices */
   html {
-    font-size: 18px; /* Increased from 16px for better readability */
+    font-size: 14px; /* Mobile base */
+  }
+  
+  @media (min-width: 640px) {
+    html {
+      font-size: 16px; /* Tablet base */
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    html {
+      font-size: 18px; /* Desktop base */
+    }
   }
   
   :root {
@@ -133,7 +145,12 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-variation-settings: 'opsz' 32;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 }
 
