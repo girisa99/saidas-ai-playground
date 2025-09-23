@@ -32,39 +32,7 @@ export const FAQ = () => {
     <section className="py-16 bg-gradient-to-b from-background to-primary/5" id="faq">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         
-        {/* Knowledge Sharing CTA */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <Card className="p-8 bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                <MessageSquare className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-foreground mb-4">
-                Still Have Questions?
-              </h3>
-              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                This AI experimentation journey is unique for everyone. I'd be happy to discuss your specific situation, 
-                share what worked in my experiments, and exchange ideas about what might work for your use case.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/faq">
-                  <Button className="bg-blue-500 hover:bg-blue-600 text-white">
-                    View Knowledge Base
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-                <Button 
-                  variant="outline" 
-                  className="border-blue-500 text-blue-600 hover:bg-blue-50"
-                  onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
-                >
-                  Share Your Experiments
-                </Button>
-              </div>
-            </div>
-          </Card>
-        </div>
-
+        
         {/* Newsletter Subscription CTA */}
         <div className="max-w-4xl mx-auto">
           <Card className="p-8 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20">
