@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { JourneyStepsFlow } from "@/components/JourneyStepsFlow";
 import { 
   Settings, 
@@ -2141,40 +2142,64 @@ const BusinessUseCases = () => {
 
       {/* Business Case Selection */}
       <Card>
-        <CardHeader className="pb-3 sm:pb-4">
-          <CardTitle className="text-lg sm:text-xl text-center">Select Business Use Case</CardTitle>
+        <CardHeader className="pb-4 sm:pb-6">
+          <CardTitle className="text-xl sm:text-2xl text-center font-bold">Select Business Use Case</CardTitle>
+          <p className="text-center text-muted-foreground">Choose a use case to explore detailed journey maps and process flows</p>
         </CardHeader>
         <CardContent>
-          <Tabs value={selectedBusinessCase} onValueChange={setSelectedBusinessCase}>
-            <TabsList className="grid w-full grid-cols-2 h-auto gap-2">
-              {Object.entries(businessCases).map(([key, businessCase]) => (
-                <TabsTrigger
-                  key={key}
-                  value={key}
-                  className="flex flex-col items-center gap-2 p-4 h-auto text-center min-h-[120px] sm:min-h-[140px] relative overflow-hidden"
-                >
-                  <businessCase.icon className="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0" />
-                  <div className="text-center space-y-1 w-full">
-                    <div className="font-semibold text-sm sm:text-base leading-tight">
-                      {businessCase.title}
+          <div className="max-w-md mx-auto mb-6">
+            <Select value={selectedBusinessCase} onValueChange={setSelectedBusinessCase}>
+              <SelectTrigger className="w-full h-12">
+                <SelectValue placeholder="Select a business use case..." />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(businessCases).map(([key, businessCase]) => (
+                  <SelectItem key={key} value={key}>
+                    <div className="flex items-center gap-3">
+                      <businessCase.icon className="w-5 h-5" />
+                      <div>
+                        <div className="font-medium">{businessCase.title}</div>
+                        <div className="text-xs text-muted-foreground">{businessCase.description.substring(0, 50)}...</div>
+                      </div>
                     </div>
-                    <div className="text-xs text-muted-foreground line-clamp-3 sm:line-clamp-2 leading-tight">
-                      {businessCase.description}
-                    </div>
-                  </div>
-                </TabsTrigger>
-              ))}
-            </TabsList>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
+          {/* Business Case Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             {Object.entries(businessCases).map(([key, businessCase]) => (
-              <TabsContent key={key} value={key} className="space-y-3 sm:space-y-4 mt-4 sm:mt-6">
-                <div className="text-center space-y-2 sm:space-y-3">
-                  <h2 className="text-lg sm:text-xl font-semibold">{businessCase.title}</h2>
-                  <p className="text-sm sm:text-base text-muted-foreground">{businessCase.description}</p>
-                </div>
-              </TabsContent>
+              <Card 
+                key={key} 
+                className={`cursor-pointer transition-all duration-200 ${
+                  selectedBusinessCase === key 
+                    ? 'ring-2 ring-primary shadow-lg scale-105' 
+                    : 'hover:shadow-md hover:scale-102'
+                }`}
+                onClick={() => setSelectedBusinessCase(key)}
+              >
+                <CardContent className="p-6 text-center">
+                  <businessCase.icon className="w-12 h-12 mx-auto mb-4 text-primary" />
+                  <h3 className="font-semibold text-lg mb-2">{businessCase.title}</h3>
+                  <p className="text-sm text-muted-foreground line-clamp-3">
+                    {businessCase.description}
+                  </p>
+                </CardContent>
+              </Card>
             ))}
-          </Tabs>
+          </div>
+
+          {/* Business Case Details */}
+          {selectedBusinessCase && (
+            <div className="space-y-3 sm:space-y-4 mt-4 sm:mt-6">
+              <div className="text-center space-y-2 sm:space-y-3">
+                <h2 className="text-lg sm:text-xl font-semibold">{currentCase.title}</h2>
+                <p className="text-sm sm:text-base text-muted-foreground">{currentCase.description}</p>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -2232,81 +2257,243 @@ const BusinessUseCases = () => {
                     </TabsTrigger>
                   </TabsList>
 
-                  <TabsContent value="sarah" className="space-y-3 sm:space-y-4">
-                    <div className="bg-muted/30 p-3 sm:p-4 rounded-lg">
-                      <h4 className="font-semibold text-base sm:text-lg mb-2 flex items-center gap-2">
-                        <currentCase.icon className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
-                        {currentCase.scenarioTitles.sarah} Journey
-                      </h4>
-                      <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3 leading-relaxed">
-                        {currentCase.scenarioDescriptions.sarah}
-                      </p>
-                    </div>
+                   <TabsContent value="sarah" className="space-y-3 sm:space-y-4">
+                     <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 sm:p-6 rounded-lg border border-purple-200">
+                       <h4 className="font-semibold text-lg sm:text-xl mb-3 flex items-center gap-2">
+                         <currentCase.icon className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
+                         {currentCase.scenarioTitles.sarah} - Detailed Process Flow
+                       </h4>
+                       <p className="text-sm sm:text-base text-purple-700 mb-4 leading-relaxed">
+                         {currentCase.scenarioDescriptions.sarah}
+                       </p>
+                       
+                       {/* Journey Step Navigator */}
+                       <div className="mb-4">
+                         <h5 className="text-sm font-medium mb-2 text-purple-800">Journey Steps:</h5>
+                         <div className="flex flex-wrap gap-2">
+                           {currentJourneySteps?.map((step: any) => (
+                             <Button
+                               key={step.id}
+                               variant={selectedStep === step.id ? "default" : "outline"}
+                               size="sm"
+                               onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}
+                               className="text-xs"
+                             >
+                               {step.id}. {step.title}
+                             </Button>
+                           ))}
+                         </div>
+                       </div>
+                     </div>
 
-                    {selectedStep && currentScenarioDetails.sarah[selectedStep] && (
-                      <div className="space-y-2 sm:space-y-3">
-                        <h5 className="font-medium text-sm sm:text-base flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                          <span>Step {selectedStep}: {currentJourneySteps.find((s: any) => s.id === selectedStep)?.title}</span>
-                          <Badge variant="outline" className="text-xs w-fit">
-                            {currentJourneySteps.find((s: any) => s.id === selectedStep)?.time}
-                          </Badge>
-                        </h5>
-                        <div className="bg-background border rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-                          {currentScenarioDetails.sarah[selectedStep]?.map((detail: any, index: number) => (
-                            <div key={index} className="border-l-2 border-primary/20 pl-2 sm:pl-3">
-                              <h6 className="font-medium text-xs sm:text-sm text-primary mb-1">{detail.substep}</h6>
-                              <p className="text-xs text-muted-foreground leading-relaxed">{detail.process}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                     {selectedStep && currentScenarioDetails.sarah[selectedStep] && (
+                       <div className="space-y-4">
+                         <Card className="border-purple-200">
+                           <CardHeader className="pb-3">
+                             <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                               <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                                 <span className="text-purple-600 font-bold text-sm">{selectedStep}</span>
+                               </div>
+                               {currentJourneySteps.find((s: any) => s.id === selectedStep)?.title}
+                               <Badge variant="outline" className="ml-auto">
+                                 {currentJourneySteps.find((s: any) => s.id === selectedStep)?.time}
+                               </Badge>
+                             </CardTitle>
+                           </CardHeader>
+                           <CardContent>
+                             {/* Detailed Process Flow */}
+                             <div className="space-y-4">
+                               <h6 className="font-semibold text-purple-800 mb-3">Detailed Process Flow:</h6>
+                               {currentScenarioDetails.sarah[selectedStep]?.map((detail: any, index: number) => (
+                                 <div key={index} className="bg-white border border-purple-100 rounded-lg p-4">
+                                   <div className="flex items-start gap-3">
+                                     <div className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center mt-1">
+                                       <span className="text-purple-600 font-bold text-xs">{index + 1}</span>
+                                     </div>
+                                     <div className="flex-1">
+                                       <h6 className="font-medium text-sm text-purple-800 mb-2">{detail.substep}</h6>
+                                       <p className="text-xs text-gray-600 leading-relaxed mb-3">{detail.process}</p>
+                                       
+                                       {/* Technology Integration */}
+                                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                                         <div className="bg-green-50 border border-green-200 rounded p-3">
+                                           <div className="flex items-center gap-2 mb-2">
+                                             <Bot className="w-4 h-4 text-green-600" />
+                                             <span className="text-xs font-medium text-green-800">Automation</span>
+                                           </div>
+                                           <ul className="text-xs text-green-700 space-y-1">
+                                             {detail.automation?.map((task: string, i: number) => (
+                                               <li key={i} className="flex items-start gap-1">
+                                                 <CheckCircle className="w-3 h-3 mt-0.5 flex-shrink-0" />
+                                                 {task}
+                                               </li>
+                                             ))}
+                                           </ul>
+                                         </div>
+                                         
+                                         <div className="bg-blue-50 border border-blue-200 rounded p-3">
+                                           <div className="flex items-center gap-2 mb-2">
+                                             <Brain className="w-4 h-4 text-blue-600" />
+                                             <span className="text-xs font-medium text-blue-800">AI Intelligence</span>
+                                           </div>
+                                           <ul className="text-xs text-blue-700 space-y-1">
+                                             {detail.ai?.map((task: string, i: number) => (
+                                               <li key={i} className="flex items-start gap-1">
+                                                 <Lightbulb className="w-3 h-3 mt-0.5 flex-shrink-0" />
+                                                 {task}
+                                               </li>
+                                             ))}
+                                           </ul>
+                                         </div>
+                                       </div>
+                                       
+                                       {/* Expected Outcome */}
+                                       {detail.outcome && (
+                                         <div className="mt-3 bg-yellow-50 border border-yellow-200 rounded p-3">
+                                           <div className="flex items-center gap-2 mb-1">
+                                             <Target className="w-4 h-4 text-yellow-600" />
+                                             <span className="text-xs font-medium text-yellow-800">Expected Outcome</span>
+                                           </div>
+                                           <p className="text-xs text-yellow-700">{detail.outcome}</p>
+                                         </div>
+                                       )}
+                                     </div>
+                                   </div>
+                                 </div>
+                               ))}
+                             </div>
+                           </CardContent>
+                         </Card>
+                       </div>
+                     )}
 
-                    {!selectedStep && (
-                      <div className="text-center py-6 sm:py-8 text-muted-foreground">
-                        <MessageCircle className="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 opacity-50" />
-                        <p className="text-sm sm:text-base">Click on a journey step above to see detailed process breakdown</p>
-                      </div>
-                    )}
-                  </TabsContent>
+                     {!selectedStep && (
+                       <div className="text-center py-8 text-muted-foreground">
+                         <MessageCircle className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                         <p className="text-base mb-2">Select a journey step to view detailed process flow</p>
+                         <p className="text-sm">Each step shows automation opportunities, AI integration, and expected outcomes</p>
+                       </div>
+                     )}
+                   </TabsContent>
 
-                  <TabsContent value="michael" className="space-y-3 sm:space-y-4">
-                    <div className="bg-muted/30 p-3 sm:p-4 rounded-lg">
-                      <h4 className="font-semibold text-base sm:text-lg mb-2 flex items-center gap-2">
-                        <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />
-                        {currentCase.scenarioTitles.michael} Journey
-                      </h4>
-                      <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3 leading-relaxed">
-                        {currentCase.scenarioDescriptions.michael}
-                      </p>
-                    </div>
+                   <TabsContent value="michael" className="space-y-3 sm:space-y-4">
+                     <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 sm:p-6 rounded-lg border border-blue-200">
+                       <h4 className="font-semibold text-lg sm:text-xl mb-3 flex items-center gap-2">
+                         <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
+                         {currentCase.scenarioTitles.michael} - Detailed Process Flow
+                       </h4>
+                       <p className="text-sm sm:text-base text-blue-700 mb-4 leading-relaxed">
+                         {currentCase.scenarioDescriptions.michael}
+                       </p>
+                       
+                       {/* Journey Step Navigator */}
+                       <div className="mb-4">
+                         <h5 className="text-sm font-medium mb-2 text-blue-800">Journey Steps:</h5>
+                         <div className="flex flex-wrap gap-2">
+                           {currentJourneySteps?.map((step: any) => (
+                             <Button
+                               key={step.id}
+                               variant={selectedStep === step.id ? "default" : "outline"}
+                               size="sm"
+                               onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}
+                               className="text-xs"
+                             >
+                               {step.id}. {step.title}
+                             </Button>
+                           ))}
+                         </div>
+                       </div>
+                     </div>
 
-                    {selectedStep && currentScenarioDetails.michael[selectedStep] && (
-                      <div className="space-y-2 sm:space-y-3">
-                        <h5 className="font-medium text-sm sm:text-base flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                          <span>Step {selectedStep}: {currentJourneySteps.find((s: any) => s.id === selectedStep)?.title}</span>
-                          <Badge variant="outline" className="text-xs w-fit">
-                            {currentJourneySteps.find((s: any) => s.id === selectedStep)?.time}
-                          </Badge>
-                        </h5>
-                        <div className="bg-background border rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-                          {currentScenarioDetails.michael[selectedStep]?.map((detail: any, index: number) => (
-                            <div key={index} className="border-l-2 border-primary/20 pl-2 sm:pl-3">
-                              <h6 className="font-medium text-xs sm:text-sm text-primary mb-1">{detail.substep}</h6>
-                              <p className="text-xs text-muted-foreground leading-relaxed">{detail.process}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                     {selectedStep && currentScenarioDetails.michael[selectedStep] && (
+                       <div className="space-y-4">
+                         <Card className="border-blue-200">
+                           <CardHeader className="pb-3">
+                             <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                               <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                 <span className="text-blue-600 font-bold text-sm">{selectedStep}</span>
+                               </div>
+                               {currentJourneySteps.find((s: any) => s.id === selectedStep)?.title}
+                               <Badge variant="outline" className="ml-auto">
+                                 {currentJourneySteps.find((s: any) => s.id === selectedStep)?.time}
+                               </Badge>
+                             </CardTitle>
+                           </CardHeader>
+                           <CardContent>
+                             {/* Detailed Process Flow */}
+                             <div className="space-y-4">
+                               <h6 className="font-semibold text-blue-800 mb-3">Detailed Process Flow:</h6>
+                               {currentScenarioDetails.michael[selectedStep]?.map((detail: any, index: number) => (
+                                 <div key={index} className="bg-white border border-blue-100 rounded-lg p-4">
+                                   <div className="flex items-start gap-3">
+                                     <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mt-1">
+                                       <span className="text-blue-600 font-bold text-xs">{index + 1}</span>
+                                     </div>
+                                     <div className="flex-1">
+                                       <h6 className="font-medium text-sm text-blue-800 mb-2">{detail.substep}</h6>
+                                       <p className="text-xs text-gray-600 leading-relaxed mb-3">{detail.process}</p>
+                                       
+                                       {/* Technology Integration */}
+                                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                                         <div className="bg-green-50 border border-green-200 rounded p-3">
+                                           <div className="flex items-center gap-2 mb-2">
+                                             <Bot className="w-4 h-4 text-green-600" />
+                                             <span className="text-xs font-medium text-green-800">Automation</span>
+                                           </div>
+                                           <ul className="text-xs text-green-700 space-y-1">
+                                             {detail.automation?.map((task: string, i: number) => (
+                                               <li key={i} className="flex items-start gap-1">
+                                                 <CheckCircle className="w-3 h-3 mt-0.5 flex-shrink-0" />
+                                                 {task}
+                                               </li>
+                                             ))}
+                                           </ul>
+                                         </div>
+                                         
+                                         <div className="bg-blue-50 border border-blue-200 rounded p-3">
+                                           <div className="flex items-center gap-2 mb-2">
+                                             <Brain className="w-4 h-4 text-blue-600" />
+                                             <span className="text-xs font-medium text-blue-800">AI Intelligence</span>
+                                           </div>
+                                           <ul className="text-xs text-blue-700 space-y-1">
+                                             {detail.ai?.map((task: string, i: number) => (
+                                               <li key={i} className="flex items-start gap-1">
+                                                 <Lightbulb className="w-3 h-3 mt-0.5 flex-shrink-0" />
+                                                 {task}
+                                               </li>
+                                             ))}
+                                           </ul>
+                                         </div>
+                                       </div>
+                                       
+                                       {/* Expected Outcome */}
+                                       {detail.outcome && (
+                                         <div className="mt-3 bg-yellow-50 border border-yellow-200 rounded p-3">
+                                           <div className="flex items-center gap-2 mb-1">
+                                             <Target className="w-4 h-4 text-yellow-600" />
+                                             <span className="text-xs font-medium text-yellow-800">Expected Outcome</span>
+                                           </div>
+                                           <p className="text-xs text-yellow-700">{detail.outcome}</p>
+                                         </div>
+                                       )}
+                                     </div>
+                                   </div>
+                                 </div>
+                               ))}
+                             </div>
+                           </CardContent>
+                         </Card>
+                       </div>
+                     )}
 
-                    {!selectedStep && (
-                      <div className="text-center py-6 sm:py-8 text-muted-foreground">
-                        <MessageCircle className="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 opacity-50" />
-                        <p className="text-sm sm:text-base">Click on a journey step above to see detailed process breakdown</p>
-                      </div>
-                    )}
-                  </TabsContent>
+                     {!selectedStep && (
+                       <div className="text-center py-8 text-muted-foreground">
+                         <MessageCircle className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                         <p className="text-base mb-2">Select a journey step to view detailed process flow</p>
+                         <p className="text-sm">Each step shows automation opportunities, AI integration, and expected outcomes</p>
+                       </div>
+                     )}
+                   </TabsContent>
                 </Tabs>
               </CardContent>
             </Card>
