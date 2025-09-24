@@ -794,6 +794,20 @@ const BusinessUseCases = () => {
             >
               {journeySteps.map((step, index) => {
                 const nextStep = journeySteps[index + 1];
+                // Define colors for each step
+                const stepColors = [
+                  { bg: "hsl(0, 70%, 50%)", border: "hsl(0, 70%, 40%)", text: "white" }, // Red
+                  { bg: "hsl(30, 70%, 50%)", border: "hsl(30, 70%, 40%)", text: "white" }, // Orange
+                  { bg: "hsl(60, 70%, 50%)", border: "hsl(60, 70%, 40%)", text: "black" }, // Yellow
+                  { bg: "hsl(120, 70%, 50%)", border: "hsl(120, 70%, 40%)", text: "white" }, // Green
+                  { bg: "hsl(200, 70%, 50%)", border: "hsl(200, 70%, 40%)", text: "white" }, // Blue
+                  { bg: "hsl(270, 70%, 50%)", border: "hsl(270, 70%, 40%)", text: "white" }, // Purple
+                  { bg: "hsl(300, 70%, 50%)", border: "hsl(300, 70%, 40%)", text: "white" }, // Magenta
+                  { bg: "hsl(180, 70%, 50%)", border: "hsl(180, 70%, 40%)", text: "black" }, // Cyan
+                  { bg: "hsl(40, 70%, 50%)", border: "hsl(40, 70%, 40%)", text: "black" } // Gold
+                ];
+                const stepColor = stepColors[index % stepColors.length];
+                
                 return (
                   <g key={step.id}>
                     {/* Connection Line */}
@@ -826,23 +840,25 @@ const BusinessUseCases = () => {
                       cx={step.position.x}
                       cy={step.position.y}
                       r="2.6"
-                      fill={selectedStep === step.id ? "hsl(var(--primary))" : "hsl(var(--muted))"}
-                      stroke={selectedStep === step.id ? "hsl(var(--primary))" : "hsl(var(--border))"}
+                      fill={selectedStep === step.id ? "hsl(var(--primary))" : stepColor.bg}
+                      stroke={selectedStep === step.id ? "hsl(var(--primary))" : stepColor.border}
                       strokeWidth="0.3"
                       className="cursor-pointer transition-all duration-200"
                       onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}
                     />
 
-                    {/* Step Number */}
-                    <text
-                      x={step.position.x}
-                      y={step.position.y + 0.6}
-                      textAnchor="middle"
-                      fontSize="1.6"
-                      className="font-semibold fill-primary-foreground pointer-events-none"
+                    {/* Step Icon */}
+                    <g 
+                      transform={`translate(${step.position.x - 1.2}, ${step.position.y - 1.2}) scale(0.1)`}
+                      className="cursor-pointer"
+                      onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}
                     >
-                      {step.id}
-                    </text>
+                      <step.icon 
+                        size={24}
+                        color={selectedStep === step.id ? "white" : stepColor.text}
+                        className="pointer-events-none"
+                      />
+                    </g>
 
                     {/* Step Title and Time */}
                     <g className="cursor-pointer" onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}>
