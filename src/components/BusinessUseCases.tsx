@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
+import { JourneyStepsFlow } from "@/components/JourneyStepsFlow";
 import { 
   Settings, 
   Bot, 
@@ -147,7 +148,6 @@ const journeySteps = {
       title: "Referral Receipt",
       icon: FileText,
       time: "Day 0",
-      position: { x: 12, y: 18 },
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "hybrid",
@@ -188,7 +188,6 @@ const journeySteps = {
       title: "Initial Patient Outreach",
       icon: MessageCircle,
       time: "Day 0-1",
-      position: { x: 32, y: 18 },
       emotion: "positive",
       emotionIcon: ThumbsUp,
       approach: "agentic",
@@ -228,7 +227,6 @@ const journeySteps = {
       title: "Provider, Treatment Center & Referral Network Check",
       icon: Network,
       time: "Day 1-2",
-      position: { x: 52, y: 18 },
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "hybrid",
@@ -266,7 +264,6 @@ const journeySteps = {
       title: "Demographic & Insurance Data Collection",
       icon: ClipboardCheck,
       time: "Day 2-3",
-      position: { x: 72, y: 18 },
       emotion: "neutral",
       emotionIcon: Meh,
       approach: "automation",
@@ -301,11 +298,10 @@ const journeySteps = {
       improvement: "AI-driven data collection achieves 95% accuracy with automated insurance verification."
     },
     {
-      id: 4,
+      id: 5,
       title: "Medical Records Acquisition",
       icon: Database,
       time: "Day 2-5",
-      position: { x: 72, y: 18 },
       emotion: "neutral",
       emotionIcon: Meh,
       approach: "hybrid",
@@ -339,11 +335,10 @@ const journeySteps = {
       improvement: "AI-driven record management reduces acquisition time by 60% with intelligent prioritization."
     },
     {
-      id: 5,
+      id: 6,
       title: "Eligibility & Benefit Verification",
       icon: Shield,
       time: "Day 3-4",
-      position: { x: 12, y: 32 },
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "hybrid",
@@ -377,11 +372,10 @@ const journeySteps = {
       improvement: "AI-enhanced verification reduces processing time to real-time with 95% accuracy."
     },
     {
-      id: 6,
+      id: 7,
       title: "Clinical Review & Triage",
       icon: Stethoscope,
       time: "Day 5-7",
-      position: { x: 32, y: 32 },
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "agentic",
@@ -415,118 +409,41 @@ const journeySteps = {
       improvement: "AI-assisted review reduces assessment time by 50% with consistent specialist matching."
     },
     {
-      id: 7,
-      title: "Genomic Test Pre-authorization",
-      icon: Dna,
-      time: "Day 7-10",
-      position: { x: 52, y: 32 },
-      emotion: "critical",
-      emotionIcon: AlertTriangle,
-      approach: "agentic",
-      description: "AI-generated comprehensive pre-authorization documentation",
-      automationPrimary: false,
-      roi: "≈ 70% efficiency gain",
-      automationTasks: [
-        "Automated submission of PA requests",
-        "Digital status tracking and updates",
-        "Standard documentation template generation",
-        "Routine follow-up scheduling"
-      ],
-      aiTasks: [
-        "AI-generated comprehensive PA documentation",
-        "Predictive approval likelihood assessment",
-        "Intelligent appeals documentation generation",
-        "Smart approval strategy optimization"
-      ],
-      whyAutomation: "Standard PA submission processes benefit from automated workflows",
-      whyAI: "Complex documentation generation and approval strategy require intelligent analysis",
-      phases: [
-        "Implement automated PA submission workflows",
-        "Deploy AI for documentation generation",
-        "Integrate predictive approval analytics"
-      ],
-      currentIssues: [
-        "Manual PA documentation is time-consuming",
-        "High denial rates due to incomplete submissions",
-        "Lengthy appeals processes for denied requests"
-      ],
-      improvement: "AI-generated documentation increases approval rates by 70% with faster processing."
-    },
-    {
       id: 8,
       title: "Appointment Scheduling & Coordination",
       icon: Calendar,
-      time: "Day 10-12",
-      position: { x: 72, y: 32 },
+      time: "Day 7-10",
       emotion: "positive",
       emotionIcon: ThumbsUp,
-      approach: "agentic",
-      description: "AI-optimized scheduling with intelligent coordination",
-      automationPrimary: false,
-      roi: "≈ 65% efficiency gain",
+      approach: "hybrid",
+      description: "Intelligent appointment scheduling with care team coordination",
+      automationPrimary: true,
+      roi: "≈ 60% efficiency gain",
       automationTasks: [
-        "Online self-scheduling portal access",
-        "Automated appointment reminders",
-        "Basic calendar management",
-        "Standard rescheduling workflows"
+        "Automated appointment slot availability checking",
+        "Standard scheduling confirmation messages",
+        "Routine calendar integration and updates",
+        "Basic appointment reminder sequences"
       ],
       aiTasks: [
-        "Optimized scheduling based on urgency and preferences",
-        "Intelligent conflict resolution",
-        "Predictive no-show prevention",
-        "AI-driven resource allocation"
+        "AI-driven optimal scheduling based on patient and provider preferences",
+        "Intelligent care team coordination and sequencing",
+        "Predictive rescheduling for anticipated conflicts",
+        "Smart resource allocation and room assignment"
       ],
-      whyAutomation: "Basic scheduling functions benefit from reliable automated processes",
-      whyAI: "Complex scheduling optimization requires intelligent analysis of multiple factors",
+      whyAutomation: "Standard scheduling workflows benefit from automated availability checking and confirmations",
+      whyAI: "Complex multi-provider coordination and optimization requires intelligent planning",
       phases: [
         "Deploy automated scheduling systems",
-        "Implement AI for optimization and conflict resolution",
-        "Integrate predictive analytics for resource planning"
+        "Implement AI for optimal appointment coordination",
+        "Integrate predictive scheduling optimization"
       ],
       currentIssues: [
-        "Manual coordination creates conflicts and delays",
-        "High cancellation rates due to poor optimization",
-        "Difficult coordination between multiple providers"
+        "Manual scheduling creates delays and conflicts",
+        "Poor coordination between multiple specialists",
+        "Inefficient use of provider time and resources"
       ],
-      improvement: "AI-optimized scheduling reduces cancellations by 40% with improved resource utilization."
-    },
-    {
-      id: 9,
-      title: "Pre-Visit Preparation & Communication",
-      icon: MessageCircle,
-      time: "Day 12-14",
-      position: { x: 42, y: 46 },
-      emotion: "positive",
-      emotionIcon: ThumbsUp,
-      approach: "agentic",
-      description: "Personalized AI assistant for patient education and preparation",
-      automationPrimary: false,
-      roi: "≈ 55% efficiency gain",
-      automationTasks: [
-        "Automated digital packet delivery",
-        "Standard preparation reminders",
-        "Basic educational material distribution",
-        "Routine compliance tracking"
-      ],
-      aiTasks: [
-        "Personalized AI assistant for patient education",
-        "Interactive preparation guides",
-        "AI-driven compliance tracking and nudges",
-        "Intelligent preparation optimization"
-      ],
-      whyAutomation: "Standard preparation tasks benefit from consistent automated delivery",
-      whyAI: "Personalized education and preparation require intelligent adaptation to patient needs",
-      phases: [
-        "Implement automated preparation workflows",
-        "Deploy AI for personalized education",
-        "Integrate intelligent compliance tracking"
-      ],
-      currentIssues: [
-        "Generic preparation leads to patient confusion",
-        "High rates of unprepared patients",
-        "Manual delivery of instructions is inefficient"
-      ],
-      improvement: "AI-personalized preparation achieves 95% patient readiness with interactive guidance."
+      improvement: "AI-enhanced scheduling reduces appointment wait times by 40% with optimized care coordination."
     }
   ],
   oncology: [
@@ -1333,131 +1250,15 @@ const BusinessUseCases = () => {
           </CardTitle>
           <div className="text-center text-sm text-muted-foreground">
             <MessageCircle className="w-4 h-4 inline mr-2" />
-            Click on journey steps below to view detailed scenarios and analysis
+            Click on journey steps to view detailed scenarios and analysis
           </div>
         </CardHeader>
         <CardContent className="p-3 sm:p-6">
-          <div className="relative w-full overflow-x-auto">
-            <svg
-              viewBox="0 0 100 50"
-              className="w-full h-auto min-h-[300px] sm:min-h-[400px] border rounded-lg bg-gradient-to-br from-background to-muted/20"
-              style={{ aspectRatio: '2/1' }}
-            >
-              {currentJourneySteps.map((step: any, index: number) => {
-                const stepColor = step.approach === 'automation' 
-                  ? { bg: '#dcfce7', border: '#16a34a', text: '#15803d' }
-                  : step.approach === 'agentic'
-                  ? { bg: '#dbeafe', border: '#2563eb', text: '#1d4ed8' }
-                  : { bg: '#f3e8ff', border: '#9333ea', text: '#7c3aed' };
-
-                const nextStep = currentJourneySteps[index + 1];
-                
-                return (
-                  <g key={step.id}>
-                    {/* Connection line to next step */}
-                    {nextStep && (
-                      <line
-                        x1={step.position.x}
-                        y1={step.position.y}
-                        x2={nextStep.position.x}
-                        y2={nextStep.position.y}
-                        stroke="hsl(var(--border))"
-                        strokeWidth="0.3"
-                        strokeDasharray="none"
-                      />
-                    )}
-
-                    {/* Focus ring for selected */}
-                    {selectedStep === step.id && (
-                      <circle
-                        cx={step.position.x}
-                        cy={step.position.y}
-                        r="3.2"
-                        fill="none"
-                        stroke="hsl(var(--primary))"
-                        strokeWidth="0.6"
-                      />
-                    )}
-
-                    {/* Hover indication - pulsing ring */}
-                    <circle
-                      cx={step.position.x}
-                      cy={step.position.y}
-                      r="2.9"
-                      fill="none"
-                      stroke={stepColor.border}
-                      strokeWidth="0.2"
-                      opacity="0.5"
-                      className="cursor-pointer animate-pulse"
-                    />
-
-                    {/* Step Circle */}
-                    <circle
-                      cx={step.position.x}
-                      cy={step.position.y}
-                      r="2.6"
-                      fill={selectedStep === step.id ? "hsl(var(--primary))" : stepColor.bg}
-                      stroke={selectedStep === step.id ? "hsl(var(--primary))" : stepColor.border}
-                      strokeWidth="0.3"
-                      className="cursor-pointer transition-all duration-200 hover:scale-110"
-                      onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}
-                    />
-
-                    {/* Step Icon */}
-                    <g 
-                      transform={`translate(${step.position.x - 1.2}, ${step.position.y - 1.2}) scale(0.1)`}
-                      className="cursor-pointer"
-                      onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}
-                    >
-                      <step.icon 
-                        size={24}
-                        color={selectedStep === step.id ? "white" : stepColor.text}
-                        className="pointer-events-none"
-                      />
-                    </g>
-
-                    {/* Step Title and Time */}
-                    <g className="cursor-pointer" onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}>
-                      <text
-                        x={step.position.x}
-                        y={step.position.y - 3.4}
-                        textAnchor="middle"
-                        fontSize="1.7"
-                        className="font-semibold fill-foreground pointer-events-none"
-                      >
-                        {step.title}
-                      </text>
-                      <text
-                        x={step.position.x}
-                        y={step.position.y + 4.2}
-                        textAnchor="middle"
-                        fontSize="1.3"
-                        className="fill-muted-foreground pointer-events-none"
-                      >
-                        {step.time}
-                      </text>
-                    </g>
-                  </g>
-                );
-              })}
-            </svg>
-          </div>
-
-          {/* Legend */}
-          <div className="mt-3 sm:mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs sm:text-sm font-medium">Approach:</span>
-              <span className={`text-xs px-2 py-1 rounded border ${getApproachColor('automation')}`}>Automation</span>
-              <span className={`text-xs px-2 py-1 rounded border ${getApproachColor('agentic')}`}>Agentic AI</span>
-              <span className={`text-xs px-2 py-1 rounded border ${getApproachColor('hybrid')}`}>Hybrid</span>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs sm:text-sm font-medium">Status:</span>
-              <span className={`text-xs px-2 py-1 rounded border ${getEmotionColor('positive')}`}>Positive</span>
-              <span className={`text-xs px-2 py-1 rounded border ${getEmotionColor('neutral')}`}>Neutral</span>
-              <span className={`text-xs px-2 py-1 rounded border ${getEmotionColor('critical')}`}>Critical</span>
-            </div>
-          </div>
+          <JourneyStepsFlow 
+            steps={currentJourneySteps}
+            selectedStep={selectedStep}
+            onStepClick={(stepId) => setSelectedStep(selectedStep === stepId ? null : stepId)}
+          />
         </CardContent>
       </Card>
 
