@@ -146,8 +146,8 @@ const journeySteps = {
       id: 1,
       title: "Referral Receipt",
       icon: FileText,
-      time: "0-30 minutes",
-      position: { x: 10, y: 15 },
+      time: "Day 0",
+      position: { x: 15, y: 20 },
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "hybrid",
@@ -162,7 +162,7 @@ const journeySteps = {
       ],
       aiTasks: [
         "Intelligent referral routing based on urgency",
-        "Smart data extraction from unstructured documents",
+        "Smart data extraction from unstructured documents", 
         "AI-powered clinical priority assessment",
         "Predictive resource allocation for complex cases"
       ],
@@ -170,7 +170,7 @@ const journeySteps = {
       whyAI: "Complex triage decisions require intelligent assessment of clinical urgency and appropriate specialist routing",
       phases: [
         "Implement digital referral processing automation",
-        "Deploy AI for intelligent triage and routing",
+        "Deploy AI for intelligent triage and routing", 
         "Integrate predictive resource planning"
       ],
       currentIssues: [
@@ -179,6 +179,310 @@ const journeySteps = {
         "Inconsistent urgency assessment across staff"
       ],
       improvement: "AI-powered processing reduces response time to under 30 minutes with 95% accuracy in data extraction."
+    },
+    {
+      id: 2,
+      title: "Initial Patient Outreach",
+      icon: MessageCircle,
+      time: "Day 0-1",
+      position: { x: 35, y: 20 },
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "Personalized AI-driven patient communication and initial screening",
+      automationPrimary: false,
+      roi: "≈ 60% efficiency gain",
+      automationTasks: [
+        "Automated SMS/email welcome messages",
+        "Basic appointment availability checking",
+        "Standard patient portal account setup",
+        "Routine reminder scheduling"
+      ],
+      aiTasks: [
+        "Personalized communication based on patient profile",
+        "Intelligent FAQ chatbot for initial questions",
+        "AI-powered sentiment analysis and escalation",
+        "Dynamic conversation flow based on patient responses"
+      ],
+      whyAutomation: "Standard communication workflows benefit from consistent automated delivery",
+      whyAI: "Patient interactions require personalized communication and intelligent response to individual needs",
+      phases: [
+        "Deploy automated communication workflows",
+        "Implement AI chatbot for initial screening",
+        "Integrate sentiment analysis for escalation"
+      ],
+      currentIssues: [
+        "Manual phone calls create delays and missed connections",
+        "Generic communication leads to patient confusion",
+        "Staff overwhelmed with routine questions"
+      ],
+      improvement: "AI-driven communication achieves 85% first-contact success with personalized messaging."
+    },
+    {
+      id: 3,
+      title: "Demographic & Insurance Data Collection",
+      icon: ClipboardCheck,
+      time: "Day 1-2",
+      position: { x: 55, y: 20 },
+      emotion: "neutral",
+      emotionIcon: Meh,
+      approach: "automation",
+      description: "Systematic collection of patient information and insurance verification",
+      automationPrimary: true,
+      roi: "≈ 70% efficiency gain",
+      automationTasks: [
+        "Digital form pre-population from existing records",
+        "Automated insurance eligibility verification",
+        "Real-time validation of required fields",
+        "Integration with external databases"
+      ],
+      aiTasks: [
+        "Smart form adaptation based on patient responses",
+        "Predictive pre-fill of forms using existing data",
+        "Real-time insurance eligibility verification with alerts",
+        "Intelligent identification of financial assistance programs"
+      ],
+      whyAutomation: "Standardized data collection benefits from consistent automated workflows",
+      whyAI: "Complex insurance verification and financial assistance matching requires intelligent analysis",
+      phases: [
+        "Deploy automated form systems with validation",
+        "Implement AI for predictive data entry",
+        "Integrate financial assistance program matching"
+      ],
+      currentIssues: [
+        "Paper forms prone to inaccuracies and delays",
+        "Manual insurance verification creates bottlenecks",
+        "Missed opportunities for financial assistance"
+      ],
+      improvement: "AI-driven data collection achieves 95% accuracy with automated insurance verification."
+    },
+    {
+      id: 4,
+      title: "Medical Records Acquisition",
+      icon: Database,
+      time: "Day 2-5",
+      position: { x: 75, y: 20 },
+      emotion: "neutral",
+      emotionIcon: Meh,
+      approach: "hybrid",
+      description: "Acquisition and integration of external medical records",
+      automationPrimary: true,
+      roi: "≈ 65% efficiency gain",
+      automationTasks: [
+        "Automated requests to external providers via HIE",
+        "Secure digital exchange of medical records",
+        "Document scanning and digital conversion",
+        "Automated status tracking and follow-up"
+      ],
+      aiTasks: [
+        "AI-powered data extraction from diverse documents",
+        "Intelligent prioritization based on clinical relevance",
+        "Smart document classification and summarization",
+        "Identification of critical clinical information"
+      ],
+      whyAutomation: "Record retrieval involves standardized processes that benefit from automation",
+      whyAI: "Document analysis and prioritization require intelligent interpretation of clinical content",
+      phases: [
+        "Implement automated record request systems",
+        "Deploy AI for document analysis and extraction",
+        "Integrate clinical relevance prioritization"
+      ],
+      currentIssues: [
+        "Manual requests via fax/mail cause significant delays",
+        "Difficulty identifying critical vs routine information",
+        "Lost requests and incomplete record collection"
+      ],
+      improvement: "AI-driven record management reduces acquisition time by 60% with intelligent prioritization."
+    },
+    {
+      id: 5,
+      title: "Eligibility & Benefit Verification",
+      icon: Shield,
+      time: "Day 3-4",
+      position: { x: 15, y: 35 },
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "hybrid",
+      description: "Comprehensive insurance verification and benefit analysis",
+      automationPrimary: true,
+      roi: "≈ 80% efficiency gain",
+      automationTasks: [
+        "Real-time API-based verification with payers",
+        "Automated benefit summaries generation",
+        "Standard pre-authorization tracking",
+        "Routine eligibility status updates"
+      ],
+      aiTasks: [
+        "Predictive approval likelihood based on policy rules",
+        "Intelligent identification of coverage gaps",
+        "AI-driven financial assistance program matching",
+        "Smart appeals strategy development"
+      ],
+      whyAutomation: "Insurance verification involves repetitive API calls and data processing",
+      whyAI: "Complex benefit interpretation and financial assistance matching require intelligent analysis",
+      phases: [
+        "Deploy real-time insurance verification APIs",
+        "Implement AI for benefit interpretation",
+        "Integrate predictive approval analytics"
+      ],
+      currentIssues: [
+        "Manual calls to payers create delays and errors",
+        "Complex benefit structures difficult to interpret",
+        "Missed opportunities for coverage optimization"
+      ],
+      improvement: "AI-enhanced verification reduces processing time to real-time with 95% accuracy."
+    },
+    {
+      id: 6,
+      title: "Clinical Review & Triage",
+      icon: Stethoscope,
+      time: "Day 5-7",
+      position: { x: 35, y: 35 },
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "agentic",
+      description: "AI-assisted clinical assessment and specialist matching",
+      automationPrimary: false,
+      roi: "≈ 50% efficiency gain",
+      automationTasks: [
+        "Automated flagging of critical data points",
+        "Standard protocol checklist generation",
+        "Basic risk stratification algorithms",
+        "Routine specialist availability checking"
+      ],
+      aiTasks: [
+        "AI-driven symptom assessment and risk stratification",
+        "Intelligent specialist matching based on profiles",
+        "Predictive treatment pathway recommendations",
+        "Smart care team coordination"
+      ],
+      whyAutomation: "Basic clinical data flagging and checklists benefit from standardized automation",
+      whyAI: "Complex clinical decision-making and specialist matching require advanced intelligence",
+      phases: [
+        "Implement automated clinical flagging systems",
+        "Deploy AI for specialist matching and risk assessment",
+        "Integrate predictive treatment planning"
+      ],
+      currentIssues: [
+        "Manual review creates bottlenecks and delays",
+        "Inconsistent specialist assignment decisions",
+        "Variable risk assessment across providers"
+      ],
+      improvement: "AI-assisted review reduces assessment time by 50% with consistent specialist matching."
+    },
+    {
+      id: 7,
+      title: "Genomic Test Pre-authorization",
+      icon: Dna,
+      time: "Day 7-10",
+      position: { x: 55, y: 35 },
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "agentic",
+      description: "AI-generated comprehensive pre-authorization documentation",
+      automationPrimary: false,
+      roi: "≈ 70% efficiency gain",
+      automationTasks: [
+        "Automated submission of PA requests",
+        "Digital status tracking and updates",
+        "Standard documentation template generation",
+        "Routine follow-up scheduling"
+      ],
+      aiTasks: [
+        "AI-generated comprehensive PA documentation",
+        "Predictive approval likelihood assessment",
+        "Intelligent appeals documentation generation",
+        "Smart approval strategy optimization"
+      ],
+      whyAutomation: "Standard PA submission processes benefit from automated workflows",
+      whyAI: "Complex documentation generation and approval strategy require intelligent analysis",
+      phases: [
+        "Implement automated PA submission workflows",
+        "Deploy AI for documentation generation",
+        "Integrate predictive approval analytics"
+      ],
+      currentIssues: [
+        "Manual PA documentation is time-consuming",
+        "High denial rates due to incomplete submissions",
+        "Lengthy appeals processes for denied requests"
+      ],
+      improvement: "AI-generated documentation increases approval rates by 70% with faster processing."
+    },
+    {
+      id: 8,
+      title: "Appointment Scheduling & Coordination",
+      icon: Calendar,
+      time: "Day 10-12",
+      position: { x: 75, y: 35 },
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "AI-optimized scheduling with intelligent coordination",
+      automationPrimary: false,
+      roi: "≈ 65% efficiency gain",
+      automationTasks: [
+        "Online self-scheduling portal access",
+        "Automated appointment reminders",
+        "Basic calendar management",
+        "Standard rescheduling workflows"
+      ],
+      aiTasks: [
+        "Optimized scheduling based on urgency and preferences",
+        "Intelligent conflict resolution",
+        "Predictive no-show prevention",
+        "AI-driven resource allocation"
+      ],
+      whyAutomation: "Basic scheduling functions benefit from reliable automated processes",
+      whyAI: "Complex scheduling optimization requires intelligent analysis of multiple factors",
+      phases: [
+        "Deploy automated scheduling systems",
+        "Implement AI for optimization and conflict resolution",
+        "Integrate predictive analytics for resource planning"
+      ],
+      currentIssues: [
+        "Manual coordination creates conflicts and delays",
+        "High cancellation rates due to poor optimization",
+        "Difficult coordination between multiple providers"
+      ],
+      improvement: "AI-optimized scheduling reduces cancellations by 40% with improved resource utilization."
+    },
+    {
+      id: 9,
+      title: "Pre-Visit Preparation & Communication",
+      icon: MessageCircle,
+      time: "Day 12-14",
+      position: { x: 45, y: 50 },
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "Personalized AI assistant for patient education and preparation",
+      automationPrimary: false,
+      roi: "≈ 55% efficiency gain",
+      automationTasks: [
+        "Automated digital packet delivery",
+        "Standard preparation reminders",
+        "Basic educational material distribution",
+        "Routine compliance tracking"
+      ],
+      aiTasks: [
+        "Personalized AI assistant for patient education",
+        "Interactive preparation guides",
+        "AI-driven compliance tracking and nudges",
+        "Intelligent preparation optimization"
+      ],
+      whyAutomation: "Standard preparation tasks benefit from consistent automated delivery",
+      whyAI: "Personalized education and preparation require intelligent adaptation to patient needs",
+      phases: [
+        "Implement automated preparation workflows",
+        "Deploy AI for personalized education",
+        "Integrate intelligent compliance tracking"
+      ],
+      currentIssues: [
+        "Generic preparation leads to patient confusion",
+        "High rates of unprepared patients",
+        "Manual delivery of instructions is inefficient"
+      ],
+      improvement: "AI-personalized preparation achieves 95% patient readiness with interactive guidance."
     }
   ],
   oncology: [
@@ -187,7 +491,7 @@ const journeySteps = {
       title: "Referral Receipt",
       icon: FileText,
       time: "Day 0 - approx. 2 hours",
-      position: { x: 10, y: 15 },
+      position: { x: 15, y: 20 },
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "hybrid",
@@ -221,6 +525,206 @@ const journeySteps = {
         "Inconsistent triage decisions across staff members"
       ],
       improvement: "Automated processing reduces response time to under 30 minutes with approx. 95% accuracy in data extraction and consistent AI-driven triage decisions."
+    },
+    {
+      id: 2,
+      title: "Data Collection",
+      icon: ClipboardCheck,
+      time: "Day 1-3",
+      position: { x: 35, y: 20 },
+      emotion: "neutral",
+      emotionIcon: Meh,
+      approach: "automation",
+      description: "Systematic collection of patient information and medical records",
+      automationPrimary: true,
+      roi: "≈ 45% efficiency gain",
+      automationTasks: [
+        "Digital form pre-population from existing records",
+        "Automated reminder sequences for incomplete submissions",
+        "Real-time validation of required fields and formats",
+        "Integration with external medical record systems",
+        "Standardized data formatting and storage protocols"
+      ],
+      aiTasks: [
+        "Smart form adaptation based on patient responses and complexity",
+        "Intelligent follow-up question generation for incomplete data",
+        "Risk-based prioritization of data collection sequences",
+        "Natural language processing for unstructured patient input",
+        "Predictive identification of missing critical information"
+      ],
+      whyAutomation: "Standardized data collection processes benefit from consistent automation to ensure completeness and reduce manual entry errors",
+      whyAI: "Complex cases require adaptive questioning and intelligent prioritization based on patient responses and clinical context",
+      phases: [
+        "Deploy automated form systems with basic validation",
+        "Implement AI for adaptive questioning and response analysis",
+        "Integrate predictive models for completeness optimization"
+      ],
+      currentIssues: [
+        "Approx. 20% incomplete forms requiring manual follow-up",
+        "Average 2-3 day delay for complete data collection",
+        "High patient frustration with repetitive information requests"
+      ],
+      improvement: "AI-driven adaptive forms reduce completion time to same-day with approx. 90% completeness rate on first submission."
+    },
+    {
+      id: 3,
+      title: "Record Acquisition",
+      icon: Database,
+      time: "Day 4-8",
+      position: { x: 55, y: 20 },
+      emotion: "neutral",
+      emotionIcon: Meh,
+      approach: "hybrid",
+      description: "Acquisition and integration of external medical records and imaging",
+      automationPrimary: true,
+      roi: "≈ 55% efficiency gain",
+      automationTasks: [
+        "Automated requests to external healthcare providers",
+        "Electronic medical record retrieval via secure APIs",
+        "Document scanning and digital conversion processes",
+        "Standardized filing and categorization systems",
+        "Automated status tracking and follow-up sequences"
+      ],
+      aiTasks: [
+        "Intelligent prioritization of record requests based on clinical relevance",
+        "Smart document classification and clinical significance assessment",
+        "Predictive identification of missing critical records",
+        "Natural language processing for unstructured medical notes",
+        "Risk assessment based on incomplete record scenarios"
+      ],
+      whyAutomation: "Record retrieval involves many standardized processes that benefit from systematic automation and consistent follow-up",
+      whyAI: "Clinical judgment is needed to prioritize record requests and assess the significance of missing information for care decisions",
+      phases: [
+        "Implement automated record request and tracking systems",
+        "Deploy AI for document analysis and prioritization",
+        "Integrate predictive models for missing record impact assessment"
+      ],
+      currentIssues: [
+        "Approx. 25% of records received incomplete or delayed",
+        "Manual tracking leads to lost requests and delays",
+        "Difficulty prioritizing critical vs. routine record needs"
+      ],
+      improvement: "AI-driven record management achieves approx. 95% completion rate with intelligent prioritization reducing critical delays by 80%."
+    },
+    {
+      id: 4,
+      title: "Appointment Scheduling",
+      icon: Calendar,
+      time: "Day 8-12",
+      position: { x: 75, y: 20 },
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "hybrid",
+      description: "Intelligent scheduling based on urgency, availability, and patient preferences",
+      automationPrimary: false,
+      roi: "≈ 70% efficiency gain",
+      automationTasks: [
+        "Real-time calendar integration and availability checking",
+        "Automated appointment confirmation and reminder systems",
+        "Insurance pre-authorization processing",
+        "Standard scheduling protocol implementation",
+        "Automated waitlist management and optimization"
+      ],
+      aiTasks: [
+        "Intelligent urgency assessment and priority scheduling",
+        "Personalized appointment timing based on patient factors",
+        "Predictive scheduling to minimize cancellations and no-shows",
+        "Dynamic resource allocation based on case complexity",
+        "Smart conflict resolution for scheduling complications"
+      ],
+      whyAutomation: "Basic scheduling functions like availability checking and confirmations benefit from reliable automation",
+      whyAI: "Complex scheduling decisions require consideration of multiple factors including urgency, patient needs, and resource optimization",
+      phases: [
+        "Deploy automated scheduling systems with basic intelligence",
+        "Implement AI for complex scheduling decisions and optimization",
+        "Integrate predictive models for no-show prevention and resource planning"
+      ],
+      currentIssues: [
+        "Approx. 18% appointment cancellation rate due to poor scheduling",
+        "Average 7-10 day wait times for non-urgent appointments",
+        "Frequent scheduling conflicts requiring manual resolution"
+      ],
+      improvement: "AI-optimized scheduling reduces wait times to 3-5 days with approx. 8% cancellation rate through intelligent patient-provider matching."
+    },
+    {
+      id: 5,
+      title: "Pre-visit Preparation",
+      icon: ClipboardCheck,
+      time: "Day 14-20",
+      position: { x: 15, y: 35 },
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "Comprehensive preparation for optimal visit outcomes",
+      automationPrimary: false,
+      roi: "≈ 50% efficiency gain",
+      automationTasks: [
+        "Automated pre-visit checklist generation and distribution",
+        "Standard preparation instruction delivery",
+        "Insurance verification and co-pay calculation",
+        "Basic medication reconciliation from pharmacy records",
+        "Automated reminder sequences for preparation tasks"
+      ],
+      aiTasks: [
+        "Personalized preparation plans based on individual patient factors",
+        "Intelligent medication interaction checking and optimization",
+        "Predictive identification of potential visit complications",
+        "Adaptive communication based on patient understanding and compliance",
+        "Smart resource allocation for complex cases requiring additional preparation"
+      ],
+      whyAutomation: "Standard preparation tasks like checklists and reminders benefit from consistent automated delivery",
+      whyAI: "Personalized preparation requires understanding of individual patient needs, risks, and optimal communication strategies",
+      phases: [
+        "Implement automated standard preparation workflows",
+        "Deploy AI for personalized preparation planning",
+        "Integrate predictive models for complication prevention"
+      ],
+      currentIssues: [
+        "Approx. 30% of patients arrive unprepared for visits",
+        "Frequent medication errors and interactions discovered during visits",
+        "Generic preparation instructions lead to confusion and non-compliance"
+      ],
+      improvement: "AI-personalized preparation achieves approx. 92% patient readiness with significant reduction in visit delays and medication errors."
+    },
+    {
+      id: 6,
+      title: "Visit Conduct",
+      icon: Stethoscope,
+      time: "Day 21",
+      position: { x: 35, y: 35 },
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "agentic",
+      description: "AI-assisted clinical visit with real-time decision support",
+      automationPrimary: false,
+      roi: "≈ 40% efficiency gain",
+      automationTasks: [
+        "Automated documentation templates and note generation",
+        "Standard clinical protocol implementation",
+        "Real-time integration with EHR systems",
+        "Automated lab order generation and scheduling",
+        "Standard post-visit task automation"
+      ],
+      aiTasks: [
+        "Real-time clinical decision support during visit",
+        "Intelligent treatment plan generation based on patient factors",
+        "Predictive risk assessment and intervention recommendations",
+        "AI-powered documentation with clinical narrative generation",
+        "Smart follow-up care coordination based on visit outcomes"
+      ],
+      whyAutomation: "Standard clinical workflows and documentation benefit from consistent automated processes",
+      whyAI: "Complex clinical decision-making requires intelligent analysis of patient data and evidence-based treatment recommendations",
+      phases: [
+        "Implement automated documentation and workflow systems",
+        "Deploy AI for clinical decision support and treatment planning",
+        "Integrate predictive analytics for outcome optimization"
+      ],
+      currentIssues: [
+        "Lengthy documentation time reduces patient interaction",
+        "Variable treatment decisions based on provider experience",
+        "Delayed follow-up coordination affecting continuity of care"
+      ],
+      improvement: "AI-assisted visits increase provider efficiency by 40% while improving treatment consistency and patient outcomes."
     }
   ],
   retail: []
@@ -239,6 +743,86 @@ const scenarioDetails = {
           substep: "Specialist Matching",
           process: "AI routes to Dr. Patel (pancreatic oncology specialist) based on case type and immediate availability for urgent consultations."
         }
+      ],
+      2: [
+        {
+          substep: "Emergency Contact Protocol",
+          process: "AI-generated urgent communication: 'Maria, we've received your referral. Dr. Patel can see you tomorrow at 2 PM. Please confirm immediately.'"
+        },
+        {
+          substep: "Rapid Screening",
+          process: "AI chatbot conducts rapid symptom assessment and preparation instructions for urgent consultation."
+        }
+      ],
+      3: [
+        {
+          substep: "Expedited Data Collection",
+          process: "AI pre-populates forms with available data, prioritizing critical fields for immediate completion."
+        },
+        {
+          substep: "Insurance Fast-Track",
+          process: "Automated urgent insurance verification with immediate approval for emergency consultation."
+        }
+      ],
+      4: [
+        {
+          substep: "Priority Record Retrieval",
+          process: "AI identifies and requests most critical records first - recent imaging, pathology reports, oncology notes."
+        },
+        {
+          substep: "Fast-Track Processing",
+          process: "Urgent request routing bypasses standard queues with immediate provider notification."
+        }
+      ],
+      5: [
+        {
+          substep: "Emergency Verification",
+          process: "Real-time insurance verification for urgent oncology consultation with immediate approval routing."
+        },
+        {
+          substep: "Coverage Optimization",
+          process: "AI identifies best coverage options for immediate treatment needs."
+        }
+      ],
+      6: [
+        {
+          substep: "Urgent Clinical Review",
+          process: "AI flags critical symptoms and routes to senior oncologist for immediate assessment."
+        },
+        {
+          substep: "Specialist Assignment",
+          process: "Immediate assignment to Dr. Patel based on expertise and urgent availability."
+        }
+      ],
+      7: [
+        {
+          substep: "Emergency PA Processing",
+          process: "AI generates comprehensive pre-authorization for genomic testing with urgent justification."
+        },
+        {
+          substep: "Fast-Track Approval",
+          process: "Emergency routing with clinical justification for immediate processing."
+        }
+      ],
+      8: [
+        {
+          substep: "Priority Scheduling",
+          process: "AI schedules urgent appointment within 24 hours, blocking necessary time and resources."
+        },
+        {
+          substep: "Resource Coordination",
+          process: "Automatic coordination of imaging, lab work, and consultation space."
+        }
+      ],
+      9: [
+        {
+          substep: "Urgent Preparation",
+          process: "AI generates urgent preparation checklist with immediate completion timeline."
+        },
+        {
+          substep: "Emergency Support",
+          process: "Connection to patient navigator for immediate assistance and emotional support."
+        }
       ]
     },
     michael: {
@@ -251,6 +835,86 @@ const scenarioDetails = {
           substep: "Genomic Testing Coordination",
           process: "AI automatically initiates genomic testing pre-authorization based on prior treatment history and current clinical status."
         }
+      ],
+      2: [
+        {
+          substep: "Care Team Assembly",
+          process: "AI coordinates with molecular pathology, genetics counselor, and clinical trials team for comprehensive evaluation planning."
+        },
+        {
+          substep: "Timeline Optimization",
+          process: "AI optimizes scheduling to minimize delays between testing, results, and treatment planning meetings."
+        }
+      ],
+      3: [
+        {
+          substep: "Comprehensive Data Gathering",
+          process: "AI generates extensive intake forms covering genomic history, prior treatments, and current clinical status."
+        },
+        {
+          substep: "Multi-Specialist Coordination",
+          process: "Automated coordination between medical oncology, genetics, and clinical trials teams."
+        }
+      ],
+      4: [
+        {
+          substep: "Complete Medical History",
+          process: "AI prioritizes acquisition of all prior treatment records, imaging, and genomic testing results."
+        },
+        {
+          substep: "Clinical Timeline Assembly",
+          process: "Comprehensive timeline construction of all prior treatments and response patterns."
+        }
+      ],
+      5: [
+        {
+          substep: "Complex Benefit Analysis",
+          process: "AI analyzes coverage for genomic testing, clinical trials, and advanced treatment options."
+        },
+        {
+          substep: "Financial Planning",
+          process: "Comprehensive analysis of treatment costs and insurance coverage optimization."
+        }
+      ],
+      6: [
+        {
+          substep: "Multi-Disciplinary Assessment",
+          process: "AI coordinates review across multiple specialists for comprehensive treatment planning."
+        },
+        {
+          substep: "Clinical Trial Screening",
+          process: "Automated screening for relevant clinical trials based on genomic profile and treatment history."
+        }
+      ],
+      7: [
+        {
+          substep: "Advanced Genomic Authorization",
+          process: "AI generates complex pre-authorization for comprehensive genomic testing panel."
+        },
+        {
+          substep: "Trial Enrollment Support",
+          process: "Automated support for clinical trial enrollment documentation and approvals."
+        }
+      ],
+      8: [
+        {
+          substep: "Complex Care Coordination",
+          process: "AI coordinates multiple appointments across different departments and specialists."
+        },
+        {
+          substep: "Treatment Planning Meeting",
+          process: "Automated scheduling of multi-disciplinary team meeting for treatment planning."
+        }
+      ],
+      9: [
+        {
+          substep: "Comprehensive Preparation",
+          process: "AI generates detailed preparation guide covering genomic counseling, treatment options, and clinical trials."
+        },
+        {
+          substep: "Educational Support",
+          process: "Personalized educational materials about genomic testing, treatment options, and clinical trial participation."
+        }
       ]
     }
   },
@@ -260,6 +924,60 @@ const scenarioDetails = {
         {
           substep: "Routine Screening Setup",
           process: "Sarah's referral processed through standard oncology workflow with family history flagging for genetic counseling."
+        },
+        {
+          substep: "Risk Assessment",
+          process: "AI analyzes family history (mother, sister with breast cancer) and flags for BRCA testing consideration."
+        }
+      ],
+      2: [
+        {
+          substep: "Standard Data Collection",
+          process: "AI generates comprehensive intake form including family history, lifestyle factors, and current symptoms."
+        },
+        {
+          substep: "Genetic Counseling Referral",
+          process: "Automatic referral to genetic counseling based on strong family history pattern."
+        }
+      ],
+      3: [
+        {
+          substep: "Prior Records Review",
+          process: "AI requests previous mammography results and compares with current findings for progression analysis."
+        },
+        {
+          substep: "Imaging Coordination",
+          process: "Coordination of additional imaging studies based on current findings and family history."
+        }
+      ],
+      4: [
+        {
+          substep: "Standard Scheduling",
+          process: "AI schedules appropriate follow-up based on risk assessment and provider availability."
+        },
+        {
+          substep: "Genetic Testing Coordination",
+          process: "Coordination of genetic counseling appointment alongside oncology consultation."
+        }
+      ],
+      5: [
+        {
+          substep: "Routine Preparation",
+          process: "AI generates standard preparation instructions including dietary restrictions and medication guidance."
+        },
+        {
+          substep: "Educational Materials",
+          process: "Personalized educational materials about genetic testing and family history implications."
+        }
+      ],
+      6: [
+        {
+          substep: "Clinical Assessment",
+          process: "Standard clinical examination with AI-assisted documentation and risk assessment."
+        },
+        {
+          substep: "Treatment Planning",
+          process: "Development of surveillance plan based on genetic testing results and family history."
         }
       ]
     },
@@ -268,6 +986,60 @@ const scenarioDetails = {
         {
           substep: "Complex Case Coordination",
           process: "Michael's multiple comorbidities trigger multi-disciplinary team assembly for coordinated care planning."
+        },
+        {
+          substep: "Risk Stratification",
+          process: "AI analyzes diabetes, hypertension, and kidney disease impact on cancer treatment options."
+        }
+      ],
+      2: [
+        {
+          substep: "Comprehensive Assessment",
+          process: "AI generates complex intake addressing all comorbidities and their management."
+        },
+        {
+          substep: "Care Team Coordination",
+          process: "Automatic coordination with endocrinology, cardiology, and nephrology teams."
+        }
+      ],
+      3: [
+        {
+          substep: "Complete Medical History",
+          process: "AI prioritizes acquisition of records from all specialists and primary care providers."
+        },
+        {
+          substep: "Comorbidity Impact Analysis",
+          process: "Analysis of how existing conditions affect treatment options and prognosis."
+        }
+      ],
+      4: [
+        {
+          substep: "Complex Scheduling",
+          process: "AI coordinates appointments across multiple specialties to optimize care delivery."
+        },
+        {
+          substep: "Treatment Feasibility",
+          process: "Assessment of treatment options considering all comorbid conditions."
+        }
+      ],
+      5: [
+        {
+          substep: "Multi-System Preparation",
+          process: "AI generates comprehensive preparation addressing all medical conditions and medications."
+        },
+        {
+          substep: "Coordination Optimization",
+          process: "Optimization of care coordination between oncology and other specialists."
+        }
+      ],
+      6: [
+        {
+          substep: "Integrated Assessment",
+          process: "Comprehensive evaluation considering cancer treatment impact on existing conditions."
+        },
+        {
+          substep: "Collaborative Planning",
+          process: "Multi-disciplinary treatment planning with input from all relevant specialists."
         }
       ]
     }
