@@ -1295,8 +1295,8 @@ const BusinessUseCases = () => {
     [selectedBusinessCase]
   );
 
-  // Transform scenario data for JourneyStepsFlow - memoized to prevent expensive recalculations
-  const getPatientScenariosForStep = useMemo(() => (stepId: number) => {
+  // Transform scenario data for JourneyStepsFlow
+  const getPatientScenariosForStep = (stepId: number) => {
     if (!selectedStep || selectedStep !== stepId) return [];
     
     const scenarios = [];
@@ -1326,9 +1326,9 @@ const BusinessUseCases = () => {
     }
     
     return scenarios;
-  }, [selectedStep, currentCase, currentScenarioDetails, currentScenarioImpacts]);
+  };
 
-  const getApproachColor = useMemo(() => (approach: string) => {
+  const getApproachColor = (approach: string) => {
     switch (approach) {
       case "automation":
         return "bg-green-100 text-green-700 border-green-300";
@@ -1339,9 +1339,9 @@ const BusinessUseCases = () => {
       default:
         return "bg-gray-100 text-gray-700 border-gray-300";
     }
-  }, []);
+  };
 
-  const getEmotionColor = useMemo(() => (emotion: string) => {
+  const getEmotionColor = (emotion: string) => {
     switch (emotion) {
       case "positive":
         return "bg-green-100 text-green-700 border-green-300";
@@ -1352,7 +1352,7 @@ const BusinessUseCases = () => {
       default:
         return "bg-gray-100 text-gray-700 border-gray-300";
     }
-  }, []);
+  };
 
   return (
     <div className="min-h-screen bg-background">
