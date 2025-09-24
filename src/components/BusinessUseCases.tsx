@@ -72,7 +72,15 @@ const businessCases = {
       "Data accuracy improved to approx. 98% with automated validation and AI error detection", 
       "Patient satisfaction projected to reach 8.7/10 with personalized communication and faster response times",
       "Healthcare provider satisfaction increased by approx. 45% due to reduced administrative burden and improved patient outcomes"
-    ]
+    ],
+    scenarioTitles: {
+      sarah: "Sarah - Routine Screening",
+      michael: "Michael - Complex Case"
+    },
+    scenarioDescriptions: {
+      sarah: "45-year-old with family history, requires follow-up imaging after abnormal mammogram",
+      michael: "67-year-old with multiple comorbidities requiring coordinated care across specialties"
+    }
   },
   referral: {
     id: "referral",
@@ -92,7 +100,15 @@ const businessCases = {
       "Intelligent specialist matching improves care coordination accuracy by 85%", 
       "Personalized preparation achieves 95% patient readiness with AI-guided education",
       "AI-generated pre-authorization documentation increases approval rates by 70%"
-    ]
+    ],
+    scenarioTitles: {
+      sarah: "Maria - Urgent Referral",
+      michael: "Robert - Complex Onboarding"
+    },
+    scenarioDescriptions: {
+      sarah: "62-year-old urgent pancreatic cancer referral requiring immediate specialist coordination",
+      michael: "58-year-old with multiple prior treatments needing comprehensive genomic testing and care team assembly"
+    }
   },
   retail: {
     id: "retail", 
@@ -112,11 +128,125 @@ const businessCases = {
       "Real-time customer service improves satisfaction scores by 50%",
       "Predictive inventory management reduces stockouts by 75%",
       "Personalized experiences increase customer lifetime value by 35%"
-    ]
+    ],
+    scenarioTitles: {
+      sarah: "Emma - First-time Buyer",
+      michael: "David - Loyalty Customer"
+    },
+    scenarioDescriptions: {
+      sarah: "28-year-old discovering brand through social media, needs guidance through purchase decision",
+      michael: "45-year-old repeat customer with specific preferences seeking efficient reorder experience"
+    }
   }
 };
 
 const journeySteps = {
+  referral: [
+    {
+      id: 1,
+      title: "Referral Receipt",
+      icon: FileText,
+      time: "0-30 minutes",
+      position: { x: 10, y: 15 },
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "hybrid",
+      description: "Immediate digital referral processing with AI-powered triage",
+      automationPrimary: true,
+      roi: "≈ 75% efficiency gain",
+      automationTasks: [
+        "Digital intake form parsing from fax/portal",
+        "Automated data extraction and validation",
+        "Basic referral completeness checking",
+        "Standard acknowledgment notifications"
+      ],
+      aiTasks: [
+        "Intelligent referral routing based on urgency",
+        "Smart data extraction from unstructured documents",
+        "AI-powered clinical priority assessment",
+        "Predictive resource allocation for complex cases"
+      ],
+      whyAutomation: "High-volume referral processing benefits from consistent digital workflows and automated validation",
+      whyAI: "Complex triage decisions require intelligent assessment of clinical urgency and appropriate specialist routing",
+      phases: [
+        "Implement digital referral processing automation",
+        "Deploy AI for intelligent triage and routing",
+        "Integrate predictive resource planning"
+      ],
+      currentIssues: [
+        "Manual fax processing leads to 4-6 hour delays",
+        "15% data entry errors in manual transcription",
+        "Inconsistent urgency assessment across staff"
+      ],
+      improvement: "AI-powered processing reduces response time to under 30 minutes with 95% accuracy in data extraction.",
+      detailedSubsteps: [
+        {
+          substep: "Digital Referral Intake",
+          process: "Automated OCR processing of fax referrals with intelligent field extraction"
+        },
+        {
+          substep: "Clinical Urgency Assessment",
+          process: "AI analysis of clinical indicators to determine appropriate triage level"
+        },
+        {
+          substep: "Specialist Routing",
+          process: "Intelligent routing to appropriate specialists based on case complexity and availability"
+        }
+      ]
+    },
+    {
+      id: 2,
+      title: "Initial Patient Outreach",
+      icon: MessageCircle,
+      time: "30 minutes-2 hours",
+      position: { x: 30, y: 15 },
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "Personalized AI-driven patient communication and initial screening",
+      automationPrimary: false,
+      roi: "≈ 60% efficiency gain",
+      automationTasks: [
+        "Automated SMS/email welcome messages",
+        "Basic appointment availability checking",
+        "Standard patient portal account setup",
+        "Routine reminder scheduling"
+      ],
+      aiTasks: [
+        "Personalized communication based on patient profile",
+        "Intelligent FAQ chatbot for initial questions",
+        "AI-powered sentiment analysis and escalation",
+        "Dynamic conversation flow based on patient responses"
+      ],
+      whyAutomation: "Standard communication workflows benefit from consistent automated delivery",
+      whyAI: "Patient interactions require personalized communication and intelligent response to individual needs",
+      phases: [
+        "Deploy automated communication workflows",
+        "Implement AI chatbot for initial screening",
+        "Integrate sentiment analysis for escalation"
+      ],
+      currentIssues: [
+        "Manual phone calls create delays and missed connections",
+        "Generic communication leads to patient confusion",
+        "Staff overwhelmed with routine questions"
+      ],
+      improvement: "AI-driven communication achieves 85% first-contact success with personalized messaging.",
+      detailedSubsteps: [
+        {
+          substep: "Welcome Communication",
+          process: "Personalized AI-generated welcome message based on referral reason and patient profile"
+        },
+        {
+          substep: "Initial Screening",
+          process: "Interactive AI chatbot for basic information gathering and FAQ responses"
+        },
+        {
+          substep: "Escalation Management",
+          process: "Intelligent escalation to human staff based on complexity or sentiment analysis"
+        }
+      ]
+    }
+  ],
   oncology: [
   {
     id: 1,
@@ -1107,14 +1237,61 @@ const journeySteps = {
         {
           substep: "Compliance Tracking",
           process: "Intelligent monitoring and personalized nudges to ensure preparation completeness"
-        }
-      ]
-    }
+      }
+    ]
+  }
   ]
 };
 
 // Patient scenario details with detailed process breakdowns
 const scenarioDetails = {
+  referral: {
+    sarah: {
+      1: [
+        {
+          substep: "Urgent Referral Processing",
+          process: "Maria's pancreatic cancer referral flagged as urgent (pain score 8/10, weight loss 20lbs). AI immediately prioritizes for same-day specialist review."
+        },
+        {
+          substep: "Specialist Matching",
+          process: "AI routes to Dr. Patel (pancreatic oncology specialist) based on case type and immediate availability for urgent consultations."
+        }
+      ],
+      2: [
+        {
+          substep: "Emergency Contact Protocol",
+          process: "AI-generated urgent communication: 'Maria, we've received your referral. Dr. Patel can see you tomorrow at 2 PM. Please confirm immediately.'"
+        },
+        {
+          substep: "Rapid Screening",
+          process: "AI chatbot conducts rapid symptom assessment and preparation instructions for urgent consultation."
+        }
+      ]
+    },
+    michael: {
+      1: [
+        {
+          substep: "Complex Case Recognition",
+          process: "Robert's referral with prior treatments (surgery, chemo, radiation) flagged for comprehensive genomic workup and multi-disciplinary approach."
+        },
+        {
+          substep: "Genomic Testing Coordination",
+          process: "AI automatically initiates genomic testing pre-authorization based on prior treatment history and current clinical status."
+        }
+      ],
+      2: [
+        {
+          substep: "Care Team Assembly",
+          process: "AI coordinates with molecular pathology, genetics counselor, and clinical trials team for comprehensive evaluation planning."
+        },
+        {
+          substep: "Timeline Optimization",
+          process: "AI optimizes scheduling to minimize delays between testing, results, and treatment planning meetings."
+        }
+      ]
+    }
+  },
+  oncology: {
   sarah: {
     1: [
       {
@@ -1522,21 +1699,21 @@ const BusinessUseCases = () => {
                 <Tabs value={selectedScenario} onValueChange={setSelectedScenario}>
                   <TabsList className="grid grid-cols-2 w-full mb-4 sm:mb-6 h-auto">
                     <TabsTrigger value="sarah" className="text-xs sm:text-sm px-2 py-2">
-                      Sarah - Routine
+                      {currentCase.scenarioTitles.sarah}
                     </TabsTrigger>
                     <TabsTrigger value="michael" className="text-xs sm:text-sm px-2 py-2">
-                      Michael - Complex
+                      {currentCase.scenarioTitles.michael}
                     </TabsTrigger>
                   </TabsList>
 
                   <TabsContent value="sarah" className="space-y-3 sm:space-y-4">
                     <div className="bg-muted/30 p-3 sm:p-4 rounded-lg">
                       <h4 className="font-semibold text-base sm:text-lg mb-2 flex items-center gap-2">
-                        <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
-                        Sarah's Journey - Routine Breast Cancer Screening Follow-up
+                        <currentCase.icon className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
+                        {currentCase.scenarioTitles.sarah} Journey
                       </h4>
                       <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3 leading-relaxed">
-                        45-year-old with family history, requires follow-up imaging after abnormal mammogram
+                        {currentCase.scenarioDescriptions.sarah}
                       </p>
                       {/* Legend for this scenario */}
                       <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs">
@@ -1581,10 +1758,10 @@ const BusinessUseCases = () => {
                     <div className="bg-muted/30 p-3 sm:p-4 rounded-lg">
                       <h4 className="font-semibold text-base sm:text-lg mb-2 flex items-center gap-2">
                         <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />
-                        Michael's Journey - Complex Multi-Disciplinary Case
+                        {currentCase.scenarioTitles.michael} Journey
                       </h4>
                       <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3 leading-relaxed">
-                        67-year-old with multiple comorbidities requiring coordinated care across specialties
+                        {currentCase.scenarioDescriptions.michael}
                       </p>
                     </div>
 
