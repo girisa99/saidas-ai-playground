@@ -97,53 +97,71 @@ export const JourneyStepsFlow = ({
   const legendItems: LegendItem[] = [
     {
       icon: Database,
-      label: "Data Collection",
-      description: "Patient information gathering and verification",
+      label: "Patient Data Collection",
+      description: "Demographics, insurance, medical history, symptoms",
       color: "text-genie-primary"
     },
     {
       icon: Share2,
-      label: "Cross-Functional Sharing",
-      description: "Inter-departmental data exchange and collaboration",
+      label: "Cross-Departmental Sharing",
+      description: "Data exchange between departments and systems",
       color: "text-genie-secondary"
     },
     {
       icon: Shield,
-      label: "Security & Compliance",
-      description: "HIPAA-compliant secure data handling",
+      label: "Verification & Compliance",
+      description: "Insurance verification, provider credentialing, HIPAA compliance",
       color: "text-success"
     },
     {
       icon: FileText,
-      label: "Documentation",
-      description: "Clinical records and administrative documents",
+      label: "Clinical Documentation",
+      description: "Medical records, test results, treatment plans, notes",
       color: "text-warning"
     },
     {
       icon: Users,
-      label: "Stakeholder Coordination",
-      description: "Care team and patient communication",
+      label: "Care Team Coordination",
+      description: "Provider assignments, specialist referrals, team communication",
       color: "text-accent"
     },
     {
       icon: Workflow,
-      label: "Process Automation",
-      description: "Automated workflows and decision points",
+      label: "Process Orchestration",
+      description: "Workflow automation, scheduling, notifications, tracking",
       color: "text-primary"
+    }
+  ];
+
+  const dataFlowConnections = [
+    {
+      from: "Patient Data Collection",
+      to: "Cross-Departmental Sharing",
+      description: "Demographics and insurance data flows to all departments"
+    },
+    {
+      from: "Clinical Documentation", 
+      to: "Care Team Coordination",
+      description: "Medical records inform specialist assignments and treatment planning"
+    },
+    {
+      from: "Verification & Compliance",
+      to: "Process Orchestration", 
+      description: "Verification results trigger automated workflows and approvals"
     }
   ];
 
   return (
     <div className="w-full space-y-6">
       {/* Information Collection Legend */}
-      <Card className="mb-6">
+        <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <Info className="h-5 w-5 text-primary" />
-              Information Collection & Data Flow Legend
+              Data Flow & Cross-Functional Information Sharing
             </CardTitle>
             <p className="text-sm text-muted-foreground">
-              Understanding what data is collected and how it flows across departments at each step
+              Understanding information flow patterns across journey steps to identify optimization and consolidation opportunities
             </p>
           </CardHeader>
           <CardContent>
@@ -162,8 +180,50 @@ export const JourneyStepsFlow = ({
               })}
             </div>
             <Separator className="my-4" />
+            
+            {/* Data Flow Connections */}
+            <div className="mb-4">
+              <h4 className="font-medium text-sm mb-3 flex items-center gap-2">
+                <ArrowRight className="h-4 w-4" />
+                Key Data Flow Connections
+              </h4>
+              <div className="space-y-2">
+                {dataFlowConnections.map((connection, index) => (
+                  <div key={index} className="flex items-center gap-2 text-xs p-2 bg-muted/30 rounded">
+                    <span className="font-medium text-genie-primary">{connection.from}</span>
+                    <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                    <span className="font-medium text-genie-secondary">{connection.to}</span>
+                    <span className="text-muted-foreground ml-2">{connection.description}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Separator className="my-4" />
+            
+            {/* Optimization Opportunities */}
+            <div className="mb-4">
+              <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                <Target className="h-4 w-4 text-accent" />
+                Step Consolidation Opportunities
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-2 bg-accent/10 border border-accent/20 rounded">
+                  <span className="font-medium text-accent">Data Collection Steps:</span>
+                  <p className="text-muted-foreground mt-1">Steps 4-6 share similar verification processes - consolidation potential</p>
+                </div>
+                <div className="p-2 bg-genie-secondary/10 border border-genie-secondary/20 rounded">
+                  <span className="font-medium text-genie-secondary">Coordination Steps:</span>
+                  <p className="text-muted-foreground mt-1">Steps 7-8 both involve care team assembly - optimization opportunity</p>
+                </div>
+              </div>
+            </div>
+
+            <Separator className="my-4" />
+            
+            {/* Technology Approach Legend */}
             <div>
-              <h4 className="font-medium text-sm mb-2">Approach Legend</h4>
+              <h4 className="font-medium text-sm mb-2">Technology Approach Legend</h4>
               <div className="flex flex-wrap gap-4 text-xs">
                 <div className="inline-flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-primary" />
@@ -182,12 +242,26 @@ export const JourneyStepsFlow = ({
           </CardContent>
         </Card>
 
-      {/* Step Flow Grid */}
+      {/* Step Flow Grid with Data Flow Indicators */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {steps.map((step, index) => {
           const StepIcon = step.icon;
           const EmotionIcon = step.emotionIcon;
           const isSelected = selectedStep === step.id;
+          
+          // Determine data flow indicators for this step
+          const getStepDataTypes = (stepId: number) => {
+            const dataTypes = [];
+            if ([1, 2, 4].includes(stepId)) dataTypes.push("Patient Data Collection");
+            if ([2, 3, 7, 8].includes(stepId)) dataTypes.push("Cross-Departmental Sharing");
+            if ([3, 6].includes(stepId)) dataTypes.push("Verification & Compliance");
+            if ([1, 5, 7].includes(stepId)) dataTypes.push("Clinical Documentation");
+            if ([7, 8, 9].includes(stepId)) dataTypes.push("Care Team Coordination");
+            if ([1, 2, 8, 9].includes(stepId)) dataTypes.push("Process Orchestration");
+            return dataTypes;
+          };
+          
+          const stepDataTypes = getStepDataTypes(step.id);
           
           return (
             <Card 
@@ -224,6 +298,22 @@ export const JourneyStepsFlow = ({
                   <span className="text-xs text-muted-foreground">
                     {step.time}
                   </span>
+                </div>
+                
+                {/* Data Flow Indicators */}
+                <div className="mb-2">
+                  <div className="flex flex-wrap gap-1">
+                    {stepDataTypes.slice(0, 2).map((dataType, idx) => (
+                      <span key={idx} className="text-xs px-1.5 py-0.5 rounded bg-muted/60 text-muted-foreground">
+                        {legendItems.find(item => item.label === dataType)?.label.split(' ')[0] || dataType.split(' ')[0]}
+                      </span>
+                    ))}
+                    {stepDataTypes.length > 2 && (
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-muted/60 text-muted-foreground">
+                        +{stepDataTypes.length - 2}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 
                 <p className="text-xs text-muted-foreground line-clamp-3 mb-2 leading-relaxed">
