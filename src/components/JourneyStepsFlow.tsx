@@ -7,9 +7,9 @@ interface JourneyStep {
   title: string;
   icon: LucideIcon;
   time: string;
-  emotion: "positive" | "neutral" | "critical";
+  emotion: string;
   emotionIcon: LucideIcon;
-  approach: "automation" | "agentic" | "hybrid";
+  approach: string;
   description: string;
   roi: string;
   automationTasks: string[];

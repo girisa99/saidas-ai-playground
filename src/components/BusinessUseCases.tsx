@@ -110,6 +110,7 @@ const businessCases = {
       sarah: "62-year-old urgent pancreatic cancer referral requiring immediate specialist coordination",
       michael: "58-year-old with multiple prior treatments needing comprehensive genomic testing and care team assembly"
     }
+  }
 };
 
 const journeySteps = {
@@ -772,8 +773,7 @@ const journeySteps = {
       ],
       improvement: "AI-adaptive monitoring improves patient outcomes by 40% with personalized follow-up optimization."
     }
-  ],
-  retail: []
+  ]
 };
 
 // Patient scenario details with detailed process breakdowns
@@ -1139,10 +1139,6 @@ const scenarioDetails = {
         }
       ]
     }
-  },
-  retail: {
-    sarah: {},
-    michael: {}
   }
 };
 
@@ -1154,56 +1150,75 @@ const BusinessUseCases = () => {
 
   // Get current business case data
   const currentCase = businessCases[selectedBusinessCase as keyof typeof businessCases];
-  const currentJourneySteps = journeySteps[selectedBusinessCase as keyof typeof journeySteps] || journeySteps.oncology;
-  const currentScenarioDetails = scenarioDetails[selectedBusinessCase as keyof typeof scenarioDetails] || scenarioDetails.oncology;
+  const currentJourneySteps = journeySteps[selectedBusinessCase as keyof typeof journeySteps];
+  const currentScenarioDetails = scenarioDetails[selectedBusinessCase as keyof typeof scenarioDetails];
 
   const getApproachColor = (approach: string) => {
     switch (approach) {
-      case 'automation':
-        return 'bg-green-100 text-green-700 border-green-200';
-      case 'agentic':
-        return 'bg-blue-100 text-blue-700 border-blue-200';
-      case 'hybrid':
-        return 'bg-purple-100 text-purple-700 border-purple-200';
+      case "automation":
+        return "bg-green-100 text-green-700 border-green-300";
+      case "agentic":
+        return "bg-blue-100 text-blue-700 border-blue-300";
+      case "hybrid":
+        return "bg-purple-100 text-purple-700 border-purple-300";
       default:
-        return 'bg-gray-100 text-gray-700 border-gray-200';
+        return "bg-gray-100 text-gray-700 border-gray-300";
     }
   };
 
   const getEmotionColor = (emotion: string) => {
     switch (emotion) {
-      case 'positive':
-        return 'bg-green-100 text-green-700 border-green-200';
-      case 'neutral':
-        return 'bg-yellow-100 text-yellow-700 border-yellow-200';
-      case 'critical':
-        return 'bg-red-100 text-red-700 border-red-200';
+      case "positive":
+        return "bg-green-100 text-green-700 border-green-300";
+      case "neutral":
+        return "bg-yellow-100 text-yellow-700 border-yellow-300";
+      case "critical":
+        return "bg-red-100 text-red-700 border-red-300";
       default:
-        return 'bg-gray-100 text-gray-700 border-gray-200';
+        return "bg-gray-100 text-gray-700 border-gray-300";
     }
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 max-w-7xl space-y-6 sm:space-y-8 lg:space-y-12">
-      {/* Business Case Selector */}
+    <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 p-3 sm:p-6">
+      {/* Header */}
+      <div className="text-center space-y-3 sm:space-y-4">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary via-primary/80 to-secondary bg-clip-text text-transparent">
+          Business Use Cases Analysis
+        </h1>
+        <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          Strategic framework for choosing between automation and agentic AI across different healthcare workflows
+        </p>
+      </div>
+
+      {/* Business Case Selection */}
       <Card>
-        <CardHeader>
-          <CardTitle className="text-xl sm:text-2xl md:text-3xl text-center">Business Use Case Analysis</CardTitle>
+        <CardHeader className="pb-3 sm:pb-4">
+          <CardTitle className="text-lg sm:text-xl text-center">Select Business Use Case</CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs value={selectedBusinessCase} onValueChange={setSelectedBusinessCase}>
-            <TabsList className="grid w-full grid-cols-3 mb-6">
-              {Object.values(businessCases).map((businessCase) => (
-                <TabsTrigger key={businessCase.id} value={businessCase.id} className="text-xs sm:text-sm">
-                  <businessCase.icon className="w-4 h-4 mr-2" />
-                  {businessCase.title}
+            <TabsList className="grid w-full grid-cols-2 h-auto">
+              {Object.entries(businessCases).map(([key, businessCase]) => (
+                <TabsTrigger
+                  key={key}
+                  value={key}
+                  className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto text-left"
+                >
+                  <businessCase.icon className="w-6 h-6 sm:w-8 sm:h-8" />
+                  <div className="text-center">
+                    <div className="font-semibold text-sm sm:text-base">{businessCase.title}</div>
+                    <div className="text-xs text-muted-foreground hidden sm:block mt-1">
+                      {businessCase.description}
+                    </div>
+                  </div>
                 </TabsTrigger>
               ))}
             </TabsList>
-            
-            {Object.values(businessCases).map((businessCase) => (
-              <TabsContent key={businessCase.id} value={businessCase.id}>
-                <div className="text-center space-y-4">
+
+            {Object.entries(businessCases).map(([key, businessCase]) => (
+              <TabsContent key={key} value={key} className="space-y-3 sm:space-y-4 mt-4 sm:mt-6">
+                <div className="text-center space-y-2 sm:space-y-3">
                   <h2 className="text-lg sm:text-xl font-semibold">{businessCase.title}</h2>
                   <p className="text-sm sm:text-base text-muted-foreground">{businessCase.description}</p>
                 </div>
