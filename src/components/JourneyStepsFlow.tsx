@@ -44,6 +44,8 @@ interface PatientScenario {
     substep: string;
     process: string;
   }[];
+  impact?: any;
+  cumulativeImpact?: any;
 }
 
 interface LegendItem {
@@ -58,6 +60,7 @@ interface JourneyStepsFlowProps {
   selectedStep: number | null;
   onStepClick: (stepId: number) => void;
   patientScenarios?: PatientScenario[];
+  scenarioImpacts?: any;
   showLegend?: boolean;
 }
 
@@ -66,6 +69,7 @@ export const JourneyStepsFlow = ({
   selectedStep, 
   onStepClick, 
   patientScenarios = [],
+  scenarioImpacts,
   showLegend = true 
 }: JourneyStepsFlowProps) => {
   const getApproachColor = (approach: string) => {
@@ -446,14 +450,14 @@ export const JourneyStepsFlow = ({
                     </div>
                   )}
 
-                  {/* Patient Scenarios */}
+                  {/* Patient Scenarios with Impact Analysis */}
                   {patientScenarios.length > 0 && (
                     <div>
                       <h4 className="font-semibold text-indigo-600 mb-4 flex items-center gap-2">
                         <Users className="h-4 w-4" />
-                        Patient Scenario Breakdown
+                        Scenario-Specific Impact Analysis
                       </h4>
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 gap-6">
                         {patientScenarios.map((scenario, idx) => (
                           <Card key={idx} className="border-l-4 border-l-indigo-400">
                             <CardContent className="p-4">
@@ -473,8 +477,41 @@ export const JourneyStepsFlow = ({
                                 </Badge>
                               </div>
                               <p className="text-xs text-muted-foreground mb-3">{scenario.description}</p>
+                              
+                              {/* Step Impact Metrics */}
+                              {scenario.impact && (
+                                <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                  <h6 className="font-medium text-blue-800 text-sm mb-2">Step Impact</h6>
+                                  <div className="grid grid-cols-2 gap-2 text-xs">
+                                    {Object.entries(scenario.impact).map(([key, value]) => (
+                                      <div key={key} className="flex justify-between">
+                                        <span className="text-blue-700 capitalize">{key.replace(/([A-Z])/g, ' $1')}:</span>
+                                        <span className="font-medium text-blue-900">{value as string}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {/* Cumulative Impact */}
+                              {scenario.cumulativeImpact && (
+                                <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                                  <h6 className="font-medium text-green-800 text-sm mb-2">Cumulative Benefits (Through Step {selectedStep})</h6>
+                                  <div className="grid grid-cols-1 gap-1 text-xs">
+                                    {Object.entries(scenario.cumulativeImpact).map(([key, value]) => (
+                                      <div key={key} className="flex justify-between">
+                                        <span className="text-green-700 capitalize">{key.replace(/([A-Z])/g, ' $1')}:</span>
+                                        <span className="font-medium text-green-900">{value as string}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {/* Process Steps */}
                               {scenario.substeps && scenario.substeps.length > 0 ? (
                                 <div className="space-y-2">
+                                  <h6 className="font-medium text-indigo-700 text-sm">Process Breakdown</h6>
                                   {scenario.substeps.map((substep, subIdx) => (
                                     <div key={subIdx} className="border border-border rounded p-2">
                                       <h6 className="font-medium text-xs text-foreground mb-1">{substep.substep}</h6>
@@ -493,6 +530,53 @@ export const JourneyStepsFlow = ({
                           </Card>
                         ))}
                       </div>
+                      
+                      {/* Comparative Analysis */}
+                      {patientScenarios.length === 2 && scenarioImpacts && (
+                        <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-lg">
+                          <h6 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                            <Target className="h-4 w-4" />
+                            Scenario Comparison: {patientScenarios[0].name} vs {patientScenarios[1].name}
+                          </h6>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                            <div className="text-center p-3 bg-white rounded border">
+                              <div className="font-medium text-blue-700">Time Reduction</div>
+                              <div className="text-lg font-bold text-blue-900">
+                                {scenarioImpacts.sarah.cumulativeBenefits.find((b: any) => b.step === selectedStep)?.totalTimeSaved || 'N/A'}
+                              </div>
+                              <div className="text-xs text-blue-600">Routine Case</div>
+                              <div className="mt-1 text-lg font-bold text-orange-900">
+                                {scenarioImpacts.michael.cumulativeBenefits.find((b: any) => b.step === selectedStep)?.totalTimeSaved || 'N/A'}
+                              </div>
+                              <div className="text-xs text-orange-600">Complex Case</div>
+                            </div>
+                            <div className="text-center p-3 bg-white rounded border">
+                              <div className="font-medium text-green-700">Error Reduction</div>
+                              <div className="text-lg font-bold text-green-900">
+                                {scenarioImpacts.sarah.cumulativeBenefits.find((b: any) => b.step === selectedStep)?.totalErrorReduction || 'N/A'}
+                              </div>
+                              <div className="text-xs text-green-600">Routine Case</div>
+                              <div className="mt-1 text-lg font-bold text-orange-900">
+                                {scenarioImpacts.michael.cumulativeBenefits.find((b: any) => b.step === selectedStep)?.totalErrorReduction || 'N/A'}
+                              </div>
+                              <div className="text-xs text-orange-600">Complex Case</div>
+                            </div>
+                            <div className="text-center p-3 bg-white rounded border">
+                              <div className="font-medium text-purple-700">Quality Score</div>
+                              <div className="text-lg font-bold text-purple-900">
+                                {scenarioImpacts.sarah.cumulativeBenefits.find((b: any) => b.step === selectedStep)?.patientExperience || 
+                                 scenarioImpacts.sarah.cumulativeBenefits.find((b: any) => b.step === selectedStep)?.careQuality || 'N/A'}
+                              </div>
+                              <div className="text-xs text-purple-600">Routine Case</div>
+                              <div className="mt-1 text-lg font-bold text-orange-900">
+                                {scenarioImpacts.michael.cumulativeBenefits.find((b: any) => b.step === selectedStep)?.patientExperience || 
+                                 scenarioImpacts.michael.cumulativeBenefits.find((b: any) => b.step === selectedStep)?.careQuality || 'N/A'}
+                              </div>
+                              <div className="text-xs text-orange-600">Complex Case</div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </CardContent>

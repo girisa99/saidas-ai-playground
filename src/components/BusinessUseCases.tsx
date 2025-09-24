@@ -1152,6 +1152,122 @@ const scenarioDetails = {
   }
 };
 
+// Scenario-specific impact analysis
+const scenarioImpactAnalysis = {
+  referral: {
+    sarah: {
+      scenarioType: "Urgent Referral",
+      overallTimeReduction: "75%",
+      errorReduction: "90%",
+      patientSatisfaction: "9.2/10",
+      stepImpacts: {
+        1: { timeReduction: "85%", accuracy: "95%", patientAnxiety: "Reduced by 60%" },
+        2: { responseRate: "95%", firstContactSuccess: "85%", patientEngagement: "High" },
+        3: { verificationTime: "Real-time", errorRate: "2%", approvalRate: "98%" },
+        4: { completionTime: "30 min", accuracy: "99%", missingData: "5%" },
+        5: { retrievalTime: "24 hours", completeness: "95%", relevance: "High" },
+        6: { verificationTime: "Real-time", approvalRate: "92%", denialsReduced: "70%" },
+        7: { assessmentTime: "2 hours", specialistMatch: "98%", riskAccuracy: "95%" },
+        8: { schedulingTime: "15 min", coordinationEfficiency: "90%", conflicts: "Reduced 80%" }
+      },
+      cumulativeBenefits: [
+        { step: 1, totalTimeSaved: "4 hours", totalErrorReduction: "85%", patientExperience: "7.2/10" },
+        { step: 2, totalTimeSaved: "6 hours", totalErrorReduction: "87%", patientExperience: "7.8/10" },
+        { step: 3, totalTimeSaved: "8 hours", totalErrorReduction: "89%", patientExperience: "8.2/10" },
+        { step: 4, totalTimeSaved: "10 hours", totalErrorReduction: "90%", patientExperience: "8.6/10" },
+        { step: 5, totalTimeSaved: "12 hours", totalErrorReduction: "91%", patientExperience: "8.8/10" },
+        { step: 6, totalTimeSaved: "14 hours", totalErrorReduction: "92%", patientExperience: "9.0/10" },
+        { step: 7, totalTimeSaved: "16 hours", totalErrorReduction: "93%", patientExperience: "9.1/10" },
+        { step: 8, totalTimeSaved: "18 hours", totalErrorReduction: "94%", patientExperience: "9.2/10" }
+      ]
+    },
+    michael: {
+      scenarioType: "Complex Onboarding",
+      overallTimeReduction: "65%",
+      errorReduction: "85%",
+      patientSatisfaction: "8.8/10",
+      stepImpacts: {
+        1: { timeReduction: "70%", accuracy: "92%", complexityHandling: "Excellent" },
+        2: { coordinationEfficiency: "88%", teamAlignment: "95%", communicationGaps: "Reduced 75%" },
+        3: { dataIntegration: "98%", crossSystemSync: "95%", completeness: "97%" },
+        4: { comprehensiveness: "96%", timelineAccuracy: "94%", clinicalRelevance: "High" },
+        5: { coverageOptimization: "93%", financialPlanning: "Excellent", approvalLikelihood: "88%" },
+        6: { coordinationQuality: "95%", trialMatching: "87%", decisionSpeed: "75% faster" },
+        7: { authorizationSuccess: "90%", trialEnrollment: "85%", complexApprovals: "88%" },
+        8: { multiProviderCoord: "92%", resourceOptimization: "89%", conflictReduction: "85%" }
+      },
+      cumulativeBenefits: [
+        { step: 1, totalTimeSaved: "3 hours", totalErrorReduction: "70%", careQuality: "7.8/10" },
+        { step: 2, totalTimeSaved: "5 hours", totalErrorReduction: "74%", careQuality: "8.0/10" },
+        { step: 3, totalTimeSaved: "7 hours", totalErrorReduction: "77%", careQuality: "8.2/10" },
+        { step: 4, totalTimeSaved: "9 hours", totalErrorReduction: "80%", careQuality: "8.4/10" },
+        { step: 5, totalTimeSaved: "11 hours", totalErrorReduction: "82%", careQuality: "8.5/10" },
+        { step: 6, totalTimeSaved: "13 hours", totalErrorReduction: "83%", careQuality: "8.6/10" },
+        { step: 7, totalTimeSaved: "15 hours", totalErrorReduction: "84%", careQuality: "8.7/10" },
+        { step: 8, totalTimeSaved: "17 hours", totalErrorReduction: "85%", careQuality: "8.8/10" }
+      ]
+    }
+  },
+  oncology: {
+    sarah: {
+      scenarioType: "Routine Screening",
+      overallTimeReduction: "70%",
+      errorReduction: "88%",
+      patientSatisfaction: "8.9/10",
+      stepImpacts: {
+        1: { timeReduction: "80%", accuracy: "96%", familyHistoryCapture: "Complete" },
+        2: { geneticReferralSpeed: "Same day", counselingAccess: "100%", riskAssessment: "Comprehensive" },
+        3: { dataCompleteness: "98%", geneticHistoryAccuracy: "99%", riskFactorCapture: "Complete" },
+        4: { recordIntegration: "95%", imagingCoordination: "98%", historyComparison: "Automated" },
+        5: { preparationQuality: "96%", educationEffectiveness: "92%", complianceRate: "94%" },
+        6: { assessmentAccuracy: "97%", riskStratification: "Precise", surveillancePlanning: "Optimal" },
+        7: { treatmentPrecision: "94%", trialEligibility: "Assessed", personalizedCare: "High" },
+        8: { coordinationEfficiency: "93%", timelineOptimization: "91%", patientPreferences: "Integrated" },
+        9: { monitoringPrecision: "95%", adherenceSupport: "Excellent", outcomeTracking: "Comprehensive" }
+      },
+      cumulativeBenefits: [
+        { step: 1, totalTimeSaved: "2 hours", totalErrorReduction: "80%", careQuality: "8.0/10" },
+        { step: 2, totalTimeSaved: "3 hours", totalErrorReduction: "82%", careQuality: "8.2/10" },
+        { step: 3, totalTimeSaved: "4 hours", totalErrorReduction: "84%", careQuality: "8.3/10" },
+        { step: 4, totalTimeSaved: "5 hours", totalErrorReduction: "85%", careQuality: "8.4/10" },
+        { step: 5, totalTimeSaved: "6 hours", totalErrorReduction: "86%", careQuality: "8.5/10" },
+        { step: 6, totalTimeSaved: "7 hours", totalErrorReduction: "87%", careQuality: "8.6/10" },
+        { step: 7, totalTimeSaved: "8 hours", totalErrorReduction: "87.5%", careQuality: "8.7/10" },
+        { step: 8, totalTimeSaved: "9 hours", totalErrorReduction: "88%", careQuality: "8.8/10" },
+        { step: 9, totalTimeSaved: "10 hours", totalErrorReduction: "88%", careQuality: "8.9/10" }
+      ]
+    },
+    michael: {
+      scenarioType: "Complex Multi-Comorbidity",
+      overallTimeReduction: "60%",
+      errorReduction: "82%",
+      patientSatisfaction: "8.6/10",
+      stepImpacts: {
+        1: { timeReduction: "65%", accuracy: "90%", complexityAssessment: "Comprehensive" },
+        2: { teamCoordination: "85%", specialistAlignment: "92%", communicationEfficiency: "88%" },
+        3: { dataIntegration: "94%", crossSpecialtyInfo: "96%", comorbidityMapping: "Complete" },
+        4: { multiSystemCoord: "88%", treatmentFeasibility: "Assessed", riskEvaluation: "Thorough" },
+        5: { multiSystemPrep: "90%", coordinationQuality: "87%", medicationReview: "Comprehensive" },
+        6: { integratedAssessment: "91%", collaborativePlanning: "89%", riskMitigation: "Excellent" },
+        7: { complexPlanning: "88%", safetyProtocols: "Enhanced", interactionChecking: "Automated" },
+        8: { integratedCare: "86%", resourceOptimization: "84%", multiSpecialtyCoord: "Seamless" },
+        9: { comprehensiveMonitoring: "87%", integratedFollowup: "85%", outcomeOptimization: "High" }
+      },
+      cumulativeBenefits: [
+        { step: 1, totalTimeSaved: "1.5 hours", totalErrorReduction: "65%", careQuality: "7.5/10" },
+        { step: 2, totalTimeSaved: "2.5 hours", totalErrorReduction: "68%", careQuality: "7.7/10" },
+        { step: 3, totalTimeSaved: "3.5 hours", totalErrorReduction: "71%", careQuality: "7.9/10" },
+        { step: 4, totalTimeSaved: "4.5 hours", totalErrorReduction: "74%", careQuality: "8.0/10" },
+        { step: 5, totalTimeSaved: "5.5 hours", totalErrorReduction: "76%", careQuality: "8.1/10" },
+        { step: 6, totalTimeSaved: "6.5 hours", totalErrorReduction: "78%", careQuality: "8.2/10" },
+        { step: 7, totalTimeSaved: "7.5 hours", totalErrorReduction: "80%", careQuality: "8.3/10" },
+        { step: 8, totalTimeSaved: "8.5 hours", totalErrorReduction: "81%", careQuality: "8.5/10" },
+        { step: 9, totalTimeSaved: "9.5 hours", totalErrorReduction: "82%", careQuality: "8.6/10" }
+      ]
+    }
+  }
+};
+
 const BusinessUseCases = () => {
   const [selectedBusinessCase, setSelectedBusinessCase] = useState("oncology");
   const [selectedScenario, setSelectedScenario] = useState("sarah");
@@ -1162,6 +1278,7 @@ const BusinessUseCases = () => {
   const currentCase = businessCases[selectedBusinessCase as keyof typeof businessCases];
   const currentJourneySteps = journeySteps[selectedBusinessCase as keyof typeof journeySteps];
   const currentScenarioDetails = scenarioDetails[selectedBusinessCase as keyof typeof scenarioDetails];
+  const currentScenarioImpacts = scenarioImpactAnalysis[selectedBusinessCase as keyof typeof scenarioImpactAnalysis];
 
   // Transform scenario data for JourneyStepsFlow
   const getPatientScenariosForStep = (stepId: number) => {
@@ -1175,7 +1292,9 @@ const BusinessUseCases = () => {
         name: currentCase.scenarioTitles.sarah,
         description: currentCase.scenarioDescriptions.sarah,
         complexity: "routine" as const,
-        substeps: currentScenarioDetails.sarah[stepId]
+        substeps: currentScenarioDetails.sarah[stepId],
+        impact: currentScenarioImpacts.sarah.stepImpacts[stepId],
+        cumulativeImpact: currentScenarioImpacts.sarah.cumulativeBenefits.find(b => b.step === stepId)
       });
     }
     
@@ -1185,7 +1304,9 @@ const BusinessUseCases = () => {
         name: currentCase.scenarioTitles.michael,
         description: currentCase.scenarioDescriptions.michael,
         complexity: "complex" as const,
-        substeps: currentScenarioDetails.michael[stepId]
+        substeps: currentScenarioDetails.michael[stepId],
+        impact: currentScenarioImpacts.michael.stepImpacts[stepId],
+        cumulativeImpact: currentScenarioImpacts.michael.cumulativeBenefits.find(b => b.step === stepId)
       });
     }
     
@@ -1361,6 +1482,7 @@ const BusinessUseCases = () => {
             selectedStep={selectedStep}
             onStepClick={(stepId) => setSelectedStep(selectedStep === stepId ? null : stepId)}
             patientScenarios={selectedStep ? getPatientScenariosForStep(selectedStep) : []}
+            scenarioImpacts={currentScenarioImpacts}
             showLegend={true}
           />
         </CardContent>
