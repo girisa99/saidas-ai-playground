@@ -71,26 +71,26 @@ export const JourneyStepsFlow = ({
   const getApproachColor = (approach: string) => {
     switch (approach) {
       case "automation":
-        return "bg-blue-500/20 text-blue-700 border-blue-300";
+        return "bg-primary/10 text-primary border-primary/30";
       case "agentic":
-        return "bg-purple-500/20 text-purple-700 border-purple-300";
+        return "bg-genie-secondary/10 text-genie-secondary border-genie-secondary/30";
       case "hybrid":
-        return "bg-green-500/20 text-green-700 border-green-300";
+        return "bg-accent/10 text-accent border-accent/30";
       default:
-        return "bg-gray-500/20 text-gray-700 border-gray-300";
+        return "bg-muted text-muted-foreground border-border";
     }
   };
 
   const getEmotionColor = (emotion: string) => {
     switch (emotion) {
       case "positive":
-        return "text-green-600";
+        return "text-success";
       case "critical":
-        return "text-red-600";
+        return "text-destructive";
       case "neutral":
-        return "text-yellow-600";
+        return "text-warning";
       default:
-        return "text-gray-600";
+        return "text-muted-foreground";
     }
   };
 
@@ -99,37 +99,37 @@ export const JourneyStepsFlow = ({
       icon: Database,
       label: "Data Collection",
       description: "Patient information gathering and verification",
-      color: "text-blue-600"
+      color: "text-genie-primary"
     },
     {
       icon: Share2,
       label: "Cross-Functional Sharing",
       description: "Inter-departmental data exchange and collaboration",
-      color: "text-purple-600"
+      color: "text-genie-secondary"
     },
     {
       icon: Shield,
       label: "Security & Compliance",
       description: "HIPAA-compliant secure data handling",
-      color: "text-green-600"
+      color: "text-success"
     },
     {
       icon: FileText,
       label: "Documentation",
       description: "Clinical records and administrative documents",
-      color: "text-orange-600"
+      color: "text-warning"
     },
     {
       icon: Users,
       label: "Stakeholder Coordination",
       description: "Care team and patient communication",
-      color: "text-teal-600"
+      color: "text-accent"
     },
     {
       icon: Workflow,
       label: "Process Automation",
       description: "Automated workflows and decision points",
-      color: "text-indigo-600"
+      color: "text-primary"
     }
   ];
 
@@ -160,6 +160,24 @@ export const JourneyStepsFlow = ({
                   </div>
                 );
               })}
+            </div>
+            <Separator className="my-4" />
+            <div>
+              <h4 className="font-medium text-sm mb-2">Approach Legend</h4>
+              <div className="flex flex-wrap gap-4 text-xs">
+                <div className="inline-flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-primary" />
+                  <span className="text-muted-foreground">Automation</span>
+                </div>
+                <div className="inline-flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-genie-secondary" />
+                  <span className="text-muted-foreground">Agentic AI</span>
+                </div>
+                <div className="inline-flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-accent" />
+                  <span className="text-muted-foreground">Hybrid</span>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -265,7 +283,7 @@ export const JourneyStepsFlow = ({
                       <ul className="space-y-2">
                         {step.automationTasks.map((task, idx) => (
                           <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                            <span className="text-blue-500 mt-1">•</span>
+                            <span className="text-primary mt-1">•</span>
                             <span>{task}</span>
                           </li>
                         ))}
@@ -282,7 +300,7 @@ export const JourneyStepsFlow = ({
                       <ul className="space-y-2">
                         {step.aiTasks.map((task, idx) => (
                           <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                            <span className="text-purple-500 mt-1">•</span>
+                            <span className="text-genie-secondary mt-1">•</span>
                             <span>{task}</span>
                           </li>
                         ))}
