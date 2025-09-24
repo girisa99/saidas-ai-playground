@@ -147,7 +147,7 @@ const journeySteps = {
       title: "Referral Receipt",
       icon: FileText,
       time: "Day 0",
-      position: { x: 15, y: 20 },
+      position: { x: 12, y: 18 },
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "hybrid",
@@ -185,7 +185,7 @@ const journeySteps = {
       title: "Initial Patient Outreach",
       icon: MessageCircle,
       time: "Day 0-1",
-      position: { x: 35, y: 20 },
+      position: { x: 32, y: 18 },
       emotion: "positive",
       emotionIcon: ThumbsUp,
       approach: "agentic",
@@ -223,7 +223,7 @@ const journeySteps = {
       title: "Demographic & Insurance Data Collection",
       icon: ClipboardCheck,
       time: "Day 1-2",
-      position: { x: 55, y: 20 },
+      position: { x: 52, y: 18 },
       emotion: "neutral",
       emotionIcon: Meh,
       approach: "automation",
@@ -261,7 +261,7 @@ const journeySteps = {
       title: "Medical Records Acquisition",
       icon: Database,
       time: "Day 2-5",
-      position: { x: 75, y: 20 },
+      position: { x: 72, y: 18 },
       emotion: "neutral",
       emotionIcon: Meh,
       approach: "hybrid",
@@ -299,7 +299,7 @@ const journeySteps = {
       title: "Eligibility & Benefit Verification",
       icon: Shield,
       time: "Day 3-4",
-      position: { x: 15, y: 35 },
+      position: { x: 12, y: 32 },
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "hybrid",
@@ -337,7 +337,7 @@ const journeySteps = {
       title: "Clinical Review & Triage",
       icon: Stethoscope,
       time: "Day 5-7",
-      position: { x: 35, y: 35 },
+      position: { x: 32, y: 32 },
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "agentic",
@@ -375,7 +375,7 @@ const journeySteps = {
       title: "Genomic Test Pre-authorization",
       icon: Dna,
       time: "Day 7-10",
-      position: { x: 55, y: 35 },
+      position: { x: 52, y: 32 },
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "agentic",
@@ -413,7 +413,7 @@ const journeySteps = {
       title: "Appointment Scheduling & Coordination",
       icon: Calendar,
       time: "Day 10-12",
-      position: { x: 75, y: 35 },
+      position: { x: 72, y: 32 },
       emotion: "positive",
       emotionIcon: ThumbsUp,
       approach: "agentic",
@@ -451,7 +451,7 @@ const journeySteps = {
       title: "Pre-Visit Preparation & Communication",
       icon: MessageCircle,
       time: "Day 12-14",
-      position: { x: 45, y: 50 },
+      position: { x: 42, y: 46 },
       emotion: "positive",
       emotionIcon: ThumbsUp,
       approach: "agentic",
@@ -491,7 +491,7 @@ const journeySteps = {
       title: "Referral Receipt",
       icon: FileText,
       time: "Day 0 - approx. 2 hours",
-      position: { x: 15, y: 20 },
+      position: { x: 10, y: 15 },
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "hybrid",
@@ -531,7 +531,7 @@ const journeySteps = {
       title: "Data Collection",
       icon: ClipboardCheck,
       time: "Day 1-3",
-      position: { x: 35, y: 20 },
+      position: { x: 30, y: 15 },
       emotion: "neutral",
       emotionIcon: Meh,
       approach: "automation",
@@ -571,7 +571,7 @@ const journeySteps = {
       title: "Record Acquisition",
       icon: Database,
       time: "Day 4-8",
-      position: { x: 55, y: 20 },
+      position: { x: 50, y: 15 },
       emotion: "neutral",
       emotionIcon: Meh,
       approach: "hybrid",
@@ -611,7 +611,7 @@ const journeySteps = {
       title: "Appointment Scheduling",
       icon: Calendar,
       time: "Day 8-12",
-      position: { x: 75, y: 20 },
+      position: { x: 70, y: 15 },
       emotion: "positive",
       emotionIcon: ThumbsUp,
       approach: "hybrid",
@@ -651,7 +651,7 @@ const journeySteps = {
       title: "Pre-visit Preparation",
       icon: ClipboardCheck,
       time: "Day 14-20",
-      position: { x: 15, y: 35 },
+      position: { x: 10, y: 30 },
       emotion: "positive",
       emotionIcon: ThumbsUp,
       approach: "agentic",
@@ -691,7 +691,7 @@ const journeySteps = {
       title: "Visit Conduct",
       icon: Stethoscope,
       time: "Day 21",
-      position: { x: 35, y: 35 },
+      position: { x: 30, y: 30 },
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "agentic",
@@ -725,6 +725,120 @@ const journeySteps = {
         "Delayed follow-up coordination affecting continuity of care"
       ],
       improvement: "AI-assisted visits increase provider efficiency by 40% while improving treatment consistency and patient outcomes."
+    },
+    {
+      id: 7,
+      title: "Treatment Planning",
+      icon: Brain,
+      time: "Day 22-25",
+      position: { x: 50, y: 30 },
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "agentic",
+      description: "AI-driven comprehensive treatment plan development",
+      automationPrimary: false,
+      roi: "≈ 60% efficiency gain",
+      automationTasks: [
+        "Automated treatment protocol identification",
+        "Standard guideline compliance checking",
+        "Basic resource availability verification",
+        "Routine appointment scheduling for treatment"
+      ],
+      aiTasks: [
+        "Personalized treatment plan optimization",
+        "Predictive outcome modeling for treatment options",
+        "Intelligent resource allocation and scheduling",
+        "AI-driven clinical trial matching and recommendations"
+      ],
+      whyAutomation: "Standard treatment protocols and scheduling benefit from consistent automated processes",
+      whyAI: "Complex treatment optimization requires intelligent analysis of patient factors and outcome predictions",
+      phases: [
+        "Implement automated protocol identification",
+        "Deploy AI for personalized treatment optimization",
+        "Integrate predictive outcome modeling"
+      ],
+      currentIssues: [
+        "Manual treatment planning is time-intensive",
+        "Variable treatment decisions across providers",
+        "Difficulty matching patients to optimal clinical trials"
+      ],
+      improvement: "AI-optimized treatment planning reduces planning time by 60% while improving outcome predictions."
+    },
+    {
+      id: 8,
+      title: "Care Coordination",
+      icon: Network,
+      time: "Day 26-30",
+      position: { x: 70, y: 30 },
+      emotion: "positive", 
+      emotionIcon: ThumbsUp,
+      approach: "hybrid",
+      description: "Comprehensive care team coordination and communication",
+      automationPrimary: true,
+      roi: "≈ 55% efficiency gain",
+      automationTasks: [
+        "Automated care team notifications and updates",
+        "Standard appointment scheduling across specialties",
+        "Basic communication template distribution",
+        "Routine status tracking and reporting"
+      ],
+      aiTasks: [
+        "Intelligent care team coordination and communication",
+        "Predictive scheduling optimization across providers",
+        "AI-driven care gap identification and resolution",
+        "Smart escalation and intervention recommendations"
+      ],
+      whyAutomation: "Standard coordination tasks benefit from reliable automated processes",
+      whyAI: "Complex care coordination requires intelligent analysis of multiple provider schedules and patient needs",
+      phases: [
+        "Implement automated coordination workflows",
+        "Deploy AI for intelligent scheduling and communication",
+        "Integrate predictive care gap analysis"
+      ],
+      currentIssues: [
+        "Manual coordination leads to communication gaps",
+        "Difficulty scheduling across multiple providers",
+        "Missed care coordination opportunities"
+      ],
+      improvement: "AI-enhanced coordination reduces gaps by 70% with optimized multi-provider scheduling."
+    },
+    {
+      id: 9,
+      title: "Follow-up & Monitoring",
+      icon: Activity,
+      time: "Ongoing",
+      position: { x: 40, y: 45 },
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "Continuous monitoring and adaptive care management",
+      automationPrimary: false,
+      roi: "≈ 65% efficiency gain",
+      automationTasks: [
+        "Automated follow-up appointment scheduling",
+        "Standard monitoring protocol implementation",
+        "Routine lab and imaging order generation",
+        "Basic patient communication and reminders"
+      ],
+      aiTasks: [
+        "Predictive monitoring and early intervention",
+        "Intelligent adaptation of follow-up protocols",
+        "AI-driven patient outcome prediction and optimization",
+        "Smart patient engagement and adherence support"
+      ],
+      whyAutomation: "Standard follow-up tasks benefit from consistent automated delivery",
+      whyAI: "Adaptive monitoring requires intelligent analysis of patient progress and outcome prediction",
+      phases: [
+        "Implement automated follow-up workflows",
+        "Deploy AI for predictive monitoring",
+        "Integrate intelligent outcome optimization"
+      ],
+      currentIssues: [
+        "Manual follow-up scheduling creates delays",
+        "Generic monitoring protocols miss individual needs",
+        "Poor patient adherence to follow-up recommendations"
+      ],
+      improvement: "AI-adaptive monitoring improves patient outcomes by 40% with personalized follow-up optimization."
     }
   ],
   retail: []
@@ -930,9 +1044,9 @@ const scenarioDetails = {
           process: "AI analyzes family history (mother, sister with breast cancer) and flags for BRCA testing consideration."
         }
       ],
-      2: [
+      3: [
         {
-          substep: "Standard Data Collection",
+          substep: "Routine Data Collection",
           process: "AI generates comprehensive intake form including family history, lifestyle factors, and current symptoms."
         },
         {
@@ -940,7 +1054,7 @@ const scenarioDetails = {
           process: "Automatic referral to genetic counseling based on strong family history pattern."
         }
       ],
-      3: [
+      4: [
         {
           substep: "Prior Records Review",
           process: "AI requests previous mammography results and compares with current findings for progression analysis."
@@ -948,16 +1062,6 @@ const scenarioDetails = {
         {
           substep: "Imaging Coordination",
           process: "Coordination of additional imaging studies based on current findings and family history."
-        }
-      ],
-      4: [
-        {
-          substep: "Standard Scheduling",
-          process: "AI schedules appropriate follow-up based on risk assessment and provider availability."
-        },
-        {
-          substep: "Genetic Testing Coordination",
-          process: "Coordination of genetic counseling appointment alongside oncology consultation."
         }
       ],
       5: [
@@ -978,6 +1082,36 @@ const scenarioDetails = {
         {
           substep: "Treatment Planning",
           process: "Development of surveillance plan based on genetic testing results and family history."
+        }
+      ],
+      7: [
+        {
+          substep: "Treatment Protocol Development",
+          process: "AI-assisted development of personalized treatment plan based on genetic testing and clinical assessment."
+        },
+        {
+          substep: "Clinical Trial Screening",
+          process: "Automated screening for relevant clinical trials based on patient profile and treatment options."
+        }
+      ],
+      8: [
+        {
+          substep: "Multi-Disciplinary Coordination",
+          process: "AI coordinates care between oncology, genetics, and other relevant specialists for comprehensive care."
+        },
+        {
+          substep: "Treatment Timeline Development",
+          process: "Optimized treatment timeline considering all aspects of care and patient preferences."
+        }
+      ],
+      9: [
+        {
+          substep: "Long-term Monitoring Plan",
+          process: "AI develops comprehensive monitoring and follow-up plan based on treatment response and risk factors."
+        },
+        {
+          substep: "Patient Education and Support",
+          process: "Personalized education about long-term care requirements and support resources."
         }
       ]
     },
@@ -1040,6 +1174,36 @@ const scenarioDetails = {
         {
           substep: "Collaborative Planning",
           process: "Multi-disciplinary treatment planning with input from all relevant specialists."
+        }
+      ],
+      7: [
+        {
+          substep: "Complex Treatment Planning",
+          process: "AI develops treatment plan considering all comorbidities and potential drug interactions."
+        },
+        {
+          substep: "Safety Protocol Development",
+          process: "Enhanced safety protocols for complex patient with multiple medical conditions."
+        }
+      ],
+      8: [
+        {
+          substep: "Integrated Care Management",
+          process: "AI coordinates care across all specialties ensuring comprehensive and safe treatment delivery."
+        },
+        {
+          substep: "Resource Optimization",
+          process: "Optimization of healthcare resources for complex patient requiring multi-specialty care."
+        }
+      ],
+      9: [
+        {
+          substep: "Comprehensive Monitoring",
+          process: "AI-enhanced monitoring considering cancer treatment effects on all existing medical conditions."
+        },
+        {
+          substep: "Integrated Follow-up",
+          process: "Coordinated follow-up across all specialties with AI-optimized scheduling and communication."
         }
       ]
     }
