@@ -1,6 +1,21 @@
 import { LucideIcon } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { 
+  Database, 
+  Share2, 
+  Shield, 
+  FileText, 
+  Users, 
+  Clock,
+  CheckCircle,
+  AlertTriangle,
+  Info,
+  ArrowRight,
+  Workflow,
+  Target
+} from "lucide-react";
 
 interface JourneyStep {
   id: number;
@@ -18,15 +33,41 @@ interface JourneyStep {
   whyAI: string;
   currentIssues: string[];
   improvement: string;
+  phases?: string[];
+}
+
+interface PatientScenario {
+  name: string;
+  description: string;
+  complexity: "routine" | "complex" | "critical";
+  substeps: {
+    substep: string;
+    process: string;
+  }[];
+}
+
+interface LegendItem {
+  icon: LucideIcon;
+  label: string;
+  description: string;
+  color: string;
 }
 
 interface JourneyStepsFlowProps {
   steps: JourneyStep[];
   selectedStep: number | null;
   onStepClick: (stepId: number) => void;
+  patientScenarios?: PatientScenario[];
+  showLegend?: boolean;
 }
 
-export const JourneyStepsFlow = ({ steps, selectedStep, onStepClick }: JourneyStepsFlowProps) => {
+export const JourneyStepsFlow = ({ 
+  steps, 
+  selectedStep, 
+  onStepClick, 
+  patientScenarios = [],
+  showLegend = true 
+}: JourneyStepsFlowProps) => {
   const getApproachColor = (approach: string) => {
     switch (approach) {
       case "automation":
@@ -53,8 +94,78 @@ export const JourneyStepsFlow = ({ steps, selectedStep, onStepClick }: JourneySt
     }
   };
 
+  const legendItems: LegendItem[] = [
+    {
+      icon: Database,
+      label: "Data Collection",
+      description: "Patient information gathering and verification",
+      color: "text-blue-600"
+    },
+    {
+      icon: Share2,
+      label: "Cross-Functional Sharing",
+      description: "Inter-departmental data exchange and collaboration",
+      color: "text-purple-600"
+    },
+    {
+      icon: Shield,
+      label: "Security & Compliance",
+      description: "HIPAA-compliant secure data handling",
+      color: "text-green-600"
+    },
+    {
+      icon: FileText,
+      label: "Documentation",
+      description: "Clinical records and administrative documents",
+      color: "text-orange-600"
+    },
+    {
+      icon: Users,
+      label: "Stakeholder Coordination",
+      description: "Care team and patient communication",
+      color: "text-teal-600"
+    },
+    {
+      icon: Workflow,
+      label: "Process Automation",
+      description: "Automated workflows and decision points",
+      color: "text-indigo-600"
+    }
+  ];
+
   return (
     <div className="w-full space-y-6">
+      {/* Information Collection Legend */}
+      {showLegend && (
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Info className="h-5 w-5 text-primary" />
+              Information Collection & Data Flow Legend
+            </CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Understanding what data is collected and how it flows across departments at each step
+            </p>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {legendItems.map((item, index) => {
+                const IconComponent = item.icon;
+                return (
+                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                    <IconComponent className={`h-5 w-5 mt-0.5 ${item.color}`} />
+                    <div>
+                      <h4 className="font-medium text-sm">{item.label}</h4>
+                      <p className="text-xs text-muted-foreground">{item.description}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Step Flow Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {steps.map((step, index) => {
@@ -184,7 +295,7 @@ export const JourneyStepsFlow = ({ steps, selectedStep, onStepClick }: JourneySt
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                     <div>
                       <h4 className="font-semibold text-red-600 mb-3 flex items-center gap-2">
                         ⚠️ Current Issues
@@ -208,6 +319,68 @@ export const JourneyStepsFlow = ({ steps, selectedStep, onStepClick }: JourneySt
                       </div>
                     </div>
                   </div>
+
+                  {/* Implementation Phases */}
+                  {step.phases && (
+                    <div className="mb-6">
+                      <h4 className="font-semibold text-purple-600 mb-3 flex items-center gap-2">
+                        <Workflow className="h-4 w-4" />
+                        Implementation Phases
+                      </h4>
+                      <div className="space-y-2">
+                        {step.phases.map((phase, idx) => (
+                          <div key={idx} className="flex items-start gap-3 p-3 bg-purple-50 border border-purple-200 rounded-lg">
+                            <div className="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-xs font-medium mt-0.5">
+                              {idx + 1}
+                            </div>
+                            <p className="text-sm text-purple-800">{phase}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Patient Scenarios */}
+                  {patientScenarios.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold text-indigo-600 mb-4 flex items-center gap-2">
+                        <Users className="h-4 w-4" />
+                        Patient Scenario Breakdown
+                      </h4>
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        {patientScenarios.map((scenario, idx) => (
+                          <Card key={idx} className="border-l-4 border-l-indigo-400">
+                            <CardContent className="p-4">
+                              <div className="flex items-start justify-between mb-3">
+                                <h5 className="font-medium text-indigo-700">{scenario.name}</h5>
+                                <Badge 
+                                  variant="outline" 
+                                  className={
+                                    scenario.complexity === "routine" 
+                                      ? "border-green-300 text-green-700"
+                                      : scenario.complexity === "complex"
+                                      ? "border-yellow-300 text-yellow-700"
+                                      : "border-red-300 text-red-700"
+                                  }
+                                >
+                                  {scenario.complexity}
+                                </Badge>
+                              </div>
+                              <p className="text-xs text-muted-foreground mb-3">{scenario.description}</p>
+                              <div className="space-y-2">
+                                {scenario.substeps.map((substep, subIdx) => (
+                                  <div key={subIdx} className="border border-border rounded p-2">
+                                    <h6 className="font-medium text-xs text-foreground mb-1">{substep.substep}</h6>
+                                    <p className="text-xs text-muted-foreground">{substep.process}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             );

@@ -1153,6 +1153,35 @@ const BusinessUseCases = () => {
   const currentJourneySteps = journeySteps[selectedBusinessCase as keyof typeof journeySteps];
   const currentScenarioDetails = scenarioDetails[selectedBusinessCase as keyof typeof scenarioDetails];
 
+  // Transform scenario data for JourneyStepsFlow
+  const getPatientScenariosForStep = (stepId: number) => {
+    if (!selectedStep || selectedStep !== stepId) return [];
+    
+    const scenarios = [];
+    
+    // Sarah scenario
+    if (currentScenarioDetails.sarah[stepId]) {
+      scenarios.push({
+        name: currentCase.scenarioTitles.sarah,
+        description: currentCase.scenarioDescriptions.sarah,
+        complexity: "routine" as const,
+        substeps: currentScenarioDetails.sarah[stepId]
+      });
+    }
+    
+    // Michael scenario  
+    if (currentScenarioDetails.michael[stepId]) {
+      scenarios.push({
+        name: currentCase.scenarioTitles.michael,
+        description: currentCase.scenarioDescriptions.michael,
+        complexity: "complex" as const,
+        substeps: currentScenarioDetails.michael[stepId]
+      });
+    }
+    
+    return scenarios;
+  };
+
   const getApproachColor = (approach: string) => {
     switch (approach) {
       case "automation":
@@ -1321,6 +1350,8 @@ const BusinessUseCases = () => {
             steps={currentJourneySteps}
             selectedStep={selectedStep}
             onStepClick={(stepId) => setSelectedStep(selectedStep === stepId ? null : stepId)}
+            patientScenarios={selectedStep ? getPatientScenariosForStep(selectedStep) : []}
+            showLegend={true}
           />
         </CardContent>
       </Card>
