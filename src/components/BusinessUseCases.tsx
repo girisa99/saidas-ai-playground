@@ -2101,13 +2101,12 @@ const BusinessUseCases = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
               Genie AI <span className="text-genie-accent">Experimentation Hub</span>
               <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl mt-2 font-normal text-white/90">
-                Real Implementation Stories & Learnings
+                Use Case Explorations
               </div>
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-              Explore real-world implementations from our experimentation lab. Discover what we've successfully deployed, 
-              current learnings from active experiments, and challenges we're addressing in healthcare AI transformation.
+              Real-world healthcare AI implementations and learnings from our experimentation hub. Exploring various scenarios where some are implemented and actively being tested, while others are in development phases as part of our ongoing experimentation initiatives.
             </p>
             
             {/* Key Features Grid - Mobile Responsive */}
@@ -2147,7 +2146,7 @@ const BusinessUseCases = () => {
               </Button>
               <Button 
                 variant="outline" 
-                className="border-white/30 text-white hover:bg-white/10"
+                className="border-white/30 text-white hover:bg-white/10 hover:text-white bg-white/5"
                 onClick={() => setShowDecisionFramework(!showDecisionFramework)}
               >
                 <FileText className="w-4 h-4 mr-2" />
