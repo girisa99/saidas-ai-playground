@@ -110,6 +110,34 @@ const businessCases = {
       sarah: "62-year-old urgent pancreatic cancer referral requiring immediate specialist coordination",
       michael: "58-year-old with multiple prior treatments needing comprehensive genomic testing and care team assembly"
     }
+  },
+  contact: {
+    id: "contact",
+    title: "Digital Contact Center Transformation",
+    description: "Comprehensive patient communication hub with AI-powered triage, multi-channel coordination, and intelligent resolution",
+    icon: MessageCircle,
+    currentIssues: [
+      "80% of contacts through phone create 4-7 minute hold times and inefficient resource allocation",
+      "Manual identity verification takes 2-3 minutes with 15% failure rate requiring supervisor intervention",
+      "Agents navigate 3-5 different systems causing 5-8 minute information gathering delays",
+      "Manual case creation and routing leads to inconsistent SLA application and priority assignment",
+      "Channel switching causes information loss and patient frustration with repeated requests"
+    ],
+    expectedImprovements: [
+      "Smart IVR with NLP reduces hold times by 70% and improves first-call resolution by 85%",
+      "Voice biometrics and multi-factor authentication reduces verification time to under 30 seconds",
+      "Unified patient view eliminates system navigation reducing information gathering time by 80%",
+      "AI-powered case management ensures consistent priority scoring and optimal resource allocation",
+      "Seamless multi-channel coordination maintains context across all touchpoints"
+    ],
+    scenarioTitles: {
+      sarah: "Jennifer - Treatment Inquiry",
+      michael: "David - Urgent Support"
+    },
+    scenarioDescriptions: {
+      sarah: "First-time cancer patient seeking treatment options across multiple channels",
+      michael: "Active patient experiencing side effects during radiation therapy requiring urgent consultation"
+    }
   }
 };
 
@@ -773,6 +801,408 @@ const journeySteps = {
       ],
       improvement: "AI-adaptive monitoring improves patient outcomes by 40% with personalized follow-up optimization."
     }
+  ],
+  contact: [
+    {
+      id: 1,
+      title: "Initial Contact & Channel Entry",
+      icon: MessageCircle,
+      time: "0-2 min",
+      emotion: "neutral",
+      emotionIcon: Meh,
+      approach: "hybrid",
+      description: "Smart IVR with NLP and virtual triage agent for optimal channel routing",
+      automationPrimary: true,
+      roi: "≈ 70% efficiency gain",
+      automationTasks: [
+        "Smart IVR with voice-to-text conversion",
+        "Callback technology with queue management",
+        "Channel deflection to faster digital options",
+        "Pre-call data loading for agent preparation",
+        "Automated sentiment detection from voice"
+      ],
+      aiTasks: [
+        "Virtual Triage Agent with NLP intent recognition",
+        "Clinical risk algorithm assessment for urgency",
+        "Intelligent routing to appropriate specialists",
+        "Preliminary guidance while routing",
+        "Continuous learning from outcomes"
+      ],
+      whyAutomation: "High-volume contact entry benefits from consistent IVR workflows and automated queue management",
+      whyAI: "Complex triage decisions require intelligent assessment of patient needs and optimal routing",
+      phases: [
+        "Deploy smart IVR with NLP capabilities",
+        "Implement virtual triage agent",
+        "Integrate predictive routing optimization"
+      ],
+      currentIssues: [
+        "80% of contacts through phone create 4-7 minute hold times",
+        "IVR menu with 6+ options confuses patients",
+        "25% of calls require transfer to another agent",
+        "Manual transfer processes lose context"
+      ],
+      improvement: "Smart IVR reduces hold times by 70% and improves first-call resolution by 85%."
+    },
+    {
+      id: 2,
+      title: "Identity Verification & Authentication",
+      icon: Shield,
+      time: "0.5-3 min",
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "agentic",
+      description: "Multi-factor authentication with voice biometrics and identity validation agent",
+      automationPrimary: false,
+      roi: "≈ 85% efficiency gain",
+      automationTasks: [
+        "Voice biometrics for passive authentication",
+        "Multi-factor authentication via SMS/Email",
+        "Biometric integration for mobile users",
+        "SSO integration across USON systems",
+        "Automated fraud detection scoring"
+      ],
+      aiTasks: [
+        "Identity Validation Agent combining multiple factors",
+        "Adaptive authentication based on request sensitivity",
+        "Suspicious pattern flagging and analysis",
+        "Security optimization while maintaining UX",
+        "Continuous learning from fraud patterns"
+      ],
+      whyAutomation: "Consistent authentication workflows benefit from standardized verification processes",
+      whyAI: "Complex identity validation requires intelligent risk assessment and adaptive security measures",
+      phases: [
+        "Implement voice biometrics system",
+        "Deploy identity validation agent",
+        "Integrate adaptive security protocols"
+      ],
+      currentIssues: [
+        "Manual verification takes 2-3 minutes on average",
+        "15% failure rate requiring supervisor intervention",
+        "Cross-references with multiple systems manually",
+        "Inconsistent verification standards across agents"
+      ],
+      improvement: "Voice biometrics reduces verification time to under 30 seconds with 99% accuracy."
+    },
+    {
+      id: 3,
+      title: "Issue Classification & Intent Recognition",
+      icon: Search,
+      time: "1-3 min",
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "AI-powered issue resolution agent with real-time NLP and context analysis",
+      automationPrimary: false,
+      roi: "≈ 65% efficiency gain",
+      automationTasks: [
+        "Real-time NLP processing of conversations",
+        "Dynamic form population from speech",
+        "Suggested classifications from AI analysis",
+        "Conversation analytics and sentiment tracking",
+        "Knowledge article suggestions for agents"
+      ],
+      aiTasks: [
+        "Issue Resolution Agent analyzing context in real-time",
+        "Prediction of most likely resolution paths",
+        "Proactive escalation prevention suggestions",
+        "Dynamic scripting and response templates",
+        "Classification accuracy refinement through feedback"
+      ],
+      whyAutomation: "Consistent classification benefits from standardized NLP processing workflows",
+      whyAI: "Complex intent recognition requires intelligent context analysis and predictive insights",
+      phases: [
+        "Deploy real-time NLP processing",
+        "Implement issue resolution agent",
+        "Integrate predictive resolution pathways"
+      ],
+      currentIssues: [
+        "Manual categorization depends on agent experience",
+        "Inconsistent classification across agents",
+        "Post-call manual review and recategorization required",
+        "Limited real-time guidance for agents"
+      ],
+      improvement: "AI-powered classification achieves 95% accuracy with real-time agent guidance."
+    },
+    {
+      id: 4,
+      title: "Information Gathering & Context Compilation",
+      icon: Database,
+      time: "2-8 min",
+      emotion: "neutral",
+      emotionIcon: Meh,
+      approach: "hybrid",
+      description: "Unified patient view with context intelligence agent for comprehensive data compilation",
+      automationPrimary: true,
+      roi: "≈ 80% efficiency gain",
+      automationTasks: [
+        "Unified patient dashboard aggregation",
+        "Smart forms adapting based on issue type",
+        "Data pre-population from existing systems",
+        "Real-time system integration and sync",
+        "Mobile-responsive interface design"
+      ],
+      aiTasks: [
+        "Context Intelligence Agent compiling comprehensive patient context",
+        "Information gap identification and question suggestions",
+        "Priority-based information collection by urgency",
+        "Predictive insights from patient history",
+        "Context maintenance across channel switches"
+      ],
+      whyAutomation: "Data aggregation benefits from consistent system integration and automated form population",
+      whyAI: "Complex context compilation requires intelligent prioritization and gap analysis",
+      phases: [
+        "Implement unified patient view dashboard",
+        "Deploy context intelligence agent",
+        "Integrate predictive context analysis"
+      ],
+      currentIssues: [
+        "Agents navigate 3-5 different systems manually",
+        "Patients repeat information already in systems",
+        "Average data gathering time: 5-8 minutes",
+        "Frequent system timeouts and login issues"
+      ],
+      improvement: "Unified patient view reduces information gathering time by 80% with complete context."
+    },
+    {
+      id: 5,
+      title: "Case Creation & Priority Management",
+      icon: ClipboardCheck,
+      time: "2-5 min",
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "Intelligent case management agent with automated routing and priority scoring",
+      automationPrimary: false,
+      roi: "≈ 75% efficiency gain",
+      automationTasks: [
+        "Intelligent case generation with structured data",
+        "Priority scoring algorithm for consistency",
+        "Automated routing to best-fit agents/teams",
+        "SLA monitoring with escalation triggers",
+        "Workflow orchestration for approvals"
+      ],
+      aiTasks: [
+        "Case Management Agent analyzing complexity and resources",
+        "Resolution time prediction from historical patterns",
+        "Workload balancing across agents and teams",
+        "Multi-departmental coordination identification",
+        "Proactive escalation based on risk factors"
+      ],
+      whyAutomation: "Case creation benefits from consistent priority scoring and automated routing workflows",
+      whyAI: "Complex case management requires intelligent resource allocation and predictive analysis",
+      phases: [
+        "Implement intelligent case generation",
+        "Deploy case management agent",
+        "Integrate predictive workload balancing"
+      ],
+      currentIssues: [
+        "Manual ticket creation in ServiceNow",
+        "Priority assignment based on personal judgment",
+        "Limited integration with clinical systems",
+        "Inconsistent SLA application across cases"
+      ],
+      improvement: "AI-powered case management ensures consistent priority scoring and optimal resource allocation."
+    },
+    {
+      id: 6,
+      title: "Resolution Research & Knowledge Management",
+      icon: Lightbulb,
+      time: "3-15 min",
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "Solution discovery agent with intelligent knowledge search and resolution strategies",
+      automationPrimary: false,
+      roi: "≈ 60% efficiency gain",
+      automationTasks: [
+        "Intelligent knowledge search with AI-powered discovery",
+        "Contextual article suggestions in real-time",
+        "Automated content updates and maintenance",
+        "Integration APIs for external systems",
+        "Pre-configured resolution workflow templates"
+      ],
+      aiTasks: [
+        "Solution Discovery Agent analyzing case context",
+        "Learning from successful resolution patterns",
+        "Step-by-step guidance for specific situations",
+        "Human expertise identification and warm handoffs",
+        "Knowledge base updates from resolution outcomes"
+      ],
+      whyAutomation: "Knowledge search benefits from consistent AI-powered content discovery and template workflows",
+      whyAI: "Complex solution discovery requires intelligent pattern recognition and adaptive guidance",
+      phases: [
+        "Deploy intelligent knowledge search",
+        "Implement solution discovery agent",
+        "Integrate continuous learning systems"
+      ],
+      currentIssues: [
+        "Manual knowledge base searches with limited functionality",
+        "Outdated content and trial-and-error approaches",
+        "Consultation with supervisors causes delays",
+        "Inconsistent resolution quality across agents"
+      ],
+      improvement: "AI-powered solution discovery improves resolution accuracy by 90% with step-by-step guidance."
+    },
+    {
+      id: 7,
+      title: "Multi-Channel Coordination & Seamless Handoffs",
+      icon: Network,
+      time: "1-5 min",
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "Channel orchestration agent managing unified communication across all touchpoints",
+      automationPrimary: false,
+      roi: "≈ 85% efficiency gain",
+      automationTasks: [
+        "Unified communication platform across channels",
+        "Context preservation during transfers",
+        "Channel optimization suggestions by issue type",
+        "Seamless handoffs with automated briefing",
+        "Mobile-first design optimization"
+      ],
+      aiTasks: [
+        "Channel Orchestration Agent optimizing communication paths",
+        "Context continuity management across transitions",
+        "Optimal channel prediction for issue resolution",
+        "Multi-agent interaction coordination for complex cases",
+        "Channel effectiveness pattern learning"
+      ],
+      whyAutomation: "Channel coordination benefits from consistent context preservation and automated handoff workflows",
+      whyAI: "Complex orchestration requires intelligent channel optimization and context management",
+      phases: [
+        "Implement unified communication platform",
+        "Deploy channel orchestration agent",
+        "Integrate predictive channel optimization"
+      ],
+      currentIssues: [
+        "Patients restart conversations when switching channels",
+        "No unified conversation history across touchpoints",
+        "Manual transfer processes with information loss",
+        "Inconsistent experience across channels"
+      ],
+      improvement: "Seamless multi-channel coordination maintains context across all touchpoints with zero information loss."
+    },
+    {
+      id: 8,
+      title: "Escalation Management & Exception Handling",
+      icon: TrendingUp,
+      time: "5-30 min",
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "agentic",
+      description: "Escalation management agent with predictive triggers and intelligent resource allocation",
+      automationPrimary: false,
+      roi: "≈ 70% efficiency gain",
+      automationTasks: [
+        "Predictive escalation triggers with AI assessment",
+        "Automatic supervisor notification with context",
+        "Escalation workflow automation and standardization",
+        "Intelligent resource allocation for senior staff",
+        "Real-time escalation metrics and trending"
+      ],
+      aiTasks: [
+        "Escalation Management Agent predicting cases requiring escalation",
+        "Proactive intervention suggestions to prevent escalation",
+        "Escalation workflow and resource allocation management",
+        "Pattern analysis for prevention strategy improvement",
+        "Cross-functional team coordination for complex cases"
+      ],
+      whyAutomation: "Escalation workflows benefit from consistent trigger mechanisms and automated notification systems",
+      whyAI: "Complex escalation management requires intelligent prediction and proactive intervention strategies",
+      phases: [
+        "Implement predictive escalation triggers",
+        "Deploy escalation management agent",
+        "Integrate cross-functional coordination"
+      ],
+      currentIssues: [
+        "Subjective escalation decisions by agents",
+        "Manual supervisor notification causes delays",
+        "No standardized escalation triggers",
+        "Reactive approach to complex issues"
+      ],
+      improvement: "Predictive escalation management prevents 60% of potential escalations through proactive intervention."
+    },
+    {
+      id: 9,
+      title: "Follow-up Communication & Relationship Management",
+      icon: Heart,
+      time: "5-15 min",
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "Relationship management agent with personalized engagement and journey-based triggers",
+      automationPrimary: false,
+      roi: "≈ 65% efficiency gain",
+      automationTasks: [
+        "Intelligent follow-up scheduling with timing optimization",
+        "Personalized communication with dynamic content",
+        "Multi-channel follow-up coordination",
+        "Outcome tracking and effectiveness measurement",
+        "Journey-based triggers aligned with milestones"
+      ],
+      aiTasks: [
+        "Relationship Management Agent developing personalized strategies",
+        "Follow-up timing optimization based on behavior patterns",
+        "Communication preference and channel effectiveness prediction",
+        "Long-term relationship building throughout treatment journey",
+        "Proactive support and intervention opportunity identification"
+      ],
+      whyAutomation: "Follow-up scheduling benefits from consistent timing optimization and multi-channel coordination",
+      whyAI: "Complex relationship management requires personalized strategies and predictive engagement",
+      phases: [
+        "Implement intelligent follow-up scheduling",
+        "Deploy relationship management agent",
+        "Integrate journey-based personalization"
+      ],
+      currentIssues: [
+        "Manual follow-up scheduling in agent calendars",
+        "Generic follow-up scripts and templates",
+        "No proactive outreach based on patient journey",
+        "Limited tracking of follow-up effectiveness"
+      ],
+      improvement: "AI-driven relationship management improves patient engagement by 75% with personalized outreach."
+    },
+    {
+      id: 10,
+      title: "Satisfaction Measurement & Continuous Improvement",
+      icon: Star,
+      time: "2-10 min",
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "Experience optimization agent with real-time satisfaction monitoring and improvement loops",
+      automationPrimary: false,
+      roi: "≈ 80% efficiency gain",
+      automationTasks: [
+        "Real-time sentiment analysis during interactions",
+        "Dynamic survey generation based on interaction type",
+        "Multi-modal feedback collection (voice, text, visual)",
+        "Automated analysis of feedback data patterns",
+        "Closed-loop improvement with automatic updates"
+      ],
+      aiTasks: [
+        "Experience Optimization Agent monitoring satisfaction real-time",
+        "Pain point and improvement opportunity identification",
+        "Satisfaction outcome prediction before case closure",
+        "Immediate intervention recommendations for at-risk interactions",
+        "Continuous improvement through pattern analysis"
+      ],
+      whyAutomation: "Satisfaction measurement benefits from consistent real-time monitoring and automated feedback collection",
+      whyAI: "Complex experience optimization requires intelligent analysis and predictive intervention capabilities",
+      phases: [
+        "Implement real-time sentiment analysis",
+        "Deploy experience optimization agent",
+        "Integrate predictive satisfaction modeling"
+      ],
+      currentIssues: [
+        "Email surveys sent 24 hours after case closure",
+        "Low response rates (8-12%) limit insights",
+        "Generic survey questions provide limited value",
+        "Manual analysis delays improvement implementation"
+      ],
+      improvement: "Real-time satisfaction monitoring with predictive intervention improves patient experience scores by 85%."
+    }
   ]
 };
 
@@ -1149,6 +1579,212 @@ const scenarioDetails = {
         }
       ]
     }
+  },
+  contact: {
+    sarah: {
+      1: [
+        {
+          substep: "Smart Channel Entry",
+          process: "Jennifer calls main number, smart IVR recognizes 'treatment options' intent, immediately routes to oncology triage while loading her profile."
+        },
+        {
+          substep: "Virtual Triage Assessment",
+          process: "AI analyzes: first-time caller, treatment inquiry, moderate anxiety level - suggests phone consultation with option to switch to video call."
+        }
+      ],
+      2: [
+        {
+          substep: "Voice Authentication",
+          process: "System recognizes Jennifer's voice pattern while she speaks, completes authentication in 15 seconds without interrupting conversation flow."
+        },
+        {
+          substep: "Security Confirmation",
+          process: "AI confirms identity with 99.2% confidence, enables full access to oncology systems and consultation capabilities."
+        }
+      ],
+      3: [
+        {
+          substep: "Intent Classification",
+          process: "NLP processing identifies: 'treatment options inquiry + insurance concerns + anxiety about diagnosis' - routes to specialized oncology financial counselor."
+        },
+        {
+          substep: "Context Building",
+          process: "AI compiles: recent diagnosis details, insurance information, family support system, communication preferences for comprehensive consultation."
+        }
+      ],
+      4: [
+        {
+          substep: "Unified Information View",
+          process: "Agent receives complete context: medical history, insurance details, provider network, previous inquiries - no questions needed from Jennifer."
+        },
+        {
+          substep: "Proactive Data Population",
+          process: "AI pre-fills consultation forms with available information, identifies specific questions needed about treatment preferences."
+        }
+      ],
+      5: [
+        {
+          substep: "Priority Case Creation",
+          process: "AI creates case: Priority 2 (treatment consultation), assigns to specialized oncology team, estimates 45-minute consultation needed."
+        },
+        {
+          substep: "Resource Coordination",
+          process: "Automatically schedules follow-up with financial counselor, reserves appointment slots with recommended oncologists."
+        }
+      ],
+      6: [
+        {
+          substep: "Treatment Options Research",
+          process: "AI provides agent with personalized treatment option summary based on Jennifer's specific cancer type, stage, and insurance coverage."
+        },
+        {
+          substep: "Financial Guidance Preparation",
+          process: "System prepares insurance coverage analysis, out-of-pocket estimates, and financial assistance program eligibility."
+        }
+      ],
+      7: [
+        {
+          substep: "Seamless Channel Transition",
+          process: "Jennifer requests to switch to video call for visual materials, system maintains full context and connects immediately."
+        },
+        {
+          substep: "Enhanced Consultation",
+          process: "Video call enables sharing of treatment timelines, facility tours, and educational materials while maintaining conversation continuity."
+        }
+      ],
+      8: [
+        {
+          substep: "Proactive Follow-up Scheduling",
+          process: "AI suggests optimal follow-up timing based on Jennifer's emotional state and information processing needs."
+        },
+        {
+          substep: "Care Team Assembly",
+          process: "System coordinates initial appointments with recommended oncologist, financial counselor, and patient navigator."
+        }
+      ],
+      9: [
+        {
+          substep: "Personalized Communication Plan",
+          process: "AI creates follow-up schedule: email summary in 2 hours, check-in call in 2 days, appointment reminders via preferred SMS."
+        },
+        {
+          substep: "Emotional Support Connection",
+          process: "System connects Jennifer with peer support group and provides contact information for patient navigator."
+        }
+      ],
+      10: [
+        {
+          substep: "Real-time Satisfaction Monitoring",
+          process: "AI detects positive resolution: reduced anxiety in voice, engagement with follow-up plan, expressed confidence in next steps."
+        },
+        {
+          substep: "Continuous Improvement Input",
+          process: "System captures successful resolution pattern: first-time caller + treatment inquiry + financial concerns = specialized counselor + video option."
+        }
+      ]
+    },
+    michael: {
+      1: [
+        {
+          substep: "Urgent Medical Triage",
+          process: "David calls reporting severe nausea during radiation, AI immediately flags as 'urgent clinical' and routes to on-call radiation oncology nurse."
+        },
+        {
+          substep: "Clinical Priority Routing",
+          process: "System prioritizes call to front of queue, loads David's treatment schedule, current medications, and side effect history."
+        }
+      ],
+      2: [
+        {
+          substep: "Rapid Authentication",
+          process: "Voice biometrics confirms David's identity in 8 seconds during description of symptoms, enabling immediate medical consultation."
+        },
+        {
+          substep: "Emergency Access Authorization",
+          process: "AI grants immediate access to clinical systems, medication protocols, and emergency consultation capabilities."
+        }
+      ],
+      3: [
+        {
+          substep: "Symptom Analysis",
+          process: "AI analyzes: 'severe nausea + radiation therapy day 8 + specific medication regimen' - flags as Grade 3 toxicity requiring immediate intervention."
+        },
+        {
+          substep: "Clinical Decision Support",
+          process: "System provides nurse with protocol recommendations, medication adjustment options, and escalation triggers."
+        }
+      ],
+      4: [
+        {
+          substep: "Complete Clinical Picture",
+          process: "Nurse receives: current treatment plan, today's radiation dose, antiemetic schedule, previous side effects, lab values - comprehensive view ready."
+        },
+        {
+          substep: "Real-time Protocol Access",
+          process: "AI provides NCCN guidelines for Grade 3 nausea management specific to David's radiation regimen and medical history."
+        }
+      ],
+      5: [
+        {
+          substep: "Urgent Case Management",
+          process: "AI creates Priority 1 case: clinical emergency, assigns to radiation oncology team, estimates need for possible treatment hold."
+        },
+        {
+          substep: "Multi-team Coordination",
+          process: "System alerts radiation oncologist, pharmacy for medication adjustments, and schedules urgent assessment appointment."
+        }
+      ],
+      6: [
+        {
+          substep: "Evidence-based Protocol",
+          process: "AI provides nurse with step-by-step symptom management protocol: immediate antiemetic, hydration assessment, treatment hold criteria."
+        },
+        {
+          substep: "Physician Consultation Bridge",
+          process: "System enables immediate consultation with radiation oncologist while maintaining David on the line for real-time decisions."
+        }
+      ],
+      7: [
+        {
+          substep: "Multi-modal Care Coordination",
+          process: "Nurse connects David to secure video call with physician, maintaining phone connection for wife who will manage medications."
+        },
+        {
+          substep: "Family Caregiver Integration",
+          process: "System extends consultation to include David's wife with medication management instructions and warning signs to monitor."
+        }
+      ],
+      8: [
+        {
+          substep: "Clinical Decision Documentation",
+          process: "AI documents: treatment hold for 2 days, antiemetic protocol change, urgent lab work needed, follow-up in 24 hours."
+        },
+        {
+          substep: "Care Plan Activation",
+          process: "System automatically schedules lab work, adjusts radiation schedule, sends new medication orders to pharmacy."
+        }
+      ],
+      9: [
+        {
+          substep: "Immediate Action Plan",
+          process: "AI generates: 24-hour check-in call, medication pickup instructions, emergency contact protocols, symptom monitoring guide."
+        },
+        {
+          substep: "Caregiver Support Setup",
+          process: "System provides David's wife with medication schedule, warning signs, direct nurse line access, and emergency protocols."
+        }
+      ],
+      10: [
+        {
+          substep: "Clinical Outcome Tracking",
+          process: "AI monitors resolution: symptom improvement over 24 hours, successful treatment modification, patient confidence in management plan."
+        },
+        {
+          substep: "Protocol Optimization",
+          process: "System updates clinical protocols: rapid escalation for Grade 3+ toxicity, improved caregiver integration, optimized medication timing."
+        }
+      ]
+    }
   }
 };
 
@@ -1263,6 +1899,68 @@ const scenarioImpactAnalysis = {
         { step: 7, totalTimeSaved: "7.5 hours", totalErrorReduction: "80%", careQuality: "8.3/10" },
         { step: 8, totalTimeSaved: "8.5 hours", totalErrorReduction: "81%", careQuality: "8.5/10" },
         { step: 9, totalTimeSaved: "9.5 hours", totalErrorReduction: "82%", careQuality: "8.6/10" }
+      ]
+    }
+  },
+  contact: {
+    sarah: {
+      scenarioType: "Treatment Inquiry - Multi-Channel",
+      overallTimeReduction: "78%",
+      errorReduction: "92%",
+      patientSatisfaction: "9.1/10",
+      stepImpacts: {
+        1: { holdTimeReduction: "70%", routingAccuracy: "95%", channelOptimization: "85%" },
+        2: { authenticationTime: "15 seconds", accuracyRate: "99.2%", userExperience: "Excellent" },
+        3: { intentAccuracy: "96%", contextCapture: "98%", resolutionPrediction: "87%" },
+        4: { informationCompleteness: "97%", systemNavigationTime: "80% reduction", dataAccuracy: "99%" },
+        5: { priorityAccuracy: "94%", resourceAllocation: "Optimal", caseQuality: "High" },
+        6: { resolutionSpeed: "75% faster", knowledgeAccuracy: "96%", agentConfidence: "High" },
+        7: { channelContinuity: "100%", contextPreservation: "Complete", userSatisfaction: "9.0/10" },
+        8: { escalationPrevention: "85%", proactiveSupport: "92%", resourceOptimization: "88%" },
+        9: { engagementQuality: "93%", followUpSuccess: "89%", relationshipBuilding: "Excellent" },
+        10: { satisfactionAccuracy: "Real-time", improvementSpeed: "75% faster", patientExperience: "9.1/10" }
+      },
+      cumulativeBenefits: [
+        { step: 1, totalTimeSaved: "3 minutes", totalErrorReduction: "70%", patientExperience: "7.5/10" },
+        { step: 2, totalTimeSaved: "5 minutes", totalErrorReduction: "75%", patientExperience: "8.0/10" },
+        { step: 3, totalTimeSaved: "8 minutes", totalErrorReduction: "80%", patientExperience: "8.2/10" },
+        { step: 4, totalTimeSaved: "15 minutes", totalErrorReduction: "85%", patientExperience: "8.4/10" },
+        { step: 5, totalTimeSaved: "20 minutes", totalErrorReduction: "87%", patientExperience: "8.6/10" },
+        { step: 6, totalTimeSaved: "30 minutes", totalErrorReduction: "89%", patientExperience: "8.7/10" },
+        { step: 7, totalTimeSaved: "35 minutes", totalErrorReduction: "90%", patientExperience: "8.8/10" },
+        { step: 8, totalTimeSaved: "40 minutes", totalErrorReduction: "91%", patientExperience: "8.9/10" },
+        { step: 9, totalTimeSaved: "45 minutes", totalErrorReduction: "91.5%", patientExperience: "9.0/10" },
+        { step: 10, totalTimeSaved: "47 minutes", totalErrorReduction: "92%", patientExperience: "9.1/10" }
+      ]
+    },
+    michael: {
+      scenarioType: "Urgent Clinical Support",
+      overallTimeReduction: "82%",
+      errorReduction: "95%",
+      patientSatisfaction: "9.4/10",
+      stepImpacts: {
+        1: { urgentTriageSpeed: "95%", clinicalRouting: "98%", priorityAccuracy: "96%" },
+        2: { rapidAuthentication: "8 seconds", emergencyAccess: "Immediate", securityMaintenance: "100%" },
+        3: { symptomAnalysis: "97%", clinicalDecisionSupport: "95%", protocolAccuracy: "98%" },
+        4: { clinicalDataCompleteness: "99%", protocolAccess: "Real-time", decisionSpeed: "85% faster" },
+        5: { urgentCaseManagement: "96%", teamCoordination: "94%", resourceAllocation: "Optimal" },
+        6: { protocolAdherence: "98%", clinicalOutcomes: "Improved", physicianConsultation: "Seamless" },
+        7: { familyCaregiverIntegration: "92%", multiModalSupport: "Excellent", communicationContinuity: "100%" },
+        8: { clinicalDocumentation: "Automated", carePlanActivation: "Immediate", coordinationEfficiency: "95%" },
+        9: { actionPlanClarity: "97%", caregiverSupport: "Comprehensive", emergencyPreparedness: "Complete" },
+        10: { clinicalOutcomeTracking: "Real-time", protocolOptimization: "Continuous", emergencyResponse: "Enhanced" }
+      },
+      cumulativeBenefits: [
+        { step: 1, totalTimeSaved: "5 minutes", totalErrorReduction: "95%", clinicalOutcome: "9.0/10" },
+        { step: 2, totalTimeSaved: "7 minutes", totalErrorReduction: "95%", clinicalOutcome: "9.1/10" },
+        { step: 3, totalTimeSaved: "10 minutes", totalErrorReduction: "95%", clinicalOutcome: "9.1/10" },
+        { step: 4, totalTimeSaved: "15 minutes", totalErrorReduction: "95%", clinicalOutcome: "9.2/10" },
+        { step: 5, totalTimeSaved: "20 minutes", totalErrorReduction: "95%", clinicalOutcome: "9.2/10" },
+        { step: 6, totalTimeSaved: "22 minutes", totalErrorReduction: "95%", clinicalOutcome: "9.3/10" },
+        { step: 7, totalTimeSaved: "25 minutes", totalErrorReduction: "95%", clinicalOutcome: "9.3/10" },
+        { step: 8, totalTimeSaved: "27 minutes", totalErrorReduction: "95%", clinicalOutcome: "9.3/10" },
+        { step: 9, totalTimeSaved: "29 minutes", totalErrorReduction: "95%", clinicalOutcome: "9.4/10" },
+        { step: 10, totalTimeSaved: "30 minutes", totalErrorReduction: "95%", clinicalOutcome: "9.4/10" }
       ]
     }
   }
