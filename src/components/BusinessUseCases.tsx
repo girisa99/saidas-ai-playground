@@ -1180,17 +1180,91 @@ const BusinessUseCases = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8 p-3 sm:p-4 lg:p-6">
-      {/* Header */}
-      <div className="text-center space-y-2 sm:space-y-3 lg:space-y-4">
-        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary via-primary/80 to-secondary bg-clip-text text-transparent px-2">
-          Business Use Cases Analysis
-          Business Use Cases Analysis
-        </h1>
-        <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4">
-          Strategic framework for choosing between automation and agentic AI across different healthcare workflows
-        </p>
-      </div>
+    <div className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <section className="relative pt-24 pb-16 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url('/src/assets/hero-ai-background.jpg')` }}
+        />
+        
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-genie-dark/90 via-genie-primary/80 to-genie-secondary/70" />
+        
+        {/* Animated Particles */}
+        <div className="absolute inset-0">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute bg-genie-accent/40 rounded-full animate-float"
+              style={{
+                width: `${Math.random() * 4 + 2}px`,
+                height: `${Math.random() * 4 + 2}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 4}s`,
+                animationDuration: `${3 + Math.random() * 3}s`
+              }}
+            />
+          ))}
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl">
+            <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-3 sm:mb-4">
+              <Target className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+              Strategic Analysis
+            </Badge>
+            
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
+              Business Use <span className="text-genie-accent">Cases</span>
+            </h1>
+            
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
+              Strategic framework for choosing between automation and agentic AI across different healthcare workflows. 
+              Explore detailed journey maps, technology analysis, and impact assessments.
+            </p>
+            
+            {/* Key Features Grid - Mobile Responsive */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 px-2">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Healthcare Focus</h3>
+                <p className="text-white/80 text-xs">Oncology & Patient Care</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">AI vs Automation</h3>
+                <p className="text-white/80 text-xs">Strategic Decision Framework</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Impact Analysis</h3>
+                <p className="text-white/80 text-xs">ROI & Efficiency Metrics</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                <Network className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Journey Mapping</h3>
+                <p className="text-white/80 text-xs">Step-by-step workflows</p>
+              </div>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 px-2">
+              <Button className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark">
+                <ArrowDown className="w-4 h-4 mr-2" />
+                Explore Use Cases
+              </Button>
+              <Button variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                <FileText className="w-4 h-4 mr-2" />
+                View Analysis Framework
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8 p-3 sm:p-4 lg:p-6">
 
       {/* Business Case Selection */}
       <Card>
@@ -1521,6 +1595,7 @@ const BusinessUseCases = () => {
           </CardContent>
         </Card>
       </div>
+    </div>
     </div>
   );
 };
