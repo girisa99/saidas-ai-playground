@@ -1180,13 +1180,14 @@ const BusinessUseCases = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 p-3 sm:p-6">
+    <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8 p-3 sm:p-4 lg:p-6">
       {/* Header */}
-      <div className="text-center space-y-3 sm:space-y-4">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary via-primary/80 to-secondary bg-clip-text text-transparent">
+      <div className="text-center space-y-2 sm:space-y-3 lg:space-y-4">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary via-primary/80 to-secondary bg-clip-text text-transparent px-2">
+          Business Use Cases Analysis
           Business Use Cases Analysis
         </h1>
-        <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+        <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4">
           Strategic framework for choosing between automation and agentic AI across different healthcare workflows
         </p>
       </div>
@@ -1198,17 +1199,19 @@ const BusinessUseCases = () => {
         </CardHeader>
         <CardContent>
           <Tabs value={selectedBusinessCase} onValueChange={setSelectedBusinessCase}>
-            <TabsList className="grid w-full grid-cols-2 h-auto">
+            <TabsList className="grid w-full grid-cols-2 h-auto gap-2">
               {Object.entries(businessCases).map(([key, businessCase]) => (
                 <TabsTrigger
                   key={key}
                   value={key}
-                  className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto text-left"
+                  className="flex flex-col items-center gap-2 p-4 h-auto text-center min-h-[120px] sm:min-h-[140px] relative overflow-hidden"
                 >
-                  <businessCase.icon className="w-6 h-6 sm:w-8 sm:h-8" />
-                  <div className="text-center">
-                    <div className="font-semibold text-sm sm:text-base">{businessCase.title}</div>
-                    <div className="text-xs text-muted-foreground hidden sm:block mt-1">
+                  <businessCase.icon className="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0" />
+                  <div className="text-center space-y-1 w-full">
+                    <div className="font-semibold text-sm sm:text-base leading-tight">
+                      {businessCase.title}
+                    </div>
+                    <div className="text-xs text-muted-foreground line-clamp-3 sm:line-clamp-2 leading-tight">
                       {businessCase.description}
                     </div>
                   </div>
@@ -1239,7 +1242,7 @@ const BusinessUseCases = () => {
             Click on journey steps to view detailed scenarios and analysis
           </div>
         </CardHeader>
-        <CardContent className="p-3 sm:p-6">
+        <CardContent className="p-3 sm:p-4 lg:p-6">
           <JourneyStepsFlow 
             steps={currentJourneySteps}
             selectedStep={selectedStep}
@@ -1249,10 +1252,10 @@ const BusinessUseCases = () => {
       </Card>
 
       {/* Detailed Analysis Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         <Tabs defaultValue="patient-scenarios" className="w-full">
           <TabsList className="grid w-full grid-cols-2 h-auto">
-            <TabsTrigger value="patient-scenarios" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5">
+            <TabsTrigger value="patient-scenarios" className="text-xs sm:text-sm px-2 py-2 sm:py-3">
               Patient Scenarios
             </TabsTrigger>
             <TabsTrigger value="technology-analysis" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5">

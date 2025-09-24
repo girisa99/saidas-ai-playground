@@ -54,9 +54,9 @@ export const JourneyStepsFlow = ({ steps, selectedStep, onStepClick }: JourneySt
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-6">
       {/* Step Flow Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {steps.map((step, index) => {
           const StepIcon = step.icon;
           const EmotionIcon = step.emotionIcon;
@@ -65,25 +65,25 @@ export const JourneyStepsFlow = ({ steps, selectedStep, onStepClick }: JourneySt
           return (
             <Card 
               key={step.id} 
-              className={`cursor-pointer transition-all duration-300 hover:shadow-lg ${
+              className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] ${
                 isSelected ? 'ring-2 ring-primary shadow-lg' : ''
               }`}
               onClick={() => onStepClick(step.id)}
             >
-              <CardContent className="p-4">
+              <CardContent className="p-3 sm:p-4">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <div className="p-2 rounded-full bg-primary/10">
-                      <StepIcon className="h-4 w-4 text-primary" />
+                    <div className="p-2 rounded-full bg-primary/10 flex-shrink-0">
+                      <StepIcon className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
                     </div>
-                    <span className="text-sm font-medium text-muted-foreground">
+                    <span className="text-xs sm:text-sm font-medium text-muted-foreground">
                       Step {step.id}
                     </span>
                   </div>
-                  <EmotionIcon className={`h-4 w-4 ${getEmotionColor(step.emotion)}`} />
+                  <EmotionIcon className={`h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 ${getEmotionColor(step.emotion)}`} />
                 </div>
                 
-                <h4 className="font-semibold text-sm mb-2 line-clamp-2">
+                <h4 className="font-semibold text-sm sm:text-base mb-2 line-clamp-2 leading-tight">
                   {step.title}
                 </h4>
                 
@@ -99,7 +99,7 @@ export const JourneyStepsFlow = ({ steps, selectedStep, onStepClick }: JourneySt
                   </span>
                 </div>
                 
-                <p className="text-xs text-muted-foreground line-clamp-2 mb-2">
+                <p className="text-xs text-muted-foreground line-clamp-3 mb-2 leading-relaxed">
                   {step.description}
                 </p>
                 
@@ -114,7 +114,7 @@ export const JourneyStepsFlow = ({ steps, selectedStep, onStepClick }: JourneySt
 
       {/* Selected Step Details */}
       {selectedStep && (
-        <div className="mt-8">
+        <div className="mt-6 sm:mt-8">
           {(() => {
             const step = steps.find(s => s.id === selectedStep);
             if (!step) return null;
@@ -124,33 +124,33 @@ export const JourneyStepsFlow = ({ steps, selectedStep, onStepClick }: JourneySt
             
             return (
               <Card className="border-l-4 border-l-primary">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="p-3 rounded-full bg-primary/10">
-                      <StepIcon className="h-6 w-6 text-primary" />
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
+                    <div className="p-2 sm:p-3 rounded-full bg-primary/10 flex-shrink-0">
+                      <StepIcon className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-xl font-semibold">{step.title}</h3>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+                        <h3 className="text-lg sm:text-xl font-semibold leading-tight">{step.title}</h3>
                         <Badge 
                           variant="outline" 
                           className={getApproachColor(step.approach)}
                         >
                           {step.approach}
                         </Badge>
-                        <EmotionIcon className={`h-5 w-5 ${getEmotionColor(step.emotion)}`} />
+                        <EmotionIcon className={`h-4 w-4 sm:h-5 sm:w-5 ${getEmotionColor(step.emotion)}`} />
                       </div>
-                      <p className="text-muted-foreground mb-2">{step.description}</p>
-                      <div className="flex items-center gap-4 text-sm">
+                      <p className="text-sm sm:text-base text-muted-foreground mb-2">{step.description}</p>
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 text-sm">
                         <span className="text-muted-foreground">⏱️ {step.time}</span>
                         <span className="text-green-600 font-medium">📈 {step.roi}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
                     <div>
-                      <h4 className="font-semibold text-blue-700 mb-3 flex items-center gap-2">
+                      <h4 className="font-semibold text-blue-700 mb-3 flex items-center gap-2 text-sm sm:text-base">
                         🤖 Automation Tasks
                       </h4>
                       <ul className="space-y-2">
