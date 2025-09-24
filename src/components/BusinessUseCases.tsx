@@ -59,7 +59,8 @@ const businessCases = {
   oncology: {
     id: "oncology",
     title: "Oncology Care Workflow",
-    description: "Strategic technology selection for oncology workflows - choosing between automation and agentic AI",
+    description: "✅ IMPLEMENTED: Strategic technology selection for oncology workflows - real deployment learnings and outcomes",
+    status: "implemented",
     icon: Heart,
     currentIssues: [
       "Approx. 40% of patients experience delays in initial appointment scheduling due to manual processing",
@@ -87,7 +88,8 @@ const businessCases = {
   referral: {
     id: "referral",
     title: "Patient Referral & Onboarding",
-    description: "Specialized oncology patient referral and onboarding process flow with granular automation and AI opportunities",
+    description: "🔬 EXPERIMENTING: Specialized oncology patient referral process - active testing and optimization",
+    status: "experimenting",
     icon: UserCheck,
     currentIssues: [
       "Manual fax/phone referral processing leads to 4-6 hour delays and 15% data entry errors",
@@ -115,7 +117,8 @@ const businessCases = {
   contact: {
     id: "contact",
     title: "Digital Contact Center Transformation",
-    description: "Comprehensive patient communication hub with AI-powered triage, multi-channel coordination, and intelligent resolution",
+    description: "🚧 IN DEVELOPMENT: Patient communication hub - addressing current contact center challenges",
+    status: "development",
     icon: MessageCircle,
     currentIssues: [
       "80% of contacts through phone create 4-7 minute hold times and inefficient resource allocation",
@@ -2092,38 +2095,38 @@ const BusinessUseCases = () => {
             </Badge>
             
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
-              Intelligent Healthcare <span className="text-genie-accent">Transformation</span>
+              Genie AI <span className="text-genie-accent">Experimentation Hub</span>
               <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl mt-2 font-normal text-white/90">
-                AI vs Automation Strategic Blueprint
+                Real Implementation Stories & Learnings
               </div>
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-              Make informed technology decisions with comprehensive analysis frameworks. Discover when to deploy automation vs agentic AI 
-              across critical healthcare workflows with measurable ROI insights.
+              Explore real-world implementations from our experimentation lab. Discover what we've successfully deployed, 
+              current learnings from active experiments, and challenges we're addressing in healthcare AI transformation.
             </p>
             
             {/* Key Features Grid - Mobile Responsive */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 px-2">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Healthcare Focus</h3>
-                <p className="text-white/80 text-xs">Oncology & Patient Care</p>
+                <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Implemented Solutions</h3>
+                <p className="text-white/80 text-xs">Live & Operational</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">AI vs Automation</h3>
-                <p className="text-white/80 text-xs">Strategic Decision Framework</p>
+                <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Active Experiments</h3>
+                <p className="text-white/80 text-xs">Learning & Iterating</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Impact Analysis</h3>
-                <p className="text-white/80 text-xs">ROI & Efficiency Metrics</p>
+                <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400 mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">In Development</h3>
+                <p className="text-white/80 text-xs">Building & Testing</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Network className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Journey Mapping</h3>
-                <p className="text-white/80 text-xs">Step-by-step workflows</p>
+                <Target className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400 mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Challenges Addressed</h3>
+                <p className="text-white/80 text-xs">Problem-solving focus</p>
               </div>
             </div>
             
@@ -2136,7 +2139,7 @@ const BusinessUseCases = () => {
                 }}
               >
                 <ArrowDown className="w-4 h-4 mr-2" />
-                Explore Use Cases
+                View Our Experiments
               </Button>
               <Button 
                 variant="outline" 
@@ -2144,7 +2147,7 @@ const BusinessUseCases = () => {
                 onClick={() => setShowDecisionFramework(!showDecisionFramework)}
               >
                 <FileText className="w-4 h-4 mr-2" />
-                {showDecisionFramework ? 'Hide' : 'View'} Analysis Framework
+                {showDecisionFramework ? 'Hide' : 'View'} Experiment Framework
               </Button>
             </div>
           </div>
@@ -2254,7 +2257,7 @@ const BusinessUseCases = () => {
       <Card>
         <CardHeader className="pb-4 sm:pb-6">
           <CardTitle className="text-xl sm:text-2xl text-center font-bold">Select Business Use Case</CardTitle>
-          <p className="text-center text-muted-foreground">Choose a use case to explore detailed journey maps and process flows</p>
+          <p className="text-center text-muted-foreground">Choose an experiment to explore implementation details, learnings, and outcomes</p>
         </CardHeader>
         <CardContent>
           <div className="max-w-md mx-auto mb-6">
@@ -2268,8 +2271,21 @@ const BusinessUseCases = () => {
                     <div className="flex items-center gap-3">
                       <businessCase.icon className="w-5 h-5" />
                       <div>
-                        <div className="font-medium">{businessCase.title}</div>
-                        <div className="text-xs text-muted-foreground">{businessCase.description.substring(0, 50)}...</div>
+                        <div className="font-medium flex items-center gap-2">
+                          {businessCase.title}
+                          <Badge 
+                            variant="outline" 
+                            className={`text-xs ${
+                              businessCase.status === 'implemented' ? 'border-green-500 text-green-600' :
+                              businessCase.status === 'experimenting' ? 'border-blue-500 text-blue-600' :
+                              'border-orange-500 text-orange-600'
+                            }`}
+                          >
+                            {businessCase.status === 'implemented' ? '✅ Live' :
+                             businessCase.status === 'experimenting' ? '🔬 Testing' : '🚧 Building'}
+                          </Badge>
+                        </div>
+                        <div className="text-xs text-muted-foreground">{businessCase.description.substring(0, 60)}...</div>
                       </div>
                     </div>
                   </SelectItem>
@@ -2278,7 +2294,7 @@ const BusinessUseCases = () => {
             </Select>
           </div>
 
-          {/* Business Case Cards */}
+          {/* Experiment Status Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             {Object.entries(businessCases).map(([key, businessCase]) => (
               <Card 
@@ -2287,11 +2303,27 @@ const BusinessUseCases = () => {
                   selectedBusinessCase === key 
                     ? 'ring-2 ring-primary shadow-lg scale-105' 
                     : 'hover:shadow-md hover:scale-102'
+                } ${
+                  businessCase.status === 'implemented' ? 'border-green-200 bg-green-50/50' :
+                  businessCase.status === 'experimenting' ? 'border-blue-200 bg-blue-50/50' :
+                  'border-orange-200 bg-orange-50/50'
                 }`}
                 onClick={() => setSelectedBusinessCase(key)}
               >
                 <CardContent className="p-6 text-center">
-                  <businessCase.icon className="w-12 h-12 mx-auto mb-4 text-primary" />
+                  <div className="flex items-center justify-center mb-4">
+                    <businessCase.icon className="w-12 h-12 text-primary mr-3" />
+                    <Badge 
+                      className={`${
+                        businessCase.status === 'implemented' ? 'bg-green-100 text-green-700 border-green-300' :
+                        businessCase.status === 'experimenting' ? 'bg-blue-100 text-blue-700 border-blue-300' :
+                        'bg-orange-100 text-orange-700 border-orange-300'
+                      }`}
+                    >
+                      {businessCase.status === 'implemented' ? '✅ Implemented' :
+                       businessCase.status === 'experimenting' ? '🔬 Experimenting' : '🚧 In Development'}
+                    </Badge>
+                  </div>
                   <h3 className="font-semibold text-lg mb-2">{businessCase.title}</h3>
                   <p className="text-sm text-muted-foreground line-clamp-3">
                     {businessCase.description}
