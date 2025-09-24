@@ -786,10 +786,10 @@ const BusinessUseCases = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="px-2 sm:px-4 lg:px-6">
-          <div className="relative w-full min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] bg-gradient-to-br from-background via-muted/30 to-background rounded-lg p-2 sm:p-4 lg:p-8 overflow-x-auto">
+          <div className="relative w-full min-h-[360px] sm:min-h-[420px] lg:min-h-[480px] bg-gradient-to-br from-background via-muted/30 to-background rounded-lg p-2 sm:p-4 lg:p-6 overflow-x-auto">
             <svg
-              viewBox="0 0 100 40"
-              className="w-full h-full min-w-[320px] sm:min-w-[600px] lg:min-w-[800px]"
+              viewBox="0 0 100 32"
+              className="w-full h-full min-w-[340px] sm:min-w-[620px] lg:min-w-[880px]"
               preserveAspectRatio="xMidYMid meet"
             >
               {journeySteps.map((step, index) => {
@@ -799,53 +799,68 @@ const BusinessUseCases = () => {
                     {/* Connection Line */}
                     {nextStep && (
                       <line
-                        x1={step.position.x + 1.8}
-                        y1={step.position.y + 1.5}
-                        x2={nextStep.position.x - 1.8}
-                        y2={nextStep.position.y + 1.5}
+                        x1={step.position.x + 3}
+                        y1={step.position.y}
+                        x2={nextStep.position.x - 3}
+                        y2={nextStep.position.y}
                         stroke="hsl(var(--border))"
-                        strokeWidth="0.15"
+                        strokeWidth="0.3"
                         strokeDasharray="none"
                       />
                     )}
-                    
+
+                    {/* Focus ring for selected */}
+                    {selectedStep === step.id && (
+                      <circle
+                        cx={step.position.x}
+                        cy={step.position.y}
+                        r="3.2"
+                        fill="none"
+                        stroke="hsl(var(--primary))"
+                        strokeWidth="0.6"
+                      />
+                    )}
+
                     {/* Step Circle */}
                     <circle
                       cx={step.position.x}
-                      cy={step.position.y + 1.5}
-                      r="1.8"
+                      cy={step.position.y}
+                      r="2.6"
                       fill={selectedStep === step.id ? "hsl(var(--primary))" : "hsl(var(--muted))"}
                       stroke={selectedStep === step.id ? "hsl(var(--primary))" : "hsl(var(--border))"}
-                      strokeWidth="0.15"
+                      strokeWidth="0.3"
                       className="cursor-pointer transition-all duration-200"
                       onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}
                     />
-                    
+
                     {/* Step Number */}
                     <text
                       x={step.position.x}
-                      y={step.position.y + 2}
+                      y={step.position.y + 0.6}
                       textAnchor="middle"
-                      className="text-[1px] sm:text-[0.9px] font-semibold fill-primary-foreground pointer-events-none"
+                      fontSize="1.6"
+                      className="font-semibold fill-primary-foreground pointer-events-none"
                     >
                       {step.id}
                     </text>
-                    
+
                     {/* Step Title and Time */}
                     <g className="cursor-pointer" onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}>
                       <text
                         x={step.position.x}
-                        y={step.position.y - 0.3}
+                        y={step.position.y - 3.4}
                         textAnchor="middle"
-                        className="text-[0.9px] sm:text-[0.8px] font-semibold fill-foreground pointer-events-none"
+                        fontSize="1.7"
+                        className="font-semibold fill-foreground pointer-events-none"
                       >
                         {step.title}
                       </text>
                       <text
                         x={step.position.x}
-                        y={step.position.y + 0.2}
+                        y={step.position.y + 4.2}
                         textAnchor="middle"
-                        className="text-[0.7px] sm:text-[0.6px] fill-muted-foreground pointer-events-none"
+                        fontSize="1.3"
+                        className="fill-muted-foreground pointer-events-none"
                       >
                         {step.time}
                       </text>
@@ -854,6 +869,22 @@ const BusinessUseCases = () => {
                 );
               })}
             </svg>
+          </div>
+
+          {/* Legend */}
+          <div className="mt-3 sm:mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs sm:text-sm font-medium">Approach:</span>
+              <span className={`text-xs px-2 py-1 rounded border ${getApproachColor('automation')}`}>{/* icon */}<span className="inline-flex items-center gap-1"><span className="inline-block align-middle"><svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="hsl(var(--muted))" stroke="hsl(var(--border))" strokeWidth="1"/></svg></span>Automation</span></span>
+              <span className={`text-xs px-2 py-1 rounded border ${getApproachColor('agentic')}`}>Agentic AI</span>
+              <span className={`text-xs px-2 py-1 rounded border ${getApproachColor('hybrid')}`}>Hybrid</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs sm:text-sm font-medium">Status:</span>
+              <span className={`text-xs px-2 py-1 rounded border ${getEmotionColor('positive')}`}>Positive</span>
+              <span className={`text-xs px-2 py-1 rounded border ${getEmotionColor('neutral')}`}>Neutral</span>
+              <span className={`text-xs px-2 py-1 rounded border ${getEmotionColor('critical')}`}>Critical</span>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -898,6 +929,16 @@ const BusinessUseCases = () => {
                       <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3 leading-relaxed">
                         45-year-old with family history, requires follow-up imaging after abnormal mammogram
                       </p>
+                      {/* Legend for this scenario */}
+                      <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs">
+                        <span className="font-medium">Legend:</span>
+                        <span className={`px-2 py-1 rounded border ${getApproachColor('automation')}`}>Automation</span>
+                        <span className={`px-2 py-1 rounded border ${getApproachColor('agentic')}`}>Agentic AI</span>
+                        <span className={`px-2 py-1 rounded border ${getApproachColor('hybrid')}`}>Hybrid</span>
+                        <span className={`px-2 py-1 rounded border ${getEmotionColor('positive')}`}>Positive</span>
+                        <span className={`px-2 py-1 rounded border ${getEmotionColor('neutral')}`}>Neutral</span>
+                        <span className={`px-2 py-1 rounded border ${getEmotionColor('critical')}`}>Critical</span>
+                      </div>
                     </div>
 
                     {selectedStep && scenarioDetails.sarah[selectedStep] && (
