@@ -1140,31 +1140,6 @@ const BusinessUseCases = () => {
           </CardContent>
         </Card>
 
-        {/* ROI Summary */}
-        <Card className="w-full mx-auto max-w-4xl bg-gradient-to-r from-primary/5 to-secondary/5 border-primary/20 lg:col-span-2">
-          <CardHeader className="px-4 sm:px-6">
-            <CardTitle className="text-lg sm:text-xl md:text-2xl text-center flex flex-col sm:flex-row items-center justify-center gap-2">
-              <Star className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-              Return on Investment Summary
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="px-4 sm:px-6">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-              <div className="text-center space-y-2 p-3 sm:p-4 bg-background/50 rounded-lg">
-                <div className="text-2xl sm:text-3xl font-bold text-primary">≈ 280%</div>
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">Overall ROI in Year 1</p>
-              </div>
-              <div className="text-center space-y-2 p-3 sm:p-4 bg-background/50 rounded-lg">
-                <div className="text-2xl sm:text-3xl font-bold text-primary">≈ 6 months</div>
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">Estimated Payback Period</p>
-              </div>
-              <div className="text-center space-y-2 p-3 sm:p-4 bg-background/50 rounded-lg">
-                <div className="text-2xl sm:text-3xl font-bold text-primary">≈ $2.8M</div>
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">Projected Annual Savings</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
