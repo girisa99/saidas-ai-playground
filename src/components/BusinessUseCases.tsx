@@ -46,8 +46,26 @@ import {
   ThumbsUp,
   ThumbsDown,
   Meh,
-  Frown
+  Frown,
+  Briefcase,
+  Search
 } from "lucide-react";
+
+// Business Use Cases Data Structure
+const businessCases = {
+  oncology: {
+    id: "oncology",
+    title: "Oncology Care Workflow",
+    description: "Strategic technology selection for oncology workflows - choosing between automation and agentic AI",
+    icon: Heart,
+  },
+  retail: {
+    id: "retail", 
+    title: "Retail Customer Experience",
+    description: "AI-powered customer journey optimization from discovery to post-purchase support",
+    icon: Briefcase,
+  }
+};
 
 const journeySteps = [
   {
@@ -727,9 +745,16 @@ const scenarioDetails = {
 };
 
 const BusinessUseCases = () => {
+  const [selectedBusinessCase, setSelectedBusinessCase] = useState("oncology");
   const [selectedScenario, setSelectedScenario] = useState("sarah");
   const [selectedStep, setSelectedStep] = useState<number | null>(null);
   const [showDecisionFramework, setShowDecisionFramework] = useState(false);
+
+  // Get current business case data - for now just use the current data structure
+  const currentCase = businessCases[selectedBusinessCase as keyof typeof businessCases];
+  // Until we fully refactor, use existing data
+  const currentJourneySteps = journeySteps;
+  const currentScenarioDetails = scenarioDetails;
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -770,11 +795,35 @@ const BusinessUseCases = () => {
     <div className="space-y-6 sm:space-y-8 px-2 sm:px-4 animate-fade-in">
       {/* Header Section */}
       <div className="text-center space-y-3 sm:space-y-4 px-4">
+        {/* Business Case Selector */}
+        <div className="flex justify-center mb-4 sm:mb-6">
+          <div className="bg-muted/50 p-1 rounded-lg inline-flex">
+            {Object.values(businessCases).map((businessCase) => {
+              const Icon = businessCase.icon;
+              return (
+                <button
+                  key={businessCase.id}
+                  onClick={() => setSelectedBusinessCase(businessCase.id)}
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 ${
+                    selectedBusinessCase === businessCase.id
+                      ? 'bg-primary text-primary-foreground shadow-md'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span className="hidden sm:inline">{businessCase.title}</span>
+                  <span className="sm:hidden">{businessCase.title.split(' ')[0]}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent leading-tight">
           Business Use Cases
         </h1>
         <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl lg:max-w-3xl mx-auto leading-relaxed">
-          Strategic technology selection for oncology workflows - choosing between automation and agentic AI
+          {currentCase.description}
         </p>
       </div>
 
@@ -782,8 +831,18 @@ const BusinessUseCases = () => {
       <Card className="w-full mx-auto max-w-7xl">
         <CardHeader className="px-4 sm:px-6 lg:px-8">
           <CardTitle className="text-xl sm:text-2xl md:text-3xl text-center mb-2 sm:mb-4 leading-tight">
-            Patient Journey Through Oncology Care
+            Patient Journey Through {currentCase.title}
           </CardTitle>
+          {/* Instructions for interaction */}
+          <div className="text-center mb-3 sm:mb-4">
+            <p className="text-xs sm:text-sm text-muted-foreground mb-2">
+              💡 <strong>Click on any step below</strong> to view detailed process breakdown and technology analysis
+            </p>
+            <div className="inline-flex items-center gap-2 text-xs bg-primary/10 text-primary px-3 py-1 rounded-full">
+              <span className="animate-pulse">👆</span>
+              <span>Interactive Journey Map</span>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="px-2 sm:px-4 lg:px-6">
           <div className="relative w-full min-h-[360px] sm:min-h-[420px] lg:min-h-[480px] bg-gradient-to-br from-background via-muted/30 to-background rounded-lg p-2 sm:p-4 lg:p-6 overflow-x-auto">
@@ -792,8 +851,8 @@ const BusinessUseCases = () => {
               className="w-full h-full min-w-[340px] sm:min-w-[620px] lg:min-w-[880px]"
               preserveAspectRatio="xMidYMid meet"
             >
-              {journeySteps.map((step, index) => {
-                const nextStep = journeySteps[index + 1];
+              {currentJourneySteps.map((step, index) => {
+                const nextStep = currentJourneySteps[index + 1];
                 // Define colors for each step
                 const stepColors = [
                   { bg: "hsl(0, 70%, 50%)", border: "hsl(0, 70%, 40%)", text: "white" }, // Red
@@ -835,6 +894,18 @@ const BusinessUseCases = () => {
                       />
                     )}
 
+                    {/* Hover indication - pulsing ring */}
+                    <circle
+                      cx={step.position.x}
+                      cy={step.position.y}
+                      r="2.9"
+                      fill="none"
+                      stroke={stepColor.border}
+                      strokeWidth="0.2"
+                      opacity="0.5"
+                      className="cursor-pointer animate-pulse"
+                    />
+
                     {/* Step Circle */}
                     <circle
                       cx={step.position.x}
@@ -843,7 +914,7 @@ const BusinessUseCases = () => {
                       fill={selectedStep === step.id ? "hsl(var(--primary))" : stepColor.bg}
                       stroke={selectedStep === step.id ? "hsl(var(--primary))" : stepColor.border}
                       strokeWidth="0.3"
-                      className="cursor-pointer transition-all duration-200"
+                      className="cursor-pointer transition-all duration-200 hover:scale-110"
                       onClick={() => setSelectedStep(selectedStep === step.id ? null : step.id)}
                     />
 
@@ -960,13 +1031,13 @@ const BusinessUseCases = () => {
                     {selectedStep && scenarioDetails.sarah[selectedStep] && (
                       <div className="space-y-2 sm:space-y-3">
                         <h5 className="font-medium text-sm sm:text-base flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                          <span>Step {selectedStep}: {journeySteps.find(s => s.id === selectedStep)?.title}</span>
+                          <span>Step {selectedStep}: {currentJourneySteps.find(s => s.id === selectedStep)?.title}</span>
                           <Badge variant="outline" className="text-xs w-fit">
-                            {journeySteps.find(s => s.id === selectedStep)?.time}
+                            {currentJourneySteps.find(s => s.id === selectedStep)?.time}
                           </Badge>
                         </h5>
                         <div className="bg-background border rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-                          {scenarioDetails.sarah[selectedStep]?.map((detail: any, index: number) => (
+                          {currentScenarioDetails.sarah[selectedStep]?.map((detail: any, index: number) => (
                             <div key={index} className="border-l-2 border-primary/20 pl-2 sm:pl-3">
                               <h6 className="font-medium text-xs sm:text-sm text-primary mb-1">{detail.substep}</h6>
                               <p className="text-xs text-muted-foreground leading-relaxed">{detail.process}</p>
@@ -998,13 +1069,13 @@ const BusinessUseCases = () => {
                     {selectedStep && scenarioDetails.michael[selectedStep] && (
                       <div className="space-y-2 sm:space-y-3">
                         <h5 className="font-medium text-sm sm:text-base flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                          <span>Step {selectedStep}: {journeySteps.find(s => s.id === selectedStep)?.title}</span>
+                          <span>Step {selectedStep}: {currentJourneySteps.find(s => s.id === selectedStep)?.title}</span>
                           <Badge variant="outline" className="text-xs w-fit">
-                            {journeySteps.find(s => s.id === selectedStep)?.time}
+                            {currentJourneySteps.find(s => s.id === selectedStep)?.time}
                           </Badge>
                         </h5>
                         <div className="bg-background border rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-                          {scenarioDetails.michael[selectedStep]?.map((detail: any, index: number) => (
+                          {currentScenarioDetails.michael[selectedStep]?.map((detail: any, index: number) => (
                             <div key={index} className="border-l-2 border-primary/20 pl-2 sm:pl-3">
                               <h6 className="font-medium text-xs sm:text-sm text-primary mb-1">{detail.substep}</h6>
                               <p className="text-xs text-muted-foreground leading-relaxed">{detail.process}</p>
@@ -1043,10 +1114,10 @@ const BusinessUseCases = () => {
                       </div>
                       <div className="min-w-0">
                         <h3 className="font-semibold text-base sm:text-lg leading-tight">
-                          {journeySteps.find(s => s.id === selectedStep)?.title}
+                          {currentJourneySteps.find(s => s.id === selectedStep)?.title}
                         </h3>
                         <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                          {journeySteps.find(s => s.id === selectedStep)?.description}
+                          {currentJourneySteps.find(s => s.id === selectedStep)?.description}
                         </p>
                       </div>
                     </div>
@@ -1060,18 +1131,18 @@ const BusinessUseCases = () => {
                               <h4 className="font-semibold text-green-800 text-sm sm:text-base">Automation Focus</h4>
                             </div>
                             <Badge variant="secondary" className="bg-green-100 text-green-700 text-xs w-fit">
-                              {journeySteps.find(s => s.id === selectedStep)?.roi}
+                              {currentJourneySteps.find(s => s.id === selectedStep)?.roi}
                             </Badge>
                           </div>
                         </CardHeader>
                         <CardContent className="space-y-2 sm:space-y-3 pt-0">
                           <p className="text-xs sm:text-sm text-green-700 font-medium leading-relaxed">
-                            {journeySteps.find(s => s.id === selectedStep)?.whyAutomation}
+                            {currentJourneySteps.find(s => s.id === selectedStep)?.whyAutomation}
                           </p>
                           <div className="space-y-2">
                             <h5 className="text-xs sm:text-sm font-semibold text-green-800">Key Tasks:</h5>
                             <ul className="space-y-1">
-                              {journeySteps.find(s => s.id === selectedStep)?.automationTasks.map((task: string, index: number) => (
+                              {currentJourneySteps.find(s => s.id === selectedStep)?.automationTasks.map((task: string, index: number) => (
                                 <li key={index} className="text-xs text-green-700 flex items-start gap-1 sm:gap-2">
                                   <CheckCircle className="w-3 h-3 text-green-500 mt-0.5 flex-shrink-0" />
                                   <span className="leading-relaxed">{task}</span>
@@ -1096,12 +1167,12 @@ const BusinessUseCases = () => {
                         </CardHeader>
                         <CardContent className="space-y-2 sm:space-y-3 pt-0">
                           <p className="text-xs sm:text-sm text-blue-700 font-medium leading-relaxed">
-                            {journeySteps.find(s => s.id === selectedStep)?.whyAI}
+                            {currentJourneySteps.find(s => s.id === selectedStep)?.whyAI}
                           </p>
                           <div className="space-y-2">
                             <h5 className="text-xs sm:text-sm font-semibold text-blue-800">AI Capabilities:</h5>
                             <ul className="space-y-1">
-                              {journeySteps.find(s => s.id === selectedStep)?.aiTasks.map((task: string, index: number) => (
+                              {currentJourneySteps.find(s => s.id === selectedStep)?.aiTasks.map((task: string, index: number) => (
                                 <li key={index} className="text-xs text-blue-700 flex items-start gap-1 sm:gap-2">
                                   <Lightbulb className="w-3 h-3 text-blue-500 mt-0.5 flex-shrink-0" />
                                   <span className="leading-relaxed">{task}</span>
@@ -1122,7 +1193,7 @@ const BusinessUseCases = () => {
                       </CardHeader>
                       <CardContent>
                         <div className="space-y-2 sm:space-y-3">
-                          {journeySteps.find(s => s.id === selectedStep)?.phases.map((phase: string, index: number) => (
+                          {currentJourneySteps.find(s => s.id === selectedStep)?.phases.map((phase: string, index: number) => (
                             <div key={index} className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 bg-orange-100/50 rounded-lg">
                               <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-orange-200 flex items-center justify-center flex-shrink-0">
                                 <span className="text-xs font-semibold text-orange-700">{index + 1}</span>
