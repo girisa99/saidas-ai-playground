@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -53,7 +53,7 @@ import {
   UserCheck
 } from "lucide-react";
 
-// Business Use Cases Data Structure
+// Business Use Cases Data Structure - moved outside component to prevent re-creation
 const businessCases = {
   oncology: {
     id: "oncology",
@@ -1274,14 +1274,29 @@ const BusinessUseCases = () => {
   const [selectedStep, setSelectedStep] = useState<number | null>(null);
   const [showDecisionFramework, setShowDecisionFramework] = useState(false);
 
-  // Get current business case data
-  const currentCase = businessCases[selectedBusinessCase as keyof typeof businessCases];
-  const currentJourneySteps = journeySteps[selectedBusinessCase as keyof typeof journeySteps];
-  const currentScenarioDetails = scenarioDetails[selectedBusinessCase as keyof typeof scenarioDetails];
-  const currentScenarioImpacts = scenarioImpactAnalysis[selectedBusinessCase as keyof typeof scenarioImpactAnalysis];
+  // Get current business case data - memoized to prevent re-creation
+  const currentCase = useMemo(() => 
+    businessCases[selectedBusinessCase as keyof typeof businessCases], 
+    [selectedBusinessCase]
+  );
+  
+  const currentJourneySteps = useMemo(() => 
+    journeySteps[selectedBusinessCase as keyof typeof journeySteps], 
+    [selectedBusinessCase]
+  );
+  
+  const currentScenarioDetails = useMemo(() => 
+    scenarioDetails[selectedBusinessCase as keyof typeof scenarioDetails], 
+    [selectedBusinessCase]
+  );
+  
+  const currentScenarioImpacts = useMemo(() => 
+    scenarioImpactAnalysis[selectedBusinessCase as keyof typeof scenarioImpactAnalysis], 
+    [selectedBusinessCase]
+  );
 
-  // Transform scenario data for JourneyStepsFlow
-  const getPatientScenariosForStep = (stepId: number) => {
+  // Transform scenario data for JourneyStepsFlow - memoized to prevent expensive recalculations
+  const getPatientScenariosForStep = useMemo(() => (stepId: number) => {
     if (!selectedStep || selectedStep !== stepId) return [];
     
     const scenarios = [];
@@ -1311,9 +1326,9 @@ const BusinessUseCases = () => {
     }
     
     return scenarios;
-  };
+  }, [selectedStep, currentCase, currentScenarioDetails, currentScenarioImpacts]);
 
-  const getApproachColor = (approach: string) => {
+  const getApproachColor = useMemo(() => (approach: string) => {
     switch (approach) {
       case "automation":
         return "bg-green-100 text-green-700 border-green-300";
@@ -1324,9 +1339,9 @@ const BusinessUseCases = () => {
       default:
         return "bg-gray-100 text-gray-700 border-gray-300";
     }
-  };
+  }, []);
 
-  const getEmotionColor = (emotion: string) => {
+  const getEmotionColor = useMemo(() => (emotion: string) => {
     switch (emotion) {
       case "positive":
         return "bg-green-100 text-green-700 border-green-300";
@@ -1337,7 +1352,7 @@ const BusinessUseCases = () => {
       default:
         return "bg-gray-100 text-gray-700 border-gray-300";
     }
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
