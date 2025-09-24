@@ -110,35 +110,6 @@ const businessCases = {
       sarah: "62-year-old urgent pancreatic cancer referral requiring immediate specialist coordination",
       michael: "58-year-old with multiple prior treatments needing comprehensive genomic testing and care team assembly"
     }
-  },
-  retail: {
-    id: "retail", 
-    title: "Retail Customer Experience",
-    description: "AI-powered customer journey optimization from discovery to post-purchase support",
-    icon: Briefcase,
-    currentIssues: [
-      "High cart abandonment rates due to complex checkout processes",
-      "Generic product recommendations missing customer preferences",
-      "Delayed customer service responses affecting satisfaction",
-      "Inventory management inefficiencies leading to stockouts",
-      "Limited personalization across customer touchpoints"
-    ],
-    expectedImprovements: [
-      "Streamlined checkout process reduces abandonment by 40%",
-      "AI-powered recommendations increase conversion rates by 60%",
-      "Real-time customer service improves satisfaction scores by 50%",
-      "Predictive inventory management reduces stockouts by 75%",
-      "Personalized experiences increase customer lifetime value by 35%"
-    ],
-    scenarioTitles: {
-      sarah: "Emma - First-time Buyer",
-      michael: "David - Loyalty Customer"
-    },
-    scenarioDescriptions: {
-      sarah: "28-year-old discovering brand through social media, needs guidance through purchase decision",
-      michael: "45-year-old repeat customer with specific preferences seeking efficient reorder experience"
-    }
-  }
 };
 
 const journeySteps = {
