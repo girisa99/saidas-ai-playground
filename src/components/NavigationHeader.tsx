@@ -47,7 +47,7 @@ export const NavigationHeader = () => {
               </div>
             </div>
             {/* Desktop brand text - hidden on smaller screens to prevent overflow */}
-            <div className="hidden xl:block min-w-0">
+            <div className="hidden lg:block min-w-0">
               <div className="flex items-center space-x-2">
                 <span className="text-lg xl:text-xl font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
                   Genie AI
@@ -55,20 +55,26 @@ export const NavigationHeader = () => {
                 <span className="text-sm xl:text-lg font-semibold text-foreground whitespace-nowrap">Hub</span>
               </div>
               <p className="text-xs text-muted-foreground font-medium whitespace-nowrap leading-tight">
-                Enterprise AI Solutions
+                I am your Technology navigator
               </p>
             </div>
             {/* Medium screens brand text */}
-            <div className="hidden md:block xl:hidden">
-              <span className="text-lg font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
-                Genie AI
-              </span>
+            <div className="hidden md:block lg:hidden">
+              <div className="flex items-center space-x-1">
+                <span className="text-lg font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
+                  Genie AI
+                </span>
+                <span className="text-sm font-semibold text-foreground whitespace-nowrap">Hub</span>
+              </div>
             </div>
             {/* Mobile brand text */}
             <div className="md:hidden">
-              <span className="text-sm sm:text-base font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
-                Genie AI
-              </span>
+              <div className="flex items-center space-x-1">
+                <span className="text-sm font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
+                  Genie AI
+                </span>
+                <span className="text-xs font-semibold text-foreground whitespace-nowrap">Hub</span>
+              </div>
             </div>
           </Link>
 
