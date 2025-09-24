@@ -136,8 +136,7 @@ export const JourneyStepsFlow = ({
   return (
     <div className="w-full space-y-6">
       {/* Information Collection Legend */}
-      {showLegend && (
-        <Card className="mb-6">
+      <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <Info className="h-5 w-5 text-primary" />
@@ -164,7 +163,6 @@ export const JourneyStepsFlow = ({
             </div>
           </CardContent>
         </Card>
-      )}
 
       {/* Step Flow Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
@@ -335,7 +333,7 @@ export const JourneyStepsFlow = ({
                             </div>
                             <p className="text-sm text-purple-800">{phase}</p>
                           </div>
-                        ))}
+                         ))}
                       </div>
                     </div>
                   )}
@@ -367,14 +365,22 @@ export const JourneyStepsFlow = ({
                                 </Badge>
                               </div>
                               <p className="text-xs text-muted-foreground mb-3">{scenario.description}</p>
-                              <div className="space-y-2">
-                                {scenario.substeps.map((substep, subIdx) => (
-                                  <div key={subIdx} className="border border-border rounded p-2">
-                                    <h6 className="font-medium text-xs text-foreground mb-1">{substep.substep}</h6>
-                                    <p className="text-xs text-muted-foreground">{substep.process}</p>
-                                  </div>
-                                ))}
-                              </div>
+                              {scenario.substeps && scenario.substeps.length > 0 ? (
+                                <div className="space-y-2">
+                                  {scenario.substeps.map((substep, subIdx) => (
+                                    <div key={subIdx} className="border border-border rounded p-2">
+                                      <h6 className="font-medium text-xs text-foreground mb-1">{substep.substep}</h6>
+                                      <p className="text-xs text-muted-foreground">{substep.process}</p>
+                                    </div>
+                                  ))}
+                                </div>
+                              ) : (
+                                <div className="p-3 bg-muted rounded-lg">
+                                  <p className="text-xs text-muted-foreground italic">
+                                    No detailed process breakdown available for this step. This step uses standard {step.approach} approaches as outlined in the main tasks above.
+                                  </p>
+                                </div>
+                              )}
                             </CardContent>
                           </Card>
                         ))}

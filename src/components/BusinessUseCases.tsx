@@ -976,6 +976,16 @@ const scenarioDetails = {
           process: "AI analyzes family history (mother, sister with breast cancer) and flags for BRCA testing consideration."
         }
       ],
+      2: [
+        {
+          substep: "Family History Documentation",
+          process: "AI documents detailed family history of breast and ovarian cancers across maternal line."
+        },
+        {
+          substep: "Genetic Counseling Referral",
+          process: "Automated referral to genetic counselor for BRCA testing discussion and risk assessment."
+        }
+      ],
       3: [
         {
           substep: "Routine Data Collection",
