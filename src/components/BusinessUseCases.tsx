@@ -48,7 +48,8 @@ import {
   Meh,
   Frown,
   Briefcase,
-  Search
+  Search,
+  UserCheck
 } from "lucide-react";
 
 // Business Use Cases Data Structure
@@ -58,16 +59,65 @@ const businessCases = {
     title: "Oncology Care Workflow",
     description: "Strategic technology selection for oncology workflows - choosing between automation and agentic AI",
     icon: Heart,
+    currentIssues: [
+      "Approx. 40% of patients experience delays in initial appointment scheduling due to manual processing",
+      "Staff productivity reduced by estimated 25% due to repetitive administrative tasks", 
+      "Approx. 30% increase in errors during data collection and record management",
+      "Patient satisfaction scores averaging 6.2/10 due to communication gaps and delays",
+      "Healthcare provider burnout increased by approx. 35% due to administrative burden"
+    ],
+    expectedImprovements: [
+      "Approx. 85% reduction in appointment scheduling time with automated referral processing",
+      "Staff efficiency increased by estimated 60% through AI-assisted workflow optimization",
+      "Data accuracy improved to approx. 98% with automated validation and AI error detection", 
+      "Patient satisfaction projected to reach 8.7/10 with personalized communication and faster response times",
+      "Healthcare provider satisfaction increased by approx. 45% due to reduced administrative burden and improved patient outcomes"
+    ]
+  },
+  referral: {
+    id: "referral",
+    title: "Patient Referral & Onboarding",
+    description: "Specialized oncology patient referral and onboarding process flow with granular automation and AI opportunities",
+    icon: UserCheck,
+    currentIssues: [
+      "Manual fax/phone referral processing leads to 4-6 hour delays and 15% data entry errors",
+      "Insurance verification bottlenecks cause 25% of patients to experience approval delays",
+      "Inconsistent specialist assignment results in 30% suboptimal care coordination",
+      "Generic patient preparation leads to 35% arriving unprepared for appointments",
+      "Manual pre-authorization processes have 40% initial denial rates requiring appeals"
+    ],
+    expectedImprovements: [
+      "AI-powered referral processing reduces response time to under 30 minutes with 95% accuracy",
+      "Real-time insurance verification eliminates approval delays and identifies financial assistance",
+      "Intelligent specialist matching improves care coordination accuracy by 85%", 
+      "Personalized preparation achieves 95% patient readiness with AI-guided education",
+      "AI-generated pre-authorization documentation increases approval rates by 70%"
+    ]
   },
   retail: {
     id: "retail", 
     title: "Retail Customer Experience",
     description: "AI-powered customer journey optimization from discovery to post-purchase support",
     icon: Briefcase,
+    currentIssues: [
+      "High cart abandonment rates due to complex checkout processes",
+      "Generic product recommendations missing customer preferences",
+      "Delayed customer service responses affecting satisfaction",
+      "Inventory management inefficiencies leading to stockouts",
+      "Limited personalization across customer touchpoints"
+    ],
+    expectedImprovements: [
+      "Streamlined checkout process reduces abandonment by 40%",
+      "AI-powered recommendations increase conversion rates by 60%",
+      "Real-time customer service improves satisfaction scores by 50%",
+      "Predictive inventory management reduces stockouts by 75%",
+      "Personalized experiences increase customer lifetime value by 35%"
+    ]
   }
 };
 
-const journeySteps = [
+const journeySteps = {
+  oncology: [
   {
     id: 1,
     title: "Referral Receipt",
@@ -590,7 +640,478 @@ const journeySteps = [
       }
     ]
   }
-];
+  ],
+  referral: [
+    {
+      id: 1,
+      title: "Referral Receipt",
+      icon: FileText,
+      time: "Day 0",
+      position: { x: 10, y: 15 },
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "hybrid",
+      description: "Fax/phone/portal-based referrals processed with AI-powered data extraction",
+      automationPrimary: false,
+      roi: "≈ 70% efficiency gain",
+      automationTasks: [
+        "Digital intake forms with automated validation",
+        "API integration with referring provider systems",
+        "Automated data entry and error checking",
+        "Standard communication templates for acknowledgments"
+      ],
+      aiTasks: [
+        "Smart routing of referrals based on content analysis",
+        "AI-powered data extraction from unstructured documents",
+        "Intelligent prioritization based on clinical indicators",
+        "Natural language processing of physician notes and faxes"
+      ],
+      whyAutomation: "Standardized data processing and routing benefit from consistent automation",
+      whyAI: "Complex document analysis and intelligent routing require contextual understanding",
+      phases: [
+        "Implement digital intake automation",
+        "Deploy AI for document analysis and routing",
+        "Integrate with existing provider networks"
+      ],
+      currentIssues: [
+        "Manual fax processing leads to data entry errors",
+        "Delayed referral acknowledgment and routing",
+        "Inconsistent prioritization across staff"
+      ],
+      improvement: "AI-powered processing reduces referral processing time from 4-6 hours to under 30 minutes with 95% accuracy.",
+      detailedSubsteps: [
+        {
+          substep: "Document Reception",
+          process: "Automated intake of referrals via multiple channels with intelligent document classification"
+        },
+        {
+          substep: "Data Extraction",
+          process: "AI-powered extraction of key information from structured and unstructured referral documents"
+        },
+        {
+          substep: "Initial Triage",
+          process: "Intelligent routing and prioritization based on clinical indicators and urgency markers"
+        }
+      ]
+    },
+    {
+      id: 2,
+      title: "Initial Patient Outreach",
+      icon: Users,
+      time: "Day 0-1",
+      position: { x: 30, y: 15 },
+      emotion: "neutral",
+      emotionIcon: Meh,
+      approach: "hybrid",
+      description: "Automated communication for scheduling with AI-powered personalization",
+      automationPrimary: true,
+      roi: "≈ 60% efficiency gain",
+      automationTasks: [
+        "Automated SMS and email outreach sequences",
+        "Self-service patient portal access provisioning",
+        "Standardized appointment scheduling workflows",
+        "Basic FAQ responses and information delivery"
+      ],
+      aiTasks: [
+        "Personalized AI assistant for initial patient contact",
+        "Intelligent chatbot for complex questions and screening",
+        "Adaptive communication based on patient responses",
+        "Predictive scheduling optimization based on patient preferences"
+      ],
+      whyAutomation: "High-volume initial outreach benefits from consistent automated messaging",
+      whyAI: "Complex patient interactions and personalized communication require intelligent responses",
+      phases: [
+        "Deploy automated outreach and scheduling systems",
+        "Implement AI chatbot for patient interactions",
+        "Integrate personalization engines for adaptive communication"
+      ],
+      currentIssues: [
+        "Manual phone calls create delays and inconsistency",
+        "High volume of basic questions overwhelming staff",
+        "Missed connections requiring multiple callback attempts"
+      ],
+      improvement: "AI-powered outreach achieves 85% successful first contact with 24/7 availability and personalized responses.",
+      detailedSubsteps: [
+        {
+          substep: "Contact Initiation",
+          process: "Automated multi-channel outreach with preferred communication method detection"
+        },
+        {
+          substep: "Interactive Screening",
+          process: "AI-powered chatbot handles initial questions and basic information gathering"
+        },
+        {
+          substep: "Scheduling Coordination",
+          process: "Intelligent scheduling assistant optimizes appointment timing based on multiple factors"
+        }
+      ]
+    },
+    {
+      id: 3,
+      title: "Demographic & Insurance Data Collection",
+      icon: ClipboardCheck,
+      time: "Day 1-2",
+      position: { x: 50, y: 15 },
+      emotion: "neutral",
+      emotionIcon: Meh,
+      approach: "automation",
+      description: "Digital forms with automated validation and AI-powered pre-fill capabilities",
+      automationPrimary: true,
+      roi: "≈ 80% efficiency gain",
+      automationTasks: [
+        "Digital patient forms with real-time validation",
+        "Direct EHR/CRM synchronization",
+        "Automated data capture and verification",
+        "Insurance eligibility API integration"
+      ],
+      aiTasks: [
+        "Predictive pre-fill using existing patient data",
+        "Real-time insurance eligibility verification with alerts",
+        "Intelligent form optimization based on patient responses",
+        "Automated detection of missing or inconsistent information"
+      ],
+      whyAutomation: "Standardized data collection processes benefit from systematic automation",
+      whyAI: "Complex form optimization and predictive data entry require intelligent analysis",
+      phases: [
+        "Implement digital forms with basic validation",
+        "Deploy AI for predictive pre-fill and optimization",
+        "Integrate real-time verification systems"
+      ],
+      currentIssues: [
+        "Paper forms lead to data entry errors and delays",
+        "Manual insurance verification creates bottlenecks",
+        "Incomplete submissions requiring multiple follow-ups"
+      ],
+      improvement: "AI-enhanced digital forms achieve 90% completion rate on first submission with real-time verification.",
+      detailedSubsteps: [
+        {
+          substep: "Form Generation",
+          process: "Automated creation of patient-specific forms with intelligent pre-population"
+        },
+        {
+          substep: "Real-time Validation",
+          process: "Continuous validation and error prevention during form completion"
+        },
+        {
+          substep: "Insurance Verification",
+          process: "Automated eligibility checking with immediate feedback and alerts"
+        }
+      ]
+    },
+    {
+      id: 4,
+      title: "Medical Records Acquisition",
+      icon: Database,
+      time: "Day 2-5",
+      position: { x: 70, y: 15 },
+      emotion: "neutral",
+      emotionIcon: Meh,
+      approach: "hybrid",
+      description: "Automated record requests with AI-powered document analysis and summarization",
+      automationPrimary: true,
+      roi: "≈ 65% efficiency gain",
+      automationTasks: [
+        "Automated record requests to external providers",
+        "Digital record exchange via secure APIs",
+        "Standardized document processing and filing",
+        "Automated status tracking and follow-up"
+      ],
+      aiTasks: [
+        "AI-powered data extraction from diverse document formats",
+        "Intelligent summarization of complex medical records",
+        "Identification of critical clinical information and gaps",
+        "Predictive assessment of record completeness"
+      ],
+      whyAutomation: "Record retrieval processes benefit from systematic automation and tracking",
+      whyAI: "Document analysis and clinical significance assessment require intelligent interpretation",
+      phases: [
+        "Implement automated record request systems",
+        "Deploy AI for document analysis and extraction",
+        "Integrate intelligent summarization capabilities"
+      ],
+      currentIssues: [
+        "Manual record requests via fax create significant delays",
+        "Difficulty prioritizing critical vs. routine records",
+        "Time-consuming manual review of complex documents"
+      ],
+      improvement: "AI-powered record management reduces acquisition time by 70% with intelligent prioritization and summarization.",
+      detailedSubsteps: [
+        {
+          substep: "Record Request",
+          process: "Automated secure communication with external providers for comprehensive record retrieval"
+        },
+        {
+          substep: "Document Processing",
+          process: "AI-powered analysis and extraction of key clinical information from diverse formats"
+        },
+        {
+          substep: "Clinical Summarization",
+          process: "Intelligent summarization highlighting critical information and identifying gaps"
+        }
+      ]
+    },
+    {
+      id: 5,
+      title: "Eligibility & Benefit Verification",
+      icon: Shield,
+      time: "Day 3-4",
+      position: { x: 10, y: 25 },
+      emotion: "neutral",
+      emotionIcon: Meh,
+      approach: "hybrid",
+      description: "Real-time API verification with AI-powered benefit analysis and financial assistance matching",
+      automationPrimary: true,
+      roi: "≈ 75% efficiency gain",
+      automationTasks: [
+        "Real-time API-based insurance verification",
+        "Automated benefit summary generation",
+        "Standard coverage checking workflows",
+        "Digital documentation and tracking"
+      ],
+      aiTasks: [
+        "Predictive approval likelihood analysis",
+        "Intelligent financial assistance program matching",
+        "Personalized coverage optimization recommendations",
+        "Risk assessment for coverage denials"
+      ],
+      whyAutomation: "Standard verification processes benefit from real-time automated checking",
+      whyAI: "Complex benefit analysis and financial assistance matching require intelligent evaluation",
+      phases: [
+        "Deploy real-time verification systems",
+        "Implement AI for benefit analysis and recommendations",
+        "Integrate financial assistance program databases"
+      ],
+      currentIssues: [
+        "Manual insurance calls create delays and errors",
+        "Missed opportunities for financial assistance",
+        "Inconsistent benefit verification across staff"
+      ],
+      improvement: "AI-enhanced verification provides immediate results with personalized financial assistance recommendations.",
+      detailedSubsteps: [
+        {
+          substep: "Real-time Verification",
+          process: "Automated API-based checking of insurance eligibility and benefits"
+        },
+        {
+          substep: "Benefit Analysis",
+          process: "AI-powered analysis of coverage details and identification of potential gaps"
+        },
+        {
+          substep: "Financial Assistance",
+          process: "Intelligent matching with available assistance programs and grant opportunities"
+        }
+      ]
+    },
+    {
+      id: 6,
+      title: "Clinical Review & Triage",
+      icon: Stethoscope,
+      time: "Day 5-7",
+      position: { x: 30, y: 25 },
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "agentic",
+      description: "AI-assisted clinical review with intelligent specialist matching and risk stratification",
+      automationPrimary: false,
+      roi: "≈ 50% efficiency gain",
+      automationTasks: [
+        "Automated flagging of critical data points",
+        "Standard clinical guideline checking",
+        "Basic risk factor identification",
+        "Template-based clinical summaries"
+      ],
+      aiTasks: [
+        "AI-driven symptom assessment and pattern recognition",
+        "Intelligent specialist matching based on clinical profiles",
+        "Preliminary risk stratification and urgency scoring",
+        "Predictive clinical pathway recommendations"
+      ],
+      whyAutomation: "Basic clinical data flagging benefits from consistent automated processing",
+      whyAI: "Complex clinical decision-making requires sophisticated analysis and pattern recognition",
+      phases: [
+        "Implement automated clinical data flagging",
+        "Deploy AI for specialist matching and risk assessment",
+        "Integrate predictive clinical pathway models"
+      ],
+      currentIssues: [
+        "Manual clinical review creates bottlenecks",
+        "Inconsistent specialist assignment decisions",
+        "Delayed recognition of high-risk cases"
+      ],
+      improvement: "AI-assisted review reduces processing time by 60% while improving specialist matching accuracy by 85%.",
+      detailedSubsteps: [
+        {
+          substep: "Clinical Data Analysis",
+          process: "AI-powered analysis of collected clinical and genomic data for pattern recognition"
+        },
+        {
+          substep: "Risk Stratification",
+          process: "Intelligent assessment of case complexity and urgency for appropriate prioritization"
+        },
+        {
+          substep: "Specialist Matching",
+          process: "AI-driven matching with appropriate specialists based on clinical profile and availability"
+        }
+      ]
+    },
+    {
+      id: 7,
+      title: "Genomic Test Pre-authorization",
+      icon: Dna,
+      time: "Day 7-10",
+      position: { x: 50, y: 25 },
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "agentic",
+      description: "AI-generated comprehensive PA documentation with predictive approval analysis",
+      automationPrimary: false,
+      roi: "≈ 85% efficiency gain",
+      automationTasks: [
+        "Automated PA request submission",
+        "Digital status tracking and notifications",
+        "Standard documentation template completion",
+        "Basic appeals process initiation"
+      ],
+      aiTasks: [
+        "AI-generated comprehensive PA documentation",
+        "Predictive approval likelihood assessment",
+        "Intelligent appeals documentation generation",
+        "Personalized approval strategy optimization"
+      ],
+      whyAutomation: "Standard PA submission processes benefit from automated workflows",
+      whyAI: "Complex documentation generation and approval strategy require intelligent analysis",
+      phases: [
+        "Implement automated PA submission workflows",
+        "Deploy AI for documentation generation and approval prediction",
+        "Integrate intelligent appeals management"
+      ],
+      currentIssues: [
+        "Manual PA documentation is time-consuming and inconsistent",
+        "High denial rates due to incomplete documentation",
+        "Lengthy appeals processes for denied requests"
+      ],
+      improvement: "AI-generated documentation increases approval rates by 70% with predictive appeal strategies reducing processing time.",
+      detailedSubsteps: [
+        {
+          substep: "Documentation Generation",
+          process: "AI-powered creation of comprehensive pre-authorization requests with supporting evidence"
+        },
+        {
+          substep: "Approval Prediction",
+          process: "Intelligent analysis of approval likelihood with recommendation optimization"
+        },
+        {
+          substep: "Appeals Management",
+          process: "Automated appeals documentation and strategy development for denied requests"
+        }
+      ]
+    },
+    {
+      id: 8,
+      title: "Appointment Scheduling & Coordination",
+      icon: Calendar,
+      time: "Day 10-12",
+      position: { x: 70, y: 25 },
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "AI-optimized scheduling with intelligent conflict resolution and patient preference matching",
+      automationPrimary: false,
+      roi: "≈ 70% efficiency gain",
+      automationTasks: [
+        "Online self-scheduling portal access",
+        "Automated appointment reminders and confirmations",
+        "Basic calendar management and availability checking",
+        "Standard rescheduling workflows"
+      ],
+      aiTasks: [
+        "Optimized scheduling based on multiple preference factors",
+        "Intelligent conflict resolution for complex scheduling",
+        "Predictive no-show prevention and optimization",
+        "AI-driven resource allocation and coordination"
+      ],
+      whyAutomation: "Basic scheduling functions benefit from reliable automated processes",
+      whyAI: "Complex scheduling optimization requires intelligent analysis of multiple factors",
+      phases: [
+        "Deploy automated scheduling and reminder systems",
+        "Implement AI for optimization and conflict resolution",
+        "Integrate predictive analytics for resource planning"
+      ],
+      currentIssues: [
+        "Manual calendar coordination creates conflicts and delays",
+        "High cancellation rates due to poor scheduling optimization",
+        "Difficult coordination between multiple providers"
+      ],
+      improvement: "AI-optimized scheduling reduces cancellations by 40% while improving patient satisfaction and resource utilization.",
+      detailedSubsteps: [
+        {
+          substep: "Schedule Optimization",
+          process: "AI-powered optimization considering physician availability, patient preferences, and treatment urgency"
+        },
+        {
+          substep: "Conflict Resolution",
+          process: "Intelligent resolution of scheduling conflicts with automated alternative suggestions"
+        },
+        {
+          substep: "Resource Coordination",
+          process: "AI-driven coordination of multiple providers and resources for comprehensive care"
+        }
+      ]
+    },
+    {
+      id: 9,
+      title: "Pre-Visit Preparation & Communication",
+      icon: MessageCircle,
+      time: "Day 12-14",
+      position: { x: 10, y: 35 },
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "agentic",
+      description: "Personalized AI assistant for patient education and interactive preparation guidance",
+      automationPrimary: false,
+      roi: "≈ 80% efficiency gain",
+      automationTasks: [
+        "Automated digital packet delivery",
+        "Standard preparation reminders and checklists",
+        "Basic educational material distribution",
+        "Automated pre-visit task tracking"
+      ],
+      aiTasks: [
+        "Personalized AI assistant for patient education",
+        "Interactive preparation guides with adaptive content",
+        "AI-driven compliance tracking and personalized nudges",
+        "Intelligent preparation optimization based on individual needs"
+      ],
+      whyAutomation: "Standard preparation tasks benefit from consistent automated delivery",
+      whyAI: "Personalized education and adaptive guidance require intelligent patient interaction",
+      phases: [
+        "Implement automated preparation workflows",
+        "Deploy AI assistant for personalized education",
+        "Integrate adaptive compliance tracking"
+      ],
+      currentIssues: [
+        "Generic preparation instructions lead to confusion",
+        "Poor patient compliance with preparation requirements",
+        "Manual delivery of materials creates delays"
+      ],
+      improvement: "AI-personalized preparation achieves 95% patient readiness with interactive guidance and real-time support.",
+      detailedSubsteps: [
+        {
+          substep: "Personalized Education",
+          process: "AI-generated educational content tailored to individual patient needs and comprehension level"
+        },
+        {
+          substep: "Interactive Preparation",
+          process: "AI assistant guides patients through preparation steps with real-time support"
+        },
+        {
+          substep: "Compliance Tracking",
+          process: "Intelligent monitoring and personalized nudges to ensure preparation completeness"
+        }
+      ]
+    }
+  ]
+};
 
 // Patient scenario details with detailed process breakdowns
 const scenarioDetails = {
@@ -750,10 +1271,9 @@ const BusinessUseCases = () => {
   const [selectedStep, setSelectedStep] = useState<number | null>(null);
   const [showDecisionFramework, setShowDecisionFramework] = useState(false);
 
-  // Get current business case data - for now just use the current data structure
+  // Get current business case data
   const currentCase = businessCases[selectedBusinessCase as keyof typeof businessCases];
-  // Until we fully refactor, use existing data
-  const currentJourneySteps = journeySteps;
+  const currentJourneySteps = journeySteps[selectedBusinessCase as keyof typeof journeySteps] || journeySteps.oncology;
   const currentScenarioDetails = scenarioDetails;
 
   const scrollToSection = (sectionId: string) => {
@@ -820,7 +1340,7 @@ const BusinessUseCases = () => {
         </div>
 
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent leading-tight">
-          Business Use Cases
+          {currentCase.title}
         </h1>
         <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl lg:max-w-3xl mx-auto leading-relaxed">
           {currentCase.description}
@@ -831,7 +1351,9 @@ const BusinessUseCases = () => {
       <Card className="w-full mx-auto max-w-7xl">
         <CardHeader className="px-4 sm:px-6 lg:px-8">
           <CardTitle className="text-xl sm:text-2xl md:text-3xl text-center mb-2 sm:mb-4 leading-tight">
-            Patient Journey Through {currentCase.title}
+            {selectedBusinessCase === 'referral' ? 'Specialized Oncology Referral Process' : 
+             selectedBusinessCase === 'retail' ? 'Customer Experience Journey' : 
+             'Patient Journey Through Oncology Care'}
           </CardTitle>
           {/* Instructions for interaction */}
           <div className="text-center mb-3 sm:mb-4">
@@ -1229,13 +1751,7 @@ const BusinessUseCases = () => {
                   Current Issues
                 </h3>
                 <div className="space-y-2 sm:space-y-3">
-                  {[
-                    "Approx. 40% of patients experience delays in initial appointment scheduling due to manual processing",
-                    "Staff productivity reduced by estimated 25% due to repetitive administrative tasks", 
-                    "Approx. 30% increase in errors during data collection and record management",
-                    "Patient satisfaction scores averaging 6.2/10 due to communication gaps and delays",
-                    "Healthcare provider burnout increased by approx. 35% due to administrative burden"
-                  ].map((issue, index) => (
+                  {currentCase.currentIssues.map((issue, index) => (
                     <div key={index} className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 bg-red-50 rounded-lg border border-red-200">
                       <AlertTriangle className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 mt-0.5 flex-shrink-0" />
                       <p className="text-xs sm:text-sm text-red-700 leading-relaxed">{issue}</p>
@@ -1250,13 +1766,7 @@ const BusinessUseCases = () => {
                   Expected Improvements
                 </h3>
                 <div className="space-y-2 sm:space-y-3">
-                  {[
-                    "Approx. 85% reduction in appointment scheduling time with automated referral processing",
-                    "Staff efficiency increased by estimated 60% through AI-assisted workflow optimization",
-                    "Data accuracy improved to approx. 98% with automated validation and AI error detection", 
-                    "Patient satisfaction projected to reach 8.7/10 with personalized communication and faster response times",
-                    "Healthcare provider satisfaction increased by approx. 45% due to reduced administrative burden and improved patient outcomes"
-                  ].map((improvement, index) => (
+                  {currentCase.expectedImprovements.map((improvement, index) => (
                     <div key={index} className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 bg-green-50 rounded-lg border border-green-200">
                       <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-green-500 mt-0.5 flex-shrink-0" />
                       <p className="text-xs sm:text-sm text-green-700 leading-relaxed">{improvement}</p>
