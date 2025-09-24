@@ -151,20 +151,22 @@ const journeySteps = {
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "hybrid",
-      description: "Immediate digital referral processing with AI-powered triage",
+      description: "Immediate digital referral processing with AI-powered triage and routing",
       automationPrimary: true,
       roi: "≈ 75% efficiency gain",
       automationTasks: [
         "Digital intake form parsing from fax/portal",
         "Automated data extraction and validation",
         "Basic referral completeness checking",
-        "Standard acknowledgment notifications"
+        "Standard acknowledgment notifications",
+        "Automated referral tracking and logging"
       ],
       aiTasks: [
-        "Intelligent referral routing based on urgency",
+        "Intelligent referral routing based on urgency and specialty",
         "Smart data extraction from unstructured documents", 
         "AI-powered clinical priority assessment",
-        "Predictive resource allocation for complex cases"
+        "Predictive resource allocation for complex cases",
+        "Natural language processing for clinical notes"
       ],
       whyAutomation: "High-volume referral processing benefits from consistent digital workflows and automated validation",
       whyAI: "Complex triage decisions require intelligent assessment of clinical urgency and appropriate specialist routing",
@@ -176,7 +178,8 @@ const journeySteps = {
       currentIssues: [
         "Manual fax processing leads to 4-6 hour delays",
         "15% data entry errors in manual transcription",
-        "Inconsistent urgency assessment across staff"
+        "Inconsistent urgency assessment across staff",
+        "Lost referrals due to manual tracking"
       ],
       improvement: "AI-powered processing reduces response time to under 30 minutes with 95% accuracy in data extraction."
     },
@@ -202,7 +205,8 @@ const journeySteps = {
         "Personalized communication based on patient profile",
         "Intelligent FAQ chatbot for initial questions",
         "AI-powered sentiment analysis and escalation",
-        "Dynamic conversation flow based on patient responses"
+        "Dynamic conversation flow based on patient responses",
+        "Multi-language support for diverse patient populations"
       ],
       whyAutomation: "Standard communication workflows benefit from consistent automated delivery",
       whyAI: "Patient interactions require personalized communication and intelligent response to individual needs",
@@ -214,16 +218,55 @@ const journeySteps = {
       currentIssues: [
         "Manual phone calls create delays and missed connections",
         "Generic communication leads to patient confusion",
-        "Staff overwhelmed with routine questions"
+        "Staff overwhelmed with routine questions",
+        "Language barriers affect patient engagement"
       ],
       improvement: "AI-driven communication achieves 85% first-contact success with personalized messaging."
     },
     {
       id: 3,
-      title: "Demographic & Insurance Data Collection",
-      icon: ClipboardCheck,
+      title: "Provider, Treatment Center & Referral Network Check",
+      icon: Network,
       time: "Day 1-2",
       position: { x: 52, y: 18 },
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "hybrid",
+      description: "Comprehensive verification of provider NPI, treatment center NPI, and credentialing status",
+      automationPrimary: true,
+      roi: "≈ 85% efficiency gain",
+      automationTasks: [
+        "NPI database lookups and verification",
+        "Automated credentialing status checks",
+        "Network participation validation",
+        "Provider directory updates"
+      ],
+      aiTasks: [
+        "Intelligent provider matching based on specialty and location",
+        "AI-powered credentialing status prediction",
+        "Smart network optimization recommendations",
+        "Predictive provider availability analysis"
+      ],
+      whyAutomation: "Provider verification involves standardized database queries and status checks",
+      whyAI: "Complex network optimization and provider matching require intelligent analysis",
+      phases: [
+        "Implement automated NPI verification systems",
+        "Deploy AI for provider matching optimization",
+        "Integrate predictive credentialing analytics"
+      ],
+      currentIssues: [
+        "Manual NPI lookups cause significant delays",
+        "Outdated credentialing information leads to rejections",
+        "Suboptimal provider matching affects patient outcomes"
+      ],
+      improvement: "AI-enhanced verification ensures 99% accurate provider matching with real-time credentialing status."
+    },
+    {
+      id: 4,
+      title: "Demographic & Insurance Data Collection",
+      icon: ClipboardCheck,
+      time: "Day 2-3",
+      position: { x: 72, y: 18 },
       emotion: "neutral",
       emotionIcon: Meh,
       approach: "automation",
@@ -234,7 +277,8 @@ const journeySteps = {
         "Digital form pre-population from existing records",
         "Automated insurance eligibility verification",
         "Real-time validation of required fields",
-        "Integration with external databases"
+        "Integration with external databases",
+        "Automated demographic data cleansing"
       ],
       aiTasks: [
         "Smart form adaptation based on patient responses",
