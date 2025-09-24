@@ -59,8 +59,8 @@ const businessCases = {
   oncology: {
     id: "oncology",
     title: "Oncology Care Workflow",
-    description: "✅ IMPLEMENTED: Strategic technology selection for oncology workflows - real deployment learnings and outcomes",
-    status: "implemented",
+    description: "Mixed implementation status - some steps live, others in development and testing phases",
+    status: "mixed",
     icon: Heart,
     currentIssues: [
       "Approx. 40% of patients experience delays in initial appointment scheduling due to manual processing",
@@ -88,8 +88,8 @@ const businessCases = {
   referral: {
     id: "referral",
     title: "Patient Referral & Onboarding",
-    description: "🔬 EXPERIMENTING: Specialized oncology patient referral process - active testing and optimization",
-    status: "experimenting",
+    description: "Partial implementation - key steps deployed, complex workflows in active development",
+    status: "mixed",
     icon: UserCheck,
     currentIssues: [
       "Manual fax/phone referral processing leads to 4-6 hour delays and 15% data entry errors",
@@ -117,8 +117,8 @@ const businessCases = {
   contact: {
     id: "contact",
     title: "Digital Contact Center Transformation",
-    description: "🚧 IN DEVELOPMENT: Patient communication hub - addressing current contact center challenges",
-    status: "development",
+    description: "Early stage implementation - foundational components built, advanced features in progress",
+    status: "mixed",
     icon: MessageCircle,
     currentIssues: [
       "80% of contacts through phone create 4-7 minute hold times and inefficient resource allocation",
@@ -158,6 +158,8 @@ const journeySteps = {
       description: "Immediate digital referral processing with AI-powered triage and routing",
       automationPrimary: true,
       roi: "≈ 75% efficiency gain",
+      implementationStatus: "live" as const, // ✅ Currently deployed and working
+      statusNote: "Digital intake and basic validation operational",
       automationTasks: [
         "Digital intake form parsing from fax/portal",
         "Automated data extraction and validation",
@@ -198,6 +200,8 @@ const journeySteps = {
       description: "Personalized AI-driven patient communication and initial screening",
       automationPrimary: false,
       roi: "≈ 60% efficiency gain",
+      implementationStatus: "testing" as const, // 🔬 In active testing phase
+      statusNote: "Basic communication workflows deployed, AI personalization in testing",
       automationTasks: [
         "Automated SMS/email welcome messages",
         "Basic appointment availability checking",
@@ -2110,23 +2114,23 @@ const BusinessUseCases = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 px-2">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Implemented Solutions</h3>
-                <p className="text-white/80 text-xs">Live & Operational</p>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Live Steps</h3>
+                <p className="text-white/80 text-xs">Deployed & Working</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Active Experiments</h3>
-                <p className="text-white/80 text-xs">Learning & Iterating</p>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Testing Phase</h3>
+                <p className="text-white/80 text-xs">Active Validation</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400 mb-2" />
                 <h3 className="font-semibold text-white text-xs sm:text-sm">In Development</h3>
-                <p className="text-white/80 text-xs">Building & Testing</p>
+                <p className="text-white/80 text-xs">Building Components</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Target className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400 mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Challenges Addressed</h3>
-                <p className="text-white/80 text-xs">Problem-solving focus</p>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Step-by-Step</h3>
+                <p className="text-white/80 text-xs">Gradual Implementation</p>
               </div>
             </div>
             
@@ -2275,14 +2279,9 @@ const BusinessUseCases = () => {
                           {businessCase.title}
                           <Badge 
                             variant="outline" 
-                            className={`text-xs ${
-                              businessCase.status === 'implemented' ? 'border-green-500 text-green-600' :
-                              businessCase.status === 'experimenting' ? 'border-blue-500 text-blue-600' :
-                              'border-orange-500 text-orange-600'
-                            }`}
+                            className="text-xs border-purple-500 text-purple-600"
                           >
-                            {businessCase.status === 'implemented' ? '✅ Live' :
-                             businessCase.status === 'experimenting' ? '🔬 Testing' : '🚧 Building'}
+                            Mixed Status
                           </Badge>
                         </div>
                         <div className="text-xs text-muted-foreground">{businessCase.description.substring(0, 60)}...</div>
@@ -2303,31 +2302,23 @@ const BusinessUseCases = () => {
                   selectedBusinessCase === key 
                     ? 'ring-2 ring-primary shadow-lg scale-105' 
                     : 'hover:shadow-md hover:scale-102'
-                } ${
-                  businessCase.status === 'implemented' ? 'border-green-200 bg-green-50/50' :
-                  businessCase.status === 'experimenting' ? 'border-blue-200 bg-blue-50/50' :
-                  'border-orange-200 bg-orange-50/50'
-                }`}
+                } border-purple-200 bg-gradient-to-br from-purple-50/50 to-blue-50/30`}
                 onClick={() => setSelectedBusinessCase(key)}
               >
                 <CardContent className="p-6 text-center">
                   <div className="flex items-center justify-center mb-4">
                     <businessCase.icon className="w-12 h-12 text-primary mr-3" />
-                    <Badge 
-                      className={`${
-                        businessCase.status === 'implemented' ? 'bg-green-100 text-green-700 border-green-300' :
-                        businessCase.status === 'experimenting' ? 'bg-blue-100 text-blue-700 border-blue-300' :
-                        'bg-orange-100 text-orange-700 border-orange-300'
-                      }`}
-                    >
-                      {businessCase.status === 'implemented' ? '✅ Implemented' :
-                       businessCase.status === 'experimenting' ? '🔬 Experimenting' : '🚧 In Development'}
+                    <Badge className="bg-purple-100 text-purple-700 border-purple-300">
+                      Mixed Implementation
                     </Badge>
                   </div>
                   <h3 className="font-semibold text-lg mb-2">{businessCase.title}</h3>
                   <p className="text-sm text-muted-foreground line-clamp-3">
                     {businessCase.description}
                   </p>
+                  <div className="mt-3 text-xs text-purple-600 font-medium">
+                    Some steps live • Others in progress
+                  </div>
                 </CardContent>
               </Card>
             ))}

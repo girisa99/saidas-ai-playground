@@ -27,6 +27,8 @@ interface JourneyStep {
   approach: string;
   description: string;
   roi: string;
+  implementationStatus?: "live" | "testing" | "development" | "planned";
+  statusNote?: string;
   automationTasks: string[];
   aiTasks: string[];
   whyAutomation: string;
@@ -275,22 +277,45 @@ export const JourneyStepsFlow = ({
               }`}
               onClick={() => onStepClick(step.id)}
             >
-              <CardContent className="p-3 sm:p-4">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 rounded-full bg-primary/10 flex-shrink-0">
-                      <StepIcon className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
-                    </div>
-                    <span className="text-xs sm:text-sm font-medium text-muted-foreground">
-                      Step {step.id}
-                    </span>
-                  </div>
-                  <EmotionIcon className={`h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 ${getEmotionColor(step.emotion)}`} />
-                </div>
-                
-                <h4 className="font-semibold text-sm sm:text-base mb-2 line-clamp-2 leading-tight">
-                  {step.title}
-                </h4>
+               <CardContent className="p-3 sm:p-4">
+                 <div className="flex items-start justify-between mb-3">
+                   <div className="flex items-center gap-2">
+                     <div className="p-2 rounded-full bg-primary/10 flex-shrink-0">
+                       <StepIcon className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
+                     </div>
+                     <span className="text-xs sm:text-sm font-medium text-muted-foreground">
+                       Step {step.id}
+                     </span>
+                   </div>
+                   <div className="flex items-center gap-1">
+                     <EmotionIcon className={`h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 ${getEmotionColor(step.emotion)}`} />
+                     {step.implementationStatus && (
+                       <Badge 
+                         variant="outline" 
+                         className={`text-xs ml-1 ${
+                           step.implementationStatus === 'live' ? 'border-green-500 text-green-600 bg-green-50' :
+                           step.implementationStatus === 'testing' ? 'border-blue-500 text-blue-600 bg-blue-50' :
+                           step.implementationStatus === 'development' ? 'border-orange-500 text-orange-600 bg-orange-50' :
+                           'border-gray-500 text-gray-600 bg-gray-50'
+                         }`}
+                       >
+                         {step.implementationStatus === 'live' ? '✅' :
+                          step.implementationStatus === 'testing' ? '🔬' :
+                          step.implementationStatus === 'development' ? '🚧' : '📋'}
+                       </Badge>
+                     )}
+                   </div>
+                 </div>
+                 
+                 <h4 className="font-semibold text-sm sm:text-base mb-2 line-clamp-2 leading-tight">
+                   {step.title}
+                 </h4>
+
+                 {step.statusNote && (
+                   <p className="text-xs text-muted-foreground mb-2 line-clamp-2 leading-relaxed">
+                     {step.statusNote}
+                   </p>
+                 )}
                 
                 <div className="flex items-center justify-between mb-2">
                   <Badge 
