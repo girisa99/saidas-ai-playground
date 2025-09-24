@@ -55,7 +55,7 @@ export const NavigationHeader = () => {
                 <span className="text-sm xl:text-lg font-semibold text-foreground whitespace-nowrap">Hub</span>
               </div>
               <p className="text-xs text-muted-foreground font-medium whitespace-nowrap leading-tight">
-                I am your Technology navigator
+                I am your Technology Navigator
               </p>
             </div>
             {/* Medium screens brand text */}
