@@ -67,7 +67,7 @@ export const BusinessImpactInfographic = () => {
         "Real-time insurance verification",
         "Clinical review assistance"
       ],
-      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio", "Business APIs: CMS Verification & Credentialing, DocuSign, Insurance APIs, ICD, FDA"]
+      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio, Google Vertex Studio, Image Generation Models", "Business APIs: CMS Verification & Credentialing, DocuSign, Insurance APIs, ICD, FDA"]
     },
     {
       landscape: "Customer Experience",
