@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Brain, Mail, Linkedin, Github, ArrowUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { PrivacyDialog, TermsDialog, DisclaimerDialog, CookiesDialog } from "./LegalDialogs";
 
 export const Footer = () => {
   const scrollToTop = () => {
@@ -107,10 +107,26 @@ export const Footer = () => {
             © 2025 Genie AI Experimentation Hub. Powered by innovation and curiosity.
           </p>
           <div className="flex space-x-6 text-sm text-muted-foreground">
-            <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
-            <Link to="/terms" className="hover:text-foreground transition-colors">Terms</Link>
-            <Link to="/disclaimer" className="hover:text-foreground transition-colors">Disclaimer</Link>
-            <Link to="/cookies" className="hover:text-foreground transition-colors">Cookies</Link>
+            <PrivacyDialog 
+              trigger={
+                <button className="hover:text-foreground transition-colors">Privacy</button>
+              }
+            />
+            <TermsDialog 
+              trigger={
+                <button className="hover:text-foreground transition-colors">Terms</button>
+              }
+            />
+            <DisclaimerDialog 
+              trigger={
+                <button className="hover:text-foreground transition-colors">Disclaimer</button>
+              }
+            />
+            <CookiesDialog 
+              trigger={
+                <button className="hover:text-foreground transition-colors">Cookies</button>
+              }
+            />
           </div>
         </div>
       </div>
