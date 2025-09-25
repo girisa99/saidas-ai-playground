@@ -80,42 +80,37 @@ export const NavigationHeader = () => {
 
           {/* Desktop Navigation - Hidden on smaller screens, flexible layout */}
           <nav className="hidden lg:flex items-center justify-center flex-1 mx-4 overflow-hidden">
-            <div className="flex items-center space-x-1 max-w-fit">
-              {navItems.slice(0, 4).map((item) => {
+            <div className="flex items-center space-x-0.5 lg:space-x-1 max-w-fit">
+              {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = isActivePath(item.to);
+                
+                // Custom labels for responsive display
+                const getResponsiveLabel = (label: string) => {
+                  switch(label) {
+                    case "About Me": return { full: "About Me", short: "About Me" };
+                    case "Tech Exploration": return { full: "Tech Exploration", short: "Tech" };
+                    case "Business Use Cases": return { full: "Business Use Cases", short: "Business" };
+                    case "Case Studies": return { full: "Case Studies", short: "Cases" };
+                    default: return { full: label, short: label };
+                  }
+                };
+                
+                const responsiveLabel = getResponsiveLabel(item.label);
+                
                 return (
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`flex items-center gap-1 xl:gap-2 px-2 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                    className={`flex items-center gap-1 xl:gap-2 px-1.5 lg:px-2 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition-all duration-200 whitespace-nowrap ${
                       isActive
                         ? 'bg-primary text-primary-foreground shadow-md'
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                     }`}
                   >
                     <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span className="hidden xl:inline">{item.label}</span>
-                    <span className="xl:hidden">{item.label.split(' ')[0]}</span>
-                  </Link>
-                );
-              })}
-              {navItems.slice(4).map((item) => {
-                const Icon = item.icon;
-                const isActive = isActivePath(item.to);
-                return (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    className={`flex items-center gap-1 xl:gap-2 px-2 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition-all duration-200 whitespace-nowrap ${
-                      isActive
-                        ? 'bg-primary text-primary-foreground shadow-md'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span className="hidden xl:inline">{item.label}</span>
-                    <span className="xl:hidden">{item.label.split(' ')[0]}</span>
+                    <span className="hidden xl:inline">{responsiveLabel.full}</span>
+                    <span className="xl:hidden">{responsiveLabel.short}</span>
                   </Link>
                 );
               })}
