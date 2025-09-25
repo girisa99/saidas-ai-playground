@@ -34,9 +34,9 @@ export const NavigationHeader = () => {
   return (
     <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-lg border-b border-border shadow-sm">
       <div className="w-full max-w-none px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between gap-4">
+        <div className="flex h-16 items-center justify-between gap-2">
           {/* Logo & Brand - Left aligned, flexible width */}
-          <Link to="/" className="flex items-center space-x-2 sm:space-x-3 group min-w-0 flex-shrink-0">
+          <Link to="/" className="flex items-center space-x-2 group min-w-0 flex-shrink-0">
             <div className="relative flex-shrink-0">
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-genie-primary/10 to-genie-secondary/10 p-1 shadow-lg group-hover:shadow-genie-primary/20 transition-all duration-300 border border-genie-primary/20">
                 <img 
@@ -46,20 +46,20 @@ export const NavigationHeader = () => {
                 />
               </div>
             </div>
-            {/* Desktop brand text - hidden on smaller screens to prevent overflow */}
-            <div className="hidden lg:block min-w-0">
+            {/* Responsive brand text */}
+            <div className="hidden xl:block">
               <div className="flex items-center space-x-2">
-                <span className="text-lg xl:text-xl font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
+                <span className="text-xl font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
                   Genie AI
                 </span>
-                <span className="text-sm xl:text-lg font-semibold text-foreground whitespace-nowrap">Hub</span>
+                <span className="text-lg font-semibold text-foreground whitespace-nowrap">Hub</span>
               </div>
               <p className="text-xs text-muted-foreground font-medium whitespace-nowrap leading-tight">
                 I am your Technology Navigator
               </p>
             </div>
-            {/* Medium screens brand text */}
-            <div className="hidden md:block lg:hidden">
+            {/* Compact brand text for smaller screens */}
+            <div className="hidden lg:block xl:hidden">
               <div className="flex items-center space-x-1">
                 <span className="text-lg font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
                   Genie AI
@@ -67,20 +67,11 @@ export const NavigationHeader = () => {
                 <span className="text-sm font-semibold text-foreground whitespace-nowrap">Hub</span>
               </div>
             </div>
-            {/* Mobile brand text */}
-            <div className="md:hidden">
-              <div className="flex items-center space-x-1">
-                <span className="text-sm font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
-                  Genie AI
-                </span>
-                <span className="text-xs font-semibold text-foreground whitespace-nowrap">Hub</span>
-              </div>
-            </div>
           </Link>
 
-          {/* Desktop Navigation - Hidden on smaller screens, flexible layout */}
-          <nav className="hidden lg:flex items-center justify-center flex-1 mx-4 overflow-hidden">
-            <div className="flex items-center space-x-0.5 lg:space-x-1 max-w-fit">
+          {/* Desktop Navigation - Center, takes available space */}
+          <nav className="hidden lg:flex items-center justify-center flex-1 min-w-0 px-2">
+            <div className="flex items-center justify-start space-x-1 max-w-full overflow-x-auto px-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = isActivePath(item.to);
@@ -88,7 +79,7 @@ export const NavigationHeader = () => {
                 // Custom labels for responsive display
                 const getResponsiveLabel = (label: string) => {
                   switch(label) {
-                    case "About Me": return { full: "About Me", short: "About Me" };
+                    case "About Me": return { full: "About Me", short: "About" };
                     case "Tech Exploration": return { full: "Tech Exploration", short: "Tech" };
                     case "Business Use Cases": return { full: "Business Use Cases", short: "Business" };
                     case "Case Studies": return { full: "Case Studies", short: "Cases" };
@@ -102,15 +93,15 @@ export const NavigationHeader = () => {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`flex items-center gap-1 xl:gap-2 px-1.5 lg:px-2 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                    className={`flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
                       isActive
                         ? 'bg-primary text-primary-foreground shadow-md'
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                     }`}
                   >
                     <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span className="hidden xl:inline">{responsiveLabel.full}</span>
-                    <span className="xl:hidden">{responsiveLabel.short}</span>
+                    <span className="hidden 2xl:inline">{responsiveLabel.full}</span>
+                    <span className="2xl:hidden">{responsiveLabel.short}</span>
                   </Link>
                 );
               })}
