@@ -23,8 +23,8 @@ export const HeroSection = () => {
             Genie AI Experimentation HUB
           </h1>
           <p className="text-xl lg:text-2xl text-blue-100 mb-8 leading-relaxed">
-            Sharing my AI journey, experiences, and learnings through experimentation. 
-            Join me as I explore the transformative potential of AI and document real-world implementations across industries.
+            Strategic AI implementation and enterprise transformation solutions. 
+            Empowering organizations to harness AI's full potential through proven frameworks and expert guidance.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl">
             <Button 

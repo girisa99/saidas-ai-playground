@@ -246,8 +246,8 @@ const Journey = () => {
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-              Sharing my AI journey, experiences, and learnings through continuous experimentation. 
-              Join me as I explore how AI tools are transforming development and document real-world discoveries since June 2025.
+              From a simple conversation to building complex applications with AI - follow my ongoing journey since June 2025, 
+              discovering how AI tools are democratizing software development and continuously evolving with new breakthroughs.
             </p>
             
             {/* Journey Highlights Grid - Mobile Responsive */}
