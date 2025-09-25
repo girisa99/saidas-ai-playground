@@ -1,7 +1,7 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { BusinessImpactInfographic } from "@/components/BusinessImpactInfographic";
+
 import { AnimatedTextEmergence } from "@/components/AnimatedTextEmergence";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -557,8 +557,6 @@ const About = () => {
           </div>
         </section>
 
-        {/* Business Impact Infographic */}
-        <BusinessImpactInfographic />
       </main>
 
       <Footer />

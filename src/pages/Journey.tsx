@@ -1,6 +1,7 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { DevelopmentJourneyMap } from "@/components/DevelopmentJourneyMap";
+import { BusinessImpactInfographic } from "@/components/BusinessImpactInfographic";
 import { GammaIntegrationWidget } from "@/components/GammaIntegrationWidget";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -659,6 +660,9 @@ const Journey = () => {
             </Card>
           </div>
         </section>
+
+        {/* Business Impact Analysis */}
+        <BusinessImpactInfographic />
 
       </main>
 
