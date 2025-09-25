@@ -56,9 +56,9 @@ export const BusinessImpactInfographic = () => {
         "Enhanced patient satisfaction"
       ],
       technologies: [
-        "Technical APIs: LLM, Small Language Models, MCP n8n, Arize, LangWatch, Labeling Studio",
-        "Business APIs: CMS Verification & Credentialing, DocuSign, Insurance APIs, ICD, FDA",
-        "Clinical Decision Support",
+        "React.js Frontend",
+        "Supabase Backend",
+        "API Service Middleware",
         "Healthcare Data Orchestration"
       ],
       journeySteps: [
@@ -67,7 +67,7 @@ export const BusinessImpactInfographic = () => {
         "Real-time insurance verification",
         "Clinical review assistance"
       ],
-      integrations: ["HIE Networks", "Insurance APIs", "Clinical Systems"]
+      integrations: ["Technical APIs: LLM, Small Language Models, MCP n8n, Arize, LangWatch, Labeling Studio", "Business APIs: CMS Verification & Credentialing, DocuSign, Insurance APIs, ICD, FDA"]
     },
     {
       landscape: "Customer Experience",
