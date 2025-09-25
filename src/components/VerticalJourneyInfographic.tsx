@@ -164,12 +164,17 @@ const VerticalJourneyInfographic = () => {
     }
   ];
 
-  // Auto-play functionality with smooth scrolling
+  // Auto-play functionality with smooth scrolling - plays once and stops
   useEffect(() => {
     if (isAutoPlay) {
       intervalRef.current = setInterval(() => {
         setActivePhase((prev) => {
-          const nextPhase = (prev + 1) % phases.length;
+          const nextPhase = prev + 1;
+          if (nextPhase >= phases.length) {
+            // Stop autoplay when we reach the end
+            setIsAutoPlay(false);
+            return prev; // Stay on the last phase
+          }
           return nextPhase;
         });
       }, 4000);
@@ -305,13 +310,13 @@ const VerticalJourneyInfographic = () => {
                             <h3 className="text-2xl font-bold text-foreground mb-1">
                               {phase.title}
                             </h3>
-                            <p className="text-lg font-medium text-muted-foreground">
+                            <p className="text-lg font-medium text-foreground/80">
                               {phase.subtitle}
                             </p>
                           </div>
 
                           {/* Description */}
-                          <p className="text-muted-foreground leading-relaxed">
+                          <p className="text-foreground leading-relaxed">
                             {phase.description}
                           </p>
 
@@ -350,12 +355,12 @@ const VerticalJourneyInfographic = () => {
                                 ✓ Touch Points
                               </h4>
                               <ul className="space-y-2">
-                                {phase.touchPoints.map((point, i) => (
-                                  <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0" />
-                                    {point}
-                                  </li>
-                                ))}
+                                 {phase.touchPoints.map((point, i) => (
+                                   <li key={i} className="flex items-start gap-2 text-sm text-foreground">
+                                     <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0" />
+                                     {point}
+                                   </li>
+                                 ))}
                               </ul>
                             </div>
 
@@ -365,12 +370,12 @@ const VerticalJourneyInfographic = () => {
                                 ⚠ Pain Points
                               </h4>
                               <ul className="space-y-2">
-                                {phase.painPoints.map((pain, i) => (
-                                  <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                    <div className="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2 flex-shrink-0" />
-                                    {pain}
-                                  </li>
-                                ))}
+                                 {phase.painPoints.map((pain, i) => (
+                                   <li key={i} className="flex items-start gap-2 text-sm text-foreground">
+                                     <div className="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2 flex-shrink-0" />
+                                     {pain}
+                                   </li>
+                                 ))}
                               </ul>
                             </div>
                           </div>
