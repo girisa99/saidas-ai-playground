@@ -289,46 +289,68 @@ const About = () => {
             <div className="text-center mb-16">
               <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
                 <Award className="w-4 h-4 mr-2" />
-                Transformation Journey
+                Professional Evolution
               </Badge>
               <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-                From <span className="text-genie-primary">Corporate Innovation</span> to 
-                <span className="text-genie-teal"> AI Pioneering</span>
+                From <span className="text-genie-primary">Healthcare Technology Leadership</span> to 
+                <span className="text-genie-teal"> AI Innovation Pioneer</span>
               </h2>
               <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-                A 21-year odyssey through Fortune 500 giants, pioneering digital transformation 
-                and now revolutionizing healthcare through AI experimentation.
+                Two decades of driving digital transformation across pharmaceutical giants, 
+                now channeling that expertise into AI experimentation and innovation.
               </p>
             </div>
 
-            {/* Journey Timeline with Impact */}
+            {/* Professional Background Narrative */}
+            <div className="prose prose-xl max-w-5xl mx-auto text-muted-foreground mb-16 leading-relaxed">
+              <Card className="p-8 lg:p-12 bg-gradient-to-br from-genie-primary/5 to-background border-genie-primary/20">
+                <p className="mb-6">
+                  My career spans technology leadership roles at industry giants including <strong className="text-genie-primary">Novartis, Bayer, 
+                  Conduent, Amgen, and Pfizer</strong>, where I've consistently led digital transformation initiatives 
+                  across commercial operations, clinical R&D, regulatory affairs, and supply chain management. 
+                  With an MBA from <strong className="text-genie-teal">Cornell University's Johnson School</strong>, I've developed a unique perspective 
+                  that combines deep technical expertise with strategic business acumen, focusing on implementing 
+                  innovative technology solutions to streamline operations and accelerate therapeutic development.
+                </p>
+                <p>
+                  Throughout my journey, I've cultivated strong entrepreneurial skills and a passion for 
+                  identifying opportunities where technology can solve complex business challenges. This 
+                  entrepreneurial mindset has driven me to explore emerging technologies, develop innovative 
+                  solutions, and bridge the gap between cutting-edge technical capabilities and real-world 
+                  healthcare applications. My approach emphasizes practical innovation that delivers measurable 
+                  impact in therapeutic development and patient outcomes.
+                </p>
+              </Card>
+            </div>
+
+            {/* Career Progression Timeline */}
             <div className="relative mb-16">
               <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-genie-primary via-genie-teal to-genie-cyan opacity-30" />
               
               <div className="space-y-16">
                 {[
                   {
-                    phase: "Corporate Mastery",
+                    phase: "Pharmaceutical Technology Leadership",
                     companies: "Novartis • Bayer • Pfizer • Amgen • Conduent",
-                    impact: "Transformed therapeutic development pipelines worth $50B+",
-                    innovation: "Led digital initiatives across commercial ops, clinical R&D, regulatory affairs",
-                    icon: Building2,
+                    focus: "Digital transformation across commercial operations, clinical R&D, regulatory affairs, and supply chain",
+                    achievements: "Led enterprise-wide technology initiatives, streamlined therapeutic development processes",
+                    icon: Briefcase,
                     color: "genie-primary"
                   },
                   {
-                    phase: "Strategic Evolution", 
-                    companies: "Cornell MBA • Entrepreneurial Ventures",
-                    impact: "Bridged technical excellence with business strategy",
-                    innovation: "Developed frameworks for technology-driven healthcare innovation",
+                    phase: "Strategic Business Foundation", 
+                    companies: "Cornell University Johnson School • MBA",
+                    focus: "Strategic business acumen combined with deep technical expertise",
+                    achievements: "Developed frameworks bridging technology solutions with business outcomes",
                     icon: GraduationCap,
                     color: "genie-teal"
                   },
                   {
-                    phase: "AI Revolution",
-                    companies: "GenieAI Experimentation Hub",
-                    impact: "Democratizing AI possibilities across healthcare ecosystem",
-                    innovation: "Pioneering experimentation-first approach to AI transformation",
-                    icon: Zap,
+                    phase: "AI Innovation & Experimentation",
+                    companies: "GenieAI Experimentation Hub • Current Focus",
+                    focus: "Democratizing AI possibilities through practical experimentation",
+                    achievements: "Translating 21+ years of healthcare technology expertise into AI innovation frameworks",
+                    icon: Lightbulb,
                     color: "genie-cyan"
                   }
                 ].map((phase, index) => {
@@ -342,7 +364,7 @@ const About = () => {
                               <IconComponent className={`w-8 h-8 text-${phase.color}`} />
                             </div>
                             <div>
-                              <h3 className={`text-2xl font-bold text-${phase.color} mb-1`}>
+                              <h3 className={`text-xl font-bold text-${phase.color} mb-1`}>
                                 {phase.phase}
                               </h3>
                               <p className="text-sm text-muted-foreground font-medium">
@@ -353,13 +375,13 @@ const About = () => {
                           
                           <div className="space-y-4">
                             <div className={`p-4 bg-${phase.color}/5 rounded-lg border border-${phase.color}/10`}>
-                              <h4 className="font-bold text-foreground mb-2">🎯 Impact Achievement</h4>
-                              <p className="text-muted-foreground">{phase.impact}</p>
+                              <h4 className="font-bold text-foreground mb-2">🎯 Focus Areas</h4>
+                              <p className="text-muted-foreground">{phase.focus}</p>
                             </div>
                             
                             <div className={`p-4 bg-${phase.color}/5 rounded-lg border border-${phase.color}/10`}>
-                              <h4 className="font-bold text-foreground mb-2">🚀 Innovation Focus</h4>
-                              <p className="text-muted-foreground">{phase.innovation}</p>
+                              <h4 className="font-bold text-foreground mb-2">🚀 Key Achievements</h4>
+                              <p className="text-muted-foreground">{phase.achievements}</p>
                             </div>
                           </div>
                         </Card>
