@@ -35,18 +35,18 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <div className="space-y-2 text-sm">
-              <button className="text-muted-foreground hover:text-foreground transition-colors block">
-                About the Journey
-              </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors block">
-                Documentation
-              </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors block">
-                Implementation Guide
-              </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors block">
-                AI Strategies
-              </button>
+              <a href="/journey" className="text-muted-foreground hover:text-foreground transition-colors block">
+                AI Journey
+              </a>
+              <a href="/about" className="text-muted-foreground hover:text-foreground transition-colors block">
+                About Me
+              </a>
+              <a href="/technology" className="text-muted-foreground hover:text-foreground transition-colors block">
+                Technology Stack
+              </a>
+              <a href="/case-studies" className="text-muted-foreground hover:text-foreground transition-colors block">
+                Case Studies
+              </a>
             </div>
           </div>
 
@@ -54,18 +54,18 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Resources</h4>
             <div className="space-y-2 text-sm">
-              <button className="text-muted-foreground hover:text-foreground transition-colors block">
-                Technical Guides
-              </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors block">
-                Business Cases
-              </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors block">
-                ROI Analysis
-              </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors block">
-                Best Practices
-              </button>
+              <a href="/business-use-cases" className="text-muted-foreground hover:text-foreground transition-colors block">
+                Business Use Cases
+              </a>
+              <a href="/docs" className="text-muted-foreground hover:text-foreground transition-colors block">
+                Documentation Hub
+              </a>
+              <a href="/faq" className="text-muted-foreground hover:text-foreground transition-colors block">
+                FAQ & Support
+              </a>
+              <a href="/#experimentation" className="text-muted-foreground hover:text-foreground transition-colors block">
+                AI Experimentation
+              </a>
             </div>
           </div>
 
