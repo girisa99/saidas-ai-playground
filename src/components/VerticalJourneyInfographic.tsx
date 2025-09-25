@@ -20,7 +20,7 @@ import phase01Spark from "@/assets/journey-phase-01-spark.jpg";
 import phase02CuriosityArtwork from "@/assets/journey-phase-02-curiosity-artwork.jpg";
 import phase03BreakthroughArtwork from "@/assets/journey-phase-03-breakthrough-artwork.jpg";
 import phase04ScalableArtwork from "@/assets/journey-phase-04-scalable-artwork.jpg";
-import phase05ResilientArtwork from "@/assets/journey-phase-05-resilient-artwork.jpg";
+import phase05ResilientHubArtwork from "@/assets/journey-phase-05-resilient-hub-artwork.jpg";
 
 const VerticalJourneyInfographic = () => {
   const [activePhase, setActivePhase] = useState(0);
@@ -150,7 +150,7 @@ const VerticalJourneyInfographic = () => {
       subtitle: "Stable Healthcare AI Platform with Multi-Agent Orchestration",
       date: "August-September 2025",
       icon: Network,
-      image: phase05ResilientArtwork,
+      image: phase05ResilientHubArtwork,
       description: "Successfully built a stable, resilient AI platform that serves as the backbone for healthcare experimentation - integrating real-world systems like NPI, CMS, FDA, and EMR platforms while deploying multiple agents for complex patient onboarding workflows without breaking functionality.",
       touchPoints: [
         "Built unbreakable, stable AI platform foundation serving as experimentation backbone",
