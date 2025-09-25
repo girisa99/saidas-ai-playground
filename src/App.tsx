@@ -11,7 +11,9 @@ import CaseStudies from "./pages/CaseStudies";
 import FAQPage from "./pages/FAQPage";
 import Docs from "./pages/Docs";
 import Privacy from "./pages/Privacy";
-
+import Terms from "./pages/Terms";
+import Disclaimer from "./pages/Disclaimer";
+import Cookies from "./pages/Cookies";
 import BusinessUseCases from "./pages/BusinessUseCases";
 import NotFound from "./pages/NotFound";
 
@@ -34,6 +36,9 @@ const App = () => (
           <Route path="/docs" element={<Docs />} />
           
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/cookies" element={<Cookies />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

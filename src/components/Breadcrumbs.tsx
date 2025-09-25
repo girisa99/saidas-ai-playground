@@ -12,10 +12,12 @@ export const Breadcrumbs = () => {
     'about': 'About Me',
     'technology': 'Technology Stack',
     'case-studies': 'Case Studies',
-    
     'faq': 'FAQ',
     'docs': 'Documentation',
-    'privacy': 'Privacy Policy'
+    'privacy': 'Privacy Policy',
+    'terms': 'Terms of Use',
+    'disclaimer': 'Disclaimer',
+    'cookies': 'Cookie Policy'
   };
 
   if (pathnames.length === 0) return null;
