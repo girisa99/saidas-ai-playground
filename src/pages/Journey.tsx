@@ -214,19 +214,22 @@ const Journey = () => {
                 variant="default"
                 size="lg"
                 className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl w-full sm:w-auto"
+                asChild
               >
-                <Calendar className="w-4 h-4 mr-2" />
-                Follow My Timeline
+                <Link to="/business-use-cases">
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Explore business use cases
+                </Link>
               </Button>
               <Button 
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 w-full sm:w-auto"
+                className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 bg-white/5 backdrop-blur-sm w-full sm:w-auto"
                 asChild
               >
-                <Link to="/case-studies">
+                <Link to="/about">
                   <Award className="w-4 h-4 mr-2" />
-                  See What I Built
+                  About me
                 </Link>
               </Button>
             </div>
