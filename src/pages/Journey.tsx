@@ -7,7 +7,7 @@ import { BusinessImpactInfographic } from "@/components/BusinessImpactInfographi
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Calendar, MapPin, Users, Lightbulb, Cog, Rocket, Target, TrendingUp, Award, Brain, Database, Code2, Network, Zap, Shield } from "lucide-react";
+import { ArrowLeft, Calendar, MapPin, Users, Lightbulb, Cog, Rocket, Target, TrendingUp, Award, Brain, Database, Code2, Network, Zap, Shield, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import journeyInfographicBg from "@/assets/journey-infographic-bg.jpg";
@@ -27,103 +27,169 @@ const Journey = () => {
       date: "June 2025",
       month: "June",
       year: "2025",
-      phase: "The Spark",
+      phase: "Phase 01: The Spark",
       icon: Lightbulb,
       title: "The Conversation That Changed Everything",
-      description: "A typical Tuesday afternoon coffee with my colleague Prashant sparked a revolutionary question: 'What if AI didn't just assist us, but truly transformed how we built solutions from the ground up?' That single question hit me like lightning - this wasn't about incremental improvements, but fundamental transformation.",
-      achievements: [
-        "Initial curiosity ignited by transformative conversation with Prashant",
-        "Recognized profound shift beyond incremental innovation", 
-        "Committed to personal quest for AI-driven development transformation"
+      description: "I remember it like it was yesterday. A typical Tuesday afternoon coffee with my brilliant colleague Prashant sparked a revolutionary question: 'What if AI didn't just assist us, but truly transformed how we built solutions from the ground up?' That single question hit me like lightning - unleashing innovation I hadn't even dared to imagine.",
+      touchPoints: [
+        "Initial spark from transformative conversation with Prashant",
+        "Recognition of fundamental shift beyond incremental innovation",
+        "Deep curiosity ignited for AI-driven development transformation"
       ],
-      technologies: ["Conceptual Framework", "Strategic Thinking"],
+      painPoints: [
+        "Overwhelming possibilities without clear direction",
+        "Limited understanding of AI's true potential",
+        "Uncertainty about where to begin exploration"
+      ],
+      opportunities: [
+        "Revolutionary approach to solution development",
+        "Potential for enterprise-wide transformation",
+        "Personal quest for AI mastery begins"
+      ],
+      technologies: ["Conceptual Framework", "Strategic Vision"],
       color: "genie-primary",
-      impact: "Foundation for AI-first development mindset"
+      impact: "Foundation for AI-first development mindset",
+      visualElement: "💡"
     },
     {
       date: "July 2025",
       month: "July", 
       year: "2025",
-      phase: "AI Engine Exploration", 
+      phase: "Phase 02: AI Engine Discovery", 
       icon: Brain,
       title: "Building My Personal AI Laboratory",
-      description: "Established my comprehensive AI experimentation hub with systematic exploration of foundational models. Deep-dive into OpenAI's GPT-4, Anthropic's Claude 3, and Google's Gemini Pro. This phase involved 200+ hours of prompt engineering, model comparison, and architectural analysis.",
-      achievements: [
+      description: "What began as pure curiosity transformed into an all-consuming personal mission. I established my comprehensive AI experimentation hub with systematic exploration of foundational models - GPT-4, Claude 3, and Gemini Pro. This involved 200+ hours of deep experimentation across diverse use cases.",
+      touchPoints: [
         "Systematically benchmarked 15+ major LLMs across use cases",
-        "Developed advanced prompt engineering methodologies",
+        "Developed advanced prompt engineering methodologies", 
         "Created model selection frameworks for specific tasks"
+      ],
+      painPoints: [
+        "Overwhelming number of AI tools and platforms",
+        "Inconsistent model performance across tasks",
+        "Steep learning curve for prompt optimization"
+      ],
+      opportunities: [
+        "Mastery of AI model capabilities and limitations",
+        "Establishment of evaluation frameworks",
+        "Foundation for intelligent tool selection"
       ],
       technologies: ["GPT-4", "Claude 3", "Gemini Pro", "Prompt Engineering"],
       color: "genie-teal",
-      impact: "Mastery of AI model capabilities and limitations"
+      impact: "Mastery of AI model capabilities and limitations",
+      visualElement: "🧠"
     },
     {
       date: "August 2025", 
       month: "August",
       year: "2025",
-      phase: "Conceptualization & Design",
+      phase: "Phase 03: Design & Architecture",
       icon: Target,
-      title: "Mapping Complex AI Architectures",
-      description: "Overcame complexity through advanced visualization methodologies. Mastered Visio for enterprise architecture, draw.io for system flows, Miro for collaborative design, and Figma for user experience mapping. Created comprehensive visual frameworks for AI solution design.",
-      achievements: [
+      title: "Mapping Complex AI Architectures", 
+      description: "This phase focused on bringing process to a stable and reliable state. I mastered advanced visualization methodologies using Visio, draw.io, Miro, and Figma to map complex AI architectures and user flows. My AI tools became co-pilots in navigating this uncharted territory.",
+      touchPoints: [
         "Developed AI-specific architectural visualization standards",
         "Created reusable design patterns for complex workflows",
         "Built systematic approach to solution conceptualization"
       ],
+      painPoints: [
+        "Abstract AI concepts difficult to visualize",
+        "Complex workflows hard to communicate",
+        "Need for standardized design patterns"
+      ],
+      opportunities: [
+        "Transform abstract concepts into actionable blueprints",
+        "Enable clear communication of complex systems",
+        "Establish reusable architectural patterns"
+      ],
       technologies: ["Visio", "Draw.io", "Miro", "Figma", "Lucidchart"],
       color: "genie-cyan",
-      impact: "Transformed abstract AI concepts into actionable blueprints"
+      impact: "Transformed abstract AI concepts into actionable blueprints",
+      visualElement: "🎯"
     },
     {
       date: "September 2025",
       month: "September",
       year: "2025",
-      phase: "Infrastructure Development",
+      phase: "Phase 04: Infrastructure Revolution",
       icon: Database,
       title: "Building Unshakeable Technical Foundations",
-      description: "Constructed robust development ecosystem using cutting-edge tools. Mastered Cursor IDE for AI-assisted coding, leveraged Replit for rapid prototyping, implemented Docker for containerization, and integrated V0 by Vercel for UI generation. Established enterprise-grade data architecture with Supabase and PostgreSQL.",
-      achievements: [
+      description: "I constructed a robust development ecosystem using cutting-edge tools. Mastered Cursor IDE for AI-assisted coding, leveraged Replit for rapid prototyping, and discovered AI-powered solutions that dramatically accelerated front-end development. This persistent learning curve was absolutely critical.",
+      touchPoints: [
         "Built scalable TypeScript-based microservices architecture",
-        "Implemented containerized development environments",
+        "Implemented containerized development environments", 
         "Established real-time data synchronization patterns"
       ],
-      technologies: ["Cursor IDE", "Replit", "Docker", "V0 by Vercel", "Supabase", "PostgreSQL", "TypeScript"],
+      painPoints: [
+        "Complex tool integration challenges",
+        "Performance optimization bottlenecks",
+        "Scaling issues with rapid prototyping"
+      ],
+      opportunities: [
+        "Foundation for rapid AI solution deployment",
+        "Streamlined development workflows",
+        "Enterprise-grade scalability achieved"
+      ],
+      technologies: ["Cursor IDE", "Replit", "Docker", "V0 by Vercel", "Supabase", "PostgreSQL"],
       color: "genie-primary",
-      impact: "Created foundation for rapid AI solution deployment"
+      impact: "Created foundation for rapid AI solution deployment",
+      visualElement: "🚀"
     },
     {
       date: "October 2025",
       month: "October",
       year: "2025",
-      phase: "Advanced System Engineering",
+      phase: "Phase 05: Production Excellence",
       icon: Shield,
-      title: "Building Production-Ready AI Systems",
-      description: "Tackled enterprise-critical challenges: single source of truth architecture, intelligent duplicate detection, hallucination reduction through RAG implementation, and multi-tenant stability. Integrated external services including DocuSign for document workflows and Twilio for communications.",
-      achievements: [
+      title: "Enterprise-Grade AI Systems",
+      description: "I tackled enterprise-critical challenges head-on: single source of truth architecture, intelligent duplicate detection, and hallucination reduction through RAG implementation. Integration of external services like DocuSign and Twilio proved the platform's enterprise readiness.",
+      touchPoints: [
         "Implemented comprehensive data consistency frameworks",
-        "Developed hallucination reduction techniques achieving 94% accuracy", 
+        "Developed hallucination reduction achieving 94% accuracy",
         "Built enterprise-grade multi-tenant isolation"
       ],
-      technologies: ["RAG Architecture", "Vector Databases", "DocuSign API", "Twilio", "Redis", "Kubernetes"],
+      painPoints: [
+        "Data consistency across multiple systems",
+        "AI hallucination and reliability concerns", 
+        "Complex multi-tenant security requirements"
+      ],
+      opportunities: [
+        "Enterprise-grade reliability and accuracy",
+        "Proven integration capabilities",
+        "Production-ready AI solutions"
+      ],
+      technologies: ["RAG Architecture", "Vector Databases", "DocuSign API", "Twilio", "Redis"],
       color: "genie-teal",
-      impact: "Achieved enterprise-grade reliability and accuracy"
+      impact: "Achieved enterprise-grade reliability and accuracy",
+      visualElement: "🛡️"
     },
     {
       date: "November 2025",
-      month: "November",
+      month: "November", 
       year: "2025",
-      phase: "Agentic AI Revolution",
+      phase: "Phase 06: Agentic AI Breakthrough",
       icon: Network,
-      title: "Dynamic Multi-Agent Platform Innovation",
-      description: "Breakthrough achievement in agentic AI: built intelligent platform where specialized AI agents are dynamically generated and orchestrated through advanced prompt engineering. Real-time workflow configuration enables agents to collaborate seamlessly, demonstrated through rapid healthcare solution prototyping.",
-      achievements: [
-        "Created dynamic agent generation system with 12+ specialized roles",
+      title: "Dynamic Multi-Agent Innovation",
+      description: "The breakthrough moment: I built an intelligent platform where specialized AI agents are dynamically generated and orchestrated through advanced prompt engineering. Real-time workflow configuration enables seamless agent collaboration, demonstrated through complete healthcare workflow automation in under 2 hours.",
+      touchPoints: [
+        "Created dynamic agent generation with 12+ specialized roles",
         "Achieved seamless multi-agent orchestration with conflict resolution",
-        "Demonstrated complete healthcare workflow automation in under 2 hours"
+        "Demonstrated complete healthcare workflow automation"
+      ],
+      painPoints: [
+        "Complex agent coordination challenges",
+        "Dynamic workflow configuration complexity",
+        "Real-time collaboration synchronization"
+      ],
+      opportunities: [
+        "Revolutionary approach to complex problem-solving",
+        "Unlimited scalability through AI collaboration",
+        "Rapid solution development and deployment"
       ],
       technologies: ["Agentic AI", "Multi-Agent Systems", "Workflow Orchestration", "Real-time Collaboration"],
       color: "genie-cyan",
-      impact: "Revolutionized approach to complex problem-solving through AI collaboration"
+      impact: "Revolutionized approach to complex problem-solving through AI collaboration",
+      visualElement: "🌐"
     }
   ];
 
@@ -268,24 +334,30 @@ const Journey = () => {
                         <div className="w-2 h-2 bg-genie-primary rounded-full" />
                       </div>
                       
-                      {/* Content card */}
-                      <Card className={`flex-1 p-8 border-${milestone.color}/20 bg-gradient-to-br from-${milestone.color}/5 to-${milestone.color}/10 hover:shadow-xl transition-all duration-300 hover:scale-105`}>
+                      {/* Enhanced Content card with customer journey style */}
+                      <Card className={`flex-1 p-8 border-${milestone.color}/20 bg-gradient-to-br from-${milestone.color}/5 to-${milestone.color}/10 hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden`}>
+                        {/* Phase Flow Line */}
+                        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-genie-cyan via-genie-teal to-genie-primary opacity-30" />
+                        
                         <div className="flex items-start gap-6">
-                          <div className={`p-4 bg-${milestone.color}/10 rounded-xl shadow-sm`}>
+                          {/* Visual Element */}
+                          <div className={`p-4 bg-${milestone.color}/10 rounded-xl shadow-sm relative`}>
                             <IconComponent className={`w-8 h-8 text-${milestone.color}`} />
+                            <div className="absolute -top-2 -right-2 text-2xl">{milestone.visualElement}</div>
                           </div>
                           
                           <div className="flex-1">
+                            {/* Phase Header */}
                             <div className="flex items-center gap-4 mb-4">
                               <Badge variant="outline" className={`border-${milestone.color} text-${milestone.color} font-semibold`}>
-                                {milestone.year}
+                                {milestone.month} {milestone.year}
                               </Badge>
-                              <Badge className={`bg-${milestone.color}/20 text-${milestone.color} font-medium`}>
+                              <Badge className={`bg-${milestone.color}/20 text-${milestone.color} font-medium px-3 py-1`}>
                                 {milestone.phase}
                               </Badge>
                             </div>
                             
-                            <h3 className="text-2xl font-bold text-foreground mb-3">
+                            <h3 className="text-2xl font-bold text-foreground mb-3 leading-tight">
                               {milestone.title}
                             </h3>
                             
@@ -293,22 +365,59 @@ const Journey = () => {
                               {milestone.description}
                             </p>
                             
-                            <div className="grid md:grid-cols-2 gap-6">
-                              <div>
-                                <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                            {/* Journey Flow Grid */}
+                            <div className="grid md:grid-cols-3 gap-4 mb-6">
+                              {/* Touch Points */}
+                              <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                                <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-green-700 dark:text-green-400">
                                   <Target className="w-4 h-4" />
-                                  Key Achievements
+                                  Touch Points
                                 </h4>
                                 <ul className="space-y-2">
-                                  {milestone.achievements.map((achievement, i) => (
+                                  {milestone.touchPoints.map((point, i) => (
                                     <li key={i} className="flex items-start gap-2 text-muted-foreground">
-                                      <div className={`w-1.5 h-1.5 bg-${milestone.color} rounded-full mt-2 flex-shrink-0`} />
-                                      <span className="text-sm">{achievement}</span>
+                                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0" />
+                                      <span className="text-xs leading-relaxed">{point}</span>
                                     </li>
                                   ))}
                                 </ul>
                               </div>
                               
+                              {/* Pain Points */}
+                              <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-4 border border-orange-200 dark:border-orange-800">
+                                <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-orange-700 dark:text-orange-400">
+                                  <AlertTriangle className="w-4 h-4" />
+                                  Pain Points
+                                </h4>
+                                <ul className="space-y-2">
+                                  {milestone.painPoints.map((pain, i) => (
+                                    <li key={i} className="flex items-start gap-2 text-muted-foreground">
+                                      <div className="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2 flex-shrink-0" />
+                                      <span className="text-xs leading-relaxed">{pain}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                              
+                              {/* Opportunities */}
+                              <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+                                <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-blue-700 dark:text-blue-400">
+                                  <TrendingUp className="w-4 h-4" />
+                                  Opportunities
+                                </h4>
+                                <ul className="space-y-2">
+                                  {milestone.opportunities.map((opportunity, i) => (
+                                    <li key={i} className="flex items-start gap-2 text-muted-foreground">
+                                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
+                                      <span className="text-xs leading-relaxed">{opportunity}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                            
+                            {/* Technologies and Impact */}
+                            <div className="grid md:grid-cols-2 gap-6">
                               <div>
                                 <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                                   <Code2 className="w-4 h-4" />
@@ -321,16 +430,16 @@ const Journey = () => {
                                     </Badge>
                                   ))}
                                 </div>
-                                
-                                <div className="mt-4">
-                                  <h5 className="font-medium text-foreground mb-2 flex items-center gap-2">
-                                    <Zap className="w-3 h-3" />
-                                    Impact
-                                  </h5>
-                                  <p className="text-sm text-muted-foreground italic">
-                                    {milestone.impact}
-                                  </p>
-                                </div>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                                  <Zap className="w-4 h-4" />
+                                  Impact
+                                </h5>
+                                <p className="text-sm text-muted-foreground italic bg-gradient-to-r from-genie-primary/20 to-genie-teal/20 p-3 rounded-lg">
+                                  {milestone.impact}
+                                </p>
                               </div>
                             </div>
                           </div>
