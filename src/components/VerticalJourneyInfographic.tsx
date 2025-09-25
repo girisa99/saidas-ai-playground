@@ -15,14 +15,12 @@ import {
   RotateCcw
 } from "lucide-react";
 
-// Import generated images
+// Import generated artwork images
 import phase01Spark from "@/assets/journey-phase-01-spark.jpg";
-import phase02CuriosityBreakthrough from "@/assets/journey-phase-02-curiosity-breakthrough.jpg";
-import phase02AILab from "@/assets/journey-phase-02-ai-lab.jpg";
-import phase03Design from "@/assets/journey-phase-03-design.jpg";
-import phase04Infrastructure from "@/assets/journey-phase-04-infrastructure.jpg";
-import phase05Production from "@/assets/journey-phase-05-production.jpg";
-import phase06Agentic from "@/assets/journey-phase-06-agentic.jpg";
+import phase02CuriosityArtwork from "@/assets/journey-phase-02-curiosity-artwork.jpg";
+import phase03BreakthroughArtwork from "@/assets/journey-phase-03-breakthrough-artwork.jpg";
+import phase04ScalableArtwork from "@/assets/journey-phase-04-scalable-artwork.jpg";
+import phase05ResilientArtwork from "@/assets/journey-phase-05-resilient-artwork.jpg";
 
 const VerticalJourneyInfographic = () => {
   const [activePhase, setActivePhase] = useState(0);
@@ -59,7 +57,7 @@ const VerticalJourneyInfographic = () => {
       subtitle: "The 45-Day Deep Dive: Building My AI Lab",
       date: "May-June 2025",
       icon: Brain,
-      image: phase02CuriosityBreakthrough,
+      image: phase02CuriosityArtwork,
       description: "What began as pure curiosity quickly transformed into an all-consuming personal mission. After two decades in the industry, AI felt profoundly different - a fundamental shift demanding deep, hands-on exploration through intensive experimentation and learning.",
       touchPoints: [
         "Established personal AI experimentation hub with systematic model comparison",
@@ -85,7 +83,7 @@ const VerticalJourneyInfographic = () => {
       subtitle: "Building Resilient AI Systems & Smart Data Foundation",
       date: "May-June 2025",
       icon: Brain,
-      image: phase02AILab,
+      image: phase03BreakthroughArtwork,
       description: "The pivotal shift from viewing AI purely as a utility to embracing it as an invaluable creative partner. This breakthrough came through integrating powerful AI-powered design and development tools, building resilient systems with sophisticated error handling, and creating intelligent data foundations with vector databases.",
       touchPoints: [
         "Breakthrough realization of AI's creative potential beyond coding assistance",
@@ -114,7 +112,7 @@ const VerticalJourneyInfographic = () => {
       subtitle: "From 45-Day Lessons to Production-Ready Architecture",
       date: "July-August 2025",
       icon: Target,
-      image: phase03Design,
+      image: phase04ScalableArtwork,
       description: "Transforming 45-day learnings into enterprise-grade foundations. Building robust, scalable MVP applications with comprehensive guardrails, security frameworks, and TypeScript-database alignment to eliminate technical debt and ensure production readiness.",
       touchPoints: [
         "Applied 45-day deep dive lessons to architect scalable MVP foundations",
@@ -152,7 +150,7 @@ const VerticalJourneyInfographic = () => {
       subtitle: "Stable Healthcare AI Platform with Multi-Agent Orchestration",
       date: "August-September 2025",
       icon: Network,
-      image: phase06Agentic,
+      image: phase05ResilientArtwork,
       description: "Successfully built a stable, resilient AI platform that serves as the backbone for healthcare experimentation - integrating real-world systems like NPI, CMS, FDA, and EMR platforms while deploying multiple agents for complex patient onboarding workflows without breaking functionality.",
       touchPoints: [
         "Built unbreakable, stable AI platform foundation serving as experimentation backbone",
