@@ -56,7 +56,7 @@ const VerticalJourneyInfographic = () => {
       id: 2,
       title: "From Curiosity to Breakthrough",
       subtitle: "The 45-Day Deep Dive: Building My AI Lab",
-      date: "June-July 2025",
+      date: "May-June 2025",
       icon: Brain,
       image: phase02CuriosityBreakthrough,
       description: "What began as pure curiosity quickly transformed into an all-consuming personal mission. After two decades in the industry, AI felt profoundly different - a fundamental shift demanding deep, hands-on exploration through intensive experimentation and learning.",
