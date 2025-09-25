@@ -221,12 +221,12 @@ export const BusinessImpactInfographic = () => {
               Strategic Decision Point: Act Now or Fall Behind
             </h4>
             <p className="text-muted-foreground mb-6">
-              A clear distinction is forming: AI-empowered organizations are set for exponential growth, 
-              while those maintaining the status quo risk stagnation and irrelevance.
+              Our analysis validates what industry leaders already recognize: AI-empowered organizations are positioned for exponential growth, 
+              while those maintaining traditional approaches face increasing risks of stagnation and market displacement.
             </p>
             <Link to="/journey">
               <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white px-8 py-4">
-                Explore Implementation Journey
+                Continue to Explore Tech Exploration
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
