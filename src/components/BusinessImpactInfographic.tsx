@@ -94,7 +94,7 @@ export const BusinessImpactInfographic = () => {
         "Real-time validation and guidance",
         "Automated verification processes"
       ],
-      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: Data Import APIs (JSON, Excel, CSV)", "Business APIs: Exploring Experian for credit check, CMS for verification and credentialing", "Twilio SMS/Email", "DocuSign"]
+      integrations: ["Prompt Engineering & AI Gateway", "Business APIs: Experian credit check, CMS verification", "Twilio SMS/Email", "DocuSign"]
     },
     {
       landscape: "Customer Experience",
