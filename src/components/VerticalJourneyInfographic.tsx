@@ -17,7 +17,7 @@ import {
 
 // Import generated images
 import phase01Spark from "@/assets/journey-phase-01-spark.jpg";
-import phase02AiLab from "@/assets/journey-phase-02-ai-lab.jpg";
+import phase02CuriosityBreakthrough from "@/assets/journey-phase-02-curiosity-breakthrough.jpg";
 import phase03Design from "@/assets/journey-phase-03-design.jpg";
 import phase04Infrastructure from "@/assets/journey-phase-04-infrastructure.jpg";
 import phase05Production from "@/assets/journey-phase-05-production.jpg";
@@ -54,23 +54,27 @@ const VerticalJourneyInfographic = () => {
     },
     {
       id: 2,
-      title: "AI Engine Discovery",
-      subtitle: "Building My Personal AI Laboratory",
-      date: "July 2025",
+      title: "From Curiosity to Breakthrough",
+      subtitle: "The 45-Day Deep Dive: Building My AI Lab",
+      date: "June-July 2025",
       icon: Brain,
-      image: phase02AiLab,
-      description: "Systematic exploration of foundational models - GPT-4, Claude 3, and Gemini Pro across 200+ hours of experimentation.",
+      image: phase02CuriosityBreakthrough,
+      description: "What began as pure curiosity quickly transformed into an all-consuming personal mission. After two decades in the industry, AI felt profoundly different - a fundamental shift demanding deep, hands-on exploration through intensive experimentation and learning.",
       touchPoints: [
-        "Benchmarked 15+ major LLMs across use cases",
-        "Developed advanced prompt engineering methods",
-        "Created model selection frameworks"
+        "Established personal AI experimentation hub with systematic model comparison",
+        "Conducted 45-day intensive deep dive across GPT, Claude, and Gemini models",
+        "Developed foundational understanding of prompt engineering and model optimization",
+        "Built prototypes using Bolt, Loveable, and Solid frameworks with TypeScript",
+        "Integrated AI into real-world workflows with GitHub, DocuSign, and Twilio APIs"
       ],
       painPoints: [
-        "Overwhelming number of AI tools and platforms",
-        "Inconsistent model performance across tasks",
-        "Steep learning curve for optimization"
+        "Overwhelming complexity of AI model selection and optimization",
+        "Challenges preventing redundancy and ensuring application stability",
+        "Steep learning curve requiring methodical experimentation approach",
+        "Trial and error process in understanding proper AI project structures",
+        "Frustrating moments of 'why isn't this working?' during foundational learning"
       ],
-      technologies: ["GPT-4", "Claude 3", "Gemini Pro", "Prompt Engineering"],
+      technologies: ["GPT Series", "Claude", "Gemini", "Bolt", "Loveable", "Solid", "TypeScript", "Supabase", "PostgreSQL", "Vector Databases"],
       color: "genie-teal",
       bgColor: "bg-gradient-to-br from-genie-teal/5 to-genie-teal/10"
     },
