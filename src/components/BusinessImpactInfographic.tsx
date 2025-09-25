@@ -28,9 +28,9 @@ export const BusinessImpactInfographic = () => {
       icon: DollarSign,
       color: "genie-primary",
       metrics: [
-        { value: "150-300%", label: "Average ROI", timeframe: "12-18 months" },
-        { value: "35-50%", label: "Annual Cost Savings", timeframe: "Customer service automation" },
-        { value: "70%", label: "Development Cost Reduction", timeframe: "AI-accelerated processes" }
+        { value: "Potential", label: "ROI Through Experimentation", timeframe: "12-18 months" },
+        { value: "10%+", label: "Annual Cost Reduction", timeframe: "Addressing YoY pressure" },
+        { value: "Significant", label: "Development Cost Savings", timeframe: "AI-accelerated processes" }
       ]
     },
     {
@@ -38,9 +38,9 @@ export const BusinessImpactInfographic = () => {
       icon: Clock,
       color: "genie-teal",
       metrics: [
-        { value: "60%", label: "Automated Inquiries", timeframe: "Reducing support workload" },
-        { value: "15-20%", label: "Employee Time Savings", timeframe: "Across departments" },
-        { value: "30%", label: "Research Time Reduction", timeframe: "With 25% accuracy improvement" }
+        { value: "High", label: "Automation Potential", timeframe: "Reducing operational workload" },
+        { value: "Substantial", label: "Employee Time Savings", timeframe: "Focus on innovation areas" },
+        { value: "Enhanced", label: "Core Business Focus", timeframe: "Through process automation" }
       ]
     },
     {
@@ -50,7 +50,7 @@ export const BusinessImpactInfographic = () => {
       metrics: [
         { value: "2x", label: "Faster Development", timeframe: "vs traditional methods" },
         { value: "Weeks", label: "Not Months", timeframe: "Time to market" },
-        { value: "94%", label: "Accuracy Rate", timeframe: "Hallucination reduction" }
+        { value: "Focus", label: "On Innovation", timeframe: "Employee time reallocation" }
       ]
     }
   ];
@@ -133,11 +133,11 @@ export const BusinessImpactInfographic = () => {
             Business Impact Analysis
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Proven Business Impact: <span className="text-genie-primary">Real-World Results</span>
+            Business Impact Possibilities: <span className="text-genie-primary">Real-World Results Potential</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            Demonstrable outcomes from systematic AI implementation across healthcare, manufacturing, 
-            and enterprise sectors with quantifiable ROI and operational improvements.
+            Experimentation hub insights show strong potential for development cost reduction, addressing 10% YoY operational cost pressure, 
+            and achieving ROI through automation that frees employees to focus on innovation and core business areas.
           </p>
         </div>
 
