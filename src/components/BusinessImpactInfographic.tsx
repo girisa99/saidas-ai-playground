@@ -83,10 +83,10 @@ export const BusinessImpactInfographic = () => {
         "Reduced support burden during onboarding"
       ],
       technologies: [
-        "Genie Conversational AI",
-        "Multi-model RAG",
-        "Workflow Automation",
-        "Sentiment Analysis"
+        "React.js + TypeScript",
+        "Supabase with PostgreSQL", 
+        "Tailwind CSS + Vite",
+        "API Service Middleware"
       ],
       journeySteps: [
         "AI-driven welcome sequence",
@@ -110,10 +110,10 @@ export const BusinessImpactInfographic = () => {
         "Seamless multi-channel experience"
       ],
       technologies: [
-        "Genie Conversational Platform",
-        "Voice Biometrics",
-        "NLP Processing",
-        "Sentiment Analysis"
+        "React.js + TypeScript",
+        "Supabase with PostgreSQL", 
+        "Tailwind CSS + Vite",
+        "API Service Middleware"
       ],
       journeySteps: [
         "Smart IVR with natural language",
@@ -141,10 +141,10 @@ export const BusinessImpactInfographic = () => {
         "Improved delivery predictions"
       ],
       technologies: [
-        "Batch Process Automation",
-        "Real-time Tracking Systems",
-        "Predictive Analytics",
-        "Supply Chain AI"
+        "React.js + TypeScript",
+        "Supabase with PostgreSQL", 
+        "Tailwind CSS + Vite",
+        "API Service Middleware"
       ],
       journeySteps: [
         "Intelligent order validation",
