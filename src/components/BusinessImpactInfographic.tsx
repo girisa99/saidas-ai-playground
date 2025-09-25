@@ -153,7 +153,7 @@ export const BusinessImpactInfographic = () => {
         "Real-time status updates",
         "Predictive issue resolution"
       ],
-      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio", "ERP Systems", "Logistics APIs"]
+      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio", "Reviewing ERP integrations", "Carrier integrations"]
     }
   ];
 
