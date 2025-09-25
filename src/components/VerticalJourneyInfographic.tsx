@@ -18,6 +18,7 @@ import {
 // Import generated images
 import phase01Spark from "@/assets/journey-phase-01-spark.jpg";
 import phase02CuriosityBreakthrough from "@/assets/journey-phase-02-curiosity-breakthrough.jpg";
+import phase02AILab from "@/assets/journey-phase-02-ai-lab.jpg";
 import phase03Design from "@/assets/journey-phase-03-design.jpg";
 import phase04Infrastructure from "@/assets/journey-phase-04-infrastructure.jpg";
 import phase05Production from "@/assets/journey-phase-05-production.jpg";
@@ -80,6 +81,35 @@ const VerticalJourneyInfographic = () => {
     },
     {
       id: 3,
+      title: "The Breakthrough: From Code to Creativity",
+      subtitle: "Building Resilient AI Systems & Smart Data Foundation",
+      date: "May-June 2025",
+      icon: Brain,
+      image: phase02AILab,
+      description: "The pivotal shift from viewing AI purely as a utility to embracing it as an invaluable creative partner. This breakthrough came through integrating powerful AI-powered design and development tools, building resilient systems with sophisticated error handling, and creating intelligent data foundations with vector databases.",
+      touchPoints: [
+        "Breakthrough realization of AI's creative potential beyond coding assistance",
+        "Integrated visual design tools (Visio, draw.io, Miro, Figma) for collaborative brainstorming",
+        "Transformed coding with Cursor IDE's AI-native capabilities and dynamic dialogue",
+        "Built resilient architectures with sophisticated error handling and feedback loops",
+        "Leveraged TypeScript extensively for compile-time checks and improved maintainability",
+        "Explored vector databases for high-dimensional data and semantic search capabilities",
+        "Prototyped with cutting-edge tools like Loveable, Bolt, and V0 by Vercel",
+        "Integrated GitHub, DocuSign, and Twilio APIs into AI-driven workflows"
+      ],
+      painPoints: [
+        "Moving past static data storage to intelligent, learning data systems",
+        "Designing systems that actively learn from errors and adapt over time",
+        "Balancing rapid prototyping with robust, scalable architectures",
+        "Complex integration challenges across multiple AI-powered tools",
+        "Need for modularity and extensibility without compromising performance"
+      ],
+      technologies: ["Cursor IDE", "Visio", "Draw.io", "Miro", "Figma", "TypeScript", "Vector Databases", "Supabase", "PostgreSQL", "Loveable", "Bolt", "V0", "GitHub API", "DocuSign API", "Twilio"],
+      color: "genie-teal",
+      bgColor: "bg-gradient-to-br from-genie-teal/5 to-genie-teal/10"
+    },
+    {
+      id: 4,
       title: "Design & Architecture",
       subtitle: "Mapping Complex AI Architectures",
       date: "August 2025",
@@ -101,7 +131,7 @@ const VerticalJourneyInfographic = () => {
       bgColor: "bg-gradient-to-br from-genie-cyan/5 to-genie-cyan/10"
     },
     {
-      id: 4,
+      id: 5,
       title: "Infrastructure Revolution",
       subtitle: "Building Unshakeable Technical Foundations",
       date: "September 2025",
@@ -123,7 +153,7 @@ const VerticalJourneyInfographic = () => {
       bgColor: "bg-gradient-to-br from-genie-primary/5 to-genie-primary/10"
     },
     {
-      id: 5,
+      id: 6,
       title: "Production Excellence",
       subtitle: "Enterprise-Grade AI Systems",
       date: "October 2025",
@@ -145,7 +175,7 @@ const VerticalJourneyInfographic = () => {
       bgColor: "bg-gradient-to-br from-genie-teal/5 to-genie-teal/10"
     },
     {
-      id: 6,
+      id: 7,
       title: "Agentic AI Breakthrough",
       subtitle: "Dynamic Multi-Agent Innovation",
       date: "November 2025",
