@@ -110,53 +110,47 @@ const VerticalJourneyInfographic = () => {
     },
     {
       id: 4,
-      title: "Design & Architecture",
-      subtitle: "Mapping Complex AI Architectures",
-      date: "August 2025",
+      title: "Scalable MVP Foundation",
+      subtitle: "From 45-Day Lessons to Production-Ready Architecture",
+      date: "July-August 2025",
       icon: Target,
       image: phase03Design,
-      description: "Mastered visualization methodologies using Visio, draw.io, Miro, and Figma to map complex AI workflows.",
+      description: "Transforming 45-day learnings into enterprise-grade foundations. Building robust, scalable MVP applications with comprehensive guardrails, security frameworks, and TypeScript-database alignment to eliminate technical debt and ensure production readiness.",
       touchPoints: [
-        "Developed AI-specific visualization standards",
-        "Created reusable design patterns",
-        "Built systematic solution conceptualization"
+        "Applied 45-day deep dive lessons to architect scalable MVP foundations",
+        "Implemented comprehensive TypeScript-database schema alignment and validation",
+        "Built intelligent guardrail systems with small verification agents",
+        "Established single source of truth patterns to eliminate data inconsistencies",
+        "Created automated duplicate detection and redundancy prevention systems",
+        "Deployed robust security frameworks with RLS policies and schema validation",
+        "Implemented hallucination reduction techniques through structured validation",
+        "Built modular component verification systems before feature deployment",
+        "Established enterprise-grade CI/CD pipelines with security scanning",
+        "Created comprehensive monitoring and vulnerability assessment frameworks",
+        "Integrated design visualization tools (Visio, draw.io, Miro, Figma) for architecture mapping",
+        "Constructed resilient development ecosystem with Cursor IDE, Replit, and Docker"
       ],
       painPoints: [
-        "Abstract AI concepts difficult to visualize",
-        "Complex workflows hard to communicate",
-        "Need for standardized design patterns"
+        "Balancing rapid MVP development with robust architectural foundations",
+        "Eliminating accumulated technical debt while maintaining development velocity",
+        "Ensuring TypeScript types perfectly align with database schemas without friction",
+        "Building comprehensive security frameworks without over-engineering solutions",
+        "Managing complexity of verification agents and validation systems effectively",
+        "Preventing feature redundancy while encouraging innovation and experimentation",
+        "Optimizing for both development speed and production stability simultaneously",
+        "Implementing guardrails that enhance rather than hinder development workflow",
+        "Complex tool integration challenges across multiple development environments",
+        "Performance optimization bottlenecks while scaling from prototype to production"
       ],
-      technologies: ["Visio", "Draw.io", "Miro", "Figma", "Lucidchart"],
-      color: "genie-cyan",
-      bgColor: "bg-gradient-to-br from-genie-cyan/5 to-genie-cyan/10"
-    },
-    {
-      id: 5,
-      title: "Infrastructure Revolution",
-      subtitle: "Building Unshakeable Technical Foundations",
-      date: "September 2025",
-      icon: Database,
-      image: phase04Infrastructure,
-      description: "Constructed robust development ecosystem with Cursor IDE, Replit, Docker, and enterprise-grade architecture.",
-      touchPoints: [
-        "Built scalable TypeScript microservices",
-        "Implemented containerized environments",
-        "Established real-time data synchronization"
-      ],
-      painPoints: [
-        "Complex tool integration challenges",
-        "Performance optimization bottlenecks",
-        "Scaling issues with rapid prototyping"
-      ],
-      technologies: ["Cursor IDE", "Replit", "Docker", "V0 by Vercel", "Supabase"],
+      technologies: ["TypeScript", "Schema Validation", "RLS Policies", "Security Scanning", "Verification Agents", "CI/CD Pipelines", "Monitoring", "Database Optimization", "Duplicate Detection", "Vulnerability Assessment", "Visio", "Draw.io", "Miro", "Figma", "Cursor IDE", "Replit", "Docker"],
       color: "genie-primary",
       bgColor: "bg-gradient-to-br from-genie-primary/5 to-genie-primary/10"
     },
     {
-      id: 6,
+      id: 5,
       title: "Production Excellence",
       subtitle: "Enterprise-Grade AI Systems",
-      date: "October 2025",
+      date: "September 2025",
       icon: Shield,
       image: phase05Production,
       description: "Tackled enterprise challenges: data consistency, hallucination reduction through RAG, and multi-tenant architecture.",
@@ -175,7 +169,7 @@ const VerticalJourneyInfographic = () => {
       bgColor: "bg-gradient-to-br from-genie-teal/5 to-genie-teal/10"
     },
     {
-      id: 7,
+      id: 6,
       title: "Agentic AI Breakthrough",
       subtitle: "Dynamic Multi-Agent Innovation",
       date: "November 2025",
