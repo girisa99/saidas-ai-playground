@@ -132,8 +132,8 @@ export const QuickStart = () => {
             From <span className="text-primary">Curiosity</span> to Impact
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Follow my step-by-step journey of AI discovery, experimentation, and practical implementation. 
-            Learn from real experiences, successes, and failures in the AI ecosystem.
+            Sharing experience and learnings through experimentation from use cases explored and successes 
+            and failures with the Experimentation Hub. Real insights from hands-on AI exploration.
           </p>
         </div>
 
