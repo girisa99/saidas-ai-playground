@@ -48,8 +48,8 @@ const VerticalJourneyInfographic = () => {
         "Uncertainty about where to begin"
       ],
       technologies: ["Strategic Vision", "Conceptual Framework"],
-      color: "from-orange-400 to-pink-500",
-      bgColor: "bg-gradient-to-br from-orange-50 to-pink-50 dark:from-orange-950/20 to-pink-950/20"
+      color: "genie-primary",
+      bgColor: "bg-gradient-to-br from-genie-primary/5 to-genie-primary/10"
     },
     {
       id: 2,
@@ -70,8 +70,8 @@ const VerticalJourneyInfographic = () => {
         "Steep learning curve for optimization"
       ],
       technologies: ["GPT-4", "Claude 3", "Gemini Pro", "Prompt Engineering"],
-      color: "from-blue-400 to-cyan-500",
-      bgColor: "bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/20 to-cyan-950/20"
+      color: "genie-teal",
+      bgColor: "bg-gradient-to-br from-genie-teal/5 to-genie-teal/10"
     },
     {
       id: 3,
@@ -92,8 +92,8 @@ const VerticalJourneyInfographic = () => {
         "Need for standardized design patterns"
       ],
       technologies: ["Visio", "Draw.io", "Miro", "Figma", "Lucidchart"],
-      color: "from-cyan-400 to-teal-500",
-      bgColor: "bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-cyan-950/20 to-teal-950/20"
+      color: "genie-cyan",
+      bgColor: "bg-gradient-to-br from-genie-cyan/5 to-genie-cyan/10"
     },
     {
       id: 4,
@@ -114,8 +114,8 @@ const VerticalJourneyInfographic = () => {
         "Scaling issues with rapid prototyping"
       ],
       technologies: ["Cursor IDE", "Replit", "Docker", "V0 by Vercel", "Supabase"],
-      color: "from-emerald-400 to-green-500",
-      bgColor: "bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/20 to-green-950/20"
+      color: "genie-primary",
+      bgColor: "bg-gradient-to-br from-genie-primary/5 to-genie-primary/10"
     },
     {
       id: 5,
@@ -136,8 +136,8 @@ const VerticalJourneyInfographic = () => {
         "Complex multi-tenant security requirements"
       ],
       technologies: ["RAG Architecture", "Vector Databases", "DocuSign API", "Twilio"],
-      color: "from-violet-400 to-purple-500",
-      bgColor: "bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/20 to-purple-950/20"
+      color: "genie-teal",
+      bgColor: "bg-gradient-to-br from-genie-teal/5 to-genie-teal/10"
     },
     {
       id: 6,
@@ -158,8 +158,8 @@ const VerticalJourneyInfographic = () => {
         "Real-time collaboration synchronization"
       ],
       technologies: ["Agentic AI", "Multi-Agent Systems", "Workflow Orchestration"],
-      color: "from-pink-400 to-rose-500",
-      bgColor: "bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/20 to-rose-950/20"
+      color: "genie-cyan",
+      bgColor: "bg-gradient-to-br from-genie-cyan/5 to-genie-cyan/10"
     }
   ];
 
@@ -246,9 +246,9 @@ const VerticalJourneyInfographic = () => {
                   {/* Phase Number Circle */}
                   <div className="absolute left-1/2 top-8 w-12 h-12 transform -translate-x-1/2 -translate-y-1/2 z-20">
                     <div className={`w-full h-full rounded-full border-4 flex items-center justify-center font-bold text-sm transition-all duration-300 ${
-                      isCompleted ? 'bg-green-500 border-green-500 text-white' :
-                      isActive ? 'bg-genie-primary border-genie-primary text-white' :
-                      'bg-background border-genie-primary/30 text-muted-foreground'
+                      isCompleted ? `bg-${phase.color} border-${phase.color} text-white` :
+                      isActive ? `bg-${phase.color} border-${phase.color} text-white` :
+                      `bg-background border-${phase.color}/30 text-muted-foreground`
                     }`}>
                       {isCompleted ? '✓' : phase.id}
                     </div>
@@ -257,7 +257,7 @@ const VerticalJourneyInfographic = () => {
                   {/* Main Card */}
                   <Card 
                     className={`${phase.bgColor} border-2 transition-all duration-300 cursor-pointer hover:shadow-xl ${
-                      isActive ? 'border-genie-primary shadow-2xl' : 'border-transparent hover:border-genie-primary/50'
+                      isActive ? `border-${phase.color} shadow-2xl` : `border-transparent hover:border-${phase.color}/50`
                     }`}
                     onClick={() => handlePhaseClick(index)}
                   >
@@ -268,7 +268,7 @@ const VerticalJourneyInfographic = () => {
                           {/* Header */}
                           <div>
                             <div className="flex items-center gap-3 mb-2">
-                              <div className={`p-2 rounded-lg bg-gradient-to-r ${phase.color}`}>
+                              <div className={`p-2 rounded-lg bg-${phase.color}`}>
                                 <IconComponent className="w-6 h-6 text-white" />
                               </div>
                               <Badge variant="outline" className="text-sm font-medium">
@@ -303,7 +303,7 @@ const VerticalJourneyInfographic = () => {
 
                         {/* Visual Side */}
                         <div className="relative">
-                          <div className={`rounded-xl overflow-hidden shadow-lg bg-gradient-to-r ${phase.color} p-1`}>
+                          <div className={`rounded-xl overflow-hidden shadow-lg bg-${phase.color} p-1`}>
                             <img
                               src={phase.image}
                               alt={phase.title}
@@ -356,32 +356,13 @@ const VerticalJourneyInfographic = () => {
                   {index < phases.length - 1 && (
                     <div className="flex justify-center mt-6 mb-2">
                       <ChevronDown className={`w-6 h-6 transition-colors duration-300 ${
-                        isCompleted ? 'text-green-500' : 'text-genie-primary/50'
+                        isCompleted ? `text-${phase.color}` : `text-${phase.color}/50`
                       }`} />
                     </div>
                   )}
                 </div>
               );
             })}
-          </div>
-
-          {/* Journey Progress */}
-          <div className="mt-12 text-center">
-            <div className="bg-muted rounded-full p-1 inline-flex">
-              {phases.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => handlePhaseClick(index)}
-                  className={`w-3 h-3 rounded-full mx-1 transition-all duration-300 ${
-                    activePhase === index ? 'bg-genie-primary scale-125' : 
-                    activePhase > index ? 'bg-green-500' : 'bg-muted-foreground/30'
-                  }`}
-                />
-              ))}
-            </div>
-            <p className="text-sm text-muted-foreground mt-2">
-              Phase {activePhase + 1} of {phases.length}
-            </p>
           </div>
         </div>
       </div>
