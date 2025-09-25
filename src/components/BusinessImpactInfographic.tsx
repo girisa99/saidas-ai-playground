@@ -55,48 +55,51 @@ export const BusinessImpactInfographic = () => {
     }
   ];
 
-  const realWorldCases = [
+  const currentWorkHighlights = [
     {
-      industry: "Healthcare",
+      area: "Patient Management",
       icon: Stethoscope,
       color: "genie-primary",
-      title: "Patient Management Revolution",
-      description: "Comprehensive healthcare solution deployment",
-      outcomes: [
-        "Automated patient onboarding workflows",
-        "Secure data handling and compliance",
-        "Treatment center operational optimization", 
-        "Real-time care coordination"
+      title: "Healthcare AI Transformation",
+      description: "Experimenting with patient onboarding and referral workflows",
+      status: "Mixed Implementation",
+      highlights: [
+        "Patient onboarding automation experiments",
+        "Referral process optimization",
+        "Treatment center workflow improvements", 
+        "Care coordination system testing"
       ],
-      impact: "300% ROI within 18 months"
+      stage: "Active experimentation with some live implementations"
     },
     {
-      industry: "Manufacturing",
+      area: "Oncology Workflows",
       icon: Factory,
       color: "genie-teal", 
-      title: "Production Process Automation",
-      description: "Manufacturing partner integration and automation",
-      outcomes: [
-        "Streamlined partner onboarding",
-        "Automated quality control processes",
-        "Supply chain optimization",
-        "Predictive maintenance protocols"
+      title: "Specialized Care Process Innovation",
+      description: "Exploring automation vs agentic AI for oncology operations",
+      status: "Development Phase",
+      highlights: [
+        "Technology selection framework development",
+        "Oncology-specific workflow analysis",
+        "Patient journey optimization studies",
+        "Clinical decision support exploration"
       ],
-      impact: "60% operational efficiency gain"
+      stage: "Research and development with pilot testing"
     },
     {
-      industry: "Enterprise",
+      area: "Customer Contact Center",
       icon: Building,
       color: "genie-cyan",
-      title: "Digital Transformation Platform",
-      description: "Enterprise-wide AI adoption framework",
-      outcomes: [
-        "Cross-departmental automation",
-        "Intelligent decision support systems",
-        "Workforce augmentation tools",
-        "Scalable AI infrastructure"
+      title: "Contact Center AI Integration",
+      description: "Building intelligent customer service capabilities",
+      status: "Experimentation",
+      highlights: [
+        "Automated inquiry handling systems",
+        "Customer service workflow optimization",
+        "Response accuracy improvement testing",
+        "Agent productivity enhancement tools"
       ],
-      impact: "25% decision accuracy improvement"
+      stage: "Proof of concept with expanding scope"
     }
   ];
 
@@ -177,63 +180,73 @@ export const BusinessImpactInfographic = () => {
           })}
         </div>
 
-        {/* Real-World Case Studies */}
+        {/* Current Work Highlights */}
         <div className="mb-16">
           <div className="text-center mb-12">
             <h3 className="text-2xl lg:text-3xl font-bold text-foreground mb-4">
-              Real-World Case Studies & Implementations
+              Current Experimentation Hub Highlights
             </h3>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Actual deployments across diverse industries demonstrating the versatility 
-              and effectiveness of AI experimentation hub methodologies.
+              Active experiments and implementations across healthcare, oncology, and customer service sectors. 
+              Exploring various AI scenarios with mixed implementation statuses as part of our ongoing experimentation initiatives.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
-            {realWorldCases.map((caseStudy, index) => {
-              const IconComponent = caseStudy.icon;
+            {currentWorkHighlights.map((workArea, index) => {
+              const IconComponent = workArea.icon;
               
               return (
-                <Card key={index} className={`p-8 border-${caseStudy.color}/20 hover:border-${caseStudy.color}/40 transition-all duration-300 bg-gradient-to-br from-${caseStudy.color}/5 to-background group`}>
+                <Card key={index} className={`p-8 border-${workArea.color}/20 hover:border-${workArea.color}/40 transition-all duration-300 bg-gradient-to-br from-${workArea.color}/5 to-background group`}>
                   <div className="flex items-center gap-4 mb-6">
-                    <div className={`p-3 bg-${caseStudy.color}/10 rounded-lg`}>
-                      <IconComponent className={`w-6 h-6 text-${caseStudy.color}`} />
+                    <div className={`p-3 bg-${workArea.color}/10 rounded-lg`}>
+                      <IconComponent className={`w-6 h-6 text-${workArea.color}`} />
                     </div>
                     <div>
-                      <Badge className={`bg-${caseStudy.color}/20 text-${caseStudy.color} border-${caseStudy.color}/30 mb-2`}>
-                        {caseStudy.industry}
+                      <Badge className={`bg-${workArea.color}/20 text-${workArea.color} border-${workArea.color}/30 mb-2`}>
+                        {workArea.status}
                       </Badge>
-                      <h4 className={`text-lg font-bold text-${caseStudy.color}`}>
-                        {caseStudy.title}
+                      <h4 className={`text-lg font-bold text-${workArea.color}`}>
+                        {workArea.title}
                       </h4>
                     </div>
                   </div>
                   
                   <p className="text-muted-foreground mb-6">
-                    {caseStudy.description}
+                    {workArea.description}
                   </p>
                   
                   <div className="space-y-3 mb-6">
-                    {caseStudy.outcomes.map((outcome, i) => (
+                    {workArea.highlights.map((highlight, i) => (
                       <div key={i} className="flex items-start gap-3">
-                        <CheckCircle className={`w-4 h-4 text-${caseStudy.color} mt-0.5 flex-shrink-0`} />
-                        <span className="text-sm text-foreground">{outcome}</span>
+                        <CheckCircle className={`w-4 h-4 text-${workArea.color} mt-0.5 flex-shrink-0`} />
+                        <span className="text-sm text-foreground">{highlight}</span>
                       </div>
                     ))}
                   </div>
                   
-                  <div className={`p-4 bg-${caseStudy.color}/10 rounded-lg border border-${caseStudy.color}/20`}>
+                  <div className={`p-4 bg-${workArea.color}/10 rounded-lg border border-${workArea.color}/20`}>
                     <div className="flex items-center gap-2 mb-2">
-                      <Award className={`w-4 h-4 text-${caseStudy.color}`} />
-                      <span className="text-sm font-semibold text-foreground">Key Impact:</span>
+                      <Award className={`w-4 h-4 text-${workArea.color}`} />
+                      <span className="text-sm font-semibold text-foreground">Current Stage:</span>
                     </div>
-                    <div className={`text-sm font-bold text-${caseStudy.color}`}>
-                      {caseStudy.impact}
+                    <div className={`text-sm font-bold text-${workArea.color}`}>
+                      {workArea.stage}
                     </div>
                   </div>
                 </Card>
               );
             })}
+          </div>
+
+          {/* Link to detailed use cases */}
+          <div className="text-center mt-12">
+            <Link to="/business-use-cases">
+              <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white px-8 py-4">
+                Explore Detailed Use Case Explorations
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
         </div>
 
