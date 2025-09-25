@@ -55,36 +55,36 @@ export const BusinessImpactInfographic = () => {
     }
   ];
 
-  const currentWorkHighlights = [
+  const experimentalUseCases = [
     {
       area: "Patient Management",
       icon: Stethoscope,
       color: "genie-primary",
-      title: "Healthcare AI Transformation",
-      description: "Experimenting with patient onboarding and referral workflows",
+      title: "Healthcare AI Experimentation",
+      description: "Exploring patient onboarding and referral workflow automation",
       status: "Mixed Implementation",
       highlights: [
         "Patient onboarding automation experiments",
-        "Referral process optimization",
-        "Treatment center workflow improvements", 
-        "Care coordination system testing"
+        "Referral process optimization testing",
+        "Treatment center workflow exploration", 
+        "Care coordination system prototyping"
       ],
-      stage: "Active experimentation with some live implementations"
+      stage: "Active experimentation with pilot implementations"
     },
     {
       area: "Oncology Workflows",
       icon: Factory,
       color: "genie-teal", 
       title: "Specialized Care Process Innovation",
-      description: "Exploring automation vs agentic AI for oncology operations",
+      description: "Testing automation vs agentic AI for oncology operations",
       status: "Development Phase",
       highlights: [
-        "Technology selection framework development",
+        "Technology selection framework exploration",
         "Oncology-specific workflow analysis",
-        "Patient journey optimization studies",
-        "Clinical decision support exploration"
+        "Patient journey optimization experiments",
+        "Clinical decision support testing"
       ],
-      stage: "Research and development with pilot testing"
+      stage: "Research and development with concept validation"
     },
     {
       area: "Customer Contact Center",
@@ -94,10 +94,10 @@ export const BusinessImpactInfographic = () => {
       description: "Building intelligent customer service capabilities",
       status: "Experimentation",
       highlights: [
-        "Automated inquiry handling systems",
-        "Customer service workflow optimization",
-        "Response accuracy improvement testing",
-        "Agent productivity enhancement tools"
+        "Automated inquiry handling experiments",
+        "Customer service workflow testing",
+        "Response accuracy improvement pilots",
+        "Agent productivity enhancement trials"
       ],
       stage: "Proof of concept with expanding scope"
     }
@@ -179,6 +179,75 @@ export const BusinessImpactInfographic = () => {
             );
           })}
         </div>
+
+        {/* Experimental Use Cases Section */}
+        <Card className="p-8 border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-background mb-16">
+          <div className="text-center mb-12">
+            <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
+              <Stethoscope className="w-4 h-4 mr-2" />
+              Experimental Use Cases Explored
+            </Badge>
+            <h3 className="text-2xl font-bold text-foreground mb-4">
+              Current Experimentation Hub <span className="text-genie-primary">Highlights</span>
+            </h3>
+            <p className="text-muted-foreground max-w-3xl mx-auto">
+              Active experiments and implementations across healthcare, oncology, and customer 
+              service sectors. Exploring various AI scenarios with mixed implementation statuses as 
+              part of ongoing experimentation initiatives.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 mb-8">
+            {experimentalUseCases.map((useCase, index) => {
+              const IconComponent = useCase.icon;
+              
+              return (
+                <Card key={index} className={`p-6 border-${useCase.color}/20 bg-gradient-to-br from-${useCase.color}/5 to-background hover:shadow-lg transition-all duration-300`}>
+                  <div className="mb-4">
+                    <div className={`w-12 h-12 bg-${useCase.color}/10 rounded-lg flex items-center justify-center mb-3`}>
+                      <IconComponent className={`w-6 h-6 text-${useCase.color}`} />
+                    </div>
+                    <Badge variant="outline" className={`text-${useCase.color} border-${useCase.color}/30 mb-2`}>
+                      {useCase.status}
+                    </Badge>
+                    <h4 className={`text-lg font-bold text-${useCase.color} mb-2`}>
+                      {useCase.title}
+                    </h4>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      {useCase.description}
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-2 mb-4">
+                    {useCase.highlights.map((highlight, i) => (
+                      <div key={i} className="flex items-start text-sm">
+                        <CheckCircle className={`w-4 h-4 text-${useCase.color} mr-2 mt-0.5 flex-shrink-0`} />
+                        <span className="text-foreground">{highlight}</span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className={`text-xs text-${useCase.color} font-medium p-2 bg-${useCase.color}/10 rounded border border-${useCase.color}/20`}>
+                    Stage: {useCase.stage}
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+
+          <div className="text-center p-6 bg-gradient-to-r from-genie-primary/10 to-genie-teal/10 rounded-lg border border-genie-primary/20">
+            <p className="text-muted-foreground mb-4">
+              Interested in exploring more comprehensive business applications and use cases?
+            </p>
+            <Link to="/business-use-cases">
+              <Button variant="outline" className="border-genie-primary text-genie-primary hover:bg-genie-primary hover:text-white">
+                Explore Business Use Cases
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </Card>
+
 
 
         {/* AI Disruption Insights */}
