@@ -79,7 +79,7 @@ export const NavigationHeader = () => {
                 // Custom labels for responsive display
                 const getResponsiveLabel = (label: string) => {
                   switch(label) {
-                    case "About Me": return { full: "About Me", short: "About" };
+                    case "About Me": return { full: "About Me", short: "About Me" };
                     case "Tech Exploration": return { full: "Tech Exploration", short: "Tech" };
                     case "Business Use Cases": return { full: "Business Use Cases", short: "Business" };
                     case "Case Studies": return { full: "Case Studies", short: "Cases" };
@@ -100,8 +100,8 @@ export const NavigationHeader = () => {
                     }`}
                   >
                     <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span className="hidden 2xl:inline">{responsiveLabel.full}</span>
-                    <span className="2xl:hidden">{responsiveLabel.short}</span>
+                    <span className="hidden xl:inline">{responsiveLabel.full}</span>
+                    <span className="xl:hidden">{responsiveLabel.short}</span>
                   </Link>
                 );
               })}
