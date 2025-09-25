@@ -126,24 +126,24 @@ export const BusinessImpactInfographic = () => {
           </p>
         </div>
 
-        {/* Experimental Use Cases Section */}
+        {/* Combined AI Landscape Exploration Section */}
         <Card className="p-8 border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-background mb-16">
           <div className="text-center mb-12">
             <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
-              <Stethoscope className="w-4 h-4 mr-2" />
-              Experimental Use Cases Explored
+              <BarChart3 className="w-4 h-4 mr-2" />
+              AI Landscape Exploration
             </Badge>
             <h3 className="text-2xl font-bold text-foreground mb-4">
-              Current Experimentation Hub <span className="text-genie-primary">Highlights</span>
+              How AI is Reshaping <span className="text-genie-primary">Various Landscapes</span>
             </h3>
             <p className="text-muted-foreground max-w-3xl mx-auto">
-              Active experiments and implementations across healthcare, oncology, customer 
-              service, and financial sectors. Exploring various AI scenarios with mixed implementation statuses as 
-              part of ongoing experimentation initiatives.
+              Through individual experimentation and knowledge sharing, exploring how AI is fundamentally transforming industries. 
+              These insights emerge from hands-on testing and learning across various sectors. What patterns do you see emerging?
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-8 mb-8">
+          {/* Experimental Use Cases Grid */}
+          <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
             {experimentalUseCases.map((useCase, index) => {
               const IconComponent = useCase.icon;
               
@@ -165,7 +165,7 @@ export const BusinessImpactInfographic = () => {
                   </div>
                   
                   <div className="space-y-2 mb-4">
-                    {useCase.highlights.map((highlight, i) => (
+                    {useCase.highlights.slice(0, 3).map((highlight, i) => (
                       <div key={i} className="flex items-start text-sm">
                         <CheckCircle className={`w-4 h-4 text-${useCase.color} mr-2 mt-0.5 flex-shrink-0`} />
                         <span className="text-foreground">{highlight}</span>
@@ -181,39 +181,13 @@ export const BusinessImpactInfographic = () => {
             })}
           </div>
 
-          <div className="text-center p-6 bg-gradient-to-r from-genie-primary/10 to-genie-teal/10 rounded-lg border border-genie-primary/20">
-            <p className="text-muted-foreground mb-4">
-              Interested in exploring more comprehensive business applications and use cases?
-            </p>
-            <Link to="/business-use-cases">
-              <Button variant="outline" className="border-genie-primary text-genie-primary hover:bg-genie-primary hover:text-white">
-                Explore Business Use Cases
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-        </Card>
-
-
-
-        {/* AI Disruption Insights */}
-        <Card className="p-8 border-genie-primary/20 bg-gradient-to-r from-genie-primary/10 via-genie-teal/10 to-genie-cyan/10">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-foreground mb-4">
-              Exploring AI's Impact: Individual Insights & Possibilities
-            </h3>
-            <p className="text-muted-foreground max-w-3xl mx-auto">
-              Through individual exploration and shared experiences, discovering how AI might be reshaping industries 
-              and opening new possibilities. What transformations do you anticipate in your field?
-            </p>
-          </div>
-
+          {/* Exploration Insights */}
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             {disruptionInsights.map((item, index) => {
               const IconComponent = item.icon;
               
               return (
-                <div key={index} className="text-center">
+                <div key={index} className="text-center p-6 bg-gradient-to-br from-background to-muted/20 rounded-lg border border-border/50">
                   <div className={`w-16 h-16 bg-${item.color}/10 rounded-full flex items-center justify-center mx-auto mb-4`}>
                     <IconComponent className={`w-8 h-8 text-${item.color}`} />
                   </div>
@@ -224,24 +198,38 @@ export const BusinessImpactInfographic = () => {
                     {item.description}
                   </p>
                   <div className="text-xs text-genie-primary font-medium p-2 bg-genie-primary/10 rounded border border-genie-primary/20">
-                    Discovery: {item.discovery}
+                    {item.discovery}
                   </div>
                 </div>
               );
             })}
           </div>
 
-          <div className="text-center p-6 bg-gradient-to-r from-genie-primary/20 to-genie-teal/20 rounded-lg border border-genie-primary/30">
-            <p className="text-muted-foreground mb-6">
-              This exploration continues - through individual experimentation and shared insights, 
-              building understanding of how AI might reshape various landscapes.
-            </p>
-            <Link to="/journey">
-              <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white px-8 py-4">
-                Continue to Explore Tech Exploration
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+          {/* Action Buttons */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="text-center p-6 bg-gradient-to-r from-genie-primary/10 to-genie-teal/10 rounded-lg border border-genie-primary/20">
+              <p className="text-muted-foreground mb-4">
+                Interested in exploring more comprehensive business applications and use cases?
+              </p>
+              <Link to="/business-use-cases">
+                <Button variant="outline" className="border-genie-primary text-genie-primary hover:bg-genie-primary hover:text-white">
+                  Explore Business Use Cases
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+            
+            <div className="text-center p-6 bg-gradient-to-r from-genie-primary/20 to-genie-teal/20 rounded-lg border border-genie-primary/30">
+              <p className="text-muted-foreground mb-4">
+                This exploration continues - through individual experimentation and shared insights, building understanding of how AI might reshape various landscapes.
+              </p>
+              <Link to="/journey">
+                <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white">
+                  Continue to Explore Tech Exploration
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </Card>
       </div>
