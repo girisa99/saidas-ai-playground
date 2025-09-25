@@ -90,12 +90,11 @@ export const BusinessImpactInfographic = () => {
       ],
       journeySteps: [
         "AI-driven welcome sequence",
-        "Intelligent form pre-population", 
         "Data import module (API, JSON, Excel)",
         "Real-time validation and guidance",
         "Automated verification processes"
       ],
-      integrations: ["Twilio SMS/Email", "DocuSign", "CRM Systems", "Data Import APIs (JSON, Excel, CSV)"]
+      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: Data Import APIs (JSON, Excel, CSV)", "Twilio SMS/Email", "DocuSign"]
     },
     {
       landscape: "Customer Experience",
