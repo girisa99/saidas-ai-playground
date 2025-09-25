@@ -121,7 +121,7 @@ export const BusinessImpactInfographic = () => {
     {
       insight: "Collective Exploration",
       description: "Individual experimentation combined with shared knowledge builds understanding", 
-      discovery: "What possibilities do you see emerging?",
+      discovery: "Shared experiences drive innovation",
       icon: Target,
       color: "genie-cyan"
     }
@@ -217,12 +217,9 @@ export const BusinessImpactInfographic = () => {
           </div>
 
           <div className="text-center p-6 bg-gradient-to-r from-genie-primary/20 to-genie-teal/20 rounded-lg border border-genie-primary/30">
-            <h4 className="text-xl font-bold text-foreground mb-4">
-              Share Your Perspective: What Do You Think the Future Holds?
-            </h4>
             <p className="text-muted-foreground mb-6">
               This exploration continues - through individual experimentation and shared insights, 
-              building understanding of how AI might reshape various landscapes. What possibilities do you envision?
+              building understanding of how AI might reshape various landscapes.
             </p>
             <Link to="/journey">
               <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white px-8 py-4">
