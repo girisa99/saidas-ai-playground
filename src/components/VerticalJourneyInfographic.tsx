@@ -27,6 +27,7 @@ const VerticalJourneyInfographic = () => {
   const [activePhase, setActivePhase] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout>();
+  const phaseRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const phases = [
     {
@@ -163,11 +164,14 @@ const VerticalJourneyInfographic = () => {
     }
   ];
 
-  // Auto-play functionality
+  // Auto-play functionality with smooth scrolling
   useEffect(() => {
     if (isAutoPlay) {
       intervalRef.current = setInterval(() => {
-        setActivePhase((prev) => (prev + 1) % phases.length);
+        setActivePhase((prev) => {
+          const nextPhase = (prev + 1) % phases.length;
+          return nextPhase;
+        });
       }, 4000);
     } else {
       if (intervalRef.current) clearInterval(intervalRef.current);
@@ -178,9 +182,31 @@ const VerticalJourneyInfographic = () => {
     };
   }, [isAutoPlay, phases.length]);
 
+  // Smooth scroll to active phase
+  useEffect(() => {
+    if (phaseRefs.current[activePhase] && isAutoPlay) {
+      const element = phaseRefs.current[activePhase];
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'nearest'
+        });
+      }
+    }
+  }, [activePhase, isAutoPlay]);
+
   const handlePhaseClick = (index: number) => {
     setActivePhase(index);
     setIsAutoPlay(false);
+    // Scroll to clicked phase
+    if (phaseRefs.current[index]) {
+      phaseRefs.current[index]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      });
+    }
   };
 
   const toggleAutoPlay = () => {
@@ -239,6 +265,7 @@ const VerticalJourneyInfographic = () => {
               return (
                 <div
                   key={phase.id}
+                  ref={(el) => (phaseRefs.current[index] = el)}
                   className={`relative transition-all duration-500 ${
                     isActive ? 'scale-105 z-10' : 'scale-100'
                   }`}
