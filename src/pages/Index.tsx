@@ -3,7 +3,7 @@ import { MultiHeroSection } from "@/components/MultiHeroSection";
 import { TrustSection } from "@/components/TrustSection";
 import { StorySection } from "@/components/StorySection";
 import { AIExperimentationBanner } from "@/components/AIExperimentationBanner";
-import { ValueProposition } from "@/components/ValueProposition";
+
 
 import { QuickStart } from "@/components/QuickStart";
 import { FAQ } from "@/components/FAQ";
@@ -30,7 +30,7 @@ const Index = () => {
         <TrustSection />
         <StorySection />
         <QuickStart />
-        <ValueProposition />
+        
         
         <FAQ />
         {/* Simplified homepage - detailed sections moved to dedicated pages per UI/UX audit */}
