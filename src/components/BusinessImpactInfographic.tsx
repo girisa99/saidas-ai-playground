@@ -407,24 +407,79 @@ export const BusinessImpactInfographic = () => {
             </h3>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {experimentationInsights.map((insight, index) => {
-              const IconComponent = insight.icon;
-              
-              return (
-                <div key={index} className={`text-center p-8 bg-gradient-to-br from-${insight.color}/10 to-background border-2 border-${insight.color}/20 rounded-xl shadow-lg hover:shadow-xl hover:shadow-${insight.color}/10 transition-all duration-300 hover:scale-105`}>
-                  <div className={`w-20 h-20 bg-gradient-to-br from-${insight.color}/20 to-${insight.color}/10 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg`}>
-                    <IconComponent className={`w-10 h-10 text-${insight.color} drop-shadow-sm`} />
+          {/* Horizontal Scrollable Insights Cards */}
+          <div className="relative mb-8">
+            <div 
+              id="insights-scroll" 
+              className="flex space-x-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth pb-4"
+            >
+              {experimentationInsights.map((insight, index) => {
+                const IconComponent = insight.icon;
+                
+                return (
+                  <div key={index} className={`w-80 flex-shrink-0 snap-start text-center p-8 bg-gradient-to-br from-${insight.color}/10 to-background border-2 border-${insight.color}/20 rounded-xl shadow-lg hover:shadow-xl hover:shadow-${insight.color}/10 transition-all duration-300 hover:scale-105`}>
+                    <div className={`w-20 h-20 bg-gradient-to-br from-${insight.color}/20 to-${insight.color}/10 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg`}>
+                      <IconComponent className={`w-10 h-10 text-${insight.color} drop-shadow-sm`} />
+                    </div>
+                    <h4 className={`text-xl font-black text-${insight.color} mb-3 drop-shadow-sm`}>
+                      {insight.insight}
+                    </h4>
+                    <p className="text-sm text-foreground leading-relaxed">
+                      {insight.description}
+                    </p>
                   </div>
-                  <h4 className={`text-xl font-black text-${insight.color} mb-3 drop-shadow-sm`}>
-                    {insight.insight}
-                  </h4>
-                  <p className="text-sm text-foreground leading-relaxed">
-                    {insight.description}
-                  </p>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+
+            {/* Navigation Controls for Insights */}
+            <div className="flex justify-between items-center mt-6">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const container = document.getElementById('insights-scroll');
+                  if (container) {
+                    container.scrollBy({ left: -400, behavior: 'smooth' });
+                  }
+                }}
+                className="flex items-center gap-2"
+              >
+                <ArrowRight className="w-4 h-4 rotate-180" />
+                Previous
+              </Button>
+              
+              <div className="flex space-x-2">
+                {experimentationInsights.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      const container = document.getElementById('insights-scroll');
+                      if (container) {
+                        const cardWidth = 400; // Approximate card width including gap
+                        container.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
+                      }
+                    }}
+                    className="w-2 h-2 bg-muted hover:bg-genie-primary rounded-full transition-colors"
+                  />
+                ))}
+              </div>
+              
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const container = document.getElementById('insights-scroll');
+                  if (container) {
+                    container.scrollBy({ left: 400, behavior: 'smooth' });
+                  }
+                }}
+                className="flex items-center gap-2"
+              >
+                Next
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
 
           {/* Action Buttons */}
