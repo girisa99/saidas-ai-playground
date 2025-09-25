@@ -123,9 +123,8 @@ export const BusinessImpactInfographic = () => {
       ],
       integrations: [
         "Prompt Engineering & AI Gateway",
-        "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio",
-        "Twilio (WhatsApp, Voice, Email, SMS)",
-        "Google Text-to-Speech & Speech-to-Text"
+        "Technical APIs: LLM, MCP, n8n, Arize",
+        "Twilio (WhatsApp, Voice, Email, SMS)"
       ]
     },
     {
@@ -153,7 +152,7 @@ export const BusinessImpactInfographic = () => {
         "Real-time status updates",
         "Predictive issue resolution"
       ],
-      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio", "Reviewing ERP integrations", "Carrier integrations"]
+      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, MCP, n8n", "Reviewing ERP integrations"]
     }
   ];
 
