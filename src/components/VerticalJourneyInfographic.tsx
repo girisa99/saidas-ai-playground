@@ -37,7 +37,7 @@ const VerticalJourneyInfographic = () => {
       date: "May 2025",
       icon: Lightbulb,
       image: phase01Spark,
-      description: "Weekend evening coffee time with community members, including close friend and associate Prashant K, sparked a revolutionary question about AI transformation that ignited this ongoing journey.",
+      description: "Evening coffee time over weekend with community members, including close friend and associate Prashant K, sparked a revolutionary question about AI transformation that ignited this ongoing journey.",
       touchPoints: [
         "Initial spark from transformative conversation",
         "Recognition of fundamental shift potential",
