@@ -94,7 +94,7 @@ export const BusinessImpactInfographic = () => {
         "Real-time validation and guidance",
         "Automated verification processes"
       ],
-      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio", "Business APIs: Experian credit check, CMS verification", "Twilio SMS/Email"]
+      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio", "Business APIs: Exploring Experian API check, CMS verification", "Twilio SMS/Email"]
     },
     {
       landscape: "Customer Experience",
