@@ -206,16 +206,16 @@ export const BusinessImpactInfographic = () => {
               return (
                 <Card 
                   key={useCase.id} 
-                  className={`w-80 sm:w-96 flex-shrink-0 snap-start border-${useCase.landscapeColor}/20 bg-gradient-to-br from-${useCase.landscapeColor}/5 to-background hover:shadow-xl transition-all duration-300 hover:scale-[1.02]`}
+                  className={`w-80 sm:w-96 flex-shrink-0 snap-start border-2 border-${useCase.landscapeColor}/30 bg-gradient-to-br from-${useCase.landscapeColor}/10 to-${useCase.landscapeColor}/5 hover:shadow-2xl hover:shadow-${useCase.landscapeColor}/20 transition-all duration-300 hover:scale-[1.03] hover:border-${useCase.landscapeColor}/50`}
                 >
                   {/* Landscape Header */}
-                  <div className={`p-4 bg-gradient-to-r from-${useCase.landscapeColor}/10 to-${useCase.landscapeColor}/5 border-b border-${useCase.landscapeColor}/20`}>
+                  <div className={`p-4 bg-gradient-to-r from-${useCase.landscapeColor}/20 to-${useCase.landscapeColor}/10 border-b-2 border-${useCase.landscapeColor}/30`}>
                     <div className="flex items-center gap-3 mb-2">
-                      <div className={`w-10 h-10 bg-${useCase.landscapeColor}/20 rounded-lg flex items-center justify-center flex-shrink-0`}>
-                        <LandscapeIcon className={`w-5 h-5 text-${useCase.landscapeColor}`} />
+                      <div className={`w-12 h-12 bg-gradient-to-br from-${useCase.landscapeColor}/30 to-${useCase.landscapeColor}/20 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                        <LandscapeIcon className={`w-6 h-6 text-${useCase.landscapeColor} drop-shadow-sm`} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className={`text-lg font-bold text-${useCase.landscapeColor} truncate`}>
+                        <h3 className={`text-xl font-black text-${useCase.landscapeColor} truncate drop-shadow-sm`}>
                           {useCase.landscape}
                         </h3>
                       </div>
@@ -394,14 +394,14 @@ export const BusinessImpactInfographic = () => {
               const IconComponent = insight.icon;
               
               return (
-                <div key={index} className="text-center p-6 bg-gradient-to-br from-background to-muted/20 rounded-lg border border-border/50">
-                  <div className={`w-16 h-16 bg-${insight.color}/10 rounded-full flex items-center justify-center mx-auto mb-4`}>
-                    <IconComponent className={`w-8 h-8 text-${insight.color}`} />
+                <div key={index} className={`text-center p-8 bg-gradient-to-br from-${insight.color}/10 to-background border-2 border-${insight.color}/20 rounded-xl shadow-lg hover:shadow-xl hover:shadow-${insight.color}/10 transition-all duration-300 hover:scale-105`}>
+                  <div className={`w-20 h-20 bg-gradient-to-br from-${insight.color}/20 to-${insight.color}/10 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg`}>
+                    <IconComponent className={`w-10 h-10 text-${insight.color} drop-shadow-sm`} />
                   </div>
-                  <h4 className={`text-lg font-bold text-${insight.color} mb-2`}>
+                  <h4 className={`text-xl font-black text-${insight.color} mb-3 drop-shadow-sm`}>
                     {insight.insight}
                   </h4>
-                  <p className="text-sm text-foreground">
+                  <p className="text-sm text-foreground leading-relaxed">
                     {insight.description}
                   </p>
                 </div>
