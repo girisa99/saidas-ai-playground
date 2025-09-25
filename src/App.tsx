@@ -11,9 +11,9 @@ import CaseStudies from "./pages/CaseStudies";
 import FAQPage from "./pages/FAQPage";
 import Docs from "./pages/Docs";
 import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import Disclaimer from "./pages/Disclaimer";
-import Cookies from "./pages/Cookies";
+import Terms from "./pages/Terms.tsx";
+import Disclaimer from "./pages/Disclaimer.tsx";
+import Cookies from "./pages/Cookies.tsx";
 import BusinessUseCases from "./pages/BusinessUseCases";
 import NotFound from "./pages/NotFound";
 
