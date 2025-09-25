@@ -308,7 +308,22 @@ export const BusinessImpactInfographic = () => {
                 </Card>
               );
             })}
-          </div>
+                    </div>
+
+                    {/* Development Infrastructure */}
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2 text-sm">
+                        <Bot className="w-4 h-4" />
+                        Development Infrastructure
+                      </h4>
+                      <div className="flex flex-wrap gap-1">
+                        {["Lovable", "Cursor", "Replit", "Docker", "GitHub", "Bolt", "Solid"].map((tool, i) => (
+                          <Badge key={i} variant="outline" className="text-xs bg-muted/50">
+                            {tool}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
           
           {/* Navigation Controls */}
           <div className="flex justify-between items-center mt-6">
