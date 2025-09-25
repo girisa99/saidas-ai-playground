@@ -24,8 +24,6 @@ export const QuickStart = () => {
       subtitle: "From Abstract Theory to Practical Reality",
       description: "Inspired by real-world AI applications, I moved beyond theoretical concepts to explore AI's practical potential. Started testing different tools to understand their capabilities.",
       icon: <Lightbulb className="h-8 w-8" />,
-      duration: "2-3 weeks",
-      difficulty: "Beginner",
       keyActions: [
         "Explored AI tool landscape",
         "Identified practical use cases", 
@@ -39,13 +37,11 @@ export const QuickStart = () => {
     {
       number: 2,
       title: "Deep Experimentation",
-      subtitle: "Testing 50+ Tools & Platforms",
+      subtitle: "Testing 20+ Tools & Platforms",
       description: "Dove into the diverse AI ecosystem, experimenting with no-code tools, coding platforms, and various models. Focused on understanding capabilities and limitations through hands-on testing.",
       icon: <Search className="h-8 w-8" />,
-      duration: "2 months intensive",
-      difficulty: "Intermediate",
       keyActions: [
-        "Tested 50+ AI tools",
+        "Tested 20+ AI tools",
         "Explored no-code/low-code platforms",
         "Evaluated LLMs and SLMs",
         "Documented successes and failures"
@@ -60,8 +56,6 @@ export const QuickStart = () => {
       subtitle: "Building Real Solutions",
       description: "Integrated AI components, leveraged agentic systems, and ensured high-quality data to build robust solutions. Multiple use cases were tested and validated during this phase.",
       icon: <Code className="h-8 w-8" />,
-      duration: "4-6 weeks",
-      difficulty: "Advanced",
       keyActions: [
         "Built AI-powered applications",
         "Integrated multiple AI components",
@@ -78,8 +72,6 @@ export const QuickStart = () => {
       subtitle: "Impact & Knowledge Transfer",
       description: "Applied AI to transform processes and outcomes. Documented the journey, shared insights, and focused on fostering AI literacy. Real examples and samples coming soon!",
       icon: <Rocket className="h-8 w-8" />,
-      duration: "Ongoing",
-      difficulty: "Expert",
       keyActions: [
         "Transformed existing processes",
         "Documented the complete journey",
@@ -113,12 +105,6 @@ export const QuickStart = () => {
     }
   ];
 
-  const difficultyColors = {
-    "Beginner": "bg-green-100 text-green-800 border-green-300",
-    "Intermediate": "bg-yellow-100 text-yellow-800 border-yellow-300", 
-    "Advanced": "bg-purple-100 text-purple-800 border-purple-300",
-    "Expert": "bg-red-100 text-red-800 border-red-300"
-  };
 
   return (
     <section className="py-20 px-6 bg-gradient-to-b from-background to-primary/5">
@@ -174,16 +160,6 @@ export const QuickStart = () => {
                     </div>
                     
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="flex items-center gap-2 bg-background/80 px-3 py-1 rounded-full">
-                          <Clock className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm font-medium">{step.duration}</span>
-                        </div>
-                        <Badge className={difficultyColors[step.difficulty as keyof typeof difficultyColors]}>
-                          {step.difficulty}
-                        </Badge>
-                      </div>
-                      
                       <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
                         {step.title}
                       </h3>
