@@ -229,10 +229,10 @@ const VerticalJourneyInfographic = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-4">
-            Interactive Journey
+            My Journey
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-6">
-            AI Transformation <span className="bg-gradient-to-r from-genie-primary to-genie-teal bg-clip-text text-transparent">Journey</span>
+            AI Transformation <span className="text-foreground">Journey</span>
           </h2>
           <p className="text-xl text-foreground mb-8 leading-relaxed">
             An ongoing comprehensive exploration from June 2025 to present - evolving from curiosity to breakthrough AI capabilities and beyond
