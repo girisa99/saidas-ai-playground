@@ -411,10 +411,9 @@ const About = () => {
                   <span className="text-genie-primary">Individual Learning</span> • <span className="text-genie-teal">Knowledge Sharing</span> • <span className="text-genie-cyan">Experimentation Hub</span>
                 </h3>
                 <p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-5xl mx-auto">
-                  This is a <strong>personal learning and knowledge sharing platform</strong> - not a service, consulting, or commercial offering. 
-                  It represents my individual journey exploring AI possibilities through practical experimentation, 
+                  This platform represents my personal journey exploring AI possibilities through practical experimentation, 
                   sharing insights from 21+ years of healthcare technology experience, and demonstrating how emerging technologies 
-                  can transform digital health through hands-on learning.
+                  can transform digital health through hands-on learning and open knowledge sharing.
                 </p>
                 
                 <div className="grid md:grid-cols-3 gap-8 mt-12">
@@ -469,10 +468,9 @@ const About = () => {
                 {/* Platform Disclaimer */}
                 <div className="mt-12 p-6 bg-background/50 rounded-lg border border-border/50">
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    <strong>Important Note:</strong> This platform serves as a personal learning environment and knowledge sharing initiative. 
-                    It is <em>not intended</em> as professional consulting, commercial services, or business offerings. 
-                    The content represents individual exploration, experimentation, and educational insights gained through 
-                    hands-on experience with emerging healthcare technologies.
+                    <strong>Platform Focus:</strong> This platform serves as a personal learning environment and knowledge sharing initiative, 
+                    representing individual exploration, experimentation, and educational insights gained through 
+                    hands-on experience with emerging healthcare technologies and AI innovation.
                   </p>
                 </div>
               </div>
