@@ -1,7 +1,7 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { TechnologyStackSection } from "@/components/TechnologyStackSection";
-import { GammaIntegrationWidget } from "@/components/GammaIntegrationWidget";
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Code2, Brain, Database, Shield, Zap, ArrowRight } from "lucide-react";

@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { GammaIntegrationWidget } from "@/components/GammaIntegrationWidget";
+
 import { 
   Brain, 
   Database, 
@@ -123,17 +123,6 @@ export const TechnologyStackSection = () => {
           </p>
         </div>
 
-        {/* Gamma Integration Widget for Technology Stack */}
-        <div className="mb-12 max-w-md mx-auto">
-          <GammaIntegrationWidget
-            contentType="infographic"
-            title="Technology Stack Infographic"
-            description="Create comprehensive visual diagram of the complete AI technology stack with categories, tools, and integration patterns"
-            data={technologies}
-            autoGenerate={true}
-            showInstructions={false}
-          />
-        </div>
 
         <div className="grid lg:grid-cols-2 gap-8 mb-16">
           {technologies.map((tech, index) => {

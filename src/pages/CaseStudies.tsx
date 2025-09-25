@@ -1,6 +1,6 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
-import { GammaIntegrationWidget } from "@/components/GammaIntegrationWidget";
+
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -188,15 +188,6 @@ const CaseStudies = () => {
         {/* Case Studies Grid */}
         <section className="py-16 lg:py-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            {/* Gamma Integration Widget for Case Studies */}
-            <div className="mb-12 max-w-md mx-auto">
-              <GammaIntegrationWidget
-                contentType="case-study"
-                title="Case Studies Presentation"
-                description="Generate professional presentation showcasing AI implementation success stories with metrics and outcomes"
-                data={caseStudies}
-              />
-            </div>
             
             <div className="grid lg:grid-cols-2 gap-8">
               {caseStudies.map((study, index) => {

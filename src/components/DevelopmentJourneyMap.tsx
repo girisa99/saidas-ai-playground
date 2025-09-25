@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { GammaIntegrationWidget } from "@/components/GammaIntegrationWidget";
+
 import { 
   Lightbulb, 
   Code2, 
@@ -160,15 +160,6 @@ export const DevelopmentJourneyMap = () => {
             </p>
           </div>
 
-          {/* Gamma Integration Widget for AI Evolution */}
-          <div className="mb-12 max-w-md mx-auto">
-            <GammaIntegrationWidget
-              contentType="timeline"
-              title="AI Evolution Timeline"
-              description="Create visual presentation showing the evolution from complex coding to simple AI-driven development"
-              data={complexToSimple}
-            />
-          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {complexToSimple.map((phase, index) => (
@@ -240,15 +231,6 @@ export const DevelopmentJourneyMap = () => {
           </p>
         </div>
 
-        {/* Gamma Integration Widget for Development Process */}
-        <div className="mb-12 max-w-md mx-auto">
-          <GammaIntegrationWidget
-            contentType="workflow"
-            title="Development Workflow"
-            description="Generate interactive workflow diagram showing the complete AI development and deployment process"
-            data={journeySteps}
-          />
-        </div>
 
         {/* Journey Steps */}
         <div className="relative">
