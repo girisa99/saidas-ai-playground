@@ -51,9 +51,9 @@ export const BusinessImpactInfographic = () => {
       title: "Patient Onboarding & Enrollment",
       description: "Comprehensive healthcare patient journey with AI-assisted clinical workflows",
       outcomes: [
-        "Streamlined enrollment reducing time by 75%",
-        "99% accurate provider NPI verification",
-        "85% improvement in patient satisfaction scores"
+        "Streamlined enrollment process",
+        "Accurate provider verification",
+        "Enhanced patient satisfaction"
       ],
       technologies: [
         "Provider NPI Verification Agents",
@@ -78,9 +78,9 @@ export const BusinessImpactInfographic = () => {
       title: "Customer Onboarding & Engagement",
       description: "AI-powered customer journey optimization with intelligent touchpoint management",
       outcomes: [
-        "Reduced onboarding time from 7 days to 2.5 days",
-        "95% completion rate with AI guidance",
-        "60% reduction in support tickets during onboarding"
+        "Faster onboarding experience",
+        "Higher completion rates with AI guidance",
+        "Reduced support burden during onboarding"
       ],
       technologies: [
         "Genie Conversational AI",
@@ -105,9 +105,9 @@ export const BusinessImpactInfographic = () => {
       title: "Contact Center AI Transformation",
       description: "Multi-channel AI-powered customer support with intelligent routing and response",
       outcomes: [
-        "80% reduction in hold times",
-        "90% first-call resolution rate",
-        "Multi-channel context preservation"
+        "Reduced customer wait times",
+        "Improved first-call resolution",
+        "Seamless multi-channel experience"
       ],
       technologies: [
         "Genie Conversational Platform",
@@ -136,9 +136,9 @@ export const BusinessImpactInfographic = () => {
       title: "Order Management & Tracking",
       description: "Real-time order processing with intelligent batch optimization and tracking",
       outcomes: [
-        "Real-time order status visibility",
-        "Automated batch processing optimization",
-        "Predictive delivery timeline accuracy"
+        "Enhanced order visibility",
+        "Optimized batch processing",
+        "Improved delivery predictions"
       ],
       technologies: [
         "Batch Process Automation",
