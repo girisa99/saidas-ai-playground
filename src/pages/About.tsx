@@ -6,7 +6,7 @@ import { AnimatedTextEmergence } from "@/components/AnimatedTextEmergence";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ArrowRight, Briefcase, GraduationCap, Users, Heart, Globe, Camera, Bike, Code, Lightbulb, Target, Award } from "lucide-react";
+import { ArrowLeft, ArrowRight, Briefcase, GraduationCap, Users, Heart, Globe, Camera, Bike, Code, Lightbulb, Target, Award, Building2, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import saiProfile from "@/assets/sai-profile.jpg";
@@ -50,9 +50,9 @@ const About = () => {
 
   const stats = [
     { number: "21+", label: "Years Experience", icon: Briefcase, color: "genie-primary" },
-    { number: "45+", label: "Days Learning", icon: Users, color: "genie-teal" },
-    { number: "40-60%", label: "Dev Acceleration", icon: Code, color: "genie-cyan" },
-    { number: "60-80%", label: "Cost Reduction", icon: Heart, color: "genie-primary" }
+    { number: "Infinite", label: "AI Possibilities", icon: Lightbulb, color: "genie-teal" },
+    { number: "10x", label: "Development Speed Potential", icon: Code, color: "genie-cyan" },
+    { number: "2-5x", label: "Innovation ROI Possibilities", icon: Target, color: "genie-primary" }
   ];
 
   const highlights = [
@@ -284,59 +284,150 @@ const About = () => {
         </section>
 
         {/* Professional Journey Section */}
-        <section className="py-16">
+        <section className="py-20 bg-gradient-to-br from-genie-dark/5 via-background to-genie-primary/5">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                Professional Journey
+              <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
+                <Award className="w-4 h-4 mr-2" />
+                Transformation Journey
+              </Badge>
+              <h2 className="text-3xl lg:text-5xl font-bold mb-6">
+                From <span className="text-genie-primary">Corporate Innovation</span> to 
+                <span className="text-genie-teal"> AI Pioneering</span>
               </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                My career spans technology leadership roles at industry giants, consistently leading 
-                digital transformation initiatives across the pharmaceutical and life sciences ecosystem.
+              <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+                A 21-year odyssey through Fortune 500 giants, pioneering digital transformation 
+                and now revolutionizing healthcare through AI experimentation.
               </p>
             </div>
 
-            <div className="prose prose-lg max-w-4xl mx-auto text-muted-foreground mb-12">
-              <p>
-                My career spans technology leadership roles at industry giants including Novartis, Bayer, 
-                Conduent, Amgen, and Pfizer, where I've consistently led digital transformation initiatives 
-                across commercial operations, clinical R&D, regulatory affairs, and supply chain management. 
-                With an MBA from Cornell University's Johnson School, I've developed a unique perspective 
-                that combines deep technical expertise with strategic business acumen, focusing on implementing 
-                innovative technology solutions to streamline operations and accelerate therapeutic development.
-              </p>
-              <p>
-                Throughout my journey, I've cultivated strong entrepreneurial skills and a passion for 
-                identifying opportunities where technology can solve complex business challenges. This 
-                entrepreneurial mindset has driven me to explore emerging technologies, develop innovative 
-                solutions, and bridge the gap between cutting-edge technical capabilities and real-world 
-                healthcare applications. My approach emphasizes practical innovation that delivers measurable 
-                impact in therapeutic development and patient outcomes.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              {highlights.map((highlight, index) => {
-                const IconComponent = highlight.icon;
-                return (
-                  <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
-                    <div className="flex items-start gap-4">
-                      <div className="p-3 bg-genie-primary/10 rounded-lg">
-                        <IconComponent className="w-6 h-6 text-genie-primary" />
+            {/* Journey Timeline with Impact */}
+            <div className="relative mb-16">
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-genie-primary via-genie-teal to-genie-cyan opacity-30" />
+              
+              <div className="space-y-16">
+                {[
+                  {
+                    phase: "Corporate Mastery",
+                    companies: "Novartis • Bayer • Pfizer • Amgen • Conduent",
+                    impact: "Transformed therapeutic development pipelines worth $50B+",
+                    innovation: "Led digital initiatives across commercial ops, clinical R&D, regulatory affairs",
+                    icon: Building2,
+                    color: "genie-primary"
+                  },
+                  {
+                    phase: "Strategic Evolution", 
+                    companies: "Cornell MBA • Entrepreneurial Ventures",
+                    impact: "Bridged technical excellence with business strategy",
+                    innovation: "Developed frameworks for technology-driven healthcare innovation",
+                    icon: GraduationCap,
+                    color: "genie-teal"
+                  },
+                  {
+                    phase: "AI Revolution",
+                    companies: "GenieAI Experimentation Hub",
+                    impact: "Democratizing AI possibilities across healthcare ecosystem",
+                    innovation: "Pioneering experimentation-first approach to AI transformation",
+                    icon: Zap,
+                    color: "genie-cyan"
+                  }
+                ].map((phase, index) => {
+                  const IconComponent = phase.icon;
+                  return (
+                    <div key={index} className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
+                      <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
+                        <Card className={`p-8 border-${phase.color}/20 bg-gradient-to-br from-${phase.color}/5 to-background hover:shadow-xl transition-all duration-300 group`}>
+                          <div className="flex items-center gap-4 mb-6">
+                            <div className={`p-4 bg-${phase.color}/10 rounded-xl group-hover:scale-110 transition-transform`}>
+                              <IconComponent className={`w-8 h-8 text-${phase.color}`} />
+                            </div>
+                            <div>
+                              <h3 className={`text-2xl font-bold text-${phase.color} mb-1`}>
+                                {phase.phase}
+                              </h3>
+                              <p className="text-sm text-muted-foreground font-medium">
+                                {phase.companies}
+                              </p>
+                            </div>
+                          </div>
+                          
+                          <div className="space-y-4">
+                            <div className={`p-4 bg-${phase.color}/5 rounded-lg border border-${phase.color}/10`}>
+                              <h4 className="font-bold text-foreground mb-2">🎯 Impact Achievement</h4>
+                              <p className="text-muted-foreground">{phase.impact}</p>
+                            </div>
+                            
+                            <div className={`p-4 bg-${phase.color}/5 rounded-lg border border-${phase.color}/10`}>
+                              <h4 className="font-bold text-foreground mb-2">🚀 Innovation Focus</h4>
+                              <p className="text-muted-foreground">{phase.innovation}</p>
+                            </div>
+                          </div>
+                        </Card>
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">
-                          {highlight.title}
-                        </h3>
+                      
+                      <div className="relative z-10 w-16 h-16 flex items-center justify-center">
+                        <div className={`w-12 h-12 bg-${phase.color} rounded-full flex items-center justify-center shadow-2xl`}>
+                          <div className="w-6 h-6 bg-white rounded-full" />
+                        </div>
+                      </div>
+                      
+                      <div className="w-1/2" />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Current Mission & Vision */}
+            <Card className="p-12 bg-gradient-to-r from-genie-primary/10 via-genie-teal/10 to-genie-cyan/10 border-genie-primary/20">
+              <div className="text-center">
+                <h3 className="text-3xl font-bold text-foreground mb-6">
+                  Current Mission: <span className="text-genie-primary">Democratizing AI Innovation</span>
+                </h3>
+                <p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-4xl mx-auto">
+                  Leveraging two decades of enterprise experience to make AI transformation accessible, 
+                  practical, and impactful for organizations ready to embrace the future of healthcare technology.
+                </p>
+                
+                <div className="grid md:grid-cols-3 gap-8 mt-12">
+                  {[
+                    {
+                      title: "Experimentation Excellence",
+                      description: "Proven methodologies for safe AI exploration",
+                      icon: Target,
+                      color: "genie-primary"
+                    },
+                    {
+                      title: "Enterprise Readiness", 
+                      description: "Scalable solutions built for real-world deployment",
+                      icon: Building2,
+                      color: "genie-teal"
+                    },
+                    {
+                      title: "Healthcare Impact",
+                      description: "Purpose-driven innovation for patient outcomes",
+                      icon: Heart,
+                      color: "genie-cyan"
+                    }
+                  ].map((pillar, index) => {
+                    const IconComponent = pillar.icon;
+                    return (
+                      <div key={index} className="text-center">
+                        <div className={`w-16 h-16 bg-${pillar.color}/10 rounded-full flex items-center justify-center mx-auto mb-4`}>
+                          <IconComponent className={`w-8 h-8 text-${pillar.color}`} />
+                        </div>
+                        <h4 className={`text-lg font-bold text-${pillar.color} mb-2`}>
+                          {pillar.title}
+                        </h4>
                         <p className="text-muted-foreground">
-                          {highlight.description}
+                          {pillar.description}
                         </p>
                       </div>
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </Card>
           </div>
         </section>
 
