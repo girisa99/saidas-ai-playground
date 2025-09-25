@@ -105,23 +105,23 @@ export const BusinessImpactInfographic = () => {
 
   const disruptionInsights = [
     {
-      insight: "Learning Through Experimentation",
-      description: "Testing AI applications across various domains reveals transformation patterns",
-      discovery: "Knowledge sharing accelerates understanding",
+      insight: "Learning Through Exploration",
+      description: "Testing AI applications across various domains reveals emerging transformation patterns",
+      discovery: "Individual insights shared with community",
       icon: Brain,
       color: "genie-primary"
     },
     {
-      insight: "Validated Disruption Patterns", 
-      description: "Documenting how AI fundamentally changes traditional approaches",
-      discovery: "Evidence-based insights shape future strategies",
+      insight: "Disruption Possibilities", 
+      description: "Observing how AI might fundamentally change traditional approaches",
+      discovery: "Patterns suggest new paradigms emerging",
       icon: Zap,
       color: "genie-teal"
     },
     {
-      insight: "Collaborative Evolution",
-      description: "Individual exploration combined with community knowledge builds collective wisdom", 
-      discovery: "Shared experiences drive innovation",
+      insight: "Collective Exploration",
+      description: "Individual experimentation combined with shared knowledge builds understanding", 
+      discovery: "What possibilities do you see emerging?",
       icon: Target,
       color: "genie-cyan"
     }
@@ -136,11 +136,11 @@ export const BusinessImpactInfographic = () => {
             Landscape Disruption Analysis
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            How AI is Reshaping Our World: <span className="text-genie-primary">Validated Learning & Insights</span>
+            How AI is Reshaping <span className="text-genie-primary">Various Landscapes</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            Through experimentation and knowledge sharing, we're documenting how AI is fundamentally disrupting industries. 
-            These insights come from hands-on testing, learning, and validating real-world applications across various sectors.
+            Through individual experimentation and knowledge sharing, exploring how AI is fundamentally transforming industries. 
+            These insights emerge from hands-on testing and learning across various sectors. What patterns do you see emerging?
           </p>
         </div>
 
@@ -185,11 +185,11 @@ export const BusinessImpactInfographic = () => {
         <Card className="p-8 border-genie-primary/20 bg-gradient-to-r from-genie-primary/10 via-genie-teal/10 to-genie-cyan/10">
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-foreground mb-4">
-              Validating the AI Transformation: What We're Learning
+              Exploring AI's Impact: Individual Insights & Possibilities
             </h3>
             <p className="text-muted-foreground max-w-3xl mx-auto">
-              Through hands-on experimentation and knowledge sharing, we're documenting how AI is fundamentally 
-              reshaping industries and creating new paradigms for innovation and growth.
+              Through individual exploration and shared experiences, discovering how AI might be reshaping industries 
+              and opening new possibilities. What transformations do you anticipate in your field?
             </p>
           </div>
 
@@ -218,11 +218,11 @@ export const BusinessImpactInfographic = () => {
 
           <div className="text-center p-6 bg-gradient-to-r from-genie-primary/20 to-genie-teal/20 rounded-lg border border-genie-primary/30">
             <h4 className="text-xl font-bold text-foreground mb-4">
-              Join the Learning Journey: Explore & Experiment Together
+              Share Your Perspective: What Do You Think the Future Holds?
             </h4>
             <p className="text-muted-foreground mb-6">
-              This exploration is ongoing - through individual experimentation and collective knowledge sharing, 
-              we're building a deeper understanding of how AI continues to reshape our world.
+              This exploration continues - through individual experimentation and shared insights, 
+              building understanding of how AI might reshape various landscapes. What possibilities do you envision?
             </p>
             <Link to="/journey">
               <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white px-8 py-4">
