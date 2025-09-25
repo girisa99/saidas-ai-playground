@@ -122,9 +122,10 @@ export const BusinessImpactInfographic = () => {
         "AI-powered case management"
       ],
       integrations: [
+        "Prompt Engineering & AI Gateway",
+        "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio",
         "Twilio (WhatsApp, Voice, Email, SMS)",
-        "Google Text-to-Speech & Speech-to-Text",
-        "CRM Integration"
+        "Google Text-to-Speech & Speech-to-Text"
       ]
     },
     {
@@ -152,7 +153,7 @@ export const BusinessImpactInfographic = () => {
         "Real-time status updates",
         "Predictive issue resolution"
       ],
-      integrations: ["ERP Systems", "Logistics APIs", "Inventory Management"]
+      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio", "ERP Systems", "Logistics APIs"]
     }
   ];
 
