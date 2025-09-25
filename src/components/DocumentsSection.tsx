@@ -43,8 +43,8 @@ export const DocumentsSection = () => {
     },
     {
       title: "My AI Journey",
-      subtitle: "From Curiosity to Impact",
-      description: "Practical exploration of AI ecosystem components, from foundational models to specialized enterprise integration tools.",
+      subtitle: "From Curiosity to Impact - 20+ AI Tools Tested",
+      description: "Practical exploration of 20+ AI tools across 2 industries, uncovering patterns and potential ROI opportunities through hands-on experimentation.",
       icon: <BookOpen className="h-6 w-6" />,
       tags: ["Learning", "Tools", "Platforms"],
       gradient: "from-primary/15 to-ai-secondary/15",
