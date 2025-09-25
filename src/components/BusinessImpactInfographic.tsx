@@ -22,39 +22,6 @@ import {
 import { Link } from "react-router-dom";
 
 export const BusinessImpactInfographic = () => {
-  const impactMetrics = [
-    {
-      category: "Learning Insights",
-      icon: Brain,
-      color: "genie-primary",
-      metrics: [
-        { value: "Validated", label: "Transformation Patterns", timeframe: "Through experimentation" },
-        { value: "Documented", label: "Success Frameworks", timeframe: "Real-world testing" },
-        { value: "Shared", label: "Knowledge Base", timeframe: "Community learning" }
-      ]
-    },
-    {
-      category: "Disruption Patterns", 
-      icon: Zap,
-      color: "genie-teal",
-      metrics: [
-        { value: "Rapid", label: "Industry Changes", timeframe: "Accelerating adoption" },
-        { value: "Fundamental", label: "Process Shifts", timeframe: "Traditional → AI-driven" },
-        { value: "Exponential", label: "Capability Growth", timeframe: "Technology advancement" }
-      ]
-    },
-    {
-      category: "Future Landscape",
-      icon: Target,
-      color: "genie-cyan", 
-      metrics: [
-        { value: "Emerging", label: "New Opportunities", timeframe: "AI-native approaches" },
-        { value: "Evolving", label: "Skill Requirements", timeframe: "Human-AI collaboration" },
-        { value: "Transforming", label: "Work Paradigms", timeframe: "Continuous adaptation" }
-      ]
-    }
-  ];
-
   const experimentalUseCases = [
     {
       area: "Patient Management",
@@ -100,6 +67,21 @@ export const BusinessImpactInfographic = () => {
         "Agent productivity enhancement trials"
       ],
       stage: "Proof of concept with expanding scope"
+    },
+    {
+      area: "Financial Services",
+      icon: DollarSign,
+      color: "genie-primary",
+      title: "FinTech AI Exploration",
+      description: "Investigating AI applications in financial operations and customer experience",
+      status: "Early Exploration",
+      highlights: [
+        "Automated financial advisory prototyping",
+        "Risk assessment algorithm testing",
+        "Customer onboarding streamlining experiments",
+        "Fraud detection mechanism exploration"
+      ],
+      stage: "Conceptual development with market research"
     }
   ];
 
@@ -144,42 +126,6 @@ export const BusinessImpactInfographic = () => {
           </p>
         </div>
 
-        {/* Impact Metrics Overview */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
-          {impactMetrics.map((category, index) => {
-            const IconComponent = category.icon;
-            
-            return (
-              <Card key={index} className={`p-8 border-${category.color}/20 bg-gradient-to-br from-${category.color}/5 to-background hover:shadow-xl transition-all duration-300`}>
-                <div className="text-center mb-6">
-                  <div className={`w-16 h-16 bg-${category.color}/10 rounded-full flex items-center justify-center mx-auto mb-4`}>
-                    <IconComponent className={`w-8 h-8 text-${category.color}`} />
-                  </div>
-                  <h3 className={`text-xl font-bold text-${category.color} mb-2`}>
-                    {category.category}
-                  </h3>
-                </div>
-                
-                <div className="space-y-6">
-                  {category.metrics.map((metric, i) => (
-                    <div key={i} className="text-center p-4 bg-background/50 rounded-lg border border-border/50">
-                      <div className={`text-3xl font-bold text-${category.color} mb-1`}>
-                        {metric.value}
-                      </div>
-                      <div className="font-semibold text-foreground mb-1">
-                        {metric.label}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {metric.timeframe}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            );
-          })}
-        </div>
-
         {/* Experimental Use Cases Section */}
         <Card className="p-8 border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-background mb-16">
           <div className="text-center mb-12">
@@ -191,13 +137,13 @@ export const BusinessImpactInfographic = () => {
               Current Experimentation Hub <span className="text-genie-primary">Highlights</span>
             </h3>
             <p className="text-muted-foreground max-w-3xl mx-auto">
-              Active experiments and implementations across healthcare, oncology, and customer 
-              service sectors. Exploring various AI scenarios with mixed implementation statuses as 
+              Active experiments and implementations across healthcare, oncology, customer 
+              service, and financial sectors. Exploring various AI scenarios with mixed implementation statuses as 
               part of ongoing experimentation initiatives.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8 mb-8">
+          <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-8 mb-8">
             {experimentalUseCases.map((useCase, index) => {
               const IconComponent = useCase.icon;
               
