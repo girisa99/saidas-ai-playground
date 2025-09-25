@@ -72,12 +72,13 @@ const Journey = () => {
             </Badge>
             
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
-              From Healthcare <span className="text-genie-accent">Innovation</span> to AI <span className="text-genie-accent">Transformation</span>
+              From Spark to <span className="text-genie-accent">Resilient AI Hub</span>
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-              A personal mission to democratize AI experimentation - transforming 21+ years of healthcare technology expertise 
-              into accessible frameworks that accelerate innovation and bridge the gap between cutting-edge AI capabilities and real-world enterprise solutions.
+              A comprehensive 5-phase transformation journey from initial AI curiosity to building a stable, 
+              resilient healthcare AI experimentation platform - featuring breakthrough moments, scalable architectures, 
+              and enterprise-grade multi-agent orchestration systems.
             </p>
             
             {/* Journey Highlights Grid - Mobile Responsive */}
