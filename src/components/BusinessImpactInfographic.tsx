@@ -38,11 +38,7 @@ import {
 import { Link } from "react-router-dom";
 
 export const BusinessImpactInfographic = () => {
-  const statusConfig = {
-    live: { label: "Live", color: "bg-green-500", textColor: "text-green-700" },
-    testing: { label: "Testing", color: "bg-yellow-500", textColor: "text-yellow-700" },
-    development: { label: "Development", color: "bg-blue-500", textColor: "text-blue-700" }
-  };
+  // Removed status config as requested by user
 
   // Flatten all use cases with their landscape context for unified scrollable cards
   const allUseCases = [
@@ -54,8 +50,6 @@ export const BusinessImpactInfographic = () => {
       id: "patient-enrollment",
       title: "Patient Onboarding & Enrollment",
       description: "Comprehensive healthcare patient journey with AI-assisted clinical workflows",
-      status: "testing",
-      roi: "75% efficiency gain",
       outcomes: [
         "Streamlined enrollment reducing time by 75%",
         "99% accurate provider NPI verification",
@@ -83,8 +77,6 @@ export const BusinessImpactInfographic = () => {
       id: "customer-onboarding",
       title: "Customer Onboarding & Engagement",
       description: "AI-powered customer journey optimization with intelligent touchpoint management",
-      status: "live",
-      roi: "65% faster onboarding",
       outcomes: [
         "Reduced onboarding time from 7 days to 2.5 days",
         "95% completion rate with AI guidance",
@@ -112,8 +104,6 @@ export const BusinessImpactInfographic = () => {
       id: "contact-center",
       title: "Contact Center AI Transformation",
       description: "Multi-channel AI-powered customer support with intelligent routing and response",
-      status: "live",
-      roi: "70% efficiency increase",
       outcomes: [
         "80% reduction in hold times",
         "90% first-call resolution rate",
@@ -145,8 +135,6 @@ export const BusinessImpactInfographic = () => {
       id: "order-management",
       title: "Order Management & Tracking",
       description: "Real-time order processing with intelligent batch optimization and tracking",
-      status: "development",
-      roi: "50% process optimization",
       outcomes: [
         "Real-time order status visibility",
         "Automated batch processing optimization",
@@ -213,7 +201,6 @@ export const BusinessImpactInfographic = () => {
             className="flex space-x-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth pb-4"
           >
             {allUseCases.map((useCase) => {
-              const status = statusConfig[useCase.status as keyof typeof statusConfig];
               const LandscapeIcon = useCase.landscapeIcon;
               
               return (
@@ -240,16 +227,6 @@ export const BusinessImpactInfographic = () => {
 
                   {/* Use Case Content */}
                   <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex flex-col gap-2">
-                        <Badge className={`${status.color} text-white text-xs w-fit`}>
-                          {status.label}
-                        </Badge>
-                        <Badge variant="outline" className={`border-${useCase.landscapeColor} text-${useCase.landscapeColor} text-xs font-semibold w-fit`}>
-                          {useCase.roi}
-                        </Badge>
-                      </div>
-                    </div>
                     
                     <CardTitle className="text-xl font-bold text-foreground leading-tight mb-2">
                       {useCase.title}
