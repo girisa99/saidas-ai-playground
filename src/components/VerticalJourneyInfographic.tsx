@@ -148,45 +148,35 @@ const VerticalJourneyInfographic = () => {
     },
     {
       id: 5,
-      title: "Production Excellence",
-      subtitle: "Enterprise-Grade AI Systems",
-      date: "September 2025",
-      icon: Shield,
-      image: phase05Production,
-      description: "Tackled enterprise challenges: data consistency, hallucination reduction through RAG, and multi-tenant architecture.",
-      touchPoints: [
-        "Implemented data consistency frameworks",
-        "Achieved 94% accuracy in hallucination reduction",
-        "Built enterprise-grade multi-tenant isolation"
-      ],
-      painPoints: [
-        "Data consistency across multiple systems",
-        "AI hallucination and reliability concerns",
-        "Complex multi-tenant security requirements"
-      ],
-      technologies: ["RAG Architecture", "Vector Databases", "DocuSign API", "Twilio"],
-      color: "genie-teal",
-      bgColor: "bg-gradient-to-br from-genie-teal/5 to-genie-teal/10"
-    },
-    {
-      id: 6,
-      title: "Agentic AI Breakthrough",
-      subtitle: "Dynamic Multi-Agent Innovation",
-      date: "November 2025",
+      title: "Resilient AI Experimentation Hub",
+      subtitle: "Stable Healthcare AI Platform with Multi-Agent Orchestration",
+      date: "August-September 2025",
       icon: Network,
       image: phase06Agentic,
-      description: "Revolutionary agentic AI platform with dynamic agent generation and seamless orchestration - the journey continues with new innovations emerging.",
+      description: "Successfully built a stable, resilient AI platform that serves as the backbone for healthcare experimentation - integrating real-world systems like NPI, CMS, FDA, and EMR platforms while deploying multiple agents for complex patient onboarding workflows without breaking functionality.",
       touchPoints: [
-        "Created dynamic agent generation system",
-        "Achieved seamless multi-agent orchestration",
-        "Demonstrated healthcare workflow automation"
+        "Built unbreakable, stable AI platform foundation serving as experimentation backbone",
+        "Successfully integrated healthcare systems: NPI, CMS credentialing, FDA product/packaging/AE tracking",
+        "Implemented ICD 9/10 code integration and Changehealth EMR for insurance verification",
+        "Deployed Label Studio for RAG and knowledge base with comprehensive data management",
+        "Integrated Twilio contact center with Langwatch and Artiz for real-time testing",
+        "Successfully orchestrated multiple agents for patient onboarding use cases",
+        "Achieved 94% accuracy in hallucination reduction through robust validation systems",
+        "Built enterprise-grade multi-tenant isolation with comprehensive security frameworks",
+        "Created dynamic agent generation system with seamless multi-agent coordination",
+        "Demonstrated full-scale healthcare workflow automation across integrated platforms"
       ],
       painPoints: [
-        "Complex agent coordination challenges",
-        "Dynamic workflow configuration complexity",
-        "Real-time collaboration synchronization"
+        "Complex healthcare system integration challenges across NPI, CMS, FDA, and EMR platforms",
+        "Ensuring platform stability while supporting rapid experimentation and agent deployment",
+        "Managing data consistency across multiple healthcare data sources and validation systems",
+        "Real-time synchronization challenges between multiple agents and external healthcare APIs",
+        "Balancing system resilience with the flexibility needed for healthcare experimentation",
+        "Complex multi-tenant security requirements for healthcare compliance and data protection",
+        "Coordinating agent orchestration while maintaining HIPAA compliance and data integrity",
+        "Performance optimization across integrated systems without compromising stability"
       ],
-      technologies: ["Agentic AI", "Multi-Agent Systems", "Workflow Orchestration"],
+      technologies: ["Multi-Agent Systems", "Agentic AI", "NPI Integration", "CMS Credentialing", "FDA APIs", "ICD 9/10", "Changehealth EMR", "Label Studio", "RAG Architecture", "Twilio", "Langwatch", "Artiz", "Vector Databases", "Healthcare Compliance"],
       color: "genie-cyan",
       bgColor: "bg-gradient-to-br from-genie-cyan/5 to-genie-cyan/10"
     }
@@ -429,6 +419,26 @@ const VerticalJourneyInfographic = () => {
                               </ul>
                             </div>
                           </div>
+                          
+                          {/* Business Use Cases Link - Only show for the final phase */}
+                          {phase.id === 5 && (
+                            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                              <h4 className="font-semibold text-blue-700 dark:text-blue-400 mb-2">
+                                🚀 Explore Real-World Applications
+                              </h4>
+                              <p className="text-sm text-foreground mb-3">
+                                See how these breakthrough technologies are being applied in healthcare workflows and patient onboarding systems.
+                              </p>
+                              <Button 
+                                variant="outline" 
+                                size="sm"
+                                onClick={() => window.location.href = '/business-use-cases'}
+                                className="border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:hover:bg-blue-900/20"
+                              >
+                                View Business Use Cases →
+                              </Button>
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
