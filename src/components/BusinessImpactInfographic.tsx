@@ -70,10 +70,10 @@ export const BusinessImpactInfographic = () => {
       integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio, Google Vertex Studio, Image Generation Models", "Business APIs: CMS Verification & Credentialing, DocuSign, Insurance APIs, ICD, FDA", "Twilio WhatsApp/SMS/Email"]
     },
     {
-      landscape: "Customer Experience",
-      landscapeIcon: MessageCircle,
-      landscapeColor: "genie-teal",
-      landscapeDescription: "Revolutionizing customer service and engagement through intelligent automation",
+      landscape: "Customer Onboarding",
+      landscapeIcon: UserCheck,
+      landscapeColor: "genie-secondary",
+      landscapeDescription: "Streamlining customer acquisition and initial engagement through intelligent automation",
       id: "customer-onboarding",
       title: "Customer Onboarding & Engagement",
       description: "AI-powered customer journey optimization with intelligent touchpoint management",
@@ -97,10 +97,10 @@ export const BusinessImpactInfographic = () => {
       integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio", "Business APIs: Exploring Experian API check, CMS verification implemented", "Twilio SMS/Email"]
     },
     {
-      landscape: "Customer Experience",
-      landscapeIcon: MessageCircle,
-      landscapeColor: "genie-teal",
-      landscapeDescription: "Revolutionizing customer service and engagement through intelligent automation",
+      landscape: "Customer Support",
+      landscapeIcon: Phone,
+      landscapeColor: "genie-accent",
+      landscapeDescription: "Transforming customer service through AI-powered multi-channel support systems",
       id: "contact-center",
       title: "Contact Center AI Transformation",
       description: "Multi-channel AI-powered customer support with intelligent routing and response",
@@ -128,9 +128,9 @@ export const BusinessImpactInfographic = () => {
       ]
     },
     {
-      landscape: "Operations & Manufacturing",
-      landscapeIcon: ShoppingCart,
-      landscapeColor: "genie-cyan",
+      landscape: "Operations Management",
+      landscapeIcon: Package,
+      landscapeColor: "genie-primary",
       landscapeDescription: "Transforming operational efficiency through intelligent automation and optimization",
       id: "order-management",
       title: "Order Management & Tracking",
