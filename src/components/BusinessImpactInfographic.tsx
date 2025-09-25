@@ -208,140 +208,183 @@ export const BusinessImpactInfographic = () => {
 
         {/* Unified Scrollable Use Case Cards */}
         <div className="relative mb-16">
-          <div className="overflow-x-auto pb-4">
-            <div className="flex space-x-6 w-max">
-              {allUseCases.map((useCase) => {
-                const status = statusConfig[useCase.status as keyof typeof statusConfig];
-                const LandscapeIcon = useCase.landscapeIcon;
-                
-                return (
-                  <Card 
-                    key={useCase.id} 
-                    className={`w-80 sm:w-96 flex-shrink-0 border-${useCase.landscapeColor}/20 bg-gradient-to-br from-${useCase.landscapeColor}/5 to-background hover:shadow-xl transition-all duration-300 hover:scale-[1.02]`}
-                  >
-                    {/* Landscape Header */}
-                    <div className={`p-4 bg-gradient-to-r from-${useCase.landscapeColor}/10 to-${useCase.landscapeColor}/5 border-b border-${useCase.landscapeColor}/20`}>
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className={`w-10 h-10 bg-${useCase.landscapeColor}/20 rounded-lg flex items-center justify-center flex-shrink-0`}>
-                          <LandscapeIcon className={`w-5 h-5 text-${useCase.landscapeColor}`} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className={`text-lg font-bold text-${useCase.landscapeColor} truncate`}>
-                            {useCase.landscape}
-                          </h3>
-                        </div>
+          <div 
+            id="use-cases-scroll" 
+            className="flex space-x-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth pb-4"
+          >
+            {allUseCases.map((useCase) => {
+              const status = statusConfig[useCase.status as keyof typeof statusConfig];
+              const LandscapeIcon = useCase.landscapeIcon;
+              
+              return (
+                <Card 
+                  key={useCase.id} 
+                  className={`w-80 sm:w-96 flex-shrink-0 snap-start border-${useCase.landscapeColor}/20 bg-gradient-to-br from-${useCase.landscapeColor}/5 to-background hover:shadow-xl transition-all duration-300 hover:scale-[1.02]`}
+                >
+                  {/* Landscape Header */}
+                  <div className={`p-4 bg-gradient-to-r from-${useCase.landscapeColor}/10 to-${useCase.landscapeColor}/5 border-b border-${useCase.landscapeColor}/20`}>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className={`w-10 h-10 bg-${useCase.landscapeColor}/20 rounded-lg flex items-center justify-center flex-shrink-0`}>
+                        <LandscapeIcon className={`w-5 h-5 text-${useCase.landscapeColor}`} />
                       </div>
-                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                        {useCase.landscapeDescription}
-                      </p>
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`text-lg font-bold text-${useCase.landscapeColor} truncate`}>
+                          {useCase.landscape}
+                        </h3>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                      {useCase.landscapeDescription}
+                    </p>
+                  </div>
+
+                  {/* Use Case Content */}
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex flex-col gap-2">
+                        <Badge className={`${status.color} text-white text-xs w-fit`}>
+                          {status.label}
+                        </Badge>
+                        <Badge variant="outline" className={`border-${useCase.landscapeColor} text-${useCase.landscapeColor} text-xs font-semibold w-fit`}>
+                          {useCase.roi}
+                        </Badge>
+                      </div>
+                    </div>
+                    
+                    <CardTitle className="text-xl font-bold text-foreground leading-tight mb-2">
+                      {useCase.title}
+                    </CardTitle>
+                    
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                      {useCase.description}
+                    </p>
+                  </CardHeader>
+                  
+                  <CardContent className="pt-0 space-y-4">
+                    {/* Key Outcomes */}
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2 text-sm">
+                        <TrendingUp className="w-4 h-4" />
+                        Key Outcomes
+                      </h4>
+                      <ul className="space-y-1">
+                        {useCase.outcomes.slice(0, 3).map((outcome, i) => (
+                          <li key={i} className="flex items-start gap-2 text-muted-foreground">
+                            <CheckCircle className={`w-3 h-3 text-${useCase.landscapeColor} mt-1 flex-shrink-0`} />
+                            <span className="text-xs leading-relaxed">{outcome}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
 
-                    {/* Use Case Content */}
-                    <CardHeader className="pb-3">
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex flex-col gap-2">
-                          <Badge className={`${status.color} text-white text-xs w-fit`}>
-                            {status.label}
+                    {/* Technologies */}
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2 text-sm">
+                        <Brain className="w-4 h-4" />
+                        Core Technologies
+                      </h4>
+                      <div className="flex flex-wrap gap-1">
+                        {useCase.technologies.slice(0, 2).map((tech, i) => (
+                          <Badge key={i} variant="secondary" className="text-xs">
+                            {tech}
                           </Badge>
-                          <Badge variant="outline" className={`border-${useCase.landscapeColor} text-${useCase.landscapeColor} text-xs font-semibold w-fit`}>
-                            {useCase.roi}
+                        ))}
+                        {useCase.technologies.length > 2 && (
+                          <Badge variant="secondary" className="text-xs">
+                            +{useCase.technologies.length - 2} more
                           </Badge>
-                        </div>
+                        )}
                       </div>
-                      
-                      <CardTitle className="text-xl font-bold text-foreground leading-tight mb-2">
-                        {useCase.title}
-                      </CardTitle>
-                      
-                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-                        {useCase.description}
-                      </p>
-                    </CardHeader>
-                    
-                    <CardContent className="pt-0 space-y-4">
-                      {/* Key Outcomes */}
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2 text-sm">
-                          <TrendingUp className="w-4 h-4" />
-                          Key Outcomes
-                        </h4>
-                        <ul className="space-y-1">
-                          {useCase.outcomes.slice(0, 3).map((outcome, i) => (
-                            <li key={i} className="flex items-start gap-2 text-muted-foreground">
-                              <CheckCircle className={`w-3 h-3 text-${useCase.landscapeColor} mt-1 flex-shrink-0`} />
-                              <span className="text-xs leading-relaxed">{outcome}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                    </div>
 
-                      {/* Technologies */}
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2 text-sm">
-                          <Brain className="w-4 h-4" />
-                          Core Technologies
-                        </h4>
-                        <div className="flex flex-wrap gap-1">
-                          {useCase.technologies.slice(0, 2).map((tech, i) => (
-                            <Badge key={i} variant="secondary" className="text-xs">
-                              {tech}
-                            </Badge>
-                          ))}
-                          {useCase.technologies.length > 2 && (
-                            <Badge variant="secondary" className="text-xs">
-                              +{useCase.technologies.length - 2} more
-                            </Badge>
-                          )}
-                        </div>
+                    {/* Journey Steps */}
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2 text-sm">
+                        <Activity className="w-4 h-4" />
+                        Journey Highlights
+                      </h4>
+                      <div className="space-y-1">
+                        {useCase.journeySteps.slice(0, 3).map((step, i) => (
+                          <div key={i} className="flex items-start gap-2">
+                            <div className={`w-1.5 h-1.5 bg-${useCase.landscapeColor} rounded-full mt-2 flex-shrink-0`} />
+                            <span className="text-xs text-muted-foreground leading-relaxed">{step}</span>
+                          </div>
+                        ))}
                       </div>
+                    </div>
 
-                      {/* Journey Steps */}
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2 text-sm">
-                          <Activity className="w-4 h-4" />
-                          Journey Highlights
-                        </h4>
-                        <div className="space-y-1">
-                          {useCase.journeySteps.slice(0, 3).map((step, i) => (
-                            <div key={i} className="flex items-start gap-2">
-                              <div className={`w-1.5 h-1.5 bg-${useCase.landscapeColor} rounded-full mt-2 flex-shrink-0`} />
-                              <span className="text-xs text-muted-foreground leading-relaxed">{step}</span>
-                            </div>
-                          ))}
-                        </div>
+                    {/* Integrations */}
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2 text-sm">
+                        <Network className="w-4 h-4" />
+                        Key Integrations
+                      </h4>
+                      <div className="flex flex-wrap gap-1">
+                        {useCase.integrations.slice(0, 3).map((integration, i) => (
+                          <Badge key={i} variant="outline" className="text-xs">
+                            {integration}
+                          </Badge>
+                        ))}
+                        {useCase.integrations.length > 3 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{useCase.integrations.length - 3}
+                          </Badge>
+                        )}
                       </div>
-
-                      {/* Integrations */}
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2 text-sm">
-                          <Network className="w-4 h-4" />
-                          Key Integrations
-                        </h4>
-                        <div className="flex flex-wrap gap-1">
-                          {useCase.integrations.slice(0, 3).map((integration, i) => (
-                            <Badge key={i} variant="outline" className="text-xs">
-                              {integration}
-                            </Badge>
-                          ))}
-                          {useCase.integrations.length > 3 && (
-                            <Badge variant="outline" className="text-xs">
-                              +{useCase.integrations.length - 3}
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
           
-          {/* Scroll Indicators */}
-          <div className="flex justify-center mt-4 space-x-2">
-            {allUseCases.map((_, i) => (
-              <div key={i} className="w-2 h-2 bg-muted rounded-full" />
-            ))}
+          {/* Navigation Controls */}
+          <div className="flex justify-between items-center mt-6">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const container = document.getElementById('use-cases-scroll');
+                if (container) {
+                  container.scrollBy({ left: -400, behavior: 'smooth' });
+                }
+              }}
+              className="flex items-center gap-2"
+            >
+              <ArrowRight className="w-4 h-4 rotate-180" />
+              Previous
+            </Button>
+            
+            <div className="flex space-x-2">
+              {allUseCases.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    const container = document.getElementById('use-cases-scroll');
+                    if (container) {
+                      const cardWidth = 400; // Approximate card width including gap
+                      container.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
+                    }
+                  }}
+                  className="w-2 h-2 bg-muted hover:bg-genie-primary rounded-full transition-colors"
+                />
+              ))}
+            </div>
+            
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const container = document.getElementById('use-cases-scroll');
+                if (container) {
+                  container.scrollBy({ left: 400, behavior: 'smooth' });
+                }
+              }}
+              className="flex items-center gap-2"
+            >
+              Next
+              <ArrowRight className="w-4 h-4" />
+            </Button>
           </div>
         </div>
 
