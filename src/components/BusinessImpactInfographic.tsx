@@ -261,16 +261,11 @@ export const BusinessImpactInfographic = () => {
                         Core Technologies
                       </h4>
                       <div className="flex flex-wrap gap-1">
-                        {useCase.technologies.slice(0, 2).map((tech, i) => (
+                        {useCase.technologies.map((tech, i) => (
                           <Badge key={i} variant="secondary" className="text-xs">
                             {tech}
                           </Badge>
                         ))}
-                        {useCase.technologies.length > 2 && (
-                          <Badge variant="secondary" className="text-xs">
-                            +{useCase.technologies.length - 2} more
-                          </Badge>
-                        )}
                       </div>
                     </div>
 
