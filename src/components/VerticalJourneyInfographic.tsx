@@ -34,10 +34,10 @@ const VerticalJourneyInfographic = () => {
       id: 1,
       title: "The Spark",
       subtitle: "The Conversation That Changed Everything",
-      date: "June 2025",
+      date: "May 2025",
       icon: Lightbulb,
       image: phase01Spark,
-      description: "A typical Tuesday afternoon coffee with Prashant sparked a revolutionary question about AI transformation that ignited this ongoing journey.",
+      description: "Weekend evening coffee time with community members, including close friend and associate Prashant K, sparked a revolutionary question about AI transformation that ignited this ongoing journey.",
       touchPoints: [
         "Initial spark from transformative conversation",
         "Recognition of fundamental shift potential",
