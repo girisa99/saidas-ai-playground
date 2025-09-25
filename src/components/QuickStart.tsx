@@ -95,20 +95,20 @@ export const QuickStart = () => {
   const stats = [
     {
       icon: <Target className="h-6 w-6" />,
-      value: "50+",
+      value: "20+",
       label: "AI Tools Tested",
       color: "text-green-600"
     },
     {
       icon: <TrendingUp className="h-6 w-6" />,
-      value: "6",
+      value: "2",
       label: "Industries Analyzed",
       color: "text-blue-600"
     },
     {
       icon: <Users className="h-6 w-6" />,
-      value: "250%",
-      label: "ROI Potential",
+      value: "Potential",
+      label: "ROI",
       color: "text-purple-600"
     }
   ];
