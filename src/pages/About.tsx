@@ -400,43 +400,45 @@ const About = () => {
               </div>
             </div>
 
-            {/* Platform Mission & Learning Philosophy */}
+            {/* Personal Learning & Knowledge Sharing Platform */}
             <Card className="p-12 bg-gradient-to-r from-genie-primary/10 via-genie-teal/10 to-genie-cyan/10 border-genie-primary/20">
               <div className="text-center">
                 <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-6">
                   <Lightbulb className="w-4 h-4 mr-2" />
-                  Platform Philosophy
+                  Personal Learning Platform
                 </Badge>
                 <h3 className="text-3xl font-bold text-foreground mb-6">
-                  <span className="text-genie-primary">Experimentation</span> • <span className="text-genie-teal">Knowledge Sharing</span> • <span className="text-genie-cyan">Continuous Learning</span>
+                  <span className="text-genie-primary">Individual Learning</span> • <span className="text-genie-teal">Knowledge Sharing</span> • <span className="text-genie-cyan">Experimentation Hub</span>
                 </h3>
-                <p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-4xl mx-auto">
-                  This platform embodies an experimentation-first mindset where AI possibilities are explored through practical applications, 
-                  knowledge is democratized through shared experiences, and continuous learning drives innovation forward.
+                <p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-5xl mx-auto">
+                  This is a <strong>personal learning and knowledge sharing platform</strong> - not a service, consulting, or commercial offering. 
+                  It represents my individual journey exploring AI possibilities through practical experimentation, 
+                  sharing insights from 21+ years of healthcare technology experience, and demonstrating how emerging technologies 
+                  can transform digital health through hands-on learning.
                 </p>
                 
                 <div className="grid md:grid-cols-3 gap-8 mt-12">
                   {[
                     {
-                      title: "Strategic Genesis",
-                      description: "Self-service AI creation for business users with faster time-to-market and reduced IT dependency",
-                      icon: Rocket,
+                      title: "Learning Laboratory",
+                      description: "Personal experimentation with AI, automation, and innovative digital solutions in healthcare",
+                      icon: Lightbulb,
                       color: "genie-primary",
-                      highlights: ["Accelerating innovation through AI experimentation", "Direct access to AI insights for decision-making"]
+                      highlights: ["Hands-on AI exploration", "Healthcare technology experiments", "Continuous skill development"]
                     },
                     {
-                      title: "Technical Vision", 
-                      description: "AI-assisted frameworks empowering developers with standardized, secure, and scalable solutions",
-                      icon: Code,
-                      color: "genie-teal",
-                      highlights: ["Enhanced security through built-in governance", "Scalable infrastructure for enterprise deployment"]
-                    },
-                    {
-                      title: "Learning Mindset",
-                      description: "Experimentation-first approach where every AI initiative begins with controlled learning",
+                      title: "Knowledge Democratization", 
+                      description: "Sharing insights and learnings from enterprise healthcare technology transformation",
                       icon: Users,
+                      color: "genie-teal",
+                      highlights: ["Open learning approach", "Experience-based insights", "Community knowledge sharing"]
+                    },
+                    {
+                      title: "Innovation Showcase",
+                      description: "Demonstrating practical applications of cutting-edge technologies working together",
+                      icon: Rocket,
                       color: "genie-cyan",
-                      highlights: ["Human-centered technology solutions", "From proof-of-concept to enterprise deployment"]
+                      highlights: ["Multi-technology integration", "Real-world applications", "Future-focused exploration"]
                     }
                   ].map((pillar, index) => {
                     const IconComponent = pillar.icon;
@@ -463,51 +465,14 @@ const About = () => {
                     );
                   })}
                 </div>
-              </div>
-            </Card>
-          </div>
-        </section>
 
-        {/* Platform Mission Section */}
-        <section className="py-16 bg-gradient-to-b from-background to-genie-primary/5">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                Platform Mission
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                This platform represents the convergence of deep industry expertise and cutting-edge innovation.
-              </p>
-            </div>
-
-            <Card className="p-8 lg:p-12 text-center">
-              <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed mb-8">
-                This platform is designed to democratize access to complex therapeutic knowledge while 
-                showcasing how individual passion and technical excellence can create meaningful impact 
-                in healthcare technology.
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-8 mt-12">
-                <div className="text-left">
-                  <h3 className="text-xl font-bold text-genie-primary mb-4">
-                    Educational & Experimental Focus
-                  </h3>
-                  <p className="text-muted-foreground">
-                    This platform serves as a learning laboratory for exploring how emerging technologies 
-                    can transform the digital health landscape. Through hands-on experimentation with AI, automation, 
-                    and innovative digital solutions, we demonstrate practical applications that could 
-                    revolutionize healthcare delivery and digital therapeutics.
-                  </p>
-                </div>
-                <div className="text-left">
-                  <h3 className="text-xl font-bold text-genie-teal mb-4">
-                    Multi-Technology Ecosystem
-                  </h3>
-                  <p className="text-muted-foreground">
-                    The healthcare value chain is complex and multifaceted. No single technology can address all 
-                    challenges. This platform experiments with integrating diverse technological solutions, 
-                    from AI-powered analytics to process automation, showcasing how multiple cutting-edge 
-                    technologies must work together to create meaningful impact in digital health.
+                {/* Platform Disclaimer */}
+                <div className="mt-12 p-6 bg-background/50 rounded-lg border border-border/50">
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    <strong>Important Note:</strong> This platform serves as a personal learning environment and knowledge sharing initiative. 
+                    It is <em>not intended</em> as professional consulting, commercial services, or business offerings. 
+                    The content represents individual exploration, experimentation, and educational insights gained through 
+                    hands-on experience with emerging healthcare technologies.
                   </p>
                 </div>
               </div>
