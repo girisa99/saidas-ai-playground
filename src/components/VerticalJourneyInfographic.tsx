@@ -510,7 +510,7 @@ const VerticalJourneyInfographic = () => {
                                  🚀 Explore Real-World Applications
                                </h4>
                                <p className="text-sm text-foreground mb-3">
-                                 See how these breakthrough technologies are being applied in healthcare workflows and patient onboarding systems.
+                                 Explore some of the business use cases I have been working and implemented so far with the learnings till date.
                                </p>
                                <Button 
                                  variant="outline" 
