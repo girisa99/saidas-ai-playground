@@ -6,7 +6,7 @@ import { AnimatedTextEmergence } from "@/components/AnimatedTextEmergence";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ArrowRight, Briefcase, GraduationCap, Users, Heart, Globe, Camera, Bike, Code, Lightbulb, Target, Award, Building2, Zap } from "lucide-react";
+import { ArrowLeft, ArrowRight, Briefcase, GraduationCap, Users, Heart, Globe, Camera, Bike, Code, Lightbulb, Target, Award, Building2, Zap, Rocket } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import saiProfile from "@/assets/sai-profile.jpg";
@@ -400,36 +400,43 @@ const About = () => {
               </div>
             </div>
 
-            {/* Current Mission & Vision */}
+            {/* Platform Mission & Learning Philosophy */}
             <Card className="p-12 bg-gradient-to-r from-genie-primary/10 via-genie-teal/10 to-genie-cyan/10 border-genie-primary/20">
               <div className="text-center">
+                <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-6">
+                  <Lightbulb className="w-4 h-4 mr-2" />
+                  Platform Philosophy
+                </Badge>
                 <h3 className="text-3xl font-bold text-foreground mb-6">
-                  Current Mission: <span className="text-genie-primary">Democratizing AI Innovation</span>
+                  <span className="text-genie-primary">Experimentation</span> • <span className="text-genie-teal">Knowledge Sharing</span> • <span className="text-genie-cyan">Continuous Learning</span>
                 </h3>
                 <p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-4xl mx-auto">
-                  Leveraging two decades of enterprise experience to make AI transformation accessible, 
-                  practical, and impactful for organizations ready to embrace the future of healthcare technology.
+                  This platform embodies an experimentation-first mindset where AI possibilities are explored through practical applications, 
+                  knowledge is democratized through shared experiences, and continuous learning drives innovation forward.
                 </p>
                 
                 <div className="grid md:grid-cols-3 gap-8 mt-12">
                   {[
                     {
-                      title: "Experimentation Excellence",
-                      description: "Proven methodologies for safe AI exploration",
-                      icon: Target,
-                      color: "genie-primary"
+                      title: "Strategic Genesis",
+                      description: "Self-service AI creation for business users with faster time-to-market and reduced IT dependency",
+                      icon: Rocket,
+                      color: "genie-primary",
+                      highlights: ["Accelerating innovation through AI experimentation", "Direct access to AI insights for decision-making"]
                     },
                     {
-                      title: "Enterprise Readiness", 
-                      description: "Scalable solutions built for real-world deployment",
-                      icon: Building2,
-                      color: "genie-teal"
+                      title: "Technical Vision", 
+                      description: "AI-assisted frameworks empowering developers with standardized, secure, and scalable solutions",
+                      icon: Code,
+                      color: "genie-teal",
+                      highlights: ["Enhanced security through built-in governance", "Scalable infrastructure for enterprise deployment"]
                     },
                     {
-                      title: "Healthcare Impact",
-                      description: "Purpose-driven innovation for patient outcomes",
-                      icon: Heart,
-                      color: "genie-cyan"
+                      title: "Learning Mindset",
+                      description: "Experimentation-first approach where every AI initiative begins with controlled learning",
+                      icon: Users,
+                      color: "genie-cyan",
+                      highlights: ["Human-centered technology solutions", "From proof-of-concept to enterprise deployment"]
                     }
                   ].map((pillar, index) => {
                     const IconComponent = pillar.icon;
@@ -438,12 +445,20 @@ const About = () => {
                         <div className={`w-16 h-16 bg-${pillar.color}/10 rounded-full flex items-center justify-center mx-auto mb-4`}>
                           <IconComponent className={`w-8 h-8 text-${pillar.color}`} />
                         </div>
-                        <h4 className={`text-lg font-bold text-${pillar.color} mb-2`}>
+                        <h4 className={`text-lg font-bold text-${pillar.color} mb-3`}>
                           {pillar.title}
                         </h4>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground mb-4">
                           {pillar.description}
                         </p>
+                        <div className="space-y-2">
+                          {pillar.highlights.map((highlight, i) => (
+                            <div key={i} className="flex items-center justify-center gap-2 text-sm text-foreground/70">
+                              <div className={`w-1 h-1 bg-${pillar.color} rounded-full`} />
+                              <span>{highlight}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     );
                   })}
