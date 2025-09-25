@@ -182,20 +182,20 @@ const VerticalJourneyInfographic = () => {
     }
   ];
 
-  // Auto-play functionality with smooth scrolling - plays once and stops
+  // Auto-play functionality with extended timing for full slide view including touch points and pain points
   useEffect(() => {
     if (isAutoPlay) {
       intervalRef.current = setInterval(() => {
         setActivePhase((prev) => {
           const nextPhase = prev + 1;
           if (nextPhase >= phases.length) {
-            // Stop autoplay when we reach the end
+            // Stop autoplay when we reach the end - no continuous loop
             setIsAutoPlay(false);
             return prev; // Stay on the last phase
           }
           return nextPhase;
         });
-      }, 4000);
+      }, 8000); // Extended to 8 seconds to allow time to read touch points and pain points
     } else {
       if (intervalRef.current) clearInterval(intervalRef.current);
     }
@@ -356,15 +356,49 @@ const VerticalJourneyInfographic = () => {
                             {phase.description}
                           </p>
 
-                          {/* Technologies */}
+                          {/* Technologies - Organized by Category */}
                           <div>
-                            <h4 className="font-semibold text-foreground mb-2">Key Technologies</h4>
-                            <div className="flex flex-wrap gap-2">
-                              {phase.technologies.map((tech, i) => (
-                                <Badge key={i} variant="secondary" className="text-xs">
-                                  {tech}
-                                </Badge>
-                              ))}
+                            <h4 className="font-semibold text-foreground mb-3">Key Technologies</h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {/* Core Technologies */}
+                              <div>
+                                <h5 className="text-sm font-medium text-muted-foreground mb-2">Core Technologies</h5>
+                                <div className="flex flex-wrap gap-1">
+                                  {phase.technologies.slice(0, Math.ceil(phase.technologies.length / 2)).map((tech, i) => (
+                                    <Badge 
+                                      key={i} 
+                                      variant="secondary" 
+                                      className={`text-xs ${
+                                        phase.color === 'genie-primary' ? 'bg-genie-primary/10 text-genie-primary border-genie-primary/20' :
+                                        phase.color === 'genie-teal' ? 'bg-genie-teal/10 text-genie-teal border-genie-teal/20' :
+                                        'bg-genie-cyan/10 text-genie-cyan border-genie-cyan/20'
+                                      }`}
+                                    >
+                                      {tech}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </div>
+                              
+                              {/* Supporting Technologies */}
+                              <div>
+                                <h5 className="text-sm font-medium text-muted-foreground mb-2">Supporting Tools</h5>
+                                <div className="flex flex-wrap gap-1">
+                                  {phase.technologies.slice(Math.ceil(phase.technologies.length / 2)).map((tech, i) => (
+                                    <Badge 
+                                      key={i} 
+                                      variant="secondary" 
+                                      className={`text-xs ${
+                                        phase.color === 'genie-primary' ? 'bg-genie-primary/10 text-genie-primary border-genie-primary/20' :
+                                        phase.color === 'genie-teal' ? 'bg-genie-teal/10 text-genie-teal border-genie-teal/20' :
+                                        'bg-genie-cyan/10 text-genie-cyan border-genie-cyan/20'
+                                      }`}
+                                    >
+                                      {tech}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -420,25 +454,74 @@ const VerticalJourneyInfographic = () => {
                             </div>
                           </div>
                           
-                          {/* Business Use Cases Link - Only show for the final phase */}
-                          {phase.id === 5 && (
-                            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                              <h4 className="font-semibold text-blue-700 dark:text-blue-400 mb-2">
-                                🚀 Explore Real-World Applications
-                              </h4>
-                              <p className="text-sm text-foreground mb-3">
-                                See how these breakthrough technologies are being applied in healthcare workflows and patient onboarding systems.
-                              </p>
-                              <Button 
-                                variant="outline" 
-                                size="sm"
-                                onClick={() => window.location.href = '/business-use-cases'}
-                                className="border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:hover:bg-blue-900/20"
-                              >
-                                View Business Use Cases →
-                              </Button>
-                            </div>
-                          )}
+                           {/* Enhanced Key Technologies for Active Phase */}
+                           <div className="mt-6 p-4 bg-muted/30 rounded-lg border border-border/50">
+                             <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                               <Database className="w-4 h-4" />
+                               Enhanced Technology Stack
+                             </h4>
+                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                               {/* Core Technologies */}
+                               <div>
+                                 <h5 className="text-sm font-medium text-muted-foreground mb-2">Core Technologies</h5>
+                                 <div className="flex flex-wrap gap-1">
+                                   {phase.technologies.slice(0, Math.ceil(phase.technologies.length / 2)).map((tech, i) => (
+                                     <Badge 
+                                       key={i} 
+                                       variant="secondary" 
+                                       className={`text-xs ${
+                                         phase.color === 'genie-primary' ? 'bg-genie-primary/10 text-genie-primary border-genie-primary/20' :
+                                         phase.color === 'genie-teal' ? 'bg-genie-teal/10 text-genie-teal border-genie-teal/20' :
+                                         'bg-genie-cyan/10 text-genie-cyan border-genie-cyan/20'
+                                       }`}
+                                     >
+                                       {tech}
+                                     </Badge>
+                                   ))}
+                                 </div>
+                               </div>
+                               
+                               {/* Supporting Technologies */}
+                               <div>
+                                 <h5 className="text-sm font-medium text-muted-foreground mb-2">Supporting Tools</h5>
+                                 <div className="flex flex-wrap gap-1">
+                                   {phase.technologies.slice(Math.ceil(phase.technologies.length / 2)).map((tech, i) => (
+                                     <Badge 
+                                       key={i} 
+                                       variant="secondary" 
+                                       className={`text-xs ${
+                                         phase.color === 'genie-primary' ? 'bg-genie-primary/10 text-genie-primary border-genie-primary/20' :
+                                         phase.color === 'genie-teal' ? 'bg-genie-teal/10 text-genie-teal border-genie-teal/20' :
+                                         'bg-genie-cyan/10 text-genie-cyan border-genie-cyan/20'
+                                       }`}
+                                     >
+                                       {tech}
+                                     </Badge>
+                                   ))}
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+
+                           {/* Business Use Cases Link - Only show for the final phase */}
+                           {phase.id === 5 && (
+                             <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                               <h4 className="font-semibold text-blue-700 dark:text-blue-400 mb-2">
+                                 🚀 Explore Real-World Applications
+                               </h4>
+                               <p className="text-sm text-foreground mb-3">
+                                 See how these breakthrough technologies are being applied in healthcare workflows and patient onboarding systems.
+                               </p>
+                               <Button 
+                                 variant="outline" 
+                                 size="sm"
+                                 onClick={() => window.location.href = '/business-use-cases'}
+                                 className="border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:hover:bg-blue-900/20"
+                               >
+                                 View Business Use Cases →
+                               </Button>
+                             </div>
+                           )}
                         </div>
                       )}
                     </div>
