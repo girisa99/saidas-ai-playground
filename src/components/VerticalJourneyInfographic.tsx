@@ -243,30 +243,30 @@ const VerticalJourneyInfographic = () => {
 
   return (
     <section className="py-16 lg:py-24 bg-gradient-to-b from-background to-muted/20">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 sm:mb-12">
           <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-4">
             My Journey
           </Badge>
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-6">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6">
             AI Transformation <span className="text-foreground">Journey</span>
           </h2>
-          <p className="text-xl text-foreground mb-8 leading-relaxed">
+          <p className="text-lg sm:text-xl text-foreground mb-6 sm:mb-8 leading-relaxed px-2">
             An ongoing comprehensive exploration from June 2025 to present - evolving from curiosity to breakthrough AI capabilities and beyond
           </p>
           
           {/* Controls */}
-          <div className="flex justify-center gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 px-4">
             <Button
               onClick={toggleAutoPlay}
               variant={isAutoPlay ? "default" : "outline"}
-              className="gap-2"
+              className="gap-2 w-full sm:w-auto"
             >
               {isAutoPlay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               {isAutoPlay ? "Pause" : "Auto Play"}
             </Button>
-            <Button onClick={resetToStart} variant="outline" className="gap-2">
+            <Button onClick={resetToStart} variant="outline" className="gap-2 w-full sm:w-auto">
               <RotateCcw className="w-4 h-4" />
               Reset
             </Button>
@@ -325,34 +325,34 @@ const VerticalJourneyInfographic = () => {
                     }`}
                     onClick={() => handlePhaseClick(index)}
                   >
-                    <div className="p-8">
-                      <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div className="p-4 sm:p-6 lg:p-8">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
                         {/* Content Side */}
-                        <div className="space-y-6">
+                        <div className="space-y-4 sm:space-y-6 order-2 lg:order-1">
                           {/* Header */}
                           <div>
-                            <div className="flex items-center gap-3 mb-2">
-                              <div className={`p-2 rounded-lg ${
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+                              <div className={`p-2 rounded-lg w-fit ${
                                 phase.color === 'genie-primary' ? 'bg-genie-primary' :
                                 phase.color === 'genie-teal' ? 'bg-genie-teal' :
                                 'bg-genie-cyan'
                               }`}>
-                                <IconComponent className="w-6 h-6 text-white" />
+                                <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                               </div>
-                              <Badge variant="outline" className="text-sm font-medium">
+                              <Badge variant="outline" className="text-xs sm:text-sm font-medium w-fit">
                                 {phase.date}
                               </Badge>
                             </div>
-                            <h3 className="text-2xl font-bold text-foreground mb-1">
+                            <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-1">
                               {phase.title}
                             </h3>
-                            <p className="text-lg font-medium text-foreground/80">
+                            <p className="text-base sm:text-lg font-medium text-foreground/80">
                               {phase.subtitle}
                             </p>
                           </div>
 
                           {/* Description */}
-                          <p className="text-foreground leading-relaxed">
+                          <p className="text-sm sm:text-base text-foreground leading-relaxed">
                             {phase.description}
                           </p>
 
@@ -455,15 +455,15 @@ const VerticalJourneyInfographic = () => {
                           </div>
                           
                            {/* Enhanced Key Technologies for Active Phase */}
-                           <div className="mt-6 p-4 bg-muted/30 rounded-lg border border-border/50">
-                             <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                               <Database className="w-4 h-4" />
+                           <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-muted/30 rounded-lg border border-border/50">
+                             <h4 className="font-semibold text-foreground mb-2 sm:mb-3 flex items-center gap-2 text-sm sm:text-base">
+                               <Database className="w-3 h-3 sm:w-4 sm:h-4" />
                                Enhanced Technology Stack
                              </h4>
-                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <div className="grid grid-cols-1 gap-3 sm:gap-4">
                                {/* Core Technologies */}
                                <div>
-                                 <h5 className="text-sm font-medium text-muted-foreground mb-2">Core Technologies</h5>
+                                 <h5 className="text-xs sm:text-sm font-medium text-muted-foreground mb-2">Core Technologies</h5>
                                  <div className="flex flex-wrap gap-1">
                                    {phase.technologies.slice(0, Math.ceil(phase.technologies.length / 2)).map((tech, i) => (
                                      <Badge 
@@ -483,7 +483,7 @@ const VerticalJourneyInfographic = () => {
                                
                                {/* Supporting Technologies */}
                                <div>
-                                 <h5 className="text-sm font-medium text-muted-foreground mb-2">Supporting Tools</h5>
+                                 <h5 className="text-xs sm:text-sm font-medium text-muted-foreground mb-2">Supporting Tools</h5>
                                  <div className="flex flex-wrap gap-1">
                                    {phase.technologies.slice(Math.ceil(phase.technologies.length / 2)).map((tech, i) => (
                                      <Badge 
@@ -505,18 +505,18 @@ const VerticalJourneyInfographic = () => {
 
                            {/* Business Use Cases Link - Only show for the final phase */}
                            {phase.id === 5 && (
-                             <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                               <h4 className="font-semibold text-blue-700 dark:text-blue-400 mb-2">
+                             <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                               <h4 className="font-semibold text-blue-700 dark:text-blue-400 mb-2 text-sm sm:text-base">
                                  🚀 Explore Real-World Applications
                                </h4>
-                               <p className="text-sm text-foreground mb-3">
+                               <p className="text-xs sm:text-sm text-foreground mb-3">
                                  Explore some of the business use cases I have been working and implemented so far with the learnings till date.
                                </p>
                                <Button 
                                  variant="outline" 
                                  size="sm"
                                  onClick={() => window.location.href = '/business-use-cases'}
-                                 className="border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:hover:bg-blue-900/20"
+                                 className="border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:hover:bg-blue-900/20 w-full sm:w-auto text-xs sm:text-sm"
                                >
                                  View Business Use Cases →
                                </Button>
