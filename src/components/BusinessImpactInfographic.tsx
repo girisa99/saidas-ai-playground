@@ -24,33 +24,33 @@ import { Link } from "react-router-dom";
 export const BusinessImpactInfographic = () => {
   const impactMetrics = [
     {
-      category: "Financial Impact",
-      icon: DollarSign,
+      category: "Learning Insights",
+      icon: Brain,
       color: "genie-primary",
       metrics: [
-        { value: "Potential", label: "ROI Through Experimentation", timeframe: "12-18 months" },
-        { value: "10%+", label: "Annual Cost Reduction", timeframe: "Addressing YoY pressure" },
-        { value: "Significant", label: "Development Cost Savings", timeframe: "AI-accelerated processes" }
+        { value: "Validated", label: "Transformation Patterns", timeframe: "Through experimentation" },
+        { value: "Documented", label: "Success Frameworks", timeframe: "Real-world testing" },
+        { value: "Shared", label: "Knowledge Base", timeframe: "Community learning" }
       ]
     },
     {
-      category: "Operational Efficiency", 
-      icon: Clock,
+      category: "Disruption Patterns", 
+      icon: Zap,
       color: "genie-teal",
       metrics: [
-        { value: "High", label: "Automation Potential", timeframe: "Reducing operational workload" },
-        { value: "Substantial", label: "Employee Time Savings", timeframe: "Focus on innovation areas" },
-        { value: "Enhanced", label: "Core Business Focus", timeframe: "Through process automation" }
+        { value: "Rapid", label: "Industry Changes", timeframe: "Accelerating adoption" },
+        { value: "Fundamental", label: "Process Shifts", timeframe: "Traditional → AI-driven" },
+        { value: "Exponential", label: "Capability Growth", timeframe: "Technology advancement" }
       ]
     },
     {
-      category: "Innovation Speed",
-      icon: Rocket,
+      category: "Future Landscape",
+      icon: Target,
       color: "genie-cyan", 
       metrics: [
-        { value: "2x", label: "Faster Development", timeframe: "vs traditional methods" },
-        { value: "Weeks", label: "Not Months", timeframe: "Time to market" },
-        { value: "Focus", label: "On Innovation", timeframe: "Employee time reallocation" }
+        { value: "Emerging", label: "New Opportunities", timeframe: "AI-native approaches" },
+        { value: "Evolving", label: "Skill Requirements", timeframe: "Human-AI collaboration" },
+        { value: "Transforming", label: "Work Paradigms", timeframe: "Continuous adaptation" }
       ]
     }
   ];
@@ -103,26 +103,26 @@ export const BusinessImpactInfographic = () => {
     }
   ];
 
-  const competitiveAdvantages = [
+  const disruptionInsights = [
     {
-      advantage: "First-Mover Advantage",
-      description: "AI-powered competitors out-innovate and out-deliver",
-      risk: "10-15% annual market share loss for delayed adopters",
-      icon: Target,
+      insight: "Learning Through Experimentation",
+      description: "Testing AI applications across various domains reveals transformation patterns",
+      discovery: "Knowledge sharing accelerates understanding",
+      icon: Brain,
       color: "genie-primary"
     },
     {
-      advantage: "Operational Excellence", 
-      description: "Streamlined processes vs manual, outdated workflows",
-      risk: "20-30% higher operational costs for non-adopters",
+      insight: "Validated Disruption Patterns", 
+      description: "Documenting how AI fundamentally changes traditional approaches",
+      discovery: "Evidence-based insights shape future strategies",
       icon: Zap,
       color: "genie-teal"
     },
     {
-      advantage: "Future Relevance",
-      description: "AI-driven methodologies for sustainable growth", 
-      risk: "Risk of irrelevance within 3-5 years",
-      icon: Brain,
+      insight: "Collaborative Evolution",
+      description: "Individual exploration combined with community knowledge builds collective wisdom", 
+      discovery: "Shared experiences drive innovation",
+      icon: Target,
       color: "genie-cyan"
     }
   ];
@@ -133,14 +133,14 @@ export const BusinessImpactInfographic = () => {
         <div className="text-center mb-16">
           <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
             <BarChart3 className="w-4 h-4 mr-2" />
-            Business Impact Analysis
+            Landscape Disruption Analysis
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Business Impact Possibilities: <span className="text-genie-primary">Real-World Results Potential</span>
+            How AI is Reshaping Our World: <span className="text-genie-primary">Validated Learning & Insights</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            Experimentation hub insights show strong potential for development cost reduction, addressing 10% YoY operational cost pressure, 
-            and achieving ROI through automation that frees employees to focus on innovation and core business areas.
+            Through experimentation and knowledge sharing, we're documenting how AI is fundamentally disrupting industries. 
+            These insights come from hands-on testing, learning, and validating real-world applications across various sectors.
           </p>
         </div>
 
@@ -181,20 +181,20 @@ export const BusinessImpactInfographic = () => {
         </div>
 
 
-        {/* Competitive Advantage Analysis */}
+        {/* AI Disruption Insights */}
         <Card className="p-8 border-genie-primary/20 bg-gradient-to-r from-genie-primary/10 via-genie-teal/10 to-genie-cyan/10">
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-foreground mb-4">
-              The Cost of Hesitation vs. AI Adoption
+              Validating the AI Transformation: What We're Learning
             </h3>
             <p className="text-muted-foreground max-w-3xl mx-auto">
-              Organizations that delay AI adoption face rapid erosion of market position, 
-              while early adopters gain sustainable competitive advantages.
+              Through hands-on experimentation and knowledge sharing, we're documenting how AI is fundamentally 
+              reshaping industries and creating new paradigms for innovation and growth.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-8">
-            {competitiveAdvantages.map((item, index) => {
+            {disruptionInsights.map((item, index) => {
               const IconComponent = item.icon;
               
               return (
@@ -203,13 +203,13 @@ export const BusinessImpactInfographic = () => {
                     <IconComponent className={`w-8 h-8 text-${item.color}`} />
                   </div>
                   <h4 className={`text-lg font-bold text-${item.color} mb-2`}>
-                    {item.advantage}
+                    {item.insight}
                   </h4>
                   <p className="text-sm text-foreground mb-3">
                     {item.description}
                   </p>
-                  <div className="text-xs text-red-600 font-medium p-2 bg-red-50 rounded border border-red-200">
-                    Risk: {item.risk}
+                  <div className="text-xs text-genie-primary font-medium p-2 bg-genie-primary/10 rounded border border-genie-primary/20">
+                    Discovery: {item.discovery}
                   </div>
                 </div>
               );
@@ -218,11 +218,11 @@ export const BusinessImpactInfographic = () => {
 
           <div className="text-center p-6 bg-gradient-to-r from-genie-primary/20 to-genie-teal/20 rounded-lg border border-genie-primary/30">
             <h4 className="text-xl font-bold text-foreground mb-4">
-              Strategic Decision Point: Act Now or Fall Behind
+              Join the Learning Journey: Explore & Experiment Together
             </h4>
             <p className="text-muted-foreground mb-6">
-              Our analysis validates what industry leaders already recognize: AI-empowered organizations are positioned for exponential growth, 
-              while those maintaining traditional approaches face increasing risks of stagnation and market displacement.
+              This exploration is ongoing - through individual experimentation and collective knowledge sharing, 
+              we're building a deeper understanding of how AI continues to reshape our world.
             </p>
             <Link to="/journey">
               <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white px-8 py-4">
