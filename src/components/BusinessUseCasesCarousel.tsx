@@ -165,25 +165,32 @@ export const BusinessUseCasesCarousel = () => {
           </Badge>
           
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Real-World AI <span className="text-genie-accent">Implementation</span> Results
+            Current Experimentation Hub <span className="text-genie-accent">Highlights</span>
           </h2>
           
           <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            Discover how our AI-powered solutions have transformed business processes across multiple industries, 
-            delivering measurable outcomes and significant ROI improvements.
+            Active experiments and implementations across healthcare, oncology, and customer service sectors. 
+            Exploring various AI scenarios with mixed implementation statuses as part of our ongoing experimentation initiatives.
           </p>
         </div>
 
         {/* Responsive Carousel */}
         <div className="relative">
-          <Carousel className="w-full" opts={{ align: "start", loop: true }}>
+          <Carousel 
+            className="w-full" 
+            opts={{ 
+              align: "start", 
+              loop: true,
+              slidesToScroll: 1
+            }}
+          >
             <CarouselContent className="-ml-2 md:-ml-4">
               {businessUseCases.map((useCase) => {
                 const IconComponent = useCase.icon;
                 const status = statusConfig[useCase.status as keyof typeof statusConfig];
                 
                 return (
-                  <CarouselItem key={useCase.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 xl:basis-1/3">
+                  <CarouselItem key={useCase.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                     <Card className={`h-full border-${useCase.color}/20 bg-gradient-to-br from-${useCase.color}/5 to-${useCase.color}/10 hover:shadow-xl transition-all duration-300 hover:scale-105`}>
                       <CardHeader className="pb-4">
                         <div className="flex items-start justify-between mb-3">
@@ -288,12 +295,20 @@ export const BusinessUseCasesCarousel = () => {
               })}
             </CarouselContent>
             
-            {/* Navigation Buttons */}
-            <div className="flex justify-center mt-6 gap-4">
-              <CarouselPrevious className="relative translate-y-0 left-0" />
-              <CarouselNext className="relative translate-y-0 right-0" />
-            </div>
+            {/* Navigation Buttons - Positioned outside for better visibility */}
+            <CarouselPrevious className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-white shadow-lg hover:bg-gray-50 border border-gray-200" />
+            <CarouselNext className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-white shadow-lg hover:bg-gray-50 border border-gray-200" />
           </Carousel>
+          
+          {/* Mobile Navigation Dots */}
+          <div className="flex justify-center mt-6 gap-2 sm:hidden">
+            {businessUseCases.map((_, index) => (
+              <div 
+                key={index} 
+                className="w-2 h-2 rounded-full bg-gray-300 data-[active=true]:bg-genie-primary" 
+              />
+            ))}
+          </div>
         </div>
 
         {/* Call to Action */}

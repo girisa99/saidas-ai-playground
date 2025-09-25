@@ -403,52 +403,17 @@ const Journey = () => {
 
 
 
-            {/* Quantifiable Business Impact */}
+            {/* Current Experimentation Hub Highlights */}
             <Card className="p-8 mt-8 border-genie-teal/20 bg-gradient-to-br from-genie-teal/5 to-genie-cyan/5">
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-foreground mb-4">
-                  Measurable Business Impact & ROI
+                  Current Experimentation Hub Highlights
                 </h3>
                 <p className="text-muted-foreground">
-                  Demonstrable results from systematic AI implementation with real-world healthcare transformation metrics
+                  Active experiments and implementations across healthcare, oncology, and customer service sectors. 
+                  Exploring various AI scenarios with mixed implementation statuses as part of our ongoing 
+                  experimentation initiatives.
                 </p>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-genie-primary mb-2">300%</div>
-                  <div className="font-semibold text-foreground mb-2">Average ROI</div>
-                  <div className="text-sm text-muted-foreground">Within 12-18 months of strategic AI implementation across healthcare operations</div>
-                </div>
-                
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-genie-teal mb-2">60%</div>
-                  <div className="font-semibold text-foreground mb-2">Automated Inquiries</div>
-                  <div className="text-sm text-muted-foreground">Achieved in customer service, reducing support costs by $1.5M annually</div>
-                </div>
-                
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-genie-cyan mb-2">20%</div>
-                  <div className="font-semibold text-foreground mb-2">Time Savings</div>
-                  <div className="text-sm text-muted-foreground">Employee time freed up across sales, HR, and finance for higher-value work</div>
-                </div>
-              </div>
-
-              <div className="mt-8 p-6 bg-gradient-to-r from-genie-primary/10 to-genie-teal/10 rounded-lg border border-genie-primary/20">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-8 h-8 bg-genie-primary/20 rounded-lg flex items-center justify-center">
-                    <Target className="w-4 h-4 text-genie-primary" />
-                  </div>
-                  <h4 className="font-semibold text-foreground">AI-Accelerated Development Benefits</h4>
-                </div>
-                <div className="grid md:grid-cols-2 gap-4 text-sm text-muted-foreground">
-                  <div>• AI-accelerated development drastically reduced timelines</div>
-                  <div>• What once took months to build, can now be done in weeks</div>
-                  <div>• Significant cost savings by reducing need for large development teams</div>
-                  <div>• Rapid prototyping cuts down overheads and time-to-market</div>
-                  <div>• Unprecedented efficiency gains achieved through intelligent automation</div>
-                  <div>• Competitive advantage through faster innovation cycles</div>
-                </div>
               </div>
             </Card>
 
