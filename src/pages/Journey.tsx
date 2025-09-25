@@ -238,39 +238,39 @@ const Journey = () => {
           <div className="max-w-5xl">
             <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-3 sm:mb-4">
               <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-              My Learning Journey
+              Strategic Genesis & Experimentation
             </Badge>
             
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
-              AI Development <span className="text-genie-accent">Discovery</span>
+              From Healthcare <span className="text-genie-accent">Innovation</span> to AI <span className="text-genie-accent">Transformation</span>
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-              From a simple conversation to building complex applications with AI - follow my ongoing journey since June 2025, 
-              discovering how AI tools are democratizing software development and continuously evolving with new breakthroughs.
+              A personal mission to democratize AI experimentation - transforming 21+ years of healthcare technology expertise 
+              into accessible frameworks that accelerate innovation and bridge the gap between cutting-edge AI capabilities and real-world enterprise solutions.
             </p>
             
             {/* Journey Highlights Grid - Mobile Responsive */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 px-2">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Learning Timeline</h3>
-                <p className="text-white/80 text-xs">Ongoing since June 2025</p>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Innovation Journey</h3>
+                <p className="text-white/80 text-xs">6-phase transformation since June 2025</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Users className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">AI Collaboration</h3>
-                <p className="text-white/80 text-xs">Human-AI development partnership</p>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Democratizing AI</h3>
+                <p className="text-white/80 text-xs">Making AI accessible to everyone</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Accessibility Growth</h3>
-                <p className="text-white/80 text-xs">No-code to advanced development</p>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Enterprise Impact</h3>
+                <p className="text-white/80 text-xs">Healthcare technology transformation</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Award className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Knowledge Sharing</h3>
-                <p className="text-white/80 text-xs">Open experimentation results</p>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Strategic Genesis</h3>
+                <p className="text-white/80 text-xs">Accelerating innovation through AI</p>
               </div>
             </div>
             
