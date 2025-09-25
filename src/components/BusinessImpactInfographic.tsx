@@ -56,10 +56,10 @@ export const BusinessImpactInfographic = () => {
         "Enhanced patient satisfaction"
       ],
       technologies: [
-        "React.js Frontend",
-        "Supabase with PostgreSQL",
-        "API Service Middleware",
-        "Healthcare Data Orchestration"
+        "React.js + TypeScript",
+        "Supabase with PostgreSQL", 
+        "Tailwind CSS + Vite",
+        "API Service Middleware"
       ],
       journeySteps: [
         "Automated referral processing",
@@ -67,7 +67,7 @@ export const BusinessImpactInfographic = () => {
         "Real-time insurance verification",
         "Clinical review assistance"
       ],
-      integrations: ["Technical APIs: LLM, Small Language Models, MCP n8n, Arize, LangWatch, Labeling Studio", "Business APIs: CMS Verification & Credentialing, DocuSign, Insurance APIs, ICD, FDA"]
+      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP n8n, Arize, LangWatch, Labeling Studio", "Business APIs: CMS Verification & Credentialing, DocuSign, Insurance APIs, ICD, FDA"]
     },
     {
       landscape: "Customer Experience",
