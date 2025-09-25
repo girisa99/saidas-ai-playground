@@ -37,7 +37,7 @@ const VerticalJourneyInfographic = () => {
       date: "June 2025",
       icon: Lightbulb,
       image: phase01Spark,
-      description: "A typical Tuesday afternoon coffee with Prashant sparked a revolutionary question about AI transformation.",
+      description: "A typical Tuesday afternoon coffee with Prashant sparked a revolutionary question about AI transformation that ignited this ongoing journey.",
       touchPoints: [
         "Initial spark from transformative conversation",
         "Recognition of fundamental shift potential",
@@ -147,7 +147,7 @@ const VerticalJourneyInfographic = () => {
       date: "November 2025",
       icon: Network,
       image: phase06Agentic,
-      description: "Revolutionary agentic AI platform with dynamic agent generation and seamless orchestration for complex workflows.",
+      description: "Revolutionary agentic AI platform with dynamic agent generation and seamless orchestration - the journey continues with new innovations emerging.",
       touchPoints: [
         "Created dynamic agent generation system",
         "Achieved seamless multi-agent orchestration",
@@ -229,8 +229,8 @@ const VerticalJourneyInfographic = () => {
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-6">
             AI Transformation <span className="bg-gradient-to-r from-genie-primary to-genie-teal bg-clip-text text-transparent">Journey</span>
           </h2>
-          <p className="text-xl text-muted-foreground mb-8">
-            A comprehensive 6-month exploration from curiosity to breakthrough AI capabilities
+          <p className="text-xl text-foreground mb-8 leading-relaxed">
+            An ongoing comprehensive exploration from June 2025 to present - evolving from curiosity to breakthrough AI capabilities and beyond
           </p>
           
           {/* Controls */}
