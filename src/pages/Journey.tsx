@@ -2,7 +2,7 @@ import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { DevelopmentJourneyMap } from "@/components/DevelopmentJourneyMap";
 import { BusinessImpactInfographic } from "@/components/BusinessImpactInfographic";
-import { BusinessUseCasesCarousel } from "@/components/BusinessUseCasesCarousel";
+
 import { GammaIntegrationWidget } from "@/components/GammaIntegrationWidget";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -435,8 +435,6 @@ const Journey = () => {
           </div>
         </section>
 
-        {/* Business Use Cases Carousel */}
-        <BusinessUseCasesCarousel />
 
         {/* Business Impact Analysis */}
         <BusinessImpactInfographic />
