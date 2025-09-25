@@ -278,9 +278,17 @@ const VerticalJourneyInfographic = () => {
                   {/* Phase Number Circle */}
                   <div className="absolute left-1/2 top-8 w-12 h-12 transform -translate-x-1/2 -translate-y-1/2 z-20">
                     <div className={`w-full h-full rounded-full border-4 flex items-center justify-center font-bold text-sm transition-all duration-300 ${
-                      isCompleted ? `bg-${phase.color} border-${phase.color} text-white` :
-                      isActive ? `bg-${phase.color} border-${phase.color} text-white` :
-                      `bg-background border-${phase.color}/30 text-muted-foreground`
+                      isCompleted ? 
+                        phase.color === 'genie-primary' ? 'bg-genie-primary border-genie-primary text-white' :
+                        phase.color === 'genie-teal' ? 'bg-genie-teal border-genie-teal text-white' :
+                        'bg-genie-cyan border-genie-cyan text-white' :
+                      isActive ? 
+                        phase.color === 'genie-primary' ? 'bg-genie-primary border-genie-primary text-white' :
+                        phase.color === 'genie-teal' ? 'bg-genie-teal border-genie-teal text-white' :
+                        'bg-genie-cyan border-genie-cyan text-white' :
+                        phase.color === 'genie-primary' ? 'bg-background border-genie-primary/30 text-muted-foreground' :
+                        phase.color === 'genie-teal' ? 'bg-background border-genie-teal/30 text-muted-foreground' :
+                        'bg-background border-genie-cyan/30 text-muted-foreground'
                     }`}>
                       {isCompleted ? '✓' : phase.id}
                     </div>
@@ -289,7 +297,13 @@ const VerticalJourneyInfographic = () => {
                   {/* Main Card */}
                   <Card 
                     className={`${phase.bgColor} border-2 transition-all duration-300 cursor-pointer hover:shadow-xl ${
-                      isActive ? `border-${phase.color} shadow-2xl` : `border-transparent hover:border-${phase.color}/50`
+                      isActive ? 
+                        phase.color === 'genie-primary' ? 'border-genie-primary shadow-2xl' :
+                        phase.color === 'genie-teal' ? 'border-genie-teal shadow-2xl' :
+                        'border-genie-cyan shadow-2xl' :
+                        phase.color === 'genie-primary' ? 'border-transparent hover:border-genie-primary/50' :
+                        phase.color === 'genie-teal' ? 'border-transparent hover:border-genie-teal/50' :
+                        'border-transparent hover:border-genie-cyan/50'
                     }`}
                     onClick={() => handlePhaseClick(index)}
                   >
@@ -300,7 +314,11 @@ const VerticalJourneyInfographic = () => {
                           {/* Header */}
                           <div>
                             <div className="flex items-center gap-3 mb-2">
-                              <div className={`p-2 rounded-lg bg-${phase.color}`}>
+                              <div className={`p-2 rounded-lg ${
+                                phase.color === 'genie-primary' ? 'bg-genie-primary' :
+                                phase.color === 'genie-teal' ? 'bg-genie-teal' :
+                                'bg-genie-cyan'
+                              }`}>
                                 <IconComponent className="w-6 h-6 text-white" />
                               </div>
                               <Badge variant="outline" className="text-sm font-medium">
@@ -335,7 +353,11 @@ const VerticalJourneyInfographic = () => {
 
                         {/* Visual Side */}
                         <div className="relative">
-                          <div className={`rounded-xl overflow-hidden shadow-lg bg-${phase.color} p-1`}>
+                          <div className={`rounded-xl overflow-hidden shadow-lg p-1 ${
+                            phase.color === 'genie-primary' ? 'bg-genie-primary' :
+                            phase.color === 'genie-teal' ? 'bg-genie-teal' :
+                            'bg-genie-cyan'
+                          }`}>
                             <img
                               src={phase.image}
                               alt={phase.title}
@@ -388,7 +410,13 @@ const VerticalJourneyInfographic = () => {
                   {index < phases.length - 1 && (
                     <div className="flex justify-center mt-6 mb-2">
                       <ChevronDown className={`w-6 h-6 transition-colors duration-300 ${
-                        isCompleted ? `text-${phase.color}` : `text-${phase.color}/50`
+                        isCompleted ? 
+                          phase.color === 'genie-primary' ? 'text-genie-primary' :
+                          phase.color === 'genie-teal' ? 'text-genie-teal' :
+                          'text-genie-cyan' :
+                          phase.color === 'genie-primary' ? 'text-genie-primary/50' :
+                          phase.color === 'genie-teal' ? 'text-genie-teal/50' :
+                          'text-genie-cyan/50'
                       }`} />
                     </div>
                   )}
