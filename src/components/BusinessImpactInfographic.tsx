@@ -159,20 +159,38 @@ export const BusinessImpactInfographic = () => {
   const experimentationInsights = [
     {
       insight: "Pattern Recognition",
-      description: "AI experimentation reveals emerging transformation patterns across industries",
+      description: "AI experimentation reveals emerging transformation patterns across industries - discovering repeatable frameworks that work",
       icon: Brain,
       color: "genie-primary"
     },
     {
-      insight: "Disruption Mapping",
-      description: "Understanding how AI fundamentally changes traditional operational approaches",
+      insight: "Disruption Mapping", 
+      description: "Understanding how AI fundamentally reshapes traditional workflows and creates entirely new operational possibilities",
       icon: Zap,
+      color: "genie-secondary"
+    },
+    {
+      insight: "Future Context Integration",
+      description: "Learning to anticipate and prepare for emerging AI capabilities while building adaptable, forward-compatible systems",
+      icon: Target,
+      color: "genie-accent"
+    },
+    {
+      insight: "Hands-on Discovery",
+      description: "Real-world experimentation teaches practical limitations and unexpected opportunities that theory cannot predict",
+      icon: Activity,
       color: "genie-teal"
     },
     {
-      insight: "Collective Learning",
-      description: "Shared experimentation builds comprehensive understanding of AI potential",
-      icon: Target,
+      insight: "Multi-Agent Orchestration",
+      description: "Exploring how different AI agents can collaborate effectively to solve complex, multi-step business challenges",
+      icon: Network,
+      color: "genie-primary"
+    },
+    {
+      insight: "Iterative Learning Cycles",
+      description: "Each AI experiment builds knowledge for the next - creating compound learning effects and accelerated innovation",
+      icon: BarChart3,
       color: "genie-cyan"
     }
   ];
@@ -385,11 +403,11 @@ export const BusinessImpactInfographic = () => {
               Experimentation Insights
             </Badge>
             <h3 className="text-2xl font-bold text-foreground mb-4">
-              What We're Learning Through <span className="text-genie-primary">AI Exploration</span>
+              What I'm Learning Through <span className="text-genie-primary">AI Experimentation & Exploration</span>
             </h3>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {experimentationInsights.map((insight, index) => {
               const IconComponent = insight.icon;
               
