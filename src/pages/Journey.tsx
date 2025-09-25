@@ -403,20 +403,6 @@ const Journey = () => {
 
 
 
-            {/* Current Experimentation Hub Highlights */}
-            <Card className="p-8 mt-8 border-genie-teal/20 bg-gradient-to-br from-genie-teal/5 to-genie-cyan/5">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-foreground mb-4">
-                  Current Experimentation Hub Highlights
-                </h3>
-                <p className="text-muted-foreground">
-                  Active experiments and implementations across healthcare, oncology, and customer service sectors. 
-                  Exploring various AI scenarios with mixed implementation statuses as part of our ongoing 
-                  experimentation initiatives.
-                </p>
-              </div>
-            </Card>
-
             {/* Key Capabilities */}
             <Card className="p-8 mt-8">
               <h3 className="text-2xl font-bold text-foreground mb-6 text-center">
