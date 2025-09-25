@@ -56,10 +56,10 @@ export const BusinessImpactInfographic = () => {
         "Enhanced patient satisfaction"
       ],
       technologies: [
-        "Provider NPI Verification Agents",
-        "MCP Stepwise Update Agents",
+        "Technical APIs: LLM, Small Language Models, MCP n8n, Arize, LangWatch, Labeling Studio",
+        "Business APIs: CMS Verification & Credentialing, DocuSign, Insurance APIs, ICD, FDA",
         "Clinical Decision Support",
-        "Insurance Verification APIs"
+        "Healthcare Data Orchestration"
       ],
       journeySteps: [
         "Automated referral processing",
