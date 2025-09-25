@@ -57,7 +57,7 @@ export const BusinessImpactInfographic = () => {
       ],
       technologies: [
         "React.js Frontend",
-        "Supabase Backend",
+        "Supabase with PostgreSQL",
         "API Service Middleware",
         "Healthcare Data Orchestration"
       ],
