@@ -22,88 +22,94 @@ import {
 import { Link } from "react-router-dom";
 
 export const BusinessImpactInfographic = () => {
-  const experimentalUseCases = [
+  const landscapeExperiments = [
     {
-      area: "Patient Management",
+      landscape: "Healthcare Innovation",
       icon: Stethoscope,
       color: "genie-primary",
-      title: "Healthcare AI Experimentation",
-      description: "Exploring patient onboarding and referral workflow automation",
-      status: "Mixed Implementation",
-      highlights: [
-        "Patient onboarding automation experiments",
-        "Referral process optimization testing",
-        "Treatment center workflow exploration", 
-        "Care coordination system prototyping"
-      ],
-      stage: "Active experimentation with pilot implementations"
+      description: "Exploring AI-driven transformation in patient care and healthcare operations",
+      experiments: [
+        {
+          title: "Patient Onboarding Automation",
+          status: "Active Testing",
+          description: "Streamlining patient registration and initial assessment workflows"
+        },
+        {
+          title: "Referral Process Optimization",
+          status: "Pilot Phase",
+          description: "Enhancing coordination between healthcare providers and specialists"
+        },
+        {
+          title: "Oncology Workflow Innovation",
+          status: "Research Phase",
+          description: "Testing automation vs agentic AI for specialized care operations"
+        }
+      ]
     },
     {
-      area: "Oncology Workflows",
-      icon: Factory,
-      color: "genie-teal", 
-      title: "Specialized Care Process Innovation",
-      description: "Testing automation vs agentic AI for oncology operations",
-      status: "Development Phase",
-      highlights: [
-        "Technology selection framework exploration",
-        "Oncology-specific workflow analysis",
-        "Patient journey optimization experiments",
-        "Clinical decision support testing"
-      ],
-      stage: "Research and development with concept validation"
-    },
-    {
-      area: "Customer Contact Center",
+      landscape: "Customer Experience",
       icon: Building,
-      color: "genie-cyan",
-      title: "Contact Center AI Integration",
-      description: "Building intelligent customer service capabilities",
-      status: "Experimentation",
-      highlights: [
-        "Automated inquiry handling experiments",
-        "Customer service workflow testing",
-        "Response accuracy improvement pilots",
-        "Agent productivity enhancement trials"
-      ],
-      stage: "Proof of concept with expanding scope"
+      color: "genie-teal",
+      description: "Revolutionizing customer service and engagement through intelligent automation",
+      experiments: [
+        {
+          title: "Contact Center AI Integration",
+          status: "Proof of Concept",
+          description: "Building intelligent customer service capabilities and response systems"
+        },
+        {
+          title: "Automated Inquiry Handling",
+          status: "Testing",
+          description: "Developing smart routing and resolution for customer queries"
+        },
+        {
+          title: "Agent Productivity Enhancement",
+          status: "Early Testing",
+          description: "Tools to augment human agents with AI-powered insights"
+        }
+      ]
     },
     {
-      area: "Financial Services",
+      landscape: "Financial Services",
       icon: DollarSign,
-      color: "genie-primary",
-      title: "FinTech AI Exploration",
+      color: "genie-cyan",
       description: "Investigating AI applications in financial operations and customer experience",
-      status: "Early Exploration",
-      highlights: [
-        "Automated financial advisory prototyping",
-        "Risk assessment algorithm testing",
-        "Customer onboarding streamlining experiments",
-        "Fraud detection mechanism exploration"
-      ],
-      stage: "Conceptual development with market research"
+      experiments: [
+        {
+          title: "Automated Financial Advisory",
+          status: "Conceptual",
+          description: "Prototyping personalized financial guidance systems"
+        },
+        {
+          title: "Risk Assessment Innovation",
+          status: "Research",
+          description: "Developing intelligent risk evaluation algorithms"
+        },
+        {
+          title: "Customer Onboarding Streamlining",
+          status: "Early Development",
+          description: "Simplifying account setup and verification processes"
+        }
+      ]
     }
   ];
 
-  const disruptionInsights = [
+  const experimentationInsights = [
     {
-      insight: "Learning Through Exploration",
-      description: "Testing AI applications across various domains reveals emerging transformation patterns",
-      discovery: "Individual insights shared with community",
+      insight: "Pattern Recognition",
+      description: "AI experimentation reveals emerging transformation patterns across industries",
       icon: Brain,
       color: "genie-primary"
     },
     {
-      insight: "Disruption Possibilities", 
-      description: "Observing how AI might fundamentally change traditional approaches",
-      discovery: "Patterns suggest new paradigms emerging",
+      insight: "Disruption Mapping",
+      description: "Understanding how AI fundamentally changes traditional operational approaches",
       icon: Zap,
       color: "genie-teal"
     },
     {
-      insight: "Collective Exploration",
-      description: "Individual experimentation combined with shared knowledge builds understanding", 
-      discovery: "Shared experiences drive innovation",
+      insight: "Collective Learning",
+      description: "Shared experimentation builds comprehensive understanding of AI potential",
       icon: Target,
       color: "genie-cyan"
     }
@@ -114,92 +120,88 @@ export const BusinessImpactInfographic = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
-            <BarChart3 className="w-4 h-4 mr-2" />
-            Landscape Disruption Analysis
+            <Rocket className="w-4 h-4 mr-2" />
+            Genie AI Experimentation Hub
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            How AI is Reshaping <span className="text-genie-primary">Various Landscapes</span>
+            Exploring AI Transformation <span className="text-genie-primary">Across Landscapes</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            Through individual experimentation and knowledge sharing, exploring how AI is fundamentally transforming industries. 
-            These insights emerge from hands-on testing and learning across various sectors. What patterns do you see emerging?
+            Through hands-on experimentation and shared learning, we're discovering how AI reshapes various industry landscapes. 
+            Each experiment reveals new patterns and possibilities for transformation.
           </p>
         </div>
 
-        {/* Combined AI Landscape Exploration Section */}
-        <Card className="p-8 border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-background mb-16">
-          <div className="text-center mb-12">
-            <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
-              <BarChart3 className="w-4 h-4 mr-2" />
-              AI Landscape Exploration
-            </Badge>
-            <h3 className="text-2xl font-bold text-foreground mb-4">
-              How AI is Reshaping <span className="text-genie-primary">Various Landscapes</span>
-            </h3>
-            <p className="text-muted-foreground max-w-3xl mx-auto">
-              Through individual experimentation and knowledge sharing, exploring how AI is fundamentally transforming industries. 
-              These insights emerge from hands-on testing and learning across various sectors. What patterns do you see emerging?
-            </p>
-          </div>
-
-          {/* Experimental Use Cases Grid */}
-          <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
-            {experimentalUseCases.map((useCase, index) => {
-              const IconComponent = useCase.icon;
-              
-              return (
-                <Card key={index} className={`p-6 border-${useCase.color}/20 bg-gradient-to-br from-${useCase.color}/5 to-background hover:shadow-lg transition-all duration-300`}>
-                  <div className="mb-4">
-                    <div className={`w-12 h-12 bg-${useCase.color}/10 rounded-lg flex items-center justify-center mb-3`}>
-                      <IconComponent className={`w-6 h-6 text-${useCase.color}`} />
-                    </div>
-                    <Badge variant="outline" className={`text-${useCase.color} border-${useCase.color}/30 mb-2`}>
-                      {useCase.status}
-                    </Badge>
-                    <h4 className={`text-lg font-bold text-${useCase.color} mb-2`}>
-                      {useCase.title}
-                    </h4>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {useCase.description}
+        {/* Landscape Experiments */}
+        <div className="space-y-8 mb-16">
+          {landscapeExperiments.map((landscape, index) => {
+            const IconComponent = landscape.icon;
+            
+            return (
+              <Card key={index} className={`p-8 border-${landscape.color}/20 bg-gradient-to-br from-${landscape.color}/5 to-background`}>
+                <div className="flex items-start gap-6 mb-8">
+                  <div className={`w-16 h-16 bg-${landscape.color}/10 rounded-xl flex items-center justify-center flex-shrink-0`}>
+                    <IconComponent className={`w-8 h-8 text-${landscape.color}`} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className={`text-2xl font-bold text-${landscape.color} mb-2`}>
+                      {landscape.landscape}
+                    </h3>
+                    <p className="text-muted-foreground text-lg">
+                      {landscape.description}
                     </p>
                   </div>
-                  
-                  <div className="space-y-2 mb-4">
-                    {useCase.highlights.slice(0, 3).map((highlight, i) => (
-                      <div key={i} className="flex items-start text-sm">
-                        <CheckCircle className={`w-4 h-4 text-${useCase.color} mr-2 mt-0.5 flex-shrink-0`} />
-                        <span className="text-foreground">{highlight}</span>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-6">
+                  {landscape.experiments.map((experiment, expIndex) => (
+                    <div key={expIndex} className="p-4 bg-background/50 rounded-lg border border-border/50">
+                      <div className="flex items-center justify-between mb-3">
+                        <Badge variant="outline" className={`text-${landscape.color} border-${landscape.color}/30`}>
+                          {experiment.status}
+                        </Badge>
                       </div>
-                    ))}
-                  </div>
-                  
-                  <div className={`text-xs text-${useCase.color} font-medium p-2 bg-${useCase.color}/10 rounded border border-${useCase.color}/20`}>
-                    Stage: {useCase.stage}
-                  </div>
-                </Card>
-              );
-            })}
+                      <h4 className="font-semibold text-foreground mb-2">
+                        {experiment.title}
+                      </h4>
+                      <p className="text-sm text-muted-foreground">
+                        {experiment.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+
+        {/* Experimentation Insights */}
+        <Card className="p-8 border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-background mb-16">
+          <div className="text-center mb-8">
+            <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
+              <Brain className="w-4 h-4 mr-2" />
+              Experimentation Insights
+            </Badge>
+            <h3 className="text-2xl font-bold text-foreground mb-4">
+              What We're Learning Through <span className="text-genie-primary">AI Exploration</span>
+            </h3>
           </div>
 
-          {/* Exploration Insights */}
           <div className="grid md:grid-cols-3 gap-8 mb-8">
-            {disruptionInsights.map((item, index) => {
-              const IconComponent = item.icon;
+            {experimentationInsights.map((insight, index) => {
+              const IconComponent = insight.icon;
               
               return (
                 <div key={index} className="text-center p-6 bg-gradient-to-br from-background to-muted/20 rounded-lg border border-border/50">
-                  <div className={`w-16 h-16 bg-${item.color}/10 rounded-full flex items-center justify-center mx-auto mb-4`}>
-                    <IconComponent className={`w-8 h-8 text-${item.color}`} />
+                  <div className={`w-16 h-16 bg-${insight.color}/10 rounded-full flex items-center justify-center mx-auto mb-4`}>
+                    <IconComponent className={`w-8 h-8 text-${insight.color}`} />
                   </div>
-                  <h4 className={`text-lg font-bold text-${item.color} mb-2`}>
-                    {item.insight}
+                  <h4 className={`text-lg font-bold text-${insight.color} mb-2`}>
+                    {insight.insight}
                   </h4>
-                  <p className="text-sm text-foreground mb-3">
-                    {item.description}
+                  <p className="text-sm text-foreground">
+                    {insight.description}
                   </p>
-                  <div className="text-xs text-genie-primary font-medium p-2 bg-genie-primary/10 rounded border border-genie-primary/20">
-                    {item.discovery}
-                  </div>
                 </div>
               );
             })}
@@ -209,7 +211,7 @@ export const BusinessImpactInfographic = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="text-center p-6 bg-gradient-to-r from-genie-primary/10 to-genie-teal/10 rounded-lg border border-genie-primary/20">
               <p className="text-muted-foreground mb-4">
-                Interested in exploring more comprehensive business applications and use cases?
+                Ready to explore comprehensive business applications and proven use cases?
               </p>
               <Link to="/business-use-cases">
                 <Button variant="outline" className="border-genie-primary text-genie-primary hover:bg-genie-primary hover:text-white">
@@ -221,11 +223,11 @@ export const BusinessImpactInfographic = () => {
             
             <div className="text-center p-6 bg-gradient-to-r from-genie-primary/20 to-genie-teal/20 rounded-lg border border-genie-primary/30">
               <p className="text-muted-foreground mb-4">
-                This exploration continues - through individual experimentation and shared insights, building understanding of how AI might reshape various landscapes.
+                Continue exploring our technology journey and development approach.
               </p>
               <Link to="/journey">
                 <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white">
-                  Continue to Explore Tech Exploration
+                  Continue Technology Journey
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
