@@ -188,20 +188,20 @@ const patientOnboardingCaseStudy: CaseStudyData = {
         "Predictive resource allocation for complex cases",
         "Natural language processing for clinical notes"
       ],
-      whyAutomation: "High-volume referral processing benefits from consistent digital workflows and automated validation",
-      whyAI: "Complex triage decisions require intelligent assessment of clinical urgency and appropriate specialist routing",
+      whyAutomation: "Digital intake systems provide consistent data collection and validation for rapid prototype development",
+      whyAI: "Agentic AI enables intelligent document processing, triage decisions, and adaptive routing based on complex healthcare requirements",
       phases: [
-        "Implement digital referral processing automation",
-        "Deploy AI for intelligent triage and routing", 
-        "Integrate predictive resource planning"
+        "Rapid prototype development using AI-assisted coding tools",
+        "Deploy Agentic AI for intelligent document processing and triage", 
+        "Integrate experimental validation and continuous feedback loops"
       ],
       currentIssues: [
-        "Manual fax processing leads to 4-6 hour delays",
-        "15% data entry errors in manual transcription",
-        "Inconsistent urgency assessment across staff",
-        "Lost referrals due to manual tracking"
+        "Traditional development cycles take weeks for basic functionality",
+        "Manual document processing creates significant development overhead",
+        "Complex healthcare requirements need intelligent interpretation",
+        "Testing cycles require extensive manual validation"
       ],
-      improvement: "AI-powered processing reduces response time to under 30 minutes with 95% accuracy in data extraction.",
+      improvement: "AI-assisted development delivers functional prototype in 3 days with 90% system accuracy in automated processing.",
       technologyStack: {
         automation: ["RPA for fax processing", "Form validation APIs", "Workflow orchestration"],
         ai: ["NLP for document parsing", "Clinical decision trees", "Predictive routing algorithms"],
@@ -286,19 +286,19 @@ const patientOnboardingCaseStudy: CaseStudyData = {
         "Smart network optimization recommendations",
         "Predictive provider availability analysis"
       ],
-      whyAutomation: "Provider verification involves standardized database queries and status checks",
-      whyAI: "Complex network optimization and provider matching require intelligent analysis",
+      whyAutomation: "Provider verification workflows benefit from standardized API integration and automated database lookups",
+      whyAI: "Agentic AI excels at complex credentialing analysis, network optimization, and intelligent provider matching across multiple healthcare systems",
       phases: [
-        "Implement automated NPI verification systems",
-        "Deploy AI for provider matching optimization",
-        "Integrate predictive credentialing analytics"
+        "Rapid development of automated verification APIs using AI-assisted coding",
+        "Deploy Agentic AI for complex credentialing analysis and validation",
+        "Integrate experimental learning algorithms for continuous improvement"
       ],
       currentIssues: [
-        "Manual NPI lookups cause significant delays",
-        "Outdated credentialing information leads to rejections",
-        "Suboptimal provider matching affects patient outcomes"
+        "Traditional verification system development requires extensive manual coding",
+        "Complex credentialing rules need intelligent interpretation and automation",
+        "Provider network optimization requires advanced analytical capabilities"
       ],
-      improvement: "AI-enhanced verification ensures 99% accurate provider matching with real-time credentialing status.",
+      improvement: "AI-enhanced development achieves production-ready verification system with Agentic AI providing 99% accurate provider matching.",
       technologyStack: {
         automation: ["NPI registry APIs", "Credentialing databases", "Network directories"],
         ai: ["Matching algorithms", "Predictive analytics", "Optimization engines"],
@@ -509,39 +509,39 @@ const patientOnboardingCaseStudy: CaseStudyData = {
   },
   integrationBlueprint: {
     phase1: [
-      "Digital intake system deployment",
-      "Basic automation workflows",
-      "Real-time verification APIs",
-      "Staff training and adoption"
+      "Rapid prototype development using AI-assisted coding",
+      "Core enrollment workflow automation design",
+      "Provider verification API integration setup",
+      "Initial testing framework implementation"
     ],
     phase2: [
-      "AI-powered triage and routing",
-      "Intelligent communication flows",
-      "Predictive analytics integration",
-      "Advanced scheduling optimization"
+      "Agentic AI deployment for credentialing workflows",
+      "ICD code processing automation integration",
+      "Patient journey optimization algorithms",
+      "Iterative testing and feedback integration"
     ],
     phase3: [
-      "Machine learning model refinement",
-      "Predictive patient journey optimization",
-      "Advanced personalization features",
-      "Continuous improvement automation"
+      "Advanced AI model fine-tuning for accuracy",
+      "Scalable architecture optimization for production",
+      "Continuous learning system deployment",
+      "Production readiness validation and monitoring"
     ]
   },
   lessonsLearned: [
-    "Hybrid approach combining automation and AI delivers optimal results",
-    "Patient communication personalization significantly improves satisfaction",
-    "Real-time verification eliminates major bottlenecks",
-    "Phased implementation allows for continuous optimization",
-    "Staff adoption crucial for success - training investment essential",
-    "Data quality directly impacts AI effectiveness"
+    "AI-assisted development accelerates prototype to production timeline",
+    "Agentic AI excels at complex verification and credentialing tasks",
+    "Iterative testing approach ensures high system accuracy",
+    "Modular architecture enables rapid feature experimentation",
+    "Provider verification automation significantly reduces manual overhead",
+    "Continuous feedback loops essential for AI model optimization"
   ],
   nextSteps: [
-    "Expand AI capabilities to predictive patient journey optimization",
-    "Integrate additional data sources for enhanced personalization",
-    "Develop advanced analytics dashboard for continuous monitoring",
-    "Scale template approach to other healthcare workflows",
-    "Implement machine learning model continuous improvement",
-    "Explore integration with emerging healthcare AI technologies"
+    "Expand Agentic AI capabilities to additional healthcare workflows",
+    "Integrate advanced learning models for predictive analytics",
+    "Develop reusable template framework for rapid deployment",
+    "Explore multi-agent collaboration for complex care coordination",
+    "Implement advanced monitoring and observability systems",
+    "Scale experimental approach to enterprise healthcare platforms"
   ]
 };
 
