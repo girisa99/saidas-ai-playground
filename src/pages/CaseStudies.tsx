@@ -109,6 +109,7 @@ const CaseStudies = () => {
                 variant="default"
                 size="lg"
                 className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl w-full sm:w-auto"
+                onClick={() => setActiveTab("detailed")}
               >
                 <TrendingUp className="w-4 h-4 mr-2" />
                 Explore My Projects
@@ -116,7 +117,7 @@ const CaseStudies = () => {
               <Button 
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 w-full sm:w-auto"
+                className="border-white text-white bg-white/10 hover:bg-white/20 hover:border-white/70 backdrop-blur-sm w-full sm:w-auto"
                 asChild
               >
                 <Link to="/journey">
