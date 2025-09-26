@@ -14,17 +14,54 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { PrivacyDialog } from "@/components/LegalDialogs";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 export const FAQ = () => {
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
+    
+    if (!email.trim()) {
+      toast({
+        title: "Email Required",
+        description: "Please enter your email address to subscribe.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
+        body: { 
+          email: email.trim(),
+          source: 'website_faq'
+        }
+      });
+
+      if (error) throw error;
+
       setIsSubscribed(true);
       setEmail("");
-      console.log("Subscribed email:", email);
+      toast({
+        title: "Welcome aboard! 🧞‍♂️",
+        description: "You've successfully subscribed to our newsletter. Check your email for a welcome message!",
+      });
+    } catch (error: any) {
+      console.error('Subscription error:', error);
+      toast({
+        title: "Subscription Failed",
+        description: error.message || "Unable to subscribe. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -60,8 +97,12 @@ export const FAQ = () => {
                     required
                     className="flex-1"
                   />
-                  <Button type="submit" className="bg-primary hover:bg-primary/90 px-6">
-                    Subscribe
+                  <Button 
+                    type="submit" 
+                    disabled={isLoading}
+                    className="bg-primary hover:bg-primary/90 px-6 disabled:opacity-50"
+                  >
+                    {isLoading ? 'Subscribing...' : 'Subscribe'}
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground mt-2 text-center">
