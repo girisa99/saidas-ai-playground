@@ -134,7 +134,7 @@ const patientOnboardingCaseStudy: CaseStudyData = {
   icon: UserCheck,
   overview: {
     challenge: "Manual patient onboarding processes were causing 4-6 hour delays, 15% data entry errors, and poor patient experience with multiple touchpoints and communication gaps.",
-    solution: "Designed and developed a comprehensive patient enrollment system integrating automation workflows with Agentic AI for intelligent process verification, credentialing validation, and ICD code processing to optimize the entire patient onboarding journey.",
+    solution: "Designed and developed a comprehensive patient enrollment system integrating automation workflows with Agentic AI for intelligent process verification, provider verification and credentialing, patient credentialing validation, and ICD code processing to optimize the entire patient onboarding journey.",
     impact: "Achieved functional application development in 3 days with 90% system accuracy and over 70% development cost savings.",
     timeline: "Less than 3 weeks for continuous optimization to production-ready deployment"
   },
