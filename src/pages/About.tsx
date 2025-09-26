@@ -308,8 +308,9 @@ const About = () => {
                   My career spans technology leadership roles at industry giants including <strong className="text-genie-primary">Novartis, Bayer, 
                   Conduent, Amgen, and Pfizer</strong>, where I've consistently led digital transformation initiatives 
                   across commercial operations, clinical R&D, regulatory affairs, and supply chain management. 
-                  Currently, I continue this mission at <strong className="text-genie-primary">McKesson</strong>, driving innovative technology solutions 
-                  in healthcare distribution and services. With an MBA from <strong className="text-genie-teal">Cornell University's Johnson School</strong>, 
+                  Currently, I serve as <strong className="text-genie-primary">Product Owner/Solution Architect at McKesson</strong> for the CGAT (Inspirogene) product, 
+                  leading cross-functional workstreams across 3PL/SD, Specialty Pharmacy (Biologics), Ontada (Provider onboarding/Order management), 
+                  and Patient services. With an MBA from <strong className="text-genie-teal">Cornell University's Johnson School</strong>, 
                   I've developed a unique perspective that combines deep technical expertise with strategic business acumen.
                 </p>
                 <p className="mb-6">
