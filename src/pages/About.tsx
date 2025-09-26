@@ -308,22 +308,22 @@ const About = () => {
                   My career spans technology leadership roles at industry giants including <strong className="text-genie-primary">Novartis, Bayer, 
                   Conduent, Amgen, and Pfizer</strong>, where I've consistently led digital transformation initiatives 
                   across commercial operations, clinical R&D, regulatory affairs, and supply chain management. 
-                  With an MBA from <strong className="text-genie-teal">Cornell University's Johnson School</strong>, I've developed a unique perspective 
-                  that combines deep technical expertise with strategic business acumen, focusing on implementing 
-                  innovative technology solutions to streamline operations and accelerate therapeutic development.
+                  Currently, I continue this mission at <strong className="text-genie-primary">McKesson</strong>, driving innovative technology solutions 
+                  in healthcare distribution and services. With an MBA from <strong className="text-genie-teal">Cornell University's Johnson School</strong>, 
+                  I've developed a unique perspective that combines deep technical expertise with strategic business acumen.
                 </p>
                 <p className="mb-6">
-                  Currently, I'm channeling this extensive healthcare technology experience into the <strong className="text-genie-cyan">GenieAI Experimentation Hub</strong> - 
-                  a comprehensive platform that demonstrates how AI can revolutionize healthcare innovation. This hub serves as a knowledge-sharing 
-                  initiative where I document and showcase practical AI applications, from proof-of-concept to enterprise-scale solutions, 
+                  Parallel to my professional work, I've launched the <strong className="text-genie-cyan">GenieAI Experimentation Hub</strong> - 
+                  a personal knowledge-sharing initiative where I explore and demonstrate how AI can revolutionize healthcare innovation. 
+                  This hub serves as a platform to document practical AI applications, from proof-of-concept to enterprise-scale solutions, 
                   helping organizations understand the transformative potential of AI in healthcare technology and beyond.
                 </p>
                 <p>
                   Throughout my journey, I've cultivated strong entrepreneurial skills and a passion for 
                   identifying opportunities where technology can solve complex business challenges. The GenieAI Experimentation Hub 
-                  represents the culmination of this entrepreneurial mindset - bridging the gap between cutting-edge AI capabilities 
+                  represents this entrepreneurial mindset - bridging the gap between cutting-edge AI capabilities 
                   and real-world healthcare applications. My approach emphasizes practical innovation that delivers measurable 
-                  impact in therapeutic development and patient outcomes, now enhanced by AI's exponential possibilities.
+                  impact in therapeutic development and patient outcomes.
                 </p>
               </Card>
             </div>
@@ -334,6 +334,14 @@ const About = () => {
               
               <div className="space-y-16">
                 {[
+                  {
+                    phase: "Current Healthcare Technology Leadership",
+                    companies: "McKesson • Present",
+                    focus: "Leading technology innovation in healthcare distribution and services",
+                    achievements: "Driving digital transformation initiatives in one of the largest healthcare companies",
+                    icon: Building2,
+                    color: "genie-primary"
+                  },
                   {
                     phase: "Pharmaceutical Technology Leadership",
                     companies: "Novartis • Bayer • Pfizer • Amgen • Conduent",
@@ -351,8 +359,8 @@ const About = () => {
                     color: "genie-teal"
                   },
                   {
-                    phase: "AI Innovation & Experimentation",
-                    companies: "GenieAI Experimentation Hub • Current Initiative",
+                    phase: "AI Innovation & Knowledge Sharing",
+                    companies: "GenieAI Experimentation Hub • Personal Initiative",
                     focus: "Democratizing AI possibilities through practical experimentation and knowledge sharing",
                     achievements: "Creating comprehensive AI application frameworks demonstrating healthcare transformation potential",
                     icon: Lightbulb,
