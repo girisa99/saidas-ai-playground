@@ -1,6 +1,6 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
-import { TechnologyEcosystemInfographic } from "@/components/TechnologyEcosystemInfographic";
+import { IntegratedTechnologyExploration } from "@/components/IntegratedTechnologyExploration";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -126,7 +126,7 @@ const TechnologyStack = () => {
       </section>
       
       <main>
-        <TechnologyEcosystemInfographic />
+        <IntegratedTechnologyExploration />
       </main>
       <Footer />
     </div>
