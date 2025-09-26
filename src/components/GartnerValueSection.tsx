@@ -49,7 +49,7 @@ export const GartnerValueSection = () => {
             Aligning <span className="text-genie-primary">Gartner's Value Framework</span> with AI Innovation
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
-            Exploring how AI experimentation creates multi-stakeholder value through strategic framework alignment, differentiated capabilities, and measurable enterprise outcomes.
+            Exploring how AI experimentation creates multi-stakeholder value through strategic framework alignment, differentiated capabilities, and measurable outcomes.
           </p>
         </div>
 
