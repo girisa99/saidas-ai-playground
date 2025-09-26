@@ -2,7 +2,6 @@ import { NavigationHeader } from "@/components/NavigationHeader";
 import { MultiHeroSection } from "@/components/MultiHeroSection";
 import { TrustSection } from "@/components/TrustSection";
 import { GartnerValueSection } from "@/components/GartnerValueSection";
-import { IntegratedTechnologyExploration } from "@/components/IntegratedTechnologyExploration";
 import { ContactModal } from "@/components/ContactModal";
 import { AIExperimentationBanner } from "@/components/AIExperimentationBanner";
 import { QuickStart } from "@/components/QuickStart";
@@ -29,7 +28,6 @@ const Index = () => {
         
         <TrustSection />
         <GartnerValueSection />
-        <IntegratedTechnologyExploration />
         <QuickStart />
         
         
