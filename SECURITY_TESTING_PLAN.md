@@ -5,17 +5,26 @@ This document outlines the comprehensive security testing strategy for the Genie
 
 ## 📊 Current Security Assessment
 
+### 🏗️ Architecture Overview
+This is a **monorepo** containing both frontend and backend components:
+- **Frontend**: React/TypeScript application (public-facing website)
+- **Backend**: Supabase Edge Functions written in Deno/TypeScript
+- **Database**: Supabase with Row Level Security policies
+- **Deployment**: Both frontend and backend deploy from same repository
+
 ### ✅ Strengths
 - **Database Security**: RLS policies implemented and hardened
 - **Authentication**: Supabase Auth with proper session management
 - **No Critical Vulnerabilities**: Automated scan shows no immediate threats
 - **Environment Configuration**: Proper separation of dev/prod environments
+- **Input Validation**: Comprehensive validation schemas implemented with Zod
+- **Security Headers**: Configured in security-headers.ts
 
 ### ⚠️ Areas for Improvement
-- **Input Validation**: Missing comprehensive validation (HIGH PRIORITY)
-- **Security Headers**: Not implemented (MEDIUM PRIORITY)
-- **Rate Limiting**: No client-side rate limiting (MEDIUM PRIORITY)
+- **Edge Function Security**: Need specialized Deno security scanning (HIGH PRIORITY)
+- **Rate Limiting**: Basic implementation needs monitoring (MEDIUM PRIORITY)
 - **Error Handling**: Potential information disclosure (LOW PRIORITY)
+- **Secrets Management**: Edge function environment variables need audit (MEDIUM PRIORITY)
 
 ---
 
@@ -41,17 +50,31 @@ snyk test && snyk code test
 ```
 
 #### Manual Code Review Checklist:
-- [ ] **Authentication Logic**: Review auth flows for bypass opportunities
+
+**Frontend Security (React/TypeScript):**
 - [ ] **Input Validation**: Check all user inputs are validated
-- [ ] **SQL Injection**: Review Supabase queries for injection risks
 - [ ] **XSS Prevention**: Check for innerHTML usage with user data
-- [ ] **Secrets Management**: Ensure no hardcoded credentials
+- [ ] **Authentication Logic**: Review auth flows for bypass opportunities
 - [ ] **Error Handling**: Review error messages for information disclosure
 
+**Backend Security (Edge Functions/Deno):**
+- [ ] **Environment Variables**: Audit all secret handling
+- [ ] **API Security**: Review external API integrations
+- [ ] **Rate Limiting**: Verify rate limiting implementation
+- [ ] **Input Sanitization**: Check server-side validation
+- [ ] **CORS Configuration**: Review cross-origin policies
+- [ ] **JWT Verification**: Ensure proper token validation
+- [ ] **Database Access**: Review Supabase client usage
+
+**Database Security:**
+- [ ] **RLS Policies**: Review row-level security rules
+- [ ] **SQL Injection**: Review Supabase queries for injection risks
+- [ ] **Data Access Patterns**: Audit sensitive data handling
+
 ### SAST Schedule:
-- **Daily**: Automated scans on PR/commit
-- **Weekly**: Manual code review
-- **Monthly**: Comprehensive security assessment
+- **Daily**: Automated scans on PR/commit (frontend + backend)
+- **Weekly**: Manual code review (prioritize edge functions)
+- **Monthly**: Comprehensive security assessment (full stack)
 
 ---
 

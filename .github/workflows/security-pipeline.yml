@@ -24,10 +24,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: ESLint Security Scan
+      - name: ESLint Security Scan (Frontend)
         run: |
           npm install --save-dev eslint-plugin-security
-          npx eslint . --ext .ts,.tsx,.js,.jsx --config .eslintrc-security.js
+          npx eslint ./src --ext .ts,.tsx,.js,.jsx --config .eslintrc-security.js
+          
+      - name: ESLint Security Scan (Backend/Edge Functions)
+        run: |
+          npx eslint ./supabase/functions --ext .ts,.js --config .eslintrc-security.js
+          
+      - name: Deno Security Scan (Edge Functions)
+        run: |
+          curl -fsSL https://deno.land/install.sh | sh
+          export PATH="$HOME/.deno/bin:$PATH"
+          deno lint ./supabase/functions/ || true
       
       - name: Semgrep SAST
         uses: semgrep/semgrep-action@v1
