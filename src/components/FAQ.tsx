@@ -13,7 +13,7 @@ import {
   ExternalLink
 } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { PrivacyDialog } from "@/components/LegalDialogs";
 
 export const FAQ = () => {
   const [email, setEmail] = useState("");
@@ -65,7 +65,7 @@ export const FAQ = () => {
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground mt-2 text-center">
-                  No spam, unsubscribe at any time. Read my <Link to="/privacy" className="underline">Privacy Policy</Link>
+                  No spam, unsubscribe at any time. Read my <PrivacyDialog trigger={<button className="underline text-muted-foreground hover:text-foreground">Privacy Policy</button>} />
                 </p>
               </form>
             ) : (
