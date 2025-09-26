@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Brain, Mail, Linkedin, Github, ArrowUp } from "lucide-react";
+import { Brain, Mail, Linkedin, ArrowUp, X } from "lucide-react";
 import { PrivacyDialog, TermsDialog, DisclaimerDialog, CookiesDialog } from "./LegalDialogs";
 
 export const Footer = () => {
@@ -95,14 +95,29 @@ export const Footer = () => {
               </div>
 
               <div className="flex space-x-2">
-                <Button size="sm" variant="ghost" className="p-2">
+                <Button 
+                  size="sm" 
+                  variant="ghost" 
+                  className="p-2"
+                  onClick={() => window.open('https://linkedin.com/in/saidasika', '_blank')}
+                >
                   <Linkedin className="h-4 w-4" />
                 </Button>
-                <Button size="sm" variant="ghost" className="p-2">
+                <Button 
+                  size="sm" 
+                  variant="ghost" 
+                  className="p-2"
+                  onClick={() => window.open('mailto:genieaiexpermentationhub@gmail.com', '_blank')}
+                >
                   <Mail className="h-4 w-4" />
                 </Button>
-                <Button size="sm" variant="ghost" className="p-2">
-                  <Github className="h-4 w-4" />
+                <Button 
+                  size="sm" 
+                  variant="ghost" 
+                  className="p-2"
+                  onClick={() => window.open('https://x.com/saidasika', '_blank')}
+                >
+                  <X className="h-4 w-4" />
                 </Button>
               </div>
               <Button 
