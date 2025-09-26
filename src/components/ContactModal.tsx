@@ -10,10 +10,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 interface ContactModalProps {
-  children: React.ReactNode;
+  trigger: React.ReactNode;
 }
 
-export const ContactModal = ({ children }: ContactModalProps) => {
+export const ContactModal = ({ trigger }: ContactModalProps) => {
   const [formData, setFormData] = useState({
     senderName: "",
     senderEmail: "",
@@ -94,7 +94,7 @@ export const ContactModal = ({ children }: ContactModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        {children}
+        {trigger}
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>

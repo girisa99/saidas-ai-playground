@@ -18,6 +18,7 @@ import {
 import { useState, useEffect } from "react";
 import { PrivacyDialog } from "@/components/LegalDialogs";
 import { FeedbackModal } from "@/components/FeedbackModal";
+import { ContactModal } from "@/components/ContactModal";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -290,6 +291,14 @@ export const FAQ = () => {
 
             {/* Action Buttons */}
             <div className="flex justify-center gap-4 mt-8">
+              <ContactModal 
+                trigger={
+                  <Button variant="default" className="flex items-center gap-2">
+                    <Users className="w-4 h-4" />
+                    Connect & Learn
+                  </Button>
+                }
+              />
               <FeedbackModal 
                 trigger={
                   <Button variant="outline" className="flex items-center gap-2">
@@ -298,10 +307,6 @@ export const FAQ = () => {
                   </Button>
                 }
               />
-              <Button variant="outline" className="flex items-center gap-2">
-                <Heart className="w-4 h-4" />
-                Follow Us
-              </Button>
             </div>
           </Card>
         </div>
