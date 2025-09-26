@@ -41,6 +41,106 @@ import techJourneyBg from "@/assets/journey-phase-02-curiosity-artwork.jpg";
 export const IntegratedTechnologyExploration = () => {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
+  // Business Use Cases mapped from existing Journey and Business Cases sections
+  const businessUseCasesMapping = {
+    'no-code': {
+      title: 'Digital Foundation & Patient Experience',
+      gartnerPhase: 'Envision',
+      cases: [
+        'Contact Center Digital Transformation',
+        'Patient Portal & Communication Automation', 
+        'Appointment Scheduling & Coordination',
+        'Digital Forms & Data Collection',
+        'Basic Workflow Automation'
+      ],
+      realWorldExamples: [
+        'Jennifer - Treatment Inquiry (Multi-channel patient communication)',
+        'Maria - Urgent Referral (Digital referral processing)',
+        'Patient demographic data collection automation'
+      ]
+    },
+    'ai-assistants': {
+      title: 'Clinical Intelligence & Decision Support',
+      gartnerPhase: 'Engage',
+      cases: [
+        'Oncology Care Workflow Optimization',
+        'Complex Patient Referral & Onboarding',
+        'Clinical Documentation & Review',
+        'Intelligent Treatment Planning',
+        'Provider Matching & Network Optimization'
+      ],
+      realWorldExamples: [
+        'Sarah - Routine Screening (Personalized care coordination)',
+        'Michael - Complex Case (Multi-specialty care coordination)',
+        'Robert - Complex Onboarding (Genomic testing & care team assembly)'
+      ]
+    },
+    'automation': {
+      title: 'Operational Excellence & Process Optimization',
+      gartnerPhase: 'Engage',
+      cases: [
+        'Insurance Verification & Benefit Analysis',
+        'Medical Records Acquisition & Management',
+        'Pre-authorization & Billing Automation',
+        'Compliance Monitoring & Reporting',
+        'Quality Assurance Workflows'
+      ],
+      realWorldExamples: [
+        'Real-time insurance eligibility verification',
+        'Automated medical record requests via HIE',
+        'AI-powered pre-authorization documentation'
+      ]
+    },
+    'analytics': {
+      title: 'Predictive Intelligence & Insights',
+      gartnerPhase: 'Scale',
+      cases: [
+        'Patient Risk Stratification & Assessment',
+        'Treatment Outcomes Analysis & Prediction',
+        'Resource Optimization & Capacity Planning',
+        'Performance Analytics & ROI Measurement',
+        'Population Health Management'
+      ],
+      realWorldExamples: [
+        'Clinical priority assessment and routing',
+        'Predictive resource allocation for complex cases',
+        'Treatment pathway optimization based on outcomes'
+      ]
+    },
+    'mcp': {
+      title: 'Enterprise Integration & Interoperability',
+      gartnerPhase: 'Scale',
+      cases: [
+        'EHR Integration & Data Harmonization',
+        'Multi-System Care Coordination',
+        'Healthcare Data Standardization',
+        'Cross-Platform Interoperability',
+        'Enterprise API Management'
+      ],
+      realWorldExamples: [
+        'Unified patient view across multiple systems',
+        'Seamless data exchange between specialists',
+        'Integrated care team communication platforms'
+      ]
+    },
+    'agentic': {
+      title: 'Autonomous Operations & Self-Optimization',
+      gartnerPhase: 'Scale',
+      cases: [
+        'Intelligent Autonomous Triage Systems',
+        'Self-Managing Care Coordination',
+        'Predictive Resource Allocation',
+        'Self-Optimizing Clinical Workflows',
+        'Autonomous Quality Improvement'
+      ],
+      realWorldExamples: [
+        'David - Urgent Support (Autonomous escalation and routing)',
+        'Self-adjusting appointment scheduling based on patterns',
+        'Autonomous care protocol optimization'
+      ]
+    }
+  };
+
   // Pure Technology Categories Aligned with Gartner Framework
   const technologyEcosystem = {
     "Artificial Intelligence & ML": {
@@ -352,29 +452,33 @@ export const IntegratedTechnologyExploration = () => {
                       </div>
                       
                       <div className="grid md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                          <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
-                            <Target className="w-3 h-3" />
-                            Business Outcomes
-                          </h5>
-                          <div className="space-y-1">
-                            {details.businessOutcomes.map((outcome, index) => (
-                              <div key={index} className="text-xs p-2 bg-muted/50 rounded">{outcome}</div>
-                            ))}
-                          </div>
-                        </div>
-                        
                          <div>
                            <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
-                             <Users className="w-3 h-3" />
-                             Journey Use Cases
+                             <Target className="w-3 h-3 text-genie-primary" />
+                             Real Business Use Cases
                            </h5>
                            <div className="space-y-1">
-                             {(('journeyUseCases' in details ? details.journeyUseCases : details.businessOutcomes) as string[]).map((useCase, index) => (
-                               <div key={index} className="text-xs p-2 bg-blue-50 dark:bg-blue-950/20 rounded">{useCase}</div>
+                             {businessUseCasesMapping[category]?.cases.map((useCase, index) => (
+                               <div key={index} className="text-xs p-2 bg-genie-primary/5 rounded border border-genie-primary/10">{useCase}</div>
+                             )) || details.businessOutcomes.map((outcome, index) => (
+                               <div key={index} className="text-xs p-2 bg-muted/50 rounded">{outcome}</div>
                              ))}
                            </div>
                          </div>
+                        
+                          <div>
+                            <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
+                              <Users className="w-3 h-3 text-genie-teal" />
+                              Real-World Examples
+                            </h5>
+                            <div className="space-y-1">
+                              {businessUseCasesMapping[category]?.realWorldExamples.map((example, index) => (
+                                <div key={index} className="text-xs p-2 bg-genie-teal/5 rounded border border-genie-teal/10">{example}</div>
+                              )) || details.businessOutcomes.slice(0, 3).map((outcome, index) => (
+                                <div key={index} className="text-xs p-2 bg-blue-50 dark:bg-blue-950/20 rounded">{outcome}</div>
+                              ))}
+                            </div>
+                          </div>
                       </div>
                       
                        <div className="mb-4">
