@@ -377,15 +377,32 @@ export const IntegratedTechnologyExploration = () => {
         <div className="text-center mb-12">
           <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
             <Zap className="w-4 h-4 mr-2" />
-            Comprehensive Technology Ecosystem
+            Technology Ecosystem
           </Badge>
-          <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-            Technology Stack <span className="text-genie-primary">Blueprint & Journey</span>
+          <h2 className="text-4xl lg:text-6xl font-bold mb-6">
+            Technology Stack <span className="text-genie-primary">& Integration Blueprint</span>
           </h2>
-          <p className="text-lg lg:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            Complete technology ecosystem mapping across healthcare innovation, customer systems, and enterprise platforms 
-            following Gartner value framework implementation.
+          <p className="text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
+            Complete technology ecosystem mapping across healthcare innovation, following Gartner value framework 
+            with 10+ integrated tools and real-world business applications.
           </p>
+          
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+            <Link to="/case-studies">
+              <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white px-8 py-4">
+                <BarChart3 className="w-5 h-5 mr-2" />
+                See What I Built
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </Link>
+            <Link to="/journey">
+              <Button variant="outline" size="lg" className="px-8 py-4">
+                <Calendar className="w-5 h-5 mr-2" />
+                View Complete Journey
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* Legend: Technology → Gartner Framework → Business Value */}
