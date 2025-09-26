@@ -14443,7 +14443,9 @@ export type Database = {
         Returns: Json
       }
       bulk_deactivate_patient_enrollments: {
-        Args: { p_enrollment_ids: string[]; p_reason?: string }
+        Args:
+          | { p_deactivation_reason?: string; p_facility_id: string }
+          | { p_enrollment_ids: string[]; p_reason?: string }
         Returns: Json
       }
       calculate_enrollment_progress: {
