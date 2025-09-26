@@ -76,6 +76,24 @@ export const Footer = () => {
               <p className="text-sm text-muted-foreground">
                 Ready to embark on your AI transformation journey?
               </p>
+              
+              {/* Contact Information */}
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center space-x-2">
+                  <Mail className="h-3 w-3 text-primary" />
+                  <a 
+                    href="mailto:genieaiexpermentationhub@gmail.com" 
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    genieaiexpermentationhub@gmail.com
+                  </a>
+                </div>
+                <div className="text-xs text-muted-foreground pl-5">
+                  936 Villageview Lane<br />
+                  Cary, NC 27519
+                </div>
+              </div>
+
               <div className="flex space-x-2">
                 <Button size="sm" variant="ghost" className="p-2">
                   <Linkedin className="h-4 w-4" />
