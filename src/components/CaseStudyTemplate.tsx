@@ -553,15 +553,6 @@ const CaseStudyTemplate = ({ caseStudyData }: CaseStudyTemplateProps) => {
   const [activeStep, setActiveStep] = useState(0);
   const [activeTab, setActiveTab] = useState("overview");
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "live": return "bg-green-500";
-      case "testing": return "bg-yellow-500";
-      case "development": return "bg-blue-500";
-      case "planned": return "bg-gray-500";
-      default: return "bg-gray-500";
-    }
-  };
 
   const getApproachColor = (approach: string) => {
     switch (approach) {
@@ -727,11 +718,6 @@ const CaseStudyTemplate = ({ caseStudyData }: CaseStudyTemplateProps) => {
                             <span className="text-xs font-bold text-genie-primary">{step.id}</span>
                           </div>
                         </div>
-                        {/* Implementation Status */}
-                        <div className="mt-2 flex items-center gap-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(step.implementationStatus)}`}></div>
-                          <span className="text-xs capitalize font-medium">{step.implementationStatus}</span>
-                        </div>
                       </div>
 
                       {/* Step Content */}
@@ -743,8 +729,6 @@ const CaseStudyTemplate = ({ caseStudyData }: CaseStudyTemplateProps) => {
                             {step.approach === 'hybrid' && <Zap className="w-3 h-3 mr-1" />}
                             {step.approach}
                           </Badge>
-                          <Badge variant="secondary" className="text-xs">{step.time}</Badge>
-                          <Badge variant="outline" className="text-xs">{step.roi}</Badge>
                           <div className="flex items-center gap-1">
                             <EmotionIcon className={`w-4 h-4 ${
                               step.emotion === 'critical' ? 'text-red-500' : 
