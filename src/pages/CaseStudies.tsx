@@ -1,20 +1,23 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
-
+import { PatientOnboardingCaseStudy } from "@/components/CaseStudyTemplate";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, TrendingUp, Users, Zap, Target, Shield, Activity, ArrowLeft, Award, BarChart3 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowRight, TrendingUp, Users, Zap, Target, Shield, Activity, ArrowLeft, Award, BarChart3, FileText, UserCheck } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import successStoriesBg from "@/assets/hero-success-stories.jpg";
 
 const CaseStudies = () => {
+  const [activeTab, setActiveTab] = useState("overview");
+
   useEffect(() => {
-    document.title = "Case Studies - Genie AI Experimentation HUB";
+    document.title = "Case Studies - AI Implementation Success Stories - Genie AI Hub";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Real AI implementation success stories - proven results across healthcare, manufacturing, and enterprise environments.');
+      metaDescription.setAttribute('content', 'Detailed case studies of successful AI implementations in healthcare. See step-by-step transformation of patient onboarding with 75% efficiency gains and 95% accuracy.');
     }
   }, []);
 
@@ -185,64 +188,148 @@ const CaseStudies = () => {
       </section>
       
       <main>
-        {/* Case Studies Grid */}
-        <section className="py-16 lg:py-24">
+        {/* Main Content Tabs */}
+        <section className="py-8 lg:py-12">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            
-            <div className="grid lg:grid-cols-2 gap-8">
-              {caseStudies.map((study, index) => {
-                const IconComponent = study.icon;
-                return (
-                  <Card key={study.id} className="p-8 border-genie-primary/20 hover:border-genie-primary/40 transition-colors">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto mb-8">
+                <TabsTrigger value="overview" className="flex items-center gap-2">
+                  <BarChart3 className="w-4 h-4" />
+                  Case Studies Overview
+                </TabsTrigger>
+                <TabsTrigger value="detailed" className="flex items-center gap-2">
+                  <FileText className="w-4 h-4" />
+                  Detailed Analysis
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="overview" className="mt-8">
+                {/* Case Studies Grid */}
+                <div className="grid lg:grid-cols-2 gap-8">
+                  {/* Featured Case Study Card */}
+                  <Card className="lg:col-span-2 p-8 border-genie-primary/20 hover:border-genie-primary/40 transition-colors bg-gradient-to-br from-genie-primary/5 to-genie-secondary/5">
                     <div className="flex items-start gap-4 mb-6">
                       <div className="p-3 bg-genie-primary/10 rounded-lg">
-                        <IconComponent className="w-6 h-6 text-genie-primary" />
+                        <UserCheck className="w-6 h-6 text-genie-primary" />
                       </div>
                       <div className="flex-1">
-                        <Badge variant="outline" className="mb-2 text-xs">
-                          {study.category}
+                        <Badge className="mb-2 text-xs bg-green-100 text-green-800">
+                          Featured • Live Implementation
                         </Badge>
                         <h3 className="text-2xl font-bold text-foreground mb-2">
-                          {study.title}
+                          AI-Powered Patient Onboarding System
                         </h3>
                         <p className="text-genie-primary font-semibold mb-4">
-                          {study.impact}
+                          75% efficiency gain with 95% accuracy
                         </p>
                       </div>
                     </div>
                     
                     <p className="text-muted-foreground mb-6 leading-relaxed">
-                      {study.description}
+                      Comprehensive transformation of healthcare patient onboarding through hybrid AI-automation approach. 
+                      Features step-by-step implementation guide, technology stack analysis, and Gartner value framework integration.
                     </p>
                     
                     <div className="mb-6">
-                      <h4 className="font-semibold text-foreground mb-3">Key Metrics</h4>
-                      <div className="grid grid-cols-3 gap-4">
-                        {study.metrics.map((metric, i) => (
-                          <div key={i} className="text-center p-3 bg-muted/50 rounded-lg">
-                            <div className="text-xl font-bold text-genie-primary">{metric.value}</div>
-                            <div className="text-xs text-muted-foreground">{metric.label}</div>
-                          </div>
-                        ))}
+                      <h4 className="font-semibold text-foreground mb-3">Key Achievements</h4>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
+                          <div className="text-xl font-bold text-genie-primary">75%</div>
+                          <div className="text-xs text-muted-foreground">Faster Processing</div>
+                        </div>
+                        <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
+                          <div className="text-xl font-bold text-genie-primary">95%</div>
+                          <div className="text-xs text-muted-foreground">Data Accuracy</div>
+                        </div>
+                        <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
+                          <div className="text-xl font-bold text-genie-primary">$2.3M</div>
+                          <div className="text-xs text-muted-foreground">Annual Savings</div>
+                        </div>
+                        <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
+                          <div className="text-xl font-bold text-genie-primary">8.7/10</div>
+                          <div className="text-xs text-muted-foreground">Patient Rating</div>
+                        </div>
                       </div>
                     </div>
                     
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {study.tags.map((tag, i) => (
-                        <Badge key={i} variant="secondary" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
+                      <Badge variant="secondary" className="text-xs">Hybrid AI-Automation</Badge>
+                      <Badge variant="secondary" className="text-xs">Healthcare Transformation</Badge>
+                      <Badge variant="secondary" className="text-xs">Gartner Framework</Badge>
+                      <Badge variant="secondary" className="text-xs">Step-by-Step Guide</Badge>
                     </div>
                     
-                    <Button variant="outline" className="w-full">
+                    <Button 
+                      variant="default" 
+                      className="w-full bg-genie-primary hover:bg-genie-primary/90"
+                      onClick={() => setActiveTab("detailed")}
+                    >
                       <ArrowRight className="w-4 h-4 mr-2" />
-                      Learn More
+                      View Detailed Case Study
                     </Button>
                   </Card>
-                );
-              })}
-            </div>
+
+                  {/* Other Case Studies */}
+                  {caseStudies.map((study, index) => {
+                    const IconComponent = study.icon;
+                    return (
+                      <Card key={study.id} className="p-8 border-genie-primary/20 hover:border-genie-primary/40 transition-colors">
+                        <div className="flex items-start gap-4 mb-6">
+                          <div className="p-3 bg-genie-primary/10 rounded-lg">
+                            <IconComponent className="w-6 h-6 text-genie-primary" />
+                          </div>
+                          <div className="flex-1">
+                            <Badge variant="outline" className="mb-2 text-xs">
+                              {study.category}
+                            </Badge>
+                            <h3 className="text-2xl font-bold text-foreground mb-2">
+                              {study.title}
+                            </h3>
+                            <p className="text-genie-primary font-semibold mb-4">
+                              {study.impact}
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <p className="text-muted-foreground mb-6 leading-relaxed">
+                          {study.description}
+                        </p>
+                        
+                        <div className="mb-6">
+                          <h4 className="font-semibold text-foreground mb-3">Key Metrics</h4>
+                          <div className="grid grid-cols-3 gap-4">
+                            {study.metrics.map((metric, i) => (
+                              <div key={i} className="text-center p-3 bg-muted/50 rounded-lg">
+                                <div className="text-xl font-bold text-genie-primary">{metric.value}</div>
+                                <div className="text-xs text-muted-foreground">{metric.label}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {study.tags.map((tag, i) => (
+                            <Badge key={i} variant="secondary" className="text-xs">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                        
+                        <Button variant="outline" className="w-full">
+                          <ArrowRight className="w-4 h-4 mr-2" />
+                          Coming Soon
+                        </Button>
+                      </Card>
+                    );
+                  })}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="detailed" className="mt-8">
+                {/* Detailed Patient Onboarding Case Study */}
+                <PatientOnboardingCaseStudy />
+              </TabsContent>
+            </Tabs>
           </div>
         </section>
 
