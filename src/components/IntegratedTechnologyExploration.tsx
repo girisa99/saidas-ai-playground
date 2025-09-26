@@ -41,102 +41,102 @@ import techJourneyBg from "@/assets/journey-phase-02-curiosity-artwork.jpg";
 export const IntegratedTechnologyExploration = () => {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
-  // Comprehensive Technology Ecosystem with Journey Integration
+  // Pure Technology Categories Aligned with Gartner Framework
   const technologyEcosystem = {
-    "Healthcare Innovation": {
+    "Artificial Intelligence & ML": {
       icon: Brain,
       color: "text-genie-primary",
       bgColor: "bg-genie-primary/10",
       borderColor: "border-genie-primary/20",
-      description: "AI-driven healthcare transformation and patient care optimization",
-      journeyPhase: "Envision → Scale",
+      description: "AI models, machine learning frameworks, and intelligent automation",
+      journeyPhase: "Envision",
       coreStack: {
-        "AI Models": ["GPT-4", "Claude Sonnet", "Gemini Pro", "Healthcare LLMs"],
-        "Development": ["React + TypeScript", "Supabase", "Tailwind CSS", "Vite"],
-        "Integrations": ["CMS APIs", "DocuSign", "Insurance APIs", "ICD/FDA", "Twilio"]
+        "AI Models": ["GPT-4", "Claude Sonnet", "Gemini Pro", "Small Language Models"],
+        "ML Frameworks": ["TensorFlow", "PyTorch", "Scikit-learn", "Vector Databases"],
+        "AI Tools": ["LangChain", "LangWatch", "Arize Analytics", "Prompt Engineering"]
       },
-      useCases: ["Patient Onboarding", "Clinical Workflows", "Provider Verification", "Insurance Processing"],
-      bestPractices: ["HIPAA Compliance", "Data Privacy", "Audit Trails", "Secure APIs"]
+      businessOutcomes: ["Healthcare Diagnostics", "Customer Support Automation", "Content Generation", "Predictive Analytics"],
+      gartnerValue: ["Innovation Discovery", "Proof of Concept", "AI Strategy Development"]
     },
     
-    "Customer Onboarding": {
-      icon: Users,
+    "Frontend Development": {
+      icon: Code2,
       color: "text-genie-secondary",
       bgColor: "bg-genie-secondary/10",
       borderColor: "border-genie-secondary/20",
-      description: "Intelligent customer acquisition and engagement automation",
-      journeyPhase: "Engage → Scale",
+      description: "Modern web frameworks, UI libraries, and development tools",
+      journeyPhase: "Engage",
       coreStack: {
-        "AI Tools": ["LLM APIs", "Small Language Models", "MCP", "n8n Automation"],
-        "Development": ["React + TypeScript", "PostgreSQL", "API Middleware", "Real-time Validation"],
-        "Integrations": ["Experian API", "CMS Verification", "Twilio SMS/Email", "Data Import Tools"]
+        "Frameworks": ["React", "TypeScript", "Vite", "Next.js"],
+        "UI Libraries": ["Tailwind CSS", "Shadcn/UI", "Radix UI", "Lucide Icons"],
+        "Tools": ["Loveable", "Cursor IDE", "GitHub Copilot", "ESLint"]
       },
-      useCases: ["Welcome Sequences", "Data Validation", "Automated Verification", "Progress Tracking"],
-      bestPractices: ["Progressive Disclosure", "Error Handling", "Accessibility", "Mobile-First"]
+      businessOutcomes: ["Patient Portals", "Customer Onboarding Apps", "Admin Dashboards", "Mobile-First Interfaces"],
+      gartnerValue: ["User Experience Optimization", "Rapid Prototyping", "Digital Transformation"]
     },
     
-    "Customer Support": {
-      icon: Phone,
+    "Backend Infrastructure": {
+      icon: Network,
       color: "text-genie-accent",
       bgColor: "bg-genie-accent/10",
       borderColor: "border-genie-accent/20",
-      description: "Multi-channel AI-powered support with intelligent routing",
+      description: "Server architecture, APIs, microservices, and cloud platforms",
       journeyPhase: "Engage → Scale",
       coreStack: {
-        "AI Systems": ["Natural Language IVR", "AI Gateway", "Arize Analytics", "LangWatch"],
-        "Development": ["React Components", "Real-time APIs", "WebSocket", "Event Streaming"],
-        "Integrations": ["Twilio Voice/SMS/WhatsApp", "Case Management", "Identity Verification"]
+        "Platforms": ["Supabase", "Node.js", "Docker", "Kubernetes"],
+        "APIs": ["REST APIs", "GraphQL", "WebSocket", "Edge Functions"],
+        "Cloud": ["AWS", "Vercel", "Railway", "API Gateways"]
       },
-      useCases: ["Smart IVR", "Case Routing", "Multi-channel Support", "Automated Resolution"],
-      bestPractices: ["Response Time SLAs", "Escalation Paths", "Quality Monitoring", "Customer Feedback"]
+      businessOutcomes: ["Scalable Healthcare Systems", "Real-time Communication", "API Integrations", "Multi-tenant Architecture"],
+      gartnerValue: ["Platform Assessment", "Scalability Planning", "Integration Strategy"]
     },
     
-    "No-Code Platforms": {
-      icon: Code2,
+    "Data Management": {
+      icon: Database,
       color: "text-genie-teal",
       bgColor: "bg-genie-teal/10",
       borderColor: "border-genie-teal/20",
-      description: "Rapid prototyping and development acceleration platforms",
-      journeyPhase: "Envision → Engage",
+      description: "Database systems, data processing, analytics, and storage solutions",
+      journeyPhase: "Engage → Scale",
       coreStack: {
-        "Platforms": ["Loveable", "Bolt AI", "Bubble", "Cursor IDE"],
-        "Development": ["TypeScript", "Modern Frameworks", "Component Libraries", "Design Systems"],
-        "Integrations": ["GitHub", "API Connectors", "Database ORM", "Authentication"]
+        "Databases": ["PostgreSQL", "Supabase DB", "Vector DBs", "Redis"],
+        "Analytics": ["Business Intelligence", "Real-time Dashboards", "ETL Pipelines"],
+        "Storage": ["Cloud Storage", "File Management", "Backup Systems", "CDN"]
       },
-      useCases: ["Rapid Prototyping", "MVP Development", "Component Libraries", "Design Systems"],
-      bestPractices: ["Code Quality", "Scalability Planning", "Testing Strategy", "Documentation"]
+      businessOutcomes: ["Patient Data Management", "Business Intelligence", "Compliance Reporting", "Performance Analytics"],
+      gartnerValue: ["Data Strategy", "Analytics Capabilities", "ROI Measurement"]
     },
     
-    "Data & Analytics": {
-      icon: Database,
+    "Security & Compliance": {
+      icon: Shield,
       color: "text-genie-cyan",
       bgColor: "bg-genie-cyan/10",
       borderColor: "border-genie-cyan/20",
-      description: "Advanced data processing and business intelligence",
-      journeyPhase: "Engage → Scale",
+      description: "Security frameworks, compliance tools, and privacy protection",
+      journeyPhase: "Scale",
       coreStack: {
-        "Storage": ["PostgreSQL", "Vector Databases", "Supabase", "Cloud Storage"],
-        "Analytics": ["Business Intelligence", "ROI Analytics", "Real-time Dashboards", "Labeling Studio"],
-        "Processing": ["ETL Pipelines", "Data Validation", "Batch Processing", "Stream Processing"]
+        "Security": ["Zero Trust", "Encryption", "Identity Management", "OAuth"],
+        "Compliance": ["HIPAA", "GDPR", "SOC2", "Audit Trails"],
+        "Monitoring": ["Security Scanning", "Threat Detection", "Access Control"]
       },
-      useCases: ["Business Intelligence", "Predictive Analytics", "Data Visualization", "Performance Monitoring"],
-      bestPractices: ["Data Governance", "Privacy Protection", "Backup Strategies", "Performance Optimization"]
+      businessOutcomes: ["Healthcare Compliance", "Data Privacy", "Risk Management", "Regulatory Adherence"],
+      gartnerValue: ["Risk Mitigation", "Compliance Assurance", "Trust Building"]
     },
     
-    "Enterprise Systems": {
-      icon: Building,
+    "Integration & Communication": {
+      icon: Phone,
       color: "text-genie-primary",
       bgColor: "bg-genie-primary/10",
       borderColor: "border-genie-primary/20",
-      description: "Enterprise-grade infrastructure and compliance frameworks",
+      description: "API integrations, communication platforms, and workflow automation",
       journeyPhase: "Scale",
       coreStack: {
-        "Infrastructure": ["Kubernetes", "Docker", "Cloud Platforms", "API Gateways"],
-        "Security": ["Identity Management", "Encryption", "Audit Logging", "Compliance Frameworks"],
-        "Integration": ["ERP Systems", "CRM Platforms", "Legacy System Connectors", "Microservices"]
+        "Communications": ["Twilio", "SendGrid", "WhatsApp API", "SMS/Voice"],
+        "Integrations": ["CMS APIs", "DocuSign", "Insurance APIs", "ERP Connectors"],
+        "Automation": ["n8n", "Zapier", "Workflow Engines", "Event Streaming"]
       },
-      useCases: ["System Integration", "Compliance Management", "Security Auditing", "Performance Scaling"],
-      bestPractices: ["Zero Trust Security", "Disaster Recovery", "Change Management", "Monitoring"]
+      businessOutcomes: ["Multi-channel Support", "Document Automation", "Customer Communications", "System Integration"],
+      gartnerValue: ["Business Process Optimization", "Operational Efficiency", "Value Realization"]
     }
   };
 
@@ -248,11 +248,11 @@ export const IntegratedTechnologyExploration = () => {
                         <div>
                           <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
                             <Target className="w-3 h-3" />
-                            Use Cases
+                            Business Outcomes
                           </h5>
                           <div className="space-y-1">
-                            {details.useCases.map((useCase, index) => (
-                              <div key={index} className="text-xs p-2 bg-muted/50 rounded">{useCase}</div>
+                            {details.businessOutcomes.map((outcome, index) => (
+                              <div key={index} className="text-xs p-2 bg-muted/50 rounded">{outcome}</div>
                             ))}
                           </div>
                         </div>
@@ -260,11 +260,11 @@ export const IntegratedTechnologyExploration = () => {
                         <div>
                           <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
                             <CheckCircle className="w-3 h-3" />
-                            Best Practices
+                            Gartner Value
                           </h5>
                           <div className="space-y-1">
-                            {details.bestPractices.map((practice, index) => (
-                              <div key={index} className="text-xs p-2 bg-green-50 dark:bg-green-950/20 rounded">{practice}</div>
+                            {details.gartnerValue.map((value, index) => (
+                              <div key={index} className="text-xs p-2 bg-green-50 dark:bg-green-950/20 rounded">{value}</div>
                             ))}
                           </div>
                         </div>
