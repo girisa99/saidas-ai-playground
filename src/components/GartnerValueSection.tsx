@@ -384,9 +384,6 @@ export const GartnerValueSection = () => {
 
         {/* CTA */}
         <div className="text-center">
-          <p className="text-base sm:text-lg text-muted-foreground mb-6 px-4">
-            Ready to explore how the Gartner Value Equation drives my AI experimentation framework?
-          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/journey">
               <Button size="lg" className="bg-primary hover:bg-primary-hover text-primary-foreground px-8 py-4 text-lg font-semibold genie-glow w-full sm:w-auto">
