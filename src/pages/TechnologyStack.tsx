@@ -1,6 +1,6 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
-import { TechnologyStackSection } from "@/components/TechnologyStackSection";
+import { TechnologyEcosystemInfographic } from "@/components/TechnologyEcosystemInfographic";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -71,8 +71,8 @@ const TechnologyStack = () => {
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-              Discover the AI-powered tools and platforms that are making software development accessible 
-              to business professionals without deep technical backgrounds.
+              Comprehensive AI experimentation ecosystem enabling rapid innovation from concept to enterprise deployment 
+              through cutting-edge no-code platforms, agentic systems, and scalable infrastructure.
             </p>
             
             {/* Tech Highlights Grid - Mobile Responsive */}
@@ -126,7 +126,7 @@ const TechnologyStack = () => {
       </section>
       
       <main>
-        <TechnologyStackSection />
+        <TechnologyEcosystemInfographic />
       </main>
       <Footer />
     </div>
