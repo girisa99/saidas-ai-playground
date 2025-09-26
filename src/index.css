@@ -110,6 +110,8 @@
     /* Enhanced Genie Theme Colors */
     --genie-dark: 217 50% 15%;
     --genie-primary: 217 50% 20%;
+    --genie-teal: 180 85% 65%;
+    --genie-cyan: 195 80% 50%;
     --genie-accent: 180 85% 65%;
     --genie-secondary: 195 80% 50%;
     --genie-muted: 220 15% 85%;
@@ -170,6 +172,8 @@
     /* Dark Genie Colors */
     --genie-dark: 217 50% 5%;
     --genie-primary: 180 85% 65%;
+    --genie-teal: 195 80% 70%;
+    --genie-cyan: 210 75% 60%;
     --genie-accent: 195 80% 70%;
     --genie-secondary: 210 75% 60%;
     --genie-muted: 217 40% 25%;

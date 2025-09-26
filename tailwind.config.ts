@@ -88,6 +88,8 @@ export default {
         },
         "genie-dark": "hsl(var(--genie-dark))",
         "genie-primary": "hsl(var(--genie-primary))",
+        "genie-teal": "hsl(var(--genie-teal))",
+        "genie-cyan": "hsl(var(--genie-cyan))",
         "genie-accent": "hsl(var(--genie-accent))",
         "genie-secondary": "hsl(var(--genie-secondary))",
         "genie-muted": "hsl(var(--genie-muted))",
