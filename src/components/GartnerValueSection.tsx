@@ -172,9 +172,8 @@ export const GartnerValueSection = () => {
             <div ref={scrollRef} className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-8">
               {/* Step 1: Listen & Sense */}
               <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-primary/20 hover:border-genie-primary/40 snap-center">
-                <div className="relative w-16 h-16 bg-gradient-to-br from-genie-primary to-genie-primary/80 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
-                  <span className="relative text-xl font-bold text-white z-10">1</span>
+                <div className="relative w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-background/60">
+                  <span className="relative text-xl font-bold">1</span>
                 </div>
                 <h4 className="font-bold text-lg mb-2 text-foreground">Listen & Sense</h4>
                 <p className="text-sm text-muted-foreground mb-4">Understanding stakeholder priorities and market demands</p>
@@ -185,9 +184,8 @@ export const GartnerValueSection = () => {
 
               {/* Step 2: Assess Materiality */}
               <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-teal/20 hover:border-genie-teal/40 snap-center">
-                <div className="relative w-16 h-16 bg-gradient-to-br from-genie-teal to-genie-teal/80 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <div className="absolute inset-0 bg-black/20 rounded-full"></div>
-                  <span className="relative text-xl font-bold text-white z-10 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">2</span>
+                <div className="relative w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-background/60">
+                  <span className="relative text-xl font-bold">2</span>
                 </div>
                 <h4 className="font-bold text-lg mb-2 text-foreground">Assess Materiality</h4>
                 <p className="text-sm text-muted-foreground mb-4">Evaluating business impact and resource requirements</p>
@@ -198,9 +196,8 @@ export const GartnerValueSection = () => {
 
               {/* Step 3: Develop Options */}
               <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-cyan/20 hover:border-genie-cyan/40 snap-center">
-                <div className="relative w-16 h-16 bg-gradient-to-br from-genie-cyan to-genie-cyan/80 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <div className="absolute inset-0 bg-black/20 rounded-full"></div>
-                  <span className="relative text-xl font-bold text-white z-10 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">3</span>
+                <div className="relative w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-background/60">
+                  <span className="relative text-xl font-bold">3</span>
                 </div>
                 <h4 className="font-bold text-lg mb-2 text-foreground">Develop Options</h4>
                 <p className="text-sm text-muted-foreground mb-4">Creating strategic AI implementation pathways</p>
@@ -211,9 +208,8 @@ export const GartnerValueSection = () => {
 
               {/* Step 4: Assess Trade-Offs */}
               <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-purple-500/20 hover:border-purple-500/40 snap-center">
-                <div className="relative w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
-                  <span className="relative text-xl font-bold text-white z-10">4</span>
+                <div className="relative w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-background/60">
+                  <span className="relative text-xl font-bold">4</span>
                 </div>
                 <h4 className="font-bold text-lg mb-2 text-foreground">Assess Trade-Offs</h4>
                 <p className="text-sm text-muted-foreground mb-4">Balancing innovation speed with risk management</p>
@@ -224,9 +220,8 @@ export const GartnerValueSection = () => {
 
               {/* Step 5: Measure Actual Give/Get Gap */}
               <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-orange-500/20 hover:border-orange-500/40 snap-center">
-                <div className="relative w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
-                  <span className="relative text-xl font-bold text-white z-10">5</span>
+                <div className="relative w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-background/60">
+                  <span className="relative text-xl font-bold">5</span>
                 </div>
                 <h4 className="font-bold text-lg mb-2 text-foreground">Measure Gap</h4>
                 <p className="text-sm text-muted-foreground mb-4">Tracking actual value delivery vs. expectations</p>
@@ -237,9 +232,8 @@ export const GartnerValueSection = () => {
 
               {/* Step 6: Adjust & Iterate */}
               <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-emerald-500/20 hover:border-emerald-500/40 snap-center">
-                <div className="relative w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
-                  <span className="relative text-xl font-bold text-white z-10">6</span>
+                <div className="relative w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-background/60">
+                  <span className="relative text-xl font-bold">6</span>
                 </div>
                 <h4 className="font-bold text-lg mb-2 text-foreground">Adjust & Iterate</h4>
                 <p className="text-sm text-muted-foreground mb-4">Continuous optimization and scaling successful models</p>
