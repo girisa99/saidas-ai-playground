@@ -312,13 +312,18 @@ const About = () => {
                   that combines deep technical expertise with strategic business acumen, focusing on implementing 
                   innovative technology solutions to streamline operations and accelerate therapeutic development.
                 </p>
+                <p className="mb-6">
+                  Currently, I'm channeling this extensive healthcare technology experience into the <strong className="text-genie-cyan">GenieAI Experimentation Hub</strong> - 
+                  a comprehensive platform that demonstrates how AI can revolutionize healthcare innovation. This hub serves as a knowledge-sharing 
+                  initiative where I document and showcase practical AI applications, from proof-of-concept to enterprise-scale solutions, 
+                  helping organizations understand the transformative potential of AI in healthcare technology and beyond.
+                </p>
                 <p>
                   Throughout my journey, I've cultivated strong entrepreneurial skills and a passion for 
-                  identifying opportunities where technology can solve complex business challenges. This 
-                  entrepreneurial mindset has driven me to explore emerging technologies, develop innovative 
-                  solutions, and bridge the gap between cutting-edge technical capabilities and real-world 
-                  healthcare applications. My approach emphasizes practical innovation that delivers measurable 
-                  impact in therapeutic development and patient outcomes.
+                  identifying opportunities where technology can solve complex business challenges. The GenieAI Experimentation Hub 
+                  represents the culmination of this entrepreneurial mindset - bridging the gap between cutting-edge AI capabilities 
+                  and real-world healthcare applications. My approach emphasizes practical innovation that delivers measurable 
+                  impact in therapeutic development and patient outcomes, now enhanced by AI's exponential possibilities.
                 </p>
               </Card>
             </div>
@@ -347,9 +352,9 @@ const About = () => {
                   },
                   {
                     phase: "AI Innovation & Experimentation",
-                    companies: "GenieAI Experimentation Hub • Current Focus",
-                    focus: "Democratizing AI possibilities through practical experimentation",
-                    achievements: "Translating 21+ years of healthcare technology expertise into AI innovation frameworks",
+                    companies: "GenieAI Experimentation Hub • Current Initiative",
+                    focus: "Democratizing AI possibilities through practical experimentation and knowledge sharing",
+                    achievements: "Creating comprehensive AI application frameworks demonstrating healthcare transformation potential",
                     icon: Lightbulb,
                     color: "genie-cyan"
                   }
