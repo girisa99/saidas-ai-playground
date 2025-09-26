@@ -123,84 +123,104 @@ export const GartnerValueSection = () => {
           </div>
         </div>
 
-        {/* 6-Step Framework */}
+        {/* Steps for Value Framework */}
         <div className="mb-12 lg:mb-16">
           <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-foreground">
-            The 6-Step <span className="text-genie-primary">Enterprise Value Framework</span>
+            <span className="text-genie-primary">Steps for Value</span> Framework
           </h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Step 1: Listen & Sense */}
-            <Card className="p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-primary/20 hover:border-genie-primary/40">
-              <div className="w-12 h-12 bg-genie-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <div className="w-8 h-8 bg-genie-primary text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
-              </div>
-              <h4 className="font-bold text-lg mb-2 text-foreground">Listen & Sense</h4>
-              <p className="text-sm text-muted-foreground mb-4">Understanding stakeholder priorities and market demands</p>
-              <div className="flex justify-center">
-                <Eye className="w-5 h-5 text-genie-primary" />
-              </div>
-            </Card>
+          <div className="relative">
+            <div className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide">
+              {/* Step 1: Listen & Sense */}
+              <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-primary/20 hover:border-genie-primary/40 snap-center">
+                <div className="relative w-16 h-16 bg-gradient-to-br from-genie-primary to-genie-primary/80 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
+                  <span className="relative text-xl font-bold text-white z-10">1</span>
+                </div>
+                <h4 className="font-bold text-lg mb-2 text-foreground">Listen & Sense</h4>
+                <p className="text-sm text-muted-foreground mb-4">Understanding stakeholder priorities and market demands</p>
+                <div className="flex justify-center">
+                  <Eye className="w-6 h-6 text-genie-primary" />
+                </div>
+              </Card>
 
-            {/* Step 2: Assess Materiality */}
-            <Card className="p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-teal/20 hover:border-genie-teal/40">
-              <div className="w-12 h-12 bg-genie-teal/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <div className="w-8 h-8 bg-genie-teal text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
-              </div>
-              <h4 className="font-bold text-lg mb-2 text-foreground">Assess Materiality</h4>
-              <p className="text-sm text-muted-foreground mb-4">Evaluating business impact and resource requirements</p>
-              <div className="flex justify-center">
-                <BarChart3 className="w-5 h-5 text-genie-teal" />
-              </div>
-            </Card>
+              {/* Step 2: Assess Materiality */}
+              <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-teal/20 hover:border-genie-teal/40 snap-center">
+                <div className="relative w-16 h-16 bg-gradient-to-br from-genie-teal to-genie-teal/80 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
+                  <span className="relative text-xl font-bold text-white z-10">2</span>
+                </div>
+                <h4 className="font-bold text-lg mb-2 text-foreground">Assess Materiality</h4>
+                <p className="text-sm text-muted-foreground mb-4">Evaluating business impact and resource requirements</p>
+                <div className="flex justify-center">
+                  <BarChart3 className="w-6 h-6 text-genie-teal" />
+                </div>
+              </Card>
 
-            {/* Step 3: Develop Options */}
-            <Card className="p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-cyan/20 hover:border-genie-cyan/40">
-              <div className="w-12 h-12 bg-genie-cyan/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <div className="w-8 h-8 bg-genie-cyan text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
-              </div>
-              <h4 className="font-bold text-lg mb-2 text-foreground">Develop Options</h4>
-              <p className="text-sm text-muted-foreground mb-4">Creating strategic AI implementation pathways</p>
-              <div className="flex justify-center">
-                <Lightbulb className="w-5 h-5 text-genie-cyan" />
-              </div>
-            </Card>
+              {/* Step 3: Develop Options */}
+              <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-cyan/20 hover:border-genie-cyan/40 snap-center">
+                <div className="relative w-16 h-16 bg-gradient-to-br from-genie-cyan to-genie-cyan/80 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
+                  <span className="relative text-xl font-bold text-white z-10">3</span>
+                </div>
+                <h4 className="font-bold text-lg mb-2 text-foreground">Develop Options</h4>
+                <p className="text-sm text-muted-foreground mb-4">Creating strategic AI implementation pathways</p>
+                <div className="flex justify-center">
+                  <Lightbulb className="w-6 h-6 text-genie-cyan" />
+                </div>
+              </Card>
 
-            {/* Step 4: Assess Trade-Offs */}
-            <Card className="p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-purple-500/20 hover:border-purple-500/40">
-              <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</div>
-              </div>
-              <h4 className="font-bold text-lg mb-2 text-foreground">Assess Trade-Offs</h4>
-              <p className="text-sm text-muted-foreground mb-4">Balancing innovation speed with risk management</p>
-              <div className="flex justify-center">
-                <Scale className="w-5 h-5 text-purple-500" />
-              </div>
-            </Card>
+              {/* Step 4: Assess Trade-Offs */}
+              <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-purple-500/20 hover:border-purple-500/40 snap-center">
+                <div className="relative w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
+                  <span className="relative text-xl font-bold text-white z-10">4</span>
+                </div>
+                <h4 className="font-bold text-lg mb-2 text-foreground">Assess Trade-Offs</h4>
+                <p className="text-sm text-muted-foreground mb-4">Balancing innovation speed with risk management</p>
+                <div className="flex justify-center">
+                  <Scale className="w-6 h-6 text-purple-500" />
+                </div>
+              </Card>
 
-            {/* Step 5: Measure Actual Give/Get Gap */}
-            <Card className="p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-orange-500/20 hover:border-orange-500/40">
-              <div className="w-12 h-12 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <div className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</div>
-              </div>
-              <h4 className="font-bold text-lg mb-2 text-foreground">Measure Gap</h4>
-              <p className="text-sm text-muted-foreground mb-4">Tracking actual value delivery vs. expectations</p>
-              <div className="flex justify-center">
-                <Target className="w-5 h-5 text-orange-500" />
-              </div>
-            </Card>
+              {/* Step 5: Measure Actual Give/Get Gap */}
+              <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-orange-500/20 hover:border-orange-500/40 snap-center">
+                <div className="relative w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
+                  <span className="relative text-xl font-bold text-white z-10">5</span>
+                </div>
+                <h4 className="font-bold text-lg mb-2 text-foreground">Measure Gap</h4>
+                <p className="text-sm text-muted-foreground mb-4">Tracking actual value delivery vs. expectations</p>
+                <div className="flex justify-center">
+                  <Target className="w-6 h-6 text-orange-500" />
+                </div>
+              </Card>
 
-            {/* Step 6: Adjust & Iterate */}
-            <Card className="p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-emerald-500/20 hover:border-emerald-500/40">
-              <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <div className="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">6</div>
+              {/* Step 6: Adjust & Iterate */}
+              <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-emerald-500/20 hover:border-emerald-500/40 snap-center">
+                <div className="relative w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
+                  <span className="relative text-xl font-bold text-white z-10">6</span>
+                </div>
+                <h4 className="font-bold text-lg mb-2 text-foreground">Adjust & Iterate</h4>
+                <p className="text-sm text-muted-foreground mb-4">Continuous optimization and scaling successful models</p>
+                <div className="flex justify-center">
+                  <Rocket className="w-6 h-6 text-emerald-500" />
+                </div>
+              </Card>
+            </div>
+            
+            {/* Scroll indicator */}
+            <div className="flex justify-center mt-4">
+              <div className="flex gap-2">
+                <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
+                <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
+                <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
+                <div className="w-2 h-2 bg-genie-primary rounded-full"></div>
+                <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
+                <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
               </div>
-              <h4 className="font-bold text-lg mb-2 text-foreground">Adjust & Iterate</h4>
-              <p className="text-sm text-muted-foreground mb-4">Continuous optimization and scaling successful models</p>
-              <div className="flex justify-center">
-                <Rocket className="w-5 h-5 text-emerald-500" />
-              </div>
-            </Card>
+            </div>
           </div>
         </div>
 
