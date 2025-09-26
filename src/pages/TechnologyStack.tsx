@@ -112,7 +112,7 @@ const TechnologyStack = () => {
               <Button 
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 w-full sm:w-auto"
+                className="bg-transparent border-white/30 text-white hover:bg-white/10 hover:border-white/50 w-full sm:w-auto"
                 asChild
               >
                 <Link to="/case-studies">
