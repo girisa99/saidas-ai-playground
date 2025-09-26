@@ -181,7 +181,7 @@ const CaseStudies = () => {
                           <div className="text-xs text-muted-foreground">System Accuracy</div>
                         </div>
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
-                          <div className="text-xl font-bold text-genie-primary">85%</div>
+                          <div className="text-xl font-bold text-genie-primary">&gt;70%</div>
                           <div className="text-xs text-muted-foreground">Dev Cost Saved</div>
                         </div>
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
