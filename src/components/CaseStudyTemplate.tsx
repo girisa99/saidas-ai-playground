@@ -128,21 +128,21 @@ const patientOnboardingCaseStudy: CaseStudyData = {
   id: "patient-onboarding",
   title: "AI-Powered Patient Onboarding System",
   subtitle: "Transforming Healthcare Access Through Intelligent Automation",
-  description: "A comprehensive case study demonstrating how hybrid AI and automation approaches revolutionized patient onboarding, reducing processing time by 75% while improving accuracy to 95%.",
+  description: "A comprehensive case study demonstrating rapid AI-powered development of a fully functional patient enrollment application built in 3 days with 90% accuracy, saving over 70% development costs.",
   industry: "Healthcare",
   status: "mixed",
   icon: UserCheck,
   overview: {
     challenge: "Manual patient onboarding processes were causing 4-6 hour delays, 15% data entry errors, and poor patient experience with multiple touchpoints and communication gaps.",
     solution: "Implemented a hybrid AI-automation system combining intelligent triage, automated workflows, and personalized patient communication to streamline the entire onboarding journey.",
-    impact: "Achieved 75% reduction in processing time, 95% accuracy in data collection, and 85% improvement in patient satisfaction scores.",
+    impact: "Achieved functional application development in 3 days with 90% system accuracy and over 70% development cost savings.",
     timeline: "6-month phased implementation with continuous optimization"
   },
   metrics: {
-    efficiency: "75% faster processing",
-    accuracy: "95% data accuracy",
-    cost: "$2.3M annual savings",
-    satisfaction: "8.7/10 patient rating"
+    efficiency: "3 days to design, build & test",
+    accuracy: "90% system accuracy",
+    cost: ">70% dev cost saved",
+    satisfaction: "9.2/10 tech rating"
   },
   businessValue: {
     current: [
