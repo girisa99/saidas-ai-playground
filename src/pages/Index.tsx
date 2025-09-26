@@ -2,7 +2,7 @@ import { NavigationHeader } from "@/components/NavigationHeader";
 import { MultiHeroSection } from "@/components/MultiHeroSection";
 import { TrustSection } from "@/components/TrustSection";
 import { GartnerValueSection } from "@/components/GartnerValueSection";
-import { ContactForm } from "@/components/ContactForm";
+import { ContactModal } from "@/components/ContactModal";
 import { AIExperimentationBanner } from "@/components/AIExperimentationBanner";
 import { QuickStart } from "@/components/QuickStart";
 import { FAQ } from "@/components/FAQ";
@@ -30,12 +30,6 @@ const Index = () => {
         <GartnerValueSection />
         <QuickStart />
         
-        {/* Contact Section */}
-        <section id="contact-form" className="py-20 px-6 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
-          <div className="max-w-4xl mx-auto">
-            <ContactForm />
-          </div>
-        </section>
         
         <FAQ />
         {/* Simplified homepage - detailed sections moved to dedicated pages per UI/UX audit */}
