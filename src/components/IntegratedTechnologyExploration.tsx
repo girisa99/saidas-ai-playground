@@ -56,7 +56,42 @@ export const IntegratedTechnologyExploration = () => {
         "AI Tools": ["LangChain", "LangWatch", "Arize Analytics", "Prompt Engineering"]
       },
       businessOutcomes: ["Healthcare Diagnostics", "Customer Support Automation", "Content Generation", "Predictive Analytics"],
-      gartnerValue: ["Innovation Discovery", "Proof of Concept", "AI Strategy Development"]
+      gartnerValue: ["Innovation Discovery", "Proof of Concept", "AI Strategy Development"],
+      integrationBlueprint: "AI Model Selection → Training Pipeline → Inference Optimization → Performance Monitoring"
+    },
+
+    "MCP (Model Context Protocol)": {
+      icon: Network,
+      color: "text-blue-600",
+      bgColor: "bg-blue-50 dark:bg-blue-950/20",
+      borderColor: "border-blue-200 dark:border-blue-800",
+      description: "Standardized protocol for AI model context sharing and integration",
+      journeyPhase: "Envision → Engage",
+      coreStack: {
+        "Protocol Stack": ["MCP Server", "Context Bridges", "Tool Integration", "State Management"],
+        "Implementation": ["Claude Desktop", "VS Code Extensions", "API Connectors", "Data Sources"],
+        "Tools": ["File System Access", "Database Queries", "Web Scraping", "Custom Functions"]
+      },
+      businessOutcomes: ["Enhanced AI Context", "Cross-Platform Integration", "Tool Orchestration", "Workflow Automation"],
+      gartnerValue: ["Context Enhancement", "Tool Unification", "Productivity Acceleration"],
+      integrationBlueprint: "MCP Server Setup → Tool Registration → Context Bridge Configuration → AI Model Integration"
+    },
+
+    "Agentic AI": {
+      icon: Bot,
+      color: "text-purple-600",
+      bgColor: "bg-purple-50 dark:bg-purple-950/20",
+      borderColor: "border-purple-200 dark:border-purple-800",
+      description: "Autonomous AI agents with reasoning, planning, and execution capabilities",
+      journeyPhase: "Engage → Scale",
+      coreStack: {
+        "Agent Frameworks": ["LangGraph", "CrewAI", "AutoGen", "Multi-Agent Systems"],
+        "Planning & Reasoning": ["Chain of Thought", "Tree of Thought", "ReAct Framework", "Tool Use"],
+        "Orchestration": ["Task Planning", "Agent Coordination", "Workflow Management", "Result Synthesis"]
+      },
+      businessOutcomes: ["Autonomous Customer Service", "Healthcare Process Automation", "Complex Task Resolution", "Multi-step Workflows"],
+      gartnerValue: ["Process Automation", "Decision Support", "Operational Excellence"],
+      integrationBlueprint: "Agent Design → Tool Integration → Planning Logic → Execution Monitoring → Feedback Loops"
     },
     
     "Frontend Development": {
@@ -72,7 +107,8 @@ export const IntegratedTechnologyExploration = () => {
         "Tools": ["Loveable", "Cursor IDE", "GitHub Copilot", "ESLint"]
       },
       businessOutcomes: ["Patient Portals", "Customer Onboarding Apps", "Admin Dashboards", "Mobile-First Interfaces"],
-      gartnerValue: ["User Experience Optimization", "Rapid Prototyping", "Digital Transformation"]
+      gartnerValue: ["User Experience Optimization", "Rapid Prototyping", "Digital Transformation"],
+      integrationBlueprint: "Component Library → Design System → State Management → Performance Optimization → Testing"
     },
     
     "Backend Infrastructure": {
@@ -88,7 +124,8 @@ export const IntegratedTechnologyExploration = () => {
         "Cloud": ["AWS", "Vercel", "Railway", "API Gateways"]
       },
       businessOutcomes: ["Scalable Healthcare Systems", "Real-time Communication", "API Integrations", "Multi-tenant Architecture"],
-      gartnerValue: ["Platform Assessment", "Scalability Planning", "Integration Strategy"]
+      gartnerValue: ["Platform Assessment", "Scalability Planning", "Integration Strategy"],
+      integrationBlueprint: "Infrastructure Design → Container Orchestration → Load Balancing → Auto-scaling → Monitoring"
     },
     
     "Data Management": {
@@ -104,7 +141,8 @@ export const IntegratedTechnologyExploration = () => {
         "Storage": ["Cloud Storage", "File Management", "Backup Systems", "CDN"]
       },
       businessOutcomes: ["Patient Data Management", "Business Intelligence", "Compliance Reporting", "Performance Analytics"],
-      gartnerValue: ["Data Strategy", "Analytics Capabilities", "ROI Measurement"]
+      gartnerValue: ["Data Strategy", "Analytics Capabilities", "ROI Measurement"],
+      integrationBlueprint: "Data Architecture → ETL Pipeline → Analytics Layer → Visualization → Insights Delivery"
     },
     
     "Security & Compliance": {
@@ -120,7 +158,8 @@ export const IntegratedTechnologyExploration = () => {
         "Monitoring": ["Security Scanning", "Threat Detection", "Access Control"]
       },
       businessOutcomes: ["Healthcare Compliance", "Data Privacy", "Risk Management", "Regulatory Adherence"],
-      gartnerValue: ["Risk Mitigation", "Compliance Assurance", "Trust Building"]
+      gartnerValue: ["Risk Mitigation", "Compliance Assurance", "Trust Building"],
+      integrationBlueprint: "Security Assessment → Identity Management → Encryption Implementation → Compliance Monitoring → Audit Trails"
     },
     
     "Integration & Communication": {
@@ -136,7 +175,8 @@ export const IntegratedTechnologyExploration = () => {
         "Automation": ["n8n", "Zapier", "Workflow Engines", "Event Streaming"]
       },
       businessOutcomes: ["Multi-channel Support", "Document Automation", "Customer Communications", "System Integration"],
-      gartnerValue: ["Business Process Optimization", "Operational Efficiency", "Value Realization"]
+      gartnerValue: ["Business Process Optimization", "Operational Efficiency", "Value Realization"],
+      integrationBlueprint: "API Gateway Setup → Service Integration → Communication Channels → Workflow Automation → Performance Optimization"
     }
   };
 
@@ -366,50 +406,56 @@ export const IntegratedTechnologyExploration = () => {
           </div>
         </div>
 
-        {/* Technology Integration Matrix */}
+        {/* Dynamic Technology Integration Blueprint */}
         <div className="mb-16">
-          <h3 className="text-2xl font-bold text-center mb-8">Technology Integration Blueprint</h3>
+          <h3 className="text-2xl font-bold text-center mb-4">Dynamic Technology Integration Blueprint</h3>
+          <p className="text-center text-muted-foreground mb-8">
+            Integration blueprint adapts based on selected technology category - click any category above to see its specific blueprint
+          </p>
           <Card className="p-6">
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Core Development Stack */}
+            {expandedCategory ? (
               <div className="space-y-4">
-                <h4 className="font-bold text-center flex items-center justify-center gap-2">
-                  <Code2 className="w-5 h-5 text-genie-primary" />
-                  Core Development
+                <h4 className="font-bold text-center text-lg mb-4">
+                  Integration Blueprint for: <span className="text-genie-primary">{expandedCategory}</span>
                 </h4>
-                <div className="space-y-2">
-                  {["React + TypeScript", "Supabase + PostgreSQL", "Tailwind CSS + Vite", "API Middleware"].map((tech, i) => (
-                    <div key={i} className="p-2 bg-genie-primary/10 rounded text-center text-sm">{tech}</div>
-                  ))}
+                <div className="text-center p-4 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg border-l-4 border-genie-primary">
+                  <p className="text-sm font-medium">
+                    {technologyEcosystem[expandedCategory as keyof typeof technologyEcosystem]?.integrationBlueprint}
+                  </p>
+                </div>
+                <div className="grid md:grid-cols-3 gap-4 mt-6">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Brain className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <h5 className="font-semibold text-sm">Envision Phase</h5>
+                    <p className="text-xs text-muted-foreground">Strategy & Discovery</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Zap className="w-6 h-6 text-purple-600" />
+                    </div>
+                    <h5 className="font-semibold text-sm">Engage Phase</h5>
+                    <p className="text-xs text-muted-foreground">Implementation & Integration</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <TrendingUp className="w-6 h-6 text-emerald-600" />
+                    </div>
+                    <h5 className="font-semibold text-sm">Scale Phase</h5>
+                    <p className="text-xs text-muted-foreground">Optimization & Value</p>
+                  </div>
                 </div>
               </div>
-              
-              {/* AI & Intelligence Layer */}
-              <div className="space-y-4">
-                <h4 className="font-bold text-center flex items-center justify-center gap-2">
-                  <Brain className="w-5 h-5 text-genie-accent" />
-                  AI & Intelligence
-                </h4>
-                <div className="space-y-2">
-                  {["GPT-4 / Claude / Gemini", "Prompt Engineering", "Vector Databases", "Analytics & Monitoring"].map((tech, i) => (
-                    <div key={i} className="p-2 bg-genie-accent/10 rounded text-center text-sm">{tech}</div>
-                  ))}
+            ) : (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 bg-muted/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Settings className="w-8 h-8 text-muted-foreground" />
                 </div>
+                <h4 className="font-bold text-lg mb-2">Select a Technology Category</h4>
+                <p className="text-muted-foreground">Click on any technology category above to see its specific integration blueprint and implementation path</p>
               </div>
-              
-              {/* Business Integration */}
-              <div className="space-y-4">
-                <h4 className="font-bold text-center flex items-center justify-center gap-2">
-                  <Network className="w-5 h-5 text-genie-teal" />
-                  Business Systems
-                </h4>
-                <div className="space-y-2">
-                  {["CMS/Healthcare APIs", "DocuSign Integration", "Twilio Communications", "Security & Compliance"].map((tech, i) => (
-                    <div key={i} className="p-2 bg-genie-teal/10 rounded text-center text-sm">{tech}</div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            )}
           </Card>
         </div>
 
@@ -419,9 +465,9 @@ export const IntegratedTechnologyExploration = () => {
             <div className="w-10 h-10 bg-genie-primary/10 rounded-lg flex items-center justify-center mx-auto mb-3">
               <Layers className="w-5 h-5 text-genie-primary" />
             </div>
-            <div className="text-xl font-bold text-genie-primary mb-1">6</div>
+            <div className="text-xl font-bold text-genie-primary mb-1">8</div>
             <div className="text-xs font-medium text-foreground mb-1">Technology Categories</div>
-            <div className="text-xs text-muted-foreground">Complete ecosystem</div>
+            <div className="text-xs text-muted-foreground">Including MCP & Agentic AI</div>
           </Card>
           
           <Card className="p-4 text-center border-genie-teal/20">
