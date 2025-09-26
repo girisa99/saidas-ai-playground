@@ -1,7 +1,9 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { MultiHeroSection } from "@/components/MultiHeroSection";
 import { TrustSection } from "@/components/TrustSection";
-import { GartnerValueSection } from "@/components/GartnerValueSection";
+import { AIHubDefinition } from "@/components/AIHubDefinition";
+import { ValueEquationInfographic } from "@/components/ValueEquationInfographic";
+import { SixStepJourney } from "@/components/SixStepJourney";
 import { AIExperimentationBanner } from "@/components/AIExperimentationBanner";
 
 
@@ -28,7 +30,9 @@ const Index = () => {
         <MultiHeroSection />
         
         <TrustSection />
-        <GartnerValueSection />
+        <AIHubDefinition />
+        <ValueEquationInfographic />
+        <SixStepJourney />
         <QuickStart />
         
         
