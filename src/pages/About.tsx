@@ -337,8 +337,8 @@ const About = () => {
                   {
                     phase: "Current Healthcare Technology Leadership",
                     companies: "McKesson • Present",
-                    focus: "Leading technology innovation in healthcare distribution and services",
-                    achievements: "Driving digital transformation initiatives in one of the largest healthcare companies",
+                    focus: "Product Owner/Solution Architecture for CGAT (Inspirogene) - leading cross-functional workstreams",
+                    achievements: "Managing 3PL/SD, Specialty Pharmacy (Biologics), Ontada (Provider onboarding/Order management), and Patient services initiatives",
                     icon: Building2,
                     color: "genie-primary"
                   },
