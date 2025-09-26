@@ -174,7 +174,7 @@ const CaseStudies = () => {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
                           <div className="text-xl font-bold text-genie-primary">3</div>
-                          <div className="text-xs text-muted-foreground">Days to Build</div>
+                          <div className="text-xs text-muted-foreground">Days to Design, Build & Test</div>
                         </div>
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
                           <div className="text-xl font-bold text-genie-primary">90%</div>
