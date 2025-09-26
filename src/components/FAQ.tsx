@@ -205,8 +205,8 @@ export const FAQ = () => {
         </div>
         
         {/* Newsletter Subscription CTA */}
-        <div className="max-w-4xl mx-auto">
-          <Card className="p-8 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20">
+        <div className="max-w-3xl mx-auto">
+          <Card className="p-6 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20">
             <div className="text-center mb-8">
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-8 h-8 text-primary" />
@@ -273,29 +273,29 @@ export const FAQ = () => {
               </div>
             )}
 
-            <div className="grid md:grid-cols-3 gap-6 mt-8 pt-8 border-t border-primary/20">
+            <div className="grid md:grid-cols-3 gap-4 mt-8 pt-8 border-t border-primary/20">
               <div className="text-center">
-                <BookOpen className="w-8 h-8 text-primary mx-auto mb-2" />
-                <h4 className="font-semibold text-foreground mb-1">Experiment Insights</h4>
-                <p className="text-sm text-muted-foreground">Real results from AI tools testing and implementation attempts</p>
+                <BookOpen className="w-6 h-6 text-primary mx-auto mb-2" />
+                <h4 className="font-semibold text-foreground mb-1 text-sm">Experiment Insights</h4>
+                <p className="text-xs text-muted-foreground">Real results from AI tools testing and implementation attempts</p>
               </div>
               <div className="text-center">
-                <Users className="w-8 h-8 text-primary mx-auto mb-2" />
-                <h4 className="font-semibold text-foreground mb-1">Connect and Share</h4>
-                <p className="text-sm text-muted-foreground">Connect with other AI experimenters and share discoveries</p>
+                <Users className="w-6 h-6 text-primary mx-auto mb-2" />
+                <h4 className="font-semibold text-foreground mb-1 text-sm">Connect and Share</h4>
+                <p className="text-xs text-muted-foreground">Connect with other AI experimenters and share discoveries</p>
               </div>
               <div className="text-center">
-                <Zap className="w-8 h-8 text-primary mx-auto mb-2" />
-                <h4 className="font-semibold text-foreground mb-1">Early Access</h4>
-                <p className="text-sm text-muted-foreground">Be first to try new tools and techniques I discover</p>
+                <Zap className="w-6 h-6 text-primary mx-auto mb-2" />
+                <h4 className="font-semibold text-foreground mb-1 text-sm">Early Access</h4>
+                <p className="text-xs text-muted-foreground">Be first to try new tools and techniques I discover</p>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex justify-center gap-4 mt-8">
+            <div className="flex justify-center gap-3 mt-6">
               <ContactModal 
                 trigger={
-                  <Button variant="default" className="flex items-center gap-2">
+                  <Button variant="default" size="sm" className="flex items-center gap-2">
                     <Users className="w-4 h-4" />
                     Connect & Learn
                   </Button>
@@ -303,7 +303,7 @@ export const FAQ = () => {
               />
               <FeedbackModal 
                 trigger={
-                  <Button variant="outline" className="flex items-center gap-2">
+                  <Button variant="outline" size="sm" className="flex items-center gap-2">
                     <MessageSquare className="w-4 h-4" />
                     Share Feedback
                   </Button>

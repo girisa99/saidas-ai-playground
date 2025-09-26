@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Brain, Mail, Linkedin, ArrowUp, X, ChevronDown } from "lucide-react";
 import { PrivacyDialog, TermsDialog, DisclaimerDialog, CookiesDialog } from "./LegalDialogs";
+import { FAQModal } from "./FAQModal";
+import { SupportModal } from "./SupportModal";
 
 export const Footer = () => {
   const scrollToTop = () => {
@@ -96,9 +98,20 @@ export const Footer = () => {
               <a href="/docs" className="text-muted-foreground hover:text-foreground transition-colors block">
                 Documentation Hub
               </a>
-              <a href="/faq" className="text-muted-foreground hover:text-foreground transition-colors block">
-                FAQ & Support
-              </a>
+              <FAQModal 
+                trigger={
+                  <button className="text-muted-foreground hover:text-foreground transition-colors text-left">
+                    FAQ & Questions
+                  </button>
+                }
+              />
+              <SupportModal 
+                trigger={
+                  <button className="text-muted-foreground hover:text-foreground transition-colors text-left">
+                    Support Center
+                  </button>
+                }
+              />
               <a href="/#experimentation" className="text-muted-foreground hover:text-foreground transition-colors block">
                 AI Experimentation
               </a>
