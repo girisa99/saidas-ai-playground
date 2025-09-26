@@ -186,8 +186,8 @@ export const GartnerValueSection = () => {
               {/* Step 2: Assess Materiality */}
               <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-teal/20 hover:border-genie-teal/40 snap-center">
                 <div className="relative w-16 h-16 bg-gradient-to-br from-genie-teal to-genie-teal/80 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full"></div>
-                  <span className="relative text-xl font-bold text-white z-10 drop-shadow-sm">2</span>
+                  <div className="absolute inset-0 bg-black/20 rounded-full"></div>
+                  <span className="relative text-xl font-bold text-white z-10 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">2</span>
                 </div>
                 <h4 className="font-bold text-lg mb-2 text-foreground">Assess Materiality</h4>
                 <p className="text-sm text-muted-foreground mb-4">Evaluating business impact and resource requirements</p>
@@ -199,8 +199,8 @@ export const GartnerValueSection = () => {
               {/* Step 3: Develop Options */}
               <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-cyan/20 hover:border-genie-cyan/40 snap-center">
                 <div className="relative w-16 h-16 bg-gradient-to-br from-genie-cyan to-genie-cyan/80 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full"></div>
-                  <span className="relative text-xl font-bold text-white z-10 drop-shadow-sm">3</span>
+                  <div className="absolute inset-0 bg-black/20 rounded-full"></div>
+                  <span className="relative text-xl font-bold text-white z-10 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">3</span>
                 </div>
                 <h4 className="font-bold text-lg mb-2 text-foreground">Develop Options</h4>
                 <p className="text-sm text-muted-foreground mb-4">Creating strategic AI implementation pathways</p>
