@@ -10,26 +10,118 @@ import {
   Zap,
   TrendingUp,
   ArrowRight,
-  ExternalLink
+  ExternalLink,
+  ThumbsUp,
+  ThumbsDown,
+  Heart
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PrivacyDialog } from "@/components/LegalDialogs";
+import { FeedbackModal } from "@/components/FeedbackModal";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 export const FAQ = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [stats, setStats] = useState({
+    total_subscribers: 0,
+    total_likes: 0,
+    total_dislikes: 0
+  });
+  const [userVote, setUserVote] = useState<'like' | 'dislike' | null>(null);
+  const [isVoting, setIsVoting] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    fetchStats();
+    // Check if user has already voted
+    const existingVote = localStorage.getItem('genie-hub-vote');
+    if (existingVote === 'like' || existingVote === 'dislike') {
+      setUserVote(existingVote);
+    }
+  }, []);
+
+  const fetchStats = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('site_stats')
+        .select('stat_name, stat_value');
+
+      if (error) throw error;
+
+      const statsObj = {
+        total_subscribers: 0,
+        total_likes: 0,
+        total_dislikes: 0
+      };
+
+      data?.forEach((stat) => {
+        if (stat.stat_name in statsObj) {
+          statsObj[stat.stat_name as keyof typeof statsObj] = stat.stat_value;
+        }
+      });
+
+      setStats(statsObj);
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+    }
+  };
+
+  const handleVote = async (voteType: 'like' | 'dislike') => {
+    if (userVote) {
+      toast({
+        title: "Already Voted",
+        description: "You've already shared your feedback. Thank you!",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsVoting(true);
+
+    try {
+      const { error } = await supabase.functions.invoke('update-site-stats', {
+        body: { statName: voteType === 'like' ? 'total_likes' : 'total_dislikes' }
+      });
+
+      if (error) throw error;
+
+      localStorage.setItem('genie-hub-vote', voteType);
+      setUserVote(voteType);
+
+      setStats(prev => ({
+        ...prev,
+        [voteType === 'like' ? 'total_likes' : 'total_dislikes']: 
+          prev[voteType === 'like' ? 'total_likes' : 'total_dislikes'] + 1
+      }));
+
+      toast({
+        title: "Thank you!",
+        description: `Your ${voteType} has been recorded. We appreciate your feedback!`,
+      });
+    } catch (error: any) {
+      console.error('Error recording vote:', error);
+      toast({
+        title: "Error",
+        description: "Unable to record your vote. Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsVoting(false);
+    }
+  };
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email.trim()) {
+    if (!firstName.trim() || !lastName.trim() || !email.trim()) {
       toast({
-        title: "Email Required",
-        description: "Please enter your email address to subscribe.",
+        title: "Missing Information",
+        description: "Please enter your first name, last name, and email address.",
         variant: "destructive",
       });
       return;
@@ -41,6 +133,8 @@ export const FAQ = () => {
       const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
         body: { 
           email: email.trim(),
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
           source: 'website_faq'
         }
       });
@@ -48,6 +142,8 @@ export const FAQ = () => {
       if (error) throw error;
 
       setIsSubscribed(true);
+      setFirstName("");
+      setLastName("");
       setEmail("");
       toast({
         title: "Welcome aboard! 🧞‍♂️",
@@ -69,6 +165,42 @@ export const FAQ = () => {
     <section className="py-16 bg-gradient-to-b from-background to-primary/5" id="faq">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         
+        {/* Community Stats */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-foreground mb-4">
+            Join Our Growing Community
+          </h2>
+          <div className="flex justify-center items-center gap-8 mb-8">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-primary">
+                {stats.total_subscribers.toLocaleString()}
+              </div>
+              <div className="text-sm text-muted-foreground">Subscribers</div>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                onClick={() => handleVote('like')}
+                disabled={isVoting || !!userVote}
+                size="sm"
+                variant={userVote === 'like' ? 'default' : 'outline'}
+                className="flex items-center gap-2"
+              >
+                <ThumbsUp className="w-4 h-4" />
+                {stats.total_likes}
+              </Button>
+              <Button
+                onClick={() => handleVote('dislike')}
+                disabled={isVoting || !!userVote}
+                size="sm"
+                variant={userVote === 'dislike' ? 'destructive' : 'outline'}
+                className="flex items-center gap-2"
+              >
+                <ThumbsDown className="w-4 h-4" />
+                {stats.total_dislikes}
+              </Button>
+            </div>
+          </div>
+        </div>
         
         {/* Newsletter Subscription CTA */}
         <div className="max-w-4xl mx-auto">
@@ -88,19 +220,34 @@ export const FAQ = () => {
 
             {!isSubscribed ? (
               <form onSubmit={handleSubscribe} className="max-w-md mx-auto">
-                <div className="flex gap-3">
+                <div className="space-y-3">
+                  <div className="grid grid-cols-2 gap-3">
+                    <Input
+                      type="text"
+                      placeholder="First Name"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      required
+                    />
+                    <Input
+                      type="text"
+                      placeholder="Last Name"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      required
+                    />
+                  </div>
                   <Input
                     type="email"
                     placeholder="Enter your email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="flex-1"
                   />
                   <Button 
                     type="submit" 
                     disabled={isLoading}
-                    className="bg-primary hover:bg-primary/90 px-6 disabled:opacity-50"
+                    className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50"
                   >
                     {isLoading ? 'Subscribing...' : 'Subscribe'}
                   </Button>
@@ -139,6 +286,22 @@ export const FAQ = () => {
                 <h4 className="font-semibold text-foreground mb-1">Early Access</h4>
                 <p className="text-sm text-muted-foreground">Be first to try new tools and techniques I discover</p>
               </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex justify-center gap-4 mt-8">
+              <FeedbackModal 
+                trigger={
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <MessageSquare className="w-4 h-4" />
+                    Share Feedback
+                  </Button>
+                }
+              />
+              <Button variant="outline" className="flex items-center gap-2">
+                <Heart className="w-4 h-4" />
+                Follow Us
+              </Button>
             </div>
           </Card>
         </div>

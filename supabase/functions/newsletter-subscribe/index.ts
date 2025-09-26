@@ -9,6 +9,8 @@ const corsHeaders = {
 
 interface SubscribeRequest {
   email: string;
+  firstName?: string;
+  lastName?: string;
   source?: string;
   preferences?: {
     frequency?: string;
@@ -23,7 +25,7 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { email, source = 'website', preferences = {} }: SubscribeRequest = await req.json();
+    const { email, firstName, lastName, source = 'website', preferences = {} }: SubscribeRequest = await req.json();
 
     // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -80,7 +82,11 @@ const handler = async (req: Request): Promise<Response> => {
         .insert({
           email: email.toLowerCase(),
           subscription_source: source,
-          preferences: preferences,
+          preferences: {
+            ...preferences,
+            firstName: firstName || '',
+            lastName: lastName || ''
+          },
           is_active: true
         })
         .select('id')
@@ -131,6 +137,7 @@ const handler = async (req: Request): Promise<Response> => {
       <h1 class="h1">Welcome to Genie AI Experimentation Hub! 🧞‍♂️</h1>
       
       <p class="text">
+        Hello ${firstName ? firstName + ' ' + lastName : 'there'}!<br/><br/>
         Thank you for joining our innovative community at <strong>Genie AI Experimentation Hub</strong>! 
         You've just taken the first step into the future of AI experimentation and discovery.
       </p>
@@ -235,6 +242,10 @@ const handler = async (req: Request): Promise<Response> => {
     </div>
     
     <div class="content">
+      <div class="info-row">
+        <span class="label">Name:</span>
+        <span class="value">${firstName && lastName ? firstName + ' ' + lastName : 'Not provided'}</span>
+      </div>
       <div class="info-row">
         <span class="label">Email:</span>
         <span class="value">${email}</span>
