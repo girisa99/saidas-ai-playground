@@ -763,16 +763,16 @@ export const IntegratedTechnologyExploration = () => {
             <div className="w-10 h-10 bg-genie-teal/10 rounded-lg flex items-center justify-center mx-auto mb-3">
               <Zap className="w-5 h-5 text-genie-teal" />
             </div>
-            <div className="text-xl font-bold text-genie-teal mb-1">50+</div>
+            <div className="text-xl font-bold text-genie-teal mb-1">10+</div>
             <div className="text-xs font-medium text-foreground mb-1">Integrated Tools</div>
-            <div className="text-xs text-muted-foreground">Proven stack</div>
+            <div className="text-xs text-muted-foreground">Business API integrations</div>
           </Card>
           
           <Card className="p-4 text-center border-genie-cyan/20">
             <div className="w-10 h-10 bg-genie-cyan/10 rounded-lg flex items-center justify-center mx-auto mb-3">
               <Target className="w-5 h-5 text-genie-cyan" />
             </div>
-            <div className="text-xl font-bold text-genie-cyan mb-1">15+</div>
+            <div className="text-xl font-bold text-genie-cyan mb-1">10+</div>
             <div className="text-xs font-medium text-foreground mb-1">Use Cases</div>
             <div className="text-xs text-muted-foreground">Real implementations</div>
           </Card>

@@ -168,9 +168,9 @@ export const TechnologyStackSection = () => {
             <div className="w-12 h-12 bg-genie-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
               <Layers className="w-6 h-6 text-genie-primary" />
             </div>
-            <div className="text-2xl font-bold text-genie-primary mb-2">50+</div>
-            <div className="text-sm font-medium text-foreground mb-1">Technologies Integrated</div>
-            <div className="text-xs text-muted-foreground">Comprehensive stack</div>
+            <div className="text-2xl font-bold text-genie-primary mb-2">10+</div>
+            <div className="text-sm font-medium text-foreground mb-1">Tools Integrated</div>
+            <div className="text-xs text-muted-foreground">Business API integrations</div>
           </Card>
           
           <Card className="p-6 text-center border-genie-teal/20 hover:shadow-lg transition-shadow">
