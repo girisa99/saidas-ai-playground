@@ -4,10 +4,10 @@ import { TrustSection } from "@/components/TrustSection";
 import { GartnerValueSection } from "@/components/GartnerValueSection";
 import { ContactForm } from "@/components/ContactForm";
 import { AIExperimentationBanner } from "@/components/AIExperimentationBanner";
-
-
 import { QuickStart } from "@/components/QuickStart";
 import { FAQ } from "@/components/FAQ";
+import { StatsSection } from "@/components/StatsSection";
+import { FeedbackSection } from "@/components/FeedbackSection";
 import { Footer } from "@/components/Footer";
 
 import { useEffect } from "react";
@@ -27,9 +27,9 @@ const Index = () => {
       <NavigationHeader />
       <main>
         <MultiHeroSection />
-        
         <TrustSection />
         <GartnerValueSection />
+        <StatsSection />
         <QuickStart />
         
         {/* Contact Section */}
@@ -48,6 +48,7 @@ const Index = () => {
         </section>
         
         <FAQ />
+        <FeedbackSection />
         {/* Simplified homepage - detailed sections moved to dedicated pages per UI/UX audit */}
       </main>
       <Footer />

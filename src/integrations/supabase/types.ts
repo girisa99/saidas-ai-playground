@@ -6047,6 +6047,42 @@ export type Database = {
         }
         Relationships: []
       }
+      feedback: {
+        Row: {
+          created_at: string
+          email: string | null
+          feedback_type: string
+          id: string
+          is_anonymous: boolean
+          message: string
+          name: string | null
+          rating: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          feedback_type: string
+          id?: string
+          is_anonymous?: boolean
+          message: string
+          name?: string | null
+          rating?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          feedback_type?: string
+          id?: string
+          is_anonymous?: boolean
+          message?: string
+          name?: string | null
+          rating?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       framework_configuration: {
         Row: {
           config_data: Json
@@ -10893,6 +10929,30 @@ export type Database = {
           },
         ]
       }
+      site_stats: {
+        Row: {
+          created_at: string
+          id: string
+          stat_name: string
+          stat_value: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          stat_name: string
+          stat_value?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          stat_name?: string
+          stat_value?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       softphone_sessions: {
         Row: {
           agent_id: string | null
@@ -14790,6 +14850,10 @@ export type Database = {
       update_api_services_documentation: {
         Args: Record<PropertyKey, never>
         Returns: Json
+      }
+      update_site_stat: {
+        Args: { increment_value?: number; stat_name_param: string }
+        Returns: undefined
       }
       update_testing_suite_comprehensive: {
         Args: Record<PropertyKey, never>
