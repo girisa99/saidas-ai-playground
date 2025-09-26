@@ -41,158 +41,159 @@ import techJourneyBg from "@/assets/journey-phase-02-curiosity-artwork.jpg";
 export const IntegratedTechnologyExploration = () => {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
-  // Business Use Cases mapped from existing Journey and Business Cases sections
+  // Real Business Use Cases mapped from existing BusinessUseCases.tsx and Journey sections
   const businessUseCasesMapping = {
     'Artificial Intelligence & ML': {
-      title: 'AI Strategy & Innovation Discovery',
+      title: 'Clinical Intelligence & AI Decision Support',
       gartnerPhase: 'Envision',
-      giveToGartner: ['Innovation Discovery', 'Proof of Concept', 'AI Strategy Development'],
-      getFromGartner: ['Strategic Vision', 'Technology Assessment', 'Innovation Framework'],
-      valueCreationSteps: ['Listen & Sense AI Opportunities', 'Develop AI Options', 'Test Feasibility'],
+      giveToGartner: ['Innovation Discovery', 'AI Strategy Development', 'Proof of Concept Validation'],
+      getFromGartner: ['Strategic Vision', 'Technology Assessment Framework', 'Innovation Roadmap'],
+      valueCreationSteps: ['Listen & Sense AI Opportunities', 'Develop Clinical AI Options', 'Test AI Feasibility'],
       cases: [
-        'Healthcare Diagnostic AI Development',
-        'Patient Risk Assessment Algorithms',
-        'Clinical Decision Support Systems',
-        'Intelligent Document Processing',
-        'Conversational AI for Patient Care'
+        'Oncology Care Workflow - AI-powered clinical priority assessment',
+        'Patient Referral & Onboarding - Intelligent referral routing based on urgency',
+        'Digital Contact Center - Smart IVR with NLP for treatment inquiries',
+        'AI-powered clinical priority assessment and triage',
+        'Smart data extraction from unstructured documents'
       ],
       realWorldExamples: [
-        'AI-powered clinical priority assessment',
-        'Intelligent symptom assessment and risk stratification',
-        'Predictive treatment pathway recommendations'
+        'Sarah - Routine Screening: AI analyzes family history and flags for BRCA testing',
+        'Maria - Urgent Referral: AI immediately prioritizes pancreatic cancer case',
+        'Jennifer - Treatment Inquiry: Smart IVR recognizes treatment options intent',
+        'AI-powered referral processing reduces response time to under 30 minutes with 95% accuracy'
       ]
     },
     'MCP (Model Context Protocol)': {
-      title: 'Context Integration & Tool Orchestration',
+      title: 'Healthcare System Context Integration',
       gartnerPhase: 'Envision → Engage',
-      giveToGartner: ['Context Enhancement', 'Tool Unification', 'Productivity Acceleration'],
+      giveToGartner: ['Context Enhancement', 'System Integration', 'Workflow Unification'],
       getFromGartner: ['Platform Assessment', 'Integration Strategy', 'Scalability Planning'],
-      valueCreationSteps: ['Assess Context Needs', 'Design Integration', 'Optimize Workflows'],
+      valueCreationSteps: ['Assess Context Needs', 'Design Integration Architecture', 'Optimize Cross-System Workflows'],
       cases: [
-        'EHR Context Integration for AI',
-        'Multi-System Patient Data Harmonization',
-        'Clinical Tool Orchestration',
-        'Healthcare API Standardization',
-        'Cross-Platform Care Coordination'
+        'Unified patient view across oncology and genetics systems',
+        'Provider, Treatment Center & Referral Network integration',
+        'Medical Records Acquisition from multiple healthcare systems',
+        'Cross-platform care coordination between specialists',
+        'Multi-system data harmonization for complex cases'
       ],
       realWorldExamples: [
-        'Unified patient view across multiple systems',
-        'Seamless data exchange between specialists',
-        'Integrated care team communication platforms'
+        'Robert - Complex Onboarding: Multi-disciplinary coordination between oncology, genetics, and clinical trials',
+        'Sarah - Family history integration across mammography and genetic counseling systems',
+        'Michael - Complex Case: Coordinated care across multiple specialties with unified data view'
       ]
     },
     'Agentic AI': {
-      title: 'Autonomous Operations & Self-Optimization',
+      title: 'Autonomous Healthcare Operations',
       gartnerPhase: 'Engage → Scale',
-      giveToGartner: ['Process Automation', 'Decision Support', 'Operational Excellence'],
-      getFromGartner: ['Value Realization', 'ROI Optimization', 'Continuous Improvement'],
-      valueCreationSteps: ['Measure Current State', 'Identify Gaps', 'Automate & Optimize'],
+      giveToGartner: ['Process Automation', 'Autonomous Decision Support', 'Operational Excellence'],
+      getFromGartner: ['Value Realization', 'ROI Optimization', 'Continuous Process Improvement'],
+      valueCreationSteps: ['Measure Current Care Processes', 'Identify Automation Gaps', 'Deploy Autonomous Systems'],
       cases: [
-        'Intelligent Autonomous Triage Systems',
-        'Self-Managing Care Coordination',
-        'Predictive Resource Allocation',
-        'Self-Optimizing Clinical Workflows',
-        'Autonomous Quality Improvement'
+        'Automated referral tracking and routing optimization',
+        'Intelligent specialist matching based on case complexity',
+        'Autonomous patient preparation and education systems',
+        'Self-optimizing appointment scheduling workflows',
+        'Predictive resource allocation for urgent cases'
       ],
       realWorldExamples: [
-        'David - Urgent Support (Autonomous escalation and routing)',
-        'Self-adjusting appointment scheduling based on patterns',
-        'Autonomous care protocol optimization'
+        'David - Urgent Support: AI immediately flags severe symptoms and routes to specialized care',
+        'Maria - Automated same-day specialist scheduling for urgent pancreatic cancer case',
+        'AI-generated pre-authorization documentation increases approval rates by 70%'
       ]
     },
     'Frontend Development': {
-      title: 'Digital Experience & User Interfaces',
+      title: 'Patient & Provider Digital Experience',
       gartnerPhase: 'Engage',
-      giveToGartner: ['User Experience Optimization', 'Rapid Prototyping', 'Digital Transformation'],
-      getFromGartner: ['Platform Assessment', 'Scalability Design', 'Integration Planning'],
-      valueCreationSteps: ['Assess User Needs', 'Design Experience', 'Optimize Performance'],
+      giveToGartner: ['User Experience Optimization', 'Digital Transformation', 'Rapid Prototyping'],
+      getFromGartner: ['Platform Assessment', 'Interface Design Strategy', 'User Adoption Planning'],
+      valueCreationSteps: ['Assess User Journey Pain Points', 'Design Intuitive Interfaces', 'Optimize Digital Experience'],
       cases: [
-        'Patient Portal Development',
-        'Healthcare Provider Dashboards',
-        'Mobile-First Care Applications',
-        'Real-time Communication Interfaces',
-        'Accessibility-Compliant Systems'
+        'Digital Contact Center Transformation - multi-channel patient interfaces',
+        'Patient Portal for oncology appointment scheduling and results',
+        'Provider dashboards for referral management and care coordination',
+        'Mobile-first patient communication and education apps',
+        'Real-time insurance verification and financial assistance interfaces'
       ],
       realWorldExamples: [
-        'Jennifer - Treatment Inquiry (Multi-channel patient communication)',
-        'Digital referral processing interfaces',
-        'Patient demographic data collection automation'
+        'Jennifer - Treatment Inquiry: Multi-channel communication maintaining context across touchpoints',
+        'Patient satisfaction projected to reach 8.7/10 with personalized digital communication',
+        'Digital intake form parsing reducing 15% data entry errors to near zero'
       ]
     },
     'Backend Infrastructure': {
-      title: 'Scalable Platform & System Architecture',
+      title: 'Healthcare System Architecture & APIs',
       gartnerPhase: 'Engage → Scale',
-      giveToGartner: ['Platform Assessment', 'Scalability Planning', 'Integration Strategy'],
-      getFromGartner: ['Value Realization', 'Performance Optimization', 'Risk Management'],
-      valueCreationSteps: ['Assess Current Systems', 'Design Architecture', 'Scale & Optimize'],
+      giveToGartner: ['Platform Scalability', 'System Integration', 'Performance Optimization'],
+      getFromGartner: ['Architecture Assessment', 'Scalability Framework', 'Performance Standards'],
+      valueCreationSteps: ['Assess Current Systems', 'Design Scalable Architecture', 'Implement & Scale'],
       cases: [
-        'Healthcare System Scalability',
-        'Real-time Patient Data Processing',
-        'Secure API Gateway Management',
-        'Multi-tenant Care Platforms',
-        'Enterprise Integration Hubs'
+        'Scalable referral processing infrastructure handling 4-6 hour to 30-minute turnaround',
+        'Real-time insurance verification API integration',
+        'Multi-tenant healthcare platform supporting multiple specialties',
+        'Edge computing for patient communication and case routing',
+        'Microservices architecture for care coordination'
       ],
       realWorldExamples: [
-        'Scalable oncology care workflow systems',
-        'Real-time insurance verification platforms',
-        'Multi-specialty care coordination backends'
+        'Staff efficiency increased by 60% through AI-assisted workflow optimization',
+        'Real-time insurance verification eliminates approval delays',
+        'Unified patient view eliminates 5-8 minute information gathering delays'
       ]
     },
     'Data Management': {
-      title: 'Information Strategy & Analytics',
+      title: 'Healthcare Data Strategy & Analytics',
       gartnerPhase: 'Engage → Scale',
       giveToGartner: ['Data Strategy', 'Analytics Capabilities', 'ROI Measurement'],
-      getFromGartner: ['Value Realization', 'Performance Metrics', 'Continuous Improvement'],
-      valueCreationSteps: ['Measure Data Quality', 'Identify Insights', 'Optimize Decisions'],
+      getFromGartner: ['Data Architecture Framework', 'Analytics Standards', 'Performance Metrics'],
+      valueCreationSteps: ['Measure Data Quality', 'Identify Analytics Opportunities', 'Optimize Data-Driven Decisions'],
       cases: [
-        'Patient Data Management Systems',
-        'Healthcare Business Intelligence',
-        'Compliance Reporting Automation',
-        'Performance Analytics Dashboards',
-        'Population Health Analytics'
+        'Oncology care workflow analytics and outcome tracking',
+        'Patient referral completion rates and bottleneck analysis',
+        'Contact center performance metrics and quality assurance',
+        'Healthcare provider burnout reduction measurement',
+        'Treatment outcome analytics for continuous improvement'
       ],
       realWorldExamples: [
-        'Clinical priority assessment and routing',
-        'Predictive resource allocation for complex cases',
-        'Treatment pathway optimization based on outcomes'
+        'Data accuracy improved to 98% with automated validation and AI error detection',
+        'Healthcare provider satisfaction increased by 45% due to reduced administrative burden',
+        'Predictive resource allocation reducing wait times by 85%'
       ]
     },
     'Security & Compliance': {
-      title: 'Risk Management & Trust Building',
+      title: 'Healthcare Security & Regulatory Compliance',
       gartnerPhase: 'Scale',
       giveToGartner: ['Risk Mitigation', 'Compliance Assurance', 'Trust Building'],
-      getFromGartner: ['Value Protection', 'Regulatory Compliance', 'Operational Security'],
-      valueCreationSteps: ['Assess Risks', 'Implement Controls', 'Monitor & Adjust'],
+      getFromGartner: ['Security Framework', 'Compliance Standards', 'Risk Management'],
+      valueCreationSteps: ['Assess Security Risks', 'Implement Compliance Controls', 'Monitor & Adjust'],
       cases: [
-        'HIPAA Compliance Management',
-        'Healthcare Data Privacy Protection',
-        'Identity & Access Management',
-        'Audit Trail & Monitoring Systems',
-        'Zero Trust Security Architecture'
+        'HIPAA-compliant patient data handling across all touchpoints',
+        'Secure multi-channel patient communication and identity verification',
+        'Audit trails for oncology care decisions and referral processes',
+        'Voice biometrics reducing verification time to under 30 seconds',
+        'Zero-trust architecture for healthcare system access'
       ],
       realWorldExamples: [
-        'Secure patient data handling across systems',
-        'Compliance monitoring for healthcare workflows',
-        'Risk-based access control for clinical data'
+        'Voice biometrics authentication with 99.2% confidence for patient verification',
+        'Manual identity verification failure rate reduced from 15% to near zero',
+        'Secure genomic data handling for BRCA testing and family history analysis'
       ]
     },
     'Integration & Communication': {
-      title: 'Business Process Optimization',
+      title: 'Healthcare Communication & Workflow Integration',
       gartnerPhase: 'Scale',
       giveToGartner: ['Business Process Optimization', 'Operational Efficiency', 'Value Realization'],
-      getFromGartner: ['ROI Optimization', 'Performance Excellence', 'Continuous Value'],
-      valueCreationSteps: ['Measure Efficiency', 'Identify Bottlenecks', 'Optimize & Scale'],
+      getFromGartner: ['Integration Framework', 'Process Excellence', 'Continuous Value'],
+      valueCreationSteps: ['Measure Communication Efficiency', 'Identify Integration Bottlenecks', 'Optimize & Scale'],
       cases: [
-        'Multi-channel Patient Communication',
-        'Healthcare Document Automation',
-        'Insurance Integration Systems',
-        'Care Team Coordination Platforms',
-        'Patient Engagement Workflows'
+        'Digital Contact Center with 70% hold time reduction',
+        'Automated patient education and preparation systems',
+        'Multi-channel patient communication maintaining context',
+        'Provider-to-provider coordination for complex cases',
+        'Automated insurance and pre-authorization workflows'
       ],
       realWorldExamples: [
-        'Automated referral processing and coordination',
-        'Real-time patient communication across channels',
-        'Integrated care team collaboration tools'
+        'Jennifer - Seamless multi-channel coordination maintains context across all touchpoints',
+        'Smart IVR with NLP reduces hold times by 70% and improves first-call resolution by 85%',
+        'Personalized preparation achieves 95% patient readiness with AI-guided education'
       ]
     }
   };
