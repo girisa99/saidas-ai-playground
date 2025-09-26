@@ -106,10 +106,14 @@ const CaseStudies = () => {
             {/* Action Buttons - Mobile Responsive */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 px-2">
               <Button 
+                type="button"
                 variant="default"
                 size="lg"
                 className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl w-full sm:w-auto"
-                onClick={() => setActiveTab("detailed")}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab("detailed");
+                }}
               >
                 <TrendingUp className="w-4 h-4 mr-2" />
                 Explore My Projects
@@ -200,9 +204,13 @@ const CaseStudies = () => {
                     </div>
                     
                     <Button 
+                      type="button"
                       variant="default" 
                       className="w-full bg-genie-primary hover:bg-genie-primary/90"
-                      onClick={() => setActiveTab("detailed")}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setActiveTab("detailed");
+                      }}
                     >
                       <ArrowRight className="w-4 h-4 mr-2" />
                       View Detailed Case Study
