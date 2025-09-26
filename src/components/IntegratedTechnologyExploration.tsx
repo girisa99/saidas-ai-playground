@@ -43,79 +43,37 @@ export const IntegratedTechnologyExploration = () => {
 
   // Business Use Cases mapped from existing Journey and Business Cases sections
   const businessUseCasesMapping = {
-    'no-code': {
-      title: 'Digital Foundation & Patient Experience',
+    'Artificial Intelligence & ML': {
+      title: 'AI Strategy & Innovation Discovery',
       gartnerPhase: 'Envision',
+      giveToGartner: ['Innovation Discovery', 'Proof of Concept', 'AI Strategy Development'],
+      getFromGartner: ['Strategic Vision', 'Technology Assessment', 'Innovation Framework'],
+      valueCreationSteps: ['Listen & Sense AI Opportunities', 'Develop AI Options', 'Test Feasibility'],
       cases: [
-        'Contact Center Digital Transformation',
-        'Patient Portal & Communication Automation', 
-        'Appointment Scheduling & Coordination',
-        'Digital Forms & Data Collection',
-        'Basic Workflow Automation'
+        'Healthcare Diagnostic AI Development',
+        'Patient Risk Assessment Algorithms',
+        'Clinical Decision Support Systems',
+        'Intelligent Document Processing',
+        'Conversational AI for Patient Care'
       ],
       realWorldExamples: [
-        'Jennifer - Treatment Inquiry (Multi-channel patient communication)',
-        'Maria - Urgent Referral (Digital referral processing)',
-        'Patient demographic data collection automation'
+        'AI-powered clinical priority assessment',
+        'Intelligent symptom assessment and risk stratification',
+        'Predictive treatment pathway recommendations'
       ]
     },
-    'ai-assistants': {
-      title: 'Clinical Intelligence & Decision Support',
-      gartnerPhase: 'Engage',
+    'MCP (Model Context Protocol)': {
+      title: 'Context Integration & Tool Orchestration',
+      gartnerPhase: 'Envision → Engage',
+      giveToGartner: ['Context Enhancement', 'Tool Unification', 'Productivity Acceleration'],
+      getFromGartner: ['Platform Assessment', 'Integration Strategy', 'Scalability Planning'],
+      valueCreationSteps: ['Assess Context Needs', 'Design Integration', 'Optimize Workflows'],
       cases: [
-        'Oncology Care Workflow Optimization',
-        'Complex Patient Referral & Onboarding',
-        'Clinical Documentation & Review',
-        'Intelligent Treatment Planning',
-        'Provider Matching & Network Optimization'
-      ],
-      realWorldExamples: [
-        'Sarah - Routine Screening (Personalized care coordination)',
-        'Michael - Complex Case (Multi-specialty care coordination)',
-        'Robert - Complex Onboarding (Genomic testing & care team assembly)'
-      ]
-    },
-    'automation': {
-      title: 'Operational Excellence & Process Optimization',
-      gartnerPhase: 'Engage',
-      cases: [
-        'Insurance Verification & Benefit Analysis',
-        'Medical Records Acquisition & Management',
-        'Pre-authorization & Billing Automation',
-        'Compliance Monitoring & Reporting',
-        'Quality Assurance Workflows'
-      ],
-      realWorldExamples: [
-        'Real-time insurance eligibility verification',
-        'Automated medical record requests via HIE',
-        'AI-powered pre-authorization documentation'
-      ]
-    },
-    'analytics': {
-      title: 'Predictive Intelligence & Insights',
-      gartnerPhase: 'Scale',
-      cases: [
-        'Patient Risk Stratification & Assessment',
-        'Treatment Outcomes Analysis & Prediction',
-        'Resource Optimization & Capacity Planning',
-        'Performance Analytics & ROI Measurement',
-        'Population Health Management'
-      ],
-      realWorldExamples: [
-        'Clinical priority assessment and routing',
-        'Predictive resource allocation for complex cases',
-        'Treatment pathway optimization based on outcomes'
-      ]
-    },
-    'mcp': {
-      title: 'Enterprise Integration & Interoperability',
-      gartnerPhase: 'Scale',
-      cases: [
-        'EHR Integration & Data Harmonization',
-        'Multi-System Care Coordination',
-        'Healthcare Data Standardization',
-        'Cross-Platform Interoperability',
-        'Enterprise API Management'
+        'EHR Context Integration for AI',
+        'Multi-System Patient Data Harmonization',
+        'Clinical Tool Orchestration',
+        'Healthcare API Standardization',
+        'Cross-Platform Care Coordination'
       ],
       realWorldExamples: [
         'Unified patient view across multiple systems',
@@ -123,9 +81,12 @@ export const IntegratedTechnologyExploration = () => {
         'Integrated care team communication platforms'
       ]
     },
-    'agentic': {
+    'Agentic AI': {
       title: 'Autonomous Operations & Self-Optimization',
-      gartnerPhase: 'Scale',
+      gartnerPhase: 'Engage → Scale',
+      giveToGartner: ['Process Automation', 'Decision Support', 'Operational Excellence'],
+      getFromGartner: ['Value Realization', 'ROI Optimization', 'Continuous Improvement'],
+      valueCreationSteps: ['Measure Current State', 'Identify Gaps', 'Automate & Optimize'],
       cases: [
         'Intelligent Autonomous Triage Systems',
         'Self-Managing Care Coordination',
@@ -137,6 +98,101 @@ export const IntegratedTechnologyExploration = () => {
         'David - Urgent Support (Autonomous escalation and routing)',
         'Self-adjusting appointment scheduling based on patterns',
         'Autonomous care protocol optimization'
+      ]
+    },
+    'Frontend Development': {
+      title: 'Digital Experience & User Interfaces',
+      gartnerPhase: 'Engage',
+      giveToGartner: ['User Experience Optimization', 'Rapid Prototyping', 'Digital Transformation'],
+      getFromGartner: ['Platform Assessment', 'Scalability Design', 'Integration Planning'],
+      valueCreationSteps: ['Assess User Needs', 'Design Experience', 'Optimize Performance'],
+      cases: [
+        'Patient Portal Development',
+        'Healthcare Provider Dashboards',
+        'Mobile-First Care Applications',
+        'Real-time Communication Interfaces',
+        'Accessibility-Compliant Systems'
+      ],
+      realWorldExamples: [
+        'Jennifer - Treatment Inquiry (Multi-channel patient communication)',
+        'Digital referral processing interfaces',
+        'Patient demographic data collection automation'
+      ]
+    },
+    'Backend Infrastructure': {
+      title: 'Scalable Platform & System Architecture',
+      gartnerPhase: 'Engage → Scale',
+      giveToGartner: ['Platform Assessment', 'Scalability Planning', 'Integration Strategy'],
+      getFromGartner: ['Value Realization', 'Performance Optimization', 'Risk Management'],
+      valueCreationSteps: ['Assess Current Systems', 'Design Architecture', 'Scale & Optimize'],
+      cases: [
+        'Healthcare System Scalability',
+        'Real-time Patient Data Processing',
+        'Secure API Gateway Management',
+        'Multi-tenant Care Platforms',
+        'Enterprise Integration Hubs'
+      ],
+      realWorldExamples: [
+        'Scalable oncology care workflow systems',
+        'Real-time insurance verification platforms',
+        'Multi-specialty care coordination backends'
+      ]
+    },
+    'Data Management': {
+      title: 'Information Strategy & Analytics',
+      gartnerPhase: 'Engage → Scale',
+      giveToGartner: ['Data Strategy', 'Analytics Capabilities', 'ROI Measurement'],
+      getFromGartner: ['Value Realization', 'Performance Metrics', 'Continuous Improvement'],
+      valueCreationSteps: ['Measure Data Quality', 'Identify Insights', 'Optimize Decisions'],
+      cases: [
+        'Patient Data Management Systems',
+        'Healthcare Business Intelligence',
+        'Compliance Reporting Automation',
+        'Performance Analytics Dashboards',
+        'Population Health Analytics'
+      ],
+      realWorldExamples: [
+        'Clinical priority assessment and routing',
+        'Predictive resource allocation for complex cases',
+        'Treatment pathway optimization based on outcomes'
+      ]
+    },
+    'Security & Compliance': {
+      title: 'Risk Management & Trust Building',
+      gartnerPhase: 'Scale',
+      giveToGartner: ['Risk Mitigation', 'Compliance Assurance', 'Trust Building'],
+      getFromGartner: ['Value Protection', 'Regulatory Compliance', 'Operational Security'],
+      valueCreationSteps: ['Assess Risks', 'Implement Controls', 'Monitor & Adjust'],
+      cases: [
+        'HIPAA Compliance Management',
+        'Healthcare Data Privacy Protection',
+        'Identity & Access Management',
+        'Audit Trail & Monitoring Systems',
+        'Zero Trust Security Architecture'
+      ],
+      realWorldExamples: [
+        'Secure patient data handling across systems',
+        'Compliance monitoring for healthcare workflows',
+        'Risk-based access control for clinical data'
+      ]
+    },
+    'Integration & Communication': {
+      title: 'Business Process Optimization',
+      gartnerPhase: 'Scale',
+      giveToGartner: ['Business Process Optimization', 'Operational Efficiency', 'Value Realization'],
+      getFromGartner: ['ROI Optimization', 'Performance Excellence', 'Continuous Value'],
+      valueCreationSteps: ['Measure Efficiency', 'Identify Bottlenecks', 'Optimize & Scale'],
+      cases: [
+        'Multi-channel Patient Communication',
+        'Healthcare Document Automation',
+        'Insurance Integration Systems',
+        'Care Team Coordination Platforms',
+        'Patient Engagement Workflows'
+      ],
+      realWorldExamples: [
+        'Automated referral processing and coordination',
+        'Real-time patient communication across channels',
+        'Integrated care team collaboration tools'
       ]
     }
   };
