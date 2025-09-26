@@ -107,9 +107,11 @@ export const Footer = () => {
                   size="sm" 
                   variant="ghost" 
                   className="p-2"
-                  onClick={() => window.location.href = 'mailto:genieaiexpermentationhub@gmail.com'}
+                  asChild
                 >
-                  <Mail className="h-4 w-4" />
+                  <a href="mailto:genieaiexpermentationhub@gmail.com">
+                    <Mail className="h-4 w-4" />
+                  </a>
                 </Button>
                 <Button 
                   size="sm" 
