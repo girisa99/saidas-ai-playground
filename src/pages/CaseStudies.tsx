@@ -21,64 +21,6 @@ const CaseStudies = () => {
     }
   }, []);
 
-  const caseStudies = [
-    {
-      id: 1,
-      title: "AI-Powered Patient Management System",
-      category: "Healthcare Digital Transformation",
-      impact: "300% ROI in 6 months",
-      description: "Implemented RAG architecture achieving 94% accuracy in patient data processing and automated workflow management for treatment centers.",
-      tags: ["RAG Architecture", "Healthcare AI", "Automation"],
-      icon: Activity,
-      metrics: [
-        { label: "Accuracy Rate", value: "94%" },
-        { label: "Processing Speed", value: "5x faster" },
-        { label: "ROI", value: "300%" }
-      ]
-    },
-    {
-      id: 2,
-      title: "Multi-Agent Healthcare Ecosystem",
-      category: "Enterprise AI Solutions",
-      impact: "Streamlined 10+ AI tools",
-      description: "Built dynamic multi-agent systems integrating 10+ AI tools for comprehensive healthcare workflow automation and decision support.",
-      tags: ["Multi-Agent Systems", "LLM Integration", "Enterprise Scale"],
-      icon: Users,
-      metrics: [
-        { label: "Tools Integrated", value: "10+" },
-        { label: "Workflow Efficiency", value: "85%" },
-        { label: "Decision Accuracy", value: "92%" }
-      ]
-    },
-    {
-      id: 3,
-      title: "Manufacturing Process Optimization",
-      category: "Industrial AI Implementation",
-      impact: "Reduced downtime by 60%",
-      description: "Applied AI frameworks to manufacturing workflows, demonstrating cross-industry applicability of healthcare-proven solutions.",
-      tags: ["Process Optimization", "Predictive Analytics", "Cross-Industry"],
-      icon: Target,
-      metrics: [
-        { label: "Downtime Reduction", value: "60%" },
-        { label: "Process Efficiency", value: "78%" },
-        { label: "Cost Savings", value: "$2.3M" }
-      ]
-    },
-    {
-      id: 4,
-      title: "Digital Therapeutics Platform",
-      category: "Healthcare Innovation",
-      impact: "Improved patient outcomes",
-      description: "Developed AI-driven digital therapeutics solutions with measurable healthcare transformation and patient engagement metrics.",
-      tags: ["Digital Health", "Patient Engagement", "Outcome Measurement"],
-      icon: Shield,
-      metrics: [
-        { label: "Patient Engagement", value: "89%" },
-        { label: "Outcome Improvement", value: "67%" },
-        { label: "Treatment Adherence", value: "84%" }
-      ]
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -205,7 +147,7 @@ const CaseStudies = () => {
 
               <TabsContent value="overview" className="mt-8">
                 {/* Case Studies Grid */}
-                <div className="grid lg:grid-cols-2 gap-8">
+                <div className="max-w-4xl mx-auto">
                   {/* Featured Case Study Card */}
                   <Card className="lg:col-span-2 p-8 border-genie-primary/20 hover:border-genie-primary/40 transition-colors bg-gradient-to-br from-genie-primary/5 to-genie-secondary/5">
                     <div className="flex items-start gap-4 mb-6">
@@ -268,60 +210,6 @@ const CaseStudies = () => {
                       View Detailed Case Study
                     </Button>
                   </Card>
-
-                  {/* Other Case Studies */}
-                  {caseStudies.map((study, index) => {
-                    const IconComponent = study.icon;
-                    return (
-                      <Card key={study.id} className="p-8 border-genie-primary/20 hover:border-genie-primary/40 transition-colors">
-                        <div className="flex items-start gap-4 mb-6">
-                          <div className="p-3 bg-genie-primary/10 rounded-lg">
-                            <IconComponent className="w-6 h-6 text-genie-primary" />
-                          </div>
-                          <div className="flex-1">
-                            <Badge variant="outline" className="mb-2 text-xs">
-                              {study.category}
-                            </Badge>
-                            <h3 className="text-2xl font-bold text-foreground mb-2">
-                              {study.title}
-                            </h3>
-                            <p className="text-genie-primary font-semibold mb-4">
-                              {study.impact}
-                            </p>
-                          </div>
-                        </div>
-                        
-                        <p className="text-muted-foreground mb-6 leading-relaxed">
-                          {study.description}
-                        </p>
-                        
-                        <div className="mb-6">
-                          <h4 className="font-semibold text-foreground mb-3">Key Metrics</h4>
-                          <div className="grid grid-cols-3 gap-4">
-                            {study.metrics.map((metric, i) => (
-                              <div key={i} className="text-center p-3 bg-muted/50 rounded-lg">
-                                <div className="text-xl font-bold text-genie-primary">{metric.value}</div>
-                                <div className="text-xs text-muted-foreground">{metric.label}</div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        
-                        <div className="flex flex-wrap gap-2 mb-6">
-                          {study.tags.map((tag, i) => (
-                            <Badge key={i} variant="secondary" className="text-xs">
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-                        
-                        <Button variant="outline" className="w-full">
-                          <ArrowRight className="w-4 h-4 mr-2" />
-                          Coming Soon
-                        </Button>
-                      </Card>
-                    );
-                  })}
                 </div>
               </TabsContent>
 
