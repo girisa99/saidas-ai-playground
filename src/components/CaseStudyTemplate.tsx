@@ -482,28 +482,28 @@ const patientOnboardingCaseStudy: CaseStudyData = {
     },
     valueRealization: {
       efficiency: [
-        "75% reduction in processing time",
-        "60% increase in staff productivity",
-        "85% automation of routine tasks",
-        "Real-time verification capabilities"
+        "Rapid development cycles through AI-assisted coding",
+        "Automated testing and deployment pipelines", 
+        "Streamlined provider verification workflows",
+        "Real-time system accuracy monitoring"
       ],
       experience: [
-        "8.7/10 patient satisfaction scores",
-        "Personalized communication flows",
-        "Multi-channel support availability",
-        "Predictive appointment optimization"
+        "Enhanced user interface design through iterative testing",
+        "Personalized patient enrollment journeys",
+        "Multi-modal communication channels",
+        "Continuous feedback integration loops"
       ],
       growth: [
-        "40% increase in patient throughput",
-        "Scalable architecture for volume growth",
-        "Data-driven process optimization",
-        "Competitive advantage in patient access"
+        "Scalable architecture supporting experimental features",
+        "Modular system design for rapid feature addition",
+        "Data-driven insights for process optimization",
+        "Platform extensibility for future use cases"
       ],
       innovation: [
-        "AI-human collaboration model",
-        "Predictive healthcare workflows",
-        "Integrated patient experience platform",
-        "Continuous learning and improvement"
+        "Agentic AI for autonomous process optimization",
+        "Experimental hybrid automation approaches", 
+        "Advanced credentialing verification systems",
+        "Continuous learning from implementation outcomes"
       ]
     }
   },
