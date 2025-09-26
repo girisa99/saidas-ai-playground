@@ -4461,8 +4461,10 @@ export type Database = {
           html_content: string
           id: string
           is_active: boolean | null
+          is_system_template: boolean | null
           name: string
           subject: string
+          template_type: string | null
           template_variables: Json | null
           text_content: string | null
           updated_at: string | null
@@ -4473,8 +4475,10 @@ export type Database = {
           html_content: string
           id?: string
           is_active?: boolean | null
+          is_system_template?: boolean | null
           name: string
           subject: string
+          template_type?: string | null
           template_variables?: Json | null
           text_content?: string | null
           updated_at?: string | null
@@ -4485,8 +4489,10 @@ export type Database = {
           html_content?: string
           id?: string
           is_active?: boolean | null
+          is_system_template?: boolean | null
           name?: string
           subject?: string
+          template_type?: string | null
           template_variables?: Json | null
           text_content?: string | null
           updated_at?: string | null
@@ -14606,6 +14612,27 @@ export type Database = {
       }
       secure_remove_user_role: {
         Args: { target_role_name: string; target_user_id: string }
+        Returns: Json
+      }
+      send_auth_email: {
+        Args: {
+          p_from_email?: string
+          p_template_name: string
+          p_to_email: string
+          p_variables?: Json
+        }
+        Returns: Json
+      }
+      send_email_via_resend: {
+        Args: {
+          p_from_email?: string
+          p_html_content?: string
+          p_subject?: string
+          p_template_id?: string
+          p_text_content?: string
+          p_to_email: string
+          p_variables?: Json
+        }
         Returns: Json
       }
       sync_active_issues: {
