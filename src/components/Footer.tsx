@@ -107,7 +107,7 @@ export const Footer = () => {
                   size="sm" 
                   variant="ghost" 
                   className="p-2"
-                  onClick={() => window.open('mailto:genieaiexpermentationhub@gmail.com', '_blank')}
+                  onClick={() => window.location.href = 'mailto:genieaiexpermentationhub@gmail.com'}
                 >
                   <Mail className="h-4 w-4" />
                 </Button>
