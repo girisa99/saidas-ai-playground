@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CookieConsent } from "@/components/CookieConsent";
-import { EmailSystem } from "@/components/EmailSystem";
+
 import Index from "./pages/Index";
 import Journey from "./pages/Journey";
 import About from "./pages/About";
@@ -11,6 +11,7 @@ import TechnologyStack from "./pages/TechnologyStack";
 import CaseStudies from "./pages/CaseStudies";
 import FAQPage from "./pages/FAQPage";
 import Docs from "./pages/Docs";
+import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms.tsx";
 import Disclaimer from "./pages/Disclaimer.tsx";
@@ -35,7 +36,8 @@ const App = () => (
         <Route path="/business-use-cases" element={<BusinessUseCases />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/docs" element={<Docs />} />
-        <Route path="/email" element={<EmailSystem />} />
+        <Route path="/contact" element={<Contact />} />
+        
         
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />

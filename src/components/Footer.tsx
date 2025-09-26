@@ -15,26 +15,35 @@ export const Footer = () => {
   };
   const emailServices = [
     {
+      name: 'Contact Form',
+      action: () => {
+        // Scroll to contact section or open contact form
+        const contactSection = document.getElementById('contact-form');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          // If no contact form on page, navigate to a contact page
+          window.location.href = '/contact';
+        }
+      }
+    },
+    {
       name: 'Gmail',
-      url: 'https://mail.google.com/mail/?view=cm&fs=1&to=genieexpermentationhub@gmail.com&su=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards'
+      action: () => window.open('https://mail.google.com/mail/?view=cm&fs=1&to=genieexpermentationhub@gmail.com&su=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
     },
     {
       name: 'Outlook',
-      url: 'https://outlook.live.com/mail/0/deeplink/compose?to=genieexpermentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards'
+      action: () => window.open('https://outlook.live.com/mail/0/deeplink/compose?to=genieexpermentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
     },
     {
       name: 'Yahoo Mail',
-      url: 'https://compose.mail.yahoo.com/?to=genieexpermentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards'
+      action: () => window.open('https://compose.mail.yahoo.com/?to=genieexpermentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
     },
     {
       name: 'Default Email App',
-      url: 'mailto:genieexpermentationhub@gmail.com?subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards'
+      action: () => window.open('mailto:genieexpermentationhub@gmail.com?subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
     }
   ];
-
-  const openEmailService = (serviceUrl: string) => {
-    window.open(serviceUrl, '_blank');
-  };
   return (
     <footer id="contact" className="bg-muted/50 border-t border-border/40">
       <div className="max-w-7xl mx-auto px-6 py-16">
@@ -146,7 +155,7 @@ export const Footer = () => {
                     {emailServices.map((service) => (
                       <DropdownMenuItem
                         key={service.name}
-                        onClick={() => openEmailService(service.url)}
+                        onClick={service.action}
                         className="cursor-pointer"
                       >
                         <Mail className="h-4 w-4 mr-2" />
