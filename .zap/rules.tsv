@@ -1,0 +1,33 @@
+# ZAP Scanning Rules Configuration
+# Format: RULE_ID	THRESHOLD	[DESCRIPTION]
+
+# High priority security checks
+10038	MEDIUM	# Content Security Policy (CSP) Header Not Set
+10020	MEDIUM	# X-Frame-Options Header Not Set
+10021	MEDIUM	# X-Content-Type-Options Header Missing
+10016	MEDIUM	# Web Browser XSS Protection Not Enabled
+10035	MEDIUM	# Strict-Transport-Security Header Not Set
+
+# Authentication and session management
+40012	HIGH	# Cross Site Request Forgery
+40014	HIGH	# HTTP Parameter Override
+40016	MEDIUM	# Cross Domain Misconfiguration
+40018	MEDIUM	# SQL Injection
+
+# Information disclosure
+10049	LOW	# Non-Storable Content
+10050	LOW	# Retrieved from Cache
+10054	LOW	# Cookie Without SameSite Attribute
+10055	LOW	# CSP Scanner
+
+# Input validation
+40019	HIGH	# Server Side Include
+40020	HIGH	# External Redirect
+40021	MEDIUM	# Source Code Disclosure
+40022	MEDIUM	# LDAP Injection
+
+# Infrastructure security
+10094	MEDIUM	# Base64 Disclosure
+10095	MEDIUM	# Backup File Disclosure
+10096	LOW	# Timestamp Disclosure
+10109	LOW	# Modern Web Application
