@@ -90,12 +90,13 @@ const handler = async (req: Request): Promise<Response> => {
       subscriberId = newSubscriber.id;
     }
 
-    // Send welcome email with HTML template
+    // Send welcome email and admin notification
     const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
     
     const unsubscribeUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/newsletter-unsubscribe?email=${encodeURIComponent(email)}&id=${subscriberId}`;
     const siteUrl = "https://genieexperimentationhub.lovable.app";
 
+    // Welcome email HTML template
     const welcomeEmailHtml = `
 <!DOCTYPE html>
 <html>
@@ -203,36 +204,120 @@ const handler = async (req: Request): Promise<Response> => {
 </html>
     `;
 
-    const { data: emailResult, error: emailError } = await resend.emails.send({
+    // Admin notification email HTML
+    const adminNotificationHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Newsletter Subscription</title>
+  <style>
+    body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif; margin: 0; padding: 20px; background-color: #f6f9fc; }
+    .container { background-color: #ffffff; margin: 0 auto; padding: 32px; border-radius: 8px; max-width: 500px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .header { text-align: center; margin-bottom: 24px; }
+    .logo { width: 60px; height: 60px; margin: 0 auto 16px; }
+    .title { color: #1a365d; font-size: 24px; font-weight: bold; margin: 0; }
+    .subtitle { color: #4a5568; font-size: 16px; margin: 8px 0 0; }
+    .content { margin: 24px 0; }
+    .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #e2e8f0; }
+    .label { font-weight: bold; color: #2d3748; }
+    .value { color: #4a5568; }
+    .footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0; text-align: center; color: #718096; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="${siteUrl}/genie-logo.png" width="60" height="60" alt="Genie AI Logo" class="logo" />
+      <h1 class="title">New Newsletter Subscription! 🎉</h1>
+      <p class="subtitle">Someone just joined your AI community</p>
+    </div>
+    
+    <div class="content">
+      <div class="info-row">
+        <span class="label">Email:</span>
+        <span class="value">${email}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Source:</span>
+        <span class="value">${source}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Subscribed At:</span>
+        <span class="value">${new Date().toLocaleString()}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Subscriber ID:</span>
+        <span class="value">${subscriberId}</span>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>This notification was sent automatically from your Genie AI Experimentation Hub.</p>
+    </div>
+  </div>
+</body>
+</html>
+    `;
+
+    // Send welcome email to subscriber
+    const { data: welcomeEmailResult, error: welcomeEmailError } = await resend.emails.send({
       from: "Genie AI Experimentation Hub <genieexpermentationhub@gmail.com>",
       to: [email],
       subject: "Welcome to Genie AI Experimentation Hub! 🧞‍♂️",
       html: welcomeEmailHtml,
     });
 
+    // Send notification email to admin
+    const { data: adminEmailResult, error: adminEmailError } = await resend.emails.send({
+      from: "Genie AI Experimentation Hub <genieexpermentationhub@gmail.com>",
+      to: ["genieexpermentationhub@gmail.com"],
+      subject: "New Newsletter Subscription - Genie AI Hub",
+      html: adminNotificationHtml,
+    });
+
     // Log email sending
     await supabase
       .from('email_logs')
-      .insert({
-        subscriber_id: subscriberId,
-        email_type: 'welcome',
-        email_address: email,
-        status: emailError ? 'failed' : 'sent',
-        error_message: emailError?.message || null,
-        template_used: 'welcome-email'
-      });
+      .insert([
+        {
+          subscriber_id: subscriberId,
+          email_type: 'welcome',
+          email_address: email,
+          status: welcomeEmailError ? 'failed' : 'sent',
+          error_message: welcomeEmailError?.message || null,
+          template_used: 'welcome-email'
+        },
+        {
+          subscriber_id: subscriberId,
+          email_type: 'admin_notification',
+          email_address: 'genieexpermentationhub@gmail.com',
+          status: adminEmailError ? 'failed' : 'sent',
+          error_message: adminEmailError?.message || null,
+          template_used: 'admin-notification'
+        }
+      ]);
 
-    if (emailError) {
-      console.error('Error sending welcome email:', emailError);
+    if (welcomeEmailError) {
+      console.error('Error sending welcome email:', welcomeEmailError);
+    }
+    if (adminEmailError) {
+      console.error('Error sending admin notification:', adminEmailError);
     }
 
-    console.log('Newsletter subscription successful:', { email, subscriberId, emailSent: !emailError });
+    console.log('Newsletter subscription successful:', { 
+      email, 
+      subscriberId, 
+      welcomeEmailSent: !welcomeEmailError,
+      adminNotificationSent: !adminEmailError
+    });
 
     return new Response(
       JSON.stringify({ 
         message: 'Successfully subscribed to newsletter',
         subscriberId,
-        emailSent: !emailError
+        emailSent: !welcomeEmailError
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
