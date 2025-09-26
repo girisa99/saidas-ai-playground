@@ -1,23 +1,39 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Brain, Mail, Linkedin, ArrowUp, X } from "lucide-react";
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Brain, Mail, Linkedin, ArrowUp, X, ChevronDown } from "lucide-react";
 import { PrivacyDialog, TermsDialog, DisclaimerDialog, CookiesDialog } from "./LegalDialogs";
 
 export const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  const openEmail = () => {
-    const mailto = 'mailto:genieaiexpermentationhub@gmail.com';
-    try {
-      window.location.href = mailto;
-    } catch (e) {
-      // ignore
-    } finally {
-      setTimeout(() => {
-        window.open(mailto, '_blank');
-      }, 200);
+  const emailServices = [
+    {
+      name: 'Gmail',
+      url: 'https://mail.google.com/mail/?view=cm&fs=1&to=genieexpermentationhub@gmail.com&su=Contact%20from%20Genie%20AI%20Hub'
+    },
+    {
+      name: 'Outlook',
+      url: 'https://outlook.live.com/mail/0/deeplink/compose?to=genieexpermentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub'
+    },
+    {
+      name: 'Yahoo Mail',
+      url: 'https://compose.mail.yahoo.com/?to=genieexpermentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub'
+    },
+    {
+      name: 'Default Email App',
+      url: 'mailto:genieexpermentationhub@gmail.com?subject=Contact%20from%20Genie%20AI%20Hub'
     }
+  ];
+
+  const openEmailService = (serviceUrl: string) => {
+    window.open(serviceUrl, '_blank');
   };
   return (
     <footer id="contact" className="bg-muted/50 border-t border-border/40">
@@ -114,15 +130,31 @@ export const Footer = () => {
                 >
                   <Linkedin className="h-4 w-4" />
                 </Button>
-                <Button 
-                  size="sm" 
-                  variant="ghost" 
-                  className="p-2"
-                  onClick={openEmail}
-                  aria-label="Email Sai Dasika"
-                >
-                  <Mail className="h-4 w-4" />
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      className="p-2"
+                      aria-label="Choose email service"
+                    >
+                      <Mail className="h-4 w-4" />
+                      <ChevronDown className="h-3 w-3 ml-1" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    {emailServices.map((service) => (
+                      <DropdownMenuItem
+                        key={service.name}
+                        onClick={() => openEmailService(service.url)}
+                        className="cursor-pointer"
+                      >
+                        <Mail className="h-4 w-4 mr-2" />
+                        {service.name}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 <Button 
                   size="sm" 
                   variant="ghost" 
