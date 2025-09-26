@@ -155,41 +155,38 @@ const CaseStudies = () => {
                         <UserCheck className="w-6 h-6 text-genie-primary" />
                       </div>
                       <div className="flex-1">
-                        <Badge className="mb-2 text-xs bg-green-100 text-green-800">
-                          Featured • Live Implementation
-                        </Badge>
                         <h3 className="text-2xl font-bold text-foreground mb-2">
                           AI-Powered Patient Onboarding System
                         </h3>
                         <p className="text-genie-primary font-semibold mb-4">
-                          75% efficiency gain with 95% accuracy
+                          Fully functional application built in 3 days with 90% accuracy
                         </p>
                       </div>
                     </div>
                     
                     <p className="text-muted-foreground mb-6 leading-relaxed">
-                      Comprehensive transformation of healthcare patient onboarding through hybrid AI-automation approach. 
-                      Features step-by-step implementation guide, technology stack analysis, and Gartner value framework integration.
+                      Comprehensive patient enrollment application demonstrating rapid AI-powered development. 
+                      Features complete technology stack analysis, Gartner value framework integration, and market challenge solutions.
                     </p>
                     
                     <div className="mb-6">
-                      <h4 className="font-semibold text-foreground mb-3">Key Achievements</h4>
+                      <h4 className="font-semibold text-foreground mb-3">Market Challenge Metrics</h4>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
-                          <div className="text-xl font-bold text-genie-primary">75%</div>
-                          <div className="text-xs text-muted-foreground">Faster Processing</div>
+                          <div className="text-xl font-bold text-genie-primary">3</div>
+                          <div className="text-xs text-muted-foreground">Days to Build</div>
                         </div>
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
-                          <div className="text-xl font-bold text-genie-primary">95%</div>
-                          <div className="text-xs text-muted-foreground">Data Accuracy</div>
+                          <div className="text-xl font-bold text-genie-primary">90%</div>
+                          <div className="text-xs text-muted-foreground">System Accuracy</div>
                         </div>
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
-                          <div className="text-xl font-bold text-genie-primary">$2.3M</div>
-                          <div className="text-xs text-muted-foreground">Annual Savings</div>
+                          <div className="text-xl font-bold text-genie-primary">85%</div>
+                          <div className="text-xs text-muted-foreground">Dev Cost Saved</div>
                         </div>
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
-                          <div className="text-xl font-bold text-genie-primary">8.7/10</div>
-                          <div className="text-xs text-muted-foreground">Patient Rating</div>
+                          <div className="text-xl font-bold text-genie-primary">9.2/10</div>
+                          <div className="text-xs text-muted-foreground">Tech Rating</div>
                         </div>
                       </div>
                     </div>
