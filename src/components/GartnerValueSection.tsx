@@ -14,11 +14,28 @@ import {
   BarChart3,
   Cog,
   Eye,
-  Scale
+  Scale,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 export const GartnerValueSection = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="gartner-value" className="py-8 sm:py-12 lg:py-16 xl:py-24 bg-gradient-to-b from-genie-primary/5 to-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,13 +43,13 @@ export const GartnerValueSection = () => {
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
           <div className="inline-flex items-center gap-2 bg-genie-primary/10 px-3 sm:px-4 py-2 rounded-full text-genie-primary text-sm font-medium mb-4">
             <Lightbulb className="w-4 h-4" />
-            What is Genie AI Hub?
+            Knowledge Sharing & AI Experimentation Hub
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground mb-4 sm:mb-6">
-            The Gartner Enterprise <span className="text-genie-primary">Value Equation</span>
+            Aligning <span className="text-genie-primary">Gartner's Value Framework</span> with AI Innovation
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
-            Strategic AI integration framework aligning stakeholder value creation with measurable business outcomes.
+            Exploring how AI experimentation creates multi-stakeholder value through strategic framework alignment, differentiated capabilities, and measurable enterprise outcomes.
           </p>
         </div>
 
@@ -130,7 +147,29 @@ export const GartnerValueSection = () => {
           </h3>
           
           <div className="relative">
-            <div className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide">
+            {/* Scroll Controls */}
+            <div className="absolute top-1/2 -translate-y-1/2 -left-4 z-20">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={scrollLeft}
+                className="h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background shadow-lg"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="absolute top-1/2 -translate-y-1/2 -right-4 z-20">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={scrollRight}
+                className="h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background shadow-lg"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            <div ref={scrollRef} className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-8">
               {/* Step 1: Listen & Sense */}
               <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-primary/20 hover:border-genie-primary/40 snap-center">
                 <div className="relative w-16 h-16 bg-gradient-to-br from-genie-primary to-genie-primary/80 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
