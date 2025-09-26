@@ -102,11 +102,12 @@ export const ContactModal = ({ trigger }: ContactModalProps) => {
             <div className="p-2 bg-primary/10 rounded-lg">
               <Users className="h-6 w-6 text-primary" />
             </div>
-            <Badge variant="secondary">Knowledge Sharing & Learning</Badge>
+            <Badge variant="secondary">GENIE Technology Navigator</Badge>
           </div>
-          <DialogTitle className="text-2xl text-center">Connect for Learning</DialogTitle>
+          <DialogTitle className="text-2xl text-center genie-gradient-text">Connect for Learning</DialogTitle>
           <p className="text-muted-foreground text-center">
-            Ready to transform your development with AI? Let's discuss how Genie AI can accelerate your innovation journey through knowledge sharing and collaborative learning.
+            <span className="genie-tagline block mb-2">I am your Technology Navigator</span>
+            Ready to transform your development with AI? Let's discuss how GENIE can accelerate your innovation journey through knowledge sharing and collaborative learning.
           </p>
         </DialogHeader>
 

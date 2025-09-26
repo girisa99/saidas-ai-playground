@@ -57,31 +57,31 @@
   }
   
   :root {
-    /* Modern Enterprise Palette */
+    /* Genie Branding Palette - Based on Logo */
     --background: 220 20% 97%;
-    --foreground: 220 15% 15%;
+    --foreground: 217 40% 15%;
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 15%;
+    --card-foreground: 217 40% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
+    --popover-foreground: 217 40% 15%;
     
-    /* Professional Primary - Deep Blue */
-    --primary: 217 91% 24%;
+    /* Genie Primary - Deep Blue from Logo */
+    --primary: 217 50% 20%;
     --primary-foreground: 0 0% 98%;
-    --primary-hover: 217 91% 30%;
+    --primary-hover: 217 55% 25%;
     
-    /* Sophisticated Secondary - Warm Gray */
+    /* Genie Secondary - Lighter Blue */
     --secondary: 215 25% 92%;
-    --secondary-foreground: 220 15% 15%;
+    --secondary-foreground: 217 40% 15%;
     
-    /* Premium Accent - Gold/Amber */
-    --accent: 45 100% 51%;
-    --accent-foreground: 220 15% 15%;
-    --accent-muted: 45 50% 88%;
+    /* Genie Accent - Cyan/Turquoise from Logo */
+    --accent: 180 85% 65%;
+    --accent-foreground: 217 40% 15%;
+    --accent-muted: 180 50% 88%;
     
     /* Modern Muted Tones */
     --muted: 220 15% 95%;
-    --muted-foreground: 220 10% 50%;
+    --muted-foreground: 220 20% 50%;
     
     /* Alerts & Status */
     --destructive: 0 84% 60%;
@@ -89,90 +89,92 @@
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
     --warning: 45 100% 51%;
-    --warning-foreground: 220 15% 15%;
+    --warning-foreground: 217 40% 15%;
     
     /* UI Elements */
     --border: 220 15% 88%;
     --input: 220 15% 94%;
-    --ring: 217 91% 24%;
+    --ring: 217 50% 20%;
     --radius: 8px;
     
     /* Sidebar */
     --sidebar-background: 220 20% 97%;
-    --sidebar-foreground: 220 15% 15%;
-    --sidebar-primary: 217 91% 24%;
+    --sidebar-foreground: 217 40% 15%;
+    --sidebar-primary: 217 50% 20%;
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 220 15% 92%;
-    --sidebar-accent-foreground: 220 15% 15%;
+    --sidebar-accent-foreground: 217 40% 15%;
     --sidebar-border: 220 15% 88%;
-    --sidebar-ring: 217 91% 24%;
+    --sidebar-ring: 217 50% 20%;
     
-    /* Enhanced Genie Theme - More Enterprise */
-    --genie-dark: 217 91% 15%;
-    --genie-primary: 217 91% 24%;
-    --genie-accent: 45 100% 51%;
-    --genie-secondary: 200 100% 45%;
+    /* Enhanced Genie Theme Colors */
+    --genie-dark: 217 50% 15%;
+    --genie-primary: 217 50% 20%;
+    --genie-accent: 180 85% 65%;
+    --genie-secondary: 195 80% 50%;
     --genie-muted: 220 15% 85%;
-    --genie-gradient: linear-gradient(135deg, hsl(217 91% 24%), hsl(200 100% 45%));
+    --genie-gradient: linear-gradient(135deg, hsl(217 50% 20%), hsl(180 85% 65%));
+    --genie-logo-gradient: linear-gradient(135deg, hsl(217 50% 20%) 0%, hsl(195 80% 50%) 50%, hsl(180 85% 65%) 100%);
   }
 
   .dark {
-    /* Dark Enterprise Theme */
-    --background: 220 15% 8%;
+    /* Dark Genie Theme */
+    --background: 217 40% 8%;
     --foreground: 220 15% 92%;
-    --card: 220 15% 10%;
+    --card: 217 40% 10%;
     --card-foreground: 220 15% 92%;
-    --popover: 220 15% 10%;
+    --popover: 217 40% 10%;
     --popover-foreground: 220 15% 92%;
     
     /* Dark Primary */
-    --primary: 217 91% 45%;
-    --primary-foreground: 220 15% 8%;
-    --primary-hover: 217 91% 55%;
+    --primary: 180 85% 65%;
+    --primary-foreground: 217 40% 8%;
+    --primary-hover: 180 85% 75%;
     
     /* Dark Secondary */
-    --secondary: 220 15% 18%;
+    --secondary: 217 40% 18%;
     --secondary-foreground: 220 15% 85%;
     
     /* Dark Accent */
-    --accent: 45 100% 65%;
-    --accent-foreground: 220 15% 8%;
-    --accent-muted: 45 50% 25%;
+    --accent: 195 80% 70%;
+    --accent-foreground: 217 40% 8%;
+    --accent-muted: 195 50% 25%;
     
     /* Dark Muted */
-    --muted: 220 15% 15%;
-    --muted-foreground: 220 10% 65%;
+    --muted: 217 40% 15%;
+    --muted-foreground: 220 20% 65%;
     
     /* Dark Alerts */
     --destructive: 0 84% 65%;
-    --destructive-foreground: 220 15% 8%;
+    --destructive-foreground: 217 40% 8%;
     --success: 142 76% 45%;
-    --success-foreground: 220 15% 8%;
+    --success-foreground: 217 40% 8%;
     --warning: 45 100% 65%;
-    --warning-foreground: 220 15% 8%;
+    --warning-foreground: 217 40% 8%;
     
     /* Dark UI Elements */
-    --border: 220 15% 20%;
-    --input: 220 15% 15%;
-    --ring: 217 91% 45%;
+    --border: 217 40% 18%;
+    --input: 217 40% 15%;
+    --ring: 180 85% 65%;
     
     /* Dark Sidebar */
-    --sidebar-background: 220 15% 8%;
-    --sidebar-foreground: 220 15% 85%;
-    --sidebar-primary: 217 91% 45%;
-    --sidebar-primary-foreground: 220 15% 8%;
-    --sidebar-accent: 220 15% 18%;
+    --sidebar-background: 217 40% 8%;
+    --sidebar-foreground: 220 15% 92%;
+    --sidebar-primary: 180 85% 65%;
+    --sidebar-primary-foreground: 217 40% 8%;
+    --sidebar-accent: 217 40% 18%;
     --sidebar-accent-foreground: 220 15% 85%;
-    --sidebar-border: 220 15% 20%;
-    --sidebar-ring: 217 91% 45%;
+    --sidebar-border: 217 40% 18%;
+    --sidebar-ring: 180 85% 65%;
     
-    /* Dark Genie Theme */
-    --genie-dark: 220 15% 5%;
-    --genie-primary: 217 91% 45%;
-    --genie-accent: 45 100% 65%;
-    --genie-secondary: 200 100% 55%;
-    --genie-muted: 220 15% 25%;
-    --genie-gradient: linear-gradient(135deg, hsl(217 91% 35%), hsl(200 100% 45%));
+    /* Dark Genie Colors */
+    --genie-dark: 217 50% 5%;
+    --genie-primary: 180 85% 65%;
+    --genie-accent: 195 80% 70%;
+    --genie-secondary: 210 75% 60%;
+    --genie-muted: 217 40% 25%;
+    --genie-gradient: linear-gradient(135deg, hsl(180 85% 65%), hsl(195 80% 70%));
+    --genie-logo-gradient: linear-gradient(135deg, hsl(217 50% 15%) 0%, hsl(195 80% 60%) 50%, hsl(180 85% 75%) 100%);
   }
 
   * {
@@ -457,5 +459,33 @@
 
   .animate-emergence-sparkle {
     animation: emergence-sparkle 1s ease-out forwards;
+  }
+
+  /* Genie Branding Utilities */
+  .genie-gradient-text {
+    background: var(--genie-logo-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .genie-tagline {
+    font-style: italic;
+    color: hsl(var(--accent));
+    font-weight: 500;
+  }
+
+  .genie-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .genie-logo-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid hsl(var(--accent));
   }
 }

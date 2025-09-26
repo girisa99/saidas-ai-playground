@@ -3,7 +3,7 @@ import { Menu, X, Home, User, Map, Wrench, FileText, Trophy, Search, ExternalLin
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
-import genieLogo from "@/assets/genie-logo-nav.png";
+import genieLogoMain from "@/assets/genie-logo-main.png";
 
 export const NavigationHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,36 +36,43 @@ export const NavigationHeader = () => {
       <div className="w-full max-w-none px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-2">
           {/* Logo & Brand - Left aligned, flexible width */}
-          <Link to="/" className="flex items-center space-x-2 group min-w-0 flex-shrink-0">
+          <Link to="/" className="genie-logo-container group min-w-0 flex-shrink-0">
             <div className="relative flex-shrink-0">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-genie-primary/10 to-genie-secondary/10 p-1 shadow-lg group-hover:shadow-genie-primary/20 transition-all duration-300 border border-genie-primary/20">
-                <img 
-                  src={genieLogo} 
-                  alt="Genie AI Experimentation Hub" 
-                  className="w-full h-full object-contain"
-                />
-              </div>
+              <img 
+                src={genieLogoMain} 
+                alt="Genie AI" 
+                className="genie-logo-image group-hover:scale-105 transition-transform duration-300"
+              />
             </div>
-            {/* Responsive brand text */}
+            {/* Full brand text for extra large screens */}
             <div className="hidden xl:block">
               <div className="flex items-center space-x-2">
-                <span className="text-xl font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
-                  Genie AI
+                <span className="text-xl font-bold genie-gradient-text whitespace-nowrap">
+                  GENIE
                 </span>
-                <span className="text-lg font-semibold text-foreground whitespace-nowrap">Hub</span>
+                <span className="text-lg font-semibold text-foreground whitespace-nowrap">AI Hub</span>
               </div>
-              <p className="text-xs text-muted-foreground font-medium whitespace-nowrap leading-tight">
+              <p className="text-xs genie-tagline whitespace-nowrap leading-tight">
                 I am your Technology Navigator
               </p>
             </div>
-            {/* Compact brand text for smaller screens */}
+            {/* Compact brand text for large screens */}
             <div className="hidden lg:block xl:hidden">
               <div className="flex items-center space-x-1">
-                <span className="text-lg font-bold bg-gradient-to-r from-genie-primary to-genie-secondary bg-clip-text text-transparent whitespace-nowrap">
-                  Genie AI
+                <span className="text-lg font-bold genie-gradient-text whitespace-nowrap">
+                  GENIE
                 </span>
-                <span className="text-sm font-semibold text-foreground whitespace-nowrap">Hub</span>
+                <span className="text-sm font-semibold text-foreground whitespace-nowrap">AI</span>
               </div>
+              <p className="text-xs genie-tagline whitespace-nowrap">
+                Tech Navigator
+              </p>
+            </div>
+            {/* Mobile - just GENIE */}
+            <div className="hidden sm:block lg:hidden">
+              <span className="text-base font-bold genie-gradient-text">
+                GENIE
+              </span>
             </div>
           </Link>
 

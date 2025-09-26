@@ -27,27 +27,30 @@ export const WelcomeEmail = ({
 }: WelcomeEmailProps) => (
   <Html>
     <Head />
-    <Preview>Welcome to Genie AI Experimentation Hub! Discover the future of AI innovation 🧞‍♂️</Preview>
+    <Preview>Welcome to GENIE AI Hub! Your Technology Navigator is here 🧞‍♂️</Preview>
     <Body style={main}>
       <Container style={container}>
         {/* Header with Logo */}
         <Section style={logoSection}>
           <Img
-            src={`${siteUrl}/genie-logo.png`}
-            width="120"
-            height="120"
-            alt="Genie AI Logo"
+            src={`${siteUrl}/genie-logo-main.png`}
+            width="100"
+            height="100"
+            alt="GENIE Logo"
             style={logo}
           />
+          <Heading style={logoText}>GENIE</Heading>
+          <Text style={tagline}>I am your Technology Navigator</Text>
         </Section>
 
         {/* Main Content */}
         <Section style={content}>
-          <Heading style={h1}>Welcome to Genie AI Experimentation Hub! 🧞‍♂️</Heading>
+          <Heading style={h1}>Welcome to GENIE AI Hub! 🧞‍♂️</Heading>
           
           <Text style={text}>
-            Thank you for joining our innovative community at <strong>Genie AI Experimentation Hub</strong>! 
+            Thank you for joining our innovative community at <strong>GENIE AI Hub</strong>! 
             You've just taken the first step into the future of AI experimentation and discovery.
+            As your Technology Navigator, I'm here to guide you through the exciting world of AI innovation.
           </Text>
 
           {/* Mission Section */}
@@ -81,13 +84,14 @@ export const WelcomeEmail = ({
             </Text>
           </Section>
 
-          {/* About Founder */}
+          {/* About Navigator */}
           <Section style={section}>
-            <Heading style={h2}>About Our Founder</Heading>
+            <Heading style={h2}>Your Technology Navigator</Heading>
             <Text style={text}>
-              Led by visionary AI researcher and innovator, our hub combines years of industry experience 
-              with a passion for making AI accessible to everyone. We believe that the next breakthrough 
-              in artificial intelligence could come from anyone, anywhere.
+              GENIE serves as your personal AI Technology Navigator, combining years of industry experience 
+              with cutting-edge insights to help you navigate the complex landscape of artificial intelligence. 
+              From Cell & Gene Therapeutic Technology to broader AI applications, I'm here to guide your journey 
+              toward technological mastery.
             </Text>
           </Section>
 
@@ -116,8 +120,8 @@ export const WelcomeEmail = ({
 
           {/* Footer */}
           <Text style={footer}>
-            Thank you for joining our mission to advance AI experimentation!<br/>
-            <strong>The Genie AI Experimentation Hub Team</strong>
+            Thank you for joining our mission to advance AI innovation!<br/>
+            <strong>GENIE - Your Technology Navigator</strong>
           </Text>
 
           <Text style={unsubscribe}>
@@ -135,7 +139,7 @@ export const WelcomeEmail = ({
 export default WelcomeEmail;
 
 const main = {
-  backgroundColor: '#f6f9fc',
+  backgroundColor: '#f0f7ff',
   fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
 };
 
@@ -144,15 +148,39 @@ const container = {
   margin: '0 auto',
   padding: '20px 0 48px',
   marginBottom: '64px',
+  borderRadius: '12px',
+  boxShadow: '0 8px 32px rgba(45, 84, 126, 0.1)',
 };
 
 const logoSection = {
   padding: '32px 0',
   textAlign: 'center' as const,
+  background: 'linear-gradient(135deg, #2d547e 0%, #48a3c4 50%, #7dd3fc 100%)',
+  borderRadius: '12px 12px 0 0',
 };
 
 const logo = {
   margin: '0 auto',
+  borderRadius: '50%',
+  border: '3px solid #7dd3fc',
+};
+
+const logoText = {
+  color: '#ffffff',
+  fontSize: '24px',
+  fontWeight: 'bold',
+  textAlign: 'center' as const,
+  margin: '16px 0 8px',
+  letterSpacing: '2px',
+};
+
+const tagline = {
+  color: '#7dd3fc',
+  fontSize: '14px',
+  fontStyle: 'italic',
+  textAlign: 'center' as const,
+  margin: '0 0 16px',
+  fontWeight: '500',
 };
 
 const content = {
@@ -160,7 +188,7 @@ const content = {
 };
 
 const h1 = {
-  color: '#1a365d',
+  color: '#2d547e',
   fontSize: '28px',
   fontWeight: 'bold',
   textAlign: 'center' as const,
@@ -169,7 +197,7 @@ const h1 = {
 };
 
 const h2 = {
-  color: '#2d3748',
+  color: '#2d547e',
   fontSize: '20px',
   fontWeight: 'bold',
   margin: '32px 0 16px',
@@ -192,7 +220,7 @@ const ctaSection = {
 };
 
 const button = {
-  backgroundColor: '#3182ce',
+  backgroundColor: '#48a3c4',
   borderRadius: '8px',
   color: '#fff',
   fontSize: '16px',
@@ -202,6 +230,7 @@ const button = {
   display: 'inline-block',
   padding: '16px 32px',
   margin: '0 auto',
+  boxShadow: '0 4px 12px rgba(72, 163, 196, 0.3)',
 };
 
 const hr = {
@@ -226,6 +255,6 @@ const unsubscribe = {
 };
 
 const unsubscribeLink = {
-  color: '#3182ce',
+  color: '#48a3c4',
   textDecoration: 'underline',
 };

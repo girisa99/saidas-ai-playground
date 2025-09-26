@@ -168,9 +168,10 @@ export const FAQ = () => {
         
         {/* Community Stats */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl font-bold genie-gradient-text mb-2">
             Join Our Growing Community
           </h2>
+          <p className="genie-tagline text-lg">I am your Technology Navigator</p>
           <div className="flex justify-center items-center gap-8 mb-8">
             <div className="text-center">
               <div className="text-2xl font-bold text-primary">
@@ -210,9 +211,10 @@ export const FAQ = () => {
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold text-foreground mb-2">
-                Join the AI Experimentation Journey
+              <h3 className="text-2xl font-bold genie-gradient-text mb-2">
+                Join the GENIE AI Journey
               </h3>
+              <p className="genie-tagline mb-2">I am your Technology Navigator</p>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Subscribe to receive insights from my AI experiments, successful implementations, failed attempts, 
                 and lessons learned. Join fellow AI enthusiasts exploring what works and what doesn't.

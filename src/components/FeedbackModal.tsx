@@ -105,9 +105,10 @@ export const FeedbackModal = ({ trigger }: FeedbackModalProps) => {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <MessageSquare className="w-5 h-5 text-primary" />
-            Share Your Learning Feedback
+            <span className="genie-gradient-text">Share Your Learning Feedback</span>
           </DialogTitle>
           <p className="text-muted-foreground text-center">
+            <span className="genie-tagline block mb-2">I am your Technology Navigator</span>
             Help us improve our AI experimentation hub through your insights and suggestions for better knowledge sharing and learning experiences.
           </p>
         </DialogHeader>

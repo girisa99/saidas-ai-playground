@@ -25,18 +25,20 @@ export const UnsubscribeConfirmationEmail = ({
 }: UnsubscribeConfirmationEmailProps) => (
   <Html>
     <Head />
-    <Preview>You've been unsubscribed from Genie AI Experimentation Hub</Preview>
+    <Preview>You've been unsubscribed from GENIE AI Hub</Preview>
     <Body style={main}>
       <Container style={container}>
         {/* Header with Logo */}
         <Section style={logoSection}>
           <Img
-            src={`${siteUrl}/genie-logo.png`}
+            src={`${siteUrl}/genie-logo-main.png`}
             width="80"
             height="80"
-            alt="Genie AI Logo"
+            alt="GENIE Logo"
             style={logo}
           />
+          <Heading style={logoText}>GENIE</Heading>
+          <Text style={tagline}>Technology Navigator</Text>
         </Section>
 
         {/* Main Content */}
@@ -45,7 +47,7 @@ export const UnsubscribeConfirmationEmail = ({
           
           <Text style={text}>
             We're sorry to see you go! You have been successfully unsubscribed from the 
-            <strong> Genie AI Experimentation Hub</strong> newsletter.
+            <strong> GENIE AI Hub</strong> newsletter.
           </Text>
 
           <Text style={text}>
@@ -74,7 +76,7 @@ export const UnsubscribeConfirmationEmail = ({
               href={siteUrl}
               style={button}
             >
-              Visit Genie AI Hub
+              Visit GENIE AI Hub
             </Button>
           </Section>
 
@@ -87,7 +89,7 @@ export const UnsubscribeConfirmationEmail = ({
           {/* Footer */}
           <Text style={footer}>
             Thank you for being part of our AI community!<br/>
-            <strong>The Genie AI Experimentation Hub Team</strong>
+            <strong>GENIE - Your Technology Navigator</strong>
           </Text>
 
           <Text style={footerNote}>
@@ -102,7 +104,7 @@ export const UnsubscribeConfirmationEmail = ({
 export default UnsubscribeConfirmationEmail;
 
 const main = {
-  backgroundColor: '#f6f9fc',
+  backgroundColor: '#f0f7ff',
   fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
 };
 
@@ -111,15 +113,39 @@ const container = {
   margin: '0 auto',
   padding: '20px 0 48px',
   marginBottom: '64px',
+  borderRadius: '12px',
+  boxShadow: '0 8px 32px rgba(45, 84, 126, 0.1)',
 };
 
 const logoSection = {
   padding: '32px 0',
   textAlign: 'center' as const,
+  background: 'linear-gradient(135deg, #2d547e 0%, #48a3c4 50%, #7dd3fc 100%)',
+  borderRadius: '12px 12px 0 0',
 };
 
 const logo = {
   margin: '0 auto',
+  borderRadius: '50%',
+  border: '3px solid #7dd3fc',
+};
+
+const logoText = {
+  color: '#ffffff',
+  fontSize: '20px',
+  fontWeight: 'bold',
+  textAlign: 'center' as const,
+  margin: '16px 0 8px',
+  letterSpacing: '2px',
+};
+
+const tagline = {
+  color: '#7dd3fc',
+  fontSize: '12px',
+  fontStyle: 'italic',
+  textAlign: 'center' as const,
+  margin: '0 0 16px',
+  fontWeight: '500',
 };
 
 const content = {
@@ -127,7 +153,7 @@ const content = {
 };
 
 const h1 = {
-  color: '#1a365d',
+  color: '#2d547e',
   fontSize: '24px',
   fontWeight: 'bold',
   textAlign: 'center' as const,
@@ -152,7 +178,7 @@ const ctaSection = {
 };
 
 const button = {
-  backgroundColor: '#3182ce',
+  backgroundColor: '#48a3c4',
   borderRadius: '8px',
   color: '#fff',
   fontSize: '16px',
@@ -162,6 +188,7 @@ const button = {
   display: 'inline-block',
   padding: '14px 28px',
   margin: '16px 0',
+  boxShadow: '0 4px 12px rgba(72, 163, 196, 0.3)',
 };
 
 const hr = {
