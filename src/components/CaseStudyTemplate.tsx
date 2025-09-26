@@ -134,9 +134,9 @@ const patientOnboardingCaseStudy: CaseStudyData = {
   icon: UserCheck,
   overview: {
     challenge: "Manual patient onboarding processes were causing 4-6 hour delays, 15% data entry errors, and poor patient experience with multiple touchpoints and communication gaps.",
-    solution: "Implemented a hybrid AI-automation system combining intelligent triage, automated workflows, and personalized patient communication to streamline the entire onboarding journey.",
+    solution: "Designed and developed a comprehensive patient enrollment system integrating automation workflows with Agentic AI for intelligent process verification, credentialing validation, and ICD code processing to optimize the entire patient onboarding journey.",
     impact: "Achieved functional application development in 3 days with 90% system accuracy and over 70% development cost savings.",
-    timeline: "6-month phased implementation with continuous optimization"
+    timeline: "Less than 3 weeks for continuous optimization to production-ready deployment"
   },
   metrics: {
     efficiency: "3 days to design, build & test",
@@ -153,11 +153,11 @@ const patientOnboardingCaseStudy: CaseStudyData = {
       "35% increase in provider burnout"
     ],
     target: [
-      "85% reduction in scheduling time",
-      "60% increase in staff efficiency",
-      "98% data accuracy rate",
-      "8.7/10 patient satisfaction target",
-      "45% improvement in provider satisfaction"
+      "Rapid design-to-deployment patient enrollment system",
+      "Automated credentialing and verification workflows", 
+      "Agentic AI for ICD code processing and validation",
+      "Integrated testing framework for accuracy assurance",
+      "Production-ready system with continuous optimization"
     ]
   },
   steps: [
