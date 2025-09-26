@@ -16,19 +16,19 @@ export const Footer = () => {
   const emailServices = [
     {
       name: 'Gmail',
-      url: 'https://mail.google.com/mail/?view=cm&fs=1&to=genieexpermentationhub@gmail.com&su=Contact%20from%20Genie%20AI%20Hub'
+      url: 'https://mail.google.com/mail/?view=cm&fs=1&to=genieexpermentationhub@gmail.com&su=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards'
     },
     {
       name: 'Outlook',
-      url: 'https://outlook.live.com/mail/0/deeplink/compose?to=genieexpermentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub'
+      url: 'https://outlook.live.com/mail/0/deeplink/compose?to=genieexpermentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards'
     },
     {
       name: 'Yahoo Mail',
-      url: 'https://compose.mail.yahoo.com/?to=genieexpermentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub'
+      url: 'https://compose.mail.yahoo.com/?to=genieexpermentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards'
     },
     {
       name: 'Default Email App',
-      url: 'mailto:genieexpermentationhub@gmail.com?subject=Contact%20from%20Genie%20AI%20Hub'
+      url: 'mailto:genieexpermentationhub@gmail.com?subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards'
     }
   ];
 
