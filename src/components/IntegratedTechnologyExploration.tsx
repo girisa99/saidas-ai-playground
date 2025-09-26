@@ -188,9 +188,48 @@ export const IntegratedTechnologyExploration = () => {
           </p>
         </div>
 
-        {/* Gartner Framework Overview */}
+        {/* Legend: Technology → Gartner Framework → Business Value */}
         <div className="mb-12">
-          <h3 className="text-xl font-bold text-center mb-6">Gartner Value Framework Technology Alignment</h3>
+          <h3 className="text-xl font-bold text-center mb-6">Technology Ecosystem → Gartner Framework → Business Value</h3>
+          
+          {/* Flow Legend */}
+          <div className="bg-gradient-to-r from-genie-primary/5 via-genie-teal/5 to-genie-cyan/5 p-6 rounded-xl mb-8">
+            <div className="grid md:grid-cols-3 gap-4 items-center">
+              <div className="text-center">
+                <div className="inline-flex items-center gap-2 bg-genie-primary/20 px-4 py-2 rounded-full text-genie-primary font-medium mb-2">
+                  <Brain className="w-4 h-4" />
+                  Envision Phase
+                </div>
+                <p className="text-xs text-muted-foreground">Innovation Discovery & Strategic Vision</p>
+              </div>
+              
+              <div className="hidden md:flex justify-center items-center">
+                <ArrowRight className="w-6 h-6 text-genie-teal animate-pulse" />
+              </div>
+              
+              <div className="text-center">
+                <div className="inline-flex items-center gap-2 bg-genie-teal/20 px-4 py-2 rounded-full text-genie-teal font-medium mb-2">
+                  <Zap className="w-4 h-4" />
+                  Engage Phase
+                </div>
+                <p className="text-xs text-muted-foreground">Platform Assessment & Integration</p>
+              </div>
+              
+              <div className="hidden md:flex justify-center items-center md:col-start-2">
+                <ArrowRight className="w-6 h-6 text-genie-cyan animate-pulse" />
+              </div>
+              
+              <div className="text-center md:col-start-3">
+                <div className="inline-flex items-center gap-2 bg-genie-cyan/20 px-4 py-2 rounded-full text-genie-cyan font-medium mb-2">
+                  <TrendingUp className="w-4 h-4" />
+                  Scale Phase
+                </div>
+                <p className="text-xs text-muted-foreground">Value Realization & ROI Optimization</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Gartner Framework Alignment */}
           <div className="grid md:grid-cols-3 gap-4">
             {gartnerPhases.map((phase, index) => {
               const IconComponent = phase.icon;
@@ -208,9 +247,13 @@ export const IntegratedTechnologyExploration = () => {
           </div>
         </div>
 
-        {/* Compact Technology Ecosystem Grid */}
+        {/* Technology Ecosystem Categories with Business Mapping */}
         <div className="mb-16">
-          <h3 className="text-2xl font-bold text-center mb-8">Technology Ecosystem Categories</h3>
+          <h3 className="text-2xl font-bold text-center mb-4">Technology Categories → Business Value Mapping</h3>
+          <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
+            Each technology category aligns with Gartner framework phases to deliver measurable business outcomes, 
+            creating multi-stakeholder value through strategic implementation.
+          </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {Object.entries(technologyEcosystem).map(([category, details]) => {
               const IconComponent = details.icon;
@@ -219,7 +262,7 @@ export const IntegratedTechnologyExploration = () => {
               return (
                 <Card key={category} className={`${details.borderColor} transition-all duration-300 ${isExpanded ? 'md:col-span-2 lg:col-span-3' : ''}`}>
                   <div 
-                    className={`p-4 ${details.bgColor} cursor-pointer`}
+                    className={`p-4 ${details.bgColor} cursor-pointer border-l-4 ${details.borderColor}`}
                     onClick={() => toggleCategoryExpansion(category)}
                   >
                     <div className="flex items-center justify-between">
@@ -227,7 +270,15 @@ export const IntegratedTechnologyExploration = () => {
                         <IconComponent className={`w-6 h-6 ${details.color}`} />
                         <div>
                           <h4 className="font-bold text-sm">{category}</h4>
-                          <p className="text-xs text-muted-foreground">{details.journeyPhase}</p>
+                          <div className="flex items-center gap-2">
+                            <span className={`text-xs px-2 py-1 rounded-full ${
+                              details.journeyPhase.includes('Envision') ? 'bg-genie-primary/20 text-genie-primary' :
+                              details.journeyPhase.includes('Engage') ? 'bg-genie-teal/20 text-genie-teal' :
+                              'bg-genie-cyan/20 text-genie-cyan'
+                            }`}>
+                              {details.journeyPhase}
+                            </span>
+                          </div>
                         </div>
                       </div>
                       {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
