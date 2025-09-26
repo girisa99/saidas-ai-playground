@@ -1,7 +1,7 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { MultiHeroSection } from "@/components/MultiHeroSection";
 import { TrustSection } from "@/components/TrustSection";
-import { StrategicValueInfographic } from "@/components/StrategicValueInfographic";
+import { GartnerValueSection } from "@/components/GartnerValueSection";
 import { AIExperimentationBanner } from "@/components/AIExperimentationBanner";
 
 
@@ -28,7 +28,7 @@ const Index = () => {
         <MultiHeroSection />
         
         <TrustSection />
-        <StrategicValueInfographic />
+        <GartnerValueSection />
         <QuickStart />
         
         
