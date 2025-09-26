@@ -7,7 +7,18 @@ export const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
+  const openEmail = () => {
+    const mailto = 'mailto:genieaiexpermentationhub@gmail.com';
+    try {
+      window.location.href = mailto;
+    } catch (e) {
+      // ignore
+    } finally {
+      setTimeout(() => {
+        window.open(mailto, '_blank');
+      }, 200);
+    }
+  };
   return (
     <footer id="contact" className="bg-muted/50 border-t border-border/40">
       <div className="max-w-7xl mx-auto px-6 py-16">
@@ -107,11 +118,10 @@ export const Footer = () => {
                   size="sm" 
                   variant="ghost" 
                   className="p-2"
-                  asChild
+                  onClick={openEmail}
+                  aria-label="Email Sai Dasika"
                 >
-                  <a href="mailto:genieaiexpermentationhub@gmail.com">
-                    <Mail className="h-4 w-4" />
-                  </a>
+                  <Mail className="h-4 w-4" />
                 </Button>
                 <Button 
                   size="sm" 
