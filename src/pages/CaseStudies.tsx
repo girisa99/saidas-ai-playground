@@ -37,12 +37,12 @@ const CaseStudies = () => {
       id: 2,
       title: "Multi-Agent Healthcare Ecosystem",
       category: "Enterprise AI Solutions",
-      impact: "Streamlined 15+ AI models",
-      description: "Built dynamic multi-agent systems integrating 15+ AI models for comprehensive healthcare workflow automation and decision support.",
+      impact: "Streamlined 10+ AI tools",
+      description: "Built dynamic multi-agent systems integrating 10+ AI tools for comprehensive healthcare workflow automation and decision support.",
       tags: ["Multi-Agent Systems", "LLM Integration", "Enterprise Scale"],
       icon: Users,
       metrics: [
-        { label: "Models Integrated", value: "15+" },
+        { label: "Tools Integrated", value: "10+" },
         { label: "Workflow Efficiency", value: "85%" },
         { label: "Decision Accuracy", value: "92%" }
       ]

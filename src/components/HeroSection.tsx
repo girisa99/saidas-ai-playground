@@ -78,8 +78,8 @@ export const HeroSection = () => {
               <div className="text-blue-100">Years in Technology</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-white mb-2">50+</div>
-              <div className="text-blue-100">AI Implementations</div>
+              <div className="text-3xl font-bold text-white mb-2">10+</div>
+              <div className="text-blue-100">AI Tools Integrated</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-white mb-2">Enterprise</div>
