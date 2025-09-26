@@ -143,21 +143,24 @@ export const IntegratedTechnologyExploration = () => {
   const gartnerPhases = [
     {
       phase: "Envision",
-      color: "bg-blue-500/10 text-blue-600 border-blue-500/20",
-      description: "Strategic vision and innovation discovery",
-      focus: "Learning, Experimentation, Proof of Concept"
+      color: "bg-genie-primary/10 text-genie-primary border-genie-primary/20",
+      description: "Listen & Sense → Develop Options",
+      focus: "AI Strategy, Innovation Discovery, Proof of Concept",
+      icon: Brain
     },
     {
       phase: "Engage", 
-      color: "bg-purple-500/10 text-purple-600 border-purple-500/20",
-      description: "Platform assessment and strategic alignment",
-      focus: "Integration, Scalability, Performance Optimization"
+      color: "bg-genie-teal/10 text-genie-teal border-genie-teal/20",
+      description: "Assess Materiality → Trade-Offs",
+      focus: "Platform Assessment, Integration Planning, Scalability Design",
+      icon: Zap
     },
     {
       phase: "Scale",
-      color: "bg-green-500/10 text-green-600 border-green-500/20",
-      description: "Business value realization and optimization",
-      focus: "Enterprise Deployment, ROI Measurement, Sustainability"
+      color: "bg-genie-cyan/10 text-genie-cyan border-genie-cyan/20",
+      description: "Measure Gap → Adjust & Iterate",
+      focus: "Value Realization, ROI Optimization, Continuous Improvement",
+      icon: TrendingUp
     }
   ];
 
@@ -187,15 +190,21 @@ export const IntegratedTechnologyExploration = () => {
 
         {/* Gartner Framework Overview */}
         <div className="mb-12">
-          <h3 className="text-xl font-bold text-center mb-6">Gartner Value Framework Phases</h3>
+          <h3 className="text-xl font-bold text-center mb-6">Gartner Value Framework Technology Alignment</h3>
           <div className="grid md:grid-cols-3 gap-4">
-            {gartnerPhases.map((phase, index) => (
-              <Card key={index} className={`p-4 text-center ${phase.color}`}>
-                <h4 className="font-bold mb-2">{phase.phase}</h4>
-                <p className="text-xs mb-2">{phase.description}</p>
-                <p className="text-xs font-medium">{phase.focus}</p>
-              </Card>
-            ))}
+            {gartnerPhases.map((phase, index) => {
+              const IconComponent = phase.icon;
+              return (
+                <Card key={index} className={`p-4 text-center ${phase.color}`}>
+                  <div className="flex items-center justify-center mb-2">
+                    <IconComponent className="w-6 h-6 mr-2" />
+                    <h4 className="font-bold">{phase.phase}</h4>
+                  </div>
+                  <p className="text-xs mb-2">{phase.description}</p>
+                  <p className="text-xs font-medium">{phase.focus}</p>
+                </Card>
+              );
+            })}
           </div>
         </div>
 
