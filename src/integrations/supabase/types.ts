@@ -4454,6 +4454,60 @@ export type Database = {
         }
         Relationships: []
       }
+      email_logs: {
+        Row: {
+          campaign_id: string | null
+          created_at: string
+          email_address: string
+          email_type: string
+          error_message: string | null
+          id: string
+          sent_at: string
+          status: string
+          subscriber_id: string | null
+          template_used: string
+        }
+        Insert: {
+          campaign_id?: string | null
+          created_at?: string
+          email_address: string
+          email_type: string
+          error_message?: string | null
+          id?: string
+          sent_at?: string
+          status?: string
+          subscriber_id?: string | null
+          template_used: string
+        }
+        Update: {
+          campaign_id?: string | null
+          created_at?: string
+          email_address?: string
+          email_type?: string
+          error_message?: string | null
+          id?: string
+          sent_at?: string
+          status?: string
+          subscriber_id?: string | null
+          template_used?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_logs_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "newsletter_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_logs_subscriber_id_fkey"
+            columns: ["subscriber_id"]
+            isOneToOne: false
+            referencedRelation: "newsletter_subscribers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       email_templates: {
         Row: {
           created_at: string | null
@@ -7401,6 +7455,84 @@ export type Database = {
           tags?: Json | null
           trace_id?: string | null
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      newsletter_campaigns: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          sent_at: string | null
+          status: string
+          subject: string
+          template_data: Json | null
+          template_name: string
+          total_sent: number | null
+          total_subscribers: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          sent_at?: string | null
+          status?: string
+          subject: string
+          template_data?: Json | null
+          template_name: string
+          total_sent?: number | null
+          total_subscribers?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          sent_at?: string | null
+          status?: string
+          subject?: string
+          template_data?: Json | null
+          template_name?: string
+          total_sent?: number | null
+          total_subscribers?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      newsletter_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          is_active: boolean
+          preferences: Json | null
+          subscribed_at: string
+          subscription_source: string | null
+          unsubscribed_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          is_active?: boolean
+          preferences?: Json | null
+          subscribed_at?: string
+          subscription_source?: string | null
+          unsubscribed_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          is_active?: boolean
+          preferences?: Json | null
+          subscribed_at?: string
+          subscription_source?: string | null
+          unsubscribed_at?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
