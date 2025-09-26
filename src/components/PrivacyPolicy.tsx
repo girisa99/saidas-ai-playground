@@ -25,9 +25,9 @@ export const PrivacyPolicy = () => {
           </p>
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <p className="text-sm">
-              This platform is designed for <strong>AI experimentation, learning, and knowledge sharing</strong>. 
-              All data collection serves to enhance the educational experience and facilitate collaborative learning. 
-              We do not provide commercial services or consulting.
+              This platform is a <strong>personal knowledge sharing and AI experimentation initiative</strong> 
+              by Saidas. It is completely separate from his professional role and has no affiliation with 
+              McKesson or any other employer. All content is for learning and educational purposes only.
             </p>
           </div>
         </CardContent>

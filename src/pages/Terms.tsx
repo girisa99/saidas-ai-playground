@@ -40,9 +40,9 @@ const Terms = () => {
             </p>
             <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
               <p className="text-sm">
-                This platform is designed exclusively for <strong>experimentation, learning, and knowledge sharing</strong>. 
-                We do not provide consulting services, professional advice, or sell any products. All content is AI-generated 
-                for educational purposes only.
+                This platform is a <strong>personal knowledge sharing and AI experimentation initiative</strong> 
+                by Saidas, completely separate from his professional role at McKesson or any other employer. 
+                All content is AI-generated for educational and learning purposes only.
               </p>
             </div>
           </CardContent>

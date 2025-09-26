@@ -39,9 +39,9 @@ const Cookies = () => {
               <strong>Last Updated:</strong> {new Date().toLocaleDateString()}
             </p>
             <p className="text-muted-foreground">
-              Cookies are small text files stored on your device when you visit our AI experimentation platform. 
-              We use cookies to enhance your learning experience, remember your preferences, and improve our 
-              educational content delivery.
+              Cookies are small text files stored on your device when you visit this personal AI experimentation 
+              platform by Saidas. This initiative is completely separate from his professional work at McKesson. 
+              We use cookies to enhance your learning experience and improve educational content delivery.
             </p>
           </CardContent>
         </Card>

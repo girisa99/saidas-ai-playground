@@ -37,9 +37,9 @@ const Disclaimer = () => {
           <CardContent>
             <div className="bg-orange-100 border border-orange-300 rounded-lg p-4">
               <p className="text-orange-800 font-medium">
-                This platform is exclusively for <strong>experimentation, learning, and knowledge sharing</strong>. 
-                All content is AI-generated and may not reflect real-world scenarios. Users must verify all 
-                information independently before any practical application.
+                This platform is a <strong>personal knowledge sharing and AI experimentation initiative</strong> 
+                by Saidas, completely independent from his professional work at McKesson or any other employer. 
+                All content is AI-generated for learning purposes and requires independent verification.
               </p>
             </div>
           </CardContent>
