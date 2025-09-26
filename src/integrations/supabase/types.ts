@@ -14453,13 +14453,15 @@ export type Database = {
         Returns: number
       }
       calculate_financial_risk_score: {
-        Args: {
-          p_annual_revenue_range: string
-          p_current_ratio: number
-          p_days_sales_outstanding: number
-          p_debt_to_equity_ratio: number
-          p_years_in_operation: number
-        }
+        Args:
+          | {
+              p_annual_revenue_range: string
+              p_current_ratio: number
+              p_days_sales_outstanding: number
+              p_debt_to_equity_ratio: number
+              p_years_in_operation: number
+            }
+          | { p_enrollment_id: string }
         Returns: number
       }
       check_duplicate_agent_name: {
@@ -14467,10 +14469,12 @@ export type Database = {
         Returns: boolean
       }
       check_user_has_role: {
-        Args: {
-          check_user_id: string
-          role_name: Database["public"]["Enums"]["user_role"]
-        }
+        Args:
+          | {
+              check_user_id: string
+              role_name: Database["public"]["Enums"]["user_role"]
+            }
+          | { p_role_name: string; p_user_id: string }
         Returns: boolean
       }
       cleanup_agent_sessions: {
