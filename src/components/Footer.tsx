@@ -79,7 +79,13 @@ export const Footer = () => {
               
               {/* Contact Information */}
               <div className="space-y-2 text-sm">
-                <div className="font-medium text-foreground">Sai Dasika</div>
+                <div className="text-muted-foreground">
+                  <span className="font-medium">Name:</span> Sai Dasika
+                </div>
+                <div className="text-muted-foreground">
+                  936 Villageview Lane<br />
+                  Cary, NC 27519
+                </div>
                 <div className="flex items-center space-x-2">
                   <Mail className="h-3 w-3 text-primary" />
                   <a 
@@ -88,10 +94,6 @@ export const Footer = () => {
                   >
                     genieaiexpermentationhub@gmail.com
                   </a>
-                </div>
-                <div className="text-xs text-muted-foreground pl-5">
-                  936 Villageview Lane<br />
-                  Cary, NC 27519
                 </div>
               </div>
 
