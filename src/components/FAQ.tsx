@@ -205,32 +205,33 @@ export const FAQ = () => {
         </div>
         
         {/* Newsletter Subscription CTA */}
-        <div className="max-w-3xl mx-auto">
-          <Card className="p-6 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail className="w-8 h-8 text-primary" />
+        <div className="max-w-xl mx-auto">
+          <Card className="p-4 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20">
+            <div className="text-center mb-6">
+              <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Mail className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold genie-gradient-text mb-2">
+              <h3 className="text-xl font-bold genie-gradient-text mb-2">
                 Join the GENIE AI Journey
               </h3>
-              <p className="genie-tagline mb-2">I am your Technology Navigator</p>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="genie-tagline mb-2 text-sm">I am your Technology Navigator</p>
+              <p className="text-muted-foreground text-sm">
                 Subscribe to receive insights from my AI experiments, successful implementations, failed attempts, 
-                and lessons learned. Join fellow AI enthusiasts exploring what works and what doesn't.
+                and lessons learned. Join fellow AI experimenters exploring what works and what doesn't.
               </p>
             </div>
 
             {!isSubscribed ? (
-              <form onSubmit={handleSubscribe} className="max-w-md mx-auto">
-                <div className="space-y-3">
-                  <div className="grid grid-cols-2 gap-3">
+              <form onSubmit={handleSubscribe} className="max-w-sm mx-auto">
+                <div className="space-y-2">
+                  <div className="grid grid-cols-2 gap-2">
                     <Input
                       type="text"
                       placeholder="First Name"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       required
+                      className="text-sm"
                     />
                     <Input
                       type="text"
@@ -238,6 +239,7 @@ export const FAQ = () => {
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       required
+                      className="text-sm"
                     />
                   </div>
                   <Input
@@ -246,11 +248,13 @@ export const FAQ = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    className="text-sm"
                   />
                   <Button 
                     type="submit" 
                     disabled={isLoading}
                     className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50"
+                    size="sm"
                   >
                     {isLoading ? 'Subscribing...' : 'Subscribe'}
                   </Button>
@@ -273,26 +277,26 @@ export const FAQ = () => {
               </div>
             )}
 
-            <div className="grid md:grid-cols-3 gap-4 mt-8 pt-8 border-t border-primary/20">
+            <div className="grid grid-cols-3 gap-3 mt-6 pt-4 border-t border-primary/20">
               <div className="text-center">
-                <BookOpen className="w-6 h-6 text-primary mx-auto mb-2" />
-                <h4 className="font-semibold text-foreground mb-1 text-sm">Experiment Insights</h4>
+                <BookOpen className="w-5 h-5 text-primary mx-auto mb-1" />
+                <h4 className="font-semibold text-foreground mb-1 text-xs">Experiment Insights</h4>
                 <p className="text-xs text-muted-foreground">Real results from AI tools testing and implementation attempts</p>
               </div>
               <div className="text-center">
-                <Users className="w-6 h-6 text-primary mx-auto mb-2" />
-                <h4 className="font-semibold text-foreground mb-1 text-sm">Connect and Share</h4>
+                <Users className="w-5 h-5 text-primary mx-auto mb-1" />
+                <h4 className="font-semibold text-foreground mb-1 text-xs">Connect and Share</h4>
                 <p className="text-xs text-muted-foreground">Connect with other AI experimenters and share discoveries</p>
               </div>
               <div className="text-center">
-                <Zap className="w-6 h-6 text-primary mx-auto mb-2" />
-                <h4 className="font-semibold text-foreground mb-1 text-sm">Early Access</h4>
+                <Zap className="w-5 h-5 text-primary mx-auto mb-1" />
+                <h4 className="font-semibold text-foreground mb-1 text-xs">Early Access</h4>
                 <p className="text-xs text-muted-foreground">Be first to try new tools and techniques I discover</p>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex justify-center gap-3 mt-6">
+            <div className="flex justify-center gap-2 mt-4">
               <ContactModal 
                 trigger={
                   <Button variant="default" size="sm" className="flex items-center gap-2">
