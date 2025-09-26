@@ -251,7 +251,7 @@ const VerticalJourneyInfographic = () => {
             AI Transformation <span className="text-foreground">Journey</span>
           </h2>
           <p className="text-lg sm:text-xl text-foreground mb-6 sm:mb-8 leading-relaxed px-2">
-            An ongoing comprehensive exploration from June 2025 to present - evolving from curiosity to breakthrough AI capabilities and beyond
+            An ongoing comprehensive exploration from May 2025 to present - evolving from curiosity to breakthrough AI capabilities and beyond
           </p>
           
           {/* Controls */}
