@@ -143,24 +143,27 @@ export const IntegratedTechnologyExploration = () => {
   const gartnerPhases = [
     {
       phase: "Envision",
-      color: "bg-genie-primary/10 text-genie-primary border-genie-primary/20",
+      color: "bg-blue-500/20 text-blue-700 border-blue-500/30",
       description: "Listen & Sense → Develop Options",
       focus: "AI Strategy, Innovation Discovery, Proof of Concept",
-      icon: Brain
+      icon: Brain,
+      businessContext: "Healthcare Innovation, AI Experimentation, Strategic Vision"
     },
     {
       phase: "Engage", 
-      color: "bg-genie-teal/10 text-genie-teal border-genie-teal/20",
+      color: "bg-purple-500/20 text-purple-700 border-purple-500/30",
       description: "Assess Materiality → Trade-Offs",
       focus: "Platform Assessment, Integration Planning, Scalability Design",
-      icon: Zap
+      icon: Zap,
+      businessContext: "Customer Onboarding, Multi-channel Support, System Integration"
     },
     {
       phase: "Scale",
-      color: "bg-genie-cyan/10 text-genie-cyan border-genie-cyan/20",
+      color: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30",
       description: "Measure Gap → Adjust & Iterate",
       focus: "Value Realization, ROI Optimization, Continuous Improvement",
-      icon: TrendingUp
+      icon: TrendingUp,
+      businessContext: "Enterprise Deployment, Compliance Management, Performance Optimization"
     }
   ];
 
@@ -193,38 +196,41 @@ export const IntegratedTechnologyExploration = () => {
           <h3 className="text-xl font-bold text-center mb-6">Technology Ecosystem → Gartner Framework → Business Value</h3>
           
           {/* Flow Legend */}
-          <div className="bg-gradient-to-r from-genie-primary/5 via-genie-teal/5 to-genie-cyan/5 p-6 rounded-xl mb-8">
+          <div className="bg-gradient-to-r from-blue-50 via-purple-50 to-emerald-50 dark:from-blue-950/20 dark:via-purple-950/20 dark:to-emerald-950/20 p-6 rounded-xl mb-8">
             <div className="grid md:grid-cols-3 gap-4 items-center">
               <div className="text-center">
-                <div className="inline-flex items-center gap-2 bg-genie-primary/20 px-4 py-2 rounded-full text-genie-primary font-medium mb-2">
+                <div className="inline-flex items-center gap-2 bg-blue-500/20 px-4 py-2 rounded-full text-blue-700 font-medium mb-2">
                   <Brain className="w-4 h-4" />
                   Envision Phase
                 </div>
                 <p className="text-xs text-muted-foreground">Innovation Discovery & Strategic Vision</p>
+                <p className="text-xs font-medium text-blue-700 mt-1">AI Strategy & Experimentation</p>
               </div>
               
               <div className="hidden md:flex justify-center items-center">
-                <ArrowRight className="w-6 h-6 text-genie-teal animate-pulse" />
+                <ArrowRight className="w-6 h-6 text-purple-600 animate-pulse" />
               </div>
               
               <div className="text-center">
-                <div className="inline-flex items-center gap-2 bg-genie-teal/20 px-4 py-2 rounded-full text-genie-teal font-medium mb-2">
+                <div className="inline-flex items-center gap-2 bg-purple-500/20 px-4 py-2 rounded-full text-purple-700 font-medium mb-2">
                   <Zap className="w-4 h-4" />
                   Engage Phase
                 </div>
                 <p className="text-xs text-muted-foreground">Platform Assessment & Integration</p>
+                <p className="text-xs font-medium text-purple-700 mt-1">Customer Systems & Support</p>
               </div>
               
               <div className="hidden md:flex justify-center items-center md:col-start-2">
-                <ArrowRight className="w-6 h-6 text-genie-cyan animate-pulse" />
+                <ArrowRight className="w-6 h-6 text-emerald-600 animate-pulse" />
               </div>
               
               <div className="text-center md:col-start-3">
-                <div className="inline-flex items-center gap-2 bg-genie-cyan/20 px-4 py-2 rounded-full text-genie-cyan font-medium mb-2">
+                <div className="inline-flex items-center gap-2 bg-emerald-500/20 px-4 py-2 rounded-full text-emerald-700 font-medium mb-2">
                   <TrendingUp className="w-4 h-4" />
                   Scale Phase
                 </div>
                 <p className="text-xs text-muted-foreground">Value Realization & ROI Optimization</p>
+                <p className="text-xs font-medium text-emerald-700 mt-1">Enterprise & Compliance</p>
               </div>
             </div>
           </div>
@@ -268,23 +274,24 @@ export const IntegratedTechnologyExploration = () => {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <IconComponent className={`w-6 h-6 ${details.color}`} />
-                        <div>
-                          <h4 className="font-bold text-sm">{category}</h4>
-                          <div className="flex items-center gap-2">
-                            <span className={`text-xs px-2 py-1 rounded-full ${
-                              details.journeyPhase.includes('Envision') ? 'bg-genie-primary/20 text-genie-primary' :
-                              details.journeyPhase.includes('Engage') ? 'bg-genie-teal/20 text-genie-teal' :
-                              'bg-genie-cyan/20 text-genie-cyan'
-                            }`}>
-                              {details.journeyPhase}
-                            </span>
-                          </div>
+                           <div>
+                             <h4 className="font-bold text-sm">{category}</h4>
+                             <div className="flex items-center gap-2">
+                               <span className={`text-xs px-2 py-1 rounded-full ${
+                                 'phaseColor' in details ? details.phaseColor : 
+                                 details.journeyPhase.includes('Envision') ? 'bg-blue-500/20 text-blue-700' :
+                                 details.journeyPhase.includes('Engage') ? 'bg-purple-500/20 text-purple-700' :
+                                 'bg-emerald-500/20 text-emerald-700'
+                               }`}>
+                                 {details.journeyPhase}
+                               </span>
+                             </div>
+                           </div>
                         </div>
+                        {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                       </div>
-                      {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                      <p className="text-xs mt-2 text-muted-foreground">{details.description}</p>
                     </div>
-                    <p className="text-xs mt-2 text-muted-foreground">{details.description}</p>
-                  </div>
                   
                   {isExpanded && (
                     <div className="p-4 border-t">
@@ -304,7 +311,7 @@ export const IntegratedTechnologyExploration = () => {
                         ))}
                       </div>
                       
-                      <div className="grid md:grid-cols-2 gap-4">
+                      <div className="grid md:grid-cols-2 gap-4 mb-4">
                         <div>
                           <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
                             <Target className="w-3 h-3" />
@@ -317,16 +324,38 @@ export const IntegratedTechnologyExploration = () => {
                           </div>
                         </div>
                         
-                        <div>
-                          <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
-                            <CheckCircle className="w-3 h-3" />
-                            Gartner Value
-                          </h5>
-                          <div className="space-y-1">
-                            {details.gartnerValue.map((value, index) => (
-                              <div key={index} className="text-xs p-2 bg-green-50 dark:bg-green-950/20 rounded">{value}</div>
-                            ))}
-                          </div>
+                         <div>
+                           <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
+                             <Users className="w-3 h-3" />
+                             Journey Use Cases
+                           </h5>
+                           <div className="space-y-1">
+                             {(('journeyUseCases' in details ? details.journeyUseCases : details.businessOutcomes) as string[]).map((useCase, index) => (
+                               <div key={index} className="text-xs p-2 bg-blue-50 dark:bg-blue-950/20 rounded">{useCase}</div>
+                             ))}
+                           </div>
+                         </div>
+                      </div>
+                      
+                       <div className="mb-4">
+                         <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
+                           <Network className="w-3 h-3" />
+                           Integration Blueprint
+                         </h5>
+                         <div className="text-xs p-3 bg-gradient-to-r from-primary/5 to-secondary/5 rounded border-l-3 border-primary/30">
+                           {('integrationBlueprint' in details ? details.integrationBlueprint : 'Technology Integration → Platform Assessment → Scalability Design → Value Optimization') as string}
+                         </div>
+                       </div>
+                      
+                      <div>
+                        <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
+                          <CheckCircle className="w-3 h-3" />
+                          Gartner Value
+                        </h5>
+                        <div className="space-y-1">
+                          {details.gartnerValue.map((value, index) => (
+                            <div key={index} className="text-xs p-2 bg-green-50 dark:bg-green-950/20 rounded">{value}</div>
+                          ))}
                         </div>
                       </div>
                     </div>
