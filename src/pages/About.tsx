@@ -1,7 +1,7 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { AboutSection } from "@/components/AboutSection";
 
 import { AnimatedTextEmergence } from "@/components/AnimatedTextEmergence";
 import { Button } from "@/components/ui/button";
@@ -98,8 +98,8 @@ const About = () => {
           <Breadcrumbs />
         </div>
         
-      {/* Hero Section with Genie */}
-      <section className="relative bg-gradient-to-br from-genie-dark via-genie-navy to-genie-primary/20 text-white py-24 lg:py-32 overflow-hidden">
+        {/* Hero Section with Genie */}
+        <section className="relative bg-gradient-to-br from-genie-dark via-genie-navy to-genie-primary/20 text-white py-24 lg:py-32 overflow-hidden">
         {/* Animated Background Effects */}
         <div className="absolute inset-0">
           {[...Array(15)].map((_, i) => (
@@ -262,7 +262,7 @@ const About = () => {
         </div>
       </section>
 
-      <main className="relative">
+      
         {/* Stats Section */}
         <section className="py-16 bg-gradient-to-b from-genie-primary/5 to-background">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -572,10 +572,11 @@ const About = () => {
                 Connect on LinkedIn
               </Button>
             </div>
-          </div>
-        </section>
+           </div>
+         </section>
 
-      </main>
+         <AboutSection />
+       </main>
 
       <Footer />
     </div>

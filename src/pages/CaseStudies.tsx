@@ -31,8 +31,8 @@ const CaseStudies = () => {
           <Breadcrumbs />
         </div>
         
-      {/* Enhanced Hero Section */}
-      <section className="relative pt-24 pb-16 overflow-hidden">
+        {/* Enhanced Hero Section */}
+        <section className="relative pt-24 pb-16 overflow-hidden">
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -139,7 +139,7 @@ const CaseStudies = () => {
         </div>
       </section>
       
-      <main>
+      
         {/* Main Content Tabs */}
         <section className="py-8 lg:py-12">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -255,9 +255,9 @@ const CaseStudies = () => {
                 </Link>
               </Button>
             </div>
-          </div>
-        </section>
-      </main>
+           </div>
+         </section>
+       </main>
       
       <Footer />
     </div>
