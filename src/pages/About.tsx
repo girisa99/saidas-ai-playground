@@ -312,7 +312,7 @@ const About = () => {
                   My career spans technology leadership roles at industry giants including <strong className="text-genie-primary">Novartis, Bayer, 
                   Conduent, Amgen, and Pfizer</strong>, where I've consistently led digital transformation initiatives 
                   across commercial operations, clinical R&D, regulatory affairs, and supply chain management. 
-                  Currently, I serve as <strong className="text-genie-primary">Director of Product owner/solution Architect for CGAT (PSaS) supporting inspiogene launch at McKesson</strong>, 
+                  Currently, I serve as <strong className="text-genie-primary">Director of Product owner/solution Architect for CGAT (PSaS) supporting InspiroGene launch at McKesson</strong>, 
                   leading cross-functional workstreams across 3PL/SD, Specialty Pharmacy (Biologics), Ontada (Provider onboarding/Order management), 
                   and Patient services. With an MBA from <strong className="text-genie-teal">Cornell University's Johnson School</strong>, 
                   I've developed a unique perspective that combines deep technical expertise with strategic business acumen.
@@ -342,7 +342,7 @@ const About = () => {
                   {
                     phase: "Current Experience",
                     companies: "McKesson • Present",
-                    focus: "Director of Product owner/solution Architect for CGAT (PSaS) supporting inspiogene launch",
+                    focus: "Director of Product owner/solution Architect for CGAT (PSaS) supporting InspiroGene launch",
                     achievements: "Managing 3PL/SD, Specialty Pharmacy (Biologics), Ontada (Provider onboarding/Order management), and Patient services initiatives",
                     icon: Building2,
                     color: "genie-primary"
