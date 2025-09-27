@@ -86,19 +86,6 @@ export const JourneySteps = ({ steps }: JourneyStepsProps) => {
                     </Badge>
                   </div>
                   <p className="text-muted-foreground mb-3">{step.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant="secondary" className="text-xs">
-                      ROI: {step.roi}
-                    </Badge>
-                    <Badge variant={step.implementationStatus === 'live' ? 'default' : 'secondary'} className="text-xs">
-                      {step.implementationStatus.charAt(0).toUpperCase() + step.implementationStatus.slice(1)}
-                    </Badge>
-                    {step.statusNote && (
-                      <Badge variant="outline" className="text-xs text-muted-foreground">
-                        {step.statusNote}
-                      </Badge>
-                    )}
-                  </div>
                 </div>
                 
                 {/* Expansion Indicator */}

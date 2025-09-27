@@ -48,9 +48,6 @@ export const patientOnboardingCaseStudy: CaseStudyData = {
       emotionIcon: AlertTriangle,
       approach: "hybrid",
       automationPrimary: true,
-      roi: "75% efficiency gain",
-      implementationStatus: "live",
-      statusNote: "Digital intake and basic validation operational",
       automationTasks: [
         "Digital intake form parsing from fax/portal",
         "Automated data extraction and validation",
@@ -99,9 +96,6 @@ export const patientOnboardingCaseStudy: CaseStudyData = {
       emotionIcon: ThumbsUp,
       approach: "agentic",
       automationPrimary: false,
-      roi: "60% efficiency gain",
-      implementationStatus: "testing",
-      statusNote: "Basic communication workflows deployed, AI personalization in testing",
       automationTasks: [
         "Automated SMS/email welcome messages",
         "Basic appointment availability checking",
@@ -149,9 +143,6 @@ export const patientOnboardingCaseStudy: CaseStudyData = {
       emotionIcon: AlertTriangle,
       approach: "hybrid",
       automationPrimary: true,
-      roi: "85% efficiency gain",
-      implementationStatus: "live",
-      statusNote: "Production-ready verification with 99% accuracy",
       automationTasks: [
         "NPI database lookups and verification",
         "Automated credentialing status checks",
@@ -197,9 +188,6 @@ export const patientOnboardingCaseStudy: CaseStudyData = {
       emotionIcon: AlertTriangle,
       approach: "hybrid",
       automationPrimary: true,
-      roi: "80% efficiency gain",
-      implementationStatus: "live",
-      statusNote: "Real-time verification operational with 95% accuracy",
       automationTasks: [
         "Real-time API-based verification with payers",
         "Automated benefit summaries generation",
@@ -245,9 +233,6 @@ export const patientOnboardingCaseStudy: CaseStudyData = {
       emotionIcon: AlertTriangle,
       approach: "agentic",
       automationPrimary: false,
-      roi: "50% efficiency gain",
-      implementationStatus: "development",
-      statusNote: "Core clinical flagging live, AI assessment in development",
       automationTasks: [
         "Automated flagging of critical data points",
         "Standard protocol checklist generation",
@@ -293,9 +278,6 @@ export const patientOnboardingCaseStudy: CaseStudyData = {
       emotionIcon: ThumbsUp,
       approach: "agentic",
       automationPrimary: false,
-      roi: "65% efficiency gain",
-      implementationStatus: "testing",
-      statusNote: "Basic scheduling live, AI optimization in testing",
       automationTasks: [
         "Real-time availability checking",
         "Automated appointment confirmation",
@@ -341,9 +323,6 @@ export const patientOnboardingCaseStudy: CaseStudyData = {
       emotionIcon: FileText,
       approach: "automation",
       automationPrimary: true,
-      roi: "85% efficiency gain",
-      implementationStatus: "live",
-      statusNote: "Digital consent workflows operational",
       automationTasks: [
         "Automated consent form generation",
         "Digital signature capture and validation",
@@ -390,9 +369,6 @@ export const patientOnboardingCaseStudy: CaseStudyData = {
       emotionIcon: ThumbsUp,
       approach: "hybrid",
       automationPrimary: true,
-      roi: "70% efficiency gain",
-      implementationStatus: "testing",
-      statusNote: "Core coordination live, AI optimization in testing",
       automationTasks: [
         "Automated care team notifications",
         "Standardized progress tracking",

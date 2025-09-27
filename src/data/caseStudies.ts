@@ -10,9 +10,6 @@ export interface CaseStudyStep {
   emotionIcon: any;
   approach: "automation" | "agentic" | "hybrid";
   automationPrimary: boolean;
-  roi: string;
-  implementationStatus: "live" | "testing" | "development" | "planned";
-  statusNote?: string;
   automationTasks: string[];
   aiTasks: string[];
   whyAutomation: string;
