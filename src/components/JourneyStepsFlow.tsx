@@ -296,7 +296,7 @@ export const JourneyStepsFlow = ({
                            step.implementationStatus === 'live' ? 'border-green-500 text-green-600 bg-green-50' :
                            step.implementationStatus === 'testing' ? 'border-blue-500 text-blue-600 bg-blue-50' :
                            step.implementationStatus === 'development' ? 'border-orange-500 text-orange-600 bg-orange-50' :
-                           'border-gray-500 text-gray-600 bg-gray-50'
+                           'border-border text-muted-foreground bg-muted/50'
                          }`}
                        >
                          {step.implementationStatus === 'live' ? '✅' :

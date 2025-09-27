@@ -165,7 +165,7 @@ export const DevelopmentJourneyMap = () => {
             {complexToSimple.map((phase, index) => (
               <Card key={index} className={`p-6 border-${phase.color === 'genie-primary' ? 'genie-primary' : 'border'}/20 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-${phase.color === 'genie-primary' ? 'genie-primary' : 'background'}/5 to-background`}>
                 <div className="text-center">
-                  <Badge className={`mb-4 ${phase.color === 'genie-primary' ? 'bg-genie-primary/20 text-genie-primary border-genie-primary/30' : 'bg-gray-100 text-gray-600'}`}>
+                  <Badge className={`mb-4 ${phase.color === 'genie-primary' ? 'bg-primary/20 text-primary border-primary/30' : 'bg-muted text-muted-foreground border-border'}`}>
                     {phase.year}
                   </Badge>
                   <h3 className="text-lg font-bold text-foreground mb-2">

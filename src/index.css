@@ -197,27 +197,27 @@
 }
 
 @layer utilities {
-  /* Genie-themed glow effects */
-  .genie-glow {
-    box-shadow: 0 0 20px hsl(var(--genie-cyan) / 0.5);
+  /* Enterprise-grade glow effects */
+  .enterprise-glow {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.3);
   }
   
-  .genie-teal-glow {
-    text-shadow: 0 0 10px hsl(var(--genie-teal) / 0.8);
+  .premium-glow {
+    text-shadow: 0 0 15px hsl(var(--accent) / 0.8);
   }
   
-  /* Gentle bounce animation for Genie */
-  @keyframes bounce-gentle {
+  /* Refined bounce animation for professional presentation */
+  @keyframes bounce-professional {
     0%, 100% {
       transform: translateY(0px);
     }
     50% {
-      transform: translateY(-10px);
+      transform: translateY(-8px);
     }
   }
   
-  .animate-bounce-gentle {
-    animation: bounce-gentle 3s ease-in-out infinite;
+  .animate-bounce-professional {
+    animation: bounce-professional 2.5s ease-in-out infinite;
   }
   
   /* Floating particles animation */
@@ -465,31 +465,38 @@
     animation: emergence-sparkle 1s ease-out forwards;
   }
 
-  /* Genie Branding Utilities */
-  .genie-gradient-text {
-    background: var(--genie-logo-gradient);
+  /* Enterprise Branding Utilities */
+  .enterprise-gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .genie-tagline {
+  .professional-tagline {
     font-style: italic;
     color: hsl(var(--accent));
     font-weight: 500;
   }
 
-  .genie-logo-container {
+  .enterprise-logo-container {
     display: flex;
     align-items: center;
     gap: 0.75rem;
   }
   
-  .genie-logo-image {
+  .enterprise-logo-image {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid hsl(var(--accent));
+  }
+
+  /* Premium card styling */
+  .enterprise-card {
+    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted)/0.1) 100%);
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 8px 32px hsla(var(--primary), 0.1);
   }
 }

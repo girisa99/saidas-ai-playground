@@ -131,26 +131,26 @@ const BusinessUseCases = () => {
   const getApproachColor = (approach: string) => {
     switch (approach) {
       case "automation":
-        return "bg-green-100 text-green-700 border-green-300";
+        return "bg-primary/10 text-primary border-primary/30";
       case "agentic":
-        return "bg-blue-100 text-blue-700 border-blue-300";
+        return "bg-accent/10 text-accent border-accent/30";
       case "hybrid":
-        return "bg-purple-100 text-purple-700 border-purple-300";
+        return "bg-secondary/10 text-secondary-foreground border-secondary/30";
       default:
-        return "bg-gray-100 text-gray-700 border-gray-300";
+        return "bg-muted text-muted-foreground border-border";
     }
   };
 
   const getEmotionColor = (emotion: string) => {
     switch (emotion) {
       case "positive":
-        return "bg-green-100 text-green-700 border-green-300";
+        return "bg-success/10 text-success border-success/30";
       case "neutral":
-        return "bg-yellow-100 text-yellow-700 border-yellow-300";
+        return "bg-warning/10 text-warning border-warning/30";
       case "critical":
-        return "bg-red-100 text-red-700 border-red-300";
+        return "bg-destructive/10 text-destructive border-destructive/30";
       default:
-        return "bg-gray-100 text-gray-700 border-gray-300";
+        return "bg-muted text-muted-foreground border-border";
     }
   };
 
