@@ -1215,52 +1215,82 @@ export const scenarioDetails = {
     sarah: {
       1: [
         {
-          substep: "Digital Intake Processing",
-          process: "AI extracts key information from digital referral: patient demographics, primary complaint, referring physician details, and insurance information."
+          substep: "Urgent Referral Processing",
+          process: "AI immediately recognizes urgent pancreatic cancer referral and triggers priority routing to appropriate oncology specialists."
         },
         {
-          substep: "Intelligent Triage Assessment",
-          process: "System analyzes clinical indicators and assigns priority level: urgent (24-48 hours), routine (1-2 weeks), or specialist consultation needed."
+          substep: "Critical Timeline Management",
+          process: "System establishes expedited timeline for urgent case processing and specialist coordination."
         }
       ],
       2: [
         {
-          substep: "Automated Patient Outreach",
-          process: "AI generates personalized communication: preferred contact method, optimal timing, and culturally appropriate messaging."
+          substep: "Priority Outreach Protocol",
+          process: "AI initiates immediate patient contact using urgent communication protocols with personalized messaging for cancer patients."
         },
         {
-          substep: "Dynamic Scheduling",
-          process: "System optimizes appointment scheduling based on patient availability, provider schedules, and clinical priority."
+          substep: "Specialist Network Verification",
+          process: "System rapidly verifies availability of pancreatic cancer specialists and coordinates immediate appointments."
         }
       ],
       3: [
         {
-          substep: "Real-time Eligibility Check",
-          process: "AI instantly verifies insurance coverage, benefit levels, and identifies potential coverage gaps or financial assistance opportunities."
+          substep: "Rapid Provider Matching",
+          process: "AI identifies optimal pancreatic cancer specialists based on expertise, availability, and geographic proximity."
         },
         {
-          substep: "Benefit Optimization",
-          process: "System analyzes benefit structure and recommends optimal utilization strategy to minimize patient costs."
+          substep: "Emergency Capacity Planning",
+          process: "System ensures immediate treatment capacity and coordinates urgent care pathway."
         }
       ],
       4: [
         {
-          substep: "AI Specialist Matching",
-          process: "AI analyzes case complexity, provider expertise, availability, and historical outcomes to recommend optimal specialist assignment."
+          substep: "Expedited Data Collection",
+          process: "AI streamlines urgent case data collection focusing on critical information for immediate care decisions."
         },
         {
-          substep: "Care Team Formation",
-          process: "System automatically assembles multi-disciplinary care team based on patient needs and specialist availability."
+          substep: "Insurance Emergency Processing",
+          process: "System processes insurance information with urgent authorization for immediate care approval."
         }
       ],
       5: [
         {
-          substep: "Personalized Education",
-          process: "AI generates customized pre-appointment materials based on patient's medical literacy, anxiety level, and specific procedure requirements."
+          substep: "Critical Record Retrieval",
+          process: "AI prioritizes acquisition of most recent imaging, lab results, and relevant medical history for urgent case review."
         },
         {
-          substep: "Preparation Optimization",
-          process: "System creates personalized timeline and checklist to ensure patient arrives fully prepared for specialist consultation."
+          substep: "Emergency Documentation Synthesis",
+          process: "System compiles critical medical information for immediate specialist review and decision-making."
+        }
+      ],
+      6: [
+        {
+          substep: "Emergency Authorization Processing",
+          process: "AI expedites insurance verification and authorization for urgent cancer care with immediate approval protocols."
+        },
+        {
+          substep: "Financial Assistance Acceleration",
+          process: "System identifies and processes emergency financial assistance options for urgent cancer treatment."
+        }
+      ],
+      7: [
+        {
+          substep: "Urgent Clinical Assessment",
+          process: "AI assists in rapid clinical review with pancreatic cancer protocols and immediate treatment pathway recommendations."
+        },
+        {
+          substep: "Emergency Care Coordination",
+          process: "System coordinates immediate multi-specialty team assembly for urgent cancer care planning."
+        }
+      ],
+      8: [
+        {
+          substep: "Priority Scheduling Protocol",
+          process: "AI implements emergency scheduling protocols to secure immediate specialist appointments and necessary procedures."
+        },
+        {
+          substep: "Urgent Care Coordination",
+          process: "System manages comprehensive urgent care coordination including imaging, lab work, and specialist consultations."
         }
       ]
     },
@@ -1268,10 +1298,10 @@ export const scenarioDetails = {
       1: [
         {
           substep: "Complex Case Analysis",
-          process: "AI performs comprehensive analysis of multiple comorbidities, medication interactions, and specialist coordination requirements."
+          process: "AI analyzes complex oncology case with multiple prior treatments and coordinates comprehensive specialist evaluation."
         },
         {
-          substep: "Multi-specialist Coordination",
+          substep: "Multi-system Coordination",
           process: "System automatically coordinates with multiple specialists and manages complex scheduling requirements."
         }
       ],
@@ -1287,32 +1317,62 @@ export const scenarioDetails = {
       ],
       3: [
         {
-          substep: "Complex Benefit Analysis",
-          process: "AI analyzes multiple insurance policies and coordination of benefits for complex cases with high expected costs."
+          substep: "Complex Provider Coordination",
+          process: "AI coordinates optimal network of specialists for complex case including genomic testing capabilities and research options."
         },
         {
-          substep: "Financial Strategy Development",
-          process: "System identifies optimal combination of insurance benefits, assistance programs, and payment options."
+          substep: "Advanced Treatment Planning",
+          process: "System identifies specialized treatment centers with advanced capabilities for complex oncology cases."
         }
       ],
       4: [
         {
-          substep: "Multi-specialty Team Assembly",
-          process: "AI coordinates optimal team of specialists considering case complexity, provider relationships, and geographic constraints."
+          substep: "Comprehensive Data Integration",
+          process: "AI manages extensive data collection including prior treatment history, genomic information, and complex medical background."
         },
         {
-          substep: "Complex Care Pathway Planning",
-          process: "System develops comprehensive care coordination strategy with multiple touchpoints and decision trees."
+          substep: "Complex Insurance Coordination",
+          process: "System navigates complex insurance scenarios for advanced treatments and genomic testing authorization."
         }
       ],
       5: [
         {
-          substep: "Comprehensive Preparation Strategy",
-          process: "AI creates detailed preparation plan addressing complex medical history, multiple appointments, and patient education needs."
+          substep: "Comprehensive Record Assembly",
+          process: "AI coordinates acquisition of extensive medical records from multiple providers and treatment centers."
         },
         {
-          substep: "Multi-modal Support Coordination",
-          process: "System arranges transportation, caregiver support, and specialized preparation resources for complex cases."
+          substep: "Advanced Case Documentation",
+          process: "System compiles comprehensive medical history including all prior treatments, genomic data, and specialist consultations."
+        }
+      ],
+      6: [
+        {
+          substep: "Complex Authorization Management",
+          process: "AI manages complex insurance authorization for advanced treatments, genomic testing, and multi-specialty care."
+        },
+        {
+          substep: "Advanced Financial Strategy",
+          process: "System develops comprehensive financial strategy for complex treatment including clinical trial options and assistance programs."
+        }
+      ],
+      7: [
+        {
+          substep: "Advanced Clinical Review",
+          process: "AI coordinates comprehensive clinical review with multiple specialists and genomic analysis for complex treatment planning."
+        },
+        {
+          substep: "Multi-specialty Care Planning",
+          process: "System orchestrates complex care planning involving multiple specialties and advanced treatment modalities."
+        }
+      ],
+      8: [
+        {
+          substep: "Complex Scheduling Coordination",
+          process: "AI manages intricate scheduling for multiple specialists, genomic testing, and advanced treatment planning sessions."
+        },
+        {
+          substep: "Comprehensive Care Integration",
+          process: "System ensures seamless integration of all care components including research participation and advanced treatment options."
         }
       ]
     }
@@ -1720,60 +1780,18 @@ export const scenarioImpactAnalysis = {
       errorReduction: "90%",
       patientSatisfaction: "9.2/10",
       stepImpacts: {
-        1: {
-          timeSaved: "4-6 hours",
-          errorReduction: "95%",
-          qualityImprovement: "Intelligent triage ensures appropriate prioritization"
-        },
-        2: {
-          timeSaved: "2-3 hours", 
-          errorReduction: "85%",
-          qualityImprovement: "Personalized communication reduces anxiety and improves engagement"
-        },
-        3: {
-          timeSaved: "1-2 hours",
-          errorReduction: "80%",
-          qualityImprovement: "Real-time verification eliminates approval delays"
-        },
-        4: {
-          timeSaved: "2-4 hours",
-          errorReduction: "90%",
-          qualityImprovement: "Optimal specialist matching improves care coordination"
-        },
-        5: {
-          timeSaved: "1-3 hours",
-          errorReduction: "75%",
-          qualityImprovement: "Comprehensive preparation improves visit outcomes"
-        },
-        6: {
-          timeSaved: "3-5 hours",
-          errorReduction: "85%",
-          qualityImprovement: "AI-enhanced verification reduces processing time"
-        },
-        7: {
-          timeSaved: "4-6 hours",
-          errorReduction: "80%",
-          qualityImprovement: "Intelligent clinical review improves triage accuracy"
-        },
-        8: {
-          timeSaved: "2-3 hours",
-          errorReduction: "70%", 
-          qualityImprovement: "Optimized scheduling reduces delays and no-shows"
-        }
+        1: { timeSaved: "4-6 hours", errorReduction: "95%", qualityImprovement: "Intelligent triage ensures appropriate prioritization" },
+        2: { timeSaved: "2-3 hours", errorReduction: "85%", qualityImprovement: "Personalized communication reduces anxiety" },
+        3: { timeSaved: "1-2 hours", errorReduction: "80%", qualityImprovement: "Real-time verification eliminates delays" },
+        4: { timeSaved: "2-4 hours", errorReduction: "90%", qualityImprovement: "Optimal specialist matching" },
+        5: { timeSaved: "1-3 hours", errorReduction: "75%", qualityImprovement: "Comprehensive preparation" },
+        6: { timeSaved: "3-5 hours", errorReduction: "85%", qualityImprovement: "AI-enhanced verification" },
+        7: { timeSaved: "4-6 hours", errorReduction: "80%", qualityImprovement: "Intelligent clinical review" },
+        8: { timeSaved: "2-3 hours", errorReduction: "70%", qualityImprovement: "Optimized scheduling" }
       },
       cumulativeBenefits: [
-        {
-          step: 1,
-          totalTimeSaved: "4-6 hours",
-          totalErrorReduction: "95%",
-          clinicalOutcome: "Immediate appropriate care routing"
-        },
-        {
-          step: 8,
-          totalTimeSaved: "19-32 hours",
-          totalErrorReduction: "85%",
-          clinicalOutcome: "Complete care coordination with optimal outcomes"
-        }
+        { step: 1, totalTimeSaved: "4-6 hours", totalErrorReduction: "95%", clinicalOutcome: "Immediate care routing" },
+        { step: 8, totalTimeSaved: "19-32 hours", totalErrorReduction: "85%", clinicalOutcome: "Complete care coordination" }
       ]
     },
     michael: {
@@ -1782,60 +1800,18 @@ export const scenarioImpactAnalysis = {
       errorReduction: "95%",
       patientSatisfaction: "9.5/10",
       stepImpacts: {
-        1: {
-          timeSaved: "6-8 hours",
-          errorReduction: "98%",
-          qualityImprovement: "Advanced triage for complex cases ensures proper resource allocation"
-        },
-        2: {
-          timeSaved: "3-4 hours",
-          errorReduction: "90%",
-          qualityImprovement: "AI-powered communication adapts to complex medical situations"
-        },
-        3: {
-          timeSaved: "2-3 hours",
-          errorReduction: "85%",
-          qualityImprovement: "Comprehensive verification handles complex benefit structures"
-        },
-        4: {
-          timeSaved: "4-6 hours",
-          errorReduction: "95%",
-          qualityImprovement: "Multi-specialty coordination ensures optimal care team assembly"
-        },
-        5: {
-          timeSaved: "3-5 hours",
-          errorReduction: "80%",
-          qualityImprovement: "Complex preparation strategy addresses all patient needs"
-        },
-        6: {
-          timeSaved: "4-6 hours",
-          errorReduction: "90%",
-          qualityImprovement: "Advanced verification handles complex insurance scenarios"
-        },
-        7: {
-          timeSaved: "6-8 hours",
-          errorReduction: "85%",
-          qualityImprovement: "AI-assisted review handles complex clinical presentations"
-        },
-        8: {
-          timeSaved: "3-4 hours",
-          errorReduction: "75%",
-          qualityImprovement: "Complex scheduling coordination ensures optimal care sequencing"
-        }
+        1: { timeSaved: "6-8 hours", errorReduction: "98%", qualityImprovement: "Advanced triage for complex cases" },
+        2: { timeSaved: "3-4 hours", errorReduction: "90%", qualityImprovement: "AI-powered complex communication" },
+        3: { timeSaved: "2-3 hours", errorReduction: "85%", qualityImprovement: "Comprehensive verification" },
+        4: { timeSaved: "4-6 hours", errorReduction: "95%", qualityImprovement: "Multi-specialty coordination" },
+        5: { timeSaved: "3-5 hours", errorReduction: "80%", qualityImprovement: "Complex preparation strategy" },
+        6: { timeSaved: "4-6 hours", errorReduction: "90%", qualityImprovement: "Advanced verification" },
+        7: { timeSaved: "6-8 hours", errorReduction: "85%", qualityImprovement: "AI-assisted complex review" },
+        8: { timeSaved: "3-4 hours", errorReduction: "75%", qualityImprovement: "Complex scheduling coordination" }
       },
       cumulativeBenefits: [
-        {
-          step: 1,
-          totalTimeSaved: "6-8 hours",
-          totalErrorReduction: "98%",
-          clinicalOutcome: "Expert-level triage for complex cases"
-        },
-        {
-          step: 8,
-          totalTimeSaved: "31-44 hours",
-          totalErrorReduction: "88%",
-          clinicalOutcome: "Comprehensive complex care coordination"
-        }
+        { step: 1, totalTimeSaved: "6-8 hours", totalErrorReduction: "98%", clinicalOutcome: "Expert complex triage" },
+        { step: 8, totalTimeSaved: "31-44 hours", totalErrorReduction: "88%", clinicalOutcome: "Comprehensive complex coordination" }
       ]
     }
   },
@@ -1846,65 +1822,19 @@ export const scenarioImpactAnalysis = {
       errorReduction: "85%",
       patientSatisfaction: "9.0/10",
       stepImpacts: {
-        1: {
-          timeSaved: "2-3 hours",
-          errorReduction: "90%",
-          qualityImprovement: "Streamlined digital processing reduces delays"
-        },
-        2: {
-          timeSaved: "1-2 hours",
-          errorReduction: "80%",
-          qualityImprovement: "AI-guided data collection improves completeness"
-        },
-        3: {
-          timeSaved: "3-4 hours",
-          errorReduction: "85%",
-          qualityImprovement: "Automated record acquisition ensures comprehensive history"
-        },
-        4: {
-          timeSaved: "1-2 hours",
-          errorReduction: "75%",
-          qualityImprovement: "Intelligent scheduling optimizes patient experience"
-        },
-        5: {
-          timeSaved: "2-3 hours",
-          errorReduction: "70%",
-          qualityImprovement: "Personalized preparation improves visit outcomes"
-        },
-        6: {
-          timeSaved: "1-2 hours",
-          errorReduction: "85%",
-          qualityImprovement: "AI-assisted assessment enhances clinical accuracy"
-        },
-        7: {
-          timeSaved: "4-6 hours",
-          errorReduction: "90%",
-          qualityImprovement: "Personalized treatment planning improves outcomes"
-        },
-        8: {
-          timeSaved: "2-3 hours",
-          errorReduction: "80%",
-          qualityImprovement: "Coordinated care delivery ensures seamless experience"
-        },
-        9: {
-          timeSaved: "3-4 hours",
-          errorReduction: "85%",
-          qualityImprovement: "Predictive monitoring enables proactive care"
-        }
+        1: { timeSaved: "2-3 hours", errorReduction: "90%", qualityImprovement: "Streamlined digital processing" },
+        2: { timeSaved: "1-2 hours", errorReduction: "80%", qualityImprovement: "AI-guided data collection" },
+        3: { timeSaved: "3-4 hours", errorReduction: "85%", qualityImprovement: "Automated record acquisition" },
+        4: { timeSaved: "1-2 hours", errorReduction: "75%", qualityImprovement: "Intelligent scheduling" },
+        5: { timeSaved: "2-3 hours", errorReduction: "70%", qualityImprovement: "Personalized preparation" },
+        6: { timeSaved: "1-2 hours", errorReduction: "85%", qualityImprovement: "AI-assisted assessment" },
+        7: { timeSaved: "4-6 hours", errorReduction: "90%", qualityImprovement: "Personalized treatment planning" },
+        8: { timeSaved: "2-3 hours", errorReduction: "80%", qualityImprovement: "Coordinated care delivery" },
+        9: { timeSaved: "3-4 hours", errorReduction: "85%", qualityImprovement: "Predictive monitoring" }
       },
       cumulativeBenefits: [
-        {
-          step: 1,
-          totalTimeSaved: "2-3 hours",
-          totalErrorReduction: "90%",
-          clinicalOutcome: "Efficient care initiation"
-        },
-        {
-          step: 9,
-          totalTimeSaved: "19-29 hours",
-          totalErrorReduction: "83%",
-          clinicalOutcome: "Complete care optimization with proactive monitoring"
-        }
+        { step: 1, totalTimeSaved: "2-3 hours", totalErrorReduction: "90%", clinicalOutcome: "Efficient care initiation" },
+        { step: 9, totalTimeSaved: "19-29 hours", totalErrorReduction: "83%", clinicalOutcome: "Complete care optimization" }
       ]
     },
     michael: {
@@ -1913,65 +1843,19 @@ export const scenarioImpactAnalysis = {
       errorReduction: "90%",
       patientSatisfaction: "9.3/10",
       stepImpacts: {
-        1: {
-          timeSaved: "4-6 hours",
-          errorReduction: "95%",
-          qualityImprovement: "Advanced processing for complex cases"
-        },
-        2: {
-          timeSaved: "3-4 hours",
-          errorReduction: "85%",
-          qualityImprovement: "Comprehensive data analysis for multiple conditions"
-        },
-        3: {
-          timeSaved: "5-7 hours",
-          errorReduction: "90%",
-          qualityImprovement: "Multi-source record integration ensures complete picture"
-        },
-        4: {
-          timeSaved: "2-3 hours",
-          errorReduction: "80%",
-          qualityImprovement: "Complex scheduling coordination across specialties"
-        },
-        5: {
-          timeSaved: "4-5 hours",
-          errorReduction: "75%",
-          qualityImprovement: "Comprehensive preparation for complex needs"
-        },
-        6: {
-          timeSaved: "3-4 hours",
-          errorReduction: "90%",
-          qualityImprovement: "Multi-specialty assessment coordination"
-        },
-        7: {
-          timeSaved: "6-8 hours",
-          errorReduction: "95%",
-          qualityImprovement: "Advanced treatment planning for multiple conditions"
-        },
-        8: {
-          timeSaved: "4-5 hours",
-          errorReduction: "85%",
-          qualityImprovement: "Complex care team management and coordination"
-        },
-        9: {
-          timeSaved: "5-6 hours",
-          errorReduction: "90%",
-          qualityImprovement: "Advanced monitoring for complex treatment interactions"
-        }
+        1: { timeSaved: "4-6 hours", errorReduction: "95%", qualityImprovement: "Advanced complex processing" },
+        2: { timeSaved: "3-4 hours", errorReduction: "85%", qualityImprovement: "Comprehensive data analysis" },
+        3: { timeSaved: "5-7 hours", errorReduction: "90%", qualityImprovement: "Multi-source record integration" },
+        4: { timeSaved: "2-3 hours", errorReduction: "80%", qualityImprovement: "Complex scheduling coordination" },
+        5: { timeSaved: "4-5 hours", errorReduction: "75%", qualityImprovement: "Comprehensive complex preparation" },
+        6: { timeSaved: "3-4 hours", errorReduction: "90%", qualityImprovement: "Multi-specialty assessment" },
+        7: { timeSaved: "6-8 hours", errorReduction: "95%", qualityImprovement: "Advanced treatment planning" },
+        8: { timeSaved: "4-5 hours", errorReduction: "85%", qualityImprovement: "Complex care management" },
+        9: { timeSaved: "5-6 hours", errorReduction: "90%", qualityImprovement: "Advanced monitoring" }
       },
       cumulativeBenefits: [
-        {
-          step: 1,
-          totalTimeSaved: "4-6 hours",
-          totalErrorReduction: "95%",
-          clinicalOutcome: "Expert complex case management initiation"
-        },
-        {
-          step: 9,
-          totalTimeSaved: "36-48 hours",
-          totalErrorReduction: "87%",
-          clinicalOutcome: "Comprehensive complex care optimization"
-        }
+        { step: 1, totalTimeSaved: "4-6 hours", totalErrorReduction: "95%", clinicalOutcome: "Expert complex management" },
+        { step: 9, totalTimeSaved: "36-48 hours", totalErrorReduction: "87%", clinicalOutcome: "Comprehensive complex optimization" }
       ]
     }
   },
@@ -1982,70 +1866,20 @@ export const scenarioImpactAnalysis = {
       errorReduction: "90%",
       patientSatisfaction: "9.1/10",
       stepImpacts: {
-        1: {
-          timeSaved: "5-7 minutes",
-          errorReduction: "85%",
-          qualityImprovement: "Smart routing reduces wait times and improves satisfaction"
-        },
-        2: {
-          timeSaved: "1-2 minutes",
-          errorReduction: "95%",
-          qualityImprovement: "Voice biometrics provides secure, rapid authentication"
-        },
-        3: {
-          timeSaved: "30-60 seconds",
-          errorReduction: "80%",
-          qualityImprovement: "AI classification ensures accurate intent recognition"
-        },
-        4: {
-          timeSaved: "3-5 minutes",
-          errorReduction: "90%",
-          qualityImprovement: "Unified view eliminates information gathering delays"
-        },
-        5: {
-          timeSaved: "2-3 minutes",
-          errorReduction: "85%",
-          qualityImprovement: "Intelligent case creation ensures proper priority"
-        },
-        6: {
-          timeSaved: "2-4 minutes",
-          errorReduction: "75%",
-          qualityImprovement: "AI knowledge discovery provides comprehensive responses"
-        },
-        7: {
-          timeSaved: "1-2 minutes",
-          errorReduction: "80%",
-          qualityImprovement: "Coordinated experience across all channels"
-        },
-        8: {
-          timeSaved: "3-5 minutes",
-          errorReduction: "85%",
-          qualityImprovement: "Intelligent escalation when specialist input needed"
-        },
-        9: {
-          timeSaved: "5-10 minutes",
-          errorReduction: "70%",
-          qualityImprovement: "Proactive follow-up ensures treatment questions resolved"
-        },
-        10: {
-          timeSaved: "2-3 minutes",
-          errorReduction: "90%",
-          qualityImprovement: "Real-time satisfaction analysis drives improvement"
-        }
+        1: { timeSaved: "5-7 minutes", errorReduction: "85%", qualityImprovement: "Smart routing reduces wait times" },
+        2: { timeSaved: "1-2 minutes", errorReduction: "95%", qualityImprovement: "Voice biometric authentication" },
+        3: { timeSaved: "30-60 seconds", errorReduction: "80%", qualityImprovement: "AI intent recognition" },
+        4: { timeSaved: "3-5 minutes", errorReduction: "90%", qualityImprovement: "Unified information view" },
+        5: { timeSaved: "2-3 minutes", errorReduction: "85%", qualityImprovement: "Intelligent case creation" },
+        6: { timeSaved: "2-4 minutes", errorReduction: "75%", qualityImprovement: "AI knowledge discovery" },
+        7: { timeSaved: "1-2 minutes", errorReduction: "80%", qualityImprovement: "Multi-channel coordination" },
+        8: { timeSaved: "3-5 minutes", errorReduction: "85%", qualityImprovement: "Intelligent escalation" },
+        9: { timeSaved: "5-10 minutes", errorReduction: "70%", qualityImprovement: "Proactive follow-up" },
+        10: { timeSaved: "2-3 minutes", errorReduction: "90%", qualityImprovement: "Real-time satisfaction analysis" }
       },
       cumulativeBenefits: [
-        {
-          step: 1,
-          totalTimeSaved: "5-7 minutes",
-          totalErrorReduction: "85%",
-          clinicalOutcome: "Immediate appropriate routing"
-        },
-        {
-          step: 10,
-          totalTimeSaved: "24-42 minutes",
-          totalErrorReduction: "84%",
-          clinicalOutcome: "Complete treatment inquiry resolution with ongoing support"
-        }
+        { step: 1, totalTimeSaved: "5-7 minutes", totalErrorReduction: "85%", clinicalOutcome: "Immediate routing" },
+        { step: 10, totalTimeSaved: "24-42 minutes", totalErrorReduction: "84%", clinicalOutcome: "Complete inquiry resolution" }
       ]
     },
     michael: {
@@ -2054,188 +1888,20 @@ export const scenarioImpactAnalysis = {
       errorReduction: "95%",
       patientSatisfaction: "9.4/10",
       stepImpacts: {
-        1: {
-          timeSaved: "7-10 minutes",
-          errorReduction: "90%",
-          qualityImprovement: "Priority routing for urgent situations with immediate response"
-        },
-        2: {
-          timeSaved: "1-2 minutes",
-          errorReduction: "98%",
-          qualityImprovement: "Expedited authentication for emergency situations"
-        },
-        3: {
-          timeSaved: "30-45 seconds",
-          errorReduction: "85%",
-          qualityImprovement: "Priority classification with immediate escalation triggers"
-        },
-        4: {
-          timeSaved: "4-6 minutes",
-          errorReduction: "95%",
-          qualityImprovement: "Rapid critical information compilation"
-        },
-        5: {
-          timeSaved: "2-3 minutes",
-          errorReduction: "90%",
-          qualityImprovement: "High-priority case creation with clinical team notification"
-        },
-        6: {
-          timeSaved: "3-5 minutes",
-          errorReduction: "80%",
-          qualityImprovement: "Immediate access to clinical protocols and guidelines"
-        },
-        7: {
-          timeSaved: "1-2 minutes",
-          errorReduction: "85%",
-          qualityImprovement: "Emergency coordination with clinical team integration"
-        },
-        8: {
-          timeSaved: "2-4 minutes",
-          errorReduction: "90%",
-          qualityImprovement: "Immediate clinical escalation with comprehensive briefing"
-        },
-        9: {
-          timeSaved: "8-12 minutes",
-          errorReduction: "75%",
-          qualityImprovement: "Enhanced monitoring and support for urgent situations"
-        },
-        10: {
-          timeSaved: "3-4 minutes",
-          errorReduction: "95%",
-          qualityImprovement: "Emergency response analysis with rapid improvement"
-        }
+        1: { timeSaved: "7-10 minutes", errorReduction: "90%", qualityImprovement: "Priority urgent routing" },
+        2: { timeSaved: "1-2 minutes", errorReduction: "98%", qualityImprovement: "Expedited authentication" },
+        3: { timeSaved: "30-45 seconds", errorReduction: "85%", qualityImprovement: "Priority classification" },
+        4: { timeSaved: "4-6 minutes", errorReduction: "95%", qualityImprovement: "Rapid critical information" },
+        5: { timeSaved: "2-3 minutes", errorReduction: "90%", qualityImprovement: "High-priority case creation" },
+        6: { timeSaved: "3-5 minutes", errorReduction: "80%", qualityImprovement: "Immediate clinical protocol access" },
+        7: { timeSaved: "1-2 minutes", errorReduction: "85%", qualityImprovement: "Emergency coordination" },
+        8: { timeSaved: "2-4 minutes", errorReduction: "90%", qualityImprovement: "Immediate clinical escalation" },
+        9: { timeSaved: "8-12 minutes", errorReduction: "75%", qualityImprovement: "Enhanced urgent monitoring" },
+        10: { timeSaved: "3-4 minutes", errorReduction: "95%", qualityImprovement: "Emergency response analysis" }
       },
       cumulativeBenefits: [
-        {
-          step: 1,
-          totalTimeSaved: "7-10 minutes",
-          totalErrorReduction: "90%",
-          clinicalOutcome: "Immediate urgent response initiation"
-        },
-        {
-          step: 10,
-          totalTimeSaved: "31-53 minutes",
-          totalErrorReduction: "87%",
-          clinicalOutcome: "Complete urgent care coordination with continuous monitoring"
-        }
-      ]
-    }
-  }
-};
-        {
-          substep: "Rapid Identity Verification",
-          process: "AI expedites authentication for urgent cases while maintaining security protocols and compliance requirements."
-        },
-        {
-          substep: "Emergency Context Access",
-          process: "System provides immediate access to critical patient information for urgent clinical decision making."
-        }
-      ],
-      3: [
-        {
-          substep: "Critical Information Assembly",
-          process: "AI rapidly consolidates vital patient data, treatment history, and current medication for emergency response."
-        },
-        {
-          substep: "Real-time Clinical Context",
-          process: "System provides immediate clinical context and treatment recommendations for urgent patient care."
-        }
-      ],
-      4: [
-        {
-          substep: "Emergency Resolution Protocol",
-          process: "AI guides urgent issue resolution with clinical protocols and immediate escalation to appropriate medical staff."
-        },
-        {
-          substep: "Continuous Monitoring Setup",
-          process: "System establishes follow-up protocols and monitoring for urgent patient situations."
-        }
-      ]
-    }
-  }
-};
-
-// Scenario impact analysis data
-export const scenarioImpactAnalysis = {
-  referral: {
-    sarah: {
-      scenarioType: "Urgent Referral",
-      overallTimeReduction: "75%",
-      errorReduction: "90%",
-      patientSatisfaction: "9.2/10",
-      stepImpacts: {
-        1: { timeReduction: "85%", accuracy: "95%", patientAnxiety: "Reduced by 60%" },
-        2: { responseRate: "95%", firstContactSuccess: "85%", patientEngagement: "High" }
-      },
-      cumulativeBenefits: [
-        { step: 1, totalTimeSaved: "4 hours", totalErrorReduction: "85%", patientExperience: "7.2/10" },
-        { step: 2, totalTimeSaved: "6 hours", totalErrorReduction: "87%", patientExperience: "7.8/10" }
-      ]
-    },
-    michael: {
-      scenarioType: "Complex Multi-Specialty Referral",
-      overallTimeReduction: "65%",
-      errorReduction: "85%",
-      patientSatisfaction: "8.8/10",
-      stepImpacts: {
-        1: { timeReduction: "70%", accuracy: "92%", complexityHandling: "Excellent" },
-        2: { coordinationEfficiency: "88%", teamAlignment: "95%", communicationGaps: "Reduced 75%" }
-      },
-      cumulativeBenefits: [
-        { step: 1, totalTimeSaved: "3 hours", totalErrorReduction: "70%", careQuality: "7.8/10" },
-        { step: 2, totalTimeSaved: "5 hours", totalErrorReduction: "74%", careQuality: "8.0/10" }
-      ]
-    }
-  },
-  oncology: {
-    sarah: {
-      scenarioType: "Routine Oncology Screening",
-      overallTimeReduction: "70%",
-      errorReduction: "88%",
-      patientSatisfaction: "8.9/10",
-      stepImpacts: {
-        1: { timeReduction: "80%", accuracy: "96%", familyHistoryCapture: "Complete" }
-      },
-      cumulativeBenefits: [
-        { step: 1, totalTimeSaved: "2 hours", totalErrorReduction: "80%", careQuality: "8.0/10" }
-      ]
-    },
-    michael: {
-      scenarioType: "Complex Multi-Comorbidity Case",
-      overallTimeReduction: "60%",
-      errorReduction: "82%",
-      patientSatisfaction: "8.6/10",
-      stepImpacts: {
-        1: { timeReduction: "65%", accuracy: "90%", complexityAssessment: "Comprehensive" }
-      },
-      cumulativeBenefits: [
-        { step: 1, totalTimeSaved: "1.5 hours", totalErrorReduction: "65%", careQuality: "7.5/10" }
-      ]
-    }
-  },
-  contact: {
-    sarah: {
-      scenarioType: "Treatment Inquiry - Multi-Channel",
-      overallTimeReduction: "78%",
-      errorReduction: "92%",
-      patientSatisfaction: "9.1/10",
-      stepImpacts: {
-        1: { holdTimeReduction: "70%", routingAccuracy: "95%", channelOptimization: "85%" }
-      },
-      cumulativeBenefits: [
-        { step: 1, totalTimeSaved: "3 minutes", totalErrorReduction: "70%", patientExperience: "7.5/10" }
-      ]
-    },
-    michael: {
-      scenarioType: "Urgent Clinical Support",
-      overallTimeReduction: "82%",
-      errorReduction: "95%",
-      patientSatisfaction: "9.4/10",
-      stepImpacts: {
-        1: { urgentTriageSpeed: "95%", clinicalRouting: "98%", priorityAccuracy: "96%" }
-      },
-      cumulativeBenefits: [
-        { step: 1, totalTimeSaved: "5 minutes", totalErrorReduction: "95%", clinicalOutcome: "9.0/10" }
+        { step: 1, totalTimeSaved: "7-10 minutes", totalErrorReduction: "90%", clinicalOutcome: "Immediate urgent response" },
+        { step: 10, totalTimeSaved: "31-53 minutes", totalErrorReduction: "87%", clinicalOutcome: "Complete urgent care coordination" }
       ]
     }
   }
