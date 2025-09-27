@@ -86,11 +86,11 @@ export const NavigationHeader = () => {
                 // Custom labels for responsive display
                 const getResponsiveLabel = (label: string) => {
                   switch(label) {
-                    case "About Me": return { full: "About Me", short: "About" };
-                    case "My AI Journey": return { full: "My AI Journey", short: "Journey" };
-                    case "Tech Stack Explored": return { full: "Tech Stack Explored", short: "Tech" };
-                    case "Business Use Cases": return { full: "Business Use Cases", short: "Business" };
-                    case "Case Studies": return { full: "Case Studies", short: "Cases" };
+                    case "About Me": return { full: "About Me", short: "About Me" };
+                    case "My AI Journey": return { full: "My AI Journey", short: "My Journey" };
+                    case "Tech Stack Explored": return { full: "Tech Stack Explored", short: "My Tech Stack" };
+                    case "Business Use Cases": return { full: "Business Use Cases", short: "Use Cases" };
+                    case "Case Studies": return { full: "Case Studies", short: "My Cases" };
                     default: return { full: label, short: label };
                   }
                 };
