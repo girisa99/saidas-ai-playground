@@ -48,9 +48,8 @@ export const NavigationHeader = () => {
             <div className="hidden xl:block">
               <div className="flex items-center space-x-2">
                 <span className="text-lg font-bold enterprise-gradient-text whitespace-nowrap">
-                  GENIE
+                  GENIE AI HUB
                 </span>
-                <span className="text-base font-semibold text-foreground whitespace-nowrap">AI Hub</span>
               </div>
               <p className="text-xs professional-tagline whitespace-nowrap leading-tight">
                 I am your Technology Navigator
@@ -60,19 +59,21 @@ export const NavigationHeader = () => {
             <div className="hidden lg:block xl:hidden">
               <div className="flex items-center space-x-1">
                 <span className="text-base font-bold enterprise-gradient-text whitespace-nowrap">
-                  GENIE
+                  GENIE AI HUB
                 </span>
-                <span className="text-sm font-semibold text-foreground whitespace-nowrap">AI</span>
               </div>
               <p className="text-xs professional-tagline whitespace-nowrap">
-                Tech Navigator
+                I am your Technology Navigator
               </p>
             </div>
-            {/* Mobile - just GENIE */}
+            {/* Mobile - GENIE AI HUB with tagline */}
             <div className="hidden sm:block lg:hidden">
-              <span className="text-sm font-bold enterprise-gradient-text">
-                GENIE
+              <span className="text-sm font-bold enterprise-gradient-text whitespace-nowrap">
+                GENIE AI HUB
               </span>
+              <p className="text-xs professional-tagline whitespace-nowrap">
+                I am your Technology Navigator
+              </p>
             </div>
           </Link>
 
