@@ -128,7 +128,7 @@ export const NavigationHeader = () => {
                 variant="outline"
                 size="sm" 
                 className="text-xs xl:text-sm font-medium hover:bg-muted/80 whitespace-nowrap h-8 xl:h-10 px-3 xl:px-4"
-                onClick={() => window.open('https://preview--cgat-patient-hcp-care-ecosystem.lovable.app/', '_blank')}
+                onClick={() => window.open('https://www.genieaiexpermentationhub.com', '_blank')}
               >
                 <ExternalLink className="w-3 xl:w-4 h-3 xl:h-4 mr-1 xl:mr-2 flex-shrink-0" />
                 <span className="hidden xl:inline">Login</span>
@@ -200,7 +200,7 @@ export const NavigationHeader = () => {
                   size="lg" 
                   className="w-full justify-center font-medium h-12"
                   onClick={() => {
-                    window.open('https://preview--cgat-patient-hcp-care-ecosystem.lovable.app/', '_blank');
+                    window.open('https://www.genieaiexpermentationhub.com', '_blank');
                     setIsMenuOpen(false);
                   }}
                 >
