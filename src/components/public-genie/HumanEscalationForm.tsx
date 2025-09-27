@@ -9,51 +9,44 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { User, Send, Clock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
+interface UserInfo {
+  firstName: string;
+  lastName?: string;
+  email: string;
+}
+
+type Context = 'technology' | 'healthcare';
+
 interface HumanEscalationFormProps {
   isOpen: boolean;
   onClose: () => void;
-  conversationId: string;
-  contextType: 'technology' | 'healthcare';
+  onSubmit: (request: any) => void;
+  userInfo: UserInfo;
+  context: Context;
 }
 
 export const HumanEscalationForm: React.FC<HumanEscalationFormProps> = ({
   isOpen,
   onClose,
-  conversationId,
-  contextType
+  onSubmit,
+  userInfo,
+  context
 }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    urgency: 'medium',
-    subject: '',
-    message: ''
-  });
+  const [message, setMessage] = useState('');
+  const [urgency, setUrgency] = useState('medium');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // For demo purposes, simulate sending to support
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Request Submitted",
-        description: "A human expert will review your request within 24 hours.",
+  const handleSubmit = () => {
+    if (message.trim()) {
+      onSubmit({
+        firstName: userInfo.firstName,
+        lastName: userInfo.lastName,
+        email: userInfo.email,
+        message: message.trim(),
+        urgency,
+        context
       });
-      
-      onClose();
-    } catch (error) {
-      toast({
-        title: "Submission Failed",
-        description: "Please try again later or contact support directly.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -63,43 +56,21 @@ export const HumanEscalationForm: React.FC<HumanEscalationFormProps> = ({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <User className="h-5 w-5" />
-            Contact Human Expert
+            Request Human Agent
           </DialogTitle>
         </DialogHeader>
         
         <Alert>
           <Clock className="h-4 w-4" />
           <AlertDescription>
-            Our {contextType} experts typically respond within 2-24 hours.
+            Our {context} experts typically respond within 2-24 hours. We'll send updates to {userInfo.email}.
           </AlertDescription>
         </Alert>
         
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                required
-              />
-            </div>
-          </div>
-          
+        <div className="space-y-4">
           <div>
-            <Label htmlFor="urgency">Urgency</Label>
-            <Select value={formData.urgency} onValueChange={(value) => setFormData(prev => ({ ...prev, urgency: value }))}>
+            <Label htmlFor="urgency">Priority Level</Label>
+            <Select value={urgency} onValueChange={setUrgency}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -107,43 +78,37 @@ export const HumanEscalationForm: React.FC<HumanEscalationFormProps> = ({
                 <SelectItem value="low">Low - General inquiry</SelectItem>
                 <SelectItem value="medium">Medium - Need guidance</SelectItem>
                 <SelectItem value="high">High - Time sensitive</SelectItem>
+                <SelectItem value="urgent">Urgent - Critical support needed</SelectItem>
               </SelectContent>
             </Select>
           </div>
           
           <div>
-            <Label htmlFor="subject">Subject</Label>
-            <Input
-              id="subject"
-              value={formData.subject}
-              onChange={(e) => setFormData(prev => ({ ...prev, subject: e.target.value }))}
-              placeholder={`${contextType} expertise needed`}
-              required
-            />
-          </div>
-          
-          <div>
-            <Label htmlFor="message">Message</Label>
+            <Label htmlFor="message">How can our human expert help you?</Label>
             <Textarea
               id="message"
-              value={formData.message}
-              onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-              placeholder="Describe what you need help with..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder={`Describe what ${context} expertise you need...`}
               rows={4}
-              required
+              className="mt-1"
             />
           </div>
           
           <div className="flex gap-2">
-            <Button type="submit" disabled={isSubmitting} className="flex-1">
-              {isSubmitting ? 'Submitting...' : 'Send Request'}
+            <Button 
+              onClick={handleSubmit}
+              disabled={!message.trim() || isSubmitting}
+              className="flex-1"
+            >
+              {isSubmitting ? 'Sending...' : 'Send Request'}
               <Send className="h-4 w-4 ml-2" />
             </Button>
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
           </div>
-        </form>
+        </div>
       </DialogContent>
     </Dialog>
   );
