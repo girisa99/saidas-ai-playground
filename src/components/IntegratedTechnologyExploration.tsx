@@ -390,10 +390,10 @@ export const IntegratedTechnologyExploration = () => {
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <Link to="/case-studies">
-              <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white px-8 py-4">
-                <BarChart3 className="w-5 h-5 mr-2" />
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base">
+                <BarChart3 className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
                 See What I Built
-                <ArrowRight className="w-4 h-4 ml-2" />
+                <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4 ml-2" />
               </Button>
             </Link>
             <Link to="/journey">
@@ -811,8 +811,8 @@ export const IntegratedTechnologyExploration = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/journey">
-              <Button size="lg" className="bg-genie-primary hover:bg-genie-teal text-white px-8 py-4">
-                <Calendar className="w-5 h-5 mr-2" />
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base">
+                <Calendar className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
                 View Complete Journey
               </Button>
             </Link>
