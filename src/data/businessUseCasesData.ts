@@ -91,3 +91,42 @@ export const businessCases = {
     }
   }
 };
+
+// Journey steps data (placeholder - should be populated with actual data)
+export const journeySteps = {
+  referral: [],
+  oncology: [],
+  contact: []
+};
+
+// Scenario details data (placeholder - should be populated with actual data)
+export const scenarioDetails = {
+  referral: {
+    sarah: {},
+    michael: {}
+  },
+  oncology: {
+    sarah: {},
+    michael: {}
+  },
+  contact: {
+    sarah: {},
+    michael: {}
+  }
+};
+
+// Scenario impact analysis data (placeholder - should be populated with actual data)
+export const scenarioImpactAnalysis = {
+  referral: {
+    sarah: {},
+    michael: {}
+  },
+  oncology: {
+    sarah: {},
+    michael: {}
+  },
+  contact: {
+    sarah: {},
+    michael: {}
+  }
+};
