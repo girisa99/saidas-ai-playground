@@ -263,13 +263,13 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
         >
         <Card className="h-full bg-gradient-to-br from-background to-muted border shadow-2xl">
           {/* Header */}
-          <div className="drag-handle flex items-center justify-between p-4 border-b bg-primary/10 cursor-move">
+          <div className="drag-handle flex items-center justify-between p-4 border-b bg-gradient-to-r from-slate-900 to-slate-800 cursor-move">
             <div className="flex items-center gap-3">
               <img src={genieLogoPopup} alt="Genie AI logo" className="h-10 w-auto object-contain drop-shadow" />
               <div>
-                <h3 className="font-semibold text-primary">Genie AI Assistant</h3>
+                <h3 className="font-semibold text-white">Genie AI Assistant</h3>
                 {context && selectedTopic && (
-                  <p className="text-xs text-muted-foreground">{selectedTopic} • {context}</p>
+                  <p className="text-xs text-slate-300">{selectedTopic} • {context}</p>
                 )}
               </div>
             </div>
