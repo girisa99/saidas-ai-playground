@@ -181,7 +181,7 @@ export const Footer = () => {
                   size="sm" 
                   variant="ghost" 
                   className="p-2"
-                  onClick={() => window.open('https://twitter.com/saidasika', '_blank')}
+                  onClick={() => window.open('https://x.com/sai_dasika/', '_blank')}
                 >
                   <X className="h-4 w-4" />
                 </Button>
