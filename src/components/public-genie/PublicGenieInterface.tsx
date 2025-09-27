@@ -278,7 +278,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
                 variant="ghost"
                 size="sm"
                 onClick={handleConnectLiveAgent}
-                className="h-6 w-6 p-0"
+                className="h-6 w-6 p-0 text-white hover:bg-white/20"
                 title="Connect with human agent"
               >
                 <Users className="h-3 w-3" />
@@ -287,7 +287,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsMinimized(!isMinimized)}
-                className="h-6 w-6 p-0"
+                className="h-6 w-6 p-0 text-white hover:bg-white/20"
               >
                 <Minimize2 className="h-3 w-3" />
               </Button>
@@ -295,7 +295,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsMaximized(!isMaximized)}
-                className="h-6 w-6 p-0"
+                className="h-6 w-6 p-0 text-white hover:bg-white/20"
               >
                 <Maximize2 className="h-3 w-3" />
               </Button>
@@ -303,7 +303,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
                 variant="ghost"
                 size="sm"
                 onClick={onClose}
-                className="h-6 w-6 p-0"
+                className="h-6 w-6 p-0 text-white hover:bg-white/20"
               >
                 <X className="h-3 w-3" />
               </Button>
