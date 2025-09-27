@@ -148,7 +148,7 @@ export const Footer = () => {
                   size="sm" 
                   variant="ghost" 
                   className="p-2"
-                  onClick={() => window.open('https://linkedin.com/in/saidasika', '_blank')}
+                  onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
                 >
                   <Linkedin className="h-4 w-4" />
                 </Button>
@@ -181,7 +181,7 @@ export const Footer = () => {
                   size="sm" 
                   variant="ghost" 
                   className="p-2"
-                  onClick={() => window.open('https://x.com/saidasika', '_blank')}
+                  onClick={() => window.open('https://twitter.com/saidasika', '_blank')}
                 >
                   <X className="h-4 w-4" />
                 </Button>

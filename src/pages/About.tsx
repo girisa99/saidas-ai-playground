@@ -571,6 +571,14 @@ const About = () => {
               >
                 Connect on LinkedIn
               </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-genie-primary text-genie-primary hover:bg-genie-primary/10 px-8 py-4"
+                onClick={() => window.open('https://twitter.com/saidasika', '_blank')}
+              >
+                Follow on X
+              </Button>
             </div>
            </div>
          </section>
