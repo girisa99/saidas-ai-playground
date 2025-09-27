@@ -304,167 +304,372 @@ export const journeySteps = {
   oncology: [
     {
       id: 1,
-      title: "Patient History Collection",
-      icon: UserCheck,
+      title: "Referral Receipt",
+      icon: FileText,
       time: "Day 0",
-      emotion: "neutral",
-      emotionIcon: Info,
-      approach: "hybrid",
-      description: "Comprehensive patient data gathering with AI-enhanced analysis",
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "automation",
+      description: "Initial referral received and triaged",
       automationPrimary: true,
       roi: "≈ 80% efficiency gain",
       implementationStatus: "live",
-      statusNote: "Integrated with EHR systems",
+      statusNote: "Fully operational digital intake system",
       automationTasks: [
-        "Digital forms and questionnaire automation",
-        "Medical record retrieval and consolidation",
-        "Insurance verification workflows",
-        "Appointment scheduling automation",
-        "Standard consent form processing"
+        "Digital referral form processing",
+        "Automated data extraction from documents",
+        "Instant referral acknowledgment notifications",
+        "Electronic health record integration",
+        "Referral tracking and routing"
       ],
       aiTasks: [
-        "Intelligent risk factor identification",
-        "Family history pattern analysis",
-        "Genetic predisposition assessment",
-        "Comorbidity risk evaluation",
-        "Personalized screening recommendations"
+        "Intelligent triage and priority assignment",
+        "Clinical urgency assessment",
+        "Provider matching based on expertise",
+        "Predictive resource allocation",
+        "Smart documentation analysis"
       ],
-      whyAutomation: "Standardized data collection ensures comprehensive and consistent patient information gathering",
-      whyAI: "Complex medical histories require intelligent analysis to identify patterns and risk factors",
+      whyAutomation: "High-volume referral processing benefits from consistent, fast digital workflows",
+      whyAI: "Complex triage decisions require intelligent assessment of clinical urgency and appropriate routing",
       phases: [
-        "Implement digital data collection automation",
-        "Deploy AI for pattern recognition and risk assessment",
-        "Integrate predictive screening recommendations"
+        "Deploy automated referral processing",
+        "Implement AI triage algorithms",
+        "Optimize resource allocation"
       ],
       currentIssues: [
-        "Paper-based forms causing delays",
-        "Incomplete medical histories",
-        "Manual risk assessment inconsistencies"
+        "Manual processing causes delays",
+        "Inconsistent triage decisions",
+        "Resource allocation inefficiencies"
       ],
-      improvement: "AI-enhanced history collection identifies 40% more risk factors and reduces collection time by 60%"
+      improvement: "Systematic collection of patient information, insurance data, medical history, symptoms"
     },
     {
       id: 2,
-      title: "Clinical Assessment",
-      icon: Stethoscope,
+      title: "Data Collection",
+      icon: Database,
       time: "Day 1-3",
       emotion: "neutral",
       emotionIcon: Clock,
-      approach: "hybrid",
-      description: "AI-augmented clinical evaluation with predictive screening",
-      automationPrimary: false,
-      roi: "≈ 70% efficiency gain",
-      implementationStatus: "testing",
-      statusNote: "Pilot with oncology specialists",
+      approach: "automation",
+      description: "Systematic collection of patient information and medical records",
+      automationPrimary: true,
+      roi: "≈ 85% efficiency gain",
+      implementationStatus: "live",
+      statusNote: "Integrated with major EHR systems",
       automationTasks: [
-        "Automated diagnostic imaging scheduling",
-        "Lab result consolidation and flagging",
-        "Clinical protocol adherence checking",
-        "Standard assessment workflows",
-        "Documentation automation"
+        "Demographics and insurance data capture",
+        "Medical history questionnaire processing",
+        "Symptom documentation workflows",
+        "Previous treatment record consolidation",
+        "Insurance verification automation"
       ],
       aiTasks: [
-        "Predictive risk stratification",
-        "Imaging analysis and pattern recognition",
-        "Treatment pathway recommendations",
-        "Clinical decision support",
-        "Personalized screening protocols"
+        "Intelligent form completion assistance",
+        "Risk factor pattern identification",
+        "Medical history gap detection",
+        "Predictive questionnaire optimization",
+        "Smart data validation and correction"
       ],
-      whyAutomation: "Standardized clinical assessments ensure consistent evaluation protocols",
-      whyAI: "Complex oncology cases require intelligent analysis of multiple clinical factors",
+      whyAutomation: "Comprehensive data collection requires systematic gathering of multiple data types",
+      whyAI: "Intelligent assistance improves data quality and identifies important patterns",
       phases: [
-        "Automate imaging and lab workflows",
-        "Deploy AI for predictive analysis",
-        "Integrate clinical decision support"
+        "Automate core data collection workflows",
+        "Deploy AI for intelligent assistance",
+        "Implement predictive optimization"
       ],
       currentIssues: [
-        "Manual imaging scheduling delays",
-        "Inconsistent assessment protocols",
-        "Delayed lab result interpretation"
+        "Incomplete data collection",
+        "Manual data entry errors",
+        "Time-consuming verification processes"
       ],
-      improvement: "AI-assisted assessment reduces diagnosis time by 45% and improves accuracy by 30%"
+      improvement: "Acquisition and integration of external medical records and documentation"
     },
     {
       id: 3,
-      title: "Treatment Planning",
-      icon: Target,
-      time: "Day 5-10",
-      emotion: "positive",
-      emotionIcon: Lightbulb,
-      approach: "agentic",
-      description: "AI-driven personalized treatment strategy development",
-      automationPrimary: false,
-      roi: "≈ 90% efficiency gain",
-      implementationStatus: "development",
-      statusNote: "Advanced AI algorithms in development",
+      title: "Record Acquisition",
+      icon: Search,
+      time: "Day 4-8",
+      emotion: "neutral",
+      emotionIcon: Clock,
+      approach: "hybrid",
+      description: "Acquisition and integration of external medical records",
+      automationPrimary: true,
+      roi: "≈ 65% efficiency gain",
+      implementationStatus: "testing",
+      statusNote: "Integration with external providers ongoing",
       automationTasks: [
-        "Treatment protocol template generation",
-        "Medication interaction checking",
-        "Insurance authorization workflows",
-        "Appointment scheduling coordination",
-        "Patient education material preparation"
+        "Automated record requests to external providers",
+        "FHIR-based data integration",
+        "Document digitization and indexing",
+        "Electronic health record synchronization",
+        "Automated follow-up for missing records"
       ],
       aiTasks: [
-        "Personalized treatment pathway optimization",
-        "Genomic data analysis integration",
-        "Predictive response modeling",
-        "Multi-specialty care coordination",
-        "Patient-specific risk assessment"
+        "Intelligent record completeness assessment",
+        "Smart document parsing and extraction",
+        "Clinical relevance scoring",
+        "Duplicate record identification",
+        "Quality assessment and validation"
       ],
-      whyAutomation: "Complex treatment plans require systematic coordination and documentation",
-      whyAI: "Personalized oncology treatment requires analysis of genomic, clinical, and patient-specific factors",
+      whyAutomation: "Record acquisition requires systematic requests and integration processes",
+      whyAI: "Intelligent analysis ensures complete and relevant record collection",
       phases: [
-        "Implement treatment template automation",
-        "Deploy genomic analysis AI",
-        "Integrate predictive modeling"
+        "Automate external record requests",
+        "Deploy AI for intelligent parsing",
+        "Implement quality assessment"
       ],
       currentIssues: [
-        "Manual treatment planning taking weeks",
-        "Limited genomic data integration",
-        "Suboptimal multi-specialty coordination"
+        "Manual record requests causing delays",
+        "Incomplete external documentation",
+        "Quality and relevance assessment challenges"
       ],
-      improvement: "AI-optimized treatment planning reduces planning time from weeks to days with 85% accuracy improvement"
+      improvement: "Intelligent scheduling based on availability, preferences, and patient requirements"
     },
     {
       id: 4,
+      title: "Appointment Scheduling",
+      icon: Calendar,
+      time: "Day 8-10",
+      emotion: "positive",
+      emotionIcon: CheckCircle,
+      approach: "hybrid",
+      description: "Intelligent scheduling with patient preference optimization",
+      automationPrimary: true,
+      roi: "≈ 75% efficiency gain",
+      implementationStatus: "live",
+      statusNote: "Smart scheduling system operational",
+      automationTasks: [
+        "Provider availability checking",
+        "Appointment slot management",
+        "Automated confirmation notifications",
+        "Calendar integration and synchronization",
+        "Reminder workflow automation"
+      ],
+      aiTasks: [
+        "Intelligent scheduling optimization",
+        "Patient preference learning",
+        "No-show prediction and prevention",
+        "Optimal time slot recommendations",
+        "Dynamic rescheduling management"
+      ],
+      whyAutomation: "Systematic scheduling ensures efficient use of provider time and resources",
+      whyAI: "Intelligent optimization improves patient satisfaction and reduces no-shows",
+      phases: [
+        "Deploy automated scheduling workflows",
+        "Implement AI optimization algorithms",
+        "Add predictive analytics"
+      ],
+      currentIssues: [
+        "Manual scheduling inefficiencies",
+        "High no-show rates",
+        "Suboptimal slot utilization"
+      ],
+      improvement: "Comprehensive preparation for optimal visit outcomes"
+    },
+    {
+      id: 5,
+      title: "Pre-visit Preparation",
+      icon: ClipboardCheck,
+      time: "Day 14-20",
+      emotion: "positive",
+      emotionIcon: CheckCircle,
+      approach: "hybrid",
+      description: "Comprehensive patient preparation and care team coordination",
+      automationPrimary: true,
+      roi: "≈ 50% efficiency gain",
+      implementationStatus: "testing",
+      statusNote: "Preparation protocols under evaluation",
+      automationTasks: [
+        "Pre-visit instruction delivery",
+        "Lab work and imaging scheduling",
+        "Medication list compilation",
+        "Transportation coordination",
+        "Care team notification workflows"
+      ],
+      aiTasks: [
+        "Personalized preparation recommendations",
+        "Anxiety and concern prediction",
+        "Educational content customization",
+        "Optimal preparation timing",
+        "Cultural and language adaptation"
+      ],
+      whyAutomation: "Systematic preparation ensures consistent and complete pre-visit workflows",
+      whyAI: "Personalized preparation improves patient readiness and reduces anxiety",
+      phases: [
+        "Automate standard preparation workflows",
+        "Deploy AI for personalization",
+        "Implement adaptive optimization"
+      ],
+      currentIssues: [
+        "Inconsistent preparation protocols",
+        "High patient anxiety levels",
+        "Poor visit preparation outcomes"
+      ],
+      improvement: "AI-assisted clinical visit with real-time decision support"
+    },
+    {
+      id: 6,
+      title: "Visit Conduct",
+      icon: Stethoscope,
+      time: "Day 21",
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "hybrid",
+      description: "AI-assisted clinical visit with comprehensive assessment",
+      automationPrimary: false,
+      roi: "≈ 40% efficiency gain",
+      implementationStatus: "development",
+      statusNote: "Clinical AI tools in development",
+      automationTasks: [
+        "Automated documentation capture",
+        "Clinical workflow management",
+        "Real-time vitals monitoring",
+        "Standard assessment protocols",
+        "Electronic form completion"
+      ],
+      aiTasks: [
+        "Clinical decision support systems",
+        "Diagnostic assistance and recommendations",
+        "Risk assessment and stratification",
+        "Treatment option analysis",
+        "Real-time clinical alerts"
+      ],
+      whyAutomation: "Systematic clinical workflows ensure comprehensive and consistent assessments",
+      whyAI: "Complex clinical decisions benefit from AI-powered decision support and analysis",
+      phases: [
+        "Deploy automated documentation",
+        "Implement AI decision support",
+        "Add real-time clinical assistance"
+      ],
+      currentIssues: [
+        "Manual documentation burden",
+        "Inconsistent assessment protocols",
+        "Limited decision support tools"
+      ],
+      improvement: "AI-driven comprehensive treatment plan development"
+    },
+    {
+      id: 7,
+      title: "Treatment Planning",
+      icon: Target,
+      time: "Day 22-25",
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "agentic",
+      description: "AI-driven personalized treatment strategy development",
+      automationPrimary: false,
+      roi: "≈ 80% efficiency gain",
+      implementationStatus: "development",
+      statusNote: "Advanced treatment AI in development",
+      automationTasks: [
+        "Treatment protocol template generation",
+        "Medication interaction checking",
+        "Insurance coverage verification",
+        "Appointment scheduling automation",
+        "Care team coordination workflows"
+      ],
+      aiTasks: [
+        "Personalized treatment recommendations",
+        "Genomic analysis integration",
+        "Predictive outcome modeling",
+        "Multi-specialty coordination",
+        "Evidence-based protocol optimization"
+      ],
+      whyAutomation: "Systematic treatment planning ensures comprehensive care coordination",
+      whyAI: "Complex treatment decisions require intelligent analysis of multiple clinical factors",
+      phases: [
+        "Automate treatment protocol generation",
+        "Deploy AI for personalized recommendations",
+        "Implement outcome prediction"
+      ],
+      currentIssues: [
+        "Manual treatment planning inefficiencies",
+        "Limited personalization capabilities",
+        "Suboptimal outcome prediction"
+      ],
+      improvement: "Comprehensive care team coordination and communication"
+    },
+    {
+      id: 8,
       title: "Care Coordination",
       icon: Users,
+      time: "Day 28-30",
+      emotion: "positive",
+      emotionIcon: CheckCircle,
+      approach: "hybrid",
+      description: "Multi-disciplinary care team coordination and communication",
+      automationPrimary: true,
+      roi: "≈ 65% efficiency gain",
+      implementationStatus: "testing",
+      statusNote: "Care coordination platform in pilot",
+      automationTasks: [
+        "Care team notification systems",
+        "Appointment coordination across specialties",
+        "Information sharing workflows",
+        "Status update automation",
+        "Communication platform management"
+      ],
+      aiTasks: [
+        "Intelligent care pathway optimization",
+        "Predictive coordination needs",
+        "Communication priority assessment",
+        "Conflict resolution recommendations",
+        "Outcome tracking and analysis"
+      ],
+      whyAutomation: "Systematic coordination ensures consistent communication across care teams",
+      whyAI: "Intelligent optimization improves care pathway efficiency and outcomes",
+      phases: [
+        "Deploy automated coordination workflows",
+        "Implement AI pathway optimization",
+        "Add predictive analytics"
+      ],
+      currentIssues: [
+        "Manual coordination inefficiencies",
+        "Communication gaps between specialists",
+        "Suboptimal care pathway execution"
+      ],
+      improvement: "Continuous monitoring and adaptive care management"
+    },
+    {
+      id: 9,
+      title: "Follow-up & Monitoring",
+      icon: Activity,
       time: "Ongoing",
       emotion: "positive",
       emotionIcon: CheckCircle,
       approach: "hybrid",
-      description: "Integrated care team management with AI-powered optimization",
+      description: "Continuous monitoring and adaptive care management",
       automationPrimary: true,
       roi: "≈ 65% efficiency gain",
       implementationStatus: "planned",
-      statusNote: "Scheduled for Q2 2024 deployment",
+      statusNote: "Monitoring systems in planning phase",
       automationTasks: [
-        "Multi-provider appointment coordination",
-        "Treatment milestone tracking",
-        "Patient progress monitoring",
-        "Communication workflow automation",
-        "Resource allocation management"
+        "Automated follow-up scheduling",
+        "Patient monitoring workflows",
+        "Lab result tracking",
+        "Medication adherence monitoring",
+        "Progress report generation"
       ],
       aiTasks: [
-        "Predictive care pathway optimization",
-        "Real-time treatment adjustment recommendations",
-        "Patient outcome prediction",
-        "Resource demand forecasting",
-        "Care team performance analytics"
+        "Predictive health deterioration alerts",
+        "Adaptive care plan optimization",
+        "Patient engagement personalization",
+        "Risk-based monitoring intervals",
+        "Outcome prediction and intervention"
       ],
-      whyAutomation: "Complex care coordination requires systematic tracking and communication",
-      whyAI: "Dynamic treatment adjustments require intelligent analysis of patient response patterns",
+      whyAutomation: "Systematic monitoring ensures consistent patient follow-up and tracking",
+      whyAI: "Intelligent analysis enables proactive care and personalized monitoring",
       phases: [
-        "Automate care coordination workflows",
-        "Deploy predictive analytics",
-        "Implement real-time optimization"
+        "Deploy automated monitoring workflows",
+        "Implement AI predictive analytics",
+        "Add adaptive care optimization"
       ],
       currentIssues: [
-        "Fragmented care team communication",
-        "Delayed treatment adjustments",
-        "Inefficient resource utilization"
+        "Manual follow-up coordination",
+        "Reactive rather than proactive care",
+        "Limited monitoring personalization"
       ],
-      improvement: "Integrated care coordination improves treatment adherence by 70% and reduces care gaps by 80%"
+      improvement: "Continuous monitoring and adaptive care management"
     }
   ],
   contact: [
