@@ -1321,84 +1321,184 @@ export const scenarioDetails = {
     sarah: {
       1: [
         {
-          substep: "Comprehensive Data Collection",
-          process: "AI guides patients through detailed medical history questionnaire, automatically identifying relevant risk factors and family history patterns."
+          substep: "Digital Intake Processing",
+          process: "Automated digital referral processing with intelligent triage and priority assignment based on clinical urgency."
         },
         {
-          substep: "Risk Factor Analysis",
-          process: "System analyzes collected data to identify genetic predispositions, environmental factors, and lifestyle risks relevant to oncology screening."
+          substep: "EHR Integration",
+          process: "Seamless integration with electronic health records for complete patient history compilation and validation."
         }
       ],
       2: [
         {
-          substep: "AI-Enhanced Clinical Assessment",
-          process: "AI assists clinicians in comprehensive evaluation, highlighting key risk factors and recommending appropriate diagnostic protocols."
+          substep: "Systematic Information Gathering",
+          process: "AI-guided comprehensive data collection including demographics, insurance, medical history, and symptom documentation."
         },
         {
-          substep: "Predictive Risk Modeling",
-          process: "System generates personalized risk assessment and screening recommendations based on patient-specific factors."
+          substep: "Intelligent Form Assistance",
+          process: "Smart form completion with AI assistance to ensure data accuracy and completeness."
         }
       ],
       3: [
         {
-          substep: "Personalized Treatment Strategy",
-          process: "AI analyzes patient profile, clinical guidelines, and latest research to recommend optimal treatment pathways."
+          substep: "External Record Requests",
+          process: "Automated external medical record requests with FHIR-based integration and intelligent parsing."
         },
         {
-          substep: "Treatment Plan Optimization",
-          process: "System coordinates multi-modal treatment approach with personalized timing and resource allocation."
+          substep: "Quality Assessment",
+          process: "AI-powered completeness assessment and clinical relevance scoring of acquired records."
         }
       ],
       4: [
         {
-          substep: "Integrated Care Coordination",
-          process: "AI orchestrates care team activities, appointment scheduling, and treatment milestone tracking."
+          substep: "Intelligent Scheduling",
+          process: "AI optimization of appointment scheduling based on provider availability, patient preferences, and clinical urgency."
         },
         {
-          substep: "Continuous Monitoring Setup",
-          process: "System establishes real-time patient monitoring and adaptive care pathway adjustments."
+          substep: "No-show Prevention",
+          process: "Predictive analytics for no-show prevention with personalized reminder strategies."
+        }
+      ],
+      5: [
+        {
+          substep: "Personalized Preparation",
+          process: "AI-driven personalized pre-visit preparation with customized education content and anxiety management."
+        },
+        {
+          substep: "Care Team Coordination",
+          process: "Comprehensive care team notification and preparation coordination for optimal visit outcomes."
+        }
+      ],
+      6: [
+        {
+          substep: "AI-Assisted Clinical Assessment",
+          process: "Real-time clinical decision support with AI-powered diagnostic assistance and risk assessment."
+        },
+        {
+          substep: "Comprehensive Documentation",
+          process: "Automated clinical documentation with intelligent data capture and structured assessment protocols."
+        }
+      ],
+      7: [
+        {
+          substep: "Personalized Treatment Strategy",
+          process: "AI-driven treatment planning with genomic analysis integration and evidence-based recommendations."
+        },
+        {
+          substep: "Multi-specialty Coordination",
+          process: "Intelligent coordination of multi-specialty care teams with optimal sequencing and communication."
+        }
+      ],
+      8: [
+        {
+          substep: "Care Pathway Optimization",
+          process: "AI-powered care pathway optimization with predictive coordination needs and conflict resolution."
+        },
+        {
+          substep: "Communication Management",
+          process: "Intelligent communication priority assessment and automated information sharing workflows."
+        }
+      ],
+      9: [
+        {
+          substep: "Predictive Monitoring",
+          process: "AI-powered predictive health monitoring with adaptive care plan optimization and risk-based intervals."
+        },
+        {
+          substep: "Proactive Intervention",
+          process: "Intelligent intervention recommendations based on outcome prediction and patient engagement patterns."
         }
       ]
     },
     michael: {
       1: [
         {
-          substep: "Complex Medical History Analysis",
-          process: "AI processes extensive medical history with multiple comorbidities, previous treatments, and complex medication regimens."
+          substep: "Complex Case Triage",
+          process: "Advanced AI triage for complex cases with multiple comorbidities requiring specialized routing and resource allocation."
         },
         {
-          substep: "Multi-system Risk Assessment",
-          process: "System analyzes interactions between oncology treatment and existing conditions to optimize care approach."
+          substep: "Multi-system Integration",
+          process: "Comprehensive integration across multiple healthcare systems to gather complete patient history."
         }
       ],
       2: [
         {
-          substep: "Comprehensive Multi-specialty Assessment",
-          process: "AI coordinates evaluation across multiple specialties, ensuring all comorbidities are considered in treatment planning."
+          substep: "Complex Data Analysis",
+          process: "AI analysis of complex medical histories with multiple treatments, medications, and specialist interactions."
         },
         {
-          substep: "Complex Case Risk Stratification",
-          process: "System performs advanced risk modeling considering multiple variables and treatment interactions."
+          substep: "Risk Factor Synthesis",
+          process: "Intelligent synthesis of multiple risk factors and comorbidity interactions for comprehensive assessment."
         }
       ],
       3: [
         {
-          substep: "Multi-modal Treatment Optimization",
-          process: "AI designs complex treatment strategy balancing oncology needs with comorbidity management."
+          substep: "Multi-source Record Compilation",
+          process: "Advanced record acquisition from multiple providers with AI-powered duplicate detection and consolidation."
         },
         {
-          substep: "Advanced Care Coordination Planning",
-          process: "System creates comprehensive care plan involving multiple specialists and complex scheduling requirements."
+          substep: "Complex Case Documentation",
+          process: "Intelligent documentation management for complex cases with extensive medical histories."
         }
       ],
       4: [
         {
-          substep: "Complex Care Team Management",
-          process: "AI orchestrates large care team with multiple specialties, ensuring seamless communication and coordination."
+          substep: "Multi-specialty Coordination",
+          process: "Complex scheduling coordination across multiple specialties with dependency management and conflict resolution."
         },
         {
-          substep: "Advanced Monitoring Protocol",
-          process: "System establishes comprehensive monitoring for complex patients with multiple treatment modalities."
+          substep: "Complex Case Optimization",
+          process: "AI optimization for complex cases requiring sequential appointments and specialized preparation."
+        }
+      ],
+      5: [
+        {
+          substep: "Comprehensive Preparation Strategy",
+          process: "Multi-modal preparation strategy for complex cases including caregiver coordination and specialized resources."
+        },
+        {
+          substep: "Advanced Support Systems",
+          process: "Coordination of advanced support systems including transportation, interpretation, and specialized care equipment."
+        }
+      ],
+      6: [
+        {
+          substep: "Multi-specialty Clinical Assessment",
+          process: "Coordinated clinical assessment across multiple specialties with AI-powered integration and decision support."
+        },
+        {
+          substep: "Complex Case Analysis",
+          process: "Advanced AI analysis of complex clinical presentations with multiple system interactions."
+        }
+      ],
+      7: [
+        {
+          substep: "Multi-modal Treatment Planning",
+          process: "Comprehensive treatment planning addressing multiple conditions with AI-powered optimization and sequencing."
+        },
+        {
+          substep: "Advanced Care Orchestration",
+          process: "Sophisticated care orchestration managing multiple treatment streams and specialist coordination."
+        }
+      ],
+      8: [
+        {
+          substep: "Complex Care Management",
+          process: "Advanced care management for complex cases with multiple touchpoints and continuous coordination needs."
+        },
+        {
+          substep: "Multi-system Communication",
+          process: "Intelligent communication management across multiple care teams and healthcare systems."
+        }
+      ],
+      9: [
+        {
+          substep: "Advanced Monitoring Protocols",
+          process: "Sophisticated monitoring protocols for complex cases with multiple conditions and treatment interactions."
+        },
+        {
+          substep: "Predictive Care Management",
+          process: "Advanced predictive care management with multi-system risk assessment and proactive intervention."
         }
       ]
     }
@@ -1407,57 +1507,621 @@ export const scenarioDetails = {
     sarah: {
       1: [
         {
-          substep: "Intelligent Call Routing",
-          process: "AI analyzes caller intent and routes to appropriate department: appointment scheduling, clinical questions, or urgent care."
+          substep: "Initial Contact Processing",
+          process: "Smart IVR with natural language processing to understand treatment inquiry and route to appropriate channel."
         },
         {
-          substep: "Personalized Response",
-          process: "System provides tailored information based on patient history, current treatments, and specific inquiry type."
+          substep: "Intent Recognition",
+          process: "AI-powered intent analysis to identify specific treatment questions and information needs."
         }
       ],
       2: [
         {
-          substep: "Multi-factor Authentication",
-          process: "AI performs voice biometric authentication while maintaining conversational flow and patient comfort."
+          substep: "Voice Authentication",
+          process: "Voice biometric authentication for secure and rapid identity verification."
         },
         {
-          substep: "Security Verification",
-          process: "System validates patient identity through intelligent questioning and behavioral pattern recognition."
+          substep: "Security Validation",
+          process: "Multi-factor authentication with dynamic security question selection based on patient profile."
         }
       ],
       3: [
         {
-          substep: "Unified Information Retrieval",
-          process: "AI instantly aggregates patient information from multiple systems, presenting relevant data contextually."
+          substep: "Issue Classification",
+          process: "AI-powered classification of treatment inquiry with context understanding and priority assessment."
         },
         {
-          substep: "Intelligent Data Prioritization",
-          process: "System highlights most relevant information based on call context and patient inquiry type."
+          substep: "Intent Analysis",
+          process: "Natural language processing to understand specific treatment concerns and information requests."
         }
       ],
       4: [
         {
-          substep: "AI-Assisted Resolution",
-          process: "AI provides intelligent solution recommendations and guides agent through optimal resolution pathways."
+          substep: "Information Consolidation",
+          process: "Unified patient view creation with relevant treatment history and current status compilation."
         },
         {
-          substep: "Outcome Optimization",
-          process: "System predicts resolution success and suggests alternative approaches for complex issues."
+          substep: "Context Orchestration",
+          process: "Intelligent orchestration of relevant information for treatment inquiry response."
+        }
+      ],
+      5: [
+        {
+          substep: "Case Creation",
+          process: "Automated case creation for treatment inquiry with appropriate priority and resource assignment."
+        },
+        {
+          substep: "Priority Management",
+          process: "AI-powered priority scoring based on treatment urgency and patient needs."
+        }
+      ],
+      6: [
+        {
+          substep: "Knowledge Discovery",
+          process: "Intelligent knowledge base search for treatment options and relevant patient education materials."
+        },
+        {
+          substep: "Resolution Research",
+          process: "AI-assisted research for comprehensive treatment information and option recommendations."
+        }
+      ],
+      7: [
+        {
+          substep: "Multi-channel Coordination",
+          process: "Seamless coordination across channels to provide consistent treatment information and support."
+        },
+        {
+          substep: "Experience Optimization",
+          process: "Personalized experience orchestration based on patient preferences and communication needs."
+        }
+      ],
+      8: [
+        {
+          substep: "Escalation Management",
+          process: "Intelligent escalation for complex treatment questions requiring specialist consultation."
+        },
+        {
+          substep: "Specialist Coordination",
+          process: "Coordinated handoff to clinical specialists with complete context and patient information."
+        }
+      ],
+      9: [
+        {
+          substep: "Follow-up Planning",
+          process: "Proactive follow-up scheduling to ensure treatment questions are fully addressed."
+        },
+        {
+          substep: "Relationship Management",
+          process: "Personalized relationship management to support ongoing treatment journey."
+        }
+      ],
+      10: [
+        {
+          substep: "Satisfaction Analysis",
+          process: "Real-time satisfaction measurement for treatment inquiry resolution and support quality."
+        },
+        {
+          substep: "Experience Optimization",
+          process: "Continuous improvement based on treatment inquiry patterns and patient feedback."
         }
       ]
     },
     michael: {
       1: [
         {
-          substep: "Emergency Triage Protocol",
-          process: "AI immediately identifies urgent clinical situations and escalates to appropriate clinical staff with priority routing."
+          substep: "Urgent Contact Processing",
+          process: "Priority routing for urgent support requests with immediate response capability and escalation triggers."
         },
         {
-          substep: "Clinical Decision Support",
-          process: "System provides real-time clinical protocols and decision trees to support immediate patient care needs."
+          substep: "Critical Assessment",
+          process: "AI-powered assessment of urgency level with automatic escalation for critical situations."
         }
       ],
       2: [
+        {
+          substep: "Rapid Authentication",
+          process: "Expedited authentication process for urgent situations with flexible verification methods."
+        },
+        {
+          substep: "Emergency Protocols",
+          process: "Specialized authentication protocols for emergency situations requiring immediate access."
+        }
+      ],
+      3: [
+        {
+          substep: "Urgent Issue Classification",
+          process: "Priority classification of urgent support request with immediate escalation triggers."
+        },
+        {
+          substep: "Critical Intent Analysis",
+          process: "Advanced NLP analysis to understand urgent medical concerns and side effect reporting."
+        }
+      ],
+      4: [
+        {
+          substep: "Urgent Information Gathering",
+          process: "Rapid compilation of critical patient information including current treatment status and recent changes."
+        },
+        {
+          substep: "Emergency Context Creation",
+          process: "Immediate context creation for urgent situations with relevant clinical information prioritization."
+        }
+      ],
+      5: [
+        {
+          substep: "Priority Case Management",
+          process: "High-priority case creation with immediate resource allocation and clinical team notification."
+        },
+        {
+          substep: "Urgent Resource Assignment",
+          process: "Immediate assignment of appropriate clinical resources based on urgency assessment."
+        }
+      ],
+      6: [
+        {
+          substep: "Clinical Knowledge Access",
+          process: "Rapid access to clinical protocols and side effect management guidelines for immediate response."
+        },
+        {
+          substep: "Emergency Resolution Support",
+          process: "AI-assisted emergency resolution with clinical decision support and protocol recommendations."
+        }
+      ],
+      7: [
+        {
+          substep: "Emergency Coordination",
+          process: "Coordinated emergency response across multiple channels with clinical team integration."
+        },
+        {
+          substep: "Critical Care Orchestration",
+          process: "Orchestration of critical care response with immediate clinical consultation availability."
+        }
+      ],
+      8: [
+        {
+          substep: "Clinical Escalation",
+          process: "Immediate escalation to clinical teams with complete patient context and urgency assessment."
+        },
+        {
+          substep: "Emergency Handoff",
+          process: "Seamless handoff to clinical providers with comprehensive situation briefing."
+        }
+      ],
+      9: [
+        {
+          substep: "Urgent Follow-up",
+          process: "Immediate follow-up protocols for urgent situations with proactive monitoring and support."
+        },
+        {
+          substep: "Critical Care Monitoring",
+          process: "Enhanced monitoring and support for patients experiencing urgent side effects."
+        }
+      ],
+      10: [
+        {
+          substep: "Emergency Response Analysis",
+          process: "Analysis of emergency response effectiveness with rapid improvement recommendations."
+        },
+        {
+          substep: "Critical Care Optimization",
+          process: "Continuous optimization of emergency response protocols based on urgent case outcomes."
+        }
+      ]
+    }
+  }
+};
+
+// Scenario impact analysis data
+export const scenarioImpactAnalysis = {
+  referral: {
+    sarah: {
+      scenarioType: "Urgent Referral",
+      overallTimeReduction: "75%",
+      errorReduction: "90%",
+      patientSatisfaction: "9.2/10",
+      stepImpacts: {
+        1: {
+          timeSaved: "4-6 hours",
+          errorReduction: "95%",
+          qualityImprovement: "Intelligent triage ensures appropriate prioritization"
+        },
+        2: {
+          timeSaved: "2-3 hours", 
+          errorReduction: "85%",
+          qualityImprovement: "Personalized communication reduces anxiety and improves engagement"
+        },
+        3: {
+          timeSaved: "1-2 hours",
+          errorReduction: "80%",
+          qualityImprovement: "Real-time verification eliminates approval delays"
+        },
+        4: {
+          timeSaved: "2-4 hours",
+          errorReduction: "90%",
+          qualityImprovement: "Optimal specialist matching improves care coordination"
+        },
+        5: {
+          timeSaved: "1-3 hours",
+          errorReduction: "75%",
+          qualityImprovement: "Comprehensive preparation improves visit outcomes"
+        },
+        6: {
+          timeSaved: "3-5 hours",
+          errorReduction: "85%",
+          qualityImprovement: "AI-enhanced verification reduces processing time"
+        },
+        7: {
+          timeSaved: "4-6 hours",
+          errorReduction: "80%",
+          qualityImprovement: "Intelligent clinical review improves triage accuracy"
+        },
+        8: {
+          timeSaved: "2-3 hours",
+          errorReduction: "70%", 
+          qualityImprovement: "Optimized scheduling reduces delays and no-shows"
+        }
+      },
+      cumulativeBenefits: [
+        {
+          step: 1,
+          totalTimeSaved: "4-6 hours",
+          totalErrorReduction: "95%",
+          clinicalOutcome: "Immediate appropriate care routing"
+        },
+        {
+          step: 8,
+          totalTimeSaved: "19-32 hours",
+          totalErrorReduction: "85%",
+          clinicalOutcome: "Complete care coordination with optimal outcomes"
+        }
+      ]
+    },
+    michael: {
+      scenarioType: "Complex Onboarding",
+      overallTimeReduction: "80%",
+      errorReduction: "95%",
+      patientSatisfaction: "9.5/10",
+      stepImpacts: {
+        1: {
+          timeSaved: "6-8 hours",
+          errorReduction: "98%",
+          qualityImprovement: "Advanced triage for complex cases ensures proper resource allocation"
+        },
+        2: {
+          timeSaved: "3-4 hours",
+          errorReduction: "90%",
+          qualityImprovement: "AI-powered communication adapts to complex medical situations"
+        },
+        3: {
+          timeSaved: "2-3 hours",
+          errorReduction: "85%",
+          qualityImprovement: "Comprehensive verification handles complex benefit structures"
+        },
+        4: {
+          timeSaved: "4-6 hours",
+          errorReduction: "95%",
+          qualityImprovement: "Multi-specialty coordination ensures optimal care team assembly"
+        },
+        5: {
+          timeSaved: "3-5 hours",
+          errorReduction: "80%",
+          qualityImprovement: "Complex preparation strategy addresses all patient needs"
+        },
+        6: {
+          timeSaved: "4-6 hours",
+          errorReduction: "90%",
+          qualityImprovement: "Advanced verification handles complex insurance scenarios"
+        },
+        7: {
+          timeSaved: "6-8 hours",
+          errorReduction: "85%",
+          qualityImprovement: "AI-assisted review handles complex clinical presentations"
+        },
+        8: {
+          timeSaved: "3-4 hours",
+          errorReduction: "75%",
+          qualityImprovement: "Complex scheduling coordination ensures optimal care sequencing"
+        }
+      },
+      cumulativeBenefits: [
+        {
+          step: 1,
+          totalTimeSaved: "6-8 hours",
+          totalErrorReduction: "98%",
+          clinicalOutcome: "Expert-level triage for complex cases"
+        },
+        {
+          step: 8,
+          totalTimeSaved: "31-44 hours",
+          totalErrorReduction: "88%",
+          clinicalOutcome: "Comprehensive complex care coordination"
+        }
+      ]
+    }
+  },
+  oncology: {
+    sarah: {
+      scenarioType: "Routine Screening",
+      overallTimeReduction: "70%",
+      errorReduction: "85%",
+      patientSatisfaction: "9.0/10",
+      stepImpacts: {
+        1: {
+          timeSaved: "2-3 hours",
+          errorReduction: "90%",
+          qualityImprovement: "Streamlined digital processing reduces delays"
+        },
+        2: {
+          timeSaved: "1-2 hours",
+          errorReduction: "80%",
+          qualityImprovement: "AI-guided data collection improves completeness"
+        },
+        3: {
+          timeSaved: "3-4 hours",
+          errorReduction: "85%",
+          qualityImprovement: "Automated record acquisition ensures comprehensive history"
+        },
+        4: {
+          timeSaved: "1-2 hours",
+          errorReduction: "75%",
+          qualityImprovement: "Intelligent scheduling optimizes patient experience"
+        },
+        5: {
+          timeSaved: "2-3 hours",
+          errorReduction: "70%",
+          qualityImprovement: "Personalized preparation improves visit outcomes"
+        },
+        6: {
+          timeSaved: "1-2 hours",
+          errorReduction: "85%",
+          qualityImprovement: "AI-assisted assessment enhances clinical accuracy"
+        },
+        7: {
+          timeSaved: "4-6 hours",
+          errorReduction: "90%",
+          qualityImprovement: "Personalized treatment planning improves outcomes"
+        },
+        8: {
+          timeSaved: "2-3 hours",
+          errorReduction: "80%",
+          qualityImprovement: "Coordinated care delivery ensures seamless experience"
+        },
+        9: {
+          timeSaved: "3-4 hours",
+          errorReduction: "85%",
+          qualityImprovement: "Predictive monitoring enables proactive care"
+        }
+      },
+      cumulativeBenefits: [
+        {
+          step: 1,
+          totalTimeSaved: "2-3 hours",
+          totalErrorReduction: "90%",
+          clinicalOutcome: "Efficient care initiation"
+        },
+        {
+          step: 9,
+          totalTimeSaved: "19-29 hours",
+          totalErrorReduction: "83%",
+          clinicalOutcome: "Complete care optimization with proactive monitoring"
+        }
+      ]
+    },
+    michael: {
+      scenarioType: "Complex Case",
+      overallTimeReduction: "75%",
+      errorReduction: "90%",
+      patientSatisfaction: "9.3/10",
+      stepImpacts: {
+        1: {
+          timeSaved: "4-6 hours",
+          errorReduction: "95%",
+          qualityImprovement: "Advanced processing for complex cases"
+        },
+        2: {
+          timeSaved: "3-4 hours",
+          errorReduction: "85%",
+          qualityImprovement: "Comprehensive data analysis for multiple conditions"
+        },
+        3: {
+          timeSaved: "5-7 hours",
+          errorReduction: "90%",
+          qualityImprovement: "Multi-source record integration ensures complete picture"
+        },
+        4: {
+          timeSaved: "2-3 hours",
+          errorReduction: "80%",
+          qualityImprovement: "Complex scheduling coordination across specialties"
+        },
+        5: {
+          timeSaved: "4-5 hours",
+          errorReduction: "75%",
+          qualityImprovement: "Comprehensive preparation for complex needs"
+        },
+        6: {
+          timeSaved: "3-4 hours",
+          errorReduction: "90%",
+          qualityImprovement: "Multi-specialty assessment coordination"
+        },
+        7: {
+          timeSaved: "6-8 hours",
+          errorReduction: "95%",
+          qualityImprovement: "Advanced treatment planning for multiple conditions"
+        },
+        8: {
+          timeSaved: "4-5 hours",
+          errorReduction: "85%",
+          qualityImprovement: "Complex care team management and coordination"
+        },
+        9: {
+          timeSaved: "5-6 hours",
+          errorReduction: "90%",
+          qualityImprovement: "Advanced monitoring for complex treatment interactions"
+        }
+      },
+      cumulativeBenefits: [
+        {
+          step: 1,
+          totalTimeSaved: "4-6 hours",
+          totalErrorReduction: "95%",
+          clinicalOutcome: "Expert complex case management initiation"
+        },
+        {
+          step: 9,
+          totalTimeSaved: "36-48 hours",
+          totalErrorReduction: "87%",
+          clinicalOutcome: "Comprehensive complex care optimization"
+        }
+      ]
+    }
+  },
+  contact: {
+    sarah: {
+      scenarioType: "Treatment Inquiry",
+      overallTimeReduction: "80%",
+      errorReduction: "90%",
+      patientSatisfaction: "9.1/10",
+      stepImpacts: {
+        1: {
+          timeSaved: "5-7 minutes",
+          errorReduction: "85%",
+          qualityImprovement: "Smart routing reduces wait times and improves satisfaction"
+        },
+        2: {
+          timeSaved: "1-2 minutes",
+          errorReduction: "95%",
+          qualityImprovement: "Voice biometrics provides secure, rapid authentication"
+        },
+        3: {
+          timeSaved: "30-60 seconds",
+          errorReduction: "80%",
+          qualityImprovement: "AI classification ensures accurate intent recognition"
+        },
+        4: {
+          timeSaved: "3-5 minutes",
+          errorReduction: "90%",
+          qualityImprovement: "Unified view eliminates information gathering delays"
+        },
+        5: {
+          timeSaved: "2-3 minutes",
+          errorReduction: "85%",
+          qualityImprovement: "Intelligent case creation ensures proper priority"
+        },
+        6: {
+          timeSaved: "2-4 minutes",
+          errorReduction: "75%",
+          qualityImprovement: "AI knowledge discovery provides comprehensive responses"
+        },
+        7: {
+          timeSaved: "1-2 minutes",
+          errorReduction: "80%",
+          qualityImprovement: "Coordinated experience across all channels"
+        },
+        8: {
+          timeSaved: "3-5 minutes",
+          errorReduction: "85%",
+          qualityImprovement: "Intelligent escalation when specialist input needed"
+        },
+        9: {
+          timeSaved: "5-10 minutes",
+          errorReduction: "70%",
+          qualityImprovement: "Proactive follow-up ensures treatment questions resolved"
+        },
+        10: {
+          timeSaved: "2-3 minutes",
+          errorReduction: "90%",
+          qualityImprovement: "Real-time satisfaction analysis drives improvement"
+        }
+      },
+      cumulativeBenefits: [
+        {
+          step: 1,
+          totalTimeSaved: "5-7 minutes",
+          totalErrorReduction: "85%",
+          clinicalOutcome: "Immediate appropriate routing"
+        },
+        {
+          step: 10,
+          totalTimeSaved: "24-42 minutes",
+          totalErrorReduction: "84%",
+          clinicalOutcome: "Complete treatment inquiry resolution with ongoing support"
+        }
+      ]
+    },
+    michael: {
+      scenarioType: "Urgent Support",
+      overallTimeReduction: "85%",
+      errorReduction: "95%",
+      patientSatisfaction: "9.4/10",
+      stepImpacts: {
+        1: {
+          timeSaved: "7-10 minutes",
+          errorReduction: "90%",
+          qualityImprovement: "Priority routing for urgent situations with immediate response"
+        },
+        2: {
+          timeSaved: "1-2 minutes",
+          errorReduction: "98%",
+          qualityImprovement: "Expedited authentication for emergency situations"
+        },
+        3: {
+          timeSaved: "30-45 seconds",
+          errorReduction: "85%",
+          qualityImprovement: "Priority classification with immediate escalation triggers"
+        },
+        4: {
+          timeSaved: "4-6 minutes",
+          errorReduction: "95%",
+          qualityImprovement: "Rapid critical information compilation"
+        },
+        5: {
+          timeSaved: "2-3 minutes",
+          errorReduction: "90%",
+          qualityImprovement: "High-priority case creation with clinical team notification"
+        },
+        6: {
+          timeSaved: "3-5 minutes",
+          errorReduction: "80%",
+          qualityImprovement: "Immediate access to clinical protocols and guidelines"
+        },
+        7: {
+          timeSaved: "1-2 minutes",
+          errorReduction: "85%",
+          qualityImprovement: "Emergency coordination with clinical team integration"
+        },
+        8: {
+          timeSaved: "2-4 minutes",
+          errorReduction: "90%",
+          qualityImprovement: "Immediate clinical escalation with comprehensive briefing"
+        },
+        9: {
+          timeSaved: "8-12 minutes",
+          errorReduction: "75%",
+          qualityImprovement: "Enhanced monitoring and support for urgent situations"
+        },
+        10: {
+          timeSaved: "3-4 minutes",
+          errorReduction: "95%",
+          qualityImprovement: "Emergency response analysis with rapid improvement"
+        }
+      },
+      cumulativeBenefits: [
+        {
+          step: 1,
+          totalTimeSaved: "7-10 minutes",
+          totalErrorReduction: "90%",
+          clinicalOutcome: "Immediate urgent response initiation"
+        },
+        {
+          step: 10,
+          totalTimeSaved: "31-53 minutes",
+          totalErrorReduction: "87%",
+          clinicalOutcome: "Complete urgent care coordination with continuous monitoring"
+        }
+      ]
+    }
+  }
+};
         {
           substep: "Rapid Identity Verification",
           process: "AI expedites authentication for urgent cases while maintaining security protocols and compliance requirements."
