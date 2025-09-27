@@ -127,7 +127,7 @@ const About = () => {
           </div>
 
           {/* Text Content Centered with proper spacing to avoid cutoff */}
-          <div className="relative z-20 text-center lg:text-left px-4 sm:pl-32 md:pl-40 lg:pl-44 lg:pr-16">
+          <div className="relative z-20 text-center lg:text-left px-4 sm:px-6 md:px-8 lg:pl-44 lg:pr-16">
             <Badge className="bg-genie-primary/20 text-genie-cyan border-genie-cyan/30 mb-4 opacity-0 animate-fade-in" 
                    style={{ animationDelay: "2s", animationFillMode: "forwards" }}>
               About Me
@@ -230,27 +230,27 @@ const About = () => {
 
           {/* Corner Images (appear only after text completes) */}
           {showPersonalImage && (
-            <div className="pointer-events-none absolute top-24 left-6 z-10 hidden sm:block animate-emerge-from-bottle">
+            <div className="pointer-events-none absolute top-24 left-2 sm:left-6 z-10 animate-emerge-from-bottle">
               <div className="relative">
-                <img 
+                 <img 
                   src={saiProfile} 
                   alt="Sai Dasika - AI Innovation Leader and Healthcare Technology Expert" 
-                  className="w-24 h-24 lg:w-32 lg:h-32 rounded-full object-cover border-4 border-genie-cyan/50 shadow-2xl"
+                  className="w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full object-cover border-4 border-genie-cyan/50 shadow-2xl"
                 />
-                <div className="absolute inset-0 w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-genie-cyan/30 blur-xl animate-pulse-glow" />
+                <div className="absolute inset-0 w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full bg-genie-cyan/30 blur-xl animate-pulse-glow" />
               </div>
             </div>
           )}
 
             {showGenieImage && (
-              <div className="mt-6 flex justify-end">
+              <div className="mt-6 flex justify-end pr-2 sm:pr-6">
                 <div className="relative pointer-events-none animate-emerge-from-bottle" style={{ animationDelay: "0.5s" }}>
                   <img 
                     src={genieAnimated} 
                     alt="AI Innovation Genie" 
-                    className="w-24 h-24 lg:w-32 lg:h-32 object-contain animate-genie-working"
+                    className="w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 object-contain animate-genie-working"
                   />
-                  <div className="absolute inset-0 w-24 h-24 lg:w-32 lg:h-32 bg-genie-teal/20 rounded-full blur-2xl animate-pulse-glow" />
+                  <div className="absolute inset-0 w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-genie-teal/20 rounded-full blur-2xl animate-pulse-glow" />
                   <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2">
                     <div className="text-genie-cyan text-xs lg:text-sm font-bold animate-loading-bounce whitespace-nowrap">
                       🎯 INNOVATION UNLEASHED! 🎯
@@ -312,7 +312,7 @@ const About = () => {
                   My career spans technology leadership roles at industry giants including <strong className="text-genie-primary">Novartis, Bayer, 
                   Conduent, Amgen, and Pfizer</strong>, where I've consistently led digital transformation initiatives 
                   across commercial operations, clinical R&D, regulatory affairs, and supply chain management. 
-                  Currently, I serve as <strong className="text-genie-primary">Product Owner/Solution Architect at McKesson</strong> for the CGAT (Inspirogene) product, 
+                  Currently, I serve as <strong className="text-genie-primary">Director of Product owner/solution Architect for CGAT (PSaS) supporting inspiogene launch at McKesson</strong>, 
                   leading cross-functional workstreams across 3PL/SD, Specialty Pharmacy (Biologics), Ontada (Provider onboarding/Order management), 
                   and Patient services. With an MBA from <strong className="text-genie-teal">Cornell University's Johnson School</strong>, 
                   I've developed a unique perspective that combines deep technical expertise with strategic business acumen.
@@ -340,9 +340,9 @@ const About = () => {
               <div className="space-y-16">
                 {[
                   {
-                    phase: "Current Healthcare Technology Leadership",
+                    phase: "Current Experience",
                     companies: "McKesson • Present",
-                    focus: "Product Owner/Solution Architecture for CGAT (Inspirogene) - leading cross-functional workstreams",
+                    focus: "Director of Product owner/solution Architect for CGAT (PSaS) supporting inspiogene launch",
                     achievements: "Managing 3PL/SD, Specialty Pharmacy (Biologics), Ontada (Provider onboarding/Order management), and Patient services initiatives",
                     icon: Building2,
                     color: "genie-primary"
