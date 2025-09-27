@@ -7,7 +7,10 @@ import {
   ChevronUp, 
   Settings, 
   Brain, 
-  ArrowRight 
+  ArrowRight,
+  AlertTriangle,
+  ThumbsUp,
+  Network
 } from "lucide-react";
 
 interface JourneyStepsProps {
@@ -98,6 +101,134 @@ export const JourneySteps = ({ steps }: JourneyStepsProps) => {
             {/* Expanded Content */}
             {activeStep === index && (
               <CardContent className="pt-0">
+                {/* Current Issues */}
+                <div className="mb-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <AlertTriangle className="w-4 h-4 text-red-500" />
+                    <h4 className="font-semibold text-red-700">Current Issues</h4>
+                  </div>
+                  <ul className="space-y-2">
+                    {step.currentIssues.map((issue, issueIndex) => (
+                      <li key={issueIndex} className="text-sm text-red-600 flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 flex-shrink-0"></div>
+                        {issue}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Technology Stack */}
+                {step.technologyStack && (
+                  <div className="mb-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Settings className="w-4 h-4 text-blue-500" />
+                      <h4 className="font-semibold">Technology Stack</h4>
+                    </div>
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <div className="space-y-2">
+                        <h6 className="text-sm font-medium text-blue-600">Automation</h6>
+                        <div className="flex flex-wrap gap-1">
+                          {step.technologyStack.automation.map((tech, techIndex) => (
+                            <Badge key={techIndex} variant="secondary" className="text-xs bg-blue-100 text-blue-700 hover:bg-blue-200">
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <h6 className="text-sm font-medium text-purple-600">AI/ML</h6>
+                        <div className="flex flex-wrap gap-1">
+                          {step.technologyStack.ai.map((tech, techIndex) => (
+                            <Badge key={techIndex} variant="secondary" className="text-xs bg-purple-100 text-purple-700 hover:bg-purple-200">
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <h6 className="text-sm font-medium text-green-600">Integration</h6>
+                        <div className="flex flex-wrap gap-1">
+                          {step.technologyStack.integration.map((tech, techIndex) => (
+                            <Badge key={techIndex} variant="secondary" className="text-xs bg-green-100 text-green-700 hover:bg-green-200">
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Improvement Achieved */}
+                <div className="mb-6">
+                  <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                    <h5 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                      <ThumbsUp className="w-4 h-4" />
+                      Improvement Achieved
+                    </h5>
+                    <p className="text-sm text-green-700">{step.improvement}</p>
+                  </div>
+                </div>
+
+                {/* Gartner Value Exchange */}
+                {step.gartnerValue && (
+                  <div className="mb-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Network className="w-4 h-4 text-genie-primary" />
+                      <h4 className="font-semibold">Gartner Value Exchange</h4>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="p-4 bg-red-50 rounded-lg border border-red-200">
+                        <h6 className="font-semibold text-red-800 mb-3 flex items-center gap-2">
+                          <ArrowRight className="w-4 h-4 rotate-180" />
+                          Value Creation (Give)
+                        </h6>
+                        <ul className="space-y-2">
+                          {step.gartnerValue.give.map((item, itemIndex) => (
+                            <li key={itemIndex} className="text-sm text-red-700 flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 flex-shrink-0"></div>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                        <h6 className="font-semibold text-green-800 mb-3 flex items-center gap-2">
+                          <ArrowRight className="w-4 h-4" />
+                          Value Realization (Get)
+                        </h6>
+                        <ul className="space-y-2">
+                          {step.gartnerValue.get.map((item, itemIndex) => (
+                            <li key={itemIndex} className="text-sm text-green-700 flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Strategy Reasoning */}
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                  <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Settings className="w-4 h-4 text-blue-600" />
+                      <h5 className="font-semibold text-blue-800">Why Automation?</h5>
+                    </div>
+                    <p className="text-sm text-blue-700">{step.whyAutomation}</p>
+                  </div>
+                  <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Brain className="w-4 h-4 text-purple-600" />
+                      <h5 className="font-semibold text-purple-800">Why AI?</h5>
+                    </div>
+                    <p className="text-sm text-purple-700">{step.whyAI}</p>
+                  </div>
+                </div>
+
+                {/* Detailed Tasks */}
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
                   {/* Automation Tasks */}
                   <div>
@@ -132,103 +263,17 @@ export const JourneySteps = ({ steps }: JourneyStepsProps) => {
                   </div>
                 </div>
                 
-                {/* Strategy Reasoning */}
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                    <h5 className="font-semibold text-blue-800 mb-2">Why Automation?</h5>
-                    <p className="text-sm text-blue-700">{step.whyAutomation}</p>
-                  </div>
-                  <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-                    <h5 className="font-semibold text-purple-800 mb-2">Why AI?</h5>
-                    <p className="text-sm text-purple-700">{step.whyAI}</p>
-                  </div>
-                </div>
-                
-                {/* Additional Details */}
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="font-semibold mb-2">Implementation Phases</h5>
-                    <ul className="space-y-1">
-                      {step.phases.map((phase, phaseIndex) => (
-                        <li key={phaseIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                          <ArrowRight className="w-3 h-3 mt-1 text-genie-primary flex-shrink-0" />
-                          {phase}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="font-semibold mb-2">Current Issues Addressed</h5>
-                    <ul className="space-y-1">
-                      {step.currentIssues.map((issue, issueIndex) => (
-                        <li key={issueIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                          <ArrowRight className="w-3 h-3 mt-1 text-genie-primary flex-shrink-0" />
-                          {issue}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                    <h5 className="font-semibold text-green-800 mb-2">Improvement Achieved</h5>
-                    <p className="text-sm text-green-700">{step.improvement}</p>
-                  </div>
-                  
-                  {/* Technology Stack */}
-                  {step.technologyStack && (
-                    <div>
-                      <h5 className="font-semibold mb-3">Technology Stack</h5>
-                      <div className="grid md:grid-cols-3 gap-4">
-                        <div>
-                          <h6 className="text-sm font-medium text-blue-600 mb-2">Automation</h6>
-                          <ul className="space-y-1">
-                            {step.technologyStack.automation.map((tech, techIndex) => (
-                              <li key={techIndex} className="text-xs text-muted-foreground">• {tech}</li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div>
-                          <h6 className="text-sm font-medium text-purple-600 mb-2">AI</h6>
-                          <ul className="space-y-1">
-                            {step.technologyStack.ai.map((tech, techIndex) => (
-                              <li key={techIndex} className="text-xs text-muted-foreground">• {tech}</li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div>
-                          <h6 className="text-sm font-medium text-green-600 mb-2">Integration</h6>
-                          <ul className="space-y-1">
-                            {step.technologyStack.integration.map((tech, techIndex) => (
-                              <li key={techIndex} className="text-xs text-muted-foreground">• {tech}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Gartner Value Exchange */}
-                  {step.gartnerValue && (
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="p-3 bg-orange-50 rounded-lg border border-orange-200">
-                        <h6 className="text-sm font-medium text-orange-800 mb-2">Investment Required</h6>
-                        <ul className="space-y-1">
-                          {step.gartnerValue.give.map((item, itemIndex) => (
-                            <li key={itemIndex} className="text-xs text-orange-700">• {item}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="p-3 bg-emerald-50 rounded-lg border border-emerald-200">
-                        <h6 className="text-sm font-medium text-emerald-800 mb-2">Value Received</h6>
-                        <ul className="space-y-1">
-                          {step.gartnerValue.get.map((item, itemIndex) => (
-                            <li key={itemIndex} className="text-xs text-emerald-700">• {item}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  )}
+                {/* Implementation Phases */}
+                <div className="mb-4">
+                  <h5 className="font-semibold mb-2">Implementation Phases</h5>
+                  <ul className="space-y-1">
+                    {step.phases.map((phase, phaseIndex) => (
+                      <li key={phaseIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <ArrowRight className="w-3 h-3 mt-1 text-genie-primary flex-shrink-0" />
+                        {phase}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </CardContent>
             )}
