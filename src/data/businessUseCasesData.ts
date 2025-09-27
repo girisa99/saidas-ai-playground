@@ -176,6 +176,129 @@ export const journeySteps = {
         "High no-show rates due to poor engagement"
       ],
       improvement: "AI-driven personalized outreach increases appointment attendance from 75% to 90%"
+    },
+    {
+      id: 3,
+      title: "Insurance Verification",
+      icon: Shield,
+      time: "Day 2-5",
+      emotion: "neutral",
+      emotionIcon: Clock,
+      approach: "hybrid",
+      description: "Real-time insurance verification with AI-powered benefit analysis",
+      automationPrimary: true,
+      roi: "≈ 85% efficiency gain",
+      implementationStatus: "live",
+      statusNote: "Integrated with major insurance providers",
+      automationTasks: [
+        "Automated eligibility verification",
+        "Benefit coverage determination",
+        "Prior authorization status checking",
+        "Copay and deductible calculation",
+        "Financial assistance screening"
+      ],
+      aiTasks: [
+        "Intelligent benefit interpretation",
+        "Predictive approval likelihood assessment",
+        "Personalized financial counseling recommendations",
+        "Alternative coverage option identification",
+        "Pre-authorization optimization strategies"
+      ],
+      whyAutomation: "Insurance verification requires systematic checking of multiple data points and policies",
+      whyAI: "Complex benefit structures require intelligent interpretation and personalized financial guidance",
+      phases: [
+        "Automate basic eligibility verification",
+        "Deploy AI for benefit interpretation",
+        "Implement predictive approval analysis"
+      ],
+      currentIssues: [
+        "Manual verification causing 25% approval delays",
+        "Inconsistent benefit interpretation",
+        "Limited financial assistance identification"
+      ],
+      improvement: "AI-enhanced verification eliminates approval delays and identifies 60% more financial assistance opportunities"
+    },
+    {
+      id: 4,
+      title: "Specialist Assignment",
+      icon: Users,
+      time: "Day 3-7",
+      emotion: "positive",
+      emotionIcon: Target,
+      approach: "agentic",
+      description: "AI-powered specialist matching with predictive care coordination",
+      automationPrimary: false,
+      roi: "≈ 75% efficiency gain",
+      implementationStatus: "testing",
+      statusNote: "AI matching algorithms under evaluation",
+      automationTasks: [
+        "Provider availability checking",
+        "Appointment slot management",
+        "Basic care team assembly",
+        "Standard referral documentation",
+        "Communication workflow triggers"
+      ],
+      aiTasks: [
+        "Intelligent specialist matching based on case complexity",
+        "Predictive care pathway optimization",
+        "Multi-specialty coordination planning",
+        "Outcome-based provider recommendations",
+        "Dynamic care team formation"
+      ],
+      whyAutomation: "Systematic specialist assignment ensures consistent care team formation",
+      whyAI: "Optimal specialist matching requires analysis of case complexity, provider expertise, and historical outcomes",
+      phases: [
+        "Automate provider availability and scheduling",
+        "Deploy AI for intelligent matching",
+        "Implement predictive coordination planning"
+      ],
+      currentIssues: [
+        "Suboptimal specialist assignment in 30% of cases",
+        "Limited care coordination planning",
+        "Inconsistent provider matching criteria"
+      ],
+      improvement: "AI-powered matching improves care coordination accuracy by 85% and reduces time-to-specialist by 50%"
+    },
+    {
+      id: 5,
+      title: "Pre-appointment Preparation",
+      icon: ClipboardCheck,
+      time: "Day 5-14",
+      emotion: "positive",
+      emotionIcon: Lightbulb,
+      approach: "hybrid",
+      description: "Personalized patient preparation with AI-guided education",
+      automationPrimary: true,
+      roi: "≈ 65% efficiency gain",
+      implementationStatus: "development",
+      statusNote: "Personalization engine in development",
+      automationTasks: [
+        "Standard pre-appointment instructions",
+        "Medication list compilation",
+        "Lab work scheduling",
+        "Transportation assistance coordination",
+        "Reminder notification workflows"
+      ],
+      aiTasks: [
+        "Personalized education content generation",
+        "Anxiety and concern prediction",
+        "Culturally appropriate communication",
+        "Learning style adaptation",
+        "Optimal preparation timeline optimization"
+      ],
+      whyAutomation: "Comprehensive preparation requires systematic coordination of multiple preparation tasks",
+      whyAI: "Effective patient education requires personalization based on individual needs, concerns, and learning preferences",
+      phases: [
+        "Automate standard preparation workflows",
+        "Deploy AI for personalized education",
+        "Implement adaptive preparation optimization"
+      ],
+      currentIssues: [
+        "35% of patients arrive unprepared",
+        "Generic preparation instructions",
+        "High patient anxiety due to uncertainty"
+      ],
+      improvement: "AI-guided preparation achieves 95% patient readiness and reduces appointment anxiety by 70%"
     }
   ],
   oncology: [
@@ -219,6 +342,129 @@ export const journeySteps = {
         "Manual risk assessment inconsistencies"
       ],
       improvement: "AI-enhanced history collection identifies 40% more risk factors and reduces collection time by 60%"
+    },
+    {
+      id: 2,
+      title: "Clinical Assessment",
+      icon: Stethoscope,
+      time: "Day 1-3",
+      emotion: "neutral",
+      emotionIcon: Clock,
+      approach: "hybrid",
+      description: "AI-augmented clinical evaluation with predictive screening",
+      automationPrimary: false,
+      roi: "≈ 70% efficiency gain",
+      implementationStatus: "testing",
+      statusNote: "Pilot with oncology specialists",
+      automationTasks: [
+        "Automated diagnostic imaging scheduling",
+        "Lab result consolidation and flagging",
+        "Clinical protocol adherence checking",
+        "Standard assessment workflows",
+        "Documentation automation"
+      ],
+      aiTasks: [
+        "Predictive risk stratification",
+        "Imaging analysis and pattern recognition",
+        "Treatment pathway recommendations",
+        "Clinical decision support",
+        "Personalized screening protocols"
+      ],
+      whyAutomation: "Standardized clinical assessments ensure consistent evaluation protocols",
+      whyAI: "Complex oncology cases require intelligent analysis of multiple clinical factors",
+      phases: [
+        "Automate imaging and lab workflows",
+        "Deploy AI for predictive analysis",
+        "Integrate clinical decision support"
+      ],
+      currentIssues: [
+        "Manual imaging scheduling delays",
+        "Inconsistent assessment protocols",
+        "Delayed lab result interpretation"
+      ],
+      improvement: "AI-assisted assessment reduces diagnosis time by 45% and improves accuracy by 30%"
+    },
+    {
+      id: 3,
+      title: "Treatment Planning",
+      icon: Target,
+      time: "Day 5-10",
+      emotion: "positive",
+      emotionIcon: Lightbulb,
+      approach: "agentic",
+      description: "AI-driven personalized treatment strategy development",
+      automationPrimary: false,
+      roi: "≈ 90% efficiency gain",
+      implementationStatus: "development",
+      statusNote: "Advanced AI algorithms in development",
+      automationTasks: [
+        "Treatment protocol template generation",
+        "Medication interaction checking",
+        "Insurance authorization workflows",
+        "Appointment scheduling coordination",
+        "Patient education material preparation"
+      ],
+      aiTasks: [
+        "Personalized treatment pathway optimization",
+        "Genomic data analysis integration",
+        "Predictive response modeling",
+        "Multi-specialty care coordination",
+        "Patient-specific risk assessment"
+      ],
+      whyAutomation: "Complex treatment plans require systematic coordination and documentation",
+      whyAI: "Personalized oncology treatment requires analysis of genomic, clinical, and patient-specific factors",
+      phases: [
+        "Implement treatment template automation",
+        "Deploy genomic analysis AI",
+        "Integrate predictive modeling"
+      ],
+      currentIssues: [
+        "Manual treatment planning taking weeks",
+        "Limited genomic data integration",
+        "Suboptimal multi-specialty coordination"
+      ],
+      improvement: "AI-optimized treatment planning reduces planning time from weeks to days with 85% accuracy improvement"
+    },
+    {
+      id: 4,
+      title: "Care Coordination",
+      icon: Users,
+      time: "Ongoing",
+      emotion: "positive",
+      emotionIcon: CheckCircle,
+      approach: "hybrid",
+      description: "Integrated care team management with AI-powered optimization",
+      automationPrimary: true,
+      roi: "≈ 65% efficiency gain",
+      implementationStatus: "planned",
+      statusNote: "Scheduled for Q2 2024 deployment",
+      automationTasks: [
+        "Multi-provider appointment coordination",
+        "Treatment milestone tracking",
+        "Patient progress monitoring",
+        "Communication workflow automation",
+        "Resource allocation management"
+      ],
+      aiTasks: [
+        "Predictive care pathway optimization",
+        "Real-time treatment adjustment recommendations",
+        "Patient outcome prediction",
+        "Resource demand forecasting",
+        "Care team performance analytics"
+      ],
+      whyAutomation: "Complex care coordination requires systematic tracking and communication",
+      whyAI: "Dynamic treatment adjustments require intelligent analysis of patient response patterns",
+      phases: [
+        "Automate care coordination workflows",
+        "Deploy predictive analytics",
+        "Implement real-time optimization"
+      ],
+      currentIssues: [
+        "Fragmented care team communication",
+        "Delayed treatment adjustments",
+        "Inefficient resource utilization"
+      ],
+      improvement: "Integrated care coordination improves treatment adherence by 70% and reduces care gaps by 80%"
     }
   ],
   contact: [
@@ -262,6 +508,129 @@ export const journeySteps = {
         "Limited after-hours support capability"
       ],
       improvement: "AI-powered contact management reduces average response time from 8 minutes to 45 seconds"
+    },
+    {
+      id: 2,
+      title: "Patient Authentication",
+      icon: Shield,
+      time: "0-2 minutes",
+      emotion: "neutral",
+      emotionIcon: Info,
+      approach: "hybrid",
+      description: "Multi-factor authentication with AI-powered identity verification",
+      automationPrimary: true,
+      roi: "≈ 75% efficiency gain",
+      implementationStatus: "testing",
+      statusNote: "Voice biometrics pilot program",
+      automationTasks: [
+        "Automated identity verification workflows",
+        "Standard security question processing",
+        "Account lookup and validation",
+        "Access level determination",
+        "Compliance logging automation"
+      ],
+      aiTasks: [
+        "Voice biometric authentication",
+        "Behavioral pattern recognition",
+        "Risk-based authentication scoring",
+        "Fraud detection algorithms",
+        "Dynamic security question selection"
+      ],
+      whyAutomation: "Consistent security protocols ensure HIPAA compliance and data protection",
+      whyAI: "Advanced authentication requires intelligent analysis of voice patterns and behavioral indicators",
+      phases: [
+        "Implement automated verification workflows",
+        "Deploy voice biometric authentication",
+        "Add behavioral analysis and fraud detection"
+      ],
+      currentIssues: [
+        "Manual verification taking 2-3 minutes",
+        "15% authentication failure rates",
+        "Security vulnerabilities with manual processes"
+      ],
+      improvement: "AI-powered authentication reduces verification time to under 30 seconds with 99% accuracy"
+    },
+    {
+      id: 3,
+      title: "Information Gathering",
+      icon: Database,
+      time: "2-5 minutes",
+      emotion: "neutral",
+      emotionIcon: Clock,
+      approach: "hybrid",
+      description: "Unified patient view with AI-enhanced data synthesis",
+      automationPrimary: true,
+      roi: "≈ 80% efficiency gain",
+      implementationStatus: "development",
+      statusNote: "Unified patient dashboard in progress",
+      automationTasks: [
+        "Automated record retrieval across systems",
+        "Standard information consolidation",
+        "Recent activity timeline generation",
+        "Insurance and billing status updates",
+        "Appointment history compilation"
+      ],
+      aiTasks: [
+        "Intelligent data synthesis and prioritization",
+        "Contextual information highlighting",
+        "Predictive information needs assessment",
+        "Smart summary generation",
+        "Personalized interaction recommendations"
+      ],
+      whyAutomation: "Comprehensive information gathering requires systematic data aggregation",
+      whyAI: "Complex patient histories need intelligent analysis to surface relevant information quickly",
+      phases: [
+        "Automate multi-system data retrieval",
+        "Deploy AI for intelligent data synthesis",
+        "Implement predictive information surfacing"
+      ],
+      currentIssues: [
+        "Agents navigating 3-5 different systems",
+        "5-8 minute delays for information gathering",
+        "Inconsistent information prioritization"
+      ],
+      improvement: "Unified AI-powered view reduces information gathering time by 80% with complete context"
+    },
+    {
+      id: 4,
+      title: "Issue Resolution",
+      icon: Wrench,
+      time: "5-15 minutes",
+      emotion: "positive",
+      emotionIcon: CheckCircle,
+      approach: "agentic",
+      description: "AI-assisted problem solving with intelligent escalation management",
+      automationPrimary: false,
+      roi: "≈ 70% efficiency gain",
+      implementationStatus: "planned",
+      statusNote: "Advanced AI resolution engine planned",
+      automationTasks: [
+        "Standard resolution workflow automation",
+        "Documentation and case creation",
+        "Follow-up task scheduling",
+        "Customer satisfaction survey deployment",
+        "Resolution confirmation workflows"
+      ],
+      aiTasks: [
+        "Intelligent solution recommendation",
+        "Dynamic escalation decision making",
+        "Personalized communication strategy",
+        "Outcome prediction and optimization",
+        "Real-time coaching for agents"
+      ],
+      whyAutomation: "Consistent resolution processes ensure quality and compliance",
+      whyAI: "Complex patient issues require intelligent analysis and personalized solution strategies",
+      phases: [
+        "Automate standard resolution workflows",
+        "Deploy AI for solution recommendation",
+        "Implement intelligent escalation management"
+      ],
+      currentIssues: [
+        "Inconsistent resolution approaches",
+        "High escalation rates for complex issues",
+        "Limited real-time guidance for agents"
+      ],
+      improvement: "AI-assisted resolution increases first-call resolution by 85% and improves satisfaction scores by 40%"
     }
   ]
 };
@@ -289,6 +658,36 @@ export const scenarioDetails = {
           substep: "Dynamic Scheduling",
           process: "System optimizes appointment scheduling based on patient availability, provider schedules, and clinical priority."
         }
+      ],
+      3: [
+        {
+          substep: "Real-time Eligibility Check",
+          process: "AI instantly verifies insurance coverage, benefit levels, and identifies potential coverage gaps or financial assistance opportunities."
+        },
+        {
+          substep: "Benefit Optimization",
+          process: "System analyzes benefit structure and recommends optimal utilization strategy to minimize patient costs."
+        }
+      ],
+      4: [
+        {
+          substep: "AI Specialist Matching",
+          process: "AI analyzes case complexity, provider expertise, availability, and historical outcomes to recommend optimal specialist assignment."
+        },
+        {
+          substep: "Care Team Formation",
+          process: "System automatically assembles multi-disciplinary care team based on patient needs and specialist availability."
+        }
+      ],
+      5: [
+        {
+          substep: "Personalized Education",
+          process: "AI generates customized pre-appointment materials based on patient's medical literacy, anxiety level, and specific procedure requirements."
+        },
+        {
+          substep: "Preparation Optimization",
+          process: "System creates personalized timeline and checklist to ensure patient arrives fully prepared for specialist consultation."
+        }
       ]
     },
     michael: {
@@ -311,6 +710,36 @@ export const scenarioDetails = {
           substep: "Care Team Integration",
           process: "System ensures all care team members are informed and coordinated for comprehensive patient management."
         }
+      ],
+      3: [
+        {
+          substep: "Complex Benefit Analysis",
+          process: "AI analyzes multiple insurance policies and coordination of benefits for complex cases with high expected costs."
+        },
+        {
+          substep: "Financial Strategy Development",
+          process: "System identifies optimal combination of insurance benefits, assistance programs, and payment options."
+        }
+      ],
+      4: [
+        {
+          substep: "Multi-specialty Team Assembly",
+          process: "AI coordinates optimal team of specialists considering case complexity, provider relationships, and geographic constraints."
+        },
+        {
+          substep: "Complex Care Pathway Planning",
+          process: "System develops comprehensive care coordination strategy with multiple touchpoints and decision trees."
+        }
+      ],
+      5: [
+        {
+          substep: "Comprehensive Preparation Strategy",
+          process: "AI creates detailed preparation plan addressing complex medical history, multiple appointments, and patient education needs."
+        },
+        {
+          substep: "Multi-modal Support Coordination",
+          process: "System arranges transportation, caregiver support, and specialized preparation resources for complex cases."
+        }
       ]
     }
   },
@@ -325,17 +754,77 @@ export const scenarioDetails = {
           substep: "Risk Factor Analysis",
           process: "System analyzes collected data to identify genetic predispositions, environmental factors, and lifestyle risks relevant to oncology screening."
         }
+      ],
+      2: [
+        {
+          substep: "AI-Enhanced Clinical Assessment",
+          process: "AI assists clinicians in comprehensive evaluation, highlighting key risk factors and recommending appropriate diagnostic protocols."
+        },
+        {
+          substep: "Predictive Risk Modeling",
+          process: "System generates personalized risk assessment and screening recommendations based on patient-specific factors."
+        }
+      ],
+      3: [
+        {
+          substep: "Personalized Treatment Strategy",
+          process: "AI analyzes patient profile, clinical guidelines, and latest research to recommend optimal treatment pathways."
+        },
+        {
+          substep: "Treatment Plan Optimization",
+          process: "System coordinates multi-modal treatment approach with personalized timing and resource allocation."
+        }
+      ],
+      4: [
+        {
+          substep: "Integrated Care Coordination",
+          process: "AI orchestrates care team activities, appointment scheduling, and treatment milestone tracking."
+        },
+        {
+          substep: "Continuous Monitoring Setup",
+          process: "System establishes real-time patient monitoring and adaptive care pathway adjustments."
+        }
       ]
     },
     michael: {
       1: [
         {
-          substep: "Complex Medical History Integration",
-          process: "AI consolidates multiple medical records, identifying patterns across different healthcare systems and providers."
+          substep: "Complex Medical History Analysis",
+          process: "AI processes extensive medical history with multiple comorbidities, previous treatments, and complex medication regimens."
         },
         {
-          substep: "Multidisciplinary Care Planning",
-          process: "System coordinates with multiple specialists to develop comprehensive treatment approach for complex oncology case."
+          substep: "Multi-system Risk Assessment",
+          process: "System analyzes interactions between oncology treatment and existing conditions to optimize care approach."
+        }
+      ],
+      2: [
+        {
+          substep: "Comprehensive Multi-specialty Assessment",
+          process: "AI coordinates evaluation across multiple specialties, ensuring all comorbidities are considered in treatment planning."
+        },
+        {
+          substep: "Complex Case Risk Stratification",
+          process: "System performs advanced risk modeling considering multiple variables and treatment interactions."
+        }
+      ],
+      3: [
+        {
+          substep: "Multi-modal Treatment Optimization",
+          process: "AI designs complex treatment strategy balancing oncology needs with comorbidity management."
+        },
+        {
+          substep: "Advanced Care Coordination Planning",
+          process: "System creates comprehensive care plan involving multiple specialists and complex scheduling requirements."
+        }
+      ],
+      4: [
+        {
+          substep: "Complex Care Team Management",
+          process: "AI orchestrates large care team with multiple specialties, ensuring seamless communication and coordination."
+        },
+        {
+          substep: "Advanced Monitoring Protocol",
+          process: "System establishes comprehensive monitoring for complex patients with multiple treatment modalities."
         }
       ]
     }
@@ -351,6 +840,36 @@ export const scenarioDetails = {
           substep: "Personalized Response",
           process: "System provides tailored information based on patient history, current treatments, and specific inquiry type."
         }
+      ],
+      2: [
+        {
+          substep: "Multi-factor Authentication",
+          process: "AI performs voice biometric authentication while maintaining conversational flow and patient comfort."
+        },
+        {
+          substep: "Security Verification",
+          process: "System validates patient identity through intelligent questioning and behavioral pattern recognition."
+        }
+      ],
+      3: [
+        {
+          substep: "Unified Information Retrieval",
+          process: "AI instantly aggregates patient information from multiple systems, presenting relevant data contextually."
+        },
+        {
+          substep: "Intelligent Data Prioritization",
+          process: "System highlights most relevant information based on call context and patient inquiry type."
+        }
+      ],
+      4: [
+        {
+          substep: "AI-Assisted Resolution",
+          process: "AI provides intelligent solution recommendations and guides agent through optimal resolution pathways."
+        },
+        {
+          substep: "Outcome Optimization",
+          process: "System predicts resolution success and suggests alternative approaches for complex issues."
+        }
       ]
     },
     michael: {
@@ -362,6 +881,36 @@ export const scenarioDetails = {
         {
           substep: "Clinical Decision Support",
           process: "System provides real-time clinical protocols and decision trees to support immediate patient care needs."
+        }
+      ],
+      2: [
+        {
+          substep: "Rapid Identity Verification",
+          process: "AI expedites authentication for urgent cases while maintaining security protocols and compliance requirements."
+        },
+        {
+          substep: "Emergency Context Access",
+          process: "System provides immediate access to critical patient information for urgent clinical decision making."
+        }
+      ],
+      3: [
+        {
+          substep: "Critical Information Assembly",
+          process: "AI rapidly consolidates vital patient data, treatment history, and current medication for emergency response."
+        },
+        {
+          substep: "Real-time Clinical Context",
+          process: "System provides immediate clinical context and treatment recommendations for urgent patient care."
+        }
+      ],
+      4: [
+        {
+          substep: "Emergency Resolution Protocol",
+          process: "AI guides urgent issue resolution with clinical protocols and immediate escalation to appropriate medical staff."
+        },
+        {
+          substep: "Continuous Monitoring Setup",
+          process: "System establishes follow-up protocols and monitoring for urgent patient situations."
         }
       ]
     }
