@@ -798,56 +798,56 @@ export const journeySteps = {
   contact: [
     {
       id: 1,
-      title: "Initial Contact",
+      title: "Initial Contact & Channel Entry",
       icon: Phone,
-      time: "Immediate",
+      time: "0-2 min",
       emotion: "critical",
       emotionIcon: AlertTriangle,
       approach: "hybrid",
-      description: "Intelligent call routing and triage with immediate response capability",
-      automationPrimary: false,
+      description: "Smart IVR with AI and omni-channel entry point to optimal channel handling",
+      automationPrimary: true,
       roi: "≈ 85% efficiency gain",
       implementationStatus: "live",
-      statusNote: "24/7 intelligent routing operational",
+      statusNote: "Smart routing system operational",
       automationTasks: [
         "Automated call routing and queuing",
-        "Basic caller authentication",
-        "Standard information capture",
-        "Appointment scheduling automation",
-        "Follow-up workflow triggers"
+        "Multi-channel contact consolidation",
+        "Basic caller information capture",
+        "Standard workflow triggers",
+        "Channel preference tracking"
       ],
       aiTasks: [
-        "Intelligent intent recognition and categorization",
-        "Dynamic priority assessment",
+        "Intelligent intent recognition",
+        "Dynamic routing optimization",
         "Real-time sentiment analysis",
-        "Personalized response generation",
-        "Proactive escalation management"
+        "Predictive resource allocation",
+        "Channel preference learning"
       ],
-      whyAutomation: "Consistent call handling ensures all patients receive standardized service and proper routing",
-      whyAI: "Each patient call has unique context, urgency, and emotional needs requiring intelligent assessment",
+      whyAutomation: "Consistent contact handling ensures standardized service across all channels",
+      whyAI: "Complex routing decisions require intelligent assessment of urgency and optimal channel selection",
       phases: [
-        "Deploy automated routing and basic triage",
-        "Implement AI for intelligent assessment and response",
-        "Add predictive analytics for proactive support"
+        "Deploy automated multi-channel routing",
+        "Implement AI intent recognition",
+        "Add predictive analytics"
       ],
       currentIssues: [
         "Long hold times during peak hours",
-        "Inconsistent triage and routing",
-        "Limited after-hours support capability"
+        "Channel switching causing information loss",
+        "Inconsistent service quality"
       ],
-      improvement: "AI-powered contact management reduces average response time from 8 minutes to 45 seconds"
+      improvement: "Smart IVR with NLP reduces hold times by 70% and improves first-call resolution by 85%"
     },
     {
       id: 2,
-      title: "Patient Authentication",
+      title: "Identity Verification & Authentication",
       icon: Shield,
-      time: "0-2 minutes",
-      emotion: "neutral",
-      emotionIcon: Info,
+      time: "0.5-2 min",
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
       approach: "hybrid",
-      description: "Multi-factor authentication with AI-powered identity verification",
+      description: "Multi-factor authentication with voice biometrics and fraud detection",
       automationPrimary: true,
-      roi: "≈ 75% efficiency gain",
+      roi: "≈ 85% efficiency gain",
       implementationStatus: "testing",
       statusNote: "Voice biometrics pilot program",
       automationTasks: [
@@ -862,103 +862,349 @@ export const journeySteps = {
         "Behavioral pattern recognition",
         "Risk-based authentication scoring",
         "Fraud detection algorithms",
-        "Dynamic security question selection"
+        "Dynamic security optimization"
       ],
       whyAutomation: "Consistent security protocols ensure HIPAA compliance and data protection",
-      whyAI: "Advanced authentication requires intelligent analysis of voice patterns and behavioral indicators",
+      whyAI: "Advanced authentication requires intelligent analysis of multiple security factors",
       phases: [
-        "Implement automated verification workflows",
-        "Deploy voice biometric authentication",
-        "Add behavioral analysis and fraud detection"
+        "Deploy automated verification",
+        "Implement voice biometrics",
+        "Add behavioral fraud detection"
       ],
       currentIssues: [
         "Manual verification taking 2-3 minutes",
         "15% authentication failure rates",
-        "Security vulnerabilities with manual processes"
+        "Security vulnerabilities"
       ],
-      improvement: "AI-powered authentication reduces verification time to under 30 seconds with 99% accuracy"
+      improvement: "Voice biometrics and multi-factor authentication reduces verification time to under 30 seconds"
     },
     {
       id: 3,
-      title: "Information Gathering",
+      title: "Issue Classification & Intent Recognition",
+      icon: Search,
+      time: "1-3 min",
+      emotion: "neutral",
+      emotionIcon: Info,
+      approach: "agentic",
+      description: "AI-powered issue agent with NLP intent resolution agent",
+      automationPrimary: false,
+      roi: "≈ 75% efficiency gain",
+      implementationStatus: "development",
+      statusNote: "NLP classification engine in development",
+      automationTasks: [
+        "Standard issue categorization workflows",
+        "Basic intent classification rules",
+        "Historical case matching",
+        "Priority level assignment",
+        "Workflow routing automation"
+      ],
+      aiTasks: [
+        "Advanced natural language processing",
+        "Intelligent issue classification",
+        "Context-aware intent recognition",
+        "Dynamic priority assessment",
+        "Predictive resolution recommendations"
+      ],
+      whyAutomation: "Systematic issue classification ensures consistent handling and tracking",
+      whyAI: "Complex patient communications require intelligent understanding of context and intent",
+      phases: [
+        "Deploy automated classification",
+        "Implement NLP intent recognition",
+        "Add predictive resolution"
+      ],
+      currentIssues: [
+        "Manual issue classification delays",
+        "Inconsistent priority assignment",
+        "Limited context understanding"
+      ],
+      improvement: "AI-powered classification agent with NLP resolves intent identification within 30 seconds"
+    },
+    {
+      id: 4,
+      title: "Information Gathering & Orchestration",
       icon: Database,
-      time: "2-5 minutes",
+      time: "2-6 min",
       emotion: "neutral",
       emotionIcon: Clock,
       approach: "hybrid",
-      description: "Unified patient view with AI-enhanced data synthesis",
+      description: "Unified patient view with context consolidation and orchestration",
       automationPrimary: true,
       roi: "≈ 80% efficiency gain",
-      implementationStatus: "development",
-      statusNote: "Unified patient dashboard in progress",
+      implementationStatus: "testing",
+      statusNote: "Unified dashboard in pilot",
       automationTasks: [
         "Automated record retrieval across systems",
         "Standard information consolidation",
         "Recent activity timeline generation",
         "Insurance and billing status updates",
-        "Appointment history compilation"
+        "Cross-system data synchronization"
       ],
       aiTasks: [
         "Intelligent data synthesis and prioritization",
-        "Contextual information highlighting",
-        "Predictive information needs assessment",
-        "Smart summary generation",
-        "Personalized interaction recommendations"
+        "Contextual information relevance scoring",
+        "Predictive information needs",
+        "Dynamic dashboard personalization",
+        "Smart information orchestration"
       ],
-      whyAutomation: "Comprehensive information gathering requires systematic data aggregation",
-      whyAI: "Complex patient histories need intelligent analysis to surface relevant information quickly",
+      whyAutomation: "Unified information access eliminates system navigation and reduces errors",
+      whyAI: "Intelligent synthesis provides relevant context and anticipates information needs",
       phases: [
-        "Automate multi-system data retrieval",
-        "Deploy AI for intelligent data synthesis",
-        "Implement predictive information surfacing"
+        "Deploy unified information platform",
+        "Implement AI data synthesis",
+        "Add predictive information delivery"
       ],
       currentIssues: [
-        "Agents navigating 3-5 different systems",
-        "5-8 minute delays for information gathering",
-        "Inconsistent information prioritization"
+        "Agents navigate 3-5 different systems",
+        "5-8 minute information gathering delays",
+        "Incomplete patient context"
       ],
-      improvement: "Unified AI-powered view reduces information gathering time by 80% with complete context"
+      improvement: "Unified patient view eliminates system navigation reducing information gathering time by 80%"
     },
     {
-      id: 4,
-      title: "Issue Resolution",
-      icon: Wrench,
-      time: "5-15 minutes",
+      id: 5,
+      title: "Case Creation & Priority Management",
+      icon: ClipboardCheck,
+      time: "1-4 min",
+      emotion: "neutral",
+      emotionIcon: Clock,
+      approach: "hybrid",
+      description: "Intelligent case management agent with automated priority and priority scoring",
+      automationPrimary: true,
+      roi: "≈ 75% efficiency gain",
+      implementationStatus: "live",
+      statusNote: "Smart case management operational",
+      automationTasks: [
+        "Automated case creation workflows",
+        "Standard priority scoring rules",
+        "SLA assignment and tracking",
+        "Resource allocation automation",
+        "Case routing and assignment"
+      ],
+      aiTasks: [
+        "Intelligent priority scoring algorithms",
+        "Dynamic SLA optimization",
+        "Predictive resource needs assessment",
+        "Smart case routing and assignment",
+        "Outcome-based priority adjustment"
+      ],
+      whyAutomation: "Systematic case management ensures consistent processing and tracking",
+      whyAI: "Complex priority decisions require intelligent analysis of multiple factors",
+      phases: [
+        "Deploy automated case creation",
+        "Implement AI priority scoring",
+        "Add predictive resource allocation"
+      ],
+      currentIssues: [
+        "Manual case creation inefficiencies",
+        "Inconsistent priority assignment",
+        "Resource allocation bottlenecks"
+      ],
+      improvement: "AI-powered case management ensures consistent priority scoring and optimal resource allocation"
+    },
+    {
+      id: 6,
+      title: "Resolution Research & Knowledge Management",
+      icon: Brain,
+      time: "3-8 min",
+      emotion: "neutral",
+      emotionIcon: Clock,
+      approach: "agentic",
+      description: "Intelligent knowledge agent with contextual recommendations and escalation",
+      automationPrimary: false,
+      roi: "≈ 85% efficiency gain",
+      implementationStatus: "development",
+      statusNote: "Knowledge AI in development",
+      automationTasks: [
+        "Standard knowledge base searches",
+        "Historical case retrieval",
+        "Documentation template generation",
+        "Basic resolution workflows",
+        "Knowledge article recommendations"
+      ],
+      aiTasks: [
+        "Intelligent knowledge discovery",
+        "Contextual resolution recommendations",
+        "Dynamic knowledge synthesis",
+        "Predictive escalation triggers",
+        "Continuous knowledge learning"
+      ],
+      whyAutomation: "Systematic knowledge access ensures consistent information retrieval",
+      whyAI: "Complex resolution research requires intelligent synthesis of multiple knowledge sources",
+      phases: [
+        "Deploy automated knowledge retrieval",
+        "Implement AI knowledge synthesis",
+        "Add predictive escalation"
+      ],
+      currentIssues: [
+        "Manual knowledge searches inefficient",
+        "Limited contextual recommendations",
+        "Delayed escalation decisions"
+      ],
+      improvement: "Intelligent knowledge agent with contextual search and escalation reduces research time by 65%"
+    },
+    {
+      id: 7,
+      title: "Multi-channel Coordination & Seamless Experience",
+      icon: Network,
+      time: "2-5 min",
+      emotion: "positive",
+      emotionIcon: CheckCircle,
+      approach: "hybrid",
+      description: "Optimal coordination agent managing unified communication and escalation",
+      automationPrimary: true,
+      roi: "≈ 70% efficiency gain",
+      implementationStatus: "testing",
+      statusNote: "Multi-channel platform in pilot",
+      automationTasks: [
+        "Cross-channel communication coordination",
+        "Contact history synchronization",
+        "Channel preference management",
+        "Standard escalation workflows",
+        "Communication timeline tracking"
+      ],
+      aiTasks: [
+        "Intelligent channel optimization",
+        "Dynamic communication coordination",
+        "Predictive channel switching",
+        "Smart escalation management",
+        "Personalized experience orchestration"
+      ],
+      whyAutomation: "Systematic coordination ensures consistent experience across channels",
+      whyAI: "Optimal coordination requires intelligent analysis of communication patterns",
+      phases: [
+        "Deploy multi-channel coordination",
+        "Implement AI optimization",
+        "Add predictive channel management"
+      ],
+      currentIssues: [
+        "Channel switching causes information loss",
+        "Inconsistent escalation handling",
+        "Poor coordination between channels"
+      ],
+      improvement: "Seamless multi-channel coordination maintains context across all touchpoints"
+    },
+    {
+      id: 8,
+      title: "Escalation Management & Exception Handling",
+      icon: AlertTriangle,
+      time: "5-15 min",
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "hybrid",
+      description: "Intelligent escalation agent with predictive triggers and intelligent handoff coordination",
+      automationPrimary: false,
+      roi: "≈ 65% efficiency gain",
+      implementationStatus: "development",
+      statusNote: "Escalation AI in development",
+      automationTasks: [
+        "Standard escalation workflow triggers",
+        "Supervisor notification automation",
+        "Case priority elevation",
+        "Handoff documentation generation",
+        "Timeline and SLA management"
+      ],
+      aiTasks: [
+        "Predictive escalation trigger identification",
+        "Intelligent handoff coordination",
+        "Dynamic priority assessment",
+        "Smart supervisor assignment",
+        "Outcome prediction and intervention"
+      ],
+      whyAutomation: "Systematic escalation ensures consistent handling of complex cases",
+      whyAI: "Complex escalation decisions require intelligent assessment of multiple factors",
+      phases: [
+        "Deploy automated escalation workflows",
+        "Implement AI prediction triggers",
+        "Add intelligent handoff coordination"
+      ],
+      currentIssues: [
+        "Manual escalation delays",
+        "Inconsistent handoff processes",
+        "Limited predictive capabilities"
+      ],
+      improvement: "Predictive escalation with intelligent handoff reduces exception handling time by 50%"
+    },
+    {
+      id: 9,
+      title: "Follow-up Communication & Relationship Management",
+      icon: MessageCircle,
+      time: "1-3 day",
+      emotion: "positive",
+      emotionIcon: CheckCircle,
+      approach: "hybrid",
+      description: "Proactive outreach agent with personalized engagement and service-based insights",
+      automationPrimary: true,
+      roi: "≈ 60% efficiency gain",
+      implementationStatus: "planned",
+      statusNote: "Follow-up automation in planning",
+      automationTasks: [
+        "Automated follow-up scheduling",
+        "Standard satisfaction surveys",
+        "Communication preference tracking",
+        "Case closure workflows",
+        "Relationship history management"
+      ],
+      aiTasks: [
+        "Personalized follow-up optimization",
+        "Intelligent satisfaction prediction",
+        "Dynamic engagement strategies",
+        "Proactive relationship management",
+        "Predictive service needs assessment"
+      ],
+      whyAutomation: "Systematic follow-up ensures consistent patient engagement",
+      whyAI: "Personalized relationship management requires intelligent analysis of patient interactions",
+      phases: [
+        "Deploy automated follow-up workflows",
+        "Implement AI personalization",
+        "Add predictive relationship management"
+      ],
+      currentIssues: [
+        "Inconsistent follow-up processes",
+        "Limited relationship tracking",
+        "Reactive service approach"
+      ],
+      improvement: "Proactive outreach agent with personalized engagement and service-based insights"
+    },
+    {
+      id: 10,
+      title: "Satisfaction Measurement & Continuous Improvement",
+      icon: TrendingUp,
+      time: "1-7 day",
       emotion: "positive",
       emotionIcon: CheckCircle,
       approach: "agentic",
-      description: "AI-assisted problem solving with intelligent escalation management",
+      description: "Experience optimization agent with real-time satisfaction analysis and improvement recommendations",
       automationPrimary: false,
       roi: "≈ 70% efficiency gain",
       implementationStatus: "planned",
-      statusNote: "Advanced AI resolution engine planned",
+      statusNote: "Analytics platform in planning",
       automationTasks: [
-        "Standard resolution workflow automation",
-        "Documentation and case creation",
-        "Follow-up task scheduling",
-        "Customer satisfaction survey deployment",
-        "Resolution confirmation workflows"
+        "Automated satisfaction surveys",
+        "Performance metrics collection",
+        "Standard reporting workflows",
+        "Benchmark comparison analysis",
+        "Improvement tracking systems"
       ],
       aiTasks: [
-        "Intelligent solution recommendation",
-        "Dynamic escalation decision making",
-        "Personalized communication strategy",
-        "Outcome prediction and optimization",
-        "Real-time coaching for agents"
+        "Real-time satisfaction analysis",
+        "Predictive improvement recommendations",
+        "Dynamic experience optimization",
+        "Intelligent pattern recognition",
+        "Continuous learning and adaptation"
       ],
-      whyAutomation: "Consistent resolution processes ensure quality and compliance",
-      whyAI: "Complex patient issues require intelligent analysis and personalized solution strategies",
+      whyAutomation: "Systematic measurement ensures consistent improvement tracking",
+      whyAI: "Complex improvement insights require intelligent analysis of satisfaction patterns",
       phases: [
-        "Automate standard resolution workflows",
-        "Deploy AI for solution recommendation",
-        "Implement intelligent escalation management"
+        "Deploy automated satisfaction measurement",
+        "Implement AI pattern analysis",
+        "Add predictive improvement recommendations"
       ],
       currentIssues: [
-        "Inconsistent resolution approaches",
-        "High escalation rates for complex issues",
-        "Limited real-time guidance for agents"
+        "Limited satisfaction visibility",
+        "Reactive improvement processes",
+        "Delayed feedback analysis"
       ],
-      improvement: "AI-assisted resolution increases first-call resolution by 85% and improves satisfaction scores by 40%"
+      improvement: "Experience optimization agent with real-time satisfaction analysis and improvement score"
     }
   ]
 };
