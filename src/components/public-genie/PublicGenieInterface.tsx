@@ -16,7 +16,7 @@ import { TypingIndicator } from '../enrollment-genie/TypingIndicator';
 import { PublicPrivacyBanner } from './PublicPrivacyBanner';
 import { HumanEscalationForm } from './HumanEscalationForm';
 import { RichResponseRenderer } from './RichResponseRenderer';
-// import { emailService } from '@/services/emailService';
+import { emailService } from '@/services/emailService';
 import genieLogoPopup from '@/assets/genie-logo-popup.png';
 
 interface UserInfo {
@@ -170,7 +170,11 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
 
     // Show intermediate response
     const intermediateMsg = generateIntermediateResponse();
-    addMessage('assistant', intermediateMsg);
+    addMessage({
+      role: 'assistant',
+      content: intermediateMsg,
+      timestamp: new Date().toISOString()
+    });
 
     try {
       const contextPrompt = `You are a helpful AI assistant specializing in ${context}, specifically in ${selectedTopic}. 
@@ -188,7 +192,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
 
       if (response) {
         // Remove the intermediate message and add the real response
-        const personalizedResponse = addPersonalityToResponse(response);
+        const personalizedResponse = addPersonalityToResponse(response.content);
         addMessage({
           role: 'assistant',
           content: personalizedResponse,

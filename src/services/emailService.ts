@@ -394,3 +394,6 @@ export class EmailService {
     return true;
   }
 }
+
+// Export a default instance for convenience
+export const emailService = EmailService;

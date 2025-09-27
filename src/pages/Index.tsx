@@ -55,7 +55,6 @@ const Index = () => {
       <PublicGenieInterface
         isOpen={isGenieOpen}
         onClose={() => setIsGenieOpen(false)}
-        mode="system"
       />
       
       <Footer />
