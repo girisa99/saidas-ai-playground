@@ -364,7 +364,7 @@ export const patientOnboardingCaseStudy: CaseStudyData = {
       title: "Treatment Plan Coordination",
       description: "Intelligent care team coordination with automated workflow management and progress tracking",
       icon: Network,
-      time: "Day 8-10 (ongoing)",
+      time: "Day 8-10",
       emotion: "positive",
       emotionIcon: ThumbsUp,
       approach: "hybrid",
