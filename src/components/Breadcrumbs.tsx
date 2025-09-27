@@ -8,10 +8,11 @@ export const Breadcrumbs = () => {
   
   const breadcrumbNameMap: Record<string, string> = {
     '': 'Home',
-    'journey': 'AI Journey',
+    'journey': 'My AI Journey',
     'about': 'About Me',
-    'technology': 'Technology Stack',
+    'technology': 'Tech Stack Explored',
     'case-studies': 'Case Studies',
+    'business-use-cases': 'Business Use Cases',
     'faq': 'FAQ',
     'docs': 'Documentation',
     'privacy': 'Privacy Policy',
