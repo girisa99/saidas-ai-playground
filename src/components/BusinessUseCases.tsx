@@ -4,6 +4,8 @@ import { BusinessCaseSelector } from "@/components/business-cases/BusinessCaseSe
 import { ExperimentStatusCards } from "@/components/business-cases/ExperimentStatusCards";
 import { BusinessCaseDetails } from "@/components/business-cases/BusinessCaseDetails";
 import { JourneyMapSection } from "@/components/business-cases/JourneyMapSection";
+import { DecisionFrameworkModal } from "@/components/business-cases/DecisionFrameworkModal";
+import { BusinessUseCasesHero } from "@/components/business-cases/BusinessUseCasesHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -1978,197 +1980,19 @@ const BusinessUseCases = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-16 overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('/src/assets/hero-ai-background.jpg')` }}
-        />
-        
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-genie-dark/90 via-genie-primary/80 to-genie-secondary/70" />
-        
-        {/* Animated Particles */}
-        <div className="absolute inset-0">
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute bg-genie-accent/40 rounded-full animate-float"
-              style={{
-                width: `${Math.random() * 4 + 2}px`,
-                height: `${Math.random() * 4 + 2}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 4}s`,
-                animationDuration: `${3 + Math.random() * 3}s`
-              }}
-            />
-          ))}
-        </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-5xl">
-            <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-3 sm:mb-4">
-              <Target className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-              Strategic Analysis
-            </Badge>
-            
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
-              Genie AI <span className="text-genie-accent">Experimentation Hub</span>
-              <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl mt-2 font-normal text-white/90">
-                Use Case Explorations
-              </div>
-            </h1>
-            
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-              Real-world healthcare AI implementations and learnings from our experimentation hub. Exploring various scenarios where some are implemented and actively being tested, while others are in development phases as part of our ongoing experimentation initiatives.
-            </p>
-            
-            {/* Key Features Grid - Mobile Responsive */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 px-2">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Live Steps</h3>
-                <p className="text-white/80 text-xs">Deployed & Working</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Testing Phase</h3>
-                <p className="text-white/80 text-xs">Active Validation</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400 mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">In Development</h3>
-                <p className="text-white/80 text-xs">Building Components</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Target className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400 mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Step-by-Step</h3>
-                <p className="text-white/80 text-xs">Gradual Implementation</p>
-              </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 px-2">
-              <Button 
-                className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark"
-                onClick={() => {
-                  const useCasesSection = document.querySelector('[data-section="use-cases"]');
-                  useCasesSection?.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                <ArrowDown className="w-4 h-4 mr-2" />
-                View Our Experiments
-              </Button>
-              <Button 
-                variant="outline" 
-                className="border-white/30 text-white hover:bg-white/10 hover:text-white bg-white/5"
-                onClick={() => setShowDecisionFramework(!showDecisionFramework)}
-              >
-                <FileText className="w-4 h-4 mr-2" />
-                {showDecisionFramework ? 'Hide' : 'View'} Experiment Framework
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <BusinessUseCasesHero 
+        onViewExperiments={() => {
+          const useCasesSection = document.querySelector('[data-section="use-cases"]');
+          useCasesSection?.scrollIntoView({ behavior: 'smooth' });
+        }}
+        showDecisionFramework={showDecisionFramework}
+        onToggleFramework={() => setShowDecisionFramework(!showDecisionFramework)}
+      />
 
-      {/* Decision Framework Modal/Section */}
-      {showDecisionFramework && (
-        <Card className="max-w-7xl mx-auto m-4 border-2 border-genie-accent/20 shadow-2xl">
-          <CardHeader className="bg-gradient-to-r from-genie-primary/10 to-genie-accent/10 border-b border-genie-accent/20">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-xl sm:text-2xl font-bold text-genie-primary flex items-center gap-2">
-                <Brain className="w-6 h-6" />
-                Strategic Analysis Framework
-              </CardTitle>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowDecisionFramework(false)}
-                className="text-genie-primary hover:text-genie-accent"
-              >
-                <Lightbulb className="w-4 h-4" />
-                Close
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="text-lg font-semibold mb-4 text-genie-primary">Decision Matrix</h3>
-                <div className="space-y-4">
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <h4 className="font-medium text-green-800 mb-2 flex items-center gap-2">
-                      <Bot className="w-4 h-4" />
-                      Choose Automation When:
-                    </h4>
-                    <ul className="text-sm text-green-700 space-y-1">
-                      <li>• High-volume, repetitive tasks</li>
-                      <li>• Well-defined, standardized processes</li>
-                      <li>• Minimal decision complexity</li>
-                      <li>• Immediate ROI requirements</li>
-                    </ul>
-                  </div>
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h4 className="font-medium text-blue-800 mb-2 flex items-center gap-2">
-                      <Brain className="w-4 h-4" />
-                      Choose Agentic AI When:
-                    </h4>
-                    <ul className="text-sm text-blue-700 space-y-1">
-                      <li>• Complex decision-making required</li>
-                      <li>• Variable, personalized processes</li>
-                      <li>• Continuous learning benefits</li>
-                      <li>• Long-term optimization goals</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-4 text-genie-primary">Implementation Phases</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-genie-accent/20 flex items-center justify-center">
-                      <span className="text-genie-accent font-bold">1</span>
-                    </div>
-                    <div>
-                      <p className="font-medium">Assessment & Mapping</p>
-                      <p className="text-xs text-muted-foreground">Current process analysis</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-genie-accent/20 flex items-center justify-center">
-                      <span className="text-genie-accent font-bold">2</span>
-                    </div>
-                    <div>
-                      <p className="font-medium">Technology Selection</p>
-                      <p className="text-xs text-muted-foreground">Automation vs AI decision</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-genie-accent/20 flex items-center justify-center">
-                      <span className="text-genie-accent font-bold">3</span>
-                    </div>
-                    <div>
-                      <p className="font-medium">Pilot Implementation</p>
-                      <p className="text-xs text-muted-foreground">Controlled testing phase</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-genie-accent/20 flex items-center justify-center">
-                      <span className="text-genie-accent font-bold">4</span>
-                    </div>
-                    <div>
-                      <p className="font-medium">Scale & Optimize</p>
-                      <p className="text-xs text-muted-foreground">Full deployment & refinement</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+      <DecisionFrameworkModal 
+        showDecisionFramework={showDecisionFramework}
+        onClose={() => setShowDecisionFramework(false)}
+      />
 
       <div data-section="use-cases" className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8 p-3 sm:p-4 lg:p-6">
 
