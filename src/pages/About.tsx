@@ -1,7 +1,7 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { AboutSection } from "@/components/AboutSection";
+
 
 import { AnimatedTextEmergence } from "@/components/AnimatedTextEmergence";
 import { Button } from "@/components/ui/button";
@@ -575,7 +575,7 @@ const About = () => {
            </div>
          </section>
 
-         <AboutSection />
+         
        </main>
 
       <Footer />
