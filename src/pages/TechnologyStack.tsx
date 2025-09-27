@@ -1,5 +1,6 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { IntegratedTechnologyExploration } from "@/components/IntegratedTechnologyExploration";
 
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,7 @@ const TechnologyStack = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavigationHeader />
+      <Breadcrumbs />
       <main className="pt-16 sm:pt-20 lg:pt-24">{" "}
       {/* Enhanced Hero Section */}
       <section className="relative pt-24 pb-16 overflow-hidden">
