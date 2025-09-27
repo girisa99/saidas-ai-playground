@@ -90,7 +90,7 @@ export const NavigationHeader = () => {
                     case "My AI Journey": return { full: "My AI Journey", short: "My Journey" };
                     case "Tech Stack Explored": return { full: "Tech Stack Explored", short: "My Tech Stack" };
                     case "Business Use Cases": return { full: "Business Use Cases", short: "Use Cases" };
-                    case "Case Studies": return { full: "Case Studies", short: "My Cases" };
+                    case "Case Studies": return { full: "Case Studies", short: "Case Studies" };
                     default: return { full: label, short: label };
                   }
                 };
