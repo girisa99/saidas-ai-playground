@@ -77,12 +77,22 @@ const CaseStudyTemplate = ({ caseStudyData }: CaseStudyTemplateProps) => {
 
       {/* Main Content Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="journey">Step-by-Step Journey</TabsTrigger>
-          <TabsTrigger value="gartner">Gartner Framework</TabsTrigger>
-          <TabsTrigger value="blueprint">Integration Blueprint</TabsTrigger>
-          <TabsTrigger value="insights">Insights</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1 sm:gap-2 h-auto p-1">
+          <TabsTrigger value="overview" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            Overview
+          </TabsTrigger>
+          <TabsTrigger value="journey" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            Step-by-Step Journey
+          </TabsTrigger>
+          <TabsTrigger value="gartner" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            Gartner Framework
+          </TabsTrigger>
+          <TabsTrigger value="blueprint" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            Integration Blueprint
+          </TabsTrigger>
+          <TabsTrigger value="insights" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            Insights
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="mt-8">
