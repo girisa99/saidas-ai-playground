@@ -102,96 +102,219 @@ export const journeySteps = {
       time: "Day 0",
       emotion: "critical",
       emotionIcon: AlertTriangle,
-      approach: "hybrid",
-      description: "Immediate digital referral processing with AI-powered triage and routing",
+      approach: "automation",
+      description: "Initial referral received and immediate processing",
       automationPrimary: true,
       roi: "≈ 75% efficiency gain",
       implementationStatus: "live",
-      statusNote: "Digital intake and basic validation operational",
+      statusNote: "Digital intake system fully operational",
       automationTasks: [
-        "Digital intake form parsing from fax/portal",
+        "Incoming digital referral processing",
+        "Fax-to-digital conversion workflows",
         "Automated data extraction and validation",
-        "Basic referral completeness checking",
-        "Standard acknowledgment notifications",
-        "Automated referral tracking and logging"
+        "Immediate acknowledgment notifications",
+        "Referral tracking system integration"
       ],
       aiTasks: [
-        "Intelligent referral routing based on urgency and specialty",
-        "Smart data extraction from unstructured documents", 
-        "AI-powered clinical priority assessment",
-        "Predictive resource allocation for complex cases",
-        "Natural language processing for clinical notes"
+        "Intelligent referral completeness assessment",
+        "Urgency classification and prioritization",
+        "Smart routing to appropriate care teams",
+        "Predictive resource allocation",
+        "Clinical context understanding"
       ],
-      whyAutomation: "High-volume referral processing benefits from consistent digital workflows and automated validation",
-      whyAI: "Complex triage decisions require intelligent assessment of clinical urgency and appropriate specialist routing",
+      whyAutomation: "High-volume referral processing requires consistent, fast digital workflows",
+      whyAI: "Complex triage decisions need intelligent assessment of clinical urgency and routing",
       phases: [
-        "Implement digital referral processing automation",
-        "Deploy AI for intelligent triage and routing", 
-        "Integrate predictive resource planning"
+        "Deploy automated referral processing",
+        "Implement AI-powered triage",
+        "Optimize routing algorithms"
       ],
       currentIssues: [
         "Manual fax processing causing delays",
-        "Inconsistent referral completeness checking",
-        "Limited triage capabilities during high volumes"
+        "Inconsistent referral handling",
+        "Limited urgency assessment capabilities"
       ],
-      improvement: "Streamlined digital intake with intelligent routing reduces processing time from 24-48 hours to 2-4 hours"
+      improvement: "Immediate digital referral processing with intelligent routing reduces response time to under 30 minutes"
     },
     {
       id: 2,
-      title: "Patient Contact",
+      title: "Initial Patient Outreach & Referral Network Check",
       icon: Phone,
-      time: "Day 1-3",
-      emotion: "neutral",
-      emotionIcon: Info,
-      approach: "hybrid",
-      description: "Automated outreach with personalized AI-driven communication",
-      automationPrimary: true,
-      roi: "≈ 60% efficiency gain",
-      implementationStatus: "testing",
-      statusNote: "Pilot program with select patient cohorts",
-      automationTasks: [
-        "Automated appointment scheduling calls",
-        "SMS reminder notifications",
-        "Email confirmation workflows",
-        "Basic insurance verification",
-        "Standard pre-appointment instructions"
-      ],
-      aiTasks: [
-        "Personalized communication tone and timing",
-        "Intelligent response to patient questions",
-        "Dynamic scheduling optimization",
-        "Predictive no-show prevention",
-        "Multilingual support and cultural adaptation"
-      ],
-      whyAutomation: "Consistent patient outreach requires systematic follow-up and standardized communication",
-      whyAI: "Each patient has unique needs, preferences, and communication styles requiring personalized approaches",
-      phases: [
-        "Deploy automated scheduling and reminders",
-        "Implement AI for personalized communication",
-        "Add predictive analytics for optimization"
-      ],
-      currentIssues: [
-        "Manual calling consuming significant staff time",
-        "Inconsistent patient communication",
-        "High no-show rates due to poor engagement"
-      ],
-      improvement: "AI-driven personalized outreach increases appointment attendance from 75% to 90%"
-    },
-    {
-      id: 3,
-      title: "Insurance Verification",
-      icon: Shield,
-      time: "Day 2-5",
+      time: "Day 1-2",
       emotion: "neutral",
       emotionIcon: Clock,
       approach: "hybrid",
-      description: "Real-time insurance verification with AI-powered benefit analysis",
+      description: "Personalized patient outreach with network verification",
       automationPrimary: true,
       roi: "≈ 85% efficiency gain",
-      implementationStatus: "live",
-      statusNote: "Integrated with major insurance providers",
+      implementationStatus: "testing",
+      statusNote: "Pilot program with personalized communications",
       automationTasks: [
-        "Automated eligibility verification",
+        "Automated patient contact workflows",
+        "Provider network verification",
+        "Appointment availability checking",
+        "Standard communication templates",
+        "Follow-up scheduling automation"
+      ],
+      aiTasks: [
+        "Personalized outreach timing optimization",
+        "Intelligent response to patient inquiries",
+        "Cultural and language adaptation",
+        "Anxiety prediction and mitigation",
+        "Optimal communication channel selection"
+      ],
+      whyAutomation: "Systematic patient outreach ensures consistent and timely communication",
+      whyAI: "Personalized communication improves patient engagement and reduces anxiety",
+      phases: [
+        "Automate basic outreach workflows",
+        "Deploy AI for personalization",
+        "Implement predictive optimization"
+      ],
+      currentIssues: [
+        "Manual calling consuming staff time",
+        "Generic communication approaches",
+        "Inconsistent follow-up processes"
+      ],
+      improvement: "AI-driven personalized outreach increases patient response rates by 60% and reduces anxiety"
+    },
+    {
+      id: 3,
+      title: "Provider, Treatment Center & Referral Network Check",
+      icon: Network,
+      time: "Day 1-3",
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "automation",
+      description: "Comprehensive provider network and capacity verification",
+      automationPrimary: true,
+      roi: "≈ 90% efficiency gain",
+      implementationStatus: "live",
+      statusNote: "Integrated with provider networks",
+      automationTasks: [
+        "Real-time provider availability checking",
+        "Treatment center capacity verification",
+        "Network coverage validation",
+        "Appointment slot synchronization",
+        "Provider credential verification"
+      ],
+      aiTasks: [
+        "Intelligent provider matching based on expertise",
+        "Optimal treatment center selection",
+        "Predictive capacity planning",
+        "Quality outcome analysis",
+        "Patient preference optimization"
+      ],
+      whyAutomation: "Network verification requires systematic checking of multiple data sources",
+      whyAI: "Optimal provider matching requires intelligent analysis of multiple factors",
+      phases: [
+        "Automate network verification",
+        "Deploy AI matching algorithms",
+        "Implement quality analytics"
+      ],
+      currentIssues: [
+        "Manual provider checking delays",
+        "Limited network visibility",
+        "Suboptimal provider assignments"
+      ],
+      improvement: "Automated network verification with AI matching reduces assignment time by 80%"
+    },
+    {
+      id: 4,
+      title: "Demographic & Insurance Data Collection",
+      icon: Database,
+      time: "Day 2-4",
+      emotion: "neutral",
+      emotionIcon: Info,
+      approach: "automation",
+      description: "Comprehensive patient data gathering and validation",
+      automationPrimary: true,
+      roi: "≈ 70% efficiency gain",
+      implementationStatus: "live",
+      statusNote: "Integrated with insurance systems",
+      automationTasks: [
+        "Digital demographic form processing",
+        "Insurance information capture",
+        "Data validation and verification",
+        "Electronic consent management",
+        "Patient portal account creation"
+      ],
+      aiTasks: [
+        "Intelligent form completion assistance",
+        "Data quality assessment and correction",
+        "Risk factor identification",
+        "Insurance plan optimization recommendations",
+        "Personalized data collection workflows"
+      ],
+      whyAutomation: "Systematic data collection ensures complete and accurate patient information",
+      whyAI: "Intelligent assistance improves data quality and patient experience",
+      phases: [
+        "Deploy automated data collection",
+        "Implement AI assistance features",
+        "Add quality optimization"
+      ],
+      currentIssues: [
+        "Manual data entry errors",
+        "Incomplete information collection",
+        "Time-consuming verification processes"
+      ],
+      improvement: "AI-assisted data collection reduces errors by 95% and completion time by 50%"
+    },
+    {
+      id: 5,
+      title: "Medical Records Acquisition",
+      icon: FileText,
+      time: "Day 3-7",
+      emotion: "neutral",
+      emotionIcon: Clock,
+      approach: "hybrid",
+      description: "Comprehensive medical history retrieval and integration",
+      automationPrimary: true,
+      roi: "≈ 65% efficiency gain",
+      implementationStatus: "testing",
+      statusNote: "FHIR integration under development",
+      automationTasks: [
+        "Automated record requests to external providers",
+        "FHIR-based data integration",
+        "Document digitization workflows",
+        "Electronic health record synchronization",
+        "Automated follow-up for missing records"
+      ],
+      aiTasks: [
+        "Intelligent record completeness assessment",
+        "Smart document parsing and extraction",
+        "Clinical relevance scoring",
+        "Duplicate detection and consolidation",
+        "Quality assessment and validation"
+      ],
+      whyAutomation: "Medical record acquisition requires systematic requests and processing",
+      whyAI: "Intelligent analysis ensures complete and relevant record collection",
+      phases: [
+        "Automate record request workflows",
+        "Deploy AI for intelligent parsing",
+        "Implement quality assessment"
+      ],
+      currentIssues: [
+        "Manual record requests causing delays",
+        "Incomplete external documentation",
+        "Quality assessment challenges"
+      ],
+      improvement: "AI-enhanced record acquisition reduces collection time by 70% and improves completeness"
+    },
+    {
+      id: 6,
+      title: "Eligibility & Benefit Verification",
+      icon: Shield,
+      time: "Day 4-8",
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
+      approach: "hybrid",
+      description: "Real-time insurance verification with comprehensive benefit analysis",
+      automationPrimary: true,
+      roi: "≈ 80% efficiency gain",
+      implementationStatus: "live",
+      statusNote: "Real-time verification operational",
+      automationTasks: [
+        "Real-time eligibility verification",
         "Benefit coverage determination",
         "Prior authorization status checking",
         "Copay and deductible calculation",
@@ -199,106 +322,106 @@ export const journeySteps = {
       ],
       aiTasks: [
         "Intelligent benefit interpretation",
-        "Predictive approval likelihood assessment",
-        "Personalized financial counseling recommendations",
-        "Alternative coverage option identification",
-        "Pre-authorization optimization strategies"
+        "Predictive approval likelihood",
+        "Personalized financial counseling",
+        "Alternative coverage identification",
+        "Pre-authorization optimization"
       ],
-      whyAutomation: "Insurance verification requires systematic checking of multiple data points and policies",
-      whyAI: "Complex benefit structures require intelligent interpretation and personalized financial guidance",
+      whyAutomation: "Insurance verification requires systematic checking of complex policies",
+      whyAI: "Benefit interpretation requires intelligent analysis for optimal patient outcomes",
       phases: [
-        "Automate basic eligibility verification",
-        "Deploy AI for benefit interpretation",
-        "Implement predictive approval analysis"
+        "Deploy real-time verification",
+        "Implement AI benefit analysis",
+        "Add predictive approval modeling"
       ],
       currentIssues: [
-        "Manual verification causing 25% approval delays",
-        "Inconsistent benefit interpretation",
+        "Manual verification delays",
+        "Complex benefit interpretation",
         "Limited financial assistance identification"
       ],
-      improvement: "AI-enhanced verification eliminates approval delays and identifies 60% more financial assistance opportunities"
+      improvement: "AI-powered verification eliminates delays and increases financial assistance identification by 60%"
     },
     {
-      id: 4,
-      title: "Specialist Assignment",
-      icon: Users,
-      time: "Day 3-7",
-      emotion: "positive",
-      emotionIcon: Target,
+      id: 7,
+      title: "Clinical Review & Triage",
+      icon: Stethoscope,
+      time: "Day 5-7",
+      emotion: "critical",
+      emotionIcon: AlertTriangle,
       approach: "agentic",
-      description: "AI-powered specialist matching with predictive care coordination",
+      description: "AI-assisted clinical assessment and care pathway determination",
       automationPrimary: false,
-      roi: "≈ 75% efficiency gain",
-      implementationStatus: "testing",
-      statusNote: "AI matching algorithms under evaluation",
+      roi: "≈ 85% efficiency gain",
+      implementationStatus: "development",
+      statusNote: "Clinical AI algorithms in development",
       automationTasks: [
-        "Provider availability checking",
-        "Appointment slot management",
-        "Basic care team assembly",
-        "Standard referral documentation",
-        "Communication workflow triggers"
+        "Clinical documentation review",
+        "Standard assessment protocols",
+        "Care pathway template selection",
+        "Provider notification workflows",
+        "Appointment type determination"
       ],
       aiTasks: [
-        "Intelligent specialist matching based on case complexity",
-        "Predictive care pathway optimization",
-        "Multi-specialty coordination planning",
-        "Outcome-based provider recommendations",
-        "Dynamic care team formation"
+        "Intelligent clinical assessment",
+        "Risk stratification and prioritization",
+        "Optimal care pathway recommendation",
+        "Specialist matching based on case complexity",
+        "Predictive outcome modeling"
       ],
-      whyAutomation: "Systematic specialist assignment ensures consistent care team formation",
-      whyAI: "Optimal specialist matching requires analysis of case complexity, provider expertise, and historical outcomes",
+      whyAutomation: "Clinical review requires systematic assessment protocols",
+      whyAI: "Complex clinical decisions benefit from intelligent analysis and recommendation",
       phases: [
-        "Automate provider availability and scheduling",
-        "Deploy AI for intelligent matching",
-        "Implement predictive coordination planning"
+        "Automate clinical documentation review",
+        "Deploy AI assessment algorithms",
+        "Implement predictive modeling"
       ],
       currentIssues: [
-        "Suboptimal specialist assignment in 30% of cases",
-        "Limited care coordination planning",
-        "Inconsistent provider matching criteria"
+        "Manual clinical review bottlenecks",
+        "Inconsistent triage decisions",
+        "Limited predictive capabilities"
       ],
-      improvement: "AI-powered matching improves care coordination accuracy by 85% and reduces time-to-specialist by 50%"
+      improvement: "AI-assisted clinical review reduces triage time by 75% and improves accuracy"
     },
     {
-      id: 5,
-      title: "Pre-appointment Preparation",
-      icon: ClipboardCheck,
-      time: "Day 5-14",
+      id: 8,
+      title: "Appointment Scheduling & Coordination",
+      icon: Calendar,
+      time: "Day 8-10",
       emotion: "positive",
-      emotionIcon: Lightbulb,
+      emotionIcon: CheckCircle,
       approach: "hybrid",
-      description: "Personalized patient preparation with AI-guided education",
+      description: "Intelligent scheduling with comprehensive care coordination",
       automationPrimary: true,
-      roi: "≈ 65% efficiency gain",
-      implementationStatus: "development",
-      statusNote: "Personalization engine in development",
+      roi: "≈ 75% efficiency gain",
+      implementationStatus: "live",
+      statusNote: "Smart scheduling system operational",
       automationTasks: [
-        "Standard pre-appointment instructions",
-        "Medication list compilation",
-        "Lab work scheduling",
-        "Transportation assistance coordination",
-        "Reminder notification workflows"
+        "Provider availability optimization",
+        "Multi-specialty appointment coordination",
+        "Patient preference integration",
+        "Automated confirmation workflows",
+        "Care team notification systems"
       ],
       aiTasks: [
-        "Personalized education content generation",
-        "Anxiety and concern prediction",
-        "Culturally appropriate communication",
-        "Learning style adaptation",
-        "Optimal preparation timeline optimization"
+        "Intelligent scheduling optimization",
+        "No-show prediction and prevention",
+        "Optimal appointment sequencing",
+        "Dynamic rescheduling management",
+        "Patient satisfaction optimization"
       ],
-      whyAutomation: "Comprehensive preparation requires systematic coordination of multiple preparation tasks",
-      whyAI: "Effective patient education requires personalization based on individual needs, concerns, and learning preferences",
+      whyAutomation: "Complex scheduling requires systematic coordination across multiple providers",
+      whyAI: "Optimal scheduling requires intelligent analysis of multiple variables",
       phases: [
-        "Automate standard preparation workflows",
-        "Deploy AI for personalized education",
-        "Implement adaptive preparation optimization"
+        "Deploy automated scheduling coordination",
+        "Implement AI optimization algorithms",
+        "Add predictive analytics"
       ],
       currentIssues: [
-        "35% of patients arrive unprepared",
-        "Generic preparation instructions",
-        "High patient anxiety due to uncertainty"
+        "Manual scheduling inefficiencies",
+        "High no-show rates",
+        "Suboptimal appointment sequencing"
       ],
-      improvement: "AI-guided preparation achieves 95% patient readiness and reduces appointment anxiety by 70%"
+      improvement: "AI-optimized scheduling reduces no-shows by 40% and improves patient satisfaction"
     }
   ],
   oncology: [
