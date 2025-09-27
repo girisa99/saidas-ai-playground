@@ -1,6 +1,9 @@
 import { useState, useMemo } from "react";
 import { businessCases } from "@/data/businessUseCasesData";
 import { BusinessCaseSelector } from "@/components/business-cases/BusinessCaseSelector";
+import { ExperimentStatusCards } from "@/components/business-cases/ExperimentStatusCards";
+import { BusinessCaseDetails } from "@/components/business-cases/BusinessCaseDetails";
+import { JourneyMapSection } from "@/components/business-cases/JourneyMapSection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -2183,71 +2186,27 @@ const BusinessUseCases = () => {
               onBusinessCaseChange={setSelectedBusinessCase}
             />
           </div>
-          {/* Experiment Status Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            {Object.entries(businessCases).map(([key, businessCase]) => (
-              <Card 
-                key={key} 
-                className={`cursor-pointer transition-all duration-200 ${
-                  selectedBusinessCase === key 
-                    ? 'ring-2 ring-primary shadow-lg scale-105' 
-                    : 'hover:shadow-md hover:scale-102'
-                } border-purple-200 bg-gradient-to-br from-purple-50/50 to-blue-50/30`}
-                onClick={() => setSelectedBusinessCase(key)}
-              >
-                <CardContent className="p-6 text-center">
-                  <div className="flex items-center justify-center mb-4">
-                    <businessCase.icon className="w-12 h-12 text-primary mr-3" />
-                    <Badge className="bg-purple-100 text-purple-700 border-purple-300">
-                      Mixed Implementation
-                    </Badge>
-                  </div>
-                  <h3 className="font-semibold text-lg mb-2">{businessCase.title}</h3>
-                  <p className="text-sm text-muted-foreground line-clamp-3">
-                    {businessCase.description}
-                  </p>
-                  <div className="mt-3 text-xs text-purple-600 font-medium">
-                    Some steps live • Others in progress
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <ExperimentStatusCards 
+            businessCases={businessCases}
+            selectedBusinessCase={selectedBusinessCase}
+            onBusinessCaseSelect={setSelectedBusinessCase}
+          />
 
           {/* Business Case Details */}
           {selectedBusinessCase && (
-            <div className="space-y-3 sm:space-y-4 mt-4 sm:mt-6">
-              <div className="text-center space-y-2 sm:space-y-3">
-                <h2 className="text-lg sm:text-xl font-semibold">{currentCase.title}</h2>
-                <p className="text-sm sm:text-base text-muted-foreground">{currentCase.description}</p>
-              </div>
-            </div>
+            <BusinessCaseDetails currentCase={currentCase} />
           )}
         </CardContent>
       </Card>
 
-      {/* Journey Map */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg sm:text-xl md:text-2xl text-center">
-            {currentCase.title} - Journey Map
-          </CardTitle>
-          <div className="text-center text-sm text-muted-foreground">
-            <MessageCircle className="w-4 h-4 inline mr-2" />
-            Click on journey steps to view detailed scenarios and analysis
-          </div>
-        </CardHeader>
-        <CardContent className="p-3 sm:p-4 lg:p-6">
-          <JourneyStepsFlow 
-            steps={currentJourneySteps}
-            selectedStep={selectedStep}
-            onStepClick={(stepId) => setSelectedStep(selectedStep === stepId ? null : stepId)}
-            patientScenarios={selectedStep ? getPatientScenariosForStep(selectedStep) : []}
-            scenarioImpacts={currentScenarioImpacts}
-            showLegend={true}
-          />
-        </CardContent>
-      </Card>
+      <JourneyMapSection 
+        currentCase={currentCase}
+        currentJourneySteps={currentJourneySteps}
+        selectedStep={selectedStep}
+        onStepClick={(stepId) => setSelectedStep(selectedStep === stepId ? null : stepId)}
+        getPatientScenariosForStep={getPatientScenariosForStep}
+        currentScenarioImpacts={currentScenarioImpacts}
+      />
 
       {/* Detailed Analysis Section */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
