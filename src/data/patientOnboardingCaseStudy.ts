@@ -151,6 +151,7 @@ export const patientOnboardingCaseStudy: CaseStudyData = {
       automationPrimary: true,
       roi: "85% efficiency gain",
       implementationStatus: "live",
+      statusNote: "Production-ready verification with 99% accuracy",
       automationTasks: [
         "NPI database lookups and verification",
         "Automated credentialing status checks",
@@ -198,6 +199,7 @@ export const patientOnboardingCaseStudy: CaseStudyData = {
       automationPrimary: true,
       roi: "80% efficiency gain",
       implementationStatus: "live",
+      statusNote: "Real-time verification operational with 95% accuracy",
       automationTasks: [
         "Real-time API-based verification with payers",
         "Automated benefit summaries generation",
@@ -327,6 +329,103 @@ export const patientOnboardingCaseStudy: CaseStudyData = {
       gartnerValue: {
         give: ["Scheduling platform costs", "AI development effort", "Integration complexity"],
         get: ["90% optimal placement", "25% fewer no-shows", "Patient satisfaction"]
+      }
+    },
+    {
+      id: 7,
+      title: "Electronic Consent & Documentation",
+      description: "Digital consent management with automated form generation and compliance tracking",
+      icon: FileText,
+      time: "Day 7-8 (30 minutes)",
+      emotion: "neutral",
+      emotionIcon: FileText,
+      approach: "automation",
+      automationPrimary: true,
+      roi: "85% efficiency gain",
+      implementationStatus: "live",
+      statusNote: "Digital consent workflows operational",
+      automationTasks: [
+        "Automated consent form generation",
+        "Digital signature capture and validation",
+        "Compliance requirement checking",
+        "Document archival and retrieval",
+        "Audit trail maintenance"
+      ],
+      aiTasks: [
+        "Intelligent form customization based on procedures",
+        "Automated compliance validation",
+        "Risk assessment for documentation completeness",
+        "Smart workflow optimization"
+      ],
+      whyAutomation: "Digital consent processes benefit from standardized document generation and validation workflows",
+      whyAI: "AI enhances consent processes with intelligent customization and compliance validation",
+      phases: [
+        "Deploy digital consent management platform",
+        "Implement automated compliance checking",
+        "Integrate with EHR systems"
+      ],
+      currentIssues: [
+        "Paper-based consent processes cause delays",
+        "Manual compliance checking creates errors",
+        "Document storage and retrieval inefficiencies"
+      ],
+      improvement: "Digital consent reduces processing time by 85% with automated compliance validation.",
+      technologyStack: {
+        automation: ["Digital signature platforms", "Form generation engines", "Document management"],
+        ai: ["Compliance validation", "Form customization", "Risk assessment"],
+        integration: ["EHR systems", "Legal databases", "Audit platforms"]
+      },
+      gartnerValue: {
+        give: ["Digital platform investment", "Legal compliance requirements", "Staff training"],
+        get: ["85% faster processing", "100% compliance", "Digital audit trails"]
+      }
+    },
+    {
+      id: 8,
+      title: "Treatment Plan Coordination",
+      description: "Intelligent care team coordination with automated workflow management and progress tracking",
+      icon: Network,
+      time: "Day 8-10 (ongoing)",
+      emotion: "positive",
+      emotionIcon: ThumbsUp,
+      approach: "hybrid",
+      automationPrimary: true,
+      roi: "70% efficiency gain",
+      implementationStatus: "testing",
+      statusNote: "Core coordination live, AI optimization in testing",
+      automationTasks: [
+        "Automated care team notifications",
+        "Standardized progress tracking",
+        "Resource scheduling and allocation",
+        "Treatment milestone monitoring"
+      ],
+      aiTasks: [
+        "Intelligent care plan optimization",
+        "Predictive resource needs assessment",
+        "Dynamic workflow adaptation",
+        "Outcome prediction and risk assessment"
+      ],
+      whyAutomation: "Care coordination benefits from standardized communication and tracking workflows",
+      whyAI: "Complex care plan optimization requires intelligent analysis of multiple variables",
+      phases: [
+        "Deploy automated coordination workflows",
+        "Implement AI for care plan optimization",
+        "Integrate predictive analytics"
+      ],
+      currentIssues: [
+        "Manual coordination creates communication gaps",
+        "Inefficient resource allocation",
+        "Delayed response to treatment changes"
+      ],
+      improvement: "AI-enhanced coordination improves care team efficiency by 70% with predictive optimization.",
+      technologyStack: {
+        automation: ["Workflow engines", "Notification systems", "Resource management"],
+        ai: ["Care plan optimization", "Predictive analytics", "Risk assessment"],
+        integration: ["EHR systems", "Care teams", "Resource platforms"]
+      },
+      gartnerValue: {
+        give: ["Coordination platform costs", "Integration complexity", "Training requirements"],
+        get: ["70% efficiency gain", "Predictive insights", "Optimized outcomes"]
       }
     }
   ],
