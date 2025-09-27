@@ -65,7 +65,7 @@ export const MultiHeroSection = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHero((prev) => (prev + 1) % heroSections.length);
-    }, 5000);
+    }, 12000); // Increased from 5000ms to 12000ms (12 seconds)
 
     return () => clearInterval(interval);
   }, []);
@@ -74,15 +74,15 @@ export const MultiHeroSection = () => {
   const IconComponent = currentSection.icon;
 
   return (
-    <section className="relative text-white py-12 sm:py-16 md:py-20 lg:py-32 transition-all duration-1000 overflow-hidden min-h-screen">
-      {/* Background Image with Transition */}
+    <section className="relative text-white py-12 sm:py-16 md:py-20 lg:py-32 transition-all duration-2000 ease-in-out overflow-hidden min-h-screen">
+      {/* Background Image with Smoother Transition */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-2000 ease-in-out"
         style={{ backgroundImage: `url(${currentSection.bgImage})` }}
       />
       
-      {/* Consistent Dark Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-genie-dark/90 via-genie-primary/75 to-genie-secondary/80" />
+      {/* Consistent Dark Gradient Overlay with Smoother Transition */}
+      <div className="absolute inset-0 bg-gradient-to-br from-genie-dark/90 via-genie-primary/75 to-genie-secondary/80 transition-opacity duration-2000 ease-in-out" />
 
       {/* Animated Background Particles */}
       <div className="absolute inset-0">
