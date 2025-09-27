@@ -58,35 +58,35 @@ export const GartnerValueSection = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             
             {/* Value Creation (Give) */}
-            <Card className="relative p-6 sm:p-8 bg-gradient-to-br from-primary/90 to-primary/80 text-primary-foreground border-primary/30 overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.2),transparent)]"></div>
+            <Card className="relative p-6 sm:p-8 bg-gradient-to-br from-blue-900/90 to-blue-800/90 text-white border-blue-600/30 overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.2),transparent)]"></div>
               <div className="relative z-10 text-center">
                 <div className="inline-flex items-center gap-2 mb-4">
-                  <Brain className="w-6 sm:w-8 h-6 sm:h-8 text-accent" />
-                  <span className="text-xs sm:text-sm font-medium text-primary-foreground/80">Stakeholders' Priorities & Concerns</span>
+                  <Brain className="w-6 sm:w-8 h-6 sm:h-8 text-cyan-400" />
+                  <span className="text-xs sm:text-sm font-medium text-blue-200">Stakeholders' Priorities & Concerns</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6 text-white">
                   Value Creation
-                  <div className="text-base sm:text-lg font-normal text-primary-foreground/80">(Give)</div>
+                  <div className="text-base sm:text-lg font-normal text-blue-200">(Give)</div>
                 </h3>
                 
                 <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
-                  <div className="flex items-center gap-3 p-3 bg-primary-foreground/10 rounded-lg backdrop-blur-sm">
-                    <Cog className="w-4 sm:w-5 h-4 sm:h-5 text-accent flex-shrink-0" />
-                    <span className="text-xs sm:text-sm">Self-service AI application creation</span>
+                  <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
+                    <Cog className="w-4 sm:w-5 h-4 sm:h-5 text-cyan-400 flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-white">Self-service AI application creation</span>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-primary-foreground/10 rounded-lg backdrop-blur-sm">
-                    <TrendingUp className="w-4 sm:w-5 h-4 sm:h-5 text-accent flex-shrink-0" />
-                    <span className="text-xs sm:text-sm">Accelerated development frameworks</span>
+                  <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
+                    <TrendingUp className="w-4 sm:w-5 h-4 sm:h-5 text-cyan-400 flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-white">Accelerated development frameworks</span>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-primary-foreground/10 rounded-lg backdrop-blur-sm">
-                    <Shield className="w-4 sm:w-5 h-4 sm:h-5 text-accent flex-shrink-0" />
-                    <span className="text-xs sm:text-sm">Enterprise-grade security & governance</span>
+                  <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
+                    <Shield className="w-4 sm:w-5 h-4 sm:h-5 text-cyan-400 flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-white">Enterprise-grade security & governance</span>
                   </div>
                 </div>
 
                 <div className="text-center">
-                  <div className="inline-flex items-center gap-2 text-accent font-medium">
+                  <div className="inline-flex items-center gap-2 text-cyan-400 font-medium">
                     <Database className="w-4 sm:w-5 h-4 sm:h-5" />
                     <span className="text-xs sm:text-sm">Value Levers</span>
                   </div>
@@ -95,35 +95,35 @@ export const GartnerValueSection = () => {
             </Card>
 
             {/* Value Realization (Get) */}
-            <Card className="relative p-6 sm:p-8 bg-gradient-to-br from-secondary/90 to-secondary/80 text-secondary-foreground border-secondary/30 overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--secondary)/0.2),transparent)]"></div>
+            <Card className="relative p-6 sm:p-8 bg-gradient-to-br from-slate-300/95 to-slate-200/95 text-slate-800 border-slate-400/30 overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(148,163,184,0.2),transparent)]"></div>
               <div className="relative z-10 text-center">
                 <div className="inline-flex items-center gap-2 mb-4">
-                  <Scale className="w-6 sm:w-8 h-6 sm:h-8 text-accent" />
-                  <span className="text-xs sm:text-sm font-medium text-secondary-foreground/80">Multi-Stakeholder Impacts</span>
+                  <Scale className="w-6 sm:w-8 h-6 sm:h-8 text-cyan-600" />
+                  <span className="text-xs sm:text-sm font-medium text-slate-600">Multi-Stakeholder Impacts</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6 text-slate-800">
                   Value Realization
-                  <div className="text-base sm:text-lg font-normal text-secondary-foreground/80">(Get)</div>
+                  <div className="text-base sm:text-lg font-normal text-slate-600">(Get)</div>
                 </h3>
                 
                 <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
-                  <div className="flex items-center gap-3 p-3 bg-secondary-foreground/10 rounded-lg backdrop-blur-sm">
-                    <BarChart3 className="w-4 sm:w-5 h-4 sm:h-5 text-accent flex-shrink-0" />
-                    <span className="text-xs sm:text-sm">Measurable ROI & business impact</span>
+                  <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg backdrop-blur-sm border border-slate-300/30">
+                    <BarChart3 className="w-4 sm:w-5 h-4 sm:h-5 text-cyan-600 flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-slate-700">Measurable ROI & business impact</span>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-secondary-foreground/10 rounded-lg backdrop-blur-sm">
-                    <Users className="w-4 sm:w-5 h-4 sm:h-5 text-accent flex-shrink-0" />
-                    <span className="text-xs sm:text-sm">Enhanced team productivity</span>
+                  <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg backdrop-blur-sm border border-slate-300/30">
+                    <Users className="w-4 sm:w-5 h-4 sm:h-5 text-cyan-600 flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-slate-700">Enhanced team productivity</span>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-secondary-foreground/10 rounded-lg backdrop-blur-sm">
-                    <Target className="w-4 sm:w-5 h-4 sm:h-5 text-accent flex-shrink-0" />
-                    <span className="text-xs sm:text-sm">Competitive market advantage</span>
+                  <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg backdrop-blur-sm border border-slate-300/30">
+                    <Target className="w-4 sm:w-5 h-4 sm:h-5 text-cyan-600 flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-slate-700">Competitive market advantage</span>
                   </div>
                 </div>
 
                 <div className="text-center">
-                  <div className="inline-flex items-center gap-2 text-accent font-medium">
+                  <div className="inline-flex items-center gap-2 text-cyan-600 font-medium">
                     <TrendingUp className="w-4 sm:w-5 h-4 sm:h-5" />
                     <span className="text-xs sm:text-sm">Realized Return to Organization</span>
                   </div>
