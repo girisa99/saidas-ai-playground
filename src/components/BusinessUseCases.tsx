@@ -108,8 +108,8 @@ const BusinessUseCases = () => {
         description: currentCase.scenarioDescriptions.sarah,
         complexity: "routine" as const,
         substeps: currentScenarioDetails.sarah[stepId],
-        impact: currentScenarioImpacts?.sarah?.stepImpacts?.[stepId] || {},
-        cumulativeImpact: currentScenarioImpacts?.sarah?.cumulativeBenefits?.find(b => b.step === stepId) || {}
+        impact: (currentScenarioImpacts as any)?.sarah?.stepImpacts?.[stepId] || {},
+        cumulativeImpact: (currentScenarioImpacts as any)?.sarah?.cumulativeBenefits?.find((b: any) => b.step === stepId) || {}
       });
     }
     
@@ -120,8 +120,8 @@ const BusinessUseCases = () => {
         description: currentCase.scenarioDescriptions.michael,
         complexity: "complex" as const,
         substeps: currentScenarioDetails.michael[stepId],
-        impact: currentScenarioImpacts?.michael?.stepImpacts?.[stepId] || {},
-        cumulativeImpact: currentScenarioImpacts?.michael?.cumulativeBenefits?.find(b => b.step === stepId) || {}
+        impact: (currentScenarioImpacts as any)?.michael?.stepImpacts?.[stepId] || {},
+        cumulativeImpact: (currentScenarioImpacts as any)?.michael?.cumulativeBenefits?.find((b: any) => b.step === stepId) || {}
       });
     }
     
