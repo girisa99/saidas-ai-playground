@@ -117,7 +117,7 @@ const TechnologyStack = () => {
               >
                 <Link to="/case-studies">
                   <ArrowRight className="w-4 h-4 mr-2" />
-                  See What I Built
+                  See What I Learned & Built
                 </Link>
               </Button>
             </div>

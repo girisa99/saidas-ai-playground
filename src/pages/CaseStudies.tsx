@@ -76,35 +76,35 @@ const CaseStudies = () => {
             </Badge>
             
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
-              What I <span className="text-genie-accent">Built</span>
+              What I <span className="text-genie-accent">Learned & Built</span>
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-              Real applications and experiments showcasing how AI tools enable rapid development 
-              and innovation - from healthcare solutions to business applications.
+              Personal experimentation journey showcasing how AI tools enable rapid learning 
+              and innovation - sharing knowledge and insights for individual growth.
             </p>
             
             {/* Impact Metrics Grid - Mobile Responsive */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 px-2">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Development Speed</h3>
-                <p className="text-white/80 text-xs">10x faster with AI tools</p>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Learning Speed</h3>
+                <p className="text-white/80 text-xs">Accelerated with AI tools</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Target className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Learning Curve</h3>
-                <p className="text-white/80 text-xs">Accessible to non-developers</p>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">Accessibility</h3>
+                <p className="text-white/80 text-xs">Open to all skill levels</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
                 <h3 className="font-semibold text-white text-xs sm:text-sm">Experimentation</h3>
-                <p className="text-white/80 text-xs">Rapid prototyping enabled</p>
+                <p className="text-white/80 text-xs">Rapid prototyping journey</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
                 <h3 className="font-semibold text-white text-xs sm:text-sm">Knowledge Sharing</h3>
-                <p className="text-white/80 text-xs">Open source insights</p>
+                <p className="text-white/80 text-xs">Open learning insights</p>
               </div>
             </div>
             
@@ -121,7 +121,7 @@ const CaseStudies = () => {
                 }}
               >
                 <TrendingUp className="w-4 h-4 mr-2" />
-                Explore My Projects
+                Explore My Learning Journey
               </Button>
               <Button 
                 variant="outline"
@@ -236,22 +236,22 @@ const CaseStudies = () => {
         <section className="py-16 bg-gradient-to-br from-genie-primary/5 to-genie-secondary/5">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Ready to Transform Your Business?
+              Ready to Start Your AI Learning Journey?
             </h2>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              See how these proven AI strategies can be adapted for your organization's unique challenges and opportunities.
+              Discover how these proven AI experiments and insights can inspire your own learning path and experimentation journey.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="gradient" size="lg" asChild>
                 <Link to="/journey">
                   <ArrowRight className="w-4 h-4 mr-2" />
-                  Start Your Journey
+                  Start Your Learning Journey
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
                 <Link to="/technology">
                   <Zap className="w-4 h-4 mr-2" />
-                  Explore Technology
+                  Explore Technologies
                 </Link>
               </Button>
             </div>

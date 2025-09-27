@@ -13,10 +13,10 @@ import { useEffect } from "react";
 const Index = () => {
   useEffect(() => {
     // Update page metadata
-    document.title = "Genie AI Experimentation HUB - Transform Development with AI";
+    document.title = "Genie AI Experimentation HUB - Learn AI Development & Experimentation";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'AI Experimentation Hub by Saidas - Comprehensive guide to AI-driven development, enterprise transformation, and intelligent automation solutions.');
+      metaDescription.setAttribute('content', 'AI Experimentation Hub by Saidas - Personal learning journey in AI-driven development, sharing experiments and insights for individual growth.');
     }
   }, []);
 

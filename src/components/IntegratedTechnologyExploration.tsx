@@ -392,7 +392,7 @@ export const IntegratedTechnologyExploration = () => {
             <Link to="/case-studies">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base">
                 <BarChart3 className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
-                See What I Built
+                See What I Learned & Built
                 <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4 ml-2" />
               </Button>
             </Link>
