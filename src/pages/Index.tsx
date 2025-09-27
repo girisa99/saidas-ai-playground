@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 
 const Index = () => {
   const [isGenieOpen, setIsGenieOpen] = useState(false);
-  const [contextType, setContextType] = useState<'technology' | 'healthcare'>('technology');
   useEffect(() => {
     // Update page metadata
     document.title = "Genie AI Experimentation HUB - Learn AI Development & Experimentation";
@@ -52,29 +51,10 @@ const Index = () => {
         </div>
       </Button>
 
-      {/* Context Toggle Button */}
-      <div className="fixed bottom-6 left-6 flex gap-2 z-40">
-        <Button
-          variant={contextType === 'technology' ? 'default' : 'outline'}
-          size="sm"
-          onClick={() => setContextType('technology')}
-        >
-          Tech AI
-        </Button>
-        <Button
-          variant={contextType === 'healthcare' ? 'default' : 'outline'}
-          size="sm"
-          onClick={() => setContextType('healthcare')}
-        >
-          Healthcare AI
-        </Button>
-      </div>
-
       {/* Public Genie Interface */}
       <PublicGenieInterface
         isOpen={isGenieOpen}
         onClose={() => setIsGenieOpen(false)}
-        contextType={contextType}
         mode="system"
       />
       

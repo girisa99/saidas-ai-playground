@@ -4,7 +4,7 @@
  * Supports: LLM, Small Language, Vision, MCP, RAG, Knowledge Base with cross-functional selection
  * Context: Technology & Healthcare focused
  */
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -19,7 +19,10 @@ import {
   MessageSquare,
   Shield,
   Clock,
-  User
+  User,
+  Move,
+  Minimize2,
+  Maximize2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
@@ -41,10 +44,17 @@ import { HumanEscalationForm } from './HumanEscalationForm';
 import genieLogoImg from '@/assets/genie-logo.png';
 import genieAnimatedImg from '@/assets/genie-animated.png';
 
+interface UserInfo {
+  firstName: string;
+  lastName?: string;
+  email: string;
+  contextType: 'technology' | 'healthcare';
+}
+
 interface PublicGenieInterfaceProps {
   isOpen: boolean;
   onClose: () => void;
-  contextType?: 'technology' | 'healthcare';
+  initialContextType?: 'technology' | 'healthcare';
   mode?: 'system' | 'single' | 'multi';
   onModeChange?: (mode: 'system' | 'single' | 'multi') => void;
 }
@@ -52,21 +62,28 @@ interface PublicGenieInterfaceProps {
 export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({
   isOpen,
   onClose,
-  contextType = 'technology',
+  initialContextType = 'technology',
   mode = 'system',
   onModeChange
 }) => {
+  // Drag functionality
+  const dragRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
   // State management
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showModelSelector, setShowModelSelector] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false);
   const [sessionId] = useState(() => `public_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
   
-  // Privacy and rate limiting
+  // Privacy and user info
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
-  const [cookiesAccepted, setCookiesAccepted] = useState(false);
-  const [showPrivacyBanner, setShowPrivacyBanner] = useState(true);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [contextType, setContextType] = useState<'technology' | 'healthcare'>('technology');
   const [rateLimitExceeded, setRateLimitExceeded] = useState(false);
   const [requestsUsed, setRequestsUsed] = useState(0);
   const [showEscalationForm, setShowEscalationForm] = useState(false);
@@ -92,6 +109,62 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({
   const { toast } = useToast();
   
   const currentMode = (state?.selectedMode as any) || mode;
+
+  // Drag handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (isMaximized) return;
+    setIsDragging(true);
+    const rect = dragRef.current?.getBoundingClientRect();
+    if (rect) {
+      setDragOffset({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      });
+    }
+  };
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isDragging || isMaximized) return;
+    
+    const newX = e.clientX - dragOffset.x;
+    const newY = e.clientY - dragOffset.y;
+    
+    // Keep within viewport bounds
+    const maxX = window.innerWidth - 400;
+    const maxY = window.innerHeight - 200;
+    
+    setPosition({
+      x: Math.max(0, Math.min(newX, maxX)),
+      y: Math.max(0, Math.min(newY, maxY))
+    });
+  }, [isDragging, dragOffset, isMaximized]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp]);
+
+  // Privacy acceptance handler
+  const handlePrivacyAccept = (userData: UserInfo) => {
+    setUserInfo(userData);
+    setContextType(userData.contextType);
+    setPrivacyAccepted(true);
+    
+    toast({
+      title: `Welcome ${userData.firstName}!`,
+      description: `GENIE AI is now configured for ${userData.contextType} expertise.`,
+    });
+  };
 
   // Context-specific system prompts
   const buildSystemPrompt = useCallback(() => {
@@ -301,119 +374,141 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({
 
   return (
     <>
-      {/* Privacy Banner */}
-      {showPrivacyBanner && !privacyAccepted && (
-        <PublicPrivacyBanner
-          onAccept={() => {
-            setPrivacyAccepted(true);
-            setShowPrivacyBanner(false);
-          }}
-          onDecline={onClose}
-          onCookiesAccept={() => setCookiesAccepted(true)}
-        />
-      )}
-
       <motion.div
-        initial={{ opacity: 0, x: 400 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 400 }}
+        ref={dragRef}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.9 }}
+        style={{
+          transform: isMaximized ? 'none' : `translate(${position.x}px, ${position.y}px)`,
+        }}
         className={`fixed z-50 bg-background border shadow-2xl flex flex-col transition-all duration-300 ${
-          isMinimized 
-            ? 'bottom-4 right-4 w-80 h-16 rounded-lg' 
-            : 'bottom-8 left-1/2 transform -translate-x-1/2 w-full max-w-4xl h-[600px] rounded-lg'
+          isMaximized 
+            ? 'inset-0 w-full h-full rounded-none' 
+            : isMinimized 
+              ? 'bottom-4 right-4 w-80 h-16 rounded-lg' 
+              : 'bottom-8 left-1/2 transform -translate-x-1/2 w-full max-w-4xl h-[600px] rounded-lg'
         }`}
       >
         <div className="flex flex-col h-full">
-          {/* Header with Public Badge */}
-          <div className="flex items-center justify-between p-3 border-b bg-gradient-to-r from-primary/5 to-secondary/5">
-            <div className="flex items-center gap-2">
-              <div className="p-1 bg-primary/10 rounded-lg">
-                <img 
-                  src={genieLogoImg} 
-                  alt="GENIE" 
-                  className="h-8 w-auto object-contain"
-                  loading="eager"
-                  onError={(e) => {
-                    console.warn('GENIE logo failed to load');
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="font-semibold text-base bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
-                    GENIE AI
-                  </h3>
-                  <Badge variant="secondary" className="text-xs">
-                    PUBLIC
-                  </Badge>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  {selectedModels.length} model{selectedModels.length !== 1 ? 's' : ''} • {currentMode} mode • {contextType}
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-1">
-              {/* Context Toggle */}
-              <Select value={contextType} onValueChange={(value: 'technology' | 'healthcare') => {
-                // This would trigger a prop change in parent component
-                console.log('Context change:', value);
-              }}>
-                <SelectTrigger className="w-24 h-8 text-xs">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="technology">Tech</SelectItem>
-                  <SelectItem value="healthcare">Health</SelectItem>
-                </SelectContent>
-              </Select>
+          {/* Privacy Banner - Embedded */}
+          {!privacyAccepted && (
+            <PublicPrivacyBanner
+              onAccept={handlePrivacyAccept}
+              onDecline={onClose}
+            />
+          )}
 
-              {/* Model Selection */}
-              <Select value={currentMode} onValueChange={handleModeChange}>
-                <SelectTrigger className="w-20 h-8 text-xs">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="single">Single</SelectItem>
-                  <SelectItem value="multi">Multi</SelectItem>
-                  <SelectItem value="system">System</SelectItem>
-                </SelectContent>
-              </Select>
-              
-              {/* Rate Limit Indicator */}
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <Clock className="h-3 w-3" />
-                <span>{requestsUsed}/10</span>
+          {/* Header with Drag Handle */}
+          {privacyAccepted && (
+            <div 
+              className="flex items-center justify-between p-3 border-b bg-gradient-to-r from-primary/5 to-secondary/5 cursor-move"
+              onMouseDown={handleMouseDown}
+            >
+              <div className="flex items-center gap-2">
+                <div className="p-1 bg-primary/10 rounded-lg">
+                  <img 
+                    src={genieLogoImg} 
+                    alt="GENIE" 
+                    className="h-8 w-auto object-contain"
+                    loading="eager"
+                    onError={(e) => {
+                      console.warn('GENIE logo failed to load');
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-semibold text-base bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                      GENIE AI
+                    </h3>
+                    <Badge variant="secondary" className="text-xs">
+                      PUBLIC
+                    </Badge>
+                    {userInfo && (
+                      <Badge variant="outline" className="text-xs">
+                        {userInfo.firstName}
+                      </Badge>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {selectedModels.length} model{selectedModels.length !== 1 ? 's' : ''} • {currentMode} mode • {contextType}
+                  </p>
+                </div>
+                <Move className="h-4 w-4 text-muted-foreground ml-2" />
               </div>
               
-              {/* Action Buttons */}
-              <Button variant="ghost" size="sm" onClick={() => {
-                resetConversation();
-                toast({
-                  title: "New conversation started",
-                  description: "Your previous conversation is cleared",
-                });
-              }} title="New Conversation">
-                <MessageSquare className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="sm" onClick={() => setShowModelSelector(true)} title="Settings">
-                <Settings className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="sm" onClick={() => setShowEscalationForm(true)} title="Contact Human">
-                <User className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="sm" onClick={() => setIsMinimized(!isMinimized)} title="Minimize">
-                <span className="text-sm">_</span>
-              </Button>
-              <Button variant="ghost" size="sm" onClick={onClose} title="Close">
-                <X className="h-4 w-4" />
-              </Button>
+              <div className="flex items-center gap-1">
+                {/* Context Toggle - Now inside popup */}
+                <Select value={contextType} onValueChange={(value: 'technology' | 'healthcare') => {
+                  setContextType(value);
+                  if (userInfo) {
+                    setUserInfo({ ...userInfo, contextType: value });
+                  }
+                  toast({
+                    title: "Context Switched",
+                    description: `Now focused on ${value} expertise`,
+                  });
+                }}>
+                  <SelectTrigger className="w-24 h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="technology">Tech</SelectItem>
+                    <SelectItem value="healthcare">Health</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                {/* Model Selection */}
+                <Select value={currentMode} onValueChange={handleModeChange}>
+                  <SelectTrigger className="w-20 h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="single">Single</SelectItem>
+                    <SelectItem value="multi">Multi</SelectItem>
+                    <SelectItem value="system">System</SelectItem>
+                  </SelectContent>
+                </Select>
+                
+                {/* Rate Limit Indicator */}
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Clock className="h-3 w-3" />
+                  <span>{requestsUsed}/10</span>
+                </div>
+                
+                {/* Action Buttons */}
+                <Button variant="ghost" size="sm" onClick={() => {
+                  resetConversation();
+                  toast({
+                    title: "New conversation started",
+                    description: "Your previous conversation is cleared",
+                  });
+                }} title="New Conversation">
+                  <MessageSquare className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => setShowModelSelector(true)} title="Settings">
+                  <Settings className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => setShowEscalationForm(true)} title="Contact Human">
+                  <User className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => setIsMaximized(!isMaximized)} title={isMaximized ? "Restore" : "Maximize"}>
+                  {isMaximized ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => setIsMinimized(!isMinimized)} title="Minimize">
+                  <span className="text-sm">_</span>
+                </Button>
+                <Button variant="ghost" size="sm" onClick={onClose} title="Close">
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Rate Limit Warning */}
-          {rateLimitExceeded && (
+          {privacyAccepted && rateLimitExceeded && (
             <Alert className="m-2" variant="destructive">
               <Shield className="h-4 w-4" />
               <AlertDescription>
@@ -423,68 +518,66 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({
           )}
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {state.messages.length === 0 && (
-              <div className="text-center text-muted-foreground py-8">
-                <img 
-                  src={genieAnimatedImg} 
-                  alt="GENIE AI" 
-                  className="h-16 w-auto mx-auto mb-4 opacity-60"
-                  loading="lazy"
-                />
-                <p className="text-lg font-medium mb-2">
-                  Welcome to GENIE AI - Public Demo
-                </p>
-                <p className="text-sm">
-                  Experience our powerful multi-model AI system with specialized {contextType} knowledge.
-                </p>
-                <p className="text-xs mt-2 text-muted-foreground">
-                  {requestsUsed}/10 requests used this hour
-                </p>
-              </div>
-            )}
-            
-            <AnimatePresence>
-              {state.messages.map((msg, index) => (
-                <MessageComponent
-                  key={index}
-                  message={msg}
-                />
-              ))}
-            </AnimatePresence>
-            
-            {isLoading && <TypingIndicator />}
-          </div>
+          {privacyAccepted && (
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {state.messages.length === 0 && (
+                <div className="text-center text-muted-foreground py-8">
+                  <img 
+                    src={genieAnimatedImg} 
+                    alt="GENIE AI" 
+                    className="h-16 w-auto mx-auto mb-4 opacity-60"
+                    loading="lazy"
+                  />
+                  <p className="text-lg font-medium mb-2">
+                    Welcome to GENIE AI - Public Demo
+                  </p>
+                  <p className="text-sm">
+                    Experience our powerful multi-model AI system with specialized {contextType} knowledge.
+                  </p>
+                  <p className="text-xs mt-2 text-muted-foreground">
+                    {requestsUsed}/10 requests used this hour
+                  </p>
+                </div>
+              )}
+              
+              <AnimatePresence>
+                {state.messages.map((msg, index) => (
+                  <MessageComponent
+                    key={index}
+                    message={msg}
+                  />
+                ))}
+              </AnimatePresence>
+              
+              {isLoading && <TypingIndicator />}
+            </div>
+          )}
 
           {/* Input Area */}
-          <div className="border-t p-4">
-            <div className="flex gap-2">
-              <div className="flex-1 flex gap-2">
-                <input
-                  type="text"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder={`Ask about ${contextType}...`}
-                  className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20"
-                  disabled={isLoading || !privacyAccepted || rateLimitExceeded}
-                />
-                <Button 
-                  onClick={handleSend} 
-                  disabled={isLoading || !message.trim() || !privacyAccepted || rateLimitExceeded}
-                  size="sm"
-                >
-                  {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-                </Button>
+          {privacyAccepted && (
+            <div className="border-t p-4">
+              <div className="flex gap-2">
+                <div className="flex-1 flex gap-2">
+                  <input
+                    type="text"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                    placeholder={`Ask about ${contextType}...`}
+                    className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    disabled={isLoading || rateLimitExceeded}
+                  />
+                  <Button 
+                    onClick={handleSend} 
+                    disabled={isLoading || !message.trim() || rateLimitExceeded}
+                    size="sm"
+                  >
+                    {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                  </Button>
+                </div>
               </div>
             </div>
-            
-            {!privacyAccepted && (
-              <p className="text-xs text-muted-foreground mt-2">
-                Please accept the privacy policy to start using GENIE AI.
-              </p>
-            )}
-          </div>
+          )}
         </div>
       </motion.div>
 
@@ -509,7 +602,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({
       )}
 
       {/* Human Escalation Form */}
-      {showEscalationForm && (
+      {showEscalationForm && userInfo && (
         <HumanEscalationForm
           isOpen={showEscalationForm}
           onClose={() => setShowEscalationForm(false)}
