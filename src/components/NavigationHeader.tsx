@@ -20,8 +20,8 @@ export const NavigationHeader = () => {
   const navItems = [
     { to: "/", label: "Home", icon: Home },
     { to: "/about", label: "About Me", icon: User },
-    { to: "/journey", label: "Journey", icon: Map },
-    { to: "/technology", label: "Tech Exploration", icon: Wrench },
+    { to: "/journey", label: "My Journey", icon: Map },
+    { to: "/technology", label: "Tech Stack Explored", icon: Wrench },
     { to: "/business-use-cases", label: "Business Use Cases", icon: Briefcase },
     { to: "/case-studies", label: "Case Studies", icon: Trophy },
   ];
@@ -86,8 +86,9 @@ export const NavigationHeader = () => {
                 // Custom labels for responsive display
                 const getResponsiveLabel = (label: string) => {
                   switch(label) {
-                    case "About Me": return { full: "About Me", short: "About Me" };
-                    case "Tech Exploration": return { full: "Tech Exploration", short: "Tech" };
+                    case "About Me": return { full: "About Me", short: "About" };
+                    case "My Journey": return { full: "My Journey", short: "Journey" };
+                    case "Tech Stack Explored": return { full: "Tech Stack Explored", short: "Tech" };
                     case "Business Use Cases": return { full: "Business Use Cases", short: "Business" };
                     case "Case Studies": return { full: "Case Studies", short: "Cases" };
                     default: return { full: label, short: label };
