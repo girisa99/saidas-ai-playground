@@ -36,41 +36,41 @@ export const NavigationHeader = () => {
       <div className="w-full max-w-none px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-2">
           {/* Logo & Brand - Left aligned, flexible width */}
-          <Link to="/" className="genie-logo-container group min-w-0 flex-shrink-0">
+          <Link to="/" className="enterprise-logo-container group min-w-0 flex-shrink-0">
             <div className="relative flex-shrink-0">
               <img 
                 src={genieLogoMain} 
                 alt="Genie AI" 
-                className="genie-logo-image group-hover:scale-105 transition-transform duration-300"
+                className="enterprise-logo-image group-hover:scale-105 transition-transform duration-300"
               />
             </div>
             {/* Full brand text for extra large screens */}
             <div className="hidden xl:block">
               <div className="flex items-center space-x-2">
-                <span className="text-xl font-bold genie-gradient-text whitespace-nowrap">
+                <span className="text-lg font-bold enterprise-gradient-text whitespace-nowrap">
                   GENIE
                 </span>
-                <span className="text-lg font-semibold text-foreground whitespace-nowrap">AI Hub</span>
+                <span className="text-base font-semibold text-foreground whitespace-nowrap">AI Hub</span>
               </div>
-              <p className="text-xs genie-tagline whitespace-nowrap leading-tight">
+              <p className="text-xs professional-tagline whitespace-nowrap leading-tight">
                 I am your Technology Navigator
               </p>
             </div>
             {/* Compact brand text for large screens */}
             <div className="hidden lg:block xl:hidden">
               <div className="flex items-center space-x-1">
-                <span className="text-lg font-bold genie-gradient-text whitespace-nowrap">
+                <span className="text-base font-bold enterprise-gradient-text whitespace-nowrap">
                   GENIE
                 </span>
                 <span className="text-sm font-semibold text-foreground whitespace-nowrap">AI</span>
               </div>
-              <p className="text-xs genie-tagline whitespace-nowrap">
+              <p className="text-xs professional-tagline whitespace-nowrap">
                 Tech Navigator
               </p>
             </div>
             {/* Mobile - just GENIE */}
             <div className="hidden sm:block lg:hidden">
-              <span className="text-base font-bold genie-gradient-text">
+              <span className="text-sm font-bold enterprise-gradient-text">
                 GENIE
               </span>
             </div>
