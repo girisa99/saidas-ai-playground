@@ -265,7 +265,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
           {/* Header */}
           <div className="drag-handle flex items-center justify-between p-4 border-b bg-primary/10 cursor-move">
             <div className="flex items-center gap-3">
-              <img src={genieLogoPopup} alt="Genie AI" className="w-10 h-10 object-contain" />
+              <img src={genieLogoPopup} alt="Genie AI logo" className="h-10 w-auto object-contain drop-shadow" />
               <div>
                 <h3 className="font-semibold text-primary">Genie AI Assistant</h3>
                 {context && selectedTopic && (
@@ -386,7 +386,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
           {isMinimized && (
             <div className="p-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <img src={genieLogoPopup} alt="Genie" className="w-6 h-6 object-contain" />
+                <img src={genieLogoPopup} alt="Genie AI logo" className="h-6 w-auto object-contain drop-shadow" />
                 <span className="text-sm font-medium">Genie AI</span>
                 {messages.length > 0 && (
                   <Badge variant="secondary" className="text-xs">
