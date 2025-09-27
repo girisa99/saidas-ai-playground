@@ -1,6 +1,7 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 import { AnimatedTextEmergence } from "@/components/AnimatedTextEmergence";
 import { Button } from "@/components/ui/button";
@@ -92,8 +93,11 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavigationHeader />
-      <Breadcrumbs />
-      
+      <main className="pt-16 sm:pt-20 lg:pt-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8">
+          <Breadcrumbs />
+        </div>
+        
       {/* Hero Section with Genie */}
       <section className="relative bg-gradient-to-br from-genie-dark via-genie-navy to-genie-primary/20 text-white py-24 lg:py-32 overflow-hidden">
         {/* Animated Background Effects */}

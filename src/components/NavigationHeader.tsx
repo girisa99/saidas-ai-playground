@@ -100,15 +100,15 @@ export const NavigationHeader = () => {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
+                    className={`flex items-center gap-1 px-3 xl:px-4 py-2 xl:py-2.5 rounded-lg text-xs xl:text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
                       isActive
                         ? 'bg-primary text-primary-foreground shadow-md'
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                     }`}
                   >
-                    <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span className="hidden xl:inline">{responsiveLabel.full}</span>
-                    <span className="xl:hidden">{responsiveLabel.short}</span>
+                    <Icon className="w-4 xl:w-5 h-4 xl:h-5 flex-shrink-0" />
+                    <span className="hidden xl:inline text-sm">{responsiveLabel.full}</span>
+                    <span className="xl:hidden text-xs">{responsiveLabel.short}</span>
                   </Link>
                 );
               })}
@@ -123,11 +123,11 @@ export const NavigationHeader = () => {
             </div>
             
             {/* Action Buttons - Responsive sizing */}
-            <div className="flex items-center space-x-1 xl:space-x-2 pl-2 xl:pl-3 border-l border-border">
+            <div className="flex items-center space-x-1 xl:space-x-2 pl-3 xl:pl-4 border-l border-border">
               <Button 
                 variant="outline"
                 size="sm" 
-                className="text-xs xl:text-sm font-medium hover:bg-muted/80 whitespace-nowrap h-8 xl:h-9 px-2 xl:px-4"
+                className="text-xs xl:text-sm font-medium hover:bg-muted/80 whitespace-nowrap h-8 xl:h-10 px-3 xl:px-4"
                 onClick={() => window.open('https://preview--cgat-patient-hcp-care-ecosystem.lovable.app/', '_blank')}
               >
                 <ExternalLink className="w-3 xl:w-4 h-3 xl:h-4 mr-1 xl:mr-2 flex-shrink-0" />
@@ -136,7 +136,7 @@ export const NavigationHeader = () => {
               </Button>
               <Button 
                 size="sm" 
-                className="bg-gradient-to-r from-genie-primary to-genie-secondary hover:from-genie-primary/90 hover:to-genie-secondary/90 text-white font-medium shadow-lg hover:shadow-genie-primary/25 transition-all duration-300 whitespace-nowrap h-8 xl:h-9 px-2 xl:px-4"
+                className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground font-medium shadow-lg hover:shadow-primary/25 transition-all duration-300 whitespace-nowrap h-8 xl:h-10 px-3 xl:px-4"
                 onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
               >
                 <span className="hidden xl:inline">Connect</span>
@@ -191,13 +191,6 @@ export const NavigationHeader = () => {
                     </Link>
                   );
                 })}
-                <button 
-                  onClick={() => scrollToSection('documents')}
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 w-full text-left"
-                >
-                  <FileText className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-medium">Documentation</span>
-                </button>
               </nav>
               
               {/* Mobile Action Buttons */}
@@ -216,7 +209,7 @@ export const NavigationHeader = () => {
                 </Button>
                 <Button 
                   size="lg" 
-                  className="w-full bg-gradient-to-r from-genie-primary to-genie-secondary hover:from-genie-primary/90 hover:to-genie-secondary/90 text-white font-medium shadow-lg h-12"
+                  className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground font-medium shadow-lg h-12"
                   onClick={() => {
                     window.open('https://www.linkedin.com/in/saidas/', '_blank');
                     setIsMenuOpen(false);

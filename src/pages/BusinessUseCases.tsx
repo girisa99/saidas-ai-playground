@@ -16,8 +16,8 @@ const BusinessUseCases = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavigationHeader />
-      <main className="pt-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+      <main className="pt-16 sm:pt-20 lg:pt-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8">
           <Breadcrumbs />
         </div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
