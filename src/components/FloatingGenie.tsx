@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { PublicGenieInterface } from './public-genie/PublicGenieInterface';
-import { useLocation } from 'react-router-dom';
 import genieFloating from '@/assets/genie-floating.png';
 
 interface FloatingGenieProps {
@@ -147,15 +146,27 @@ const getPageSpecificMessages = (pathname: string) => {
 };
 
 export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) => {
-  const location = useLocation();
   const [isVisible, setIsVisible] = useState(true);
   const [isGenieOpen, setIsGenieOpen] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [currentPath, setCurrentPath] = useState('/');
   
-  const pageMessages = getPageSpecificMessages(location.pathname);
+  // Update current path when location changes
+  useEffect(() => {
+    const updatePath = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    
+    updatePath(); // Set initial path
+    window.addEventListener('popstate', updatePath);
+    
+    return () => window.removeEventListener('popstate', updatePath);
+  }, []);
+  
+  const pageMessages = getPageSpecificMessages(currentPath);
 
   useEffect(() => {
     // Show tooltip after 2 seconds if user hasn't interacted
