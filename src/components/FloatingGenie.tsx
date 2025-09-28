@@ -226,8 +226,11 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
             damping: 20,
             delay: 1 
           }}
-          className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[9999] ${className}`}
-          style={{ position: 'fixed' }}
+          className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[99999] ${className}`}
+          style={{ 
+            position: 'fixed',
+            isolation: 'isolate'
+          }}
         >
           {/* Floating Action Button */}
           <motion.div
@@ -312,9 +315,10 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
               )}
             </AnimatePresence>
 
-            {/* Genie Lamp/Bottle Button */}
+            {/* Genie Bottle Button */}
             <motion.div
-              className="relative"
+              className="relative cursor-pointer"
+              onClick={handleGenieClick}
               animate={!hasInteracted ? {
                 scale: [1, 1.08, 1],
                 rotate: [0, 3, -3, 0],
@@ -325,31 +329,42 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {/* Magical bottle/lamp base */}
-              <motion.div
-                className="w-16 h-20 md:w-20 md:h-24 relative cursor-pointer"
-                onClick={handleGenieClick}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {/* Lamp body */}
+              {/* Genie Bottle Container */}
+              <div className="w-16 h-20 md:w-20 md:h-24 relative flex flex-col items-center">
+                
+                {/* Bottle Neck/Spout */}
                 <motion.div
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 shadow-2xl border-2 border-yellow-300/50"
+                  className="w-4 h-6 md:w-5 md:h-8 bg-gradient-to-t from-amber-600 via-amber-500 to-amber-400 rounded-t-lg shadow-lg border border-amber-300/50"
+                  animate={{
+                    scaleY: [1, 1.05, 1]
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
+                
+                {/* Bottle Body */}
+                <motion.div
+                  className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 rounded-full shadow-2xl border-2 border-yellow-300/50 relative overflow-hidden"
                   animate={{
                     boxShadow: [
-                      "0 0 20px rgba(251, 191, 36, 0.5)",
-                      "0 0 30px rgba(251, 191, 36, 0.8)",
-                      "0 0 20px rgba(251, 191, 36, 0.5)"
+                      "0 0 20px rgba(251, 191, 36, 0.6)",
+                      "0 0 30px rgba(251, 191, 36, 0.9)",
+                      "0 0 20px rgba(251, 191, 36, 0.6)"
                     ]
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
-                  {/* Genie Logo */}
+                  {/* Genie Logo - No white background */}
                   <motion.img
                     src={genieFloating}
                     alt="Genie AI"
-                    className="w-8 h-8 md:w-12 md:h-12 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+                    className="w-6 h-6 md:w-10 md:h-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 object-contain"
+                    style={{ 
+                      filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
+                      background: 'transparent'
+                    }}
                     animate={{
                       y: [0, -1, 0],
                       rotate: [0, 2, -2, 0]
@@ -360,43 +375,45 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                       ease: "easeInOut"
                     }}
                   />
+                  
+                  {/* Bottle shine effect */}
+                  <motion.div
+                    className="absolute top-2 left-2 w-3 h-3 md:w-4 md:h-4 bg-white/40 rounded-full blur-sm"
+                    animate={{
+                      opacity: [0.3, 0.7, 0.3]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
                 </motion.div>
 
-                {/* Lamp spout */}
-                <motion.div
-                  className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-8 md:w-8 md:h-10 bg-gradient-to-t from-amber-500 to-amber-300 rounded-t-full border border-yellow-300/50"
-                  animate={{
-                    scaleY: [1, 1.1, 1]
-                  }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-                {/* Magic fumes/smoke */}
-                <motion.div className="absolute -top-2 left-1/2 -translate-x-1/2 z-20">
-                  {[...Array(5)].map((_, i) => (
+                {/* Magic fumes/smoke from bottle neck */}
+                <motion.div className="absolute -top-1 left-1/2 -translate-x-1/2 z-20">
+                  {[...Array(4)].map((_, i) => (
                     <motion.div
                       key={i}
-                      className="absolute w-1 h-1 md:w-2 md:h-2 bg-gradient-to-t from-yellow-200 to-transparent rounded-full"
+                      className="absolute w-1 h-1 md:w-1.5 md:h-1.5 bg-gradient-to-t from-blue-200/60 via-purple-200/40 to-transparent rounded-full"
                       style={{
-                        left: `${(i - 2) * 8}px`,
-                        top: `${-i * 4}px`
+                        left: `${(i - 1.5) * 6}px`,
+                        top: `${-i * 3}px`
                       }}
                       animate={{
-                        y: [0, -20, -40],
-                        opacity: [0.8, 0.4, 0],
-                        scale: [0.5, 1, 0.3]
+                        y: [0, -15, -30],
+                        opacity: [0.7, 0.4, 0],
+                        scale: [0.3, 0.8, 0.2],
+                        x: [0, Math.sin(i) * 4, Math.sin(i) * 8]
                       }}
                       transition={{
-                        duration: 2,
+                        duration: 2.5,
                         repeat: Infinity,
-                        delay: i * 0.2,
+                        delay: i * 0.3,
                         ease: "easeOut"
                       }}
                     />
                   ))}
                 </motion.div>
 
-                {/* Magical sparkles around the lamp */}
-                <motion.div className="absolute inset-0 z-10">
+                {/* Magical sparkles around the bottle */}
+                <motion.div className="absolute inset-0 z-15 pointer-events-none">
                   <motion.div
                     className="absolute -top-2 -right-2 w-3 h-3 text-yellow-300"
                     animate={{
@@ -431,7 +448,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                     <Flame className="w-full h-full" />
                   </motion.div>
                 </motion.div>
-              </motion.div>
+              </div>
             </motion.div>
 
             {/* Magic energy rings */}
@@ -484,7 +501,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                 e.stopPropagation();
                 handleClose();
               }}
-              className="absolute -top-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity z-30"
+              className="absolute -top-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity z-[100000]"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
