@@ -177,18 +177,41 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
               <div className="space-y-3 text-sm">
                 <p className="text-red-600 dark:text-red-400">
                   You've reached your daily limit. If you need extended access for legitimate use cases, 
-                  you can request additional quota by contacting our team.
+                  you can request additional quota by submitting a request through our system.
                 </p>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   className="w-full border-red-200 text-red-700 hover:bg-red-50"
-                  onClick={() => {
-                    // Submit access request
-                    const requestReason = prompt('Please describe your use case and why you need extended access:');
-                    if (requestReason) {
-                      // Submit via API
-                      console.log('Access request would be submitted:', requestReason);
+                  onClick={async () => {
+                    const requestReason = prompt("Please describe your use case and why you need extended access:");
+                    if (requestReason && requestReason.trim()) {
+                      try {
+                        // Get user info from the parent component or context
+                        const userEmail = prompt("Please provide your email address:") || "anonymous@domain.com";
+                        
+                        const response = await fetch("https://ithspbabhmdntioslfqe.supabase.co/functions/v1/submit-access-request", {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                            user_email: userEmail,
+                            ip_address: window.location.hostname,
+                            request_reason: requestReason
+                          })
+                        });
+                        
+                        if (response.ok) {
+                          alert("Access request submitted successfully! You will be contacted at genieaiexpermentationhub@gmail.com within 1-2 business days.");
+                        } else {
+                          throw new Error("Failed to submit request");
+                        }
+                      } catch (error) {
+                        console.error("Error submitting access request:", error);
+                        // Fallback to email
+                        window.open(`mailto:genieaiexpermentationhub@gmail.com?subject=Genie AI Access Request&body=Use Case: ${encodeURIComponent(requestReason)}`, '_blank');
+                      }
                     }
                   }}
                 >

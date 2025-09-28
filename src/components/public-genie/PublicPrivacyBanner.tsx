@@ -60,12 +60,14 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
               <AlertDescription className="text-sm">
                 <strong>Privacy & Terms Agreement:</strong>
                 <ul className="list-disc list-inside mt-3 space-y-2 text-sm">
-                  <li>This is a demonstration of AI capabilities</li>
+                  <li>This is an experimental demonstration of AI capabilities</li>
                   <li>Conversations may be monitored for quality and safety</li>
                   <li>AI responses should be verified with experts</li>
                   <li>Medical advice should be confirmed with healthcare providers</li>
                   <li>We will send you welcome emails and newsletters (you can unsubscribe anytime)</li>
-                  <li>Rate limits apply (10 requests per hour)</li>
+                  <li>Rate limits apply (2 conversations per hour, 5 per day)</li>
+                  <li>Extended access available upon request for legitimate use cases</li>
+                  <li>All access requests are reviewed by our team at genieaiexpermentationhub@gmail.com</li>
                   <li>We use minimal cookies to maintain your session</li>
                 </ul>
               </AlertDescription>
