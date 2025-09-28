@@ -12,120 +12,93 @@ import {
   CheckCircle,
   ArrowRight,
   Play,
-  Clock
+  Clock,
+  Stethoscope,
+  Briefcase
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const QuickStart = () => {
-  const steps = [
+  const successMetrics = [
     {
-      number: 1,
-      title: "Curiosity & Discovery",
-      subtitle: "From Abstract Theory to Practical Reality",
-      description: "Inspired by real-world AI applications, I moved beyond theoretical concepts to explore AI's practical potential. Started testing different tools to understand their capabilities.",
-      icon: <Lightbulb className="h-8 w-8" />,
-      keyActions: [
-        "Explored AI tool landscape",
-        "Identified practical use cases", 
-        "Built initial understanding",
-        "Set experimentation goals"
-      ],
+      icon: <Target className="h-6 w-6" />,
+      value: "8+",
+      label: "Business Cases Documented",
+      color: "text-green-600"
+    },
+    {
+      icon: <TrendingUp className="h-6 w-6" />,
+      value: "3",
+      label: "Case Studies Completed", 
+      color: "text-blue-600"
+    },
+    {
+      icon: <Users className="h-6 w-6" />,
+      value: "Mixed",
+      label: "Implementation Status",
+      color: "text-purple-600"
+    }
+  ];
+
+  const proofPoints = [
+    {
+      title: "Patient Onboarding Automation",
+      subtitle: "Healthcare AI Implementation",
+      description: "Complete transformation of patient enrollment process using automation and agentic AI. Documented every step from business case to implementation.",
+      icon: <Stethoscope className="h-8 w-8" />,
+      link: "/case-studies",
+      status: "Case Study Available",
+      statusColor: "bg-green-100 text-green-700",
       color: "from-green-500/20 to-emerald-500/20",
       iconBg: "bg-green-500",
       borderColor: "border-green-500/30"
     },
     {
-      number: 2,
-      title: "Deep Experimentation",
-      subtitle: "Testing 20+ Tools & Platforms",
-      description: "Dove into the diverse AI ecosystem, experimenting with no-code tools, coding platforms, and various models. Focused on understanding capabilities and limitations through hands-on testing.",
-      icon: <Search className="h-8 w-8" />,
-      keyActions: [
-        "Tested 20+ AI tools",
-        "Explored no-code/low-code platforms",
-        "Evaluated LLMs and SLMs",
-        "Documented successes and failures"
-      ],
+      title: "Business Use Cases Framework", 
+      subtitle: "Automation vs Agentic AI Decision Model",
+      description: "Strategic analysis of when to use automation versus agentic AI across multiple healthcare scenarios. Interactive journey mapping included.",
+      icon: <Briefcase className="h-8 w-8" />,
+      link: "/business-use-cases",
+      status: "Interactive Analysis",
+      statusColor: "bg-blue-100 text-blue-700",
       color: "from-blue-500/20 to-cyan-500/20",
-      iconBg: "bg-blue-500",
+      iconBg: "bg-blue-500", 
       borderColor: "border-blue-500/30"
     },
     {
-      number: 3,
-      title: "Practical Implementation",
-      subtitle: "Building Real Solutions",
-      description: "Integrated AI components, leveraged agentic systems, and ensured high-quality data to build robust solutions. Multiple use cases were tested and validated during this phase.",
+      title: "Technology Stack Deep Dive",
+      subtitle: "No-Code to Full-Stack Implementation",
+      description: "Comprehensive analysis of 20+ AI tools and platforms. From no-code solutions to full development stacks with real implementation examples.",
       icon: <Code className="h-8 w-8" />,
-      keyActions: [
-        "Built AI-powered applications",
-        "Integrated multiple AI components",
-        "Implemented agentic systems",
-        "Validated real-world use cases"
-      ],
+      link: "/technology-stack",
+      status: "Technology Analysis",
+      statusColor: "bg-purple-100 text-purple-700",
       color: "from-purple-500/20 to-indigo-500/20",
       iconBg: "bg-purple-500",
       borderColor: "border-purple-500/30"
-    },
-    {
-      number: 4,
-      title: "Transformation & Sharing",
-      subtitle: "Impact & Knowledge Transfer",
-      description: "Applied AI to transform processes and outcomes. Documented the journey, shared insights, and focused on fostering AI literacy. Real examples and samples coming soon!",
-      icon: <Rocket className="h-8 w-8" />,
-      keyActions: [
-        "Transformed existing processes",
-        "Documented the complete journey",
-        "Shared knowledge and insights",
-        "Built knowledge repository"
-      ],
-      color: "from-orange-500/20 to-red-500/20",
-      iconBg: "bg-orange-500",
-      borderColor: "border-orange-500/30"
     }
   ];
-
-  const stats = [
-    {
-      icon: <Target className="h-6 w-6" />,
-      value: "20+",
-      label: "AI Tools Tested",
-      color: "text-green-600"
-    },
-    {
-      icon: <TrendingUp className="h-6 w-6" />,
-      value: "2",
-      label: "Industries Analyzed",
-      color: "text-blue-600"
-    },
-    {
-      icon: <Users className="h-6 w-6" />,
-      value: "Potential",
-      label: "ROI",
-      color: "text-purple-600"
-    }
-  ];
-
 
   return (
     <section className="py-20 px-6 bg-gradient-to-b from-background to-primary/5">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <Badge className="bg-primary/20 text-primary border-primary/30 mb-4">
-            <Play className="w-4 h-4 mr-2" />
-            My AI Experimentation Journey
+            <CheckCircle className="w-4 h-4 mr-2" />
+            Success Proof
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            From <span className="text-primary">Curiosity</span> to Impact
+            Real <span className="text-primary">Results</span> From Real <span className="text-primary">Experiments</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Sharing experience and learnings through experimentation from use cases explored and successes 
-            and failures with the Experimentation Hub. Real insights from hands-on AI exploration.
+            Don't just take my word for it. Explore documented business cases, complete case studies, 
+            and detailed technology analyses from actual AI implementations.
           </p>
         </div>
 
-        {/* Key Stats */}
+        {/* Success Metrics */}
         <div className="grid md:grid-cols-3 gap-6 mb-16">
-          {stats.map((stat, index) => (
+          {successMetrics.map((stat, index) => (
             <Card key={index} className="p-6 text-center bg-gradient-to-br from-background to-primary/5 border-primary/20">
               <div className={`w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4`}>
                 <div className={stat.color}>
@@ -138,67 +111,70 @@ export const QuickStart = () => {
           ))}
         </div>
 
-        {/* Journey Steps */}
-        <div className="relative">
-          {/* Progress Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary/30 to-primary/10 rounded-full hidden lg:block"></div>
-          
-          <div className="space-y-16">
-            {steps.map((step, index) => (
-              <div key={index} className={`relative ${index % 2 === 0 ? 'lg:pr-1/2' : 'lg:pl-1/2 lg:ml-auto'}`}>
-                {/* Step Number Circle */}
-                <div className={`absolute ${index % 2 === 0 ? 'lg:right-0 lg:translate-x-1/2' : 'lg:left-0 lg:-translate-x-1/2'} top-8 left-1/2 lg:transform lg:-translate-y-1/2 w-16 h-16 ${step.iconBg} rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg z-10`}>
-                  {step.number}
+        {/* Proof Points */}
+        <div className="space-y-8">
+          {proofPoints.map((proof, index) => (
+            <Card key={index} className={`p-8 bg-gradient-to-br ${proof.color} ${proof.borderColor} border-2 hover:scale-105 transition-all duration-300 group`}>
+              <div className="flex items-start space-x-6">
+                <div className={`flex-shrink-0 p-4 ${proof.iconBg}/10 rounded-xl`}>
+                  <div className={`${proof.iconBg.replace('bg-', 'text-')}`}>
+                    {proof.icon}
+                  </div>
                 </div>
                 
-                <Card className={`p-8 bg-gradient-to-br ${step.color} ${step.borderColor} border-2 hover:scale-105 transition-all duration-300 group ${index % 2 === 0 ? 'lg:mr-8' : 'lg:ml-8'}`}>
-                  <div className="flex items-start space-x-6">
-                    <div className={`flex-shrink-0 p-3 ${step.iconBg}/10 rounded-xl`}>
-                      <div className={`${step.iconBg.replace('bg-', 'text-')}`}>
-                        {step.icon}
-                      </div>
-                    </div>
-                    
-                    <div className="flex-1">
+                <div className="flex-1">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
                       <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
-                        {step.title}
+                        {proof.title}
                       </h3>
-                      <p className="text-lg font-medium text-muted-foreground mb-4">
-                        {step.subtitle}
+                      <p className="text-lg font-medium text-muted-foreground mb-2">
+                        {proof.subtitle}
                       </p>
-                      <p className="text-muted-foreground mb-6 leading-relaxed">
-                        {step.description}
-                      </p>
-                      
-                      <div className="grid sm:grid-cols-2 gap-2 mb-6">
-                        {step.keyActions.map((action, actionIndex) => (
-                          <div key={actionIndex} className="flex items-center space-x-2">
-                            <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                            <span className="text-sm text-muted-foreground">{action}</span>
-                          </div>
-                        ))}
-                      </div>
                     </div>
+                    <Badge className={proof.statusColor}>
+                      {proof.status}
+                    </Badge>
                   </div>
-                </Card>
+                  
+                  <p className="text-muted-foreground mb-6 leading-relaxed">
+                    {proof.description}
+                  </p>
+                  
+                  <Link to={proof.link}>
+                    <Button className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      Explore Details
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                </div>
               </div>
-            ))}
-          </div>
+            </Card>
+          ))}
         </div>
 
-        {/* Journey Impact Metrics */}
-        <div className="mt-16 grid md:grid-cols-2 gap-8">
-          <Card className="p-6 text-center bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
-            <div className="text-3xl font-bold text-green-600 mb-2">3+ Months</div>
-            <p className="text-muted-foreground">Focused Experimentation</p>
-          </Card>
-          <Card className="p-6 text-center bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200">
-            <div className="text-3xl font-bold text-blue-600 mb-2">8+</div>
-            <p className="text-muted-foreground">Use Cases Addressed</p>
+        {/* Call to Action */}
+        <div className="mt-16 text-center">
+          <Card className="p-8 bg-gradient-to-r from-primary/5 to-background border-primary/20">
+            <h3 className="text-2xl font-bold mb-4">Ready to See More?</h3>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+              Dive deeper into specific implementations, explore the decision frameworks, 
+              or learn about the technology stacks that made these successes possible.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/business-use-cases">
+                <Button size="lg" className="w-full sm:w-auto">
+                  Explore All Business Cases
+                </Button>
+              </Link>
+              <Link to="/case-studies">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                  View Case Studies
+                </Button>
+              </Link>
+            </div>
           </Card>
         </div>
-
-
       </div>
     </section>
   );
