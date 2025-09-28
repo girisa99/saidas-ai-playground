@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Brain, Settings, Layers, Zap, Heart, FileText, Pill, Cpu } from 'lucide-react';
-import { getReimbursementInfo } from './HealthcareKnowledgeBase';
+import { HealthcareKnowledgeBase, getReimbursementInfo } from './HealthcareKnowledgeBase';
 
 interface CapabilitiesPromptProps {
   onModeSelect: (mode: 'default' | 'single' | 'multi') => void;
@@ -84,72 +84,156 @@ export const TopicSuggestions: React.FC<TopicSuggestionsProps> = ({
 }) => {
   
   const handleTopicClick = (topic: string) => {
+    // Add emotional intelligence and visual references to responses
+    const getEmotionalResponse = () => {
+      const responses = HealthcareKnowledgeBase.emotionalResponses;
+      if (responses) {
+        const randomEmpathetic = responses.empathetic[Math.floor(Math.random() * responses.empathetic.length)];
+        const randomEncouraging = responses.encouraging[Math.floor(Math.random() * responses.encouraging.length)];
+        return { empathetic: randomEmpathetic, encouraging: randomEncouraging };
+      }
+      return { empathetic: "I'm here to help you through this! 💙", encouraging: "You're asking great questions! 🌟" };
+    };
+
+    const emotional = getEmotionalResponse();
+    
     // Provide specific information for healthcare reimbursement topics
     if (context === 'healthcare' && topic.toLowerCase().includes('reimbursement')) {
-      const reimbursementInfo = getReimbursementInfo(topic);
-      if (reimbursementInfo) {
-        const detailedResponse = `🏥 **${topic} Support**
+      const detailedResponse = `${emotional.empathetic}
 
-**Available Therapies & Products:**
-- Digital Therapeutics (DTx) with CPT codes 90834, 90837
-- Cell & Gene Therapies with outcome-based contracts
-- Oncology treatments with biomarker testing
-- Chronic disease management platforms
+🏥 **${topic} - Complete Support Guide**
 
-**Reimbursement Process Support:**
-- Prior authorization assistance (14-day standard, 72-hour expedited)
-- Claims submission with proper CPT/HCPCS codes
-- Appeal process guidance
-- Coverage verification tools
+**🎯 Available Therapies & Products:**
+• **Digital Therapeutics (DTx)** 📱
+  - Mental Health Apps (Depression, PTSD, Addiction)
+  - Chronic Disease Management (Diabetes, Hypertension)
+  - CPT codes: 90834, 90837, 96116
+  
+• **Cell & Gene Therapies** 🧬
+  - CAR-T Cell Treatments (your own cells, modified to fight disease!)
+  - Gene Replacement Therapies
+  - Outcome-based contracts & patient assistance programs
+  
+• **Oncology Treatments** 🎗️
+  - Immunotherapy (Keytruda, Opdivo) 
+  - Targeted Therapy (Herceptin, Gleevec)
+  - Biomarker testing & companion diagnostics
 
-**Supported Payers:**
-- Medicare Part B (telehealth services, RPM codes)
-- Medicaid (state-specific programs)
-- Commercial insurance (value-based contracts)
+**💰 Reimbursement Process (Made Simple!):**
+📋 **Prior Authorization** (Don't worry, we'll guide you!)
+  - Standard: 14 business days ⏰
+  - Expedited: 72 hours ⚡
+  - Emergency: 24 hours 🚨
+  
+💡 **Pro Tip**: Insurance paperwork can feel like learning a new language, but I speak fluent 'medical billing'! 😉
 
-**Patient Assistance Programs:**
-- Copay reduction programs
-- Travel & lodging assistance
-- Free drug programs
-- Provider support services
+**🎯 Supported Payers:**
+✅ Medicare Part B (telehealth services, RPM codes 99453-99458)
+✅ Medicaid (state-specific programs - varies by location)
+✅ Commercial insurance (value-based contracts trending!)
 
-Would you like me to explain any specific aspect of reimbursement support?`;
+**🤝 Patient Support Programs:**
+💳 Copay reduction (sometimes $0 copay!)
+✈️ Travel & lodging assistance for treatment
+💊 Free drug programs for qualifying patients
+📞 24/7 support hotlines
 
-        onTopicSelect(detailedResponse);
-      } else {
-        onTopicSelect(`Selected topic: ${topic}. How can I help you with this healthcare area?`);
-      }
+${emotional.encouraging}
+
+Would you like me to dive deeper into any specific aspect? I can explain the step-by-step process for your exact situation! 🎯`;
+
+      onTopicSelect(detailedResponse);
     } else if (context === 'healthcare' && (topic.toLowerCase().includes('digital') || topic.toLowerCase().includes('dtx'))) {
-      const digitalInfo = `🔬 **Digital Health & Therapeutics Support**
+      const digitalInfo = `${emotional.encouraging}
 
-**Covered Digital Therapeutics:**
-- Mental Health DTx (Depression, PTSD, Addiction)
-- Chronic Disease Management (Diabetes, Hypertension, COPD)
-- Rehabilitation DTx (Physical Therapy, Stroke Recovery)
+🔬 **Digital Health & Therapeutics - The Future is Here!**
 
-**Reimbursement Codes:**
-- Remote Patient Monitoring: 99453-99458
-- Telehealth: Modifiers 95, GT, GQ
-- Cognitive Behavioral Therapy: 90834, 90837
-- Care Management: CCM codes
+**📱 Covered Digital Therapeutics:**
+🧠 **Mental Health DTx** (FDA-approved & reimbursed!)
+  - Depression & Anxiety Apps with proven clinical outcomes
+  - PTSD Treatment Platforms used by Veterans Affairs
+  - Addiction Recovery Apps (like having a therapist in your pocket!)
+  
+🩺 **Chronic Disease Management**
+  - Digital Diabetes Management (A1C improvements of 1-2%!)
+  - Hypertension Monitoring (24/7 peace of mind)
+  - COPD Management Platforms
+  
+🏃 **Rehabilitation DTx**
+  - Physical Therapy Apps (no more boring exercises!)
+  - Stroke Recovery Platforms with gamification
+  - Post-Surgical Rehabilitation tracking
 
-**Coverage Status:**
-- FDA-approved DTx with established pathways
-- Pilot programs with major insurers
-- Value-based outcome contracts
-- Employer-sponsored wellness programs
+**💰 Reimbursement Codes & Coverage:**
+📊 **Remote Patient Monitoring**: 99453-99458 (Medicare loves these!)
+📞 **Telehealth Services**: Modifiers 95, GT, GQ
+🧠 **Cognitive Behavioral Therapy**: 90834, 90837
+💊 **Care Management**: CCM codes for chronic conditions
 
-**Implementation Support:**
-- Provider training and certification
-- Patient onboarding assistance
-- Outcome data collection
-- Technical integration support
+**🎯 Coverage Status (Getting Better Every Day!):**
+✅ FDA-approved DTx with established reimbursement pathways
+🧪 Pilot programs with major insurers (Aetna, Cigna leading the way!)
+📈 Value-based outcome contracts (pay for results, not just usage)
+🏢 Employer-sponsored wellness programs expanding rapidly
 
-What specific digital health solution can I help you with?`;
+**🚀 Implementation Support:**
+👨‍⚕️ Provider training & certification (we make it easy!)
+📚 Patient onboarding assistance (step-by-step guidance)
+📊 Outcome data collection (prove it works!)
+🔧 Technical integration support
+
+Fun fact: Some digital therapeutics are now as effective as traditional therapy, but available 24/7! 🤯
+
+What specific digital health solution interests you most? I can walk you through the exact coverage and implementation process! 💪`;
 
       onTopicSelect(digitalInfo);
+    } else if (context === 'healthcare' && topic.toLowerCase().includes('infusion')) {
+      const infusionInfo = `${emotional.empathetic}
+
+💉 **Infusion Therapy - Your Complete Journey Guide**
+
+**🔄 The Infusion Process (Step by Step):**
+
+**📋 Pre-Infusion (We've Got This!):**
+✅ Lab work & baseline vitals (just making sure you're ready!)
+✅ Insurance authorization ✓ (the boring paperwork stuff)
+✅ Pre-medication if needed (to prevent any reactions)
+✅ IV access (tiny pinch, then you're all set!)
+✅ Education & consent (knowledge is power! 💪)
+
+*Visual Guide*: 📊 Think of it like a pre-flight checklist - everything checked twice for your safety!
+
+**⏱️ During Infusion (Relax Time!):**
+📊 Continuous monitoring (we're watching over you!)
+⚡ Controlled infusion rate (slow and steady wins the race)
+🛋️ Comfort measures (blankets, pillows, entertainment)
+👀 Side effect monitoring (better safe than sorry!)
+🗣️ Constant communication (we're here for you!)
+
+*Pro Tip*: Many patients bring Netflix, books, or just nap! It's actually pretty relaxing once you get started 😌
+
+**✨ Post-Infusion (You Did It!):**
+📈 Recovery monitoring (making sure you feel great!)
+🏠 Home care instructions (simple stuff, don't worry!)
+📅 Next appointment scheduling (keeping momentum going!)
+📞 Emergency contacts (just in case, but rarely needed!)
+
+**💰 Reimbursement Coverage:**
+✅ Most infusion therapies covered under medical benefit
+✅ Facility fees typically covered
+✅ Professional fees for monitoring included
+✅ Pre-medications usually covered
+
+**🎉 Emotional Support Throughout:**
+Remember: You're being incredibly brave by taking this step for your health! Every infusion brings you closer to feeling better. 💚
+
+The infusion center staff have seen it all and they're rooting for you! Plus, you'll probably make some new friends in the reclining chairs next to you! 😊
+
+Need me to explain any specific part of the process? I'm here to make this as stress-free as possible! 🌟`;
+
+      onTopicSelect(infusionInfo);
     } else {
-      onTopicSelect(`Selected topic: ${topic}. What would you like to know about this?`);
+      onTopicSelect(`${emotional.encouraging} Selected topic: ${topic}. What would you like to know about this? I'm here to help make it as clear and manageable as possible! 😊`);
     }
   };
 
