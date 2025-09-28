@@ -141,18 +141,18 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
       case "case-studies":
         return {
           primary: {
-            title: "Apply to Your Business",
-            description: "See how these patterns apply to different business scenarios",
+            title: "Apply Framework Patterns",
+            description: "See how these validated framework results apply to different business scenarios and healthcare implementations",
             link: "/business-use-cases",
             icon: Target,
             buttonText: "Business Applications"
           },
           secondary: {
-            title: "Understand My Journey",
-            description: "Learn the experimentation process behind these successes",
+            title: "See Framework Journey",
+            description: "Learn the 3-phase experimentation methodology behind these validated results and business outcomes",
             link: "/journey",
             icon: Map,
-            buttonText: "Learning Journey"
+            buttonText: "Framework Journey"
           },
           tertiary: {
             title: "Let's Collaborate",

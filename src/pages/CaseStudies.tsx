@@ -16,10 +16,10 @@ const CaseStudies = () => {
   const [activeTab, setActiveTab] = useState("overview");
 
   useEffect(() => {
-    document.title = "Case Studies - AI Implementation Success Stories - Genie AI Hub";
+    document.title = "3-Phase Framework Results - What I Learned & Built";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Detailed case studies of successful AI implementations in healthcare. See step-by-step transformation of patient onboarding with 75% efficiency gains and 95% accuracy.');
+      metaDescription.setAttribute('content', 'Real-world validation of the Experiment → Validate → Deploy framework through detailed case studies. Following Gartner value methodology with 94% accuracy and proven healthcare implementations.');
     }
   }, []);
 
@@ -73,7 +73,7 @@ const CaseStudies = () => {
           <div className="max-w-5xl">
             <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-3 sm:mb-4">
               <Award className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-              Learning Outcomes
+              3-Phase Framework Results
             </Badge>
             
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
@@ -81,31 +81,31 @@ const CaseStudies = () => {
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-              Personal experimentation journey showcasing how AI tools enable rapid learning 
-              and innovation - sharing knowledge and insights for individual growth.
+              How the <span className="text-genie-accent font-semibold">Experiment → Validate → Deploy</span> framework enabled rapid learning and innovation, 
+              following Gartner value methodology — sharing knowledge and insights for individual growth and business transformation.
             </p>
             
-            {/* Impact Metrics Grid - Mobile Responsive */}
+            {/* Framework Impact Metrics Grid - Mobile Responsive */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 px-2">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Learning Speed</h3>
-                <p className="text-white/80 text-xs">Accelerated with AI tools</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Target className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Accessibility</h3>
-                <p className="text-white/80 text-xs">Open to all skill levels</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Experimentation</h3>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">EXPERIMENT</h3>
                 <p className="text-white/80 text-xs">Rapid prototyping journey</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                <Target className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">VALIDATE</h3>
+                <p className="text-white/80 text-xs">94% accuracy achieved</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">DEPLOY</h3>
+                <p className="text-white/80 text-xs">8+ validated use cases</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Knowledge Sharing</h3>
-                <p className="text-white/80 text-xs">Open learning insights</p>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">GARTNER</h3>
+                <p className="text-white/80 text-xs">Framework aligned value</p>
               </div>
             </div>
             
@@ -122,7 +122,7 @@ const CaseStudies = () => {
                 }}
               >
                 <TrendingUp className="w-4 h-4 mr-2" />
-                Explore My Learning Journey
+                Explore Framework Results
               </Button>
               <Button 
                 variant="outline"
@@ -132,7 +132,7 @@ const CaseStudies = () => {
               >
                 <Link to="/journey">
                   <ArrowRight className="w-4 h-4 mr-2" />
-                  See My Learning Path
+                  See Framework Journey
                 </Link>
               </Button>
             </div>
@@ -170,43 +170,43 @@ const CaseStudies = () => {
                           AI-Powered Patient Onboarding System
                         </h3>
                         <p className="text-genie-primary font-semibold mb-4">
-                          Fully functional application built in 3 days with 90% accuracy
+                          Framework validation: Built in 3 days with 94% accuracy
                         </p>
                       </div>
                     </div>
                     
                     <p className="text-muted-foreground mb-6 leading-relaxed">
-                      Comprehensive patient enrollment application demonstrating rapid AI-powered development. 
-                      Features complete technology stack analysis, Gartner value framework integration, and market challenge solutions.
+                      Comprehensive patient enrollment application demonstrating the Experiment → Validate → Deploy framework in action. 
+                      Features complete technology stack validation, Gartner value methodology integration, and real-world healthcare solutions.
                     </p>
                     
                     <div className="mb-6">
-                      <h4 className="font-semibold text-foreground mb-3">Market Challenge Metrics</h4>
+                      <h4 className="font-semibold text-foreground mb-3">3-Phase Framework Validation Metrics</h4>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
                           <div className="text-xl font-bold text-genie-primary">3</div>
                           <div className="text-xs text-muted-foreground">Days to Design, Build & Test</div>
                         </div>
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
-                          <div className="text-xl font-bold text-genie-primary">90%</div>
-                          <div className="text-xs text-muted-foreground">System Accuracy</div>
+                          <div className="text-xl font-bold text-genie-primary">94%</div>
+                          <div className="text-xs text-muted-foreground">Framework Accuracy</div>
                         </div>
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
-                          <div className="text-xl font-bold text-genie-primary">&gt;70%</div>
-                          <div className="text-xs text-muted-foreground">Dev Cost Saved</div>
+                          <div className="text-xl font-bold text-genie-primary">8+</div>
+                          <div className="text-xs text-muted-foreground">Validated Use Cases</div>
                         </div>
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
-                          <div className="text-xl font-bold text-genie-primary">9.2/10</div>
-                          <div className="text-xs text-muted-foreground">Tech Rating</div>
+                          <div className="text-xl font-bold text-genie-primary">3</div>
+                          <div className="text-xs text-muted-foreground">Gartner Phases</div>
                         </div>
                       </div>
                     </div>
                     
                     <div className="flex flex-wrap gap-2 mb-6">
-                      <Badge variant="secondary" className="text-xs">Hybrid AI-Automation</Badge>
+                      <Badge variant="secondary" className="text-xs">3-Phase Framework</Badge>
                       <Badge variant="secondary" className="text-xs">Healthcare Transformation</Badge>
-                      <Badge variant="secondary" className="text-xs">Gartner Framework</Badge>
-                      <Badge variant="secondary" className="text-xs">Step-by-Step Guide</Badge>
+                      <Badge variant="secondary" className="text-xs">Gartner Value Method</Badge>
+                      <Badge variant="secondary" className="text-xs">Experiment → Validate → Deploy</Badge>
                     </div>
                     
                     <Button 
