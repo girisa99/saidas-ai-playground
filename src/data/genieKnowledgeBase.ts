@@ -2,72 +2,82 @@
 export const genieKnowledgeBase = {
   siteOverview: {
     title: "Genie AI Experimentation Hub",
-    description: "Personal learning journey in AI-driven development by Saidas, sharing experiments and insights for individual growth",
-    creator: "Saidas - AI Innovation Leader and Healthcare Technology Expert",
-    purpose: "Systematic exploration of AI technologies through hands-on experimentation, documentation, and knowledge sharing"
+    description: "3-Phase AI Framework validation journey by Sai Das, following Gartner methodology - sharing structured learning for individual growth and business transformation",
+    creator: "Sai Das - AI Innovation Leader and Healthcare Technology Expert",
+    purpose: "Systematic exploration of AI technologies through the Experiment → Validate → Deploy framework, with Gartner value methodology integration"
+  },
+
+  framework: {
+    title: "3-Phase AI Framework (Experiment → Validate → Deploy)",
+    description: "Structured approach to AI implementation following Gartner value methodology",
+    phases: {
+      experiment: "Rapid prototyping, hypothesis testing, and proof-of-concept development",
+      validate: "Real-world testing, accuracy measurement, and stakeholder feedback integration", 
+      deploy: "Production implementation, scaling, and continuous improvement"
+    },
+    gartnerAlignment: "Framework aligns with Gartner's strategic technology adoption lifecycle for measurable business value",
+    metrics: {
+      accuracy: "94% framework validation accuracy achieved",
+      useCases: "8+ validated business use cases implemented",
+      timeToValue: "3 days average from concept to validated prototype"
+    }
   },
 
   pages: {
     home: {
-      title: "Genie AI Experimentation HUB - Learn AI Development & Experimentation",
-      description: "Main landing page featuring AI journey overview, trust indicators, value propositions, and quick start guide",
-      keyFeatures: ["Multi-hero sections", "Trust indicators", "Gartner value framework", "Quick start journey"]
+      title: "Genie AI Experimentation HUB - 3-Phase AI Framework Learning",
+      description: "Main landing page featuring AI framework journey, Gartner value methodology, trust indicators, and quick start guide",
+      keyFeatures: ["3-Phase framework overview", "Gartner value integration", "Trust indicators", "Framework journey guide"]
     },
     about: {
-      title: "About Saidas - AI Innovation Leader",
-      description: "Background, expertise, and vision for AI experimentation hub",
-      expertise: ["Healthcare technology", "AI innovation", "Digital transformation", "System architecture"]
+      title: "About Sai Das - AI Innovation Leader",
+      description: "Background, expertise, and vision for structured AI experimentation using proven methodologies",
+      expertise: ["Healthcare technology", "AI innovation", "3-phase framework validation", "Gartner methodology implementation"]
     },
     journey: {
-      title: "My AI Journey - 5 Phase Transformation",
-      description: "Detailed documentation of AI learning journey from curiosity to innovation",
-      phases: [
-        "Phase 1: The Spark - Initial curiosity and exploration",
-        "Phase 2: Curiosity Ignited - Deep dive into AI fundamentals", 
-        "Phase 3: The Breakthrough - First successful implementations",
-        "Phase 4: Scalable Innovation - Building robust solutions",
-        "Phase 5: The Resilient Hub - Establishing sustainable AI practices"
-      ]
+      title: "AI Development Journey - Framework Evolution",
+      description: "Detailed documentation of AI learning journey from curiosity to structured 3-phase framework implementation",
+      approach: "Personal learning journey demonstrating framework development and validation over time"
     },
     technology: {
-      title: "Technology Stack Explored",
-      description: "Comprehensive overview of AI tools, platforms, and technologies tested",
-      categories: ["LLMs", "AI Platforms", "Development Tools", "Infrastructure", "Security"]
+      title: "3-Phase Tech Framework",
+      description: "Comprehensive technology stack organized by framework phases: Experiment → Validate → Deploy",
+      categories: ["Experimentation tools", "Validation platforms", "Deployment infrastructure", "Gartner-aligned technologies"]
     },
     businessUseCases: {
-      title: "Business Use Cases - Automation vs Agentic AI",
-      description: "Strategic framework for technology selection in healthcare and business contexts",
-      focus: ["Patient onboarding", "Referral processes", "Workflow automation", "Decision frameworks"]
+      title: "Gartner Business Solutions",
+      description: "Strategic framework for technology selection using Gartner value methodology in healthcare and business contexts",
+      focus: ["3-phase case implementations", "Gartner value realization", "Healthcare workflow automation", "Business decision frameworks"]
     },
     caseStudies: {
-      title: "Case Studies & Success Stories", 
-      description: "Detailed analysis of AI implementations with metrics and outcomes",
-      examples: ["Healthcare AI transformation", "Financial services automation", "Process optimization"]
+      title: "Validated Case Studies - Framework Results", 
+      description: "Detailed analysis of 3-phase framework implementations with Gartner-aligned metrics and outcomes",
+      examples: ["Patient onboarding (94% accuracy in 3 days)", "Healthcare AI transformation", "Framework validation studies"]
     }
   },
 
   aiCapabilities: {
     specializations: [
-      "AI Innovation & Value Creation",
-      "Gartner Value Framework mapping", 
-      "Technology stack architecture",
-      "Healthcare business use cases",
-      "Digital therapeutics (DTx)",
-      "Cell & gene therapies",
-      "Experimentation methodologies",
-      "Security and compliance",
-      "Journey mapping and case studies"
+      "3-Phase AI Framework (Experiment → Validate → Deploy)",
+      "Gartner Value Framework implementation", 
+      "Technology stack architecture and validation",
+      "Healthcare business use cases with proven ROI",
+      "Digital therapeutics (DTx) implementation",
+      "Cell & gene therapy technology solutions",
+      "Structured experimentation methodologies",
+      "AI security and compliance frameworks",
+      "Framework validation and case study development"
     ],
     contexts: {
-      technology: "Formal, technical discussions about AI implementation, architecture, and best practices",
-      healthcare: "Empathetic, detailed explanations of healthcare applications, regulations, and patient impact"
+      technology: "Formal, technical discussions about 3-phase AI implementation, architecture, and Gartner-aligned best practices",
+      healthcare: "Empathetic, detailed explanations of healthcare applications, proven framework results, and patient impact validation"
     },
     modes: [
-      "Default mode for general conversations",
-      "Single-agent mode for focused expertise", 
-      "Multi-agent mode for complex analysis",
-      "Split-screen comparisons with different AI models",
-      "RAG-enabled responses with knowledge base integration"
+      "3-Phase framework guidance for structured AI implementation",
+      "Gartner methodology consultation for business value realization", 
+      "Validation mode for testing framework applications",
+      "Case study analysis with measurable outcomes",
+      "RAG-enabled responses with validated knowledge base integration"
     ]
   },
 
@@ -110,17 +120,22 @@ export const genieKnowledgeBase = {
   },
 
   experimentationFramework: {
-    phases: {
-      discovery: "Months 1-3: Technology exploration, use case identification, skill development",
-      experimentation: "Months 4-9: Hypothesis testing, pilot implementation, user feedback", 
-      scale: "Months 10-18: Production deployment, system integration, team scaling"
+    coreFramework: {
+      experiment: "Rapid prototyping journey - Test ideas quickly with minimal viable implementations",
+      validate: "Real-world testing phase - Measure accuracy, gather feedback, validate business value", 
+      deploy: "Production implementation - Scale successful experiments into robust, measurable solutions"
     },
-    methodology: [
-      "Start small with specific problems",
-      "Document everything - successes and failures",
-      "Test with real data (safely)",
-      "Iterate based on feedback",
-      "Scale only after thorough validation"
+    gartnerMethodology: {
+      valueRealization: "Structured approach to technology adoption with measurable business outcomes",
+      riskMitigation: "Phased implementation reduces risk while maximizing learning and value creation",
+      timeline: "3-day average from concept to validated prototype, following proven methodologies"
+    },
+    successMetrics: [
+      "94% framework accuracy across multiple use cases",
+      "8+ validated business implementations", 
+      "3-day average development cycle time",
+      "Gartner-aligned value realization tracking",
+      "Continuous feedback integration and improvement"
     ]
   },
 
@@ -150,43 +165,46 @@ export const genieKnowledgeBase = {
   },
 
   gartnerFramework: {
-    description: "Mapping AI value creation to practical technology implementations",
+    description: "3-Phase AI Framework aligned with Gartner methodology for practical technology implementations with measurable business value",
     valueRealization: {
-      shortTerm: "Quick wins and proof of concepts",
-      mediumTerm: "Scaled implementations with measurable ROI",
-      longTerm: "Strategic transformation and competitive advantage"
+      experiment: "Quick proof-of-concept validation with minimal resource investment", 
+      validate: "Measured implementations with accuracy tracking and stakeholder feedback",
+      deploy: "Strategic transformation with competitive advantage and sustainable ROI"
     },
-    kpis: ["ROI metrics", "Efficiency gains", "Cost reductions", "Quality improvements"]
+    kpis: ["94% accuracy metrics", "3-day implementation cycles", "8+ validated use cases", "Continuous value measurement"],
+    businessAlignment: "Framework ensures technology initiatives align with business objectives and deliver measurable outcomes"
   },
 
   caseStudyExamples: {
-    healthcare: {
-      challenge: "40% reduction in diagnosis time",
-      solution: "AI-powered diagnostic assistance",
-      technologies: ["Computer vision", "Natural language processing", "Clinical decision support"],
-      outcomes: ["Faster diagnosis", "Improved accuracy", "Reduced clinician workload"]
+    patientOnboarding: {
+      challenge: "Complex healthcare patient enrollment process requiring 94% accuracy",
+      solution: "3-Phase AI Framework implementation: Experiment → Validate → Deploy",
+      framework: "Built in 3 days using structured methodology with real-world validation",
+      technologies: ["Multi-agent AI systems", "Natural language processing", "Clinical decision support"],
+      outcomes: ["94% accuracy achieved", "3-day development cycle", "Gartner methodology validated", "Scalable framework proven"]
     },
-    financial: {
-      challenge: "80% improvement in fraud detection", 
-      solution: "Machine learning fraud prevention",
-      technologies: ["Anomaly detection", "Pattern recognition", "Real-time processing"],
-      outcomes: ["Reduced fraud losses", "Faster detection", "Lower false positives"]
+    frameworkValidation: {
+      challenge: "Prove 3-Phase Framework effectiveness across multiple use cases", 
+      solution: "Systematic validation across 8+ business scenarios with Gartner alignment",
+      technologies: ["Structured experimentation", "Outcome measurement", "Stakeholder feedback integration"],
+      outcomes: ["Framework validated", "Methodology proven", "Replicable process established", "Business value demonstrated"]
     }
   },
 
   emergingTechnologies: [
-    "Agentic AI and multi-agent systems",
-    "No-code/low-code AI platforms", 
-    "Edge AI and local model deployment",
-    "RAG (Retrieval Augmented Generation)",
-    "Model Context Protocol (MCP)",
-    "AI observability and monitoring tools"
+    "3-Phase Framework methodology for AI implementation",
+    "Gartner-aligned value realization tracking",
+    "Agentic AI and multi-agent systems validation",
+    "Structured experimentation platforms", 
+    "Outcome-based AI development cycles",
+    "RAG (Retrieval Augmented Generation) with framework integration",
+    "Framework-driven AI observability and monitoring"
   ],
 
   communityGuidelines: {
-    approach: "Learning through experimentation and sharing",
-    values: ["Transparency", "Practical application", "Continuous learning", "Knowledge sharing"],
-    engagement: "Connect on LinkedIn for AI discussions and experiment sharing"
+    approach: "Structured learning through 3-Phase Framework validation and Gartner methodology implementation",
+    values: ["Framework-driven transparency", "Measurable outcomes", "Structured learning", "Validated knowledge sharing"],
+    engagement: "Connect on LinkedIn to discuss 3-Phase AI Framework implementation and share validated experiments"
   }
 };
 
@@ -226,8 +244,10 @@ export const getContextualKnowledge = (topic: string): any => {
     'journey': genieKnowledgeBase.pages.journey,
     'security': genieKnowledgeBase.securityCompliance,
     'gartner': genieKnowledgeBase.gartnerFramework,
+    'framework': genieKnowledgeBase.framework,
     'experiments': genieKnowledgeBase.experimentationFramework,
-    'ai': genieKnowledgeBase.aiCapabilities
+    'ai': genieKnowledgeBase.aiCapabilities,
+    'cases': genieKnowledgeBase.caseStudyExamples
   };
   
   return topicMap[topic.toLowerCase()] || genieKnowledgeBase.siteOverview;

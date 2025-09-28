@@ -57,9 +57,9 @@ export const KnowledgePoweredFAQ = ({ onStartConversation }: KnowledgePoweredFAQ
       },
       {
         category: "AI Journey", 
-        question: "How does the 5-phase AI journey work?",
-        answer: Object.values(genieKnowledgeBase.experimentationFramework.phases).join(" → "),
-        context: "journey"
+        question: "How does the 3-phase AI framework work?",
+        answer: Object.values(genieKnowledgeBase.framework.phases).join(" → "),
+        context: "framework"
       },
       {
         category: "Technology Stack",

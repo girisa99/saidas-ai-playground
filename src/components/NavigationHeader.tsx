@@ -128,19 +128,11 @@ export const NavigationHeader = () => {
               <Button 
                 variant="outline"
                 size="sm" 
-                className="hidden xl:inline-flex text-xs font-medium hover:bg-muted/80 whitespace-nowrap h-8 px-2"
+                className="text-xs font-medium hover:bg-muted/80 whitespace-nowrap h-8 px-3"
                 onClick={() => window.open('https://www.genieaiexpermentationhub.com', '_blank')}
               >
                 <ExternalLink className="w-3 h-3 mr-1 flex-shrink-0" />
                 <span>Login</span>
-              </Button>
-              <Button 
-                size="sm" 
-                className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground font-medium shadow-lg hover:shadow-primary/25 transition-all duration-300 whitespace-nowrap h-8 px-2"
-                onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
-              >
-                <span className="hidden lg:inline">Connect</span>
-                <ExternalLink className="w-3 h-3 ml-1 flex-shrink-0" />
               </Button>
             </div>
           </div>
