@@ -31,90 +31,49 @@ const VerticalJourneyInfographic = () => {
   const phases = [
     {
       id: 1,
-      title: "The Spark",
-      subtitle: "The Conversation That Changed Everything",
-      date: "May 2025",
+      title: "EXPERIMENT",
+      subtitle: "From Spark to Deep AI Exploration",
+      date: "May-June 2025",
       icon: Lightbulb,
       image: phase01Spark,
-      description: "Evening coffee time over weekend with community members, including close friend and associate Prashant K, sparked a revolutionary question about AI transformation that ignited this ongoing journey.",
+      description: "Evening coffee with community members sparked a revolutionary question about AI transformation. This curiosity transformed into an all-consuming 45-day deep dive, building my personal AI experimentation lab and systematically exploring the landscape of AI possibilities.",
       touchPoints: [
-        "Initial spark from transformative conversation",
-        "Recognition of fundamental shift potential",
-        "Deep curiosity ignited for AI exploration"
+        "Initial spark from transformative conversation with Prashant K and community members",
+        "Recognition of fundamental shift potential in AI landscape",
+        "Established personal AI experimentation hub with systematic model comparison",
+        "Conducted 45-day intensive deep dive across GPT, Claude, and Gemini models", 
+        "Developed foundational understanding of prompt engineering and model optimization",
+        "Built prototypes using Bolt, Loveable, and Solid frameworks with TypeScript",
+        "Integrated AI into real-world workflows with GitHub, DocuSign, and Twilio APIs",
+        "Deep curiosity ignited for comprehensive AI exploration"
       ],
       painPoints: [
-        "Overwhelming possibilities without direction",
-        "Limited understanding of AI's true potential",
-        "Uncertainty about where to begin"
+        "Overwhelming possibilities without clear direction or starting point",
+        "Limited understanding of AI's true potential beyond surface-level applications",
+        "Overwhelming complexity of AI model selection and optimization decisions",
+        "Challenges preventing redundancy and ensuring application stability",
+        "Steep learning curve requiring methodical experimentation approach",
+        "Trial and error process in understanding proper AI project structures",
+        "Frustrating moments of 'why isn't this working?' during foundational learning",
+        "Uncertainty about where to begin the AI transformation journey"
       ],
-      technologies: ["Strategic Vision", "Conceptual Framework"],
+      technologies: ["Strategic Vision", "Conceptual Framework", "GPT Series", "Claude", "Gemini", "Bolt", "Loveable", "Solid", "TypeScript", "Supabase", "PostgreSQL", "Vector Databases"],
       color: "genie-primary",
       bgColor: "bg-gradient-to-br from-genie-primary/5 to-genie-primary/10"
     },
     {
       id: 2,
-      title: "From Curiosity to Breakthrough",
-      subtitle: "The 45-Day Deep Dive: Building My AI Lab",
-      date: "May-June 2025",
-      icon: Brain,
-      image: phase02CuriosityArtwork,
-      description: "What began as pure curiosity quickly transformed into an all-consuming personal mission. After two decades in the industry, AI felt profoundly different - a fundamental shift demanding deep, hands-on exploration through intensive experimentation and learning.",
-      touchPoints: [
-        "Established personal AI experimentation hub with systematic model comparison",
-        "Conducted 45-day intensive deep dive across GPT, Claude, and Gemini models",
-        "Developed foundational understanding of prompt engineering and model optimization",
-        "Built prototypes using Bolt, Loveable, and Solid frameworks with TypeScript",
-        "Integrated AI into real-world workflows with GitHub, DocuSign, and Twilio APIs"
-      ],
-      painPoints: [
-        "Overwhelming complexity of AI model selection and optimization",
-        "Challenges preventing redundancy and ensuring application stability",
-        "Steep learning curve requiring methodical experimentation approach",
-        "Trial and error process in understanding proper AI project structures",
-        "Frustrating moments of 'why isn't this working?' during foundational learning"
-      ],
-      technologies: ["GPT Series", "Claude", "Gemini", "Bolt", "Loveable", "Solid", "TypeScript", "Supabase", "PostgreSQL", "Vector Databases"],
-      color: "genie-teal",
-      bgColor: "bg-gradient-to-br from-genie-teal/5 to-genie-teal/10"
-    },
-    {
-      id: 3,
-      title: "The Breakthrough: From Code to Creativity",
-      subtitle: "Building Resilient AI Systems & Smart Data Foundation",
-      date: "May-June 2025",
-      icon: Brain,
+      title: "VALIDATE",
+      subtitle: "From Breakthrough to Production-Ready Foundation",
+      date: "May-August 2025",
+      icon: Target,
       image: phase03BreakthroughArtwork,
-      description: "The pivotal shift from viewing AI purely as a utility to embracing it as an invaluable creative partner. This breakthrough came through integrating powerful AI-powered design and development tools, building resilient systems with sophisticated error handling, and creating intelligent data foundations with vector databases.",
+      description: "The pivotal shift from experimental curiosity to validated, production-ready solutions. This phase represents the breakthrough realization of AI's creative potential, combined with building enterprise-grade foundations that transform 45-day learnings into scalable, resilient architectures.",
       touchPoints: [
         "Breakthrough realization of AI's creative potential beyond coding assistance",
         "Integrated visual design tools (Visio, draw.io, Miro, Figma) for collaborative brainstorming",
         "Transformed coding with Cursor IDE's AI-native capabilities and dynamic dialogue",
         "Built resilient architectures with sophisticated error handling and feedback loops",
-        "Leveraged TypeScript extensively for compile-time checks and improved maintainability",
-        "Explored vector databases for high-dimensional data and semantic search capabilities",
-        "Prototyped with cutting-edge tools like Loveable, Bolt, and V0 by Vercel",
-        "Integrated GitHub, DocuSign, and Twilio APIs into AI-driven workflows"
-      ],
-      painPoints: [
-        "Moving past static data storage to intelligent, learning data systems",
-        "Designing systems that actively learn from errors and adapt over time",
-        "Balancing rapid prototyping with robust, scalable architectures",
-        "Complex integration challenges across multiple AI-powered tools",
-        "Need for modularity and extensibility without compromising performance"
-      ],
-      technologies: ["Cursor IDE", "Visio", "Draw.io", "Miro", "Figma", "TypeScript", "Vector Databases", "Supabase", "PostgreSQL", "Loveable", "Bolt", "V0", "GitHub API", "DocuSign API", "Twilio"],
-      color: "genie-teal",
-      bgColor: "bg-gradient-to-br from-genie-teal/5 to-genie-teal/10"
-    },
-    {
-      id: 4,
-      title: "Scalable MVP Foundation",
-      subtitle: "From 45-Day Lessons to Production-Ready Architecture",
-      date: "July-August 2025",
-      icon: Target,
-      image: phase04ScalableArtwork,
-      description: "Transforming 45-day learnings into enterprise-grade foundations. Building robust, scalable MVP applications with comprehensive guardrails, security frameworks, and TypeScript-database alignment to eliminate technical debt and ensure production readiness.",
-      touchPoints: [
         "Applied 45-day deep dive lessons to architect scalable MVP foundations",
         "Implemented comprehensive TypeScript-database schema alignment and validation",
         "Built intelligent guardrail systems with small verification agents",
@@ -124,11 +83,12 @@ const VerticalJourneyInfographic = () => {
         "Implemented hallucination reduction techniques through structured validation",
         "Built modular component verification systems before feature deployment",
         "Established enterprise-grade CI/CD pipelines with security scanning",
-        "Created comprehensive monitoring and vulnerability assessment frameworks",
-        "Integrated design visualization tools (Visio, draw.io, Miro, Figma) for architecture mapping",
-        "Constructed resilient development ecosystem with Cursor IDE, Replit, and Docker"
+        "Created comprehensive monitoring and vulnerability assessment frameworks"
       ],
       painPoints: [
+        "Moving past static data storage to intelligent, learning data systems",
+        "Designing systems that actively learn from errors and adapt over time",
+        "Balancing rapid prototyping with robust, scalable architectures",
         "Balancing rapid MVP development with robust architectural foundations",
         "Eliminating accumulated technical debt while maintaining development velocity",
         "Ensuring TypeScript types perfectly align with database schemas without friction",
@@ -137,21 +97,20 @@ const VerticalJourneyInfographic = () => {
         "Preventing feature redundancy while encouraging innovation and experimentation",
         "Optimizing for both development speed and production stability simultaneously",
         "Implementing guardrails that enhance rather than hinder development workflow",
-        "Complex tool integration challenges across multiple development environments",
-        "Performance optimization bottlenecks while scaling from prototype to production"
+        "Complex tool integration challenges across multiple development environments"
       ],
-      technologies: ["TypeScript", "Schema Validation", "RLS Policies", "Security Scanning", "Verification Agents", "CI/CD Pipelines", "Monitoring", "Database Optimization", "Duplicate Detection", "Vulnerability Assessment", "Visio", "Draw.io", "Miro", "Figma", "Cursor IDE", "Replit", "Docker"],
-      color: "genie-primary",
-      bgColor: "bg-gradient-to-br from-genie-primary/5 to-genie-primary/10"
+      technologies: ["Cursor IDE", "Visio", "Draw.io", "Miro", "Figma", "TypeScript", "Vector Databases", "Schema Validation", "RLS Policies", "Security Scanning", "Verification Agents", "CI/CD Pipelines", "Monitoring", "Database Optimization", "Duplicate Detection", "Vulnerability Assessment", "Replit", "Docker"],
+      color: "genie-teal",
+      bgColor: "bg-gradient-to-br from-genie-teal/5 to-genie-teal/10"
     },
     {
-      id: 5,
-      title: "Resilient AI Experimentation Hub",
-      subtitle: "Stable Healthcare AI Platform with Multi-Agent Orchestration",
+      id: 3,
+      title: "DEPLOY",
+      subtitle: "Resilient Healthcare AI Platform in Production",
       date: "August-September 2025",
       icon: Network,
       image: phase05ResilientHubArtwork,
-      description: "Successfully built a stable, resilient AI platform that serves as the backbone for healthcare experimentation - integrating real-world systems like NPI, CMS, FDA, and EMR platforms while deploying multiple agents for complex patient onboarding workflows without breaking functionality.",
+      description: "Successfully deployed a stable, resilient AI platform that serves as the production backbone for healthcare experimentation - integrating real-world systems like NPI, CMS, FDA, and EMR platforms while orchestrating multiple agents for complex patient onboarding workflows without breaking functionality.",
       touchPoints: [
         "Built unbreakable, stable AI platform foundation serving as experimentation backbone",
         "Successfully integrated healthcare systems: NPI, CMS credentialing, FDA product/packaging/AE tracking",
