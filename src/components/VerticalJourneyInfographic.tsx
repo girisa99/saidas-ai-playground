@@ -241,7 +241,7 @@ const VerticalJourneyInfographic = () => {
           }
           return nextPhase;
         });
-      }, 8000); // Extended to 8 seconds to allow time to read touch points and pain points
+      }, 12000); // Increased to 12 seconds to reduce performance impact
     } else {
       if (intervalRef.current) clearInterval(intervalRef.current);
     }

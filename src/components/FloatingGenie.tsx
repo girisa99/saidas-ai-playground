@@ -225,11 +225,11 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
   }, [hasInteracted]);
 
   useEffect(() => {
-    // Rotate messages every 6 seconds when tooltip is visible
+    // Rotate messages every 10 seconds when tooltip is visible (increased from 6s)
     if (showTooltip && !hasInteracted) {
       const timer = setInterval(() => {
         setCurrentMessageIndex((prev) => (prev + 1) % pageMessages.length);
-      }, 6000);
+      }, 10000); // Increased to reduce CPU usage
       return () => clearInterval(timer);
     }
   }, [showTooltip, hasInteracted, pageMessages.length]);

@@ -1,6 +1,6 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
-
+import { LazyComponentLoader } from "@/components/LazyComponentLoader";
 import { IntegratedTechnologyExploration } from "@/components/IntegratedTechnologyExploration";
 import { CTASection } from "@/components/CTASection";
 
@@ -35,19 +35,19 @@ const TechnologyStack = () => {
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-genie-dark/90 via-genie-primary/80 to-genie-secondary/70" />
         
-        {/* Animated Tech Particles */}
+        {/* Optimized Tech Particles - Reduced count and simplified animations */}
         <div className="absolute inset-0">
-          {[...Array(25)].map((_, i) => (
+          {[...Array(8)].map((_, i) => (
             <div
               key={i}
-              className="absolute bg-genie-accent/40 rounded-full animate-float"
+              className="absolute bg-genie-accent/30 rounded-full animate-pulse"
               style={{
-                width: `${Math.random() * 4 + 2}px`,
-                height: `${Math.random() * 4 + 2}px`,
+                width: `${Math.random() * 3 + 2}px`,
+                height: `${Math.random() * 3 + 2}px`,
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 4}s`,
-                animationDuration: `${3 + Math.random() * 3}s`
+                animationDelay: `${Math.random() * 2}s`,
+                animationDuration: `${4 + Math.random() * 2}s`
               }}
             />
           ))}
@@ -124,10 +124,21 @@ const TechnologyStack = () => {
       </section>
       
         
-        <IntegratedTechnologyExploration />
+        <LazyComponentLoader fallback={
+          <div className="h-96 flex items-center justify-center">
+            <div className="text-center">
+              <div className="animate-pulse rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-muted-foreground">Loading 3-Phase Technology Framework...</p>
+            </div>
+          </div>
+        }>
+          <IntegratedTechnologyExploration />
+        </LazyComponentLoader>
         
         {/* Strategic navigation flow */}
-        <CTASection currentPage="technology" />
+        <LazyComponentLoader>
+          <CTASection currentPage="technology" />
+        </LazyComponentLoader>
       </main>
       <Footer />
     </div>
