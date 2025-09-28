@@ -405,7 +405,23 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                   transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
                 />
 
-                {/* Magic fumes/smoke from bottle neck */}
+                {/* "I am your Genie..." message coming from fumes */}
+                <motion.div 
+                  className="absolute -top-8 left-1/2 -translate-x-1/2 z-30"
+                  animate={{
+                    y: [0, -5, 0],
+                    opacity: [0.7, 1, 0.7]
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                >
+                  <div className="bg-gradient-to-r from-purple-600/90 to-blue-600/90 text-white text-xs px-3 py-1 rounded-full shadow-lg backdrop-blur-sm border border-white/20">
+                    💨 I am your Genie...
+                  </div>
+                </motion.div>
                 <motion.div className="absolute -top-1 left-1/2 -translate-x-1/2 z-20">
                   {[...Array(4)].map((_, i) => (
                     <motion.div
@@ -514,6 +530,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
               />
             )}
 
+            </motion.div>
           </motion.div>
         </Draggable>
       </AnimatePresence>
