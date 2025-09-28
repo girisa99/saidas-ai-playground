@@ -74,6 +74,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [isLiveAgentAvailable, setIsLiveAgentAvailable] = useState(false);
   const [conversationPersonality, setConversationPersonality] = useState<'formal' | 'casual' | 'empathetic'>('casual');
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
+  const [hasStartedConversation, setHasStartedConversation] = useState(false);
   const [aiConfig, setAIConfig] = useState<AIConfig>({
     mode: 'default',
     ragEnabled: false,
@@ -191,6 +192,12 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
 
     const userMessage = inputMessage.trim();
     setInputMessage('');
+    
+    // Mark that conversation has started
+    if (!hasStartedConversation) {
+      setHasStartedConversation(true);
+    }
+    
     addMessage({
       role: 'user',
       content: userMessage,
@@ -286,6 +293,56 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
     }
   };
 
+  const handleClose = async () => {
+    // Send conversation transcript if user had a meaningful conversation
+    if (hasStartedConversation && messages.length > 2 && userInfo) {
+      await sendConversationTranscript();
+    }
+    onClose();
+  };
+
+  const sendConversationTranscript = async () => {
+    try {
+      const transcript = messages
+        .map((msg, idx) => `${idx + 1}. ${msg.role === 'user' ? 'User' : 'Genie AI'}: ${msg.content}`)
+        .join('\n\n');
+
+      const conversationSummary = {
+        userInfo: `${userInfo!.firstName} ${userInfo!.lastName || ''} (${userInfo!.email})`,
+        context: context,
+        topic: selectedTopic,
+        aiConfig: aiConfig,
+        messageCount: messages.length,
+        conversationDuration: `Started: ${messages[0]?.timestamp || 'Unknown'}`,
+        transcript: transcript
+      };
+
+      await ContactService.submitContactForm({
+        name: 'Genie AI System',
+        email: 'genieaiexpermentationhub@gmail.com',
+        subject: `[TRANSCRIPT] Conversation with ${userInfo!.firstName} - ${context}/${selectedTopic}`,
+        message: `Conversation Transcript:
+
+User: ${conversationSummary.userInfo}
+Context: ${conversationSummary.context}
+Topic: ${conversationSummary.topic}
+AI Configuration: ${JSON.stringify(conversationSummary.aiConfig, null, 2)}
+Messages: ${conversationSummary.messageCount}
+${conversationSummary.conversationDuration}
+
+--- FULL TRANSCRIPT ---
+${conversationSummary.transcript}
+
+--- END TRANSCRIPT ---
+
+This transcript was automatically generated when the user closed the conversation.`
+      } as any);
+
+    } catch (error) {
+      console.error('Failed to send conversation transcript:', error);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -359,7 +416,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={onClose}
+                onClick={handleClose}
                 className="h-6 w-6 p-0 text-white hover:bg-white/20"
               >
                 <X className="h-3 w-3" />
