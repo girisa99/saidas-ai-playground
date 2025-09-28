@@ -79,7 +79,7 @@ export const NavigationHeader = () => {
 
           {/* Desktop Navigation - Center, takes available space */}
           <nav className="hidden lg:flex items-center justify-center flex-1 min-w-0 px-2">
-            <div className="flex items-center justify-start space-x-1 max-w-full overflow-x-auto px-2">
+            <div className="flex items-center justify-center space-x-1 w-full">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = isActivePath(item.to);
@@ -87,11 +87,11 @@ export const NavigationHeader = () => {
                 // Custom labels for responsive display
                 const getResponsiveLabel = (label: string) => {
                   switch(label) {
-                    case "About Me": return { full: "About Me", short: "About Me" };
-                    case "My AI Journey": return { full: "My AI Journey", short: "My Journey" };
-                    case "Tech Stack Explored": return { full: "Tech Stack Explored", short: "My Tech Stack" };
-                    case "Business Use Cases": return { full: "Business Use Cases", short: "Use Cases" };
-                    case "Case Studies": return { full: "Case Studies", short: "Case Studies" };
+                    case "About Me": return { full: "About Me", short: "About" };
+                    case "My AI Journey": return { full: "My Journey", short: "Journey" };
+                    case "Tech Stack Explored": return { full: "My Tech St", short: "Tech" };
+                    case "Business Use Cases": return { full: "Use Cases", short: "Cases" };
+                    case "Case Studies": return { full: "Case Studies", short: "Studies" };
                     default: return { full: label, short: label };
                   }
                 };
@@ -102,15 +102,15 @@ export const NavigationHeader = () => {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`flex items-center gap-1 px-3 xl:px-4 py-2 xl:py-2.5 rounded-lg text-xs xl:text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
+                    className={`flex items-center gap-1 px-2 lg:px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 whitespace-nowrap ${
                       isActive
                         ? 'bg-primary text-primary-foreground shadow-md'
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                     }`}
                   >
-                    <Icon className="w-4 xl:w-5 h-4 xl:h-5 flex-shrink-0" />
-                    <span className="hidden xl:inline text-sm">{responsiveLabel.full}</span>
-                    <span className="xl:hidden text-xs">{responsiveLabel.short}</span>
+                    <Icon className="w-4 h-4 flex-shrink-0" />
+                    <span className="hidden xl:inline text-xs">{responsiveLabel.full}</span>
+                    <span className="lg:inline xl:hidden text-xs">{responsiveLabel.short}</span>
                   </Link>
                 );
               })}
