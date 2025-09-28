@@ -7,10 +7,10 @@ import { useEffect } from "react";
 
 const BusinessUseCases = () => {
   useEffect(() => {
-    document.title = "Business Use Cases - Automation vs Agentic AI - Genie AI Hub";
+    document.title = "3-Phase Framework Applications - Real-World AI Experiments";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Strategic technology selection for oncology workflows. Comprehensive framework for choosing between automation and agentic AI in patient onboarding and referral processes.');
+      metaDescription.setAttribute('content', 'Real-world validation of the Experiment → Validate → Deploy framework through healthcare AI implementations. Strategic technology selection following Gartner value methodology for oncology workflows.');
     }
   }, []);
 

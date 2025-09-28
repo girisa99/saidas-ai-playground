@@ -33,29 +33,29 @@ export const BusinessUseCasesHero = ({
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight px-2">
-          AI Business Use Cases
-          <span className="block text-genie-accent mt-2">Real-World Experiments</span>
+          <span className="text-genie-accent">3-Phase Framework</span> Applications
+          <span className="block text-white mt-2">Real-World Experiments</span>
         </h1>
         
         <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-          Real-world healthcare AI implementations and learnings from our experimentation hub. Exploring various scenarios where some are implemented and actively being tested, while others are in development phases as part of our ongoing experimentation initiatives.
+          Real-world validation of the <span className="text-genie-accent font-semibold">Experiment → Validate → Deploy</span> framework through healthcare AI implementations, following Gartner value methodology. Exploring various scenarios where some are implemented and actively being tested, while others are in development phases as part of our ongoing experimentation initiatives.
         </p>
         
         {/* Key Features Grid - Mobile Responsive */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 px-2">
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
             <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 mb-2" />
-            <h3 className="font-semibold text-white text-xs sm:text-sm">Live Steps</h3>
+            <h3 className="font-semibold text-white text-xs sm:text-sm">DEPLOY Phase</h3>
             <p className="text-white/80 text-xs">Deployed & Working</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
             <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 mb-2" />
-            <h3 className="font-semibold text-white text-xs sm:text-sm">Testing Phase</h3>
+            <h3 className="font-semibold text-white text-xs sm:text-sm">VALIDATE Phase</h3>
             <p className="text-white/80 text-xs">Active Validation</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
             <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400 mb-2" />
-            <h3 className="font-semibold text-white text-xs sm:text-sm">In Development</h3>
+            <h3 className="font-semibold text-white text-xs sm:text-sm">EXPERIMENT Phase</h3>
             <p className="text-white/80 text-xs">Building Components</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">

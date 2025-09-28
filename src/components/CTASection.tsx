@@ -123,11 +123,11 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
             buttonText: "View Case Studies"
           },
           secondary: {
-            title: "Learn My Process",
-            description: "Understand the journey that led to these business insights",
+            title: "See Framework Journey",
+            description: "Understand the 3-phase methodology that led to these business insights and real-world applications",
             link: "/journey",
             icon: Map,
-            buttonText: "My AI Journey"
+            buttonText: "Framework Journey"
           },
           tertiary: {
             title: "Connect & Collaborate",
