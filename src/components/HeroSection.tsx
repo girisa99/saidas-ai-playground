@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Brain, Zap, Target, BookOpen, User, Lightbulb, Wrench, Map } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import heroBackground from "@/assets/hero-ai-background.jpg";
 
 export const HeroSection = () => {
-  const navigate = useNavigate();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -30,40 +29,48 @@ export const HeroSection = () => {
             <Button 
               size="lg" 
               className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold"
-              onClick={() => navigate('/journey')}
+              asChild
             >
-              <Map className="mr-2 h-4 sm:h-5 w-4 sm:w-5" />
-              AI Journey
+              <Link to="/journey">
+                <Map className="mr-2 h-4 sm:h-5 w-4 sm:w-5" />
+                AI Journey
+              </Link>
             </Button>
             
             <Button 
               variant="outline" 
               size="lg" 
               className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold"
-              onClick={() => navigate('/about')}
+              asChild
             >
-              <User className="mr-2 h-4 sm:h-5 w-4 sm:w-5" />
-              My Story
+              <Link to="/about">
+                <User className="mr-2 h-4 sm:h-5 w-4 sm:w-5" />
+                My Story
+              </Link>
             </Button>
 
             <Button 
               variant="outline" 
               size="lg" 
               className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold"
-              onClick={() => navigate('/technology')}
+              asChild
             >
-              <Wrench className="mr-2 h-4 sm:h-5 w-4 sm:w-5" />
-              AI Tools
+              <Link to="/technology">
+                <Wrench className="mr-2 h-4 sm:h-5 w-4 sm:w-5" />
+                AI Tools
+              </Link>
             </Button>
 
             <Button 
               variant="outline" 
               size="lg" 
               className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold"
-              onClick={() => navigate('/case-studies')}
+              asChild
             >
-              <Lightbulb className="mr-2 h-4 sm:h-5 w-4 sm:w-5" />
-              Case Studies
+              <Link to="/case-studies">
+                <Lightbulb className="mr-2 h-4 sm:h-5 w-4 sm:w-5" />
+                Case Studies
+              </Link>
             </Button>
           </div>
         </div>

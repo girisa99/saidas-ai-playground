@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MapPin, Trophy, Wrench, Rocket, Target } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import aiJourneyBg from "@/assets/hero-ai-journey.jpg";
 import successStoriesBg from "@/assets/hero-success-stories.jpg";
 import aiToolsBg from "@/assets/hero-ai-tools.jpg";
@@ -54,11 +54,10 @@ const heroSections = [
 
 export const MultiHeroSection = () => {
   const [currentHero, setCurrentHero] = useState(0);
-  const navigate = useNavigate();
   const primaryCtaPathMap: Record<number, string> = {
     1: "/journey",
     2: "/case-studies",
-    3: "/technology",
+    3: "/technology", 
     4: "/journey",
   };
 
@@ -144,18 +143,22 @@ export const MultiHeroSection = () => {
               variant="default"
               size="lg" 
               className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
-              onClick={() => navigate('/journey')}
+              asChild
             >
-              See How It Works
-              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+              <Link to={primaryCtaPathMap[currentHero + 1] || "/journey"}>
+                See How It Works
+                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+              </Link>
             </Button>
             <Button 
               variant="outline" 
               size="lg" 
               className="border-white/50 text-white bg-transparent hover:bg-white hover:text-genie-dark backdrop-blur-sm w-full sm:w-auto transition-all duration-300"
-              onClick={() => navigate('/case-studies')}
+              asChild
             >
-              View Live Examples
+              <Link to="/case-studies">
+                View Live Examples
+              </Link>
             </Button>
           </div>
         </div>
