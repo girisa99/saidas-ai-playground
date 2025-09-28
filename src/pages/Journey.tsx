@@ -16,10 +16,10 @@ import timelineVisual from "@/assets/timeline-visual.png";
 
 const Journey = () => {
   useEffect(() => {
-    document.title = "Our Journey - Genie AI Experimentation HUB";
+    document.title = "Experiment → Validate → Deploy AI Framework - Genie AI HUB";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Discover the journey behind Genie AI Experimentation HUB - from concept to enterprise AI transformation platform.');
+      metaDescription.setAttribute('content', 'Discover the proven Experiment → Validate → Deploy AI framework - from 45-day experimentation to production-ready healthcare AI solutions with enterprise-grade reliability.');
     }
   }, []);
 
@@ -70,54 +70,49 @@ const Journey = () => {
           <div className="max-w-5xl">
             <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-3 sm:mb-4">
               <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-              Strategic Genesis & Experimentation
+              Experiment → Validate → Deploy Framework
             </Badge>
             
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
-              From Spark to <span className="text-genie-accent">Resilient AI Hub</span>
+              <span className="text-genie-accent">Experiment → Validate → Deploy</span> AI Framework
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-              A comprehensive 5-phase transformation journey from initial AI curiosity to building a stable, 
-              resilient healthcare AI experimentation platform - featuring breakthrough moments, scalable architectures, 
-              and enterprise-grade multi-agent orchestration systems.
+              A proven 3-phase methodology transforming AI curiosity into production-ready healthcare solutions. 
+              From initial spark and deep experimentation to validated architectures and deployed resilient platforms 
+              serving real-world healthcare workflows with enterprise-grade reliability.
             </p>
             
             {/* Journey Highlights Grid - Mobile Responsive */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 px-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8 px-2">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Innovation Journey</h3>
-                <p className="text-white/80 text-xs">5-phase transformation since May 2025</p>
+                <Lightbulb className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">EXPERIMENT</h3>
+                <p className="text-white/80 text-xs">45-day deep dive & AI lab creation</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Users className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Democratizing AI</h3>
-                <p className="text-white/80 text-xs">Making AI accessible to everyone</p>
+                <Target className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">VALIDATE</h3>
+                <p className="text-white/80 text-xs">Production-ready architecture & validation</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Enterprise Impact</h3>
-                <p className="text-white/80 text-xs">Healthcare technology transformation</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Award className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">Strategic Genesis</h3>
-                <p className="text-white/80 text-xs">Accelerating innovation through AI</p>
+                <Network className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
+                <h3 className="font-semibold text-white text-xs sm:text-sm">DEPLOY</h3>
+                <p className="text-white/80 text-xs">Healthcare AI platform in production</p>
               </div>
             </div>
             
             {/* Action Buttons - Mobile Responsive */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 px-2">
-              <Button 
+               <Button 
                 variant="default"
                 size="lg"
                 className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl w-full sm:w-auto"
                 asChild
               >
                 <Link to="/business-use-cases">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  Explore business use cases
+                  <Rocket className="w-4 h-4 mr-2" />
+                  See Framework in Action
                 </Link>
               </Button>
               <Button 
@@ -127,8 +122,8 @@ const Journey = () => {
                 asChild
               >
                 <Link to="/about">
-                  <Award className="w-4 h-4 mr-2" />
-                  About me
+                  <Brain className="w-4 h-4 mr-2" />
+                  Framework Creator
                 </Link>
               </Button>
             </div>
