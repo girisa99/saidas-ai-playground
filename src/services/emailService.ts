@@ -396,4 +396,4 @@ export class EmailService {
 }
 
 // Export a default instance for convenience
-export const emailService = EmailService;
+export const emailService = new EmailService();

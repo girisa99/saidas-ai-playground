@@ -16,7 +16,7 @@ import { TypingIndicator } from '../enrollment-genie/TypingIndicator';
 import { PublicPrivacyBanner } from './PublicPrivacyBanner';
 import { HumanEscalationForm } from './HumanEscalationForm';
 import { RichResponseRenderer } from './RichResponseRenderer';
-import { emailService } from '@/services/emailService';
+import { EmailService } from '@/services/emailService';
 import genieLogoPopup from '@/assets/genie-logo-popup.png';
 
 interface UserInfo {
