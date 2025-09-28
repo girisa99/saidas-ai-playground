@@ -57,27 +57,33 @@ const technologyTopics = [
 
 const healthcareTopics = [
   'Reimbursement (Travel & Logistics)',
-  'Oncology',
-  'Cardiology', 
+  'Oncology Therapies & Products',
+  'Cardiology Treatments & Devices', 
   'Cell, Gene & Advanced Therapies',
+  'Digital Therapeutics (DTx)',
+  'Digital Health Solutions',
   'Radioland Therapies',
-  '340B Drug Pricing',
+  '340B Drug Pricing Programs',
   'WAC (Wholesale Acquisition Cost)',
-  'Government Pricing',
-  'Treatment Centers',
+  'Government Pricing & Medicare',
+  'Treatment Centers & Networks',
   'Copay Assistance Programs',
   'Alternative Funding Programs',
   'Treatment Sharing & Access',
-  'ICD Codes',
-  'Product Information',
-  'Packaging Information',
+  'ICD Codes & Billing',
+  'Product Information & Formularies',
+  'Packaging & Distribution',
   'Authorized Treatment Centers by Therapy',
   'Treatment Centers by Zip Code',
   'Specialty Pharmacy Orders & Process',
-  'Adverse Events (AE/SAE)',
+  'Adverse Events (AE/SAE) Reporting',
   'Clinical Trials & Enrollment Process',
   'Competitor Analysis for Trials',
-  'Commercial Product Competitors'
+  'Commercial Product Competitors',
+  'Prior Authorization Support',
+  'Insurance Coverage Verification',
+  'Patient Financial Assistance',
+  'Biosimilar & Generic Alternatives'
 ];
 
 export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOpen, onClose }) => {
