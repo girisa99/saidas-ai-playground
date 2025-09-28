@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Draggable from 'react-draggable';
 import { X, MessageCircle, Sparkles, Brain, Lightbulb, Bot, Zap, Star, Flame, Wind } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -153,7 +154,16 @@ const getPageSpecificMessages = (pathname: string) => {
 };
 
 export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) => {
-  const [isVisible, setIsVisible] = useState(true);
+  const dragRef = useRef<HTMLDivElement>(null);
+  const [dragY, setDragY] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('floatingGenieY');
+      return saved ? parseFloat(saved) : 0;
+    } catch {
+      return 0;
+    }
+  });
+  const [dragBounds, setDragBounds] = useState<{ top: number; bottom: number }>({ top: -300, bottom: 0 });
   const [isGenieOpen, setIsGenieOpen] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -226,6 +236,19 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
     }
   }, [showTooltip, isHovered]);
 
+  // Compute vertical drag bounds based on viewport height
+  useEffect(() => {
+    const computeBounds = () => {
+      const visibleHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
+      // Bottle container height approx 96px; allow moving up to top padding
+      const top = -Math.max(0, visibleHeight - 160);
+      setDragBounds({ top, bottom: 0 });
+    };
+    computeBounds();
+    window.addEventListener('resize', computeBounds);
+    return () => window.removeEventListener('resize', computeBounds);
+  }, []);
+
   const handleGenieClick = () => {
     console.debug('[FloatingGenie] Bottle clicked');
     setHasInteracted(true);
@@ -233,33 +256,40 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
     setIsGenieOpen(true);
   };
 
-  const handleClose = () => {
-    setIsVisible(false);
-  };
+  // Removed hard-close; Genie stays docked and always available
 
   const currentMessage = pageMessages[currentMessageIndex];
-
-  if (!isVisible) return null;
 
   return (
     <>
       <AnimatePresence>
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0, opacity: 0 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 260, 
-            damping: 20,
-            delay: 1 
-          }}
-          className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[99999] ${className}`}
-          style={{ 
-            position: 'fixed',
-            isolation: 'isolate'
+        <Draggable
+          axis="y"
+          nodeRef={dragRef}
+          bounds={dragBounds}
+          defaultPosition={{ x: 0, y: dragY }}
+          onStop={(e, data) => {
+            setDragY(data.y);
+            try { localStorage.setItem('floatingGenieY', String(data.y)); } catch {}
           }}
         >
+          <motion.div
+            ref={dragRef}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            transition={{ 
+              type: "spring", 
+              stiffness: 260, 
+              damping: 20,
+              delay: 1 
+            }}
+            className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[99999] ${className}`}
+            style={{ 
+              position: 'fixed',
+              isolation: 'isolate'
+            }}
+          >
           {/* Floating Action Button */}
           <motion.div
             className="relative"
@@ -276,7 +306,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                   animate={{ opacity: 1, x: 0, scale: 1 }}
                   exit={{ opacity: 0, x: 20, scale: 0.8 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute right-16 md:right-20 top-1/2 -translate-y-1/2 max-w-[280px] md:max-w-xs"
+                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 max-w-[280px] md:max-w-xs"
                 >
                   {/* Genie Speech Bubble */}
                   <motion.div
@@ -335,8 +365,8 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                     </motion.p>
 
                     {/* Speech bubble tail */}
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full">
-                      <div className="w-0 h-0 border-l-8 border-l-primary border-t-4 border-t-transparent border-b-4 border-b-transparent"></div>
+                    <div className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-full">
+                      <div className="w-0 h-0 border-t-8 border-t-primary border-l-4 border-l-transparent border-r-4 border-r-transparent"></div>
                     </div>
                   </motion.div>
                 </motion.div>
@@ -484,22 +514,8 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
               />
             )}
 
-            {/* Close button (only on hover to avoid intercepting clicks) */}
-            {isHovered && (
-              <motion.button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleClose();
-                }}
-                className="absolute -top-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center shadow z-[100000]"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <X className="w-2 h-2 md:w-3 md:h-3" />
-              </motion.button>
-            )}
           </motion.div>
-        </motion.div>
+        </Draggable>
       </AnimatePresence>
 
       {/* Genie Interface Modal */}
