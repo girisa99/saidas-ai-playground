@@ -179,22 +179,20 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
                   You've reached your daily limit. If you need extended access for legitimate use cases, 
                   you can request additional quota by contacting our team.
                 </p>
-                <div className="bg-white dark:bg-red-900/20 p-3 rounded-lg border border-red-200 dark:border-red-800">
-                  <h4 className="font-medium text-red-700 mb-2">Request Access:</h4>
-                  <ul className="space-y-1 text-xs text-red-600 dark:text-red-400">
-                    <li>• Email: support@your-domain.com</li>
-                    <li>• Include your use case and requirements</li>
-                    <li>• Mention your IP address: {limits.reset_time}</li>
-                    <li>• Allow 1-2 business days for review</li>
-                  </ul>
-                </div>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   className="w-full border-red-200 text-red-700 hover:bg-red-50"
-                  onClick={() => window.open('mailto:support@your-domain.com?subject=Conversation Access Request&body=Please describe your use case and requirements for extended access.', '_blank')}
+                  onClick={() => {
+                    // Submit access request
+                    const requestReason = prompt('Please describe your use case and why you need extended access:');
+                    if (requestReason) {
+                      // Submit via API
+                      console.log('Access request would be submitted:', requestReason);
+                    }
+                  }}
                 >
-                  Send Access Request Email
+                  Request Extended Access
                 </Button>
               </div>
             </Card>

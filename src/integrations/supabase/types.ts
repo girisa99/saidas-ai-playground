@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      access_requests: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          id: string
+          ip_address: string
+          request_reason: string
+          requested_at: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          updated_at: string
+          user_email: string
+          user_name: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          id?: string
+          ip_address: string
+          request_reason: string
+          requested_at?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          user_email: string
+          user_name?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          id?: string
+          ip_address?: string
+          request_reason?: string
+          requested_at?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          user_email?: string
+          user_name?: string | null
+        }
+        Relationships: []
+      }
       action_execution_logs: {
         Row: {
           action_id: string
@@ -2737,6 +2782,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      approved_access_overrides: {
+        Row: {
+          additional_quota: Json | null
+          created_at: string
+          expires_at: string | null
+          granted_at: string
+          granted_by: string | null
+          id: string
+          ip_address: string
+          is_active: boolean | null
+          reason: string | null
+          user_email: string | null
+        }
+        Insert: {
+          additional_quota?: Json | null
+          created_at?: string
+          expires_at?: string | null
+          granted_at?: string
+          granted_by?: string | null
+          id?: string
+          ip_address: string
+          is_active?: boolean | null
+          reason?: string | null
+          user_email?: string | null
+        }
+        Update: {
+          additional_quota?: Json | null
+          created_at?: string
+          expires_at?: string | null
+          granted_at?: string
+          granted_by?: string | null
+          id?: string
+          ip_address?: string
+          is_active?: boolean | null
+          reason?: string | null
+          user_email?: string | null
+        }
+        Relationships: []
       }
       arize_configurations: {
         Row: {
@@ -14652,6 +14736,10 @@ export type Database = {
             }
           | { p_enrollment_id: string }
         Returns: number
+      }
+      check_access_override: {
+        Args: { p_ip_address: string; p_user_email?: string }
+        Returns: Json
       }
       check_conversation_limits: {
         Args: { p_ip_address: unknown; p_user_email?: string }

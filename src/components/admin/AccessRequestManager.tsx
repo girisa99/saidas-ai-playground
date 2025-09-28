@@ -32,13 +32,20 @@ export const AccessRequestManager: React.FC = () => {
 
   const loadAccessRequests = async () => {
     try {
+      // Use direct query instead of typed client to avoid type conflicts
       const { data, error } = await supabase
         .from('access_requests')
         .select('*')
         .order('requested_at', { ascending: false });
 
-      if (error) throw error;
-      setRequests(data || []);
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+      
+      // Cast the data to our interface
+      const typedData = data as AccessRequest[];
+      setRequests(typedData || []);
     } catch (error) {
       console.error('Error loading access requests:', error);
       toast({
