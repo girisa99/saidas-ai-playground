@@ -20,6 +20,7 @@ const Disclaimer = lazy(() => import("./pages/Disclaimer"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const BusinessUseCases = lazy(() => import("./pages/BusinessUseCases"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const EmailTest = lazy(() => import("./pages/EmailTest"));
 
 // Loading component
 const PageLoader = () => (
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/business-use-cases" element={<BusinessUseCases />} />
           
           <Route path="/docs" element={<Docs />} />
+          <Route path="/email-test" element={<EmailTest />} />
           <Route path="/contact" element={<Contact />} />
           
 

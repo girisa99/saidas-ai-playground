@@ -174,7 +174,7 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     const { error: emailError } = await resend.emails.send({
-      from: "Genie AI Experimentation Hub <genieaiexperimentationhub@gmail.com>",
+      from: "Genie AI Experimentation Hub <noreply@lovableproject.com>",
       to: [email],
       subject: "You've been unsubscribed - Genie AI Hub",
       html: unsubscribeConfirmationHtml,
