@@ -167,11 +167,45 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
             </div>
           </Card>
 
-          {/* Action Buttons */}
-          <div className="flex justify-between items-center pt-4 border-t">
-            <div className="text-xs text-muted-foreground">
+          {/* Access Request Section */}
+          {limits.restriction_reason === 'permanent_block' || (limits.daily_count >= limits.daily_limit && limits.hourly_count >= limits.hourly_limit) ? (
+            <Card className="p-4 border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20">
+              <div className="flex items-center space-x-2 mb-3">
+                <Shield className="w-4 h-4 text-red-500" />
+                <h3 className="font-semibold text-red-700">Need More Access?</h3>
+              </div>
+              <div className="space-y-3 text-sm">
+                <p className="text-red-600 dark:text-red-400">
+                  You've reached your daily limit. If you need extended access for legitimate use cases, 
+                  you can request additional quota by contacting our team.
+                </p>
+                <div className="bg-white dark:bg-red-900/20 p-3 rounded-lg border border-red-200 dark:border-red-800">
+                  <h4 className="font-medium text-red-700 mb-2">Request Access:</h4>
+                  <ul className="space-y-1 text-xs text-red-600 dark:text-red-400">
+                    <li>• Email: support@your-domain.com</li>
+                    <li>• Include your use case and requirements</li>
+                    <li>• Mention your IP address: {limits.reset_time}</li>
+                    <li>• Allow 1-2 business days for review</li>
+                  </ul>
+                </div>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full border-red-200 text-red-700 hover:bg-red-50"
+                  onClick={() => window.open('mailto:support@your-domain.com?subject=Conversation Access Request&body=Please describe your use case and requirements for extended access.', '_blank')}
+                >
+                  Send Access Request Email
+                </Button>
+              </div>
+            </Card>
+          ) : (
+            <div className="text-xs text-muted-foreground text-center py-2">
               Limits reset automatically every hour
             </div>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex justify-end pt-4 border-t">
             <Button onClick={onClose} className="min-w-[100px]">
               Understood
             </Button>
