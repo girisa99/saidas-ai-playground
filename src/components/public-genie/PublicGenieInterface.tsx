@@ -118,6 +118,8 @@ const healthcareTopics = [
 ];
 
 export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOpen, onClose }) => {
+  console.log('PublicGenieInterface rendering...');
+  
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
   const [showPrivacyBanner, setShowPrivacyBanner] = useState(true);
@@ -135,10 +137,12 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [showConfigWizard, setShowConfigWizard] = useState(false);
   const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
   const [ipAddress, setIpAddress] = useState<string | null>(null);
-  const [showLimitModal, setShowLimitModal] = useState(false);
-  const [conversationLimits, setConversationLimits] = useState<ConversationLimits | null>(null);
-  const [isConversationAllowed, setIsConversationAllowed] = useState(true);
-  const [showExperimentationBanner, setShowExperimentationBanner] = useState(true);
+  
+  // Conversation limit states - explicitly initialized
+  const [showLimitModal, setShowLimitModal] = React.useState<boolean>(false);
+  const [conversationLimits, setConversationLimits] = React.useState<ConversationLimits | null>(null);
+  const [isConversationAllowed, setIsConversationAllowed] = React.useState<boolean>(true);
+  const [showExperimentationBanner, setShowExperimentationBanner] = React.useState<boolean>(true);
   const [showSessionManager, setShowSessionManager] = useState(false);
   const [loadingStates, setLoadingStates] = useState({
     primary: false,
@@ -175,16 +179,20 @@ useEffect(() => {
 
 // Check conversation limits on component mount
 useEffect(() => {
+  console.log('useEffect for checking limits triggered, userInfo:', userInfo);
   const checkLimits = async () => {
     try {
+      console.log('showLimitModal state:', showLimitModal);
       const limits = await conversationLimitService.checkConversationLimits(
         userInfo?.email,
         userInfo?.firstName
       );
+      console.log('Limits received:', limits);
       setConversationLimits(limits);
       setIsConversationAllowed(limits.allowed);
       
       if (!limits.allowed) {
+        console.log('Setting showLimitModal to true');
         setShowLimitModal(true);
       }
     } catch (error) {
@@ -981,7 +989,10 @@ ${conversationSummary.transcript}`
         {/* Conversation Limit Modal */}
         <ConversationLimitModal
           isOpen={showLimitModal}
-          onClose={() => setShowLimitModal(false)}
+          onClose={() => {
+            console.log('Closing limit modal');
+            setShowLimitModal(false);
+          }}
           limits={conversationLimits || {
             allowed: false,
             daily_count: 0,
