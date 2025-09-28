@@ -24,6 +24,7 @@ import { ContextSwitcher } from './ContextSwitcher';
 import { ContextualTopicSuggester } from './ContextualTopicSuggester';
 import { ConversationLimitModal } from './ConversationLimitModal';
 import { ExperimentationBanner } from './ExperimentationBanner';
+import { ContactCenterOptimizer } from './ContactCenterOptimizer';
 import { TechnologyKnowledgeBase, getTechnologyKnowledge } from '../comprehensive-knowledge/TechnologyKnowledgeBase';
 import { HealthcareKnowledgeBase, getReimbursementInfo } from './HealthcareKnowledgeBase';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
@@ -785,6 +786,21 @@ ${conversationSummary.transcript}`
                             </div>
                           </div>
                         ))}
+                        
+                        {/* Contact Center Intelligence (shows after meaningful conversation) */}
+                        {messages.length >= 4 && (
+                          <ContactCenterOptimizer
+                            conversationHistory={messages}
+                            onOptimizationSuggestion={(suggestion) => {
+                              addMessage({
+                                role: 'assistant',
+                                content: suggestion,
+                                timestamp: new Date().toISOString()
+                              });
+                            }}
+                          />
+                        )}
+                        
                         {isLoading && (
                           <div className="flex items-center space-x-3 p-4 bg-muted/30 rounded-lg my-2">
                             <img 

@@ -55,33 +55,135 @@ Remember: I represent Saidas' AI experimentation journey and should help users n
   const addPersonality = (response: string): string => {
     const personalities = {
       technology: {
-        humor: ["💡 Ah, the classic tech challenge!", "🤖 *adjusts digital parameters*", "⚡ Here's the interesting part!"],
-        empathy: ["I totally understand that perspective", "That's a really insightful question", "I can see why that would be important"],
-        transitions: ["Speaking of which...", "That reminds me of something from our experiments...", "Here's what we've learned..."]
+        humor: [
+          "💡 Ah, the classic tech challenge!", 
+          "🤖 *adjusts digital parameters*", 
+          "⚡ Here's the fascinating part!",
+          "🚀 *activates knowledge engines*",
+          "🎯 This is where it gets interesting!",
+          "🔥 Now we're getting into the good stuff!",
+          "⚙️ *processes through AI neurons*"
+        ],
+        empathy: [
+          "I totally understand that perspective", 
+          "That's a really insightful question", 
+          "I can see why that would be important",
+          "That resonates with many developers",
+          "You're thinking like a true innovator",
+          "That's exactly the right mindset",
+          "I appreciate your technical curiosity"
+        ],
+        transitions: [
+          "Speaking of which...", 
+          "That reminds me of something from our experiments...", 
+          "Here's what we've learned...",
+          "Building on that foundation...",
+          "This connects beautifully to...",
+          "Let me share a related insight...",
+          "Here's where it gets even more exciting..."
+        ],
+        contextual: [
+          "From our 3-Phase Framework experience...",
+          "Based on our Gartner methodology validation...",
+          "Our experimentation hub insights show...",
+          "Through our structured learning approach..."
+        ]
       },
       healthcare: {
-        humor: ["🩺 *in my most caring AI voice*", "💊 The prescription for that insight is...", "🏥 *channels healthcare expertise*"],
-        empathy: ["That's completely understandable", "Many people have similar concerns", "You're asking exactly the right questions"],
-        transitions: ["From a patient care perspective...", "Building on that healthcare context...", "Let me share something valuable..."]
+        humor: [
+          "🩺 *in my most caring AI voice*", 
+          "💊 The prescription for that insight is...", 
+          "🏥 *channels healthcare expertise*",
+          "🫀 *with genuine healthcare concern*",
+          "🌡️ Let me check my clinical knowledge...",
+          "💉 *drawing from healthcare wisdom*",
+          "🔬 *accessing medical database*"
+        ],
+        empathy: [
+          "That's completely understandable", 
+          "Many people have similar concerns", 
+          "You're asking exactly the right questions",
+          "I hear the concern in your question",
+          "That's a very human worry to have",
+          "Your health journey matters to me",
+          "I want to make sure you feel supported"
+        ],
+        transitions: [
+          "From a patient care perspective...", 
+          "Building on that healthcare context...", 
+          "Let me share something valuable...",
+          "In my experience helping patients...",
+          "What's important to understand is...",
+          "Here's what can bring peace of mind...",
+          "Let me walk you through this gently..."
+        ],
+        contextual: [
+          "From our healthcare case studies...",
+          "Based on our DTx expertise...",
+          "Our cell & gene therapy knowledge shows...",
+          "Through our patient-centered approach..."
+        ]
       },
       general: {
-        humor: ["🧞‍♂️ *emerges from the knowledge lamp*", "✨ Let me illuminate that for you!", "🎯 Excellent question!"],
-        empathy: ["I appreciate you asking that", "That's a thoughtful inquiry", "Great way to think about it"],
-        transitions: ["Let me guide you through this...", "Here's what I've learned...", "Based on our experiments..."]
+        humor: [
+          "🧞‍♂️ *emerges from the knowledge lamp*", 
+          "✨ Let me illuminate that for you!", 
+          "🎯 Excellent question!",
+          "🎭 *puts on thinking cap*",
+          "🎪 Welcome to the show!",
+          "🎨 *paints a picture of understanding*",
+          "🎵 That's music to my AI ears!"
+        ],
+        empathy: [
+          "I appreciate you asking that", 
+          "That's a thoughtful inquiry", 
+          "Great way to think about it",
+          "I can sense your curiosity",
+          "That shows real insight",
+          "You're asking the important questions",
+          "I'm here to help you understand"
+        ],
+        transitions: [
+          "Let me guide you through this...", 
+          "Here's what I've learned...", 
+          "Based on our experiments...",
+          "From my perspective...",
+          "What's fascinating is...",
+          "Let me break this down...",
+          "Here's something cool..."
+        ],
+        contextual: [
+          "From our experimentation hub...",
+          "Based on our 3-phase approach...",
+          "Our structured methodology reveals...",
+          "Through our innovation journey..."
+        ]
       }
     };
 
     const currentPersonality = personalities[context as keyof typeof personalities] || personalities.general;
-    const randomHumor = currentPersonality.humor[Math.floor(Math.random() * currentPersonality.humor.length)];
-    const randomEmpathy = currentPersonality.empathy[Math.floor(Math.random() * currentPersonality.empathy.length)];
     
-    // Add personality elements strategically
-    if (Math.random() > 0.7) {
-      response = `${randomHumor} ${response}`;
+    // Enhanced personality injection with more variety
+    const personalityChance = Math.random();
+    
+    if (personalityChance > 0.6) {
+      const humor = currentPersonality.humor[Math.floor(Math.random() * currentPersonality.humor.length)];
+      response = `${humor} ${response}`;
+    } else if (personalityChance > 0.3) {
+      const empathy = currentPersonality.empathy[Math.floor(Math.random() * currentPersonality.empathy.length)];
+      response = `${empathy}. ${response}`;
     }
     
-    if (Math.random() > 0.6) {
-      response = `${randomEmpathy}. ${response}`;
+    // Add contextual framework references (30% chance)
+    if (Math.random() > 0.7) {
+      const contextual = currentPersonality.contextual[Math.floor(Math.random() * currentPersonality.contextual.length)];
+      response = `${contextual} ${response}`;
+    }
+    
+    // Add smooth transitions (20% chance)
+    if (Math.random() > 0.8) {
+      const transition = currentPersonality.transitions[Math.floor(Math.random() * currentPersonality.transitions.length)];
+      response = response.replace(/\. /, `. ${transition} `);
     }
 
     return response;
