@@ -10,7 +10,11 @@ import {
   Brain,
   Target,
   MessageSquare,
-  ExternalLink
+  ExternalLink,
+  Map,
+  Wrench,
+  Briefcase,
+  Trophy
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -32,65 +36,194 @@ export const FAQModal = ({ trigger }: FAQModalProps) => {
 
   const faqCategories = [
     {
-      category: "Getting Started with AI Experiments",
-      icon: Lightbulb,
+      category: "Genie AI Capabilities & Overview",
+      icon: Brain,
+      color: "text-genie-primary",
+      bgColor: "bg-genie-primary/10",
+      borderColor: "border-genie-primary/20",
+      questions: [
+        {
+          question: "What is Genie AI and how can it help me?",
+          answer: "Genie AI is your intelligent assistant specializing in Technology and Healthcare concepts. I can support discussions on AI innovation, Gartner Value Framework, tech stack mapping, experimentation hub methodologies, and healthcare business use cases. I'm designed to guide users through complex topics with personalized insights and practical recommendations."
+        },
+        {
+          question: "What topics can Genie AI discuss?",
+          answer: "I specialize in: • AI Innovation & Value Creation • Gartner Value Framework mapping • Technology stack architecture • Healthcare business use cases • Digital therapeutics (DTx) • Cell & gene therapies • Experimentation methodologies • Security and compliance topics • Journey mapping and case studies"
+        },
+        {
+          question: "How does Genie AI adapt to different contexts?",
+          answer: "I intelligently detect whether you're asking about technology or healthcare topics and adapt my responses accordingly. I can switch between formal, casual, or empathetic communication styles based on your needs and provide contextual suggestions to guide our conversation."
+        }
+      ]
+    },
+    {
+      category: "Gartner Value Framework & AI Innovation",
+      icon: Target,
+      color: "text-genie-teal",
+      bgColor: "bg-genie-teal/10",
+      borderColor: "border-genie-teal/20",
+      questions: [
+        {
+          question: "How does Genie AI map Gartner's Value Framework to tech stacks?",
+          answer: "I help you understand how Gartner's AI Value Framework translates into practical technology implementations. This includes mapping value creation to data layers, MLOps platforms, application architectures, and infrastructure components. I can guide you through short-term, medium-term, and long-term value realization strategies with specific KPIs and outcomes."
+        },
+        {
+          question: "What are the key value realization phases in AI implementation?",
+          answer: "Short-term (3-6 months): Quick wins and proof of concepts with immediate ROI. Medium-term (6-18 months): Scaled implementations with measurable business impact. Long-term (18+ months): Strategic transformation and competitive advantage through AI-driven innovation."
+        },
+        {
+          question: "How do you measure AI value creation and ROI?",
+          answer: "Key metrics include: • Efficiency gains (time saved, process automation) • Cost reductions (operational savings, resource optimization) • Quality improvements (accuracy, error reduction) • Revenue generation (new capabilities, enhanced products) • Strategic advantages (market differentiation, innovation speed)"
+        }
+      ]
+    },
+    {
+      category: "My AI Journey - 5 Phase Transformation",
+      icon: Map,
+      color: "text-genie-secondary",
+      bgColor: "bg-genie-secondary/10",
+      borderColor: "border-genie-secondary/20",
+      questions: [
+        {
+          question: "What are the 5 phases of your AI experimentation journey?",
+          answer: "Phase 1: The Spark - Initial curiosity and AI exploration. Phase 2: Curiosity Ignited - Deep dive into AI fundamentals and tool testing. Phase 3: The Breakthrough - First successful implementations and real-world applications. Phase 4: Scalable Innovation - Building robust, production-ready solutions. Phase 5: The Resilient Hub - Establishing sustainable AI practices and knowledge sharing."
+        },
+        {
+          question: "How long does each phase of the AI journey take?",
+          answer: "Discovery & Learning (Months 1-3): Technology exploration, use case identification, skill development. Experimentation & Validation (Months 4-9): Hypothesis testing, pilot implementation, user feedback. Scale & Integration (Months 10-18): Production deployment, system integration, team scaling. Each phase builds upon the previous one with overlapping activities."
+        },
+        {
+          question: "What should I expect in my own AI transformation journey?",
+          answer: "Expect excitement, challenges, and continuous learning. Start with curiosity and small experiments. Document everything - successes AND failures. Focus on solving real problems rather than using AI for its own sake. Build gradually from simple tools to complex systems. Most importantly, share your learnings with the community."
+        },
+        {
+          question: "What are common challenges in the AI journey and how to overcome them?",
+          answer: "Common challenges: Information overload, tool selection paralysis, unrealistic expectations, lack of clear use cases. Solutions: Start small with specific problems, focus on learning over perfection, join communities for support, document your experiments, celebrate small wins, and remember that failure is part of learning."
+        }
+      ]
+    },
+    {
+      category: "Technology Stack & AI Tools Explored",
+      icon: Wrench,
+      color: "text-genie-cyan",
+      bgColor: "bg-genie-cyan/10",
+      borderColor: "border-genie-cyan/20",
+      questions: [
+        {
+          question: "What AI models and LLMs have you extensively tested?",
+          answer: "Large Language Models: GPT-5, GPT-4, Claude 3.5, Gemini, Local models (Llama, Mistral), Specialized healthcare models. Each tested for specific use cases including reasoning, creativity, coding, and domain-specific applications with detailed performance comparisons."
+        },
+        {
+          question: "What AI platforms and development tools do you recommend?",
+          answer: "Platforms: OpenAI API, Anthropic Claude, Supabase for backend, React + TypeScript for frontend. Development: Cursor IDE, GitHub Copilot, Tailwind CSS. Infrastructure: Edge functions, database management, authentication systems, file storage. Each chosen for specific strengths and integration capabilities."
+        },
+        {
+          question: "How do you evaluate and select AI technologies for projects?",
+          answer: "Evaluation criteria: Problem fit, ease of integration, cost-effectiveness, scalability, community support, security features. Process: Start with free tiers, test specific use cases, benchmark performance, evaluate total cost of ownership, assess long-term viability, and consider team expertise requirements."
+        },
+        {
+          question: "What emerging AI technologies should I focus on in 2025?",
+          answer: "Key areas: Agentic AI and multi-agent systems, No-code/low-code AI platforms, Edge AI and local model deployment, RAG (Retrieval Augmented Generation), Model Context Protocol (MCP), AI observability and monitoring tools. Focus on technologies that solve real business problems rather than following hype."
+        }
+      ]
+    },
+    {
+      category: "Business Use Cases & Strategic Implementation",
+      icon: Briefcase,
       color: "text-green-600",
       bgColor: "bg-green-50",
       borderColor: "border-green-200",
       questions: [
         {
-          question: "What is an AI Experimentation Hub and how does it work?",
-          answer: "An AI Experimentation Hub is my personal approach to systematically exploring AI technologies. It's about hands-on learning, testing different tools, documenting what works and what doesn't, and sharing those insights. Think of it as a lab notebook for AI experiments where I try new models, platforms, and techniques to see their real-world applicability."
+          question: "How do you decide between automation and agentic AI for business processes?",
+          answer: "Automation for: Repetitive, rule-based tasks with clear inputs/outputs, high-volume processing, cost reduction focus. Agentic AI for: Complex decision-making, multi-step reasoning, adaptive responses, customer interaction, creative problem-solving. Consider data complexity, decision requirements, and human oversight needs."
         },
         {
-          question: "How do you decide which AI tools to experiment with?",
-          answer: "I focus on tools that solve real problems I encounter or that show potential for healthcare applications. I start with free tiers, test specific use cases, and evaluate based on ease of use, accuracy, cost, and integration capabilities. Failed experiments are just as valuable as successful ones - they teach us what doesn't work."
+          question: "What are key business use cases you've implemented successfully?",
+          answer: "Healthcare: Patient onboarding automation (40% time reduction), diagnostic assistance, clinical decision support. Financial: Fraud detection (80% improvement), automated reporting, risk assessment. Operations: Process optimization, intelligent document processing, workflow automation. Each with detailed ROI metrics and lessons learned."
         },
         {
-          question: "What should I expect from my first AI experiments?",
-          answer: "Expect a mix of excitement and frustration! Start small - maybe automate a simple task or try prompt engineering with ChatGPT. Document everything: what you tried, what worked, what failed, and why. Most importantly, don't expect perfection on the first try. Learning AI is iterative."
+          question: "How do you approach AI implementation in healthcare workflows?",
+          answer: "Start with regulatory compliance (HIPAA, FDA), focus on patient safety and privacy, implement gradual rollouts with clinician feedback, measure patient outcomes not just efficiency, ensure human oversight for critical decisions, and maintain detailed audit trails for accountability."
+        },
+        {
+          question: "What's your framework for AI business case development?",
+          answer: "1. Problem Definition: Clear pain point identification. 2. Solution Design: AI approach selection and architecture. 3. ROI Analysis: Cost-benefit with timeline. 4. Risk Assessment: Technical, regulatory, and operational risks. 5. Implementation Plan: Phased approach with milestones. 6. Success Metrics: Quantifiable outcomes and KPIs."
         }
       ]
     },
     {
-      category: "Learning & Knowledge Sharing",
-      icon: Brain,
-      color: "text-blue-600", 
+      category: "Case Studies & Success Stories",
+      icon: Trophy,
+      color: "text-purple-600",
+      bgColor: "bg-purple-50",
+      borderColor: "border-purple-200",
+      questions: [
+        {
+          question: "Can you share details about your healthcare AI transformation case study?",
+          answer: "Challenge: 40% reduction in diagnosis time needed. Solution: AI-powered diagnostic assistance with computer vision and NLP. Technologies: Clinical decision support, pattern recognition, real-time processing. Outcomes: Faster diagnosis, improved accuracy, reduced clinician workload, better patient satisfaction. Key lesson: Human-AI collaboration is more effective than replacement."
+        },
+        {
+          question: "What was achieved in your financial services automation project?",
+          answer: "Challenge: 80% improvement in fraud detection needed. Solution: Machine learning fraud prevention system. Technologies: Anomaly detection, pattern recognition, real-time processing. Outcomes: Reduced fraud losses, faster detection, lower false positives, improved customer experience. Key insight: Continuous model retraining is essential for accuracy."
+        },
+        {
+          question: "How do you document and share case study insights?",
+          answer: "Structure: Challenge definition, solution approach, technologies used, implementation timeline, quantifiable results, lessons learned, failure points, recommendations. Focus on practical insights, honest assessment of what didn't work, and actionable advice for others facing similar challenges."
+        },
+        {
+          question: "What common patterns emerge across successful AI implementations?",
+          answer: "Success patterns: Clear problem definition, stakeholder buy-in, phased implementation, continuous feedback loops, human-AI collaboration, robust testing, change management. Failure patterns: Technology-first approach, unrealistic expectations, insufficient data, poor user adoption, lack of monitoring."
+        }
+      ]
+    },
+    {
+      category: "Healthcare & Digital Therapeutics Expertise",
+      icon: Lightbulb,
+      color: "text-blue-600",
       bgColor: "bg-blue-50",
       borderColor: "border-blue-200",
       questions: [
         {
-          question: "How do you document and share your AI experiments?",
-          answer: "I maintain detailed experiment logs including objectives, tools used, prompts tried, results achieved, and lessons learned. I share both successes and failures because learning what doesn't work is just as valuable. My goal is to help others avoid the same pitfalls I encountered."
+          question: "What are Digital Therapeutics (DTx) and their reimbursement landscape?",
+          answer: "DTx are evidence-based therapeutic interventions driven by high-quality software programs. Reimbursement includes CPT codes (90834, 90837, 96116), coverage through Medicare Part B and commercial insurance. Categories: mental health DTx, chronic disease management, rehabilitation platforms. Key: Clinical evidence and regulatory approval drive reimbursement."
         },
         {
-          question: "What's the best way to learn AI practically?",
-          answer: "Start by identifying a real problem you want to solve, then experiment with AI tools to address it. Don't just read about AI - actually use it. Try different approaches, compare results, and iterate. Join communities where people share their experiments and learn from their experiences."
+          question: "How do Cell & Gene Therapies work with reimbursement and AI applications?",
+          answer: "Revolutionary treatments using patient's own cells face unique challenges: high costs ($100K-$500K+), outcome-based contracts, prior authorization requirements. AI applications: Patient selection optimization, treatment response prediction, supply chain management, outcome monitoring. Examples: CAR-T therapies, gene replacement treatments."
         },
         {
-          question: "How can I contribute to this knowledge sharing community?",
-          answer: "Share your own experiments! Whether successful or failed, your experiences help others learn. Connect with me on LinkedIn to discuss what you're working on. The more we share our real-world AI experiences, the better we all become at practical AI implementation."
+          question: "What should I know about 340B drug pricing and AI optimization?",
+          answer: "340B Program requires manufacturers to provide 20-50% discounts to eligible safety-net providers. AI applications: Eligibility verification, contract pharmacy optimization, inventory management, audit compliance automation. Key considerations: GPO pricing comparison, WAC cost analysis, regulatory compliance monitoring."
+        },
+        {
+          question: "How does AI enhance patient care in healthcare settings?",
+          answer: "Applications: Diagnostic assistance, treatment personalization, risk prediction, workflow optimization, patient engagement. Benefits: Improved accuracy, faster decisions, reduced costs, better outcomes. Challenges: Regulatory compliance, data privacy, clinician adoption, integration complexity. Success requires human-AI collaboration, not replacement."
         }
       ]
     },
     {
-      category: "Practical Implementation Tips",
-      icon: Target,
-      color: "text-purple-600",
-      bgColor: "bg-purple-50", 
-      borderColor: "border-purple-200",
+      category: "Security, Compliance & Implementation Best Practices",
+      icon: ExternalLink,
+      color: "text-red-600",
+      bgColor: "bg-red-50",
+      borderColor: "border-red-200",
       questions: [
         {
-          question: "What are common mistakes in AI experimentation?",
-          answer: "Starting too complex, not documenting failures, expecting perfect results immediately, and not testing with real data. Also, focusing only on the latest hyped tools without understanding fundamentals. I've made all these mistakes - learning from them is part of the journey."
+          question: "How do you handle security and compliance in AI implementations?",
+          answer: "Security measures: Adversarial attack protection, data poisoning prevention, model validation and testing, privacy-preserving techniques, bias detection and mitigation. Compliance: GDPR, HIPAA, industry-specific regulations. Monitoring: Continuous audit trails, performance monitoring, security assessments."
         },
         {
-          question: "How do you handle data privacy and security in experiments?",
-          answer: "Always start with dummy or anonymized data for experiments. Never put sensitive information into public AI models. For healthcare applications, I ensure HIPAA compliance from the beginning. Security isn't an afterthought - it's built into every experiment from day one."
+          question: "What data protection measures do you implement for AI systems?",
+          answer: "Protection measures: IP-based session isolation, encrypted data transmission, no cross-user data sharing, audit logging for sensitive access, regular security assessments. Privacy: Minimal data collection, user consent management, data deletion options, anonymization techniques. Always prioritize user privacy and regulatory compliance."
         },
         {
-          question: "What's your approach to scaling successful experiments?",
-          answer: "I validate experiments thoroughly before scaling. This means testing edge cases, evaluating performance under load, and ensuring the solution is maintainable. Not every successful experiment should be scaled - sometimes the learning is the main value."
+          question: "What are your recommendations for responsible AI development?",
+          answer: "Principles: Transparency in AI decision-making, bias testing and mitigation, human oversight for critical decisions, clear error handling, user consent and control. Implementation: Regular audits, diverse testing datasets, stakeholder feedback, ethical review processes, continuous monitoring for unintended consequences."
+        },
+        {
+          question: "How do you ensure AI system reliability and performance?",
+          answer: "Reliability: Comprehensive testing with edge cases, gradual rollout strategies, fallback mechanisms, performance monitoring. Quality: Model validation, accuracy benchmarking, user feedback integration, continuous improvement cycles. Always plan for failure scenarios and maintain human oversight capabilities."
         }
       ]
     }
