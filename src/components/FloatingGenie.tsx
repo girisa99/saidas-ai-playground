@@ -120,7 +120,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
             {/* Genie Button */}
             <Button
               onClick={handleGenieClick}
-              className="w-16 h-16 rounded-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg border-2 border-white/20 relative overflow-hidden"
+              className="w-20 h-20 rounded-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg border-2 border-white/20 relative overflow-hidden"
               size="icon"
             >
               {/* Animated background glow */}
@@ -140,7 +140,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
               <motion.img
                 src={genieFloating}
                 alt="Genie AI"
-                className="w-10 h-10 relative z-10"
+                className="w-12 h-12 relative z-10"
                 animate={{
                   y: [0, -2, 0],
                 }}
