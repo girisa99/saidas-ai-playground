@@ -66,22 +66,22 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
       case "journey":
         return {
           primary: {
-            title: "Apply These Insights",
-            description: "See how journey insights translate to real business applications",
+            title: "Apply the Framework",
+            description: "See how the Experiment → Validate → Deploy methodology translates to real business applications and healthcare solutions",
             link: "/business-use-cases",
             icon: Target,
             buttonText: "Business Applications"
           },
           secondary: {
-            title: "See Detailed Results",
-            description: "Explore specific case studies with metrics and outcomes",
+            title: "See Framework Results",
+            description: "Explore detailed case studies showing the 3-phase methodology delivering measurable outcomes and enterprise-grade solutions",
             link: "/case-studies",
             icon: Trophy,
             buttonText: "Success Stories"
           },
           tertiary: {
-            title: "Learn About Tools",
-            description: "Discover the technology stack that powered this transformation",
+            title: "Explore the Tech Stack",
+            description: "Discover the AI tools, technologies, and infrastructure that powered each phase of this transformation journey",
             link: "/technology",
             icon: Zap,
             buttonText: "Tech Deep Dive"

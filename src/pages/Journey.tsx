@@ -101,8 +101,8 @@ const Journey = () => {
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
               A proven 3-phase methodology transforming AI curiosity into production-ready healthcare solutions. 
-              From initial spark and deep experimentation to validated architectures and deployed resilient platforms 
-              serving real-world healthcare workflows with enterprise-grade reliability.
+              From <span className="text-genie-accent font-semibold">Spark & Curiosity</span> through <span className="text-genie-accent font-semibold">Breakthrough Innovation</span> to <span className="text-genie-accent font-semibold">Scalable MVP Foundation</span> — 
+              creating enterprise-grade AI platforms serving real-world healthcare workflows.
             </p>
             
             {/* Journey Highlights Grid - Mobile Responsive */}
@@ -110,17 +110,17 @@ const Journey = () => {
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Lightbulb className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
                 <h3 className="font-semibold text-white text-xs sm:text-sm">EXPERIMENT</h3>
-                <p className="text-white/80 text-xs">45-day deep dive & AI lab creation</p>
+                <p className="text-white/80 text-xs">Spark & curiosity combined exploration</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Target className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
                 <h3 className="font-semibold text-white text-xs sm:text-sm">VALIDATE</h3>
-                <p className="text-white/80 text-xs">Production-ready architecture & validation</p>
+                <p className="text-white/80 text-xs">Code to creativity breakthrough</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Network className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
                 <h3 className="font-semibold text-white text-xs sm:text-sm">DEPLOY</h3>
-                <p className="text-white/80 text-xs">Healthcare AI platform in production</p>
+                <p className="text-white/80 text-xs">45-day lessons to production MVP</p>
               </div>
             </div>
             
