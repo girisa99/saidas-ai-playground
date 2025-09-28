@@ -28,10 +28,9 @@ const App = () => (
     <Sonner />
     <CookieConsent />
     
-    {/* Floating Genie AI Assistant */}
-    <FloatingGenie />
-    
     <BrowserRouter>
+      {/* Floating Genie AI Assistant */}
+      <FloatingGenie />
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/journey" element={<Journey />} />
