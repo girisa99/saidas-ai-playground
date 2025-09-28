@@ -14,6 +14,12 @@ interface FloatingGenieProps {
 const getPageSpecificMessages = (pathname: string) => {
   const baseMessages = [
     {
+      text: "🧞 I am your Genie — emerging from the fumes...",
+      description: "Tap the lamp to begin: privacy note first, then we start our intelligent chat.",
+      icon: Sparkles,
+      humor: "No wish limits. Just smart answers."
+    },
+    {
       text: "🧞‍♂️ *Poof!* Your AI guide appears!",
       description: "Like a genie from a bottle, I'm here to grant your tech wishes! Well, almost... 😉",
       icon: Sparkles,
@@ -221,6 +227,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
   }, [showTooltip, isHovered]);
 
   const handleGenieClick = () => {
+    console.debug('[FloatingGenie] Bottle clicked');
     setHasInteracted(true);
     setShowTooltip(false);
     setIsGenieOpen(true);
@@ -435,7 +442,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
 
             {/* Magic energy rings */}
             <motion.div
-              className="absolute inset-0 rounded-full border-2 border-yellow-400/40"
+              className="absolute inset-0 rounded-full border-2 border-yellow-400/40 pointer-events-none"
               animate={{
                 scale: [1, 1.6, 1],
                 opacity: [0.8, 0, 0.8],
@@ -447,7 +454,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
               }}
             />
             <motion.div
-              className="absolute inset-0 rounded-full border-2 border-amber-300/30"
+              className="absolute inset-0 rounded-full border-2 border-amber-300/30 pointer-events-none"
               animate={{
                 scale: [1, 1.8, 1],
                 opacity: [0.6, 0, 0.6],
@@ -463,7 +470,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
             {/* Magical aura for attention */}
             {!hasInteracted && (
               <motion.div
-                className="absolute -inset-6 rounded-full bg-gradient-to-r from-yellow-300/20 via-amber-400/20 to-yellow-300/20 blur-xl"
+                className="absolute -inset-6 rounded-full bg-gradient-to-r from-yellow-300/20 via-amber-400/20 to-yellow-300/20 blur-xl pointer-events-none"
                 animate={{
                   scale: [1, 1.3, 1],
                   opacity: [0.4, 0.8, 0.4],
@@ -477,18 +484,20 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
               />
             )}
 
-            {/* Close button (appears on hover) */}
-            <motion.button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleClose();
-              }}
-              className="absolute -top-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity z-[100000]"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <X className="w-2 h-2 md:w-3 md:h-3" />
-            </motion.button>
+            {/* Close button (only on hover to avoid intercepting clicks) */}
+            {isHovered && (
+              <motion.button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleClose();
+                }}
+                className="absolute -top-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center shadow z-[100000]"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <X className="w-2 h-2 md:w-3 md:h-3" />
+              </motion.button>
+            )}
           </motion.div>
         </motion.div>
       </AnimatePresence>
