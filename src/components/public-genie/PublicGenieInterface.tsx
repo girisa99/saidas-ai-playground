@@ -16,7 +16,8 @@ import { TypingIndicator } from '../enrollment-genie/TypingIndicator';
 import { PublicPrivacyBanner } from './PublicPrivacyBanner';
 import { HumanEscalationForm } from './HumanEscalationForm';
 import { RichResponseRenderer } from './RichResponseRenderer';
-import { EmailService } from '@/services/emailService';
+import { NewsletterService } from '@/services/newsletterService';
+import { ContactService } from '@/services/publicContactService';
 import genieLogoPopup from '@/assets/genie-logo-popup.png';
 
 interface UserInfo {
@@ -33,16 +34,18 @@ interface PublicGenieInterfaceProps {
 }
 
 const technologyTopics = [
-  'AI & Machine Learning',
-  'Software Development',
-  'Cloud Computing',
-  'Cybersecurity',
-  'Data Science',
-  'DevOps',
-  'Mobile Development',
-  'Web Development',
-  'Blockchain',
-  'IoT'
+  'Agentic AI',
+  'Large Language Models (LLMs)',
+  'Small Language Models (SLMs)',
+  'Model Context Protocol (MCP)',
+  'RAG & Knowledge Bases',
+  'Automation (UiPath, Power Automate, n8n)',
+  'AI Observability (Langfuse/Langwatch)',
+  'Data Labeling (Label Studio)',
+  'Cloud & Platforms (OpenAI, Claude, Gemini, Meta, Azure)',
+  'New Models & Hugging Face',
+  'Contact Center AI Trends',
+  'M&A and Market Trends'
 ];
 
 const healthcareTopics = [
@@ -86,9 +89,24 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
     setContext(selectedContext);
     setSelectedTopic(topic);
     setShowPrivacyBanner(false);
-    
-    // Subscribe user to email list (placeholder for now)
-    console.log('Would subscribe user:', info.email);
+
+    // Subscribe user to newsletter (public edge function)
+    try {
+      const res = await NewsletterService.subscribe({
+        email: info.email,
+        firstName: info.firstName,
+        lastName: info.lastName,
+        interests: [selectedContext, topic]
+      });
+      if (res.success) {
+        toast({ title: 'Subscribed', description: 'Welcome email sent. You can unsubscribe anytime.' });
+      } else {
+        toast({ title: 'Subscription issue', description: res.message, variant: 'destructive' });
+      }
+    } catch (e: any) {
+      console.error('Subscription error', e);
+      toast({ title: 'Subscription failed', description: 'Please try again later.', variant: 'destructive' });
+    }
     
     // Add welcome message with personality
     const personalityGreetings = {
@@ -177,11 +195,13 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
     });
 
     try {
-      const contextPrompt = `You are a helpful AI assistant specializing in ${context}, specifically in ${selectedTopic}. 
-      Be conversational, helpful, and ${conversationPersonality}. 
-      Add appropriate humor and empathy. Show genuine interest in helping the user.
-      Format responses with markdown for better readability when appropriate.
-      Always end with a follow-up question to keep the conversation flowing.`;
+      const contextPrompt = `You are a helpful AI assistant specializing in ${context}, specifically in ${selectedTopic}.
+      Be conversational, helpful, and ${conversationPersonality}. Use concise, high-signal answers.
+      If context is "technology", bias content toward Agentic AI, LLMs/SLMs, MCP, RAG/knowledge bases, automation tools (UiPath, Power Automate, n8n),
+      observability (Langfuse/Langwatch), data labeling (Label Studio), cloud/platform updates (OpenAI, Claude, Gemini, Meta, Azure), Hugging Face models,
+      and contact-center AI trends, including notable market trends, launches, and M&A when relevant.
+      If the user mentions healthcare, explicitly ask to switch context to healthcare and continue accordingly.
+      Format with markdown where useful and always finish with a helpful follow-up question inviting next steps or a topic pivot.`;
 
       const response = await generateResponse({
         prompt: userMessage,
@@ -218,18 +238,27 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
 
   const handleHumanEscalation = async (request: any) => {
     try {
-      console.log('Human escalation request:', request);
-      toast({
-        title: "Request Sent",
-        description: "We'll connect you with a human agent soon!"
-      });
-      setShowHumanEscalation(false);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to send request. Please try again.",
-        variant: "destructive"
-      });
+      const transcript = messages
+        .slice(-5)
+        .map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`)
+        .join('\n');
+
+      const result = await ContactService.submitContactForm({
+        name: `${request.firstName} ${request.lastName || ''}`.trim(),
+        email: request.email,
+        subject: `[${(request.urgency || 'medium').toUpperCase()}] Live agent request (${context})`,
+        message: `${request.message}\n\nTopic: ${selectedTopic}\nContext: ${context}\n\nRecent conversation (last 5):\n${transcript}`,
+      } as any);
+
+      if (result.success) {
+        toast({ title: 'Request Sent', description: "We'll connect you with a human agent soon!" });
+        setShowHumanEscalation(false);
+      } else {
+        toast({ title: 'Error', description: result.message, variant: 'destructive' });
+      }
+    } catch (error: any) {
+      console.error('Human escalation error', error);
+      toast({ title: 'Error', description: 'Failed to send request. Please try again.', variant: 'destructive' });
     }
   };
 
@@ -314,11 +343,13 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
           {!isMinimized && (
             <div className="flex flex-col h-full">
               {showPrivacyBanner ? (
-                <PublicPrivacyBanner 
-                  onAccept={handlePrivacyAccept} 
-                  technologyTopics={technologyTopics}
-                  healthcareTopics={healthcareTopics}
-                />
+                <div className="flex-1 overflow-y-auto p-4">
+                  <PublicPrivacyBanner 
+                    onAccept={handlePrivacyAccept} 
+                    technologyTopics={technologyTopics}
+                    healthcareTopics={healthcareTopics}
+                  />
+                </div>
               ) : (
                 <>
                   {/* Messages */}
