@@ -1,27 +1,18 @@
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { 
-  Mail,
-  MessageSquare,
-  BookOpen,
-  Users,
-  Lightbulb,
-  Zap,
-  TrendingUp,
-  ArrowRight,
-  ExternalLink,
-  ThumbsUp,
-  ThumbsDown,
-  Heart
-} from "lucide-react";
 import { useState, useEffect } from "react";
-import { PrivacyDialog } from "@/components/LegalDialogs";
-import { FeedbackModal } from "@/components/FeedbackModal";
-import { ContactModal } from "@/components/ContactModal";
-import { supabase } from "@/integrations/supabase/client";
+import { ChevronDown, ChevronUp, Brain, Heart, Lightbulb, Cog, Rocket, Star, Users, ThumbsUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { PrivacyDialog } from "./LegalDialogs";
+import { FeedbackModal } from "./FeedbackModal";
+import { ContactModal } from "./ContactModal";
+import { RAGReviewModal } from "./RAGReviewModal";
+import { supabase } from "@/integrations/supabase/client";
 
+// Static FAQ data
 const faqData = [
   {
     category: "Genie AI Capabilities",
@@ -128,35 +119,84 @@ const faqData = [
 ];
 
 export const FAQ = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const [expandedCategories, setExpandedCategories] = useState<number[]>([]);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [expandedCategories, setExpandedCategories] = useState<string[]>(['Genie AI Capabilities']);
   const [stats, setStats] = useState({
-    total_subscribers: 0,
-    total_likes: 0,
-    total_dislikes: 0
+    subscribers: 0,
+    likes: 0,
+    dislikes: 0
   });
   const [userVote, setUserVote] = useState<'like' | 'dislike' | null>(null);
-  const [isVoting, setIsVoting] = useState(false);
+  const [dynamicFaqData, setDynamicFaqData] = useState<any[]>([]);
+  const [combinedFaqData, setCombinedFaqData] = useState<any[]>(faqData);
   const { toast } = useToast();
+
+  // Fetch dynamic FAQ entries from database
+  const fetchDynamicFAQ = async () => {
+    try {
+      const { data: faqEntries, error } = await supabase
+        .from('faq_entries')
+        .select('*')
+        .eq('is_active', true)
+        .order('category_name', { ascending: true })
+        .order('display_order', { ascending: true });
+
+      if (error) {
+        console.error('Error fetching FAQ entries:', error);
+        return;
+      }
+
+      // Group FAQ entries by category
+      const groupedFAQ = faqEntries?.reduce((acc: any, entry: any) => {
+        const category = entry.category_name;
+        if (!acc[category]) {
+          acc[category] = [];
+        }
+        acc[category].push({
+          q: entry.question,
+          a: entry.answer,
+          fromRAG: entry.created_from_rag
+        });
+        return acc;
+      }, {});
+
+      // Convert to array format expected by component
+      const dynamicCategories = Object.entries(groupedFAQ || {}).map(([category, questions]: [string, any]) => ({
+        category,
+        questions: questions as any[],
+        isDynamic: true
+      }));
+
+      setDynamicFaqData(dynamicCategories);
+      
+      // Combine static and dynamic FAQ data
+      const staticWithFlags = faqData.map(cat => ({ ...cat, isDynamic: false }));
+      setCombinedFaqData([...staticWithFlags, ...dynamicCategories]);
+    } catch (error) {
+      console.error('Error fetching dynamic FAQ:', error);
+    }
+  };
 
   useEffect(() => {
     fetchStats();
+    fetchDynamicFAQ();
+    
     // Check if user has already voted
-    const existingVote = localStorage.getItem('genie-hub-vote');
-    if (existingVote === 'like' || existingVote === 'dislike') {
-      setUserVote(existingVote);
+    const storedVote = localStorage.getItem('faq-user-vote');
+    if (storedVote) {
+      setUserVote(storedVote as 'like' | 'dislike');
     }
   }, []);
 
-  const toggleCategory = (category: string) => {
+  const toggleCategory = (index: number) => {
     setExpandedCategories(prev => 
-      prev.includes(category) 
-        ? prev.filter(c => c !== category)
-        : [...prev, category]
+      prev.includes(index) 
+        ? prev.filter(item => item !== index)
+        : [...prev, index]
     );
   };
 
@@ -164,23 +204,30 @@ export const FAQ = () => {
     try {
       const { data, error } = await supabase
         .from('site_stats')
-        .select('stat_name, stat_value');
+        .select('stat_name, stat_value')
+        .in('stat_name', ['total_subscribers', 'total_likes', 'total_dislikes']);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching stats:', error);
+        return;
+      }
 
-      const statsObj = {
-        total_subscribers: 0,
-        total_likes: 0,
-        total_dislikes: 0
-      };
-
-      data?.forEach((stat) => {
-        if (stat.stat_name in statsObj) {
-          statsObj[stat.stat_name as keyof typeof statsObj] = stat.stat_value;
+      const statsObj = data?.reduce((acc: any, stat: any) => {
+        switch (stat.stat_name) {
+          case 'total_subscribers':
+            acc.subscribers = stat.stat_value;
+            break;
+          case 'total_likes':
+            acc.likes = stat.stat_value;
+            break;
+          case 'total_dislikes':
+            acc.dislikes = stat.stat_value;
+            break;
         }
-      });
+        return acc;
+      }, {});
 
-      setStats(statsObj);
+      setStats(prev => ({ ...prev, ...statsObj }));
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
@@ -189,87 +236,79 @@ export const FAQ = () => {
   const handleVote = async (voteType: 'like' | 'dislike') => {
     if (userVote) {
       toast({
-        title: "Already Voted",
-        description: "You've already shared your feedback. Thank you!",
-        variant: "destructive"
+        title: "Already voted",
+        description: "You've already provided feedback. Thank you!"
       });
       return;
     }
 
-    setIsVoting(true);
-
     try {
       const { error } = await supabase.functions.invoke('update-site-stats', {
-        body: { statName: voteType === 'like' ? 'total_likes' : 'total_dislikes' }
+        body: { 
+          statName: voteType === 'like' ? 'total_likes' : 'total_dislikes',
+          increment: 1
+        }
       });
 
       if (error) throw error;
 
-      localStorage.setItem('genie-hub-vote', voteType);
       setUserVote(voteType);
-
+      localStorage.setItem('faq-user-vote', voteType);
+      
       setStats(prev => ({
         ...prev,
-        [voteType === 'like' ? 'total_likes' : 'total_dislikes']: 
-          prev[voteType === 'like' ? 'total_likes' : 'total_dislikes'] + 1
+        [voteType === 'like' ? 'likes' : 'dislikes']: prev[voteType === 'like' ? 'likes' : 'dislikes'] + 1
       }));
 
       toast({
         title: "Thank you!",
-        description: `Your ${voteType} has been recorded. We appreciate your feedback!`,
+        description: `Your ${voteType} has been recorded.`
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error recording vote:', error);
       toast({
         title: "Error",
-        description: "Unable to record your vote. Please try again later.",
+        description: "Failed to record your feedback. Please try again.",
         variant: "destructive"
       });
-    } finally {
-      setIsVoting(false);
     }
   };
 
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!firstName.trim() || !lastName.trim() || !email.trim()) {
+  const handleSubscribe = async () => {
+    if (!firstName || !lastName || !email) {
       toast({
-        title: "Missing Information",
-        description: "Please enter your first name, last name, and email address.",
-        variant: "destructive",
+        title: "Missing information",
+        description: "Please fill in all fields.",
+        variant: "destructive"
       });
       return;
     }
 
     setIsLoading(true);
-    
+
     try {
-      const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
+      const { error } = await supabase.functions.invoke('newsletter-subscribe', {
         body: { 
-          email: email.trim(),
-          firstName: firstName.trim(),
-          lastName: lastName.trim(),
-          source: 'website_faq'
+          firstName,
+          lastName,
+          email,
+          source: 'faq_section'
         }
       });
 
       if (error) throw error;
 
       setIsSubscribed(true);
-      setFirstName("");
-      setLastName("");
-      setEmail("");
       toast({
-        title: "Welcome aboard! 🧞‍♂️",
-        description: "You've successfully subscribed to our newsletter. Check your email for a welcome message!",
+        title: "Subscribed!",
+        description: "Welcome to our community! Check your email for confirmation."
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error('Subscription error:', error);
       toast({
-        title: "Subscription Failed",
-        description: error.message || "Unable to subscribe. Please try again later.",
-        variant: "destructive",
+        title: "Subscription failed",
+        description: "Please try again or contact support.",
+        variant: "destructive"
       });
     } finally {
       setIsLoading(false);
@@ -277,207 +316,217 @@ export const FAQ = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-b from-background to-primary/5" id="faq">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="faq" className="py-20 bg-gradient-to-b from-background to-primary/5">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
         
-        {/* FAQ Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold genie-gradient-text mb-4">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <Badge className="bg-primary/20 text-primary border-primary/30 mb-4">
+            <Lightbulb className="w-4 h-4 mr-2" />
+            FAQ & Knowledge Hub
+          </Badge>
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="genie-tagline text-lg mb-2">Everything you need to know about Genie AI</p>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive answers about AI innovation, healthcare concepts, technology implementation, and experimentation methodologies
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Comprehensive answers about AI innovation, technology implementation, 
+            and healthcare transformation. Updated with insights from real conversations.
           </p>
         </div>
 
         {/* FAQ Categories */}
-        <div className="max-w-4xl mx-auto mb-16 space-y-6">
-          {faqData.map((category, categoryIndex) => (
-            <Card key={categoryIndex} className="border border-primary/20">
-              <button
-                onClick={() => toggleCategory(category.category)}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-primary/5 transition-colors"
-              >
-                <h3 className="text-xl font-semibold text-foreground">
-                  {category.category}
-                </h3>
-                <ArrowRight 
-                  className={`w-5 h-5 text-primary transition-transform ${
-                    expandedCategories.includes(category.category) ? 'rotate-90' : ''
-                  }`} 
-                />
-              </button>
-              
-              {expandedCategories.includes(category.category) && (
-                <div className="px-6 pb-6 space-y-4">
-                  {category.questions.map((faq, faqIndex) => (
-                    <div key={faqIndex} className="border-l-2 border-primary/20 pl-4">
-                      <h4 className="font-semibold text-foreground mb-2">
-                        {faq.q}
-                      </h4>
-                      <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-                        {faq.a}
+        <div className="space-y-6">
+          {combinedFaqData.map((faqCategory, categoryIndex) => {
+            const isExpanded = expandedCategories.includes(categoryIndex);
+            const Icon = categoryIndex === 0 ? Brain : 
+                        categoryIndex === 1 ? Cog : 
+                        categoryIndex === 2 ? Heart : 
+                        categoryIndex === 3 ? Rocket : 
+                        categoryIndex === 4 ? Users : 
+                        categoryIndex === 5 ? Lightbulb : Star;
+            
+            return (
+              <Card key={categoryIndex} className="border border-primary/20 bg-gradient-to-r from-background to-primary/5">
+                <div 
+                  className="p-6 cursor-pointer flex items-center justify-between hover:bg-primary/5 transition-colors"
+                  onClick={() => toggleCategory(categoryIndex)}
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
+                        {faqCategory.category}
+                        {faqCategory.isDynamic && (
+                          <Badge variant="secondary" className="text-xs">
+                            Dynamic
+                          </Badge>
+                        )}
+                      </h3>
+                      <p className="text-muted-foreground">
+                        {faqCategory.questions.length} questions
                       </p>
                     </div>
-                  ))}
+                  </div>
+                  {isExpanded ? (
+                    <ChevronUp className="w-5 h-5 text-primary" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-primary" />
+                  )}
                 </div>
-              )}
-            </Card>
-          ))}
+                
+                {isExpanded && (
+                  <div className="px-6 pb-6">
+                    <Separator className="mb-6" />
+                    <div className="space-y-4">
+                      {faqCategory.questions.map((qa: any, qaIndex: number) => (
+                        <div key={qaIndex} className="border-l-2 border-primary/30 pl-4">
+                          <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                            {qa.q}
+                            {qa.fromRAG && (
+                              <Badge variant="outline" className="text-xs">
+                                AI Generated
+                              </Badge>
+                            )}
+                          </h4>
+                          <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+                            {qa.a}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </Card>
+            );
+          })}
         </div>
-        
-        {/* Community Stats */}
+
+        <Separator className="my-16" />
+
+        {/* Community Stats and Voting */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold genie-gradient-text mb-2">
-            Join Our Growing Community
-          </h2>
-          <p className="genie-tagline text-lg">I am your Technology Navigator</p>
-          <div className="flex justify-center items-center gap-8 mb-8">
+          <h3 className="text-2xl font-bold text-foreground mb-6">Community Feedback</h3>
+          <div className="flex justify-center items-center space-x-8 mb-6">
             <div className="text-center">
-              <div className="text-2xl font-bold text-primary">
-                {stats.total_subscribers.toLocaleString()}
-              </div>
+              <div className="text-3xl font-bold text-primary">{stats.subscribers}</div>
               <div className="text-sm text-muted-foreground">Subscribers</div>
             </div>
-            <div className="flex gap-4">
-              <Button
-                onClick={() => handleVote('like')}
-                disabled={isVoting || !!userVote}
-                size="sm"
-                variant={userVote === 'like' ? 'default' : 'outline'}
-                className="flex items-center gap-2"
-              >
-                <ThumbsUp className="w-4 h-4" />
-                {stats.total_likes}
-              </Button>
-              <Button
-                onClick={() => handleVote('dislike')}
-                disabled={isVoting || !!userVote}
-                size="sm"
-                variant={userVote === 'dislike' ? 'destructive' : 'outline'}
-                className="flex items-center gap-2"
-              >
-                <ThumbsDown className="w-4 h-4" />
-                {stats.total_dislikes}
-              </Button>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-green-600">{stats.likes}</div>
+              <div className="text-sm text-muted-foreground">Helpful</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-red-600">{stats.dislikes}</div>
+              <div className="text-sm text-muted-foreground">Needs Work</div>
             </div>
           </div>
+
+          <div className="flex justify-center space-x-4 mb-8">
+            <Button
+              variant={userVote === 'like' ? 'default' : 'outline'}
+              onClick={() => handleVote('like')}
+              disabled={!!userVote}
+              className="flex items-center space-x-2"
+            >
+              <ThumbsUp className="w-4 h-4" />
+              <span>Helpful</span>
+            </Button>
+            <Button
+              variant={userVote === 'dislike' ? 'destructive' : 'outline'}
+              onClick={() => handleVote('dislike')}
+              disabled={!!userVote}
+              className="flex items-center space-x-2"
+            >
+              <ThumbsUp className="w-4 h-4 rotate-180" />
+              <span>Needs Work</span>
+            </Button>
+          </div>
         </div>
-        
-        {/* Newsletter Subscription CTA */}
-        <div className="max-w-xl mx-auto">
-          <Card className="p-4 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20">
-            <div className="text-center mb-6">
-              <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Mail className="w-6 h-6 text-primary" />
+
+        {/* Newsletter Subscription */}
+        <Card className="p-8 bg-gradient-to-r from-primary/5 to-secondary/5 border border-primary/20">
+          <div className="text-center mb-6">
+            <h3 className="text-2xl font-bold text-foreground mb-2">Stay Updated</h3>
+            <p className="text-muted-foreground">
+              Get the latest insights on AI innovation and healthcare transformation
+            </p>
+          </div>
+
+          {isSubscribed ? (
+            <div className="text-center">
+              <div className="text-green-600 font-semibold mb-2">🎉 Successfully Subscribed!</div>
+              <p className="text-muted-foreground">Check your email for confirmation.</p>
+            </div>
+          ) : (
+            <div className="max-w-md mx-auto space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <Input
+                  placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+                <Input
+                  placeholder="Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
               </div>
-              <h3 className="text-xl font-bold genie-gradient-text mb-2">
-                Join the GENIE AI Journey
-              </h3>
-              <p className="genie-tagline mb-2 text-sm">I am your Technology Navigator</p>
-              <p className="text-muted-foreground text-sm">
-                Subscribe to receive insights from my AI experiments, successful implementations, failed attempts, 
-                and lessons learned. Join fellow AI experimenters exploring what works and what doesn't.
+              <Input
+                placeholder="Email address"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Button 
+                onClick={handleSubscribe}
+                disabled={isLoading}
+                className="w-full bg-primary hover:bg-primary/90"
+              >
+                {isLoading ? 'Subscribing...' : 'Subscribe to Updates'}
+              </Button>
+              <p className="text-xs text-muted-foreground text-center">
+                By subscribing, you agree to our{' '}
+                <PrivacyDialog 
+                  trigger={
+                    <button className="underline hover:text-primary transition-colors">
+                      Privacy Policy
+                    </button>
+                  }
+                />
               </p>
             </div>
+          )}
+        </Card>
 
-            {!isSubscribed ? (
-              <form onSubmit={handleSubscribe} className="max-w-sm mx-auto">
-                <div className="space-y-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    <Input
-                      type="text"
-                      placeholder="First Name"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      required
-                      className="text-sm"
-                    />
-                    <Input
-                      type="text"
-                      placeholder="Last Name"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      required
-                      className="text-sm"
-                    />
-                  </div>
-                  <Input
-                    type="email"
-                    placeholder="Enter your email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="text-sm"
-                  />
-                  <Button 
-                    type="submit" 
-                    disabled={isLoading}
-                    className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50"
-                    size="sm"
-                  >
-                    {isLoading ? 'Subscribing...' : 'Subscribe'}
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground mt-2 text-center">
-                  No spam, unsubscribe at any time. Read my <PrivacyDialog trigger={<button className="underline text-muted-foreground hover:text-foreground">Privacy Policy</button>} />
-                </p>
-              </form>
-            ) : (
-              <div className="text-center">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <TrendingUp className="w-6 h-6 text-green-600" />
-                </div>
-                <h4 className="text-lg font-semibold text-foreground mb-2">
-                  Thank you for joining the journey!
-                </h4>
-                <p className="text-muted-foreground">
-                  You'll receive my latest AI experiments and insights soon.
-                </p>
-              </div>
-            )}
-
-            <div className="grid grid-cols-3 gap-3 mt-6 pt-4 border-t border-primary/20">
-              <div className="text-center">
-                <BookOpen className="w-5 h-5 text-primary mx-auto mb-1" />
-                <h4 className="font-semibold text-foreground mb-1 text-xs">Experiment Insights</h4>
-                <p className="text-xs text-muted-foreground">Real results from AI tools testing and implementation attempts</p>
-              </div>
-              <div className="text-center">
-                <Users className="w-5 h-5 text-primary mx-auto mb-1" />
-                <h4 className="font-semibold text-foreground mb-1 text-xs">Connect and Share</h4>
-                <p className="text-xs text-muted-foreground">Connect with other AI experimenters and share discoveries</p>
-              </div>
-              <div className="text-center">
-                <Zap className="w-5 h-5 text-primary mx-auto mb-1" />
-                <h4 className="font-semibold text-foreground mb-1 text-xs">Early Access</h4>
-                <p className="text-xs text-muted-foreground">Be first to try new tools and techniques I discover</p>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex justify-center gap-2 mt-4">
-              <ContactModal 
-                trigger={
-                  <Button variant="default" size="sm" className="flex items-center gap-2">
-                    <Users className="w-4 h-4" />
-                    Connect & Learn
-                  </Button>
-                }
-              />
-              <FeedbackModal 
-                trigger={
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
-                    <MessageSquare className="w-4 h-4" />
-                    Share Feedback
-                  </Button>
-                }
-              />
-            </div>
-          </Card>
+        {/* Action Buttons */}
+        <div className="flex flex-wrap justify-center gap-4 mt-12">
+          <FeedbackModal 
+            trigger={
+              <Button variant="outline" className="flex items-center space-x-2">
+                <Heart className="w-4 h-4" />
+                <span>Share Feedback</span>
+              </Button>
+            }
+          />
+          <ContactModal 
+            trigger={
+              <Button variant="outline" className="flex items-center space-x-2">
+                <Users className="w-4 h-4" />
+                <span>Get in Touch</span>
+              </Button>
+            }
+          />
+          <RAGReviewModal 
+            trigger={
+              <Button variant="outline" className="flex items-center space-x-2">
+                <Brain className="w-4 h-4" />
+                <span>Review RAG Updates</span>
+              </Button>
+            }
+          />
         </div>
-
       </div>
     </section>
   );

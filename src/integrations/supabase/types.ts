@@ -6218,6 +6218,53 @@ export type Database = {
         }
         Relationships: []
       }
+      faq_entries: {
+        Row: {
+          answer: string
+          category_name: string
+          created_at: string
+          created_from_rag: boolean | null
+          display_order: number | null
+          id: string
+          is_active: boolean | null
+          knowledge_base_entry_id: string | null
+          question: string
+          updated_at: string
+        }
+        Insert: {
+          answer: string
+          category_name: string
+          created_at?: string
+          created_from_rag?: boolean | null
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          knowledge_base_entry_id?: string | null
+          question: string
+          updated_at?: string
+        }
+        Update: {
+          answer?: string
+          category_name?: string
+          created_at?: string
+          created_from_rag?: boolean | null
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          knowledge_base_entry_id?: string | null
+          question?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "faq_entries_knowledge_base_entry_id_fkey"
+            columns: ["knowledge_base_entry_id"]
+            isOneToOne: false
+            referencedRelation: "knowledge_base"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       feedback: {
         Row: {
           created_at: string
@@ -7022,7 +7069,9 @@ export type Database = {
       }
       knowledge_base: {
         Row: {
+          approval_notes: string | null
           category: string
+          confidence_score: number | null
           content_type: string | null
           created_at: string
           created_by: string | null
@@ -7037,13 +7086,18 @@ export type Database = {
           processed_content: string | null
           raw_content: string | null
           regulatory_status: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
           source_type: string
           source_url: string | null
+          status: string | null
           treatment_category: string | null
           updated_at: string
         }
         Insert: {
+          approval_notes?: string | null
           category: string
+          confidence_score?: number | null
           content_type?: string | null
           created_at?: string
           created_by?: string | null
@@ -7058,13 +7112,18 @@ export type Database = {
           processed_content?: string | null
           raw_content?: string | null
           regulatory_status?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           source_type: string
           source_url?: string | null
+          status?: string | null
           treatment_category?: string | null
           updated_at?: string
         }
         Update: {
+          approval_notes?: string | null
           category?: string
+          confidence_score?: number | null
           content_type?: string | null
           created_at?: string
           created_by?: string | null
@@ -7079,8 +7138,11 @@ export type Database = {
           processed_content?: string | null
           raw_content?: string | null
           regulatory_status?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           source_type?: string
           source_url?: string | null
+          status?: string | null
           treatment_category?: string | null
           updated_at?: string
         }
@@ -10424,10 +10486,15 @@ export type Database = {
           created_at: string
           healthcare_context: Json | null
           id: string
+          knowledge_base_entry_id: string | null
           knowledge_base_ids: string[] | null
           next_best_actions: Json
           query_context: string
           recommendations: Json
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string | null
           treatment_recommendations: Json | null
         }
         Insert: {
@@ -10437,10 +10504,15 @@ export type Database = {
           created_at?: string
           healthcare_context?: Json | null
           id?: string
+          knowledge_base_entry_id?: string | null
           knowledge_base_ids?: string[] | null
           next_best_actions: Json
           query_context: string
           recommendations: Json
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
           treatment_recommendations?: Json | null
         }
         Update: {
@@ -10450,10 +10522,15 @@ export type Database = {
           created_at?: string
           healthcare_context?: Json | null
           id?: string
+          knowledge_base_entry_id?: string | null
           knowledge_base_ids?: string[] | null
           next_best_actions?: Json
           query_context?: string
           recommendations?: Json
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
           treatment_recommendations?: Json | null
         }
         Relationships: [
@@ -10462,6 +10539,13 @@ export type Database = {
             columns: ["conversation_id"]
             isOneToOne: false
             referencedRelation: "agent_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rag_recommendations_knowledge_base_entry_id_fkey"
+            columns: ["knowledge_base_entry_id"]
+            isOneToOne: false
+            referencedRelation: "knowledge_base"
             referencedColumns: ["id"]
           },
         ]
@@ -15063,6 +15147,15 @@ export type Database = {
       optimize_slow_queries: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      process_rag_recommendation: {
+        Args: {
+          p_action: string
+          p_merge_with_entry_id?: string
+          p_recommendation_id: string
+          p_review_notes?: string
+        }
+        Returns: Json
       }
       progress_journey_stage: {
         Args: {
