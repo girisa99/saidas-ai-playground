@@ -71,41 +71,41 @@ export const TrustSection = () => {
           </div>
         </div>
 
-        {/* Why This Framework Works */}
+        {/* Experimentation Framework Principles */}
         <div className="bg-gradient-to-r from-primary/5 to-background/50 rounded-2xl p-8 mb-12">
-          <h3 className="text-2xl font-bold text-center mb-8">Why This Framework Eliminates Common AI Pitfalls</h3>
+          <h3 className="text-2xl font-bold text-center mb-8">Core Experimentation Framework Principles</h3>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-primary">Traditional Approach Issues:</h4>
+              <h4 className="text-lg font-semibold text-primary">Rapid Iteration Mindset:</h4>
               <div className="space-y-2 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <span>Long development cycles with uncertain outcomes</span>
+                  <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>
+                  <span>Small, focused experiments with clear success criteria</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <span>High upfront investment without validation</span>
+                  <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>
+                  <span>Fail fast and learn from each iteration</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <span>Lack of stakeholder buy-in due to abstract concepts</span>
+                  <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>
+                  <span>Document both successes and failures for learning</span>
                 </div>
               </div>
             </div>
             <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-primary">Our Framework Benefits:</h4>
+              <h4 className="text-lg font-semibold text-primary">Framework Benefits:</h4>
               <div className="space-y-2 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>
-                  <span>Rapid feedback loops and course correction</span>
+                  <span>Reduces risk through incremental validation</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>
-                  <span>Proven ROI before major investments</span>
+                  <span>Builds stakeholder confidence with tangible results</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>
-                  <span>Concrete examples that build confidence</span>
+                  <span>Accelerates learning and knowledge transfer</span>
                 </div>
               </div>
             </div>
