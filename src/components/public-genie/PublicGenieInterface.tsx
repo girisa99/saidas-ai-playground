@@ -17,6 +17,7 @@ import { PublicPrivacyBanner } from './PublicPrivacyBanner';
 import { HumanEscalationForm } from './HumanEscalationForm';
 import { RichResponseRenderer } from './RichResponseRenderer';
 import { AdvancedAISettings, AIConfig } from './AdvancedAISettings';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { CapabilitiesPrompt, TopicSuggestions } from './ConversationUtils';
 import { NewsletterService } from '@/services/newsletterService';
 import { ContactService } from '@/services/publicContactService';
@@ -78,12 +79,16 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [hasStartedConversation, setHasStartedConversation] = useState(false);
   const [showCapabilities, setShowCapabilities] = useState(false);
   const [showTopicSuggestions, setShowTopicSuggestions] = useState(false);
+  const [showConfigWizard, setShowConfigWizard] = useState(false);
+  const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
+  const [ipAddress, setIpAddress] = useState<string | null>(null);
   const [aiConfig, setAIConfig] = useState<AIConfig>({
     mode: 'default',
     ragEnabled: false,
     knowledgeBaseEnabled: false,
     mcpEnabled: false,
     selectedModel: 'gpt-4o-mini',
+    secondaryModel: 'claude-3-haiku',
     splitScreenEnabled: false,
     contextualSuggestions: true,
   });
@@ -95,9 +100,17 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const { state, addMessage, resetConversation } = useConversationState();
   const messages = state.messages;
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+useEffect(() => {
+  messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+}, [messages]);
+
+useEffect(() => {
+  // Capture user IP (best-effort) for rate limiting
+  fetch('https://api.ipify.org?format=json')
+    .then((r) => r.json())
+    .then((d) => setIpAddress(d.ip))
+    .catch(() => setIpAddress(null));
+}, []);
 
   const handlePrivacyAccept = async (info: UserInfo) => {
     setUserInfo(info);
@@ -139,8 +152,8 @@ Ask me anything to get started, or click below to explore my advanced features!`
       timestamp: new Date().toISOString()
     });
 
-    // Show capabilities prompt after welcome
-    setTimeout(() => setShowCapabilities(true), 2000);
+    // Show configuration wizard before starting conversation
+    setShowConfigWizard(true);
   };
 
   const addPersonalityToResponse = (response: string): string => {

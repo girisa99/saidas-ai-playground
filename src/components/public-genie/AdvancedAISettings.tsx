@@ -19,6 +19,7 @@ export interface AIConfig {
   knowledgeBaseEnabled: boolean;
   mcpEnabled: boolean;
   selectedModel: string;
+  secondaryModel?: string;
   splitScreenEnabled: boolean;
   contextualSuggestions: boolean;
 }
@@ -135,6 +136,50 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
           )}
         </CardContent>
       </Card>
+
+      {/* Comparison Model (for Multi + Split) */}
+      {(config.mode === 'multi' || config.splitScreenEnabled) && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm flex items-center gap-2">
+              <Cpu className="h-4 w-4" />
+              Comparison Model
+            </CardTitle>
+            <CardDescription className="text-xs">
+              Secondary model for side-by-side responses
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="pt-0 space-y-2">
+            <Select
+              value={config.secondaryModel || 'claude-3-haiku'}
+              onValueChange={(value) => updateConfig({ secondaryModel: value })}
+            >
+              <SelectTrigger className="h-8">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {modelOptions
+                  .filter((m) => m.id !== config.selectedModel)
+                  .map((model) => (
+                    <SelectItem key={model.id} value={model.id}>
+                      <div className="flex items-center justify-between w-full">
+                        <span className="text-xs">{model.name}</span>
+                        <div className="flex gap-1 ml-2">
+                          <Badge variant="secondary" className="text-xs px-1 py-0">
+                            {model.type}
+                          </Badge>
+                          <Badge variant="outline" className="text-xs px-1 py-0">
+                            {model.provider}
+                          </Badge>
+                        </div>
+                      </div>
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Knowledge & Context Features */}
       <Card>
