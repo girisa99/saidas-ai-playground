@@ -36,7 +36,7 @@ export const NavigationHeader = () => {
       <div className="w-full max-w-none px-4 sm:px-6 lg:px-8">
         <div className="flex h-14 sm:h-16 items-center justify-between gap-2 max-w-full overflow-hidden">{/* Mobile-optimized height */}
           {/* Logo & Brand - Left aligned, flexible width */}
-          <Link to="/" className="enterprise-logo-container group min-w-0 flex-shrink-0 mr-4 sm:mr-6 lg:mr-8 xl:mr-10">
+          <Link to="/" className="enterprise-logo-container group min-w-fit flex-shrink-0 mr-4 sm:mr-6 lg:mr-8 xl:mr-10">
             <div className="relative flex-shrink-0">
               <img 
                 src={genieLogoMain} 
