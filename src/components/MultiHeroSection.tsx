@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MapPin, Trophy, Wrench, Rocket } from "lucide-react";
+import { ArrowRight, MapPin, Trophy, Wrench, Rocket, Target } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import aiJourneyBg from "@/assets/hero-ai-journey.jpg";
@@ -105,41 +105,40 @@ export const MultiHeroSection = () => {
       {/* Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
-            {/* Clear Value Proposition */}
+            {/* Bold Value Proposition */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6 animate-fade-in text-center text-white">
-              Genie AI Development <span className="text-genie-accent">Experimentation</span>
+              Experiment. Validate. Deploy. <span className="text-genie-accent">Faster AI Innovation Without Bureaucracy</span>
             </h1>
             <div className="w-16 sm:w-20 md:w-24 h-1 bg-genie-accent mx-auto mb-6 sm:mb-8"></div>
             
-            {/* Clear Purpose Statement */}
+            {/* Outcome-Driven Subheading */}
             <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mb-4 sm:mb-6 font-medium max-w-4xl mx-auto px-2">
-              Sharing How AI is Democratizing Software Development for Everyone
+              How I Built 8+ AI Solutions in 90 Days Using No-Code Tools
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto px-2">
-              Join my exploration of how AI tools are making software development accessible to business professionals 
-              with little to no coding experience. Real experiments, honest discoveries, and practical insights.
+              Learn the practical approach from business idea to working AI application through proven technology stacks and real examples.
             </p>
             
-            {/* What You'll Discover - Knowledge focused */}
+            {/* Experiment → Validate → Deploy Framework */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 max-w-4xl mx-auto px-2">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <MapPin className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
-                <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Learning Journey</h3>
-                <p className="text-white/80 text-xs sm:text-sm">Follow my step-by-step exploration of AI development tools</p>
+                <Trophy className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
+                <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Experiment</h3>
+                <p className="text-white/80 text-xs sm:text-sm">Test AI tools and platforms without technical barriers</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Trophy className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
-                <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Real Experiments</h3>
-                <p className="text-white/80 text-xs sm:text-sm">Honest results from testing no-code and AI-powered platforms</p>
+                <Target className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
+                <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Validate</h3>
+                <p className="text-white/80 text-xs sm:text-sm">Prove concepts with real-world use cases and results</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20 sm:col-span-2 md:col-span-1">
-                <Wrench className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
-                <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Accessible Tools</h3>
-                <p className="text-white/80 text-xs sm:text-sm">Discover AI tools that require minimal technical background</p>
+                <Rocket className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
+                <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Deploy</h3>
+                <p className="text-white/80 text-xs sm:text-sm">Launch working solutions that solve real problems</p>
               </div>
             </div>
 
-          {/* Primary CTA - Learning focused */}
+          {/* Strong Action-Oriented CTAs */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12 animate-fade-in justify-center px-2">
             <Button 
               variant="default"
@@ -147,16 +146,16 @@ export const MultiHeroSection = () => {
               className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
               onClick={() => navigate('/journey')}
             >
-              Explore My Learning Path
+              See How It Works
               <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
             <Button 
               variant="outline" 
               size="lg" 
               className="border-white/50 text-white bg-transparent hover:bg-white hover:text-genie-dark backdrop-blur-sm w-full sm:w-auto transition-all duration-300"
-              onClick={() => navigate('/about')}
+              onClick={() => navigate('/case-studies')}
             >
-              About my background
+              View Live Examples
             </Button>
           </div>
         </div>
