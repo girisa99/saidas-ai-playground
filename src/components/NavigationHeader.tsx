@@ -79,7 +79,7 @@ export const NavigationHeader = () => {
 
           {/* Desktop Navigation - Center, takes available space */}
           <nav className="hidden lg:flex items-center justify-center flex-1 min-w-0 px-4 lg:px-6">
-            <div className="flex items-center justify-center space-x-2 w-full">
+            <div className="flex items-center justify-center space-x-2 w-full overflow-x-auto">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = isActivePath(item.to);
@@ -109,7 +109,8 @@ export const NavigationHeader = () => {
                     }`}
                   >
                     <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span className="inline text-xs">{responsiveLabel.full}</span>
+                    <span className="hidden xl:inline text-xs">{responsiveLabel.full}</span>
+                    <span className="lg:inline xl:hidden text-xs">{responsiveLabel.short}</span>
                   </Link>
                 );
               })}
