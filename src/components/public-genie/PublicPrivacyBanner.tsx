@@ -67,7 +67,7 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
                   <li>We will send you welcome emails and newsletters (you can unsubscribe anytime)</li>
                   <li>Rate limits apply (2 conversations per hour, 5 per day)</li>
                   <li>Extended access available upon request for legitimate use cases</li>
-                  <li>All access requests are reviewed by our team at genieaiexpermentationhub@gmail.com</li>
+                  <li>All access requests are reviewed by me personally upon receiving the request at genieaiexpermentationhub@gmail.com</li>
                   <li>We use minimal cookies to maintain your session</li>
                 </ul>
               </AlertDescription>
