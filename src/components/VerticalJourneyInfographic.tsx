@@ -31,109 +31,194 @@ const VerticalJourneyInfographic = () => {
   const phases = [
     {
       id: 1,
-      title: "EXPERIMENT",
-      subtitle: "From Spark to Deep AI Exploration",
-      date: "May-June 2025",
+      title: "Patient Onboarding & Enrollment",
+      subtitle: "AI-Driven Healthcare Workflow Transformation",
+      date: "May-September 2025",
       icon: Lightbulb,
       image: phase01Spark,
-      description: "Evening coffee with community members sparked a revolutionary question about AI transformation. This curiosity transformed into an all-consuming 45-day deep dive, building my personal AI experimentation lab and systematically exploring the landscape of AI possibilities.",
-      touchPoints: [
-        "Initial spark from transformative conversation with Prashant K and community members",
-        "Recognition of fundamental shift potential in AI landscape",
-        "Established personal AI experimentation hub with systematic model comparison",
-        "Conducted 45-day intensive deep dive across GPT, Claude, and Gemini models", 
-        "Developed foundational understanding of prompt engineering and model optimization",
-        "Built prototypes using Bolt, Loveable, and Solid frameworks with TypeScript",
-        "Integrated AI into real-world workflows with GitHub, DocuSign, and Twilio APIs",
-        "Deep curiosity ignited for comprehensive AI exploration"
-      ],
-      painPoints: [
-        "Overwhelming possibilities without clear direction or starting point",
-        "Limited understanding of AI's true potential beyond surface-level applications",
-        "Overwhelming complexity of AI model selection and optimization decisions",
-        "Challenges preventing redundancy and ensuring application stability",
-        "Steep learning curve requiring methodical experimentation approach",
-        "Trial and error process in understanding proper AI project structures",
-        "Frustrating moments of 'why isn't this working?' during foundational learning",
-        "Uncertainty about where to begin the AI transformation journey"
-      ],
-      technologies: ["Strategic Vision", "Conceptual Framework", "GPT Series", "Claude", "Gemini", "Bolt", "Loveable", "Solid", "TypeScript", "Supabase", "PostgreSQL", "Vector Databases"],
+      description: "End-to-end patient onboarding and enrollment system leveraging AI to streamline healthcare workflows from initial contact to treatment delivery.",
+      experiment: {
+        title: "EXPERIMENT",
+        description: "Initial spark from transformative conversation sparked AI exploration for healthcare workflows",
+        activities: [
+          "Initial spark from transformative conversation with Prashant K and community members",
+          "Recognition of fundamental shift potential in AI landscape for healthcare",
+          "Established personal AI experimentation hub with systematic model comparison",
+          "Conducted 45-day intensive deep dive across GPT, Claude, and Gemini models",
+          "Developed foundational understanding of prompt engineering and model optimization"
+        ],
+        challenges: [
+          "Overwhelming possibilities without clear direction or starting point",
+          "Limited understanding of AI's true potential beyond surface-level applications",
+          "Overwhelming complexity of AI model selection and optimization decisions",
+          "Uncertainty about where to begin the AI transformation journey"
+        ],
+        technologies: ["Strategic Vision", "Conceptual Framework", "GPT Series", "Claude", "Gemini"]
+      },
+      validate: {
+        title: "VALIDATE",
+        description: "Breakthrough realization of AI's creative potential transformed into validated, production-ready foundations",
+        activities: [
+          "Breakthrough realization of AI's creative potential beyond coding assistance",
+          "Integrated visual design tools (Visio, draw.io, Miro, Figma) for collaborative brainstorming",
+          "Transformed coding with Cursor IDE's AI-native capabilities and dynamic dialogue",
+          "Built resilient architectures with sophisticated error handling and feedback loops",
+          "Applied 45-day deep dive lessons to architect scalable MVP foundations"
+        ],
+        challenges: [
+          "Moving past static data storage to intelligent, learning data systems",
+          "Balancing rapid prototyping with robust, scalable architectures",
+          "Ensuring TypeScript types perfectly align with database schemas without friction",
+          "Managing complexity of verification agents and validation systems effectively"
+        ],
+        technologies: ["Cursor IDE", "Visio", "Draw.io", "Miro", "Figma", "TypeScript", "Vector Databases"]
+      },
+      deploy: {
+        title: "DEPLOY",
+        description: "Successfully deployed stable, resilient AI platform serving as production backbone for healthcare",
+        activities: [
+          "Built unbreakable, stable AI platform foundation serving as experimentation backbone",
+          "Successfully integrated healthcare systems: NPI, CMS credentialing, FDA tracking",
+          "Implemented ICD 9/10 code integration and Changehealth EMR for insurance verification",
+          "Successfully orchestrated multiple agents for patient onboarding use cases",
+          "Achieved 94% accuracy in hallucination reduction through robust validation systems"
+        ],
+        challenges: [
+          "Complex healthcare system integration challenges across NPI, CMS, FDA, and EMR platforms",
+          "Ensuring platform stability while supporting rapid experimentation and agent deployment",
+          "Managing data consistency across multiple healthcare data sources and validation systems",
+          "Coordinating agent orchestration while maintaining HIPAA compliance and data integrity"
+        ],
+        technologies: ["Multi-Agent Systems", "Agentic AI", "NPI Integration", "CMS Credentialing", "FDA APIs", "ICD 9/10", "Changehealth EMR"]
+      },
       color: "genie-primary",
       bgColor: "bg-gradient-to-br from-genie-primary/5 to-genie-primary/10"
     },
     {
       id: 2,
-      title: "VALIDATE",
-      subtitle: "From Breakthrough to Production-Ready Foundation",
-      date: "May-August 2025",
+      title: "AI Lab Infrastructure",
+      subtitle: "Enterprise-Grade Development Platform",
+      date: "May-September 2025",
       icon: Target,
       image: phase03BreakthroughArtwork,
-      description: "The pivotal shift from experimental curiosity to validated, production-ready solutions. This phase represents the breakthrough realization of AI's creative potential, combined with building enterprise-grade foundations that transform 45-day learnings into scalable, resilient architectures.",
-      touchPoints: [
-        "Breakthrough realization of AI's creative potential beyond coding assistance",
-        "Integrated visual design tools (Visio, draw.io, Miro, Figma) for collaborative brainstorming",
-        "Transformed coding with Cursor IDE's AI-native capabilities and dynamic dialogue",
-        "Built resilient architectures with sophisticated error handling and feedback loops",
-        "Applied 45-day deep dive lessons to architect scalable MVP foundations",
-        "Implemented comprehensive TypeScript-database schema alignment and validation",
-        "Built intelligent guardrail systems with small verification agents",
-        "Established single source of truth patterns to eliminate data inconsistencies",
-        "Created automated duplicate detection and redundancy prevention systems",
-        "Deployed robust security frameworks with RLS policies and schema validation",
-        "Implemented hallucination reduction techniques through structured validation",
-        "Built modular component verification systems before feature deployment",
-        "Established enterprise-grade CI/CD pipelines with security scanning",
-        "Created comprehensive monitoring and vulnerability assessment frameworks"
-      ],
-      painPoints: [
-        "Moving past static data storage to intelligent, learning data systems",
-        "Designing systems that actively learn from errors and adapt over time",
-        "Balancing rapid prototyping with robust, scalable architectures",
-        "Balancing rapid MVP development with robust architectural foundations",
-        "Eliminating accumulated technical debt while maintaining development velocity",
-        "Ensuring TypeScript types perfectly align with database schemas without friction",
-        "Building comprehensive security frameworks without over-engineering solutions",
-        "Managing complexity of verification agents and validation systems effectively",
-        "Preventing feature redundancy while encouraging innovation and experimentation",
-        "Optimizing for both development speed and production stability simultaneously",
-        "Implementing guardrails that enhance rather than hinder development workflow",
-        "Complex tool integration challenges across multiple development environments"
-      ],
-      technologies: ["Cursor IDE", "Visio", "Draw.io", "Miro", "Figma", "TypeScript", "Vector Databases", "Schema Validation", "RLS Policies", "Security Scanning", "Verification Agents", "CI/CD Pipelines", "Monitoring", "Database Optimization", "Duplicate Detection", "Vulnerability Assessment", "Replit", "Docker"],
+      description: "Building comprehensive AI development and experimentation infrastructure with robust security, monitoring, and deployment capabilities.",
+      experiment: {
+        title: "EXPERIMENT",
+        description: "Deep curiosity ignited for comprehensive AI exploration and infrastructure building",
+        activities: [
+          "Built prototypes using Bolt, Loveable, and Solid frameworks with TypeScript",
+          "Integrated AI into real-world workflows with GitHub, DocuSign, and Twilio APIs",
+          "Deep curiosity ignited for comprehensive AI exploration",
+          "Steep learning curve requiring methodical experimentation approach",
+          "Trial and error process in understanding proper AI project structures"
+        ],
+        challenges: [
+          "Challenges preventing redundancy and ensuring application stability",
+          "Steep learning curve requiring methodical experimentation approach",
+          "Trial and error process in understanding proper AI project structures",
+          "Frustrating moments of 'why isn't this working?' during foundational learning"
+        ],
+        technologies: ["Bolt", "Loveable", "Solid", "TypeScript", "Supabase", "PostgreSQL", "Vector Databases"]
+      },
+      validate: {
+        title: "VALIDATE",
+        description: "Implemented comprehensive validation systems and enterprise-grade security frameworks",
+        activities: [
+          "Implemented comprehensive TypeScript-database schema alignment and validation",
+          "Built intelligent guardrail systems with small verification agents",
+          "Established single source of truth patterns to eliminate data inconsistencies",
+          "Created automated duplicate detection and redundancy prevention systems",
+          "Deployed robust security frameworks with RLS policies and schema validation"
+        ],
+        challenges: [
+          "Eliminating accumulated technical debt while maintaining development velocity",
+          "Building comprehensive security frameworks without over-engineering solutions",
+          "Preventing feature redundancy while encouraging innovation and experimentation",
+          "Optimizing for both development speed and production stability simultaneously"
+        ],
+        technologies: ["Schema Validation", "RLS Policies", "Security Scanning", "Verification Agents", "CI/CD Pipelines", "Monitoring"]
+      },
+      deploy: {
+        title: "DEPLOY",
+        description: "Deployed Label Studio for RAG and comprehensive data management with real-time testing capabilities",
+        activities: [
+          "Deployed Label Studio for RAG and knowledge base with comprehensive data management",
+          "Integrated Twilio contact center with Langwatch and Artiz for real-time testing",
+          "Built enterprise-grade multi-tenant isolation with comprehensive security frameworks",
+          "Created dynamic agent generation system with seamless multi-agent coordination",
+          "Demonstrated full-scale healthcare workflow automation across integrated platforms"
+        ],
+        challenges: [
+          "Real-time synchronization challenges between multiple agents and external healthcare APIs",
+          "Balancing system resilience with the flexibility needed for healthcare experimentation",
+          "Complex multi-tenant security requirements for healthcare compliance and data protection",
+          "Performance optimization across integrated systems without compromising stability"
+        ],
+        technologies: ["Label Studio", "RAG Architecture", "Twilio", "Langwatch", "Artiz", "Vector Databases", "Healthcare Compliance"]
+      },
       color: "genie-teal",
       bgColor: "bg-gradient-to-br from-genie-teal/5 to-genie-teal/10"
     },
     {
       id: 3,
-      title: "DEPLOY",
-      subtitle: "Resilient Healthcare AI Platform in Production",
+      title: "Intelligent Automation System",
+      subtitle: "Multi-Agent Orchestration Platform",
       date: "August-September 2025",
       icon: Network,
       image: phase05ResilientHubArtwork,
-      description: "Successfully deployed a stable, resilient AI platform that serves as the production backbone for healthcare experimentation - integrating real-world systems like NPI, CMS, FDA, and EMR platforms while orchestrating multiple agents for complex patient onboarding workflows without breaking functionality.",
-      touchPoints: [
-        "Built unbreakable, stable AI platform foundation serving as experimentation backbone",
-        "Successfully integrated healthcare systems: NPI, CMS credentialing, FDA product/packaging/AE tracking",
-        "Implemented ICD 9/10 code integration and Changehealth EMR for insurance verification",
-        "Deployed Label Studio for RAG and knowledge base with comprehensive data management",
-        "Integrated Twilio contact center with Langwatch and Artiz for real-time testing",
-        "Successfully orchestrated multiple agents for patient onboarding use cases",
-        "Achieved 94% accuracy in hallucination reduction through robust validation systems",
-        "Built enterprise-grade multi-tenant isolation with comprehensive security frameworks",
-        "Created dynamic agent generation system with seamless multi-agent coordination",
-        "Demonstrated full-scale healthcare workflow automation across integrated platforms"
-      ],
-      painPoints: [
-        "Complex healthcare system integration challenges across NPI, CMS, FDA, and EMR platforms",
-        "Ensuring platform stability while supporting rapid experimentation and agent deployment",
-        "Managing data consistency across multiple healthcare data sources and validation systems",
-        "Real-time synchronization challenges between multiple agents and external healthcare APIs",
-        "Balancing system resilience with the flexibility needed for healthcare experimentation",
-        "Complex multi-tenant security requirements for healthcare compliance and data protection",
-        "Coordinating agent orchestration while maintaining HIPAA compliance and data integrity",
-        "Performance optimization across integrated systems without compromising stability"
-      ],
-      technologies: ["Multi-Agent Systems", "Agentic AI", "NPI Integration", "CMS Credentialing", "FDA APIs", "ICD 9/10", "Changehealth EMR", "Label Studio", "RAG Architecture", "Twilio", "Langwatch", "Artiz", "Vector Databases", "Healthcare Compliance"],
+      description: "Advanced multi-agent system orchestrating complex workflows with intelligent automation, monitoring, and continuous optimization capabilities.",
+      experiment: {
+        title: "EXPERIMENT",
+        description: "Designing systems that actively learn from errors and adapt over time",
+        activities: [
+          "Designing systems that actively learn from errors and adapt over time",
+          "Implemented hallucination reduction techniques through structured validation",
+          "Built modular component verification systems before feature deployment",
+          "Established enterprise-grade CI/CD pipelines with security scanning",
+          "Created comprehensive monitoring and vulnerability assessment frameworks"
+        ],
+        challenges: [
+          "Implementing guardrails that enhance rather than hinder development workflow",
+          "Complex tool integration challenges across multiple development environments",
+          "Balancing rapid MVP development with robust architectural foundations"
+        ],
+        technologies: ["Database Optimization", "Duplicate Detection", "Vulnerability Assessment", "Replit", "Docker"]
+      },
+      validate: {
+        title: "VALIDATE",
+        description: "Comprehensive monitoring and vulnerability assessment frameworks for enterprise deployment",
+        activities: [
+          "Implemented hallucination reduction techniques through structured validation",
+          "Built modular component verification systems before feature deployment", 
+          "Established enterprise-grade CI/CD pipelines with security scanning",
+          "Created comprehensive monitoring and vulnerability assessment frameworks",
+          "Achieved 94% accuracy in hallucination reduction through robust validation systems"
+        ],
+        challenges: [
+          "Managing data consistency across multiple healthcare data sources and validation systems",
+          "Optimizing for both development speed and production stability simultaneously",
+          "Implementing guardrails that enhance rather than hinder development workflow"
+        ],
+        technologies: ["Monitoring", "Database Optimization", "Duplicate Detection", "Vulnerability Assessment"]
+      },
+      deploy: {
+        title: "DEPLOY",
+        description: "Full-scale healthcare workflow automation with multi-agent coordination and HIPAA compliance",
+        activities: [
+          "Successfully orchestrated multiple agents for patient onboarding use cases",
+          "Achieved 94% accuracy in hallucination reduction through robust validation systems",
+          "Built enterprise-grade multi-tenant isolation with comprehensive security frameworks",
+          "Created dynamic agent generation system with seamless multi-agent coordination",
+          "Demonstrated full-scale healthcare workflow automation across integrated platforms"
+        ],
+        challenges: [
+          "Complex healthcare system integration challenges across NPI, CMS, FDA, and EMR platforms",
+          "Ensuring platform stability while supporting rapid experimentation and agent deployment",
+          "Coordinating agent orchestration while maintaining HIPAA compliance and data integrity",
+          "Performance optimization across integrated systems without compromising stability"
+        ],
+        technologies: ["Multi-Agent Systems", "Agentic AI", "Healthcare Compliance", "Vector Databases"]
+      },
       color: "genie-cyan",
       bgColor: "bg-gradient-to-br from-genie-cyan/5 to-genie-cyan/10"
     }
@@ -313,48 +398,53 @@ const VerticalJourneyInfographic = () => {
                             {phase.description}
                           </p>
 
-                          {/* Technologies - Organized by Category */}
-                          <div>
-                            <h4 className="font-semibold text-foreground mb-3">Key Technologies</h4>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              {/* Core Technologies */}
-                              <div>
-                                <h5 className="text-sm font-medium text-muted-foreground mb-2">Core Technologies</h5>
-                                <div className="flex flex-wrap gap-1">
-                                  {phase.technologies.slice(0, Math.ceil(phase.technologies.length / 2)).map((tech, i) => (
-                                    <Badge 
-                                      key={i} 
-                                      variant="secondary" 
-                                      className={`text-xs ${
-                                        phase.color === 'genie-primary' ? 'bg-genie-primary/10 text-genie-primary border-genie-primary/20' :
-                                        phase.color === 'genie-teal' ? 'bg-genie-teal/10 text-genie-teal border-genie-teal/20' :
-                                        'bg-genie-cyan/10 text-genie-cyan border-genie-cyan/20'
-                                      }`}
-                                    >
-                                      {tech}
-                                    </Badge>
-                                  ))}
-                                </div>
+                          {/* Three Phase Structure */}
+                          <div className="space-y-4">
+                            {/* Experiment Phase */}
+                            <div className="border rounded-lg p-4 bg-background/50">
+                              <div className="flex items-center gap-2 mb-2">
+                                <div className="w-6 h-6 rounded-full bg-genie-primary text-white flex items-center justify-center text-xs font-bold">E</div>
+                                <h4 className="font-semibold text-foreground">{phase.experiment.title}</h4>
                               </div>
-                              
-                              {/* Supporting Technologies */}
-                              <div>
-                                <h5 className="text-sm font-medium text-muted-foreground mb-2">Supporting Tools</h5>
-                                <div className="flex flex-wrap gap-1">
-                                  {phase.technologies.slice(Math.ceil(phase.technologies.length / 2)).map((tech, i) => (
-                                    <Badge 
-                                      key={i} 
-                                      variant="secondary" 
-                                      className={`text-xs ${
-                                        phase.color === 'genie-primary' ? 'bg-genie-primary/10 text-genie-primary border-genie-primary/20' :
-                                        phase.color === 'genie-teal' ? 'bg-genie-teal/10 text-genie-teal border-genie-teal/20' :
-                                        'bg-genie-cyan/10 text-genie-cyan border-genie-cyan/20'
-                                      }`}
-                                    >
-                                      {tech}
-                                    </Badge>
-                                  ))}
-                                </div>
+                              <p className="text-sm text-muted-foreground mb-3">{phase.experiment.description}</p>
+                              <div className="flex flex-wrap gap-1">
+                                {phase.experiment.technologies.map((tech, i) => (
+                                  <Badge key={i} variant="secondary" className="text-xs bg-genie-primary/10 text-genie-primary border-genie-primary/20">
+                                    {tech}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Validate Phase */}
+                            <div className="border rounded-lg p-4 bg-background/50">
+                              <div className="flex items-center gap-2 mb-2">
+                                <div className="w-6 h-6 rounded-full bg-genie-teal text-white flex items-center justify-center text-xs font-bold">V</div>
+                                <h4 className="font-semibold text-foreground">{phase.validate.title}</h4>
+                              </div>
+                              <p className="text-sm text-muted-foreground mb-3">{phase.validate.description}</p>
+                              <div className="flex flex-wrap gap-1">
+                                {phase.validate.technologies.map((tech, i) => (
+                                  <Badge key={i} variant="secondary" className="text-xs bg-genie-teal/10 text-genie-teal border-genie-teal/20">
+                                    {tech}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Deploy Phase */}
+                            <div className="border rounded-lg p-4 bg-background/50">
+                              <div className="flex items-center gap-2 mb-2">
+                                <div className="w-6 h-6 rounded-full bg-genie-cyan text-white flex items-center justify-center text-xs font-bold">D</div>
+                                <h4 className="font-semibold text-foreground">{phase.deploy.title}</h4>
+                              </div>
+                              <p className="text-sm text-muted-foreground mb-3">{phase.deploy.description}</p>
+                              <div className="flex flex-wrap gap-1">
+                                {phase.deploy.technologies.map((tech, i) => (
+                                  <Badge key={i} variant="secondary" className="text-xs bg-genie-cyan/10 text-genie-cyan border-genie-cyan/20">
+                                    {tech}
+                                  </Badge>
+                                ))}
                               </div>
                             </div>
                           </div>
@@ -379,101 +469,97 @@ const VerticalJourneyInfographic = () => {
                       {/* Expandable Details */}
                       {isActive && (
                         <div className="mt-8 pt-8 border-t border-border/50 animate-fade-in">
-                          <div className="grid md:grid-cols-2 gap-6">
-                            {/* Touch Points */}
+                          <div className="grid lg:grid-cols-3 gap-6">
+                            {/* Experiment Details */}
                             <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
-                              <h4 className="font-semibold text-green-700 dark:text-green-400 mb-3">
-                                ✓ Touch Points
+                              <h4 className="font-semibold text-green-700 dark:text-green-400 mb-3 flex items-center gap-2">
+                                <div className="w-5 h-5 rounded-full bg-genie-primary text-white flex items-center justify-center text-xs font-bold">E</div>
+                                Experiment Activities
                               </h4>
-                              <ul className="space-y-2">
-                                 {phase.touchPoints.map((point, i) => (
+                              <ul className="space-y-2 mb-4">
+                                 {phase.experiment.activities.map((activity, i) => (
                                    <li key={i} className="flex items-start gap-2 text-sm text-foreground">
                                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0" />
-                                     {point}
+                                     {activity}
+                                   </li>
+                                 ))}
+                              </ul>
+                              <h5 className="font-medium text-green-600 dark:text-green-400 mb-2">Challenges</h5>
+                              <ul className="space-y-1">
+                                 {phase.experiment.challenges.map((challenge, i) => (
+                                   <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                                     <div className="w-1 h-1 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
+                                     {challenge}
                                    </li>
                                  ))}
                               </ul>
                             </div>
 
-                            {/* Pain Points */}
-                            <div className="bg-orange-50 dark:bg-orange-950/20 rounded-lg p-4 border border-orange-200 dark:border-orange-800">
-                              <h4 className="font-semibold text-orange-700 dark:text-orange-400 mb-3">
-                                ⚠ Pain Points
+                            {/* Validate Details */}
+                            <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+                              <h4 className="font-semibold text-blue-700 dark:text-blue-400 mb-3 flex items-center gap-2">
+                                <div className="w-5 h-5 rounded-full bg-genie-teal text-white flex items-center justify-center text-xs font-bold">V</div>
+                                Validate Activities
                               </h4>
-                              <ul className="space-y-2">
-                                 {phase.painPoints.map((pain, i) => (
+                              <ul className="space-y-2 mb-4">
+                                 {phase.validate.activities.map((activity, i) => (
                                    <li key={i} className="flex items-start gap-2 text-sm text-foreground">
-                                     <div className="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2 flex-shrink-0" />
-                                     {pain}
+                                     <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
+                                     {activity}
+                                   </li>
+                                 ))}
+                              </ul>
+                              <h5 className="font-medium text-blue-600 dark:text-blue-400 mb-2">Challenges</h5>
+                              <ul className="space-y-1">
+                                 {phase.validate.challenges.map((challenge, i) => (
+                                   <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                                     <div className="w-1 h-1 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
+                                     {challenge}
+                                   </li>
+                                 ))}
+                              </ul>
+                            </div>
+
+                            {/* Deploy Details */}
+                            <div className="bg-cyan-50 dark:bg-cyan-950/20 rounded-lg p-4 border border-cyan-200 dark:border-cyan-800">
+                              <h4 className="font-semibold text-cyan-700 dark:text-cyan-400 mb-3 flex items-center gap-2">
+                                <div className="w-5 h-5 rounded-full bg-genie-cyan text-white flex items-center justify-center text-xs font-bold">D</div>
+                                Deploy Activities
+                              </h4>
+                              <ul className="space-y-2 mb-4">
+                                 {phase.deploy.activities.map((activity, i) => (
+                                   <li key={i} className="flex items-start gap-2 text-sm text-foreground">
+                                     <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full mt-2 flex-shrink-0" />
+                                     {activity}
+                                   </li>
+                                 ))}
+                              </ul>
+                              <h5 className="font-medium text-cyan-600 dark:text-cyan-400 mb-2">Challenges</h5>
+                              <ul className="space-y-1">
+                                 {phase.deploy.challenges.map((challenge, i) => (
+                                   <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                                     <div className="w-1 h-1 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
+                                     {challenge}
                                    </li>
                                  ))}
                               </ul>
                             </div>
                           </div>
-                          
-                           {/* Enhanced Key Technologies for Active Phase */}
-                           <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-muted/30 rounded-lg border border-border/50">
-                             <h4 className="font-semibold text-foreground mb-2 sm:mb-3 flex items-center gap-2 text-sm sm:text-base">
-                               <Database className="w-3 h-3 sm:w-4 sm:h-4" />
-                               Enhanced Technology Stack
-                             </h4>
-                             <div className="grid grid-cols-1 gap-3 sm:gap-4">
-                               {/* Core Technologies */}
-                               <div>
-                                 <h5 className="text-xs sm:text-sm font-medium text-muted-foreground mb-2">Core Technologies</h5>
-                                 <div className="flex flex-wrap gap-1">
-                                   {phase.technologies.slice(0, Math.ceil(phase.technologies.length / 2)).map((tech, i) => (
-                                     <Badge 
-                                       key={i} 
-                                       variant="secondary" 
-                                       className={`text-xs ${
-                                         phase.color === 'genie-primary' ? 'bg-genie-primary/10 text-genie-primary border-genie-primary/20' :
-                                         phase.color === 'genie-teal' ? 'bg-genie-teal/10 text-genie-teal border-genie-teal/20' :
-                                         'bg-genie-cyan/10 text-genie-cyan border-genie-cyan/20'
-                                       }`}
-                                     >
-                                       {tech}
-                                     </Badge>
-                                   ))}
-                                 </div>
-                               </div>
-                               
-                               {/* Supporting Technologies */}
-                               <div>
-                                 <h5 className="text-xs sm:text-sm font-medium text-muted-foreground mb-2">Supporting Tools</h5>
-                                 <div className="flex flex-wrap gap-1">
-                                   {phase.technologies.slice(Math.ceil(phase.technologies.length / 2)).map((tech, i) => (
-                                     <Badge 
-                                       key={i} 
-                                       variant="secondary" 
-                                       className={`text-xs ${
-                                         phase.color === 'genie-primary' ? 'bg-genie-primary/10 text-genie-primary border-genie-primary/20' :
-                                         phase.color === 'genie-teal' ? 'bg-genie-teal/10 text-genie-teal border-genie-teal/20' :
-                                         'bg-genie-cyan/10 text-genie-cyan border-genie-cyan/20'
-                                       }`}
-                                     >
-                                       {tech}
-                                     </Badge>
-                                   ))}
-                                 </div>
-                               </div>
-                             </div>
-                           </div>
 
                            {/* Business Use Cases Link - Only show for the final phase */}
-                           {phase.id === 5 && (
-                             <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                               <h4 className="font-semibold text-blue-700 dark:text-blue-400 mb-2 text-sm sm:text-base">
+                           {phase.id === 3 && (
+                             <div className="mt-6 p-4 bg-purple-50 dark:bg-purple-950/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                               <h4 className="font-semibold text-purple-700 dark:text-purple-400 mb-2">
                                  🚀 Explore Real-World Applications
                                </h4>
-                               <p className="text-xs sm:text-sm text-foreground mb-3">
+                               <p className="text-sm text-foreground mb-3">
                                  Explore some of the business use cases I have been working and implemented so far with the learnings till date.
                                </p>
                                <Button 
                                  variant="outline" 
                                  size="sm"
                                  onClick={() => window.location.href = '/business-use-cases'}
-                                 className="border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:hover:bg-blue-900/20 w-full sm:w-auto text-xs sm:text-sm"
+                                 className="border-purple-300 hover:bg-purple-100 dark:border-purple-700 dark:hover:bg-purple-900/20 w-full sm:w-auto"
                                >
                                  View Business Use Cases →
                                </Button>
