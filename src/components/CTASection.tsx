@@ -194,19 +194,19 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
 
   if (variant === "minimal") {
     return (
-      <section className="py-12 bg-gradient-to-r from-primary/5 to-secondary/5">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h3 className="text-2xl font-bold text-foreground mb-4">
+      <section className="py-8 bg-gradient-to-r from-primary/5 to-secondary/5">
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <h3 className="text-lg font-semibold text-foreground mb-2">
             {nextSteps.primary.title}
           </h3>
-          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+          <p className="text-sm text-muted-foreground mb-4 max-w-lg mx-auto">
             {nextSteps.primary.description}
           </p>
-          <Button size="lg" className="bg-primary hover:bg-primary/90" asChild>
+          <Button size="sm" className="bg-primary hover:bg-primary/90" asChild>
             <Link to={nextSteps.primary.link}>
-              {React.createElement(nextSteps.primary.icon, { className: "w-4 h-4 mr-2" })}
+              {React.createElement(nextSteps.primary.icon, { className: "w-3 h-3 mr-1" })}
               {nextSteps.primary.buttonText}
-              <ArrowRight className="w-4 h-4 ml-2" />
+              <ArrowRight className="w-3 h-3 ml-1" />
             </Link>
           </Button>
         </div>
@@ -216,60 +216,57 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
 
   if (variant === "secondary") {
     return (
-      <section className="py-16 bg-gradient-to-br from-genie-primary/10 to-genie-secondary/10">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
-              <Rocket className="w-4 h-4 mr-2" />
+      <section className="py-8 bg-gradient-to-br from-genie-primary/5 to-genie-secondary/5">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-6">
+            <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-2">
+              <Rocket className="w-3 h-3 mr-1" />
               Next Steps
             </Badge>
-            <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+            <h2 className="text-xl font-bold mb-2">
               Continue Your <span className="text-genie-primary">AI Exploration</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Take the next step in your AI journey with curated resources and insights
-            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="p-8 hover:shadow-lg transition-all duration-300 border-genie-primary/20">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="p-3 bg-genie-primary/10 rounded-lg">
-                  {React.createElement(nextSteps.primary.icon, { className: "w-6 h-6 text-genie-primary" })}
+          <div className="grid md:grid-cols-2 gap-4">
+            <Card className="p-4 hover:shadow-md transition-all duration-300 border-genie-primary/20">
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-genie-primary/10 rounded-lg flex-shrink-0">
+                  {React.createElement(nextSteps.primary.icon, { className: "w-4 h-4 text-genie-primary" })}
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-foreground mb-2">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm font-semibold text-foreground mb-1">
                     {nextSteps.primary.title}
                   </h3>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
                     {nextSteps.primary.description}
                   </p>
-                  <Button className="bg-genie-primary hover:bg-genie-primary/90" asChild>
+                  <Button size="sm" className="bg-genie-primary hover:bg-genie-primary/90 text-xs" asChild>
                     <Link to={nextSteps.primary.link}>
                       {nextSteps.primary.buttonText}
-                      <ArrowRight className="w-4 h-4 ml-2" />
+                      <ArrowRight className="w-3 h-3 ml-1" />
                     </Link>
                   </Button>
                 </div>
               </div>
             </Card>
 
-            <Card className="p-8 hover:shadow-lg transition-all duration-300 border-genie-secondary/20">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="p-3 bg-genie-secondary/10 rounded-lg">
-                  {React.createElement(nextSteps.secondary.icon, { className: "w-6 h-6 text-genie-secondary" })}
+            <Card className="p-4 hover:shadow-md transition-all duration-300 border-genie-secondary/20">
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-genie-secondary/10 rounded-lg flex-shrink-0">
+                  {React.createElement(nextSteps.secondary.icon, { className: "w-4 h-4 text-genie-secondary" })}
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-foreground mb-2">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm font-semibold text-foreground mb-1">
                     {nextSteps.secondary.title}
                   </h3>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
                     {nextSteps.secondary.description}
                   </p>
-                  <Button variant="outline" className="border-genie-secondary text-genie-secondary hover:bg-genie-secondary/10" asChild>
+                  <Button variant="outline" size="sm" className="border-genie-secondary text-genie-secondary hover:bg-genie-secondary/10 text-xs" asChild>
                     <Link to={nextSteps.secondary.link}>
                       {nextSteps.secondary.buttonText}
-                      <ArrowRight className="w-4 h-4 ml-2" />
+                      <ArrowRight className="w-3 h-3 ml-1" />
                     </Link>
                   </Button>
                 </div>
@@ -281,42 +278,41 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
     );
   }
 
-  // Primary variant (full CTA section)
+  // Primary variant - compact CTA section
   return (
-    <section className="py-20 bg-gradient-to-br from-genie-dark/5 via-genie-primary/5 to-genie-secondary/5">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
-            <Rocket className="w-4 h-4 mr-2" />
+    <section className="py-10 bg-gradient-to-br from-genie-dark/5 via-genie-primary/5 to-genie-secondary/5">
+      <div className="max-w-5xl mx-auto px-4">
+        <div className="text-center mb-8">
+          <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-2">
+            <Rocket className="w-3 h-3 mr-1" />
             What's Next?
           </Badge>
-          <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-            Continue Your <span className="text-genie-primary">AI Exploration</span>
+          <h2 className="text-xl lg:text-2xl font-bold mb-3">
+            Continue Your <span className="text-genie-primary">AI Journey</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            Follow a clear path through my AI experimentation journey - each step builds upon the last 
-            to give you comprehensive insights into practical AI implementation.
+          <p className="text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Follow the next logical step in your AI exploration
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-4">
           {/* Primary CTA */}
-          <Card className="lg:col-span-2 p-8 lg:p-12 bg-gradient-to-br from-genie-primary/10 to-genie-primary/5 border-genie-primary/20 hover:border-genie-primary/40 transition-all duration-300">
-            <div className="flex items-start gap-6 mb-8">
-              <div className="p-4 bg-genie-primary/20 rounded-xl">
-                {React.createElement(nextSteps.primary.icon, { className: "w-8 h-8 text-genie-primary" })}
+          <Card className="lg:col-span-2 p-5 bg-gradient-to-br from-genie-primary/10 to-genie-primary/5 border-genie-primary/20 hover:border-genie-primary/40 transition-all duration-300">
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-genie-primary/20 rounded-lg flex-shrink-0">
+                {React.createElement(nextSteps.primary.icon, { className: "w-5 h-5 text-genie-primary" })}
               </div>
-              <div className="flex-1">
-                <h3 className="text-2xl lg:text-3xl font-bold text-foreground mb-4">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg font-bold text-foreground mb-2">
                   {nextSteps.primary.title}
                 </h3>
-                <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                   {nextSteps.primary.description}
                 </p>
-                <Button size="lg" className="bg-genie-primary hover:bg-genie-primary/90 text-white font-semibold shadow-lg hover:shadow-xl" asChild>
+                <Button className="bg-genie-primary hover:bg-genie-primary/90 text-white text-sm" asChild>
                   <Link to={nextSteps.primary.link}>
                     {nextSteps.primary.buttonText}
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                    <ArrowRight className="w-4 h-4 ml-1" />
                   </Link>
                 </Button>
               </div>
@@ -324,45 +320,45 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
           </Card>
 
           {/* Secondary CTAs */}
-          <div className="space-y-6">
-            <Card className="p-6 hover:shadow-lg transition-all duration-300 border-genie-secondary/20">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="p-3 bg-genie-secondary/10 rounded-lg">
-                  {React.createElement(nextSteps.secondary.icon, { className: "w-6 h-6 text-genie-secondary" })}
+          <div className="space-y-4">
+            <Card className="p-4 hover:shadow-md transition-all duration-300 border-genie-secondary/20">
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-genie-secondary/10 rounded-lg flex-shrink-0">
+                  {React.createElement(nextSteps.secondary.icon, { className: "w-4 h-4 text-genie-secondary" })}
                 </div>
-                <div className="flex-1">
-                  <h4 className="text-lg font-bold text-foreground mb-2">
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-sm font-semibold text-foreground mb-1">
                     {nextSteps.secondary.title}
                   </h4>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
                     {nextSteps.secondary.description}
                   </p>
-                  <Button variant="outline" size="sm" className="border-genie-secondary text-genie-secondary hover:bg-genie-secondary/10" asChild>
+                  <Button variant="outline" size="sm" className="border-genie-secondary text-genie-secondary hover:bg-genie-secondary/10 text-xs" asChild>
                     <Link to={nextSteps.secondary.link}>
                       {nextSteps.secondary.buttonText}
-                      <ArrowRight className="w-4 h-4 ml-1" />
+                      <ArrowRight className="w-3 h-3 ml-1" />
                     </Link>
                   </Button>
                 </div>
               </div>
             </Card>
 
-            <Card className="p-6 hover:shadow-lg transition-all duration-300 border-genie-teal/20">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="p-3 bg-genie-teal/10 rounded-lg">
-                  {React.createElement(nextSteps.tertiary.icon, { className: "w-6 h-6 text-genie-teal" })}
+            <Card className="p-4 hover:shadow-md transition-all duration-300 border-genie-teal/20">
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-genie-teal/10 rounded-lg flex-shrink-0">
+                  {React.createElement(nextSteps.tertiary.icon, { className: "w-4 h-4 text-genie-teal" })}
                 </div>
-                <div className="flex-1">
-                  <h4 className="text-lg font-bold text-foreground mb-2">
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-sm font-semibold text-foreground mb-1">
                     {nextSteps.tertiary.title}
                   </h4>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
                     {nextSteps.tertiary.description}
                   </p>
-                  <Button variant="outline" size="sm" className="border-genie-teal text-genie-teal hover:bg-genie-teal/10" asChild>
+                  <Button variant="outline" size="sm" className="border-genie-teal text-genie-teal hover:bg-genie-teal/10 text-xs" asChild>
                     <Link to={nextSteps.tertiary.link}>
                       {nextSteps.tertiary.buttonText}
-                      <ArrowRight className="w-4 h-4 ml-1" />
+                      <ArrowRight className="w-3 h-3 ml-1" />
                     </Link>
                   </Button>
                 </div>
@@ -371,24 +367,21 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
           </div>
         </div>
 
-        {/* Progress Indicator */}
-        <div className="mt-16 text-center">
-          <p className="text-sm text-muted-foreground mb-4">
-            🚀 Your AI Journey Progress
-          </p>
-          <div className="flex justify-center space-x-2 max-w-md mx-auto">
+        {/* Compact Progress Indicator */}
+        <div className="mt-8 text-center">
+          <div className="flex justify-center space-x-1 max-w-xs mx-auto mb-2">
             {["about", "journey", "business-cases", "case-studies"].map((page, index) => (
               <div 
                 key={page}
-                className={`h-2 flex-1 rounded-full ${
+                className={`h-1.5 flex-1 rounded-full ${
                   currentPage === page ? "bg-genie-primary" : 
                   ["about", "journey", "business-cases", "case-studies"].indexOf(currentPage) > index ? "bg-genie-primary/50" : "bg-gray-200"
                 }`}
               />
             ))}
           </div>
-          <p className="text-xs text-muted-foreground mt-2">
-            Follow the logical flow to maximize your learning experience
+          <p className="text-xs text-muted-foreground">
+            Journey Progress
           </p>
         </div>
       </div>
