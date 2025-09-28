@@ -173,11 +173,11 @@ serve(async (req) => {
       </div>
     `;
 
-    // Send transcript email to admin
+    // Send transcript email to both user and admin
     const emailResponse = await resend.emails.send({
       from: 'Genie AI Hub <genieaiexpermentationhub@gmail.com>',
-      to: ['genieaiexpermentationhub@gmail.com'],
-      subject: `[TRANSCRIPT] ${userInfo.firstName} - ${context}/${topic} (${conversationStats.totalMessages} messages)`,
+      to: [userInfo.email, 'genieaiexpermentationhub@gmail.com'],
+      subject: `Your Genie AI Conversation Transcript - ${context}/${topic}`,
       html: emailHtml,
       text: `
 Genie AI Conversation Transcript
@@ -194,7 +194,7 @@ ${transcript.replace(/\*\*/g, '')}
 
 --- END TRANSCRIPT ---
 
-This transcript was automatically generated when the user completed their conversation session.
+This transcript was automatically generated when you completed your conversation session.
       `.trim(),
     });
 
