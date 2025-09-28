@@ -203,14 +203,14 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
                         });
                         
                         if (response.ok) {
-                          alert("Access request submitted successfully! You will be contacted at genieaiexpermentationhub@gmail.com within 1-2 business days.");
+                          alert("Access request submitted successfully! You will be contacted at genieaiexperimentationhub@gmail.com within 1-2 business days.");
                         } else {
                           throw new Error("Failed to submit request");
                         }
                       } catch (error) {
                         console.error("Error submitting access request:", error);
                         // Fallback to email
-                        window.open(`mailto:genieaiexpermentationhub@gmail.com?subject=Genie AI Access Request&body=Use Case: ${encodeURIComponent(requestReason)}`, '_blank');
+                        window.open(`mailto:genieaiexperimentationhub@gmail.com?subject=Genie AI Access Request&body=Use Case: ${encodeURIComponent(requestReason)}`, '_blank');
                       }
                     }
                   }}

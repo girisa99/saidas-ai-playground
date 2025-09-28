@@ -87,13 +87,13 @@ serve(async (req) => {
 
     console.log('Access request created successfully:', data);
 
-    // TODO: Send email notification to genieaiexpermentationhub@gmail.com
+    // TODO: Send email notification to genieaiexperimentationhub@gmail.com
     // This would require setting up an email service like Resend
 
     return new Response(JSON.stringify({
       success: true,
       request_id: data.id,
-      message: 'Access request submitted successfully. Our team at genieaiexpermentationhub@gmail.com will review your request within 1-2 business days.'
+      message: 'Access request submitted successfully. Our team at genieaiexperimentationhub@gmail.com will review your request within 1-2 business days.'
     }), {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }

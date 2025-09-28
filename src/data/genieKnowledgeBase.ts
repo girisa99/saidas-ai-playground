@@ -146,7 +146,7 @@ export const genieKnowledgeBase = {
   conversationLimits: {
     public: "2 conversations per hour, 5 per day",
     extendedAccess: "Available for legitimate research or business use cases",
-    contact: "genieaiexpermentationhub@gmail.com for access requests"
+    contact: "genieaiexperimentationhub@gmail.com for access requests"
   },
 
   gartnerFramework: {

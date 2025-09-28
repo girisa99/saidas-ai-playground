@@ -164,7 +164,7 @@ serve(async (req) => {
             <strong>Genie AI Experimentation Hub</strong><br>
             Saidas - AI Innovation Leader<br>
             936 Villageview Lane, Cary, NC 27519<br>
-            <a href="mailto:genieaiexpermentationhub@gmail.com" style="color: #3b82f6; text-decoration: underline;">genieaiexpermentationhub@gmail.com</a>
+            <a href="mailto:genieaiexperimentationhub@gmail.com" style="color: #3b82f6; text-decoration: underline;">genieaiexperimentationhub@gmail.com</a>
           </p>
           <p style="color: #94a3b8; font-size: 12px; margin: 0; font-style: italic;">
             This transcript was automatically generated when the user completed their conversation session.
@@ -175,8 +175,8 @@ serve(async (req) => {
 
     // Send transcript email to both user and admin
     const emailResponse = await resend.emails.send({
-      from: 'Genie AI Hub <genieaiexpermentationhub@gmail.com>',
-      to: [userInfo.email, 'genieaiexpermentationhub@gmail.com'],
+      from: 'Genie AI Hub <genieaiexperimentationhub@gmail.com>',
+      to: [userInfo.email, 'genieaiexperimentationhub@gmail.com'],
       subject: `Your Genie AI Conversation Transcript - ${context}/${topic}`,
       html: emailHtml,
       text: `

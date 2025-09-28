@@ -625,7 +625,7 @@ Genie AI Team`
         // Send to admin
         ContactService.submitContactForm({
           name: 'Genie AI System',
-          email: 'genieaiexpermentationhub@gmail.com',
+          email: 'genieaiexperimentationhub@gmail.com',
           subject: `[TRANSCRIPT] ${userInfo!.firstName} - ${context}/${selectedTopic}`,
           message: `User: ${conversationSummary.userInfo}
 Context: ${conversationSummary.context}

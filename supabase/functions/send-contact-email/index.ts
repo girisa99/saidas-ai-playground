@@ -128,7 +128,7 @@ serve(async (req) => {
             <strong>Genie AI Experimentation Hub</strong><br>
             Saidas - AI Innovation Leader<br>
             936 Villageview Lane, Cary, NC 27519<br>
-            <a href="mailto:genieexpermentationhub@gmail.com" style="color: #3b82f6; text-decoration: underline;">genieexpermentationhub@gmail.com</a>
+            <a href="mailto:genieaiexperimentationhub@gmail.com" style="color: #3b82f6; text-decoration: underline;">genieaiexperimentationhub@gmail.com</a>
           </p>
           <p style="color: #94a3b8; font-size: 12px; margin: 0; font-style: italic;">
             This email was automatically generated from your website contact form.
@@ -139,8 +139,8 @@ serve(async (req) => {
 
     // Send email to the business owner
     const emailResponse = await resend.emails.send({
-      from: 'Genie AI Hub <genieaiexpermentationhub@gmail.com>',
-      to: ['genieexpermentationhub@gmail.com'],
+      from: 'Genie AI Hub <genieaiexperimentationhub@gmail.com>',
+      to: ['genieaiexperimentationhub@gmail.com'],
       subject: `New Contact Enquiry from ${contactData.senderName}`,
       html: emailHtml,
       replyTo: contactData.senderEmail,
@@ -228,7 +228,7 @@ Reply directly to this email to respond to ${contactData.senderName}.
             <strong>Genie AI Experimentation Hub</strong><br>
             Saidas - AI Innovation Leader<br>
             936 Villageview Lane, Cary, NC 27519<br>
-            <a href="mailto:genieexpermentationhub@gmail.com" style="color: #3b82f6;">genieexpermentationhub@gmail.com</a>
+            <a href="mailto:genieaiexperimentationhub@gmail.com" style="color: #3b82f6;">genieaiexperimentationhub@gmail.com</a>
           </p>
         </div>
       </div>
@@ -236,7 +236,7 @@ Reply directly to this email to respond to ${contactData.senderName}.
 
     // Send auto-reply
     await resend.emails.send({
-      from: 'Genie AI Hub <genieaiexpermentationhub@gmail.com>',
+      from: 'Genie AI Hub <genieaiexperimentationhub@gmail.com>',
       to: [contactData.senderEmail],
       subject: `Thank you for contacting Genie AI Hub, ${contactData.senderName}!`,
       html: autoReplyHtml,
@@ -260,7 +260,7 @@ Best regards,
 Genie AI Experimentation Hub
 Saidas - AI Innovation Leader
 936 Villageview Lane, Cary, NC 27519
-genieexpermentationhub@gmail.com
+genieaiexperimentationhub@gmail.com
       `.trim(),
     });
 

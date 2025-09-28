@@ -274,7 +274,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send welcome email to subscriber
     const { data: welcomeEmailResult, error: welcomeEmailError } = await resend.emails.send({
-      from: "Genie AI Experimentation Hub <genieexpermentationhub@gmail.com>",
+      from: "Genie AI Experimentation Hub <genieaiexperimentationhub@gmail.com>",
       to: [email],
       subject: "Welcome to Genie AI Experimentation Hub! 🧞‍♂️",
       html: welcomeEmailHtml,
@@ -282,8 +282,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send notification email to admin
     const { data: adminEmailResult, error: adminEmailError } = await resend.emails.send({
-      from: "Genie AI Experimentation Hub <genieexpermentationhub@gmail.com>",
-      to: ["genieexpermentationhub@gmail.com"],
+      from: "Genie AI Experimentation Hub <genieaiexperimentationhub@gmail.com>",
+      to: ["genieaiexperimentationhub@gmail.com"],
       subject: "New Newsletter Subscription - Genie AI Hub",
       html: adminNotificationHtml,
     });
@@ -303,7 +303,7 @@ const handler = async (req: Request): Promise<Response> => {
         {
           subscriber_id: subscriberId,
           email_type: 'admin_notification',
-          email_address: 'genieexpermentationhub@gmail.com',
+          email_address: 'genieaiexperimentationhub@gmail.com',
           status: adminEmailError ? 'failed' : 'sent',
           error_message: adminEmailError?.message || null,
           template_used: 'admin-notification'

@@ -91,7 +91,7 @@ const faqData = [
       },
       {
         q: "Are there conversation limits?",
-        a: "Yes, for system protection: 2 conversations per hour and 5 per day for public users. If you need extended access for legitimate research or business use cases, you can request it directly through the interface, and all requests are reviewed personally by our team at genieaiexpermentationhub@gmail.com."
+        a: "Yes, for system protection: 2 conversations per hour and 5 per day for public users. If you need extended access for legitimate research or business use cases, you can request it directly through the interface, and all requests are reviewed personally by our team at genieaiexperimentationhub@gmail.com."
       },
       {
         q: "How is my data protected?",

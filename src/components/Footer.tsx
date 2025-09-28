@@ -31,19 +31,19 @@ export const Footer = () => {
     },
     {
       name: 'Gmail',
-      action: () => window.open('https://mail.google.com/mail/?view=cm&fs=1&to=genieexpermentationhub@gmail.com&su=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
+      action: () => window.open('https://mail.google.com/mail/?view=cm&fs=1&to=genieaiexperimentationhub@gmail.com&su=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
     },
     {
       name: 'Outlook',
-      action: () => window.open('https://outlook.live.com/mail/0/deeplink/compose?to=genieexpermentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
+      action: () => window.open('https://outlook.live.com/mail/0/deeplink/compose?to=genieaiexperimentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
     },
     {
       name: 'Yahoo Mail',
-      action: () => window.open('https://compose.mail.yahoo.com/?to=genieexpermentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
+      action: () => window.open('https://compose.mail.yahoo.com/?to=genieaiexperimentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
     },
     {
       name: 'Default Email App',
-      action: () => window.open('mailto:genieexpermentationhub@gmail.com?subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
+      action: () => window.open('mailto:genieaiexperimentationhub@gmail.com?subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
     }
   ];
   return (
@@ -135,10 +135,10 @@ export const Footer = () => {
                 <div className="flex items-center space-x-2">
                   <Mail className="h-3 w-3 text-primary" />
                   <a 
-                    href="mailto:genieaiexpermentationhub@gmail.com" 
+                    href="mailto:genieaiexperimentationhub@gmail.com" 
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    genieaiexpermentationhub@gmail.com
+                    genieaiexperimentationhub@gmail.com
                   </a>
                 </div>
               </div>
