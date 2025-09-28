@@ -78,8 +78,8 @@ export const NavigationHeader = () => {
           </Link>
 
           {/* Desktop Navigation - Center, takes available space */}
-          <nav className="hidden lg:flex items-center justify-center flex-1 min-w-0 px-2">
-            <div className="flex items-center justify-center space-x-1 w-full">
+          <nav className="hidden lg:flex items-center justify-center flex-1 min-w-0 px-4 lg:px-6">
+            <div className="flex items-center justify-center space-x-2 w-full">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = isActivePath(item.to);
