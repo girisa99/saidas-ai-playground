@@ -42,18 +42,36 @@ interface PublicGenieInterfaceProps {
 }
 
 const technologyTopics = [
-  'Agentic AI',
+  'AI Democratization & Open Source',
   'Large Language Models (LLMs)',
-  'Small Language Models (SLMs)',
+  'Small Language Models (SLMs)', 
+  'Agentic AI Platforms',
+  'No-Code/Low-Code Revolution',
+  'Big Tech AI Strategies',
+  'Emerging AI Platforms',
   'Model Context Protocol (MCP)',
   'RAG & Knowledge Bases',
-  'Automation (UiPath, Power Automate, n8n)',
-  'AI Observability (Langfuse/Langwatch)',
-  'Data Labeling (Label Studio)',
-  'Cloud & Platforms (OpenAI, Claude, Gemini, Meta, Azure)',
-  'New Models & Hugging Face',
-  'Contact Center AI Trends',
-  'M&A and Market Trends'
+  'Automation Platforms (UiPath, n8n)',
+  'AI Observability & Monitoring',
+  'Edge AI & Local Models',
+  'Multi-Agent Systems',
+  'AI Development Tools',
+  'Cloud AI Services (OpenAI, Claude, Gemini)',
+  'Hugging Face Ecosystem',
+  'Technology Conferences 2025',
+  'AI Safety & Ethics',
+  'Digital Health & Medical Devices',
+  'Wearable Health Technology',
+  'Digital Therapeutics (DTx)',
+  'Remote Patient Monitoring',
+  'Healthcare AI Applications',
+  'Medical Device Innovation',
+  'Health Tech Conferences',
+  'Industry Consortiums',
+  'M&A and Market Trends',
+  'Venture Capital in AI',
+  'Enterprise AI Adoption',
+  'AI Regulation & Compliance'
 ];
 
 const healthcareTopics = [

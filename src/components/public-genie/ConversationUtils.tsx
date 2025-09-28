@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Brain, Settings, Layers, Zap, Heart, FileText, Pill, Cpu } from 'lucide-react';
 import { HealthcareKnowledgeBase, getReimbursementInfo } from './HealthcareKnowledgeBase';
+import { TechnologyKnowledgeBase, getTechnologyInfo } from './TechnologyKnowledgeBase';
 
 interface CapabilitiesPromptProps {
   onModeSelect: (mode: 'default' | 'single' | 'multi') => void;
@@ -85,21 +86,237 @@ export const TopicSuggestions: React.FC<TopicSuggestionsProps> = ({
   
   const handleTopicClick = (topic: string) => {
     // Add emotional intelligence and visual references to responses
-    const getEmotionalResponse = () => {
-      const responses = HealthcareKnowledgeBase.emotionalResponses;
-      if (responses) {
+    const getEmotionalResponse = (ctx: 'technology' | 'healthcare') => {
+      if (ctx === 'healthcare') {
+        const responses = HealthcareKnowledgeBase.emotionalResponses;
+        const randomEmpathetic = responses.empathetic[Math.floor(Math.random() * responses.empathetic.length)];
+        const randomEncouraging = responses.encouraging[Math.floor(Math.random() * responses.encouraging.length)];
+        return { empathetic: randomEmpathetic, encouraging: randomEncouraging };
+      } else {
+        const responses = TechnologyKnowledgeBase.emotionalResponses;
         const randomEmpathetic = responses.empathetic[Math.floor(Math.random() * responses.empathetic.length)];
         const randomEncouraging = responses.encouraging[Math.floor(Math.random() * responses.encouraging.length)];
         return { empathetic: randomEmpathetic, encouraging: randomEncouraging };
       }
-      return { empathetic: "I'm here to help you through this! 💙", encouraging: "You're asking great questions! 🌟" };
     };
 
-    const emotional = getEmotionalResponse();
+    const emotional = getEmotionalResponse(context);
     
     
-    // Provide specific information for healthcare reimbursement topics
-    if (context === 'healthcare' && topic.toLowerCase().includes('340b')) {
+    // Handle Technology Topics
+    if (context === 'technology') {
+      if (topic.toLowerCase().includes('democratization') || topic.toLowerCase().includes('open source')) {
+        const democratizationInfo = `${emotional.encouraging}
+
+🚀 **AI Democratization - The Great Equalizer!**
+
+**🌟 What's Happening:**
+We're witnessing the biggest technology democratization since the internet! AI is moving from the exclusive domain of big tech to everyone's toolkit. 
+
+**🏗️ Open Source Revolution:**
+• **Meta's Llama 3.1**: Matching GPT-4 performance, completely free!
+• **Mixtral & Phi-3**: High-quality models you can run locally
+• **Hugging Face**: The GitHub of AI - 500k+ models available
+• **Local LLMs**: Running ChatGPT-level AI on your laptop!
+
+**💡 No-Code AI Platforms:**
+✅ **Zapier**: Connect AI to 5,000+ apps without coding
+✅ **Bubble**: Build AI-powered apps visually  
+✅ **Retool**: Create internal AI tools in minutes
+✅ **n8n**: Open-source workflow automation
+
+**🎯 Real Impact:**
+"A small startup can now build AI features that would have required a Google-sized team just 2 years ago!" 
+
+**🌍 Market Transformation:**
+• **Developer Tools**: GitHub Copilot coding for everyone
+• **Content Creation**: AI writing, video, art generation
+• **Business Automation**: AI agents handling customer service
+• **Personal Productivity**: AI assistants for everyone
+
+${emotional.empathetic}
+
+**Fun Fact**: There are now more AI models than there are apps in the Apple App Store! 📱🤖
+
+Want to explore specific platforms or learn how to get started with any of these technologies? 🎯`;
+
+        onTopicSelect(democratizationInfo);
+      } else if (topic.toLowerCase().includes('agentic') || topic.toLowerCase().includes('agents')) {
+        const agenticInfo = `${emotional.encouraging}
+
+🤖 **Agentic AI - Building Digital Employees!**
+
+**🧠 What are AI Agents?**
+Think beyond chatbots! Agentic AI can plan, execute multi-step tasks, use tools, and adapt to achieve goals autonomously.
+
+**🎯 Evolution Timeline:**
+📅 **2022-2023**: Reactive AI (ChatGPT responds to prompts)
+📅 **2023-2024**: Tool-Using AI (Can search web, run code)
+📅 **2024-2025**: Agentic AI (Plans and executes workflows)
+📅 **2025-2026**: Multi-Agent Teams (AI collaborating together)
+
+**🚀 Leading Platforms:**
+• **LangChain**: The framework powering most AI agents
+• **CrewAI**: Building teams of specialized AI agents
+• **AutoGPT**: Autonomous task completion
+• **Microsoft Autogen**: Enterprise-grade agent conversations
+• **Zapier Central**: No-code agent building
+
+**💼 Real-World Applications:**
+✅ **Customer Service**: AI handling complex support cases
+✅ **Sales**: AI qualifying leads and booking meetings  
+✅ **Research**: AI gathering and analyzing market data
+✅ **Development**: AI writing and testing code
+✅ **Content**: AI managing entire content workflows
+
+**🌟 Success Stories:**
+"Our AI sales agent books 300% more qualified meetings than human SDRs!" - SaaS startup
+
+**🎮 The Agent Stack:**
+1. **Planning**: Agent figures out what to do
+2. **Tools**: Agent uses APIs, databases, web search
+3. **Memory**: Agent remembers context across tasks
+4. **Execution**: Agent completes multi-step workflows
+5. **Learning**: Agent improves from experience
+
+${emotional.empathetic}
+
+**Mind-Blowing Fact**: Some companies now have AI agents that hire other AI agents! 🤖👔
+
+Ready to build your first AI agent or explore specific platforms? 🛠️`;
+
+        onTopicSelect(agenticInfo);
+      } else if (topic.toLowerCase().includes('no-code') || topic.toLowerCase().includes('low-code')) {
+        const noCodeInfo = `${emotional.encouraging}
+
+🛠️ **No-Code/Low-Code Revolution - Building Without Barriers!**
+
+**🎯 The Revolution:**
+Remember when you needed a computer science degree to build software? Those days are GONE! We're in the golden age of visual development.
+
+**📊 Market Explosion:**
+• **Market Size**: $13.2B in 2024 → $45.5B by 2030
+• **Growth Rate**: 23% annually (faster than AI itself!)
+• **User Base**: 5M+ people building apps without code
+
+**🚀 Major Players & Their Superpowers:**
+
+**⚡ Zapier** (Workflow Automation King)
+• 5M+ users connecting 7,000+ apps
+• AI-powered workflow suggestions
+• "If this, then that" on steroids!
+
+**🎨 Bubble** (App Building Powerhouse)  
+• Visual programming like Photoshop for apps
+• 3M+ registered users
+• AI-generated app features (new!)
+
+**🔧 Retool** (Internal Tool Champion)
+• 500k+ companies use it
+• Connect to any database visually
+• AI-generated interfaces (game-changer!)
+
+**🌐 Webflow** (Design-to-Code Magic)
+• No-code websites that developers envy
+• $4B valuation for a reason!
+
+**🤖 AI Integration Everywhere:**
+✅ **Bubble**: "Describe your app, AI builds it"
+✅ **Zapier**: AI writes automation workflows
+✅ **Retool**: AI generates database queries
+✅ **Glide**: AI creates apps from spreadsheets
+
+**💡 Democratization Impact:**
+• **Citizen Developers**: Accountants building CRM systems
+• **Rapid Prototyping**: Ideas to MVP in days
+• **Enterprise Innovation**: Teams building custom solutions
+• **Startup Acceleration**: Non-technical founders launching
+
+**🎉 Success Stories:**
+"Built a $50M business using only no-code tools!" - Coachello founder
+
+${emotional.empathetic}
+
+**Wild Stat**: 84% of enterprises now use no-code tools! Your IT department probably doesn't even know! 😅
+
+Want to explore specific platforms or see what you can build? 🎨`;
+
+        onTopicSelect(noCodeInfo);
+      } else if (topic.toLowerCase().includes('conferences') || topic.toLowerCase().includes('events')) {
+        const conferencesInfo = `${emotional.encouraging}
+
+🎤 **Must-Attend Conferences 2025 - Where the Future is Unveiled!**
+
+**🚀 MAJOR TECHNOLOGY CONFERENCES:**
+
+**🏆 NeurIPS 2025** (December, Vancouver)
+• The Olympics of AI research! 🥇
+• 15,000 researchers unveiling breakthroughs
+• Where GPT-6 hints might emerge!
+
+**📱 CES 2025** (Jan 7-10, Las Vegas)
+• 170,000 attendees see consumer AI future
+• Self-driving cars, smart homes, AI everything
+• "The future you'll live in next year!"
+
+**🌟 Google I/O 2025** (May, Mountain View)
+• Gemini's next evolution revealed
+• Developer tools that change everything
+• Google's AI strategy for the year
+
+**💼 Microsoft Build 2025** (May, Seattle)  
+• Copilot expansions everywhere
+• Enterprise AI transformation stories
+• Azure AI services roadmap
+
+**🏥 HEALTHCARE & DIGITAL HEALTH:**
+
+**🏥 HIMSS 2025** (March 3-7, Las Vegas)
+• 40,000 health IT professionals
+• Where healthcare meets technology
+• EHR, telehealth, AI diagnostics
+
+**💊 Digital Medicine Society (DiMe)** (June, Boston)
+• Digital therapeutics authority event
+• FDA regulatory pathways revealed
+• DTx reimbursement strategies
+
+**📲 mHealth Summit** (November, Washington DC)
+• Mobile health innovation showcase
+• Wearables, apps, population health
+• "Your phone as your doctor"
+
+**🤖 AI in Healthcare Summit** (September, Boston)
+• Medical AI algorithms in action
+• Diagnostic tool demonstrations  
+• Treatment optimization breakthroughs
+
+**🤝 KEY CONSORTIUMS & ORGANIZATIONS:**
+
+✅ **Partnership on AI**: OpenAI, Google, Microsoft collaboration
+✅ **AI Alliance**: IBM, Meta pushing open-source AI
+✅ **Digital Medicine Society**: DTx standards & validation
+✅ **HL7 FHIR**: Healthcare data interoperability
+
+**💡 Pro Tips:**
+• **Networking**: 70% of value comes from hallway conversations
+• **Side Events**: Often more valuable than main sessions
+• **Virtual Options**: Most now offer hybrid attendance
+• **Early Bird**: Save 30-50% on registration fees
+
+${emotional.empathetic}
+
+**Insider Secret**: The real deals and partnerships are announced at after-parties, not main stages! 🍸🤝
+
+Which type of conference interests you most? I can dive deeper into specific events! 🎯`;
+
+        onTopicSelect(conferencesInfo);
+      } else {
+        onTopicSelect(`${emotional.encouraging} Great choice exploring ${topic}! This is one of the hottest areas in tech right now. What specific aspect would you like to dive into? 🚀`);
+      }
+    } 
+    // Healthcare topics (existing code)
+    else if (context === 'healthcare' && topic.toLowerCase().includes('340b')) {
       const pricingInfo = `${emotional.empathetic}
 
 💊 **340B Drug Pricing Program - The Safety Net's Lifeline**

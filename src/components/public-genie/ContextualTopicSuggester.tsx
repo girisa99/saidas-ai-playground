@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Lightbulb, ArrowRight, Brain, Sparkles } from 'lucide-react';
 import { HealthcareKnowledgeBase } from './HealthcareKnowledgeBase';
+import { TechnologyKnowledgeBase } from './TechnologyKnowledgeBase';
 
 interface ContextualTopicSuggesterProps {
   conversationHistory: Array<{ role: string; content: string; timestamp: string }>;
@@ -30,7 +31,7 @@ export const ContextualTopicSuggester: React.FC<ContextualTopicSuggesterProps> =
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [lastAnalyzedLength, setLastAnalyzedLength] = useState(0);
 
-  // Healthcare keyword mappings for intelligent detection
+  // Healthcare keyword mappings
   const healthcareKeywords = {
     pricing: ['340b', 'wac', 'price', 'cost', 'reimbursement', 'payment', 'coverage'],
     claims: ['claim', 'denial', 'prior auth', 'authorization', 'billing', 'coding', 'cpt', 'icd'],
@@ -39,6 +40,18 @@ export const ContextualTopicSuggester: React.FC<ContextualTopicSuggesterProps> =
     oncology: ['cancer', 'oncology', 'chemotherapy', 'immunotherapy', 'tumor'],
     gpo: ['gpo', 'purchasing', 'contract', 'negotiation', 'volume'],
     assistance: ['copay', 'assistance', 'discount', 'coupon', 'support', 'help']
+  };
+
+  // Technology keyword mappings
+  const technologyKeywords = {
+    ai: ['ai', 'artificial intelligence', 'machine learning', 'llm', 'gpt', 'claude'],
+    democratization: ['democratization', 'open source', 'free', 'accessible', 'local'],
+    nocode: ['no-code', 'low-code', 'nocode', 'lowcode', 'visual', 'drag', 'drop'],
+    agentic: ['agent', 'agentic', 'autonomous', 'workflow', 'automation', 'task'],
+    platforms: ['platform', 'api', 'service', 'cloud', 'saas', 'tool'],
+    bigtech: ['openai', 'google', 'microsoft', 'meta', 'anthropic', 'apple'],
+    conferences: ['conference', 'event', 'summit', 'meetup', 'neurips', 'ces'],
+    trends: ['trend', 'future', 'emerging', 'new', 'latest', 'breakthrough']
   };
 
   const analyzeConversationContext = () => {
@@ -55,6 +68,17 @@ export const ContextualTopicSuggester: React.FC<ContextualTopicSuggesterProps> =
         const matchCount = keywords.filter(keyword => allText.includes(keyword)).length;
         if (matchCount > 0) {
           const suggestions = generateHealthcareSuggestions(category, matchCount, allText);
+          detectedTopics.push(...suggestions);
+        }
+      });
+    }
+
+    // Analyze for technology topics
+    if (currentContext === 'technology' || !currentContext) {
+      Object.entries(technologyKeywords).forEach(([category, keywords]) => {
+        const matchCount = keywords.filter(keyword => allText.includes(keyword)).length;
+        if (matchCount > 0) {
+          const suggestions = generateTechnologySuggestions(category, matchCount, allText);
           detectedTopics.push(...suggestions);
         }
       });
@@ -154,6 +178,87 @@ export const ContextualTopicSuggester: React.FC<ContextualTopicSuggesterProps> =
             category: 'related',
             confidence: confidence,
             icon: '💳'
+          }
+        ];
+        
+      default:
+        return [];
+    }
+  };
+
+  const generateTechnologySuggestions = (category: string, matchCount: number, text: string): TopicSuggestion[] => {
+    const confidence = Math.min(matchCount * 0.3, 1.0);
+    
+    switch (category) {
+      case 'ai':
+        return [
+          {
+            topic: 'AI Democratization & Open Source',
+            reason: 'The AI landscape is evolving rapidly - want to explore the latest trends?',
+            category: 'immediate',
+            confidence: confidence + 0.1,
+            icon: '🚀'
+          },
+          {
+            topic: 'Big Tech AI Strategies',
+            reason: 'Understanding how major players are shaping AI could be valuable',
+            category: 'related',
+            confidence: confidence,
+            icon: '🏢'
+          }
+        ];
+        
+      case 'democratization':
+        return [
+          {
+            topic: 'No-Code/Low-Code Revolution',
+            reason: 'Democratization goes beyond AI - no-code is transforming development',
+            category: 'immediate',
+            confidence: confidence + 0.15,
+            icon: '🛠️'
+          },
+          {
+            topic: 'Open Source AI Models',
+            reason: 'Local models are making AI accessible to everyone',
+            category: 'related',
+            confidence: confidence,
+            icon: '🌐'
+          }
+        ];
+        
+      case 'agentic':
+        return [
+          {
+            topic: 'Agentic AI Platforms',
+            reason: 'AI agents are the next frontier - let me show you what\'s possible',
+            category: 'immediate',
+            confidence: confidence + 0.2,
+            icon: '🤖'
+          },
+          {
+            topic: 'Multi-Agent Systems',
+            reason: 'Teams of AI working together are revolutionizing workflows',
+            category: 'followup',
+            confidence: confidence,
+            icon: '👥'
+          }
+        ];
+        
+      case 'conferences':
+        return [
+          {
+            topic: 'Technology Conferences 2025',
+            reason: 'Stay ahead with the must-attend tech events this year',
+            category: 'immediate',
+            confidence: confidence + 0.1,
+            icon: '🎤'
+          },
+          {
+            topic: 'Industry Consortiums',
+            reason: 'Network with the organizations shaping tech\'s future',
+            category: 'related',
+            confidence: confidence,
+            icon: '🤝'
           }
         ];
         
