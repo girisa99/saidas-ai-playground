@@ -79,7 +79,7 @@ export const NavigationHeader = () => {
 
           {/* Desktop Navigation - Center, takes available space */}
           <nav className="hidden lg:flex items-center justify-center flex-1 min-w-0 px-4 lg:px-6">
-            <div className="flex items-center justify-center space-x-2 w-full overflow-x-auto">
+            <div className="flex items-center justify-center space-x-1 w-full">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = isActivePath(item.to);
@@ -102,15 +102,14 @@ export const NavigationHeader = () => {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`flex items-center gap-1 px-2 lg:px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 whitespace-nowrap ${
+                    className={`flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-200 whitespace-nowrap ${
                       isActive
                         ? 'bg-primary text-primary-foreground shadow-md'
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                     }`}
                   >
                     <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span className="hidden xl:inline text-xs">{responsiveLabel.full}</span>
-                    <span className="lg:inline xl:hidden text-xs">{responsiveLabel.short}</span>
+                    <span className="inline text-xs">{responsiveLabel.full}</span>
                   </Link>
                 );
               })}
@@ -129,11 +128,11 @@ export const NavigationHeader = () => {
               <Button 
                 variant="outline"
                 size="sm" 
-                className="text-xs font-medium hover:bg-muted/80 whitespace-nowrap h-8 px-2"
+                className="hidden xl:inline-flex text-xs font-medium hover:bg-muted/80 whitespace-nowrap h-8 px-2"
                 onClick={() => window.open('https://www.genieaiexpermentationhub.com', '_blank')}
               >
                 <ExternalLink className="w-3 h-3 mr-1 flex-shrink-0" />
-                <span className="hidden lg:inline">Login</span>
+                <span>Login</span>
               </Button>
               <Button 
                 size="sm" 
