@@ -2,6 +2,7 @@ import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import BusinessUseCasesComponent from "@/components/BusinessUseCases";
+import { CTASection } from "@/components/CTASection";
 import { useEffect } from "react";
 
 const BusinessUseCases = () => {
@@ -23,6 +24,9 @@ const BusinessUseCases = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <BusinessUseCasesComponent />
         </div>
+        
+        {/* Strategic next steps */}
+        <CTASection currentPage="business-cases" />
       </main>
       <Footer />
     </div>

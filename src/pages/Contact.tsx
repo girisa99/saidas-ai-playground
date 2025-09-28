@@ -1,6 +1,7 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { ContactForm } from "@/components/ContactForm";
+import { CTASection } from "@/components/CTASection";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Brain, Mail, MapPin, Clock, MessageSquare } from "lucide-react";
@@ -152,37 +153,8 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* Additional CTA Section */}
-        <section className="py-16 px-6 bg-gradient-to-r from-primary/5 to-secondary/5">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              Not Ready to Contact Yet?
-            </h2>
-            <p className="text-muted-foreground mb-6">
-              Explore our AI journey, technology stack, and case studies to learn more about our approach.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a 
-                href="/journey" 
-                className="px-6 py-2 bg-background border border-border rounded-lg hover:bg-muted transition-colors"
-              >
-                Explore AI Journey
-              </a>
-              <a 
-                href="/technology" 
-                className="px-6 py-2 bg-background border border-border rounded-lg hover:bg-muted transition-colors"
-              >
-                Technology Stack
-              </a>
-              <a 
-                href="/case-studies" 
-                className="px-6 py-2 bg-background border border-border rounded-lg hover:bg-muted transition-colors"
-              >
-                Case Studies
-              </a>
-            </div>
-          </div>
-        </section>
+        {/* Strategic navigation back to content */}
+        <CTASection currentPage="contact" variant="minimal" />
       </main>
       
       <Footer />

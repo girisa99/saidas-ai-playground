@@ -198,6 +198,29 @@ export const QuickStart = () => {
           </Card>
         </div>
 
+        {/* Clear navigation to next step */}
+        <div className="mt-16 text-center">
+          <h3 className="text-2xl font-bold mb-4">Ready to Dive Deeper?</h3>
+          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+            Now that you've seen my journey, explore how these insights translate to real business applications
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="bg-primary hover:bg-primary/90" asChild>
+              <Link to="/business-use-cases">
+                <Target className="w-4 h-4 mr-2" />
+                Explore Business Use Cases
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+            <Button variant="outline" size="lg" asChild>
+              <Link to="/case-studies">
+                <TrendingUp className="w-4 h-4 mr-2" />
+                View Success Stories
+              </Link>
+            </Button>
+          </div>
+        </div>
+
       </div>
     </section>
   );

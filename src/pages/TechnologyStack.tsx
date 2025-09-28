@@ -2,6 +2,7 @@ import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { IntegratedTechnologyExploration } from "@/components/IntegratedTechnologyExploration";
+import { CTASection } from "@/components/CTASection";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -129,6 +130,9 @@ const TechnologyStack = () => {
       
         
         <IntegratedTechnologyExploration />
+        
+        {/* Strategic navigation flow */}
+        <CTASection currentPage="technology" />
       </main>
       <Footer />
     </div>

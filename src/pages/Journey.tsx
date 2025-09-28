@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import VerticalJourneyInfographic from "@/components/VerticalJourneyInfographic";
 import { BusinessImpactInfographic } from "@/components/BusinessImpactInfographic";
-
+import { CTASection } from "@/components/CTASection";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -141,6 +141,9 @@ const Journey = () => {
 
         {/* Business Impact Analysis */}
         <BusinessImpactInfographic />
+
+        {/* Clear next steps */}
+        <CTASection currentPage="journey" />
 
       </main>
 

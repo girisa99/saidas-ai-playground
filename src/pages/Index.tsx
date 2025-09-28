@@ -5,6 +5,7 @@ import { GartnerValueSection } from "@/components/GartnerValueSection";
 import { QuickStart } from "@/components/QuickStart";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
+import { CTASection } from "@/components/CTASection";
 import { useEffect } from "react";
 
 const Index = () => {
@@ -26,7 +27,8 @@ const Index = () => {
         <GartnerValueSection />
         <QuickStart />
         <FAQ />
-        {/* Simplified homepage - detailed sections moved to dedicated pages per UI/UX audit */}
+        {/* Clear navigation flow to guide users */}
+        <CTASection currentPage="home" />
       </main>
       <Footer />
     </div>

@@ -1,7 +1,7 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-
+import { CTASection } from "@/components/CTASection";
 
 import { AnimatedTextEmergence } from "@/components/AnimatedTextEmergence";
 import { Button } from "@/components/ui/button";
@@ -581,14 +581,16 @@ const About = () => {
               </Button>
             </div>
            </div>
-         </section>
+          </section>
 
-         
-       </main>
+          {/* Clear navigation CTAs */}
+          <CTASection currentPage="about" />
+          
+        </main>
 
-      <Footer />
-    </div>
-  );
-};
+       <Footer />
+     </div>
+   );
+ };
 
-export default About;
+ export default About;

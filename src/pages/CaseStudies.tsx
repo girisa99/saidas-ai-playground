@@ -2,6 +2,7 @@ import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { PatientOnboardingCaseStudy } from "@/components/CaseStudyTemplate";
+import { CTASection } from "@/components/CTASection";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -232,32 +233,11 @@ const CaseStudies = () => {
           </div>
         </section>
 
-        {/* Call to Action */}
-        <section className="py-16 bg-gradient-to-br from-genie-primary/5 to-genie-secondary/5">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              Ready to Start Your AI Learning Journey?
-            </h2>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Discover how these proven AI experiments and insights can inspire your own learning path and experimentation journey.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="gradient" size="lg" asChild>
-                <Link to="/journey">
-                  <ArrowRight className="w-4 h-4 mr-2" />
-                  Start Your Learning Journey
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/technology">
-                  <Zap className="w-4 h-4 mr-2" />
-                  Explore Technologies
-                </Link>
-              </Button>
-            </div>
-           </div>
-         </section>
-       </main>
+        
+        {/* Strategic next steps for users */}
+        <CTASection currentPage="case-studies" />
+        
+        </main>
       
       <Footer />
     </div>
