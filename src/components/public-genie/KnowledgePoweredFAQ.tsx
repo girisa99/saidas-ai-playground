@@ -56,8 +56,8 @@ export const KnowledgePoweredFAQ = ({ onStartConversation }: KnowledgePoweredFAQ
         context: "ai"
       },
       {
-        category: "AI Journey", 
-        question: "How does the 3-phase AI framework work?",
+        category: "3-Phase Framework",
+        question: "How does the Experiment → Validate → Deploy framework work?",
         answer: Object.values(genieKnowledgeBase.framework.phases).join(" → "),
         context: "framework"
       },
@@ -68,7 +68,7 @@ export const KnowledgePoweredFAQ = ({ onStartConversation }: KnowledgePoweredFAQ
         context: "technology"
       },
       {
-        category: "Healthcare",
+        category: "Healthcare Applications",
         question: "How does AI apply to healthcare and digital therapeutics?",
         answer: genieKnowledgeBase.healthcareExpertise.digitalTherapeutics.definition,
         context: "healthcare"
@@ -84,11 +84,24 @@ export const KnowledgePoweredFAQ = ({ onStartConversation }: KnowledgePoweredFAQ
         question: "How do I start experimenting with AI?",
         answer: "Start small with specific problems, document everything, test safely with real data, iterate based on feedback.",
         context: "experiments"
+      },
+      {
+        category: "Security & Compliance",
+        question: "How do you handle AI security and compliance?",
+        answer: genieKnowledgeBase.securityCompliance.considerations.slice(0, 3).join(", "),
+        context: "technology"
+      },
+      {
+        category: "Case Studies",
+        question: "What are the proven results of your 3-phase framework?",
+        answer: `94% accuracy achieved, 8+ validated use cases, 3-day development cycles`,
+        context: "cases"
       }
     ];
+
   };
 
-  const filteredQuestions = selectedCategory === "all" 
+  const filteredQuestions = selectedCategory === "all"
     ? getFeaturedQuestions()
     : getFeaturedQuestions().filter(q => q.context === selectedCategory);
 

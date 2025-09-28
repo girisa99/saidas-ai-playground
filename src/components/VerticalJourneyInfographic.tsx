@@ -2,11 +2,12 @@ import { useState, useRef, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { LazyImage } from "@/components/LazyImage";
 import { 
   Lightbulb, 
   Brain, 
-  Target, 
+  Target,
   Database, 
   Shield, 
   Network,
@@ -561,11 +562,13 @@ const VerticalJourneyInfographic = () => {
                                <Button 
                                  variant="outline" 
                                  size="sm"
-                                 onClick={() => window.location.href = '/business-use-cases'}
+                                 asChild
                                  className="border-purple-300 hover:bg-purple-100 dark:border-purple-700 dark:hover:bg-purple-900/20 w-full sm:w-auto"
-                               >
-                                 View Business Use Cases →
-                               </Button>
+                                >
+                                   <Link to="/business-use-cases">
+                                     View Business Use Cases →
+                                   </Link>
+                                </Button>
                              </div>
                            )}
                         </div>
