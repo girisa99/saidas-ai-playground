@@ -19,11 +19,11 @@ export const NavigationHeader = () => {
 
   const navItems = [
     { to: "/", label: "Home", icon: Home },
-    { to: "/about", label: "About Me", icon: User },
-    { to: "/journey", label: "My AI Journey", icon: Map },
-    { to: "/technology", label: "Tech Stack Explored", icon: Wrench },
-    { to: "/business-use-cases", label: "Business Use Cases", icon: Briefcase },
-    { to: "/case-studies", label: "Case Studies", icon: Trophy },
+    { to: "/about", label: "About Sai Das", icon: User },
+    { to: "/journey", label: "AI Development Journey", icon: Map },
+    { to: "/technology", label: "3-Phase Tech Framework", icon: Wrench },
+    { to: "/business-use-cases", label: "Gartner Business Solutions", icon: Briefcase },
+    { to: "/case-studies", label: "Validated Case Studies", icon: Trophy },
   ];
 
   const isActivePath = (path: string) => {
@@ -87,11 +87,11 @@ export const NavigationHeader = () => {
                 // Custom labels for responsive display
                 const getResponsiveLabel = (label: string) => {
                   switch(label) {
-                    case "About Me": return { full: "About Me", short: "About" };
-                    case "My AI Journey": return { full: "My Journey", short: "Journey" };
-                    case "Tech Stack Explored": return { full: "My Tech St", short: "Tech" };
-                    case "Business Use Cases": return { full: "Use Cases", short: "Cases" };
-                    case "Case Studies": return { full: "Case Studies", short: "Studies" };
+                    case "About Sai Das": return { full: "About Sai", short: "About" };
+                    case "AI Development Journey": return { full: "AI Journey", short: "Journey" };
+                    case "3-Phase Tech Framework": return { full: "Tech Framework", short: "Tech" };
+                    case "Gartner Business Solutions": return { full: "Business Solutions", short: "Business" };
+                    case "Validated Case Studies": return { full: "Case Studies", short: "Studies" };
                     default: return { full: label, short: label };
                   }
                 };
