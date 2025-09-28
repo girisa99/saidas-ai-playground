@@ -17,6 +17,10 @@ import { PublicPrivacyBanner } from './PublicPrivacyBanner';
 import { HumanEscalationForm } from './HumanEscalationForm';
 import { RichResponseRenderer } from './RichResponseRenderer';
 import { AdvancedAISettings, AIConfig } from './AdvancedAISettings';
+import { ConfigurationWizard } from './ConfigurationWizard';
+import { SplitScreenRenderer } from './SplitScreenRenderer';
+import { SessionManager } from './SessionManager';
+import { ContextSwitcher } from './ContextSwitcher';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { CapabilitiesPrompt, TopicSuggestions } from './ConversationUtils';
 import { NewsletterService } from '@/services/newsletterService';
@@ -82,6 +86,18 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [showConfigWizard, setShowConfigWizard] = useState(false);
   const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
   const [ipAddress, setIpAddress] = useState<string | null>(null);
+  const [showSessionManager, setShowSessionManager] = useState(false);
+  const [loadingStates, setLoadingStates] = useState({
+    primary: false,
+    secondary: false
+  });
+  const [splitResponses, setSplitResponses] = useState<{
+    primary: any[];
+    secondary: any[];
+  }>({
+    primary: [],
+    secondary: []
+  });
   const [aiConfig, setAIConfig] = useState<AIConfig>({
     mode: 'default',
     ragEnabled: false,
@@ -251,14 +267,6 @@ Ask me anything to get started, or click below to explore my advanced features!`
       timestamp: new Date().toISOString()
     });
 
-    // Add intermediate response with context awareness
-    const intermediateMessage = context ? generateIntermediateResponse() : "Let me understand what you're looking for... 🤔";
-    addMessage({
-      role: 'assistant',
-      content: intermediateMessage,
-      timestamp: new Date().toISOString()
-    });
-
     try {
       const systemPrompt = context ? 
         `You are Genie AI, a helpful assistant specializing in ${context}${selectedTopic ? ` with focus on ${selectedTopic}` : ''}. 
@@ -282,38 +290,101 @@ Ask me anything to get started, or click below to explore my advanced features!`
         
         Note: If no context is set, try to identify if this relates to technology or healthcare and suggest relevant topics.`;
 
-      const response = await generateResponse({
-        provider: 'openai',
-        model: aiConfig.selectedModel,
-        prompt: enhancedPrompt,
-        systemPrompt,
-        temperature: 0.7,
-        maxTokens: 1000
-      });
+      if (aiConfig.splitScreenEnabled && aiConfig.mode === 'multi') {
+        // Handle split-screen multi-model responses
+        setLoadingStates({ primary: true, secondary: true });
 
-      if (response) {
-        // Remove the intermediate message and add the real response
-        const personalizedResponse = addPersonalityToResponse(response.content);
-        addMessage({
-          role: 'assistant',
-          content: personalizedResponse,
-          timestamp: new Date().toISOString()
+        const [primaryResponse, secondaryResponse] = await Promise.all([
+          generateResponse({
+            provider: 'openai',
+            model: aiConfig.selectedModel,
+            prompt: enhancedPrompt,
+            systemPrompt,
+            temperature: 0.7,
+            maxTokens: 1000
+          }),
+          generateResponse({
+            provider: 'claude',
+            model: aiConfig.secondaryModel || 'claude-3-haiku',
+            prompt: enhancedPrompt,
+            systemPrompt,
+            temperature: 0.7,
+            maxTokens: 1000
+          })
+        ]);
+
+        setLoadingStates({ primary: false, secondary: false });
+
+        if (primaryResponse) {
+          const personalizedPrimary = addPersonalityToResponse(primaryResponse.content);
+          setSplitResponses(prev => ({
+            ...prev,
+            primary: [...prev.primary, {
+              role: 'assistant',
+              content: personalizedPrimary,
+              timestamp: new Date().toISOString(),
+              model: aiConfig.selectedModel
+            }]
+          }));
+        }
+
+        if (secondaryResponse) {
+          const personalizedSecondary = addPersonalityToResponse(secondaryResponse.content);
+          setSplitResponses(prev => ({
+            ...prev,
+            secondary: [...prev.secondary, {
+              role: 'assistant',
+              content: personalizedSecondary,
+              timestamp: new Date().toISOString(),
+              model: aiConfig.secondaryModel
+            }]
+          }));
+        }
+      } else {
+        // Standard single response
+        const response = await generateResponse({
+          provider: 'openai',
+          model: aiConfig.selectedModel,
+          prompt: enhancedPrompt,
+          systemPrompt,
+          temperature: 0.7,
+          maxTokens: 1000
         });
-        
-        // Randomly change conversation personality to keep it dynamic
-        if (Math.random() > 0.8) {
-          const personalities: Array<'formal' | 'casual' | 'empathetic'> = ['formal', 'casual', 'empathetic'];
-          setConversationPersonality(personalities[Math.floor(Math.random() * personalities.length)]);
+
+        if (response) {
+          const personalizedResponse = addPersonalityToResponse(response.content);
+          addMessage({
+            role: 'assistant',
+            content: personalizedResponse,
+            timestamp: new Date().toISOString()
+          });
         }
       }
-    } catch (error) {
+      
+      // Randomly change conversation personality to keep it dynamic
+      if (Math.random() > 0.8) {
+        const personalities: Array<'formal' | 'casual' | 'empathetic'> = ['formal', 'casual', 'empathetic'];
+        setConversationPersonality(personalities[Math.floor(Math.random() * personalities.length)]);
+      }
+    } catch (error: any) {
       console.error('Error sending message:', error);
-      addMessage({
-        role: 'assistant',
-        content: 'I apologize, but I encountered an error. Would you like to speak with a human agent instead? 🤝',
-        timestamp: new Date().toISOString()
-      });
-      setShowHumanEscalation(true);
+      
+      // Check if it's a token/limit error
+      if (error.message?.includes('token') || error.message?.includes('limit') || error.message?.includes('quota')) {
+        addMessage({
+          role: 'assistant',
+          content: '⚠️ **Demo Limit Reached** \n\nI\'ve hit the token or conversation limit for this demonstration. This showcases the technology feasibility and experimentation capabilities. \n\nWould you like to start a new session or connect with a human agent? 🤝',
+          timestamp: new Date().toISOString()
+        });
+        setShowSessionManager(true);
+      } else {
+        addMessage({
+          role: 'assistant',
+          content: 'I apologize, but I encountered an error. Would you like to speak with a human agent instead? 🤝',
+          timestamp: new Date().toISOString()
+        });
+        setShowHumanEscalation(true);
+      }
     }
   };
 
@@ -365,8 +436,10 @@ Ask me anything to get started, or click below to explore my advanced features!`
 
   const sendConversationTranscript = async () => {
     try {
-      const transcript = messages
-        .map((msg, idx) => `${idx + 1}. ${msg.role === 'user' ? 'User' : 'Genie AI'}: ${msg.content}`)
+      // Limit transcript length to avoid validation errors
+      const recentMessages = messages.slice(-10); // Only last 10 messages
+      const transcript = recentMessages
+        .map((msg, idx) => `${idx + 1}. ${msg.role === 'user' ? 'User' : 'Genie AI'}: ${msg.content.substring(0, 200)}${msg.content.length > 200 ? '...' : ''}`)
         .join('\n\n');
 
       const conversationSummary = {
@@ -376,29 +449,50 @@ Ask me anything to get started, or click below to explore my advanced features!`
         aiConfig: aiConfig,
         messageCount: messages.length,
         conversationDuration: `Started: ${messages[0]?.timestamp || 'Unknown'}`,
-        transcript: transcript
+        transcript: transcript.substring(0, 1500) // Ensure under 2000 char limit
       };
 
-      await ContactService.submitContactForm({
-        name: 'Genie AI System',
-        email: 'genieaiexpermentationhub@gmail.com',
-        subject: `[TRANSCRIPT] Conversation with ${userInfo!.firstName} - ${context}/${selectedTopic}`,
-        message: `Conversation Transcript:
+      // Send to both user and admin email
+      await Promise.all([
+        // Send to user
+        ContactService.submitContactForm({
+          name: 'Genie AI System',
+          email: userInfo!.email,
+          subject: `Your Genie AI Conversation Summary - ${context}/${selectedTopic}`,
+          message: `Hi ${userInfo!.firstName},
 
-User: ${conversationSummary.userInfo}
+Thank you for exploring Genie AI! Here's a summary of our conversation:
+
 Context: ${conversationSummary.context}
 Topic: ${conversationSummary.topic}
-AI Configuration: ${JSON.stringify(conversationSummary.aiConfig, null, 2)}
 Messages: ${conversationSummary.messageCount}
 ${conversationSummary.conversationDuration}
 
---- FULL TRANSCRIPT ---
+--- CONVERSATION HIGHLIGHTS ---
 ${conversationSummary.transcript}
 
---- END TRANSCRIPT ---
+--- END SUMMARY ---
 
-This transcript was automatically generated when the user closed the conversation.`
-      } as any);
+This was a technology demonstration showcasing AI experimentation capabilities.
+
+Best regards,
+Genie AI Team`
+        } as any),
+        
+        // Send to admin
+        ContactService.submitContactForm({
+          name: 'Genie AI System',
+          email: 'genieaiexpermentationhub@gmail.com',
+          subject: `[TRANSCRIPT] ${userInfo!.firstName} - ${context}/${selectedTopic}`,
+          message: `User: ${conversationSummary.userInfo}
+Context: ${conversationSummary.context}
+Topic: ${conversationSummary.topic}
+Config: ${JSON.stringify(conversationSummary.aiConfig, null, 2)}
+Messages: ${conversationSummary.messageCount}
+
+${conversationSummary.transcript}`
+        } as any)
+      ]);
 
     } catch (error) {
       console.error('Failed to send conversation transcript:', error);
@@ -510,26 +604,36 @@ This transcript was automatically generated when the user closed the conversatio
                   )}
 
                   {/* Messages */}
-                  <div className={`flex-1 overflow-y-auto p-4 space-y-4 ${aiConfig.splitScreenEnabled ? 'grid grid-cols-2 gap-4' : ''}`}>
-                    <div className={aiConfig.splitScreenEnabled ? 'space-y-2' : ''}>
-                      {messages.map((message, index) => (
-                        <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                          <div className={`max-w-[80%] p-3 rounded-lg ${
-                            message.role === 'user' 
-                              ? 'bg-primary text-primary-foreground' 
-                              : 'bg-accent'
-                          }`}>
-                            {message.role === 'assistant' ? (
-                              <RichResponseRenderer content={message.content} />
-                            ) : (
-                              <p className="text-sm">{message.content}</p>
-                            )}
+                  <div className={`flex-1 overflow-y-auto p-4 space-y-4 ${aiConfig.splitScreenEnabled && aiConfig.mode === 'multi' ? '' : ''}`}>
+                    {aiConfig.splitScreenEnabled && aiConfig.mode === 'multi' ? (
+                      <SplitScreenRenderer
+                        messages={[...messages, ...splitResponses.primary, ...splitResponses.secondary]}
+                        primaryModel={aiConfig.selectedModel}
+                        secondaryModel={aiConfig.secondaryModel || 'claude-3-haiku'}
+                        isLoading={isLoading}
+                        loadingStates={loadingStates}
+                      />
+                    ) : (
+                      <div className="space-y-2">
+                        {messages.map((message, index) => (
+                          <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                            <div className={`max-w-[80%] p-3 rounded-lg ${
+                              message.role === 'user' 
+                                ? 'bg-primary text-primary-foreground' 
+                                : 'bg-accent'
+                            }`}>
+                              {message.role === 'assistant' ? (
+                                <RichResponseRenderer content={message.content} />
+                              ) : (
+                                <p className="text-sm">{message.content}</p>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                      {isLoading && <TypingIndicator />}
-                      <div ref={messagesEndRef} />
-                    </div>
+                        ))}
+                        {isLoading && <TypingIndicator />}
+                        <div ref={messagesEndRef} />
+                      </div>
+                    )}
                   </div>
 
                    {/* Capabilities Prompt */}
@@ -564,8 +668,55 @@ This transcript was automatically generated when the user closed the conversatio
                     />
                   )}
 
-                  {/* Input */}
-                  <div className="p-4 border-t bg-background/50">
+                   {/* Session Manager */}
+                   {showSessionManager && (
+                     <SessionManager
+                       ipAddress={ipAddress}
+                       messageCount={messages.length}
+                       onRestart={() => {
+                         resetConversation();
+                         setSplitResponses({ primary: [], secondary: [] });
+                         setContext(null);
+                         setSelectedTopic('');
+                         setShowSessionManager(false);
+                         setShowConfigWizard(true);
+                       }}
+                       onContinue={() => setShowSessionManager(false)}
+                       showControls={hasStartedConversation}
+                     />
+                   )}
+
+                   {/* Input */}
+                   <div className="p-4 border-t bg-background/50">
+                     {/* Context Switcher */}
+                     {hasStartedConversation && (
+                       <div className="mb-3">
+                         <ContextSwitcher
+                           currentContext={context}
+                           onContextSwitch={(newContext) => {
+                             setContext(newContext);
+                             setSelectedTopic('');
+                             addMessage({
+                               role: 'assistant',
+                               content: `Switched to ${newContext} context! 🔄 What would you like to explore?`,
+                               timestamp: new Date().toISOString()
+                             });
+                           }}
+                           onTopicSelect={(topic) => {
+                             setSelectedTopic(topic);
+                             addMessage({
+                               role: 'assistant',
+                               content: `Great! I'm now focused on ${topic}. What specific questions do you have?`,
+                               timestamp: new Date().toISOString()
+                             });
+                           }}
+                           availableTopics={{
+                             technology: technologyTopics,
+                             healthcare: healthcareTopics
+                           }}
+                         />
+                       </div>
+                     )}
                     <div className="flex gap-2">
                       <Input
                         value={inputMessage}
@@ -664,6 +815,16 @@ This transcript was automatically generated when the user closed the conversatio
             </div>
           )}
         </Card>
+        
+        {/* Configuration Wizard */}
+        <ConfigurationWizard
+          isOpen={showConfigWizard}
+          onComplete={(config) => {
+            setAIConfig(config);
+            setShowConfigWizard(false);
+          }}
+          onCancel={() => setShowConfigWizard(false)}
+        />
         
         {/* Human Escalation Form */}
         <AnimatePresence>
