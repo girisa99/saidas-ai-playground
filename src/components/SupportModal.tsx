@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { ContactModal } from "./ContactModal";
 import { FeedbackModal } from "./FeedbackModal";
+import { DocumentationModal } from "./DocumentationModal";
 
 interface SupportModalProps {
   trigger: React.ReactNode;
@@ -65,9 +66,6 @@ export const SupportModal = ({ trigger }: SupportModalProps) => {
     switch (action) {
       case 'linkedin':
         window.open('https://www.linkedin.com/in/saidas/', '_blank');
-        break;
-      case 'docs':
-        window.location.href = '/docs';
         break;
       default:
         break;
@@ -132,15 +130,25 @@ export const SupportModal = ({ trigger }: SupportModalProps) => {
                     />
                   )}
                   
-                  {(option.action === 'linkedin' || option.action === 'docs') && (
+                  {option.action === 'linkedin' && (
                     <Button 
                       onClick={() => handleAction(option.action)}
                       className="w-full"
-                      variant={option.action === 'linkedin' ? 'default' : 'outline'}
                     >
-                      {option.action === 'linkedin' ? 'Connect on LinkedIn' : 'View Documentation'}
+                      Connect on LinkedIn
                       <ExternalLink className="ml-2 h-4 w-4" />
                     </Button>
+                  )}
+                  
+                  {option.action === 'docs' && (
+                    <DocumentationModal 
+                      trigger={
+                        <Button className="w-full" variant="outline">
+                          View Documentation
+                          <FileText className="ml-2 h-4 w-4" />
+                        </Button>
+                      }
+                    />
                   )}
                 </div>
               </Card>
