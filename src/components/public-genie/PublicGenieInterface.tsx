@@ -17,6 +17,7 @@ import { PublicPrivacyBanner } from './PublicPrivacyBanner';
 import { HumanEscalationForm } from './HumanEscalationForm';
 import { RichResponseRenderer } from './RichResponseRenderer';
 import { AdvancedAISettings, AIConfig } from './AdvancedAISettings';
+import { CapabilitiesPrompt, TopicSuggestions } from './ConversationUtils';
 import { NewsletterService } from '@/services/newsletterService';
 import { ContactService } from '@/services/publicContactService';
 import genieLogoPopup from '@/assets/genie-logo-popup.png';
@@ -75,6 +76,8 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [conversationPersonality, setConversationPersonality] = useState<'formal' | 'casual' | 'empathetic'>('casual');
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
   const [hasStartedConversation, setHasStartedConversation] = useState(false);
+  const [showCapabilities, setShowCapabilities] = useState(false);
+  const [showTopicSuggestions, setShowTopicSuggestions] = useState(false);
   const [aiConfig, setAIConfig] = useState<AIConfig>({
     mode: 'default',
     ragEnabled: false,
@@ -96,10 +99,8 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handlePrivacyAccept = async (info: UserInfo, selectedContext: Context, topic: string) => {
+  const handlePrivacyAccept = async (info: UserInfo) => {
     setUserInfo(info);
-    setContext(selectedContext);
-    setSelectedTopic(topic);
     setShowPrivacyBanner(false);
 
     // Subscribe user to newsletter (public edge function)
@@ -108,7 +109,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
         email: info.email,
         firstName: info.firstName,
         lastName: info.lastName,
-        interests: [selectedContext, topic]
+        interests: ['AI Conversation']
       });
       if (res.success) {
         toast({ title: 'Subscribed', description: 'Welcome email sent. You can unsubscribe anytime.' });
@@ -120,27 +121,26 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
       toast({ title: 'Subscription failed', description: 'Please try again later.', variant: 'destructive' });
     }
     
-    // Add welcome message with personality
-    const personalityGreetings = {
-      technology: [
-        `Hello ${info.firstName}! 👋 I'm your Genie AI assistant, ready to dive into the exciting world of ${topic} with you! What tech challenge can I help you conquer today?`,
-        `Hey there ${info.firstName}! 🤖 Your tech genie is here and fully charged for ${topic} discussions! What digital adventure shall we embark on?`,
-        `Welcome ${info.firstName}! ⚡ I'm your AI companion for all things ${topic}. Let's turn your questions into solutions!`
-      ],
-      healthcare: [
-        `Hello ${info.firstName}! 🩺 I'm your Genie AI assistant, here to support your ${topic} journey with thoughtful guidance. How can I help you today?`,
-        `Welcome ${info.firstName}! 💊 Your healthcare genie is ready to assist with ${topic} insights. What's on your mind?`,
-        `Hi ${info.firstName}! 🏥 I'm here to provide helpful ${topic} guidance with empathy and understanding. How may I assist you?`
-      ]
-    };
-    
-    const greetings = personalityGreetings[selectedContext];
-    const welcomeMessage = greetings[Math.floor(Math.random() * greetings.length)];
+    // Add capabilities introduction message
+    const capabilitiesMessage = `Hello ${info.firstName}! 🧞‍♂️ Welcome to Genie AI! 
+
+I'm your intelligent assistant with powerful capabilities. Just start asking questions and I'll adapt to help you best!
+
+💡 **What I can help with:**
+• Technology & AI topics 🚀
+• Healthcare & wellness guidance 🏥  
+• Real-time research and analysis 📊
+
+Ask me anything to get started, or click below to explore my advanced features!`;
+
     addMessage({
       role: 'assistant',
-      content: welcomeMessage,
+      content: capabilitiesMessage,
       timestamp: new Date().toISOString()
     });
+
+    // Show capabilities prompt after welcome
+    setTimeout(() => setShowCapabilities(true), 2000);
   };
 
   const addPersonalityToResponse = (response: string): string => {
@@ -187,8 +187,25 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
     return intermediates[context!][Math.floor(Math.random() * intermediates[context!].length)];
   };
 
+  const detectContextFromMessage = (message: string): Context | null => {
+    const techKeywords = ['ai', 'technology', 'software', 'programming', 'code', 'automation', 'llm', 'model', 'api', 'cloud', 'data'];
+    const healthcareKeywords = ['health', 'medical', 'patient', 'clinical', 'wellness', 'treatment', 'diagnosis', 'healthcare', 'medicine'];
+    
+    const lowerMessage = message.toLowerCase();
+    const techMatches = techKeywords.filter(keyword => lowerMessage.includes(keyword)).length;
+    const healthMatches = healthcareKeywords.filter(keyword => lowerMessage.includes(keyword)).length;
+    
+    if (techMatches > healthMatches && techMatches > 0) return 'technology';
+    if (healthMatches > techMatches && healthMatches > 0) return 'healthcare';
+    return null;
+  };
+
+  const suggestTopicsForContext = (detectedContext: Context): string[] => {
+    return detectedContext === 'technology' ? technologyTopics.slice(0, 5) : healthcareTopics.slice(0, 5);
+  };
+
   const handleSendMessage = async () => {
-    if (!inputMessage.trim() || isLoading || !context || !selectedTopic) return;
+    if (!inputMessage.trim() || isLoading) return;
 
     const userMessage = inputMessage.trim();
     setInputMessage('');
@@ -197,6 +214,23 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
     if (!hasStartedConversation) {
       setHasStartedConversation(true);
     }
+
+    // Auto-detect context if not set
+    if (!context) {
+      const detectedContext = detectContextFromMessage(userMessage);
+      if (detectedContext) {
+        setContext(detectedContext);
+        // Show topic suggestions
+        setTimeout(() => {
+          setShowTopicSuggestions(true);
+          addMessage({
+            role: 'assistant',
+            content: `I detected you're interested in ${detectedContext}! 🎯 I can provide specialized assistance in this area. You can select a specific topic below or continue with your question.`,
+            timestamp: new Date().toISOString()
+          });
+        }, 1000);
+      }
+    }
     
     addMessage({
       role: 'user',
@@ -204,29 +238,44 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
       timestamp: new Date().toISOString()
     });
 
-    // Show intermediate response
-    const intermediateMsg = generateIntermediateResponse();
+    // Add intermediate response with context awareness
+    const intermediateMessage = context ? generateIntermediateResponse() : "Let me understand what you're looking for... 🤔";
     addMessage({
       role: 'assistant',
-      content: intermediateMsg,
+      content: intermediateMessage,
       timestamp: new Date().toISOString()
     });
 
     try {
-      const contextPrompt = `You are a helpful AI assistant specializing in ${context}, specifically in ${selectedTopic}.
-      Be conversational, helpful, and ${conversationPersonality}. Use concise, high-signal answers.
-      If context is "technology", bias content toward Agentic AI, LLMs/SLMs, MCP, RAG/knowledge bases, automation tools (UiPath, Power Automate, n8n),
-      observability (Langfuse/Langwatch), data labeling (Label Studio), cloud/platform updates (OpenAI, Claude, Gemini, Meta, Azure), Hugging Face models,
-      and contact-center AI trends, including notable market trends, launches, and M&A when relevant.
-      If the user mentions healthcare, explicitly ask to switch context to healthcare and continue accordingly.
-      Format with markdown where useful and always finish with a helpful follow-up question inviting next steps or a topic pivot.`;
+      const systemPrompt = context ? 
+        `You are Genie AI, a helpful assistant specializing in ${context}${selectedTopic ? ` with focus on ${selectedTopic}` : ''}. 
+        Personality: ${conversationPersonality}. 
+        Be engaging, helpful, and provide practical insights. 
+        Keep responses concise but informative.
+        Context: This is a conversation interface demonstration.
+        If the user asks about capabilities, mention the different AI modes (default/single/multi-agent), RAG, knowledge bases, MCP tools, and split-screen options.` :
+        `You are Genie AI, a versatile assistant ready to help with any topic. 
+        I can adapt to technology, healthcare, or general inquiries.
+        Be engaging, helpful, and offer to configure specialized capabilities.
+        Mention that I can work in different modes (default/single/multi-agent) and have advanced features like RAG, knowledge bases, and split-screen.
+        Context: This is a conversation interface demonstration.`;
+
+      const enhancedPrompt = `${userMessage}
+        
+        ${context ? `Context: ${context}` : 'Context: General inquiry - suggest relevant contexts'}
+        ${selectedTopic ? `Topic Focus: ${selectedTopic}` : ''}
+        User: ${userInfo?.firstName}
+        AI Config: ${JSON.stringify(aiConfig)}
+        
+        Note: If no context is set, try to identify if this relates to technology or healthcare and suggest relevant topics.`;
 
       const response = await generateResponse({
-        prompt: userMessage,
-        systemPrompt: contextPrompt,
-        model: aiConfig.selectedModel.includes('gpt') ? aiConfig.selectedModel as any : 'gpt-4o-mini',
-        provider: aiConfig.selectedModel.includes('claude') ? 'claude' : 
-                  aiConfig.selectedModel.includes('gemini') ? 'gemini' : 'openai'
+        provider: 'openai',
+        model: aiConfig.selectedModel,
+        prompt: enhancedPrompt,
+        systemPrompt,
+        temperature: 0.7,
+        maxTokens: 1000
       });
 
       if (response) {
@@ -470,53 +519,110 @@ This transcript was automatically generated when the user closed the conversatio
                     </div>
                   </div>
 
+                   {/* Capabilities Prompt */}
+                   {showCapabilities && !context && (
+                     <CapabilitiesPrompt
+                       onModeSelect={(mode) => {
+                         setAIConfig(prev => ({ ...prev, mode }));
+                         setShowCapabilities(false);
+                       }}
+                       onFeatureToggle={(feature) => {
+                         const featureKey = feature.toLowerCase().replace(' ', '') + 'Enabled';
+                         setAIConfig(prev => ({ ...prev, [featureKey]: !prev[featureKey as keyof AIConfig] }));
+                       }}
+                       currentConfig={aiConfig}
+                     />
+                   )}
+
+                   {/* Topic Suggestions */}
+                   {showTopicSuggestions && context && (
+                     <TopicSuggestions
+                       context={context}
+                       topics={context === 'technology' ? technologyTopics.slice(0, 6) : healthcareTopics.slice(0, 6)}
+                       onTopicSelect={(topic) => {
+                         setSelectedTopic(topic);
+                        setShowTopicSuggestions(false);
+                        addMessage({
+                          role: 'assistant',
+                          content: `Great! I'm now focused on ${topic}. What specific questions do you have about this topic?`,
+                          timestamp: new Date().toISOString()
+                        });
+                      }}
+                    />
+                  )}
+
                   {/* Input */}
-                  {selectedTopic && (
-                    <div className="p-4 border-t bg-background/50">
-                      <div className="flex gap-2">
-                        <Input
-                          value={inputMessage}
-                          onChange={(e) => setInputMessage(e.target.value)}
-                          placeholder={`Ask me about ${selectedTopic}...`}
-                          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                          disabled={isLoading}
-                          className="flex-1"
-                        />
-                        <Button
-                          onClick={handleSendMessage}
-                          disabled={isLoading || !inputMessage.trim()}
-                          size="sm"
-                        >
-                          <Send className="h-4 w-4" />
-                        </Button>
+                  <div className="p-4 border-t bg-background/50">
+                    <div className="flex gap-2">
+                      <Input
+                        value={inputMessage}
+                        onChange={(e) => setInputMessage(e.target.value)}
+                        placeholder={selectedTopic ? `Ask me about ${selectedTopic}...` : "Ask me anything..."}
+                        onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                        disabled={isLoading}
+                        className="flex-1"
+                      />
+                      <Button
+                        onClick={handleSendMessage}
+                        disabled={isLoading || !inputMessage.trim()}
+                        size="sm"
+                      >
+                        <Send className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    
+                    {/* Context and Topic Switcher */}
+                    <div className="flex justify-between items-center mt-2">
+                      <div className="flex items-center gap-2">
+                        {context && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setShowTopicSuggestions(!showTopicSuggestions)}
+                            className="text-xs h-6"
+                          >
+                            {context === 'technology' ? '🚀' : '🏥'} {selectedTopic || 'Choose Topic'}
+                          </Button>
+                        )}
+                        {!context && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setShowCapabilities(!showCapabilities)}
+                            className="text-xs h-6"
+                          >
+                            ⚙️ Configure AI
+                          </Button>
+                        )}
                       </div>
-                       <div className="flex justify-between items-center mt-2">
-                         <p className="text-xs text-muted-foreground flex items-center gap-2">
-                           <span>Powered by Genie AI • {conversationPersonality} mode</span>
-                           {aiConfig.mode !== 'default' && (
-                             <Badge variant="secondary" className="text-xs">
-                               {aiConfig.mode.toUpperCase()}
-                             </Badge>
-                           )}
-                           {(aiConfig.ragEnabled || aiConfig.knowledgeBaseEnabled || aiConfig.mcpEnabled) && (
-                             <div className="flex gap-1">
-                               {aiConfig.ragEnabled && <Badge variant="outline" className="text-xs">RAG</Badge>}
-                               {aiConfig.knowledgeBaseEnabled && <Badge variant="outline" className="text-xs">KB</Badge>}
-                               {aiConfig.mcpEnabled && <Badge variant="outline" className="text-xs">MCP</Badge>}
-                             </div>
-                           )}
-                         </p>
+                      
+                      <div className="flex items-center gap-2">
+                        <p className="text-xs text-muted-foreground flex items-center gap-1">
+                          <span>Genie AI</span>
+                          {aiConfig.mode !== 'default' && (
+                            <Badge variant="secondary" className="text-xs">
+                              {aiConfig.mode.toUpperCase()}
+                            </Badge>
+                          )}
+                          {(aiConfig.ragEnabled || aiConfig.knowledgeBaseEnabled || aiConfig.mcpEnabled) && (
+                            <div className="flex gap-1">
+                              {aiConfig.ragEnabled && <Badge variant="outline" className="text-xs">RAG</Badge>}
+                              {aiConfig.knowledgeBaseEnabled && <Badge variant="outline" className="text-xs">KB</Badge>}
+                              {aiConfig.mcpEnabled && <Badge variant="outline" className="text-xs">MCP</Badge>}
+                            </div>
+                          )}
+                        </p>
                         <Button
                           variant="link"
                           size="sm"
                           onClick={() => setShowHumanEscalation(true)}
                           className="text-xs p-0"
                         >
-                          {isLiveAgentAvailable ? '🟢 Live Agent' : 'Need human help?'}
+                          {isLiveAgentAvailable ? '🟢 Live Agent' : 'Need help?'}
                         </Button>
                       </div>
                     </div>
-                  )}
+                  </div>
                 </>
               )}
             </div>

@@ -16,7 +16,7 @@ interface UserInfo {
 type Context = 'technology' | 'healthcare';
 
 interface PublicPrivacyBannerProps {
-  onAccept: (userInfo: UserInfo, context: Context, topic: string) => void;
+  onAccept: (userInfo: UserInfo) => void;
   technologyTopics: string[];
   healthcareTopics: string[];
 }
@@ -26,19 +26,17 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
   technologyTopics, 
   healthcareTopics
 }) => {
-  const [step, setStep] = useState<'privacy' | 'info' | 'context' | 'topic'>('privacy');
+  const [step, setStep] = useState<'privacy' | 'info'>('privacy');
   const [userInfo, setUserInfo] = useState<UserInfo>({
     firstName: '',
     lastName: '',
     email: ''
   });
-  const [context, setContext] = useState<Context | null>(null);
-  const [selectedTopic, setSelectedTopic] = useState<string>('');
   const { toast } = useToast();
 
   const handleSubmit = () => {
-    if (userInfo.firstName && userInfo.email && context && selectedTopic) {
-      onAccept(userInfo, context, selectedTopic);
+    if (userInfo.firstName && userInfo.email) {
+      onAccept(userInfo);
     }
   };
 
@@ -83,6 +81,9 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
         {step === 'info' && (
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-center">Tell us about yourself</h3>
+            <p className="text-sm text-muted-foreground text-center">
+              Skip topic selection - I'll detect your interests and adapt during our conversation!
+            </p>
             <div className="space-y-4">
               <div>
                 <Label htmlFor="firstName">First Name *</Label>
@@ -121,83 +122,11 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
                 Back
               </Button>
               <Button 
-                onClick={() => setStep('context')}
+                onClick={handleSubmit}
                 disabled={!userInfo.firstName || !userInfo.email || !isEmailValid(userInfo.email)}
                 className="flex-1"
               >
-                Next
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Context Selection */}
-        {step === 'context' && (
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-center">Choose Your Area of Interest</h3>
-            <div className="grid grid-cols-1 gap-3">
-              <Button
-                variant={context === 'technology' ? 'default' : 'outline'}
-                onClick={() => setContext('technology')}
-                className="p-4 h-auto flex flex-col gap-2"
-              >
-                <span className="text-lg">🚀</span>
-                <span className="font-medium">Technology</span>
-                <span className="text-xs text-muted-foreground">AI, Software, Innovation</span>
-              </Button>
-              <Button
-                variant={context === 'healthcare' ? 'default' : 'outline'}
-                onClick={() => setContext('healthcare')}
-                className="p-4 h-auto flex flex-col gap-2"
-              >
-                <span className="text-lg">🏥</span>
-                <span className="font-medium">Healthcare</span>
-                <span className="text-xs text-muted-foreground">Medical, Wellness, Research</span>
-              </Button>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setStep('info')} className="flex-1">
-                Back
-              </Button>
-              <Button 
-                onClick={() => setStep('topic')}
-                disabled={!context}
-                className="flex-1"
-              >
-                Next
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Topic Selection */}
-        {step === 'topic' && context && (
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-center">
-              Select Your {context === 'technology' ? 'Tech' : 'Healthcare'} Focus
-            </h3>
-            <div className="grid grid-cols-2 gap-2 max-h-60 overflow-y-auto">
-              {(context === 'technology' ? technologyTopics : healthcareTopics).map((topic) => (
-                <Button
-                  key={topic}
-                  variant={selectedTopic === topic ? 'default' : 'outline'}
-                  onClick={() => setSelectedTopic(topic)}
-                  className="p-2 h-auto text-xs"
-                >
-                  {topic}
-                </Button>
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setStep('context')} className="flex-1">
-                Back
-              </Button>
-              <Button 
-                onClick={handleSubmit}
-                disabled={!selectedTopic}
-                className="flex-1"
-              >
-                Start Chat
+                Start Intelligent Chat
               </Button>
             </div>
           </div>
