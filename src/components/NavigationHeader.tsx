@@ -33,8 +33,8 @@ export const NavigationHeader = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-lg border-b border-border shadow-sm">
-      <div className="w-full max-w-none px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between gap-2">
+      <div className="w-full max-w-none mobile-safe-padding">
+        <div className="flex h-14 sm:h-16 items-center justify-between gap-2">{/* Mobile-optimized height */}
           {/* Logo & Brand - Left aligned, flexible width */}
           <Link to="/" className="enterprise-logo-container group min-w-0 flex-shrink-0">
             <div className="relative flex-shrink-0">

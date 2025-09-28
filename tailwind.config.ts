@@ -28,9 +28,12 @@ export default {
         '4xl': ['2.25rem', { lineHeight: '1.3', letterSpacing: '0.025em' }],
         '5xl': ['3rem', { lineHeight: '1.2', letterSpacing: '0.025em' }],
         '6xl': ['3.75rem', { lineHeight: '1.1', letterSpacing: '0.025em' }],
-        '7xl': ['4.5rem', { lineHeight: '1.1', letterSpacing: '0.025em' }],
-        '8xl': ['6rem', { lineHeight: '1.1', letterSpacing: '0.025em' }],
-        '9xl': ['8rem', { lineHeight: '1.1', letterSpacing: '0.025em' }],
+      },
+      spacing: {
+        'safe-top': 'env(safe-area-inset-top)',
+        'safe-bottom': 'env(safe-area-inset-bottom)',
+        'safe-left': 'env(safe-area-inset-left)',
+        'safe-right': 'env(safe-area-inset-right)',
       },
       colors: {
         border: "hsl(var(--border))",

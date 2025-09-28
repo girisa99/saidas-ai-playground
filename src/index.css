@@ -39,20 +39,22 @@
 @tailwind utilities;
 
 @layer base {
-  /* Responsive base font size for optimal readability across devices */
+  /* Mobile-first responsive typography */
   html {
     font-size: 14px; /* Mobile base */
+    line-height: 1.6;
+    scroll-behavior: smooth;
   }
   
   @media (min-width: 640px) {
     html {
-      font-size: 16px; /* Tablet base */
+      font-size: 15px; /* Tablet base */
     }
   }
   
   @media (min-width: 1024px) {
     html {
-      font-size: 18px; /* Desktop base */
+      font-size: 16px; /* Desktop base */
     }
   }
   
@@ -193,6 +195,10 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    /* Improve mobile scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
   }
 }
 
@@ -498,5 +504,40 @@
     background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted)/0.1) 100%);
     border: 1px solid hsl(var(--border));
     box-shadow: 0 8px 32px hsla(var(--primary), 0.1);
+    transition: all 0.3s ease;
+  }
+
+  /* Mobile-first utilities */
+  .mobile-safe-padding {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .mobile-safe-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+
+  /* Consistent text sizing across devices */
+  .text-heading-1 { @apply text-2xl sm:text-3xl lg:text-4xl font-bold; }
+  .text-heading-2 { @apply text-xl sm:text-2xl lg:text-3xl font-bold; }
+  .text-heading-3 { @apply text-lg sm:text-xl lg:text-2xl font-semibold; }
+  .text-heading-4 { @apply text-base sm:text-lg lg:text-xl font-semibold; }
+  .text-body-lg { @apply text-base sm:text-lg; }
+  .text-body { @apply text-sm sm:text-base; }
+  .text-caption { @apply text-xs sm:text-sm; }
+
+  /* Mobile-optimized button spacing */
+  .mobile-button-group {
+    @apply flex flex-col sm:flex-row gap-3 sm:gap-4;
+  }
+
+  /* Mobile card consistency */
+  .mobile-card {
+    @apply p-4 sm:p-6 lg:p-8 rounded-lg border border-border bg-card;
+  }
+
+  /* Touch-friendly interactive elements */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
   }
 }
