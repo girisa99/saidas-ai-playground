@@ -16,25 +16,25 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
       case "home":
         return {
           primary: {
-            title: "Start Your AI Journey",
-            description: "Discover how I transformed from curiosity to AI innovation through hands-on experimentation",
+            title: "Learn the Framework",
+            description: "Discover the Experiment → Validate → Deploy approach that powered 8+ successful AI implementations",
             link: "/about",
             icon: Users,
-            buttonText: "Meet Sai & His Story"
+            buttonText: "See the Framework in Action"
           },
           secondary: {
-            title: "See Real Applications",
-            description: "Explore practical AI use cases and their impact on healthcare innovation",
+            title: "Explore Real Validation",
+            description: "See how business cases validate AI solutions before major investments",
             link: "/business-use-cases",
             icon: Target,
-            buttonText: "Explore Use Cases"
+            buttonText: "View Business Cases"
           },
           tertiary: {
-            title: "View Success Stories",
-            description: "See detailed case studies of AI implementations with real results",
+            title: "See Deployment Success",
+            description: "Study complete case studies showing end-to-end AI implementations",
             link: "/case-studies",
             icon: Trophy,
-            buttonText: "View Case Studies"
+            buttonText: "View Success Stories"
           }
         };
 
