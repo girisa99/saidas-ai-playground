@@ -44,6 +44,8 @@
     font-size: 14px; /* Mobile base */
     line-height: 1.6;
     scroll-behavior: smooth;
+    /* Prevent horizontal overflow */
+    overflow-x: hidden;
   }
   
   @media (min-width: 640px) {

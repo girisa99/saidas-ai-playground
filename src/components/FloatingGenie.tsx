@@ -249,9 +249,9 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
     const computeBounds = () => {
       const visibleHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
       const visibleWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
-      // Approximate bottle size and margins
-      const verticalTop = -Math.max(0, visibleHeight - 160);
-      const horizontalLeft = -Math.max(0, visibleWidth - 120);
+      // Approximate bottle size and margins - ensure it stays within viewport
+      const verticalTop = -Math.max(0, visibleHeight - 200);
+      const horizontalLeft = -Math.max(0, visibleWidth - 150);
       setDragBounds({ top: verticalTop, bottom: 0, left: horizontalLeft, right: 0 });
     };
     computeBounds();
@@ -301,7 +301,9 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
             className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[99999] ${className}`}
             style={{ 
               position: 'fixed',
-              isolation: 'isolate'
+              isolation: 'isolate',
+              maxWidth: 'calc(100vw - 2rem)',
+              maxHeight: 'calc(100vh - 2rem)'
             }}
           >
           {/* Floating Action Button */}
@@ -320,7 +322,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 md:w-72 max-w-[calc(100vw-2rem)]"
+                  className="absolute bottom-full right-0 mb-3 w-64 md:w-72 max-w-[calc(100vw-6rem)]"
                 >
                   {/* Genie Speech Bubble */}
                   <motion.div

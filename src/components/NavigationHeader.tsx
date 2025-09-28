@@ -32,9 +32,9 @@ export const NavigationHeader = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-lg border-b border-border shadow-sm">
-      <div className="w-full max-w-none mobile-safe-padding">
-        <div className="flex h-14 sm:h-16 items-center justify-between gap-2">{/* Mobile-optimized height */}
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-lg border-b border-border shadow-sm overflow-hidden">
+      <div className="w-full max-w-none px-4 sm:px-6 lg:px-8">
+        <div className="flex h-14 sm:h-16 items-center justify-between gap-2 max-w-full overflow-hidden">{/* Mobile-optimized height */}
           {/* Logo & Brand - Left aligned, flexible width */}
           <Link to="/" className="enterprise-logo-container group min-w-0 flex-shrink-0">
             <div className="relative flex-shrink-0">
@@ -118,32 +118,30 @@ export const NavigationHeader = () => {
           </nav>
 
           {/* Desktop Actions - Right aligned, responsive sizing */}
-          <div className="hidden lg:flex items-center space-x-2 xl:space-x-3 flex-shrink-0">
+          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2 flex-shrink-0 min-w-0">
             {/* Search - Hidden on smaller desktop screens */}
             <div className="hidden xl:block relative">
               <SearchBar />
             </div>
             
             {/* Action Buttons - Responsive sizing */}
-            <div className="flex items-center space-x-1 xl:space-x-2 pl-3 xl:pl-4 border-l border-border">
+            <div className="flex items-center space-x-1 pl-2 xl:pl-3 border-l border-border min-w-0">
               <Button 
                 variant="outline"
                 size="sm" 
-                className="text-xs xl:text-sm font-medium hover:bg-muted/80 whitespace-nowrap h-8 xl:h-10 px-3 xl:px-4"
+                className="text-xs font-medium hover:bg-muted/80 whitespace-nowrap h-8 px-2"
                 onClick={() => window.open('https://www.genieaiexpermentationhub.com', '_blank')}
               >
-                <ExternalLink className="w-3 xl:w-4 h-3 xl:h-4 mr-1 xl:mr-2 flex-shrink-0" />
-                <span className="hidden xl:inline">Login</span>
-                <span className="xl:hidden">Login</span>
+                <ExternalLink className="w-3 h-3 mr-1 flex-shrink-0" />
+                <span className="hidden lg:inline">Login</span>
               </Button>
               <Button 
                 size="sm" 
-                className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground font-medium shadow-lg hover:shadow-primary/25 transition-all duration-300 whitespace-nowrap h-8 xl:h-10 px-3 xl:px-4"
+                className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground font-medium shadow-lg hover:shadow-primary/25 transition-all duration-300 whitespace-nowrap h-8 px-2"
                 onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
               >
-                <span className="hidden xl:inline">Connect</span>
-                <span className="xl:hidden">Connect</span>
-                <ExternalLink className="w-3 xl:w-4 h-3 xl:h-4 ml-1 xl:ml-2 flex-shrink-0" />
+                <span className="hidden lg:inline">Connect</span>
+                <ExternalLink className="w-3 h-3 ml-1 flex-shrink-0" />
               </Button>
             </div>
           </div>
