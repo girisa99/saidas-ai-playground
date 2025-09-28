@@ -102,7 +102,7 @@ const Journey = () => {
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
               A proven 3-phase methodology transforming AI curiosity into production-ready healthcare solutions. 
               From <span className="text-genie-accent font-semibold">Spark & Curiosity</span> through <span className="text-genie-accent font-semibold">Breakthrough Innovation</span> to <span className="text-genie-accent font-semibold">Scalable MVP Foundation</span> — 
-              creating enterprise-grade AI platforms serving real-world healthcare workflows.
+              sharing deep knowledge on healthcare workflows with enterprise-grade AI platforms.
             </p>
             
             {/* Journey Highlights Grid - Mobile Responsive */}
