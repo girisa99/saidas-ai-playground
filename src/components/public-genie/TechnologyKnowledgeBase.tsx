@@ -65,6 +65,47 @@ export const TechnologyKnowledgeBase = {
       ]
     },
 
+    enterprisePlatforms: {
+      title: "Enterprise Tech Giants - The Old Guard Goes AI",
+      companies: [
+        {
+          name: "Oracle",
+          focus: ["Database AI", "Cloud infrastructure", "Enterprise applications"],
+          aiStrategy: "AI-powered autonomous database and cloud services",
+          marketPosition: "Database dominance + AI cloud",
+          emotionalNote: "Larry Ellison's database empire meets the AI age! 🏛️🤖"
+        },
+        {
+          name: "Salesforce",
+          focus: ["Einstein AI", "CRM automation", "Customer service AI"],
+          aiStrategy: "AI-first CRM with predictive analytics and automation",
+          marketPosition: "CRM leader embracing conversational AI",
+          emotionalNote: "Making every salesperson an AI-powered superhero! 🦸‍♂️💼"
+        },
+        {
+          name: "SAP",
+          focus: ["Business AI", "ERP intelligence", "Process automation"],
+          aiStrategy: "Embedding AI across all business processes",
+          marketPosition: "Enterprise backbone getting smarter",
+          emotionalNote: "German engineering precision meets artificial intelligence! 🇩🇪🤖"
+        },
+        {
+          name: "ServiceNow",
+          focus: ["IT service AI", "Workflow automation", "Incident prediction"],
+          aiStrategy: "AI-powered IT operations and service management",
+          marketPosition: "IT workflow automation leader",
+          emotionalNote: "Making IT tickets solve themselves - the dream is real! 🎫✨"
+        },
+        {
+          name: "Veeva",
+          focus: ["Life sciences AI", "Clinical trial optimization", "Regulatory compliance"],
+          aiStrategy: "AI for pharmaceutical and biotech industry",
+          marketPosition: "Healthcare vertical specialist",
+          emotionalNote: "Helping bring life-saving drugs to market faster with AI! 💊🚀"
+        }
+      ]
+    },
+
     emergingPlatforms: {
       title: "The Rising Stars Changing the Game",
       categories: [
@@ -88,8 +129,298 @@ export const TechnologyKnowledgeBase = {
           trend: "Visual AI workflow creation without coding",
           impact: "Empowering non-technical users to build AI solutions",
           emotionalNote: "Remember when you needed a computer science degree to build apps? Not anymore! 🎓➡️🚫"
+        },
+        {
+          name: "Development Tools Revolution",
+          players: ["Cursor", "Replit", "GitHub Copilot", "CodeWhisperer", "Tabnine"],
+          trend: "AI-powered coding assistance and pair programming",
+          impact: "10x productivity gains for developers",
+          emotionalNote: "Coding with AI is like having a genius pair programmer 24/7! 👨‍💻🤖"
+        },
+        {
+          name: "No-Code/Low-Code Platforms",
+          players: ["Lovable", "Bolt", "Solid", "Webflow", "Framer"],
+          trend: "AI-powered visual app development",
+          impact: "Anyone can build professional apps",
+          emotionalNote: "The democratization of app development is happening NOW! 🏗️✨"
         }
       ]
+    },
+
+    languageModels: {
+      title: "Language Models Ecosystem - The AI Brain Trust",
+      categories: [
+        {
+          name: "Large Language Models (LLMs)",
+          models: ["GPT-4", "Claude", "Gemini", "Llama", "Mixtral"],
+          capabilities: ["Reasoning", "Code generation", "Creative writing", "Analysis"],
+          trends: ["Multimodal capabilities", "Longer context windows", "Specialized domains"],
+          emotionalNote: "These models are getting scary good at thinking! 🧠💭"
+        },
+        {
+          name: "Small Language Models (SLMs)",
+          models: ["Phi-3", "Gemma", "CodeT5", "DistilBERT", "TinyLlama"],
+          advantages: ["Edge deployment", "Lower costs", "Faster inference", "Privacy"],
+          trends: ["Mobile optimization", "Domain specialization", "Efficient architectures"],
+          emotionalNote: "Small but mighty - like having a genius in your pocket! 📱🧠"
+        },
+        {
+          name: "Model Context Protocol (MCP)",
+          description: "Standardized way for AI models to connect to data sources",
+          importance: "Enables secure, controlled access to real-time data",
+          players: ["Anthropic", "Microsoft", "OpenAI"],
+          impact: "Making AI agents more powerful and trustworthy",
+          emotionalNote: "Finally, a way for AI to safely talk to your data! 🔒📊"
+        }
+      ]
+    },
+
+    securityCompliance: {
+      title: "Security, Risk & Compliance - Keeping AI Safe",
+      categories: [
+        {
+          name: "AI Security Tools",
+          tools: ["Robust Intelligence", "Protect AI", "HiddenLayer", "Adversa"],
+          focus: ["Model protection", "Adversarial detection", "Data poisoning prevention"],
+          importance: "Critical as AI becomes mission-critical",
+          emotionalNote: "Protecting AI from the dark side of the force! 🛡️⚔️"
+        },
+        {
+          name: "GDPR & Privacy Tools",
+          tools: ["OneTrust", "TrustArc", "Privacera", "Immuta"],
+          capabilities: ["Data governance", "Consent management", "Privacy compliance"],
+          regulations: ["GDPR", "CCPA", "AI Act"],
+          emotionalNote: "Privacy by design - because your data deserves respect! 🔐👤"
+        },
+        {
+          name: "Vulnerability Assessment",
+          tools: ["Veracode", "Checkmarx", "Snyk", "OWASP ZAP"],
+          focus: ["Code analysis", "Dependency scanning", "Runtime protection"],
+          aiIntegration: "AI-powered vulnerability detection",
+          emotionalNote: "Finding bugs before the bad guys do! 🐛🔍"
+        },
+        {
+          name: "Testing & Quality Assurance",
+          tools: ["Selenium", "Cypress", "Playwright", "TestRail"],
+          trends: ["AI-generated tests", "Visual testing", "Autonomous testing"],
+          impact: "Faster, more reliable software delivery",
+          emotionalNote: "Testing at the speed of thought with AI! ⚡🧪"
+        }
+      ]
+    },
+
+    workflowTools: {
+      title: "Documentation & Workflow Revolution",
+      categories: [
+        {
+          name: "Documentation Tools",
+          tools: ["Notion", "Confluence", "GitBook", "Mintlify", "Gitiles"],
+          aiFeatures: ["Auto-generation", "Smart summaries", "Context-aware suggestions"],
+          trend: "Living documentation that updates itself",
+          emotionalNote: "Documentation that writes itself - every developer's dream! 📚✨"
+        },
+        {
+          name: "Visual Presentation Tools",
+          tools: ["Gamma", "Tome", "Beautiful.ai", "Pitch", "Canva"],
+          aiCapabilities: ["Auto-design", "Content generation", "Style matching"],
+          evolution: "From PowerPoint to AI-powered storytelling",
+          emotionalNote: "Making everyone a presentation designer with AI! 🎨📊"
+        },
+        {
+          name: "Video & Screen Recording",
+          tools: ["Loom", "Riverside", "Descript", "ScreenStudio", "Tella"],
+          aiFeatures: ["Auto-editing", "Transcription", "Highlight extraction"],
+          impact: "Async communication and knowledge sharing",
+          emotionalNote: "Your screen recordings are getting Hollywood-level editing! 🎬📺"
+        },
+        {
+          name: "Data Labeling & Training",
+          tools: ["Label Studio", "Labelbox", "Scale AI", "SuperAnnotate"],
+          importance: "Quality data for quality AI models",
+          trends: ["Auto-labeling", "Active learning", "Multi-modal annotation"],
+          emotionalNote: "Teaching AI to see the world through human eyes! 👁️🤖"
+        }
+      ]
+    }
+  },
+
+  languageModels: {
+    title: "Language Models Ecosystem - The AI Brain Trust",
+    categories: [
+      {
+        name: "Large Language Models (LLMs)",
+        models: ["GPT-4", "Claude", "Gemini", "Llama", "Mixtral"],
+        capabilities: ["Reasoning", "Code generation", "Creative writing", "Analysis"],
+        trends: ["Multimodal capabilities", "Longer context windows", "Specialized domains"],
+        emotionalNote: "These models are getting scary good at thinking! 🧠💭"
+      },
+      {
+        name: "Small Language Models (SLMs)",
+        models: ["Phi-3", "Gemma", "CodeT5", "DistilBERT", "TinyLlama"],
+        advantages: ["Edge deployment", "Lower costs", "Faster inference", "Privacy"],
+        trends: ["Mobile optimization", "Domain specialization", "Efficient architectures"],
+        emotionalNote: "Small but mighty - like having a genius in your pocket! 📱🧠"
+      },
+      {
+        name: "Model Context Protocol (MCP)",
+        description: "Standardized way for AI models to connect to data sources",
+        importance: "Enables secure, controlled access to real-time data",
+        players: ["Anthropic", "Microsoft", "OpenAI"],
+        impact: "Making AI agents more powerful and trustworthy",
+        emotionalNote: "Finally, a way for AI to safely talk to your data! 🔒📊"
+      }
+    ]
+  },
+
+  securityCompliance: {
+    title: "Security, Risk & Compliance - Keeping AI Safe",
+    categories: [
+      {
+        name: "AI Security Tools",
+        tools: ["Robust Intelligence", "Protect AI", "HiddenLayer", "Adversa"],
+        focus: ["Model protection", "Adversarial detection", "Data poisoning prevention"],
+        importance: "Critical as AI becomes mission-critical",
+        emotionalNote: "Protecting AI from the dark side of the force! 🛡️⚔️"
+      },
+      {
+        name: "GDPR & Privacy Tools",
+        tools: ["OneTrust", "TrustArc", "Privacera", "Immuta"],
+        capabilities: ["Data governance", "Consent management", "Privacy compliance"],
+        regulations: ["GDPR", "CCPA", "AI Act"],
+        emotionalNote: "Privacy by design - because your data deserves respect! 🔐👤"
+      },
+      {
+        name: "Vulnerability Assessment",
+        tools: ["Veracode", "Checkmarx", "Snyk", "OWASP ZAP"],
+        focus: ["Code analysis", "Dependency scanning", "Runtime protection"],
+        aiIntegration: "AI-powered vulnerability detection",
+        emotionalNote: "Finding bugs before the bad guys do! 🐛🔍"
+      },
+      {
+        name: "Testing & Quality Assurance",
+        tools: ["Selenium", "Cypress", "Playwright", "TestRail"],
+        trends: ["AI-generated tests", "Visual testing", "Autonomous testing"],
+        impact: "Faster, more reliable software delivery",
+        emotionalNote: "Testing at the speed of thought with AI! ⚡🧪"
+      }
+    ]
+  },
+
+  workflowTools: {
+    title: "Documentation & Workflow Revolution",
+    categories: [
+      {
+        name: "Documentation Tools",
+        tools: ["Notion", "Confluence", "GitBook", "Mintlify", "Gitiles"],
+        aiFeatures: ["Auto-generation", "Smart summaries", "Context-aware suggestions"],
+        trend: "Living documentation that updates itself",
+        emotionalNote: "Documentation that writes itself - every developer's dream! 📚✨"
+      },
+      {
+        name: "Visual Presentation Tools",
+        tools: ["Gamma", "Tome", "Beautiful.ai", "Pitch", "Canva"],
+        aiCapabilities: ["Auto-design", "Content generation", "Style matching"],
+        evolution: "From PowerPoint to AI-powered storytelling",
+        emotionalNote: "Making everyone a presentation designer with AI! 🎨📊"
+      },
+      {
+        name: "Video & Screen Recording",
+        tools: ["Loom", "Riverside", "Descript", "ScreenStudio", "Tella"],
+        aiFeatures: ["Auto-editing", "Transcription", "Highlight extraction"],
+        impact: "Async communication and knowledge sharing",
+        emotionalNote: "Your screen recordings are getting Hollywood-level editing! 🎬📺"
+      },
+      {
+        name: "Data Labeling & Training",
+        tools: ["Label Studio", "Labelbox", "Scale AI", "SuperAnnotate"],
+        importance: "Quality data for quality AI models",
+        trends: ["Auto-labeling", "Active learning", "Multi-modal annotation"],
+        emotionalNote: "Teaching AI to see the world through human eyes! 👁️🤖"
+      }
+    ]
+  },
+
+  integrationEvolution: {
+    title: "Integration Revolution - How Everything Connects",
+    serviceLayerEvolution: {
+      traditional: {
+        description: "Point-to-point integrations, custom APIs, manual workflows",
+        challenges: ["Scalability issues", "Maintenance overhead", "Integration hell"],
+        timeline: "2000-2020"
+      },
+      modern: {
+        description: "API-first, microservices, event-driven architectures",
+        enablers: ["GraphQL", "REST APIs", "Message queues", "API gateways"],
+        timeline: "2015-2024"
+      },
+      agentic: {
+        description: "AI agents orchestrating business processes autonomously",
+        capabilities: ["Self-healing integrations", "Adaptive workflows", "Intelligent routing"],
+        timeline: "2024-2030",
+        emotionalNote: "Integrations that think and adapt - the future is here! 🔗🧠"
+      }
+    },
+    
+    businessTechConvergence: {
+      title: "When Business Logic Meets AI",
+      trends: [
+        {
+          name: "Agentic Process Automation",
+          description: "AI agents handling end-to-end business processes",
+          examples: ["Invoice processing", "Customer onboarding", "Compliance reporting"],
+          impact: "80% reduction in manual intervention"
+        },
+        {
+          name: "Intelligent API Orchestration",
+          description: "AI deciding which APIs to call and when",
+          examples: ["Dynamic pricing", "Smart routing", "Predictive scaling"],
+          impact: "Self-optimizing systems"
+        },
+        {
+          name: "Conversational Integration",
+          description: "Natural language interface for system integration",
+          examples: ["'Connect my CRM to accounting'", "'Sync customer data'"],
+          impact: "Democratizing integration for non-technical users"
+        }
+      ],
+      emotionalNote: "Business and technology are becoming one organism! 🧬💼"
+    },
+
+    agenticDisruption: {
+      title: "How Agentic AI is Disrupting Everything",
+      industries: [
+        {
+          name: "Healthcare",
+          disruption: "AI agents managing patient journeys, drug discovery, clinical trials",
+          timeline: "2025-2027",
+          impact: "Personalized medicine at scale"
+        },
+        {
+          name: "Finance",
+          disruption: "Autonomous trading, fraud detection, personalized advisory",
+          timeline: "2024-2026", 
+          impact: "Democratized financial expertise"
+        },
+        {
+          name: "Manufacturing",
+          disruption: "Predictive maintenance, quality control, supply chain optimization",
+          timeline: "2024-2028",
+          impact: "Lights-out factories"
+        },
+        {
+          name: "Customer Service",
+          disruption: "24/7 AI agents with human-level empathy and problem-solving",
+          timeline: "2024-2025",
+          impact: "Customer service without wait times"
+        }
+      ],
+      keyPrinciples: [
+        "Autonomous decision-making",
+        "Learning from interactions", 
+        "Multi-modal understanding",
+        "Proactive problem-solving"
+      ],
+      emotionalNote: "We're not just automating tasks - we're creating digital colleagues! 🤝🤖"
     }
   },
 
@@ -210,6 +541,90 @@ export const TechnologyKnowledgeBase = {
         }
       ],
       emotionalNote: "We're not just building AI assistants anymore - we're building AI employees! 🤖👔"
+    },
+
+    integrationEvolution: {
+      title: "Integration Revolution - How Everything Connects",
+      serviceLayerEvolution: {
+        traditional: {
+          description: "Point-to-point integrations, custom APIs, manual workflows",
+          challenges: ["Scalability issues", "Maintenance overhead", "Integration hell"],
+          timeline: "2000-2020"
+        },
+        modern: {
+          description: "API-first, microservices, event-driven architectures",
+          enablers: ["GraphQL", "REST APIs", "Message queues", "API gateways"],
+          timeline: "2015-2024"
+        },
+        agentic: {
+          description: "AI agents orchestrating business processes autonomously",
+          capabilities: ["Self-healing integrations", "Adaptive workflows", "Intelligent routing"],
+          timeline: "2024-2030",
+          emotionalNote: "Integrations that think and adapt - the future is here! 🔗🧠"
+        }
+      },
+      
+      businessTechConvergence: {
+        title: "When Business Logic Meets AI",
+        trends: [
+          {
+            name: "Agentic Process Automation",
+            description: "AI agents handling end-to-end business processes",
+            examples: ["Invoice processing", "Customer onboarding", "Compliance reporting"],
+            impact: "80% reduction in manual intervention"
+          },
+          {
+            name: "Intelligent API Orchestration",
+            description: "AI deciding which APIs to call and when",
+            examples: ["Dynamic pricing", "Smart routing", "Predictive scaling"],
+            impact: "Self-optimizing systems"
+          },
+          {
+            name: "Conversational Integration",
+            description: "Natural language interface for system integration",
+            examples: ["'Connect my CRM to accounting'", "'Sync customer data'"],
+            impact: "Democratizing integration for non-technical users"
+          }
+        ],
+        emotionalNote: "Business and technology are becoming one organism! 🧬💼"
+      },
+
+      agenticDisruption: {
+        title: "How Agentic AI is Disrupting Everything",
+        industries: [
+          {
+            name: "Healthcare",
+            disruption: "AI agents managing patient journeys, drug discovery, clinical trials",
+            timeline: "2025-2027",
+            impact: "Personalized medicine at scale"
+          },
+          {
+            name: "Finance",
+            disruption: "Autonomous trading, fraud detection, personalized advisory",
+            timeline: "2024-2026", 
+            impact: "Democratized financial expertise"
+          },
+          {
+            name: "Manufacturing",
+            disruption: "Predictive maintenance, quality control, supply chain optimization",
+            timeline: "2024-2028",
+            impact: "Lights-out factories"
+          },
+          {
+            name: "Customer Service",
+            disruption: "24/7 AI agents with human-level empathy and problem-solving",
+            timeline: "2024-2025",
+            impact: "Customer service without wait times"
+          }
+        ],
+        keyPrinciples: [
+          "Autonomous decision-making",
+          "Learning from interactions", 
+          "Multi-modal understanding",
+          "Proactive problem-solving"
+        ],
+        emotionalNote: "We're not just automating tasks - we're creating digital colleagues! 🤝🤖"
+      }
     }
   },
 
@@ -394,6 +809,34 @@ export const getTechnologyInfo = (topic: string) => {
     case 'big tech':
     case 'market leaders':
       return TechnologyKnowledgeBase.marketLandscape.bigTechPlayers;
+    case 'enterprise platforms':
+    case 'oracle':
+    case 'salesforce':
+    case 'sap':
+      return TechnologyKnowledgeBase.marketLandscape.enterprisePlatforms;
+    case 'language models':
+    case 'llm':
+    case 'slm':
+    case 'mcp':
+      return TechnologyKnowledgeBase.languageModels;
+    case 'security':
+    case 'compliance':
+    case 'gdpr':
+    case 'privacy':
+      return TechnologyKnowledgeBase.securityCompliance;
+    case 'development tools':
+    case 'cursor':
+    case 'replit':
+    case 'testing':
+      return TechnologyKnowledgeBase.marketLandscape.emergingPlatforms;
+    case 'workflow':
+    case 'documentation':
+    case 'visual tools':
+      return TechnologyKnowledgeBase.workflowTools;
+    case 'integration':
+    case 'agentic disruption':
+    case 'service layer':
+      return TechnologyKnowledgeBase.integrationEvolution;
     case 'conferences':
     case 'tech conferences':
       return TechnologyKnowledgeBase.upcomingConferences.technology;

@@ -27,6 +27,7 @@ import { CapabilitiesPrompt, TopicSuggestions } from './ConversationUtils';
 import { NewsletterService } from '@/services/newsletterService';
 import { ContactService } from '@/services/publicContactService';
 import genieLogoPopup from '@/assets/genie-logo-popup.png';
+import genieThinking from '@/assets/genie-thinking.png';
 
 interface UserInfo {
   firstName: string;
@@ -687,7 +688,19 @@ ${conversationSummary.transcript}`
                             </div>
                           </div>
                         ))}
-                        {isLoading && <TypingIndicator />}
+                        {isLoading && (
+                          <div className="flex items-center space-x-3 p-4 bg-muted/30 rounded-lg my-2">
+                            <img 
+                              src={genieThinking} 
+                              alt="Genie thinking" 
+                              className="w-12 h-12 animate-pulse"
+                            />
+                            <div className="flex flex-col">
+                              <span className="text-sm font-medium text-foreground">Genie is thinking...</span>
+                              <span className="text-xs text-muted-foreground">Analyzing your question with AI magic ✨</span>
+                            </div>
+                          </div>
+                        )}
                         <div ref={messagesEndRef} />
                       </div>
                     )}
