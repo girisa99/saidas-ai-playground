@@ -3659,6 +3659,93 @@ export type Database = {
           },
         ]
       }
+      conversation_sessions: {
+        Row: {
+          conversation_count: number
+          created_at: string
+          first_conversation_at: string
+          id: string
+          ip_address: unknown
+          is_restricted: boolean
+          last_conversation_at: string
+          restriction_reason: string | null
+          session_id: string
+          updated_at: string
+          user_email: string | null
+          user_name: string | null
+        }
+        Insert: {
+          conversation_count?: number
+          created_at?: string
+          first_conversation_at?: string
+          id?: string
+          ip_address: unknown
+          is_restricted?: boolean
+          last_conversation_at?: string
+          restriction_reason?: string | null
+          session_id: string
+          updated_at?: string
+          user_email?: string | null
+          user_name?: string | null
+        }
+        Update: {
+          conversation_count?: number
+          created_at?: string
+          first_conversation_at?: string
+          id?: string
+          ip_address?: unknown
+          is_restricted?: boolean
+          last_conversation_at?: string
+          restriction_reason?: string | null
+          session_id?: string
+          updated_at?: string
+          user_email?: string | null
+          user_name?: string | null
+        }
+        Relationships: []
+      }
+      conversation_tracking: {
+        Row: {
+          context: string
+          created_at: string
+          duration_minutes: number | null
+          ended_at: string | null
+          id: string
+          ip_address: unknown
+          is_completed: boolean
+          message_count: number
+          session_id: string
+          started_at: string
+          user_email: string | null
+        }
+        Insert: {
+          context: string
+          created_at?: string
+          duration_minutes?: number | null
+          ended_at?: string | null
+          id?: string
+          ip_address: unknown
+          is_completed?: boolean
+          message_count?: number
+          session_id: string
+          started_at?: string
+          user_email?: string | null
+        }
+        Update: {
+          context?: string
+          created_at?: string
+          duration_minutes?: number | null
+          ended_at?: string | null
+          id?: string
+          ip_address?: unknown
+          is_completed?: boolean
+          message_count?: number
+          session_id?: string
+          started_at?: string
+          user_email?: string | null
+        }
+        Relationships: []
+      }
       credit_application_audit: {
         Row: {
           action_type: string
@@ -10119,6 +10206,78 @@ export type Database = {
           },
         ]
       }
+      public_conversations: {
+        Row: {
+          context_type: string
+          conversation_data: Json
+          created_at: string
+          escalation_requested: boolean | null
+          id: string
+          ip_address: unknown | null
+          metadata: Json | null
+          privacy_accepted: boolean | null
+          session_id: string
+          status: string
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          context_type?: string
+          conversation_data?: Json
+          created_at?: string
+          escalation_requested?: boolean | null
+          id?: string
+          ip_address?: unknown | null
+          metadata?: Json | null
+          privacy_accepted?: boolean | null
+          session_id: string
+          status?: string
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          context_type?: string
+          conversation_data?: Json
+          created_at?: string
+          escalation_requested?: boolean | null
+          id?: string
+          ip_address?: unknown | null
+          metadata?: Json | null
+          privacy_accepted?: boolean | null
+          session_id?: string
+          status?: string
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      public_rate_limits: {
+        Row: {
+          created_at: string
+          id: string
+          ip_address: unknown
+          last_request: string
+          requests_count: number
+          window_start: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_address: unknown
+          last_request?: string
+          requests_count?: number
+          window_start?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_address?: unknown
+          last_request?: string
+          requests_count?: number
+          window_start?: string
+        }
+        Relationships: []
+      }
       questionnaire_sessions: {
         Row: {
           agent_recommendation: string | null
@@ -12220,6 +12379,36 @@ export type Database = {
           session_type?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      usage_limits: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          limit_type: string
+          limit_value: number
+          time_window_hours: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          limit_type: string
+          limit_value: number
+          time_window_hours?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          limit_type?: string
+          limit_value?: number
+          time_window_hours?: number
+          updated_at?: string
         }
         Relationships: []
       }
@@ -14463,6 +14652,10 @@ export type Database = {
             }
           | { p_enrollment_id: string }
         Returns: number
+      }
+      check_conversation_limits: {
+        Args: { p_ip_address: unknown; p_user_email?: string }
+        Returns: Json
       }
       check_duplicate_agent_name: {
         Args: { p_exclude_id?: string; p_name: string; p_user_id: string }
