@@ -1,8 +1,6 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import VerticalJourneyInfographic from "@/components/VerticalJourneyInfographic";
-import { BusinessImpactInfographic } from "@/components/BusinessImpactInfographic";
 import { CTASection } from "@/components/CTASection";
 
 import { Button } from "@/components/ui/button";
@@ -10,9 +8,31 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Calendar, MapPin, Users, Lightbulb, Cog, Rocket, Target, TrendingUp, Award, Brain, Database, Code2, Network, Zap, Shield, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 import journeyInfographicBg from "@/assets/journey-infographic-bg.jpg";
 import timelineVisual from "@/assets/timeline-visual.png";
+
+// Lazy load heavy components
+const VerticalJourneyInfographic = lazy(() => import("@/components/VerticalJourneyInfographic"));
+const BusinessImpactInfographic = lazy(() => import("@/components/BusinessImpactInfographic").then(module => ({ default: module.BusinessImpactInfographic })));
+
+// Loading skeleton for heavy components
+const ComponentSkeleton = () => (
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="space-y-8">
+      <Skeleton className="h-8 w-64 mx-auto" />
+      <div className="grid gap-6">
+        {[1, 2, 3].map(i => (
+          <div key={i} className="space-y-4">
+            <Skeleton className="h-6 w-48" />
+            <Skeleton className="h-32 w-full" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
 
 const Journey = () => {
   useEffect(() => {
@@ -31,10 +51,12 @@ const Journey = () => {
       <main className="pt-16 sm:pt-20 lg:pt-24">{" "}
       {/* Enhanced Hero Section - Consistent with other pages */}
       <section className="relative pt-24 pb-16 overflow-hidden">
-        {/* Background Image */}
+        {/* Background Image with loading optimization */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${journeyInfographicBg})` }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300"
+          style={{ 
+            backgroundImage: `url(${journeyInfographicBg})`
+          }}
         />
         
         {/* Dark Gradient Overlay - matching other pages */}
@@ -131,11 +153,15 @@ const Journey = () => {
         </div>
       </section>
 
-        {/* Vertical Journey Infographic */}
-        <VerticalJourneyInfographic />
+        {/* Vertical Journey Infographic - Lazy loaded */}
+        <Suspense fallback={<ComponentSkeleton />}>
+          <VerticalJourneyInfographic />
+        </Suspense>
 
-        {/* Business Impact Analysis */}
-        <BusinessImpactInfographic />
+        {/* Business Impact Analysis - Lazy loaded */}
+        <Suspense fallback={<ComponentSkeleton />}>
+          <BusinessImpactInfographic />
+        </Suspense>
 
         {/* Clear next steps */}
         <CTASection currentPage="journey" />

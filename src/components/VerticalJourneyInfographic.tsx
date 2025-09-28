@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { LazyImage } from "@/components/LazyImage";
 import { 
   Lightbulb, 
   Brain, 
@@ -459,7 +460,7 @@ const VerticalJourneyInfographic = () => {
                             phase.color === 'genie-teal' ? 'bg-genie-teal' :
                             'bg-genie-cyan'
                           }`}>
-                            <img
+                            <LazyImage
                               src={phase.image}
                               alt={phase.title}
                               className="w-full h-64 object-cover rounded-lg"
