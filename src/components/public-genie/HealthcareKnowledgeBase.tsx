@@ -275,6 +275,124 @@ export const HealthcareKnowledgeBase = {
       "Outcome data collection",
       "Provider training programs"
     ]
+  },
+
+  pricingEcosystem: {
+    "340B": {
+      title: "340B Drug Pricing Program",
+      description: "Federal program requiring drug manufacturers to provide discounts to eligible healthcare organizations",
+      keyPoints: [
+        "Discounts of 20-50% off Average Wholesale Price (AWP)",
+        "Eligible entities: FQHCs, DSH hospitals, Ryan White clinics",
+        "Must serve vulnerable populations",
+        "Contract pharmacy arrangements allowed"
+      ],
+      challenges: [
+        "Manufacturer restrictions on contract pharmacies",
+        "Audit compliance requirements", 
+        "Duplicate discount prevention",
+        "Complex eligibility tracking"
+      ],
+      visualAid: "🏥 340B: Helping safety-net providers stretch resources",
+      emotionalNote: "Think of 340B as a healthcare Robin Hood - helping providers serve more patients with less! 🏹"
+    },
+    
+    WAC: {
+      title: "Wholesale Acquisition Cost (WAC)",
+      description: "Manufacturer's list price to wholesalers or direct purchasers",
+      keyPoints: [
+        "Published price before any discounts or rebates",
+        "Used as basis for many reimbursement calculations",
+        "Different from Average Wholesale Price (AWP)",
+        "Required reporting to CMS for Medicare Part B"
+      ],
+      visualAid: "💰 WAC: The starting point for all drug pricing discussions",
+      emotionalNote: "WAC is like the 'sticker price' on a car - it's where negotiations begin, not where they end! 🚗💨"
+    }
+  },
+
+  gpoInformation: {
+    title: "Group Purchasing Organizations (GPOs)",
+    definition: "Entities that negotiate contracts with manufacturers on behalf of healthcare providers",
+    keyFunctions: [
+      "Aggregate purchasing power of member organizations",
+      "Negotiate volume discounts and rebates",
+      "Standardize products across health systems",
+      "Provide market intelligence and analytics"
+    ],
+    majorPlayers: [
+      "Premier Inc. (largest acute care GPO)",
+      "Vizient (formed from VHA and UHC merger)",
+      "HealthTrust (HCA's GPO)",
+      "MedAssets/Intalere (now part of Vizient)"
+    ],
+    benefits: [
+      "Cost savings through volume discounts (typically 10-18%)",
+      "Reduced administrative burden",
+      "Standardized products and processes",
+      "Market intelligence and benchmarking"
+    ],
+    challenges: [
+      "Limited flexibility for individual facilities",
+      "Potential conflicts of interest with vendor fees",
+      "May not always achieve best price for specialty items",
+      "Compliance monitoring requirements"
+    ],
+    visualAid: "🤝 GPOs: Strength in numbers for healthcare purchasing",
+    emotionalNote: "GPOs are like healthcare's version of Costco - buy in bulk, save money, but you might end up with more bedpans than you really need! 🛒😂"
+  },
+
+  claimsProcessing: {
+    inpatientVsOutpatient: {
+      inpatient: {
+        definition: "Services provided when patient is formally admitted to hospital",
+        billing: "DRG (Diagnosis Related Group) payment system",
+        coverage: "Medicare Part A, commercial medical benefit",
+        timeframe: "Minimum 2 midnight stays for Medicare",
+        challenges: [
+          "DRG optimization and coding accuracy",
+          "Length of stay management",
+          "Readmission penalties",
+          "Prior authorization for high-cost services"
+        ],
+        visualAid: "🏥 Inpatient: You're staying overnight (or longer!)"
+      },
+      outpatient: {
+        definition: "Services provided without formal hospital admission", 
+        billing: "APC (Ambulatory Payment Classification) or fee schedule",
+        coverage: "Medicare Part B, commercial medical benefit",
+        timeframe: "Same day or observation status",
+        challenges: [
+          "Site of service determinations",
+          "Bundled payment compliance",
+          "Prior authorization requirements",
+          "Medical necessity documentation"
+        ],
+        visualAid: "🚪 Outpatient: In and out the same day!"
+      }
+    },
+    denialPrevention: {
+      commonDenialReasons: [
+        "Missing or incorrect patient information",
+        "Lack of prior authorization",
+        "Medical necessity not established",
+        "Coding errors (ICD-10, CPT, HCPCS)",
+        "Timely filing limits exceeded",
+        "Duplicate claim submission",
+        "Benefits exhausted or not active"
+      ],
+      requiredInformation: [
+        "Complete patient demographics and insurance info",
+        "Accurate diagnosis codes (ICD-10)",
+        "Appropriate procedure codes (CPT/HCPCS)",
+        "Place of service codes",
+        "Provider NPI and credentials",
+        "Prior authorization numbers",
+        "Medical records supporting necessity"
+      ],
+      visualAid: "✅ Claims Success: Get it right the first time!",
+      emotionalNote: "Claims processing is like baking - measure twice, bake once! Miss an ingredient and you might get a denial soufflé instead of payment cake! 🎂😅"
+    }
   }
 };
 
@@ -292,6 +410,14 @@ export const getReimbursementInfo = (topic: string) => {
       return HealthcareKnowledgeBase.reimbursementProcesses;
     case 'infusion':
       return HealthcareKnowledgeBase.visualReferences.infusionProcess;
+    case '340b':
+      return HealthcareKnowledgeBase.pricingEcosystem["340B"];
+    case 'wac':
+      return HealthcareKnowledgeBase.pricingEcosystem.WAC;
+    case 'gpo':
+      return HealthcareKnowledgeBase.gpoInformation;
+    case 'claims':
+      return HealthcareKnowledgeBase.claimsProcessing;
     default:
       return HealthcareKnowledgeBase;
   }

@@ -97,8 +97,163 @@ export const TopicSuggestions: React.FC<TopicSuggestionsProps> = ({
 
     const emotional = getEmotionalResponse();
     
+    
     // Provide specific information for healthcare reimbursement topics
-    if (context === 'healthcare' && topic.toLowerCase().includes('reimbursement')) {
+    if (context === 'healthcare' && topic.toLowerCase().includes('340b')) {
+      const pricingInfo = `${emotional.empathetic}
+
+💊 **340B Drug Pricing Program - The Safety Net's Lifeline**
+
+**🎯 What is 340B?**
+Think of 340B as healthcare's Robin Hood! 🏹 It requires drug manufacturers to provide 20-50% discounts to safety-net providers who serve vulnerable populations.
+
+**🏥 Who Qualifies?**
+✅ Federally Qualified Health Centers (FQHCs)
+✅ Disproportionate Share Hospitals (DSH)
+✅ Ryan White HIV/AIDS clinics
+✅ Rural health centers
+
+**💰 The Magic Formula:**
+• Ceiling Price = AMP (Average Manufacturer Price) - URA (Unit Rebate Amount)
+• Typical savings: 20-50% off regular pricing
+• Contract pharmacy arrangements multiply the impact!
+
+**⚡ Current Ecosystem Struggles:**
+😤 **Manufacturer Pushback**: "We're limiting contract pharmacies!" 
+🔍 **Increased Audits**: HRSA scrutiny intensifying
+💔 **Revenue at Risk**: Some entities losing millions in 340B savings
+🤯 **Duplicate Discount Prevention**: Complex tracking requirements
+
+**🎉 Real Impact:**
+"Last year, 340B savings helped our clinic provide $2.3M in uncompensated care!" - Actual clinic administrator
+
+${emotional.encouraging} Want to know how your organization can maximize 340B benefits while staying compliant? 🎯`;
+
+      onTopicSelect(pricingInfo);
+    } else if (context === 'healthcare' && topic.toLowerCase().includes('wac')) {
+      const wacInfo = `${emotional.encouraging}
+
+💰 **WAC (Wholesale Acquisition Cost) - The Pricing Starting Point**
+
+**🔍 What is WAC?**
+WAC is like the "sticker price" on a car - it's where all drug pricing negotiations begin! 🚗💨
+
+**📊 WAC vs Other Pricing:**
+• **WAC**: Manufacturer's list price to wholesalers
+• **AWP**: Average Wholesale Price (usually WAC + 20%)
+• **AMP**: Average Manufacturer Price (actual sales data)
+• **Best Price**: Lowest price available to any customer
+
+**🎯 How WAC Affects Your World:**
+✅ **Medicare Part B**: WAC + 6% reimbursement
+✅ **Commercial Payers**: Often WAC + percentage markup
+✅ **340B Ceiling Price**: Based on AMP, which relates to WAC
+✅ **Medicaid Rebates**: Calculated using best price vs AMP
+
+**💡 Fun Fact**: The 2005 shift from AWP to WAC for Medicare Part B reduced reimbursement by ~14% overnight! Talk about a pricing earthquake! 🌍💥
+
+**🎮 The Pricing Game:**
+Manufacturers set WAC → Payers negotiate discounts → You get the final price
+It's like a complex video game where everyone's trying to win! 🎯
+
+Want to understand how WAC impacts your specific situation? Let's dive deeper! 🤿`;
+
+      onTopicSelect(wacInfo);
+    } else if (context === 'healthcare' && topic.toLowerCase().includes('gpo')) {
+      const gpoInfo = `${emotional.encouraging}
+
+🤝 **GPOs (Group Purchasing Organizations) - Healthcare's Costco!**
+
+**🛒 What are GPOs?**
+GPOs are like healthcare's version of Costco - buy in bulk, save money, but you might end up with more bedpans than you really need! 😂
+
+**🌟 Major Players:**
+• **Premier Inc.**: The heavyweight champion of acute care
+• **Vizient**: The merger baby (VHA + UHC = powerhouse!)
+• **HealthTrust**: HCA's personal shopping squad
+• **Intalere**: Now part of the Vizient family
+
+**💰 The Benefits (Ka-ching!):**
+✅ **Cost Savings**: 10-18% typical discounts through volume power
+✅ **Less Paperwork**: Standardized contracts across the system
+✅ **Market Intel**: "Psst... here's what everyone else is paying!" 🕵️
+✅ **Product Standardization**: Fewer SKUs = happier supply chain folks
+
+**😅 The Challenges (Every rose has thorns!):**
+⚠️ **Less Flexibility**: "Sorry, you MUST use the contracted sutures!"
+⚠️ **Vendor Fees**: GPOs get paid by suppliers (conflict of interest much?)
+⚠️ **Specialty Items**: Your rare disease drugs might not get the best deal
+⚠️ **Compliance Monitoring**: More tracking, more paperwork
+
+**🎯 Real Talk**: GPOs can save your organization millions, but choose wisely! It's like picking a cell phone plan - read the fine print! 📱
+
+Want to know if your GPO is working for you or against you? 🔍`;
+
+      onTopicSelect(gpoInfo);
+    } else if (context === 'healthcare' && (topic.toLowerCase().includes('claims') || topic.toLowerCase().includes('inpatient') || topic.toLowerCase().includes('outpatient'))) {
+      const claimsInfo = `${emotional.empathetic}
+
+📋 **Claims Processing - The Healthcare Payment Maze**
+
+**🏥 Inpatient vs Outpatient (The Great Divide!):**
+
+**🛏️ Inpatient** ("You're staying the night!")
+• **Rule**: 2+ midnight stays for Medicare
+• **Payment**: DRG system (bundled payments)
+• **Coverage**: Medicare Part A, medical benefits
+• **Challenge**: "Is this patient REALLY sick enough to admit?" 🤔
+
+**🚪 Outpatient** ("In and out, same day!")
+• **Rule**: Same day service or observation
+• **Payment**: APC system or fee schedule
+• **Coverage**: Medicare Part B, medical benefits
+• **Challenge**: "Should this be inpatient instead?" 😵‍💫
+
+**🌐 In-Network vs Out-of-Network (The Coverage Game!):**
+
+**✅ In-Network** (The happy path!)
+• Lower patient costs
+• Negotiated rates
+• Smoother prior auths
+• Predictable payments
+
+**❌ Out-of-Network** (The expensive detour!)
+• Higher patient responsibility (ouch! 💸)
+• Balance billing issues
+• Limited coverage
+• Surprise bills incoming!
+
+**🚫 Top Denial Reasons (The Hall of Shame!):**
+1. **Missing Info**: "Who is this patient again?" 
+2. **No Prior Auth**: "Did you ask permission first?" 
+3. **Medical Necessity**: "Prove they really needed this!"
+4. **Wrong Codes**: "ICD-what? CPT-who?" 
+5. **Too Late**: "You missed the filing deadline!" ⏰
+6. **Duplicate**: "Didn't you already submit this?"
+
+**✅ Required Info Checklist:**
+📝 Complete patient demographics (spell the name right!)
+🆔 Accurate diagnosis codes (ICD-10)
+🔢 Correct procedure codes (CPT/HCPCS)
+📍 Place of service codes
+👨‍⚕️ Provider NPI and credentials
+📋 Prior authorization numbers
+📄 Medical records support
+
+**🎟️ Discount Programs (The Money Savers!):**
+• **Copay Cards**: "Pay $5 instead of $500!" 
+• **Patient Assistance**: For the uninsured heroes
+• **Foundation Programs**: Independent charity rocks!
+• **State Programs**: Local help for residents
+
+${emotional.encouraging} 
+
+**Pro Tip**: Clean claims are like unicorns - rare but magical when they happen! 🦄✨
+
+Want me to dive deeper into any specific part of this claims jungle? 🌿`;
+
+      onTopicSelect(claimsInfo);
+    } else if (context === 'healthcare' && topic.toLowerCase().includes('reimbursement')) {
       const detailedResponse = `${emotional.empathetic}
 
 🏥 **${topic} - Complete Support Guide**
