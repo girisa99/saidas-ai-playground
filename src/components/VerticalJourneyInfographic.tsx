@@ -31,21 +31,21 @@ const VerticalJourneyInfographic = () => {
   const phases = [
     {
       id: 1,
-      title: "Patient Onboarding & Enrollment",
-      subtitle: "AI-Driven Healthcare Workflow Transformation",
+      title: "Spark & Curiosity Combined",
+      subtitle: "Initial AI Exploration & Discovery",
       date: "May-September 2025",
       icon: Lightbulb,
       image: phase01Spark,
-      description: "End-to-end patient onboarding and enrollment system leveraging AI to streamline healthcare workflows from initial contact to treatment delivery.",
+      description: "The initial spark and curiosity phase combining transformative conversations with deep AI exploration across multiple models and frameworks.",
       experiment: {
         title: "EXPERIMENT",
-        description: "Initial spark from transformative conversation sparked AI exploration for healthcare workflows",
+        description: "Initial spark from transformative conversation combined with deep curiosity for AI exploration",
         activities: [
           "Initial spark from transformative conversation with Prashant K and community members",
           "Recognition of fundamental shift potential in AI landscape",
+          "Deep curiosity ignited for comprehensive AI exploration",
           "Established personal AI experimentation hub with systematic model comparison",
-          "Conducted 45-day intensive deep dive across GPT, Claude, and Gemini models",
-          "Deep curiosity ignited for comprehensive AI exploration"
+          "Conducted 45-day intensive deep dive across GPT, Claude, and Gemini models"
         ],
         challenges: [
           "Overwhelming possibilities without clear direction or starting point",
@@ -96,21 +96,21 @@ const VerticalJourneyInfographic = () => {
     },
     {
       id: 2,
-      title: "AI Lab Infrastructure",
-      subtitle: "Enterprise-Grade Development Platform",
+      title: "Breakthrough: Code to Creativity",
+      subtitle: "AI Lab Infrastructure",
       date: "May-September 2025",
       icon: Target,
       image: phase03BreakthroughArtwork,
-      description: "Building comprehensive AI development and experimentation infrastructure with robust security, monitoring, and deployment capabilities.",
+      description: "The pivotal shift from viewing AI purely as a utility to embracing it as an invaluable creative partner. This breakthrough came through integrating powerful AI-powered design and development tools, building resilient systems with sophisticated error handling, and creating intelligent data foundations with vector databases.",
       experiment: {
         title: "EXPERIMENT",
-        description: "Deep experimentation with visual design tools and AI-native development environments",
+        description: "The pivotal shift from viewing AI purely as a utility to embracing it as an invaluable creative partner",
         activities: [
-          "Integrated visual design tools (Visio, draw.io, Miro, Figma) for collaborative brainstorming",
+          "Breakthrough realization of AI's creative potential beyond coding assistance",
+          "Integrated powerful AI-powered design and development tools",
           "Transformed coding with Cursor IDE's AI-native capabilities and dynamic dialogue",
-          "Built resilient architectures with sophisticated error handling and feedback loops",
-          "Designed systems that actively learn from errors and adapt over time",
-          "Implemented hallucination reduction techniques through structured validation"
+          "Integrated visual design tools (Visio, draw.io, Miro, Figma) for collaborative brainstorming",
+          "Built resilient systems with sophisticated error handling and feedback loops"
         ],
         challenges: [
           "Moving past static data storage to intelligent, learning data systems",
@@ -161,27 +161,27 @@ const VerticalJourneyInfographic = () => {
     },
     {
       id: 3,
-      title: "Intelligent Automation System",
-      subtitle: "Multi-Agent Orchestration Platform",
+      title: "Scalable MVP Foundation",
+      subtitle: "45-Day Lessons to Production Architecture",
       date: "August-September 2025",
       icon: Network,
       image: phase05ResilientHubArtwork,
-      description: "Advanced multi-agent system orchestrating complex workflows with intelligent automation, monitoring, and continuous optimization capabilities.",
+      description: "Transforming 45-day experimental lessons into production-ready architecture. Built unbreakable, stable AI platform foundation serving as the backbone for enterprise-scale experimentation and deployment.",
       experiment: {
         title: "EXPERIMENT",
-        description: "Building unbreakable, stable AI platform foundation serving as experimentation backbone",
+        description: "Transforming 45-day experimental lessons into production-ready architecture foundations",
         activities: [
+          "Applied 45-day deep dive lessons to architect scalable MVP foundations",
           "Built unbreakable, stable AI platform foundation serving as experimentation backbone",
           "Created dynamic agent generation system with seamless multi-agent coordination",
           "Implemented comprehensive database optimization and duplicate detection systems",
-          "Designed vulnerability assessment frameworks with Docker containerization",
-          "Achieved breakthrough in multi-agent orchestration capabilities"
+          "Designed vulnerability assessment frameworks with Docker containerization"
         ],
         challenges: [
+          "Transforming experimental insights into robust production architectures",
           "Ensuring platform stability while supporting rapid experimentation and agent deployment",
           "Complex multi-tenant security requirements for healthcare compliance and data protection",
-          "Balancing rapid MVP development with robust architectural foundations",
-          "Managing complexity across multiple integrated systems and platforms"
+          "Balancing rapid MVP development with robust architectural foundations"
         ],
         technologies: ["Database Optimization", "Duplicate Detection", "Vulnerability Assessment", "Replit", "Docker"]
       },
