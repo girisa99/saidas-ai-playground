@@ -24,6 +24,8 @@ import { ContextSwitcher } from './ContextSwitcher';
 import { ContextualTopicSuggester } from './ContextualTopicSuggester';
 import { ConversationLimitModal } from './ConversationLimitModal';
 import { ExperimentationBanner } from './ExperimentationBanner';
+import { TechnologyKnowledgeBase, getTechnologyKnowledge } from '../comprehensive-knowledge/TechnologyKnowledgeBase';
+import { HealthcareKnowledgeBase, getReimbursementInfo } from './HealthcareKnowledgeBase';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { CapabilitiesPrompt, TopicSuggestions } from './ConversationUtils';
 import { NewsletterService } from '@/services/newsletterService';
@@ -247,12 +249,17 @@ useEffect(() => {
     // Add capabilities introduction message
     const capabilitiesMessage = `Hello ${info.firstName}! 🧞‍♂️ Welcome to Genie AI! 
 
-I'm your intelligent assistant with powerful capabilities. Just start asking questions and I'll adapt to help you best!
+I am Genie and I can support and discuss with you on Experimentation Hub Technology and Healthcare concepts.
 
-💡 **What I can help with:**
-• Technology & AI topics 🚀
-• Healthcare & wellness guidance 🏥  
-• Real-time research and analysis 📊
+💡 **My comprehensive knowledge includes:**
+• 🚀 AI Innovation & Gartner Value Framework mapping to tech stacks
+• 🏥 Healthcare business use cases, DTx, Cell & Gene therapies  
+• 🔬 Technology stack concepts and journey use cases
+• 📊 Case studies and implementation methodologies
+• 🛡️ Security topics and compliance frameworks
+• 🗺️ Value creation and realization strategies
+
+I'm continuously updated with all website content and can intelligently guide you through complex topics with personalized insights!
 
 Ask me anything to get started, or click below to explore my advanced features!`;
 
@@ -388,17 +395,34 @@ Ask me anything to get started, or click below to explore my advanced features!`
 
     try {
       const systemPrompt = context ? 
-        `You are Genie AI, a helpful assistant specializing in ${context}${selectedTopic ? ` with focus on ${selectedTopic}` : ''}. 
+        `You are Genie AI, an intelligent assistant specializing in ${context}${selectedTopic ? ` with focus on ${selectedTopic}` : ''}. 
+        
+        You have comprehensive knowledge about:
+        - AI Innovation and Gartner Value Framework mapping to tech stacks
+        - Healthcare business use cases, Digital Therapeutics (DTx), Cell & Gene therapies
+        - Technology concepts, journey use cases, and case studies  
+        - Security topics and compliance frameworks
+        - Value creation and realization strategies
+        - Experimentation hub methodologies
+        
         Personality: ${conversationPersonality}. 
-        Be engaging, helpful, and provide practical insights. 
-        Keep responses concise but informative.
-        Context: This is a conversation interface demonstration.
-        If the user asks about capabilities, mention the different AI modes (default/single/multi-agent), RAG, knowledge bases, MCP tools, and split-screen options.` :
-        `You are Genie AI, a versatile assistant ready to help with any topic. 
-        I can adapt to technology, healthcare, or general inquiries.
-        Be engaging, helpful, and offer to configure specialized capabilities.
-        Mention that I can work in different modes (default/single/multi-agent) and have advanced features like RAG, knowledge bases, and split-screen.
-        Context: This is a conversation interface demonstration.`;
+        Be engaging, helpful, and provide practical insights with specific examples.
+        Draw from the comprehensive knowledge base including website content, case studies, and implementation guides.
+        Keep responses informative but accessible.
+        
+        Advanced capabilities: I support different AI modes (default/single/multi-agent), RAG, knowledge bases, MCP tools, and split-screen comparisons.` :
+        `You are Genie AI, a versatile assistant who can support and discuss Experimentation Hub Technology and Healthcare concepts.
+        
+        I have comprehensive knowledge about the entire website content including:
+        - AI Innovation frameworks and value creation strategies  
+        - Healthcare business use cases and reimbursement processes
+        - Technology stack architectures and implementation guides
+        - Journey mapping, case studies, and experimentation methodologies
+        - Security, compliance, and best practices
+        
+        Be engaging, helpful, and intelligently guide users through complex topics.
+        Adapt to technology, healthcare, or general inquiries with personalized insights.
+        Mention my advanced features: different modes (default/single/multi-agent), RAG, knowledge bases, and split-screen analysis.`;
 
       const enhancedPrompt = `${userMessage}
         

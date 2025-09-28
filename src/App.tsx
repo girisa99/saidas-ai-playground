@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CookieConsent } from "@/components/CookieConsent";
+import { FloatingGenie } from "@/components/FloatingGenie";
 
 import Index from "./pages/Index";
 import Journey from "./pages/Journey";
@@ -26,6 +27,10 @@ const App = () => (
     <Toaster />
     <Sonner />
     <CookieConsent />
+    
+    {/* Floating Genie AI Assistant */}
+    <FloatingGenie />
+    
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
@@ -38,7 +43,7 @@ const App = () => (
         <Route path="/docs" element={<Docs />} />
         <Route path="/contact" element={<Contact />} />
         
-        
+
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/disclaimer" element={<Disclaimer />} />
