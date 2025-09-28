@@ -173,7 +173,7 @@ const About = () => {
               </div>
               <div className="text-white/80 font-medium">
                 <AnimatedTextEmergence 
-                  text="Now sharing the Experiment → Validate → Deploy methodology through GenieAI Hub - helping organizations build AI solutions faster and with greater confidence."
+                  text="Now sharing knowledge to help organizations build AI solutions faster and with greater confidence through the GenieAI Hub methodology."
                   startDelay={6500}
                   charDelay={30}
                   className="block"
