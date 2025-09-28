@@ -1,6 +1,6 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+
 import { CTASection } from "@/components/CTASection";
 
 import { Button } from "@/components/ui/button";
@@ -47,8 +47,7 @@ const Journey = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavigationHeader />
-      <Breadcrumbs />
-      <main className="pt-16 sm:pt-20 lg:pt-24">{" "}
+      <main className="pt-16 sm:pt-20 lg:pt-24">
       {/* Enhanced Hero Section - Consistent with other pages */}
       <section className="relative pt-24 pb-16 overflow-hidden">
         {/* Background Image with loading optimization */}

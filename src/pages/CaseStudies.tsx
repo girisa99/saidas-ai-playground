@@ -1,6 +1,6 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+
 import { PatientOnboardingCaseStudy } from "@/components/CaseStudyTemplate";
 import { CTASection } from "@/components/CTASection";
 import { Card } from "@/components/ui/card";
@@ -28,9 +28,6 @@ const CaseStudies = () => {
     <div className="min-h-screen bg-background">
       <NavigationHeader />
       <main className="pt-16 sm:pt-20 lg:pt-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8">
-          <Breadcrumbs />
-        </div>
         
         {/* Enhanced Hero Section */}
         <section className="relative pt-24 pb-16 overflow-hidden">
