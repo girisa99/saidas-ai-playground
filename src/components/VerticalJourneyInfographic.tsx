@@ -42,10 +42,10 @@ const VerticalJourneyInfographic = () => {
         description: "Initial spark from transformative conversation sparked AI exploration for healthcare workflows",
         activities: [
           "Initial spark from transformative conversation with Prashant K and community members",
-          "Recognition of fundamental shift potential in AI landscape for healthcare",
+          "Recognition of fundamental shift potential in AI landscape",
           "Established personal AI experimentation hub with systematic model comparison",
           "Conducted 45-day intensive deep dive across GPT, Claude, and Gemini models",
-          "Developed foundational understanding of prompt engineering and model optimization"
+          "Deep curiosity ignited for comprehensive AI exploration"
         ],
         challenges: [
           "Overwhelming possibilities without clear direction or starting point",
@@ -59,37 +59,37 @@ const VerticalJourneyInfographic = () => {
         title: "VALIDATE",
         description: "Breakthrough realization of AI's creative potential transformed into validated, production-ready foundations",
         activities: [
+          "Developed foundational understanding of prompt engineering and model optimization",
+          "Built prototypes using Bolt, Loveable, and Solid frameworks with TypeScript",
+          "Integrated AI into real-world workflows with GitHub, DocuSign, and Twilio APIs",
           "Breakthrough realization of AI's creative potential beyond coding assistance",
-          "Integrated visual design tools (Visio, draw.io, Miro, Figma) for collaborative brainstorming",
-          "Transformed coding with Cursor IDE's AI-native capabilities and dynamic dialogue",
-          "Built resilient architectures with sophisticated error handling and feedback loops",
           "Applied 45-day deep dive lessons to architect scalable MVP foundations"
         ],
         challenges: [
-          "Moving past static data storage to intelligent, learning data systems",
-          "Balancing rapid prototyping with robust, scalable architectures",
-          "Ensuring TypeScript types perfectly align with database schemas without friction",
-          "Managing complexity of verification agents and validation systems effectively"
+          "Challenges preventing redundancy and ensuring application stability",
+          "Steep learning curve requiring methodical experimentation approach",
+          "Trial and error process in understanding proper AI project structures",
+          "Frustrating moments of 'why isn't this working?' during foundational learning"
         ],
-        technologies: ["Cursor IDE", "Visio", "Draw.io", "Miro", "Figma", "TypeScript", "Vector Databases"]
+        technologies: ["Bolt", "Loveable", "Solid", "TypeScript", "Supabase", "PostgreSQL"]
       },
       deploy: {
         title: "DEPLOY",
-        description: "Successfully deployed stable, resilient AI platform serving as production backbone for healthcare",
+        description: "Successfully integrated healthcare systems with NPI, CMS, FDA, and EMR platforms for patient workflows",
         activities: [
-          "Built unbreakable, stable AI platform foundation serving as experimentation backbone",
           "Successfully integrated healthcare systems: NPI, CMS credentialing, FDA tracking",
           "Implemented ICD 9/10 code integration and Changehealth EMR for insurance verification",
           "Successfully orchestrated multiple agents for patient onboarding use cases",
-          "Achieved 94% accuracy in hallucination reduction through robust validation systems"
+          "Built enterprise-grade multi-tenant isolation with comprehensive security frameworks",
+          "Demonstrated full-scale healthcare workflow automation across integrated platforms"
         ],
         challenges: [
           "Complex healthcare system integration challenges across NPI, CMS, FDA, and EMR platforms",
-          "Ensuring platform stability while supporting rapid experimentation and agent deployment",
+          "Coordinating agent orchestration while maintaining HIPAA compliance and data integrity",
           "Managing data consistency across multiple healthcare data sources and validation systems",
-          "Coordinating agent orchestration while maintaining HIPAA compliance and data integrity"
+          "Performance optimization across integrated systems without compromising stability"
         ],
-        technologies: ["Multi-Agent Systems", "Agentic AI", "NPI Integration", "CMS Credentialing", "FDA APIs", "ICD 9/10", "Changehealth EMR"]
+        technologies: ["Multi-Agent Systems", "NPI Integration", "CMS Credentialing", "FDA APIs", "ICD 9/10", "Changehealth EMR", "Healthcare Compliance"]
       },
       color: "genie-primary",
       bgColor: "bg-gradient-to-br from-genie-primary/5 to-genie-primary/10"
@@ -104,25 +104,25 @@ const VerticalJourneyInfographic = () => {
       description: "Building comprehensive AI development and experimentation infrastructure with robust security, monitoring, and deployment capabilities.",
       experiment: {
         title: "EXPERIMENT",
-        description: "Deep curiosity ignited for comprehensive AI exploration and infrastructure building",
+        description: "Deep experimentation with visual design tools and AI-native development environments",
         activities: [
-          "Built prototypes using Bolt, Loveable, and Solid frameworks with TypeScript",
-          "Integrated AI into real-world workflows with GitHub, DocuSign, and Twilio APIs",
-          "Deep curiosity ignited for comprehensive AI exploration",
-          "Steep learning curve requiring methodical experimentation approach",
-          "Trial and error process in understanding proper AI project structures"
+          "Integrated visual design tools (Visio, draw.io, Miro, Figma) for collaborative brainstorming",
+          "Transformed coding with Cursor IDE's AI-native capabilities and dynamic dialogue",
+          "Built resilient architectures with sophisticated error handling and feedback loops",
+          "Designed systems that actively learn from errors and adapt over time",
+          "Implemented hallucination reduction techniques through structured validation"
         ],
         challenges: [
-          "Challenges preventing redundancy and ensuring application stability",
-          "Steep learning curve requiring methodical experimentation approach",
-          "Trial and error process in understanding proper AI project structures",
-          "Frustrating moments of 'why isn't this working?' during foundational learning"
+          "Moving past static data storage to intelligent, learning data systems",
+          "Balancing rapid prototyping with robust, scalable architectures",
+          "Complex tool integration challenges across multiple development environments",
+          "Implementing guardrails that enhance rather than hinder development workflow"
         ],
-        technologies: ["Bolt", "Loveable", "Solid", "TypeScript", "Supabase", "PostgreSQL", "Vector Databases"]
+        technologies: ["Cursor IDE", "Visio", "Draw.io", "Miro", "Figma", "Vector Databases"]
       },
       validate: {
         title: "VALIDATE",
-        description: "Implemented comprehensive validation systems and enterprise-grade security frameworks",
+        description: "Comprehensive validation systems and enterprise-grade security frameworks implementation",
         activities: [
           "Implemented comprehensive TypeScript-database schema alignment and validation",
           "Built intelligent guardrail systems with small verification agents",
@@ -133,28 +133,28 @@ const VerticalJourneyInfographic = () => {
         challenges: [
           "Eliminating accumulated technical debt while maintaining development velocity",
           "Building comprehensive security frameworks without over-engineering solutions",
-          "Preventing feature redundancy while encouraging innovation and experimentation",
-          "Optimizing for both development speed and production stability simultaneously"
+          "Managing complexity of verification agents and validation systems effectively",
+          "Ensuring TypeScript types perfectly align with database schemas without friction"
         ],
-        technologies: ["Schema Validation", "RLS Policies", "Security Scanning", "Verification Agents", "CI/CD Pipelines", "Monitoring"]
+        technologies: ["TypeScript", "Schema Validation", "RLS Policies", "Security Scanning", "Verification Agents"]
       },
       deploy: {
         title: "DEPLOY",
-        description: "Deployed Label Studio for RAG and comprehensive data management with real-time testing capabilities",
+        description: "Production deployment of Label Studio for RAG and comprehensive data management with real-time testing",
         activities: [
+          "Built modular component verification systems before feature deployment",
+          "Established enterprise-grade CI/CD pipelines with security scanning",
+          "Created comprehensive monitoring and vulnerability assessment frameworks",
           "Deployed Label Studio for RAG and knowledge base with comprehensive data management",
-          "Integrated Twilio contact center with Langwatch and Artiz for real-time testing",
-          "Built enterprise-grade multi-tenant isolation with comprehensive security frameworks",
-          "Created dynamic agent generation system with seamless multi-agent coordination",
-          "Demonstrated full-scale healthcare workflow automation across integrated platforms"
+          "Integrated Twilio contact center with Langwatch and Artiz for real-time testing"
         ],
         challenges: [
+          "Preventing feature redundancy while encouraging innovation and experimentation",
+          "Optimizing for both development speed and production stability simultaneously",
           "Real-time synchronization challenges between multiple agents and external healthcare APIs",
-          "Balancing system resilience with the flexibility needed for healthcare experimentation",
-          "Complex multi-tenant security requirements for healthcare compliance and data protection",
-          "Performance optimization across integrated systems without compromising stability"
+          "Balancing system resilience with the flexibility needed for healthcare experimentation"
         ],
-        technologies: ["Label Studio", "RAG Architecture", "Twilio", "Langwatch", "Artiz", "Vector Databases", "Healthcare Compliance"]
+        technologies: ["CI/CD Pipelines", "Monitoring", "Label Studio", "RAG Architecture", "Twilio", "Langwatch", "Artiz"]
       },
       color: "genie-teal",
       bgColor: "bg-gradient-to-br from-genie-teal/5 to-genie-teal/10"
@@ -169,41 +169,43 @@ const VerticalJourneyInfographic = () => {
       description: "Advanced multi-agent system orchestrating complex workflows with intelligent automation, monitoring, and continuous optimization capabilities.",
       experiment: {
         title: "EXPERIMENT",
-        description: "Designing systems that actively learn from errors and adapt over time",
+        description: "Building unbreakable, stable AI platform foundation serving as experimentation backbone",
         activities: [
-          "Designing systems that actively learn from errors and adapt over time",
-          "Implemented hallucination reduction techniques through structured validation",
-          "Built modular component verification systems before feature deployment",
-          "Established enterprise-grade CI/CD pipelines with security scanning",
-          "Created comprehensive monitoring and vulnerability assessment frameworks"
+          "Built unbreakable, stable AI platform foundation serving as experimentation backbone",
+          "Created dynamic agent generation system with seamless multi-agent coordination",
+          "Implemented comprehensive database optimization and duplicate detection systems",
+          "Designed vulnerability assessment frameworks with Docker containerization",
+          "Achieved breakthrough in multi-agent orchestration capabilities"
         ],
         challenges: [
-          "Implementing guardrails that enhance rather than hinder development workflow",
-          "Complex tool integration challenges across multiple development environments",
-          "Balancing rapid MVP development with robust architectural foundations"
+          "Ensuring platform stability while supporting rapid experimentation and agent deployment",
+          "Complex multi-tenant security requirements for healthcare compliance and data protection",
+          "Balancing rapid MVP development with robust architectural foundations",
+          "Managing complexity across multiple integrated systems and platforms"
         ],
         technologies: ["Database Optimization", "Duplicate Detection", "Vulnerability Assessment", "Replit", "Docker"]
       },
       validate: {
         title: "VALIDATE",
-        description: "Comprehensive monitoring and vulnerability assessment frameworks for enterprise deployment",
+        description: "Comprehensive monitoring, vulnerability assessment, and hallucination reduction validation",
         activities: [
-          "Implemented hallucination reduction techniques through structured validation",
-          "Built modular component verification systems before feature deployment", 
-          "Established enterprise-grade CI/CD pipelines with security scanning",
-          "Created comprehensive monitoring and vulnerability assessment frameworks",
-          "Achieved 94% accuracy in hallucination reduction through robust validation systems"
+          "Achieved 94% accuracy in hallucination reduction through robust validation systems",
+          "Built enterprise-grade multi-tenant isolation with comprehensive security frameworks",
+          "Implemented advanced monitoring and vulnerability assessment frameworks",
+          "Created comprehensive database optimization with intelligent duplicate detection",
+          "Validated multi-agent coordination systems for production readiness"
         ],
         challenges: [
           "Managing data consistency across multiple healthcare data sources and validation systems",
           "Optimizing for both development speed and production stability simultaneously",
-          "Implementing guardrails that enhance rather than hinder development workflow"
+          "Implementing guardrails that enhance rather than hinder development workflow",
+          "Balancing system resilience with flexibility needed for healthcare experimentation"
         ],
-        technologies: ["Monitoring", "Database Optimization", "Duplicate Detection", "Vulnerability Assessment"]
+        technologies: ["Monitoring", "Database Optimization", "Duplicate Detection", "Vulnerability Assessment", "Multi-Agent Systems"]
       },
       deploy: {
         title: "DEPLOY",
-        description: "Full-scale healthcare workflow automation with multi-agent coordination and HIPAA compliance",
+        description: "Full-scale healthcare workflow automation with agentic AI and HIPAA-compliant multi-agent coordination",
         activities: [
           "Successfully orchestrated multiple agents for patient onboarding use cases",
           "Achieved 94% accuracy in hallucination reduction through robust validation systems",

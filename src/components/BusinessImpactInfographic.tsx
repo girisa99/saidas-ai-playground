@@ -40,7 +40,7 @@ import { Link } from "react-router-dom";
 export const BusinessImpactInfographic = () => {
   // Removed status config as requested by user
 
-  // Flatten all use cases with their landscape context for unified scrollable cards
+  // Updated use cases with 3-phase structure
   const allUseCases = [
     {
       landscape: "Healthcare Innovation",
@@ -50,24 +50,27 @@ export const BusinessImpactInfographic = () => {
       id: "patient-enrollment",
       title: "Patient Onboarding & Enrollment",
       description: "Comprehensive healthcare patient journey with AI-assisted clinical workflows",
+      experiment: {
+        title: "EXPERIMENT",
+        activities: ["Initial healthcare workflow analysis", "AI model testing for patient data", "Prototype development with basic forms"],
+        technologies: ["React.js", "GPT Models", "Basic API Integration"]
+      },
+      validate: {
+        title: "VALIDATE", 
+        activities: ["Insurance verification system testing", "Clinical review workflow validation", "HIPAA compliance assessment"],
+        technologies: ["TypeScript", "Supabase", "Healthcare APIs", "Validation Systems"]
+      },
+      deploy: {
+        title: "DEPLOY",
+        activities: ["Full CMS integration deployment", "Multi-agent orchestration live", "Real-time insurance verification"],
+        technologies: ["CMS Credentialing", "FDA APIs", "ICD 9/10", "Multi-Agent Systems"]
+      },
       outcomes: [
         "Streamlined enrollment process",
-        "Accurate provider verification",
+        "Accurate provider verification", 
         "Enhanced patient satisfaction"
       ],
-      technologies: [
-        "React.js + TypeScript",
-        "Supabase with PostgreSQL", 
-        "Tailwind CSS + Vite",
-        "API Service Middleware"
-      ],
-      journeySteps: [
-        "Automated referral processing",
-        "AI-powered triage and routing",
-        "Real-time insurance verification",
-        "Clinical review assistance"
-      ],
-      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio, Google Vertex Studio, Image Generation Models", "Business APIs: CMS Verification & Credentialing, DocuSign, Insurance APIs, ICD, FDA", "Twilio WhatsApp/SMS/Email"]
+      integrations: ["CMS Verification & Credentialing", "DocuSign", "Insurance APIs", "ICD", "FDA", "Twilio WhatsApp/SMS/Email"]
     },
     {
       landscape: "Customer Onboarding",
@@ -77,24 +80,27 @@ export const BusinessImpactInfographic = () => {
       id: "customer-onboarding",
       title: "Customer Onboarding & Engagement",
       description: "AI-powered customer journey optimization with intelligent touchpoint management",
+      experiment: {
+        title: "EXPERIMENT",
+        activities: ["Customer journey mapping", "AI chatbot prototyping", "Data import testing (JSON, Excel)"],
+        technologies: ["React.js", "Basic AI Models", "Form Processing"]
+      },
+      validate: {
+        title: "VALIDATE",
+        activities: ["Welcome sequence optimization", "Real-time validation testing", "User experience refinement"],
+        technologies: ["TypeScript", "Supabase", "Advanced AI Gateway", "Validation Middleware"]
+      },
+      deploy: {
+        title: "DEPLOY", 
+        activities: ["Automated verification deployment", "AI-driven guidance live", "Multi-channel communication"],
+        technologies: ["Experian API", "CMS Verification", "Twilio SMS/Email", "Production AI Systems"]
+      },
       outcomes: [
         "Faster onboarding experience",
         "Higher completion rates with AI guidance",
         "Reduced support burden during onboarding"
       ],
-      technologies: [
-        "React.js + TypeScript",
-        "Supabase with PostgreSQL", 
-        "Tailwind CSS + Vite",
-        "API Service Middleware"
-      ],
-      journeySteps: [
-        "AI-driven welcome sequence",
-        "Data import module (API, JSON, Excel)",
-        "Real-time validation and guidance",
-        "Automated verification processes"
-      ],
-      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, Small Language Models, MCP, n8n, Arize, LangWatch, Labeling Studio", "Business APIs: Exploring Experian API check, CMS verification implemented", "Twilio SMS/Email"]
+      integrations: ["Experian API check", "CMS verification", "Twilio SMS/Email"]
     },
     {
       landscape: "Customer Support",
@@ -104,28 +110,27 @@ export const BusinessImpactInfographic = () => {
       id: "contact-center",
       title: "Contact Center AI Transformation",
       description: "Multi-channel AI-powered customer support with intelligent routing and response",
+      experiment: {
+        title: "EXPERIMENT",
+        activities: ["Natural language IVR testing", "AI response prototyping", "Multi-channel integration trials"],
+        technologies: ["Basic Twilio", "LLM Models", "Voice Processing"]
+      },
+      validate: {
+        title: "VALIDATE",
+        activities: ["Identity verification system testing", "Unified customer view validation", "Response accuracy assessment"],
+        technologies: ["Advanced Twilio", "Customer Data APIs", "AI Gateway", "Real-time Processing"]
+      },
+      deploy: {
+        title: "DEPLOY",
+        activities: ["Smart IVR production deployment", "AI case management live", "Multi-channel orchestration"],
+        technologies: ["Twilio WhatsApp/Voice/Email/SMS", "MCP", "Arize", "Production AI Systems"]
+      },
       outcomes: [
         "Reduced customer wait times",
         "Improved first-call resolution",
         "Seamless multi-channel experience"
       ],
-      technologies: [
-        "React.js + TypeScript",
-        "Supabase with PostgreSQL", 
-        "Tailwind CSS + Vite",
-        "API Service Middleware"
-      ],
-      journeySteps: [
-        "Smart IVR with natural language",
-        "Instant identity verification",
-        "Unified customer view",
-        "AI-powered case management"
-      ],
-      integrations: [
-        "Prompt Engineering & AI Gateway",
-        "Technical APIs: LLM, MCP, n8n, Arize",
-        "Twilio (WhatsApp, Voice, Email, SMS)"
-      ]
+      integrations: ["Twilio (WhatsApp, Voice, Email, SMS)", "MCP", "Arize"]
     },
     {
       landscape: "Operations Management",
@@ -135,24 +140,27 @@ export const BusinessImpactInfographic = () => {
       id: "order-management",
       title: "Order Management & Tracking",
       description: "Real-time order processing with intelligent batch optimization and tracking",
+      experiment: {
+        title: "EXPERIMENT",
+        activities: ["Order validation logic testing", "Batch optimization algorithms", "Basic tracking implementation"],
+        technologies: ["React.js", "Basic APIs", "Scheduling Logic"]
+      },
+      validate: {
+        title: "VALIDATE",
+        activities: ["Batch scheduling optimization", "Real-time status system testing", "Predictive analytics validation"],
+        technologies: ["TypeScript", "Supabase", "Advanced Scheduling", "Analytics APIs"]
+      },
+      deploy: {
+        title: "DEPLOY", 
+        activities: ["Intelligent validation live", "Automated batch scheduling", "Predictive issue resolution"],
+        technologies: ["ERP Integrations", "MCP", "Production Optimization Systems", "Real-time Analytics"]
+      },
       outcomes: [
         "Enhanced order visibility",
         "Optimized batch processing",
         "Improved delivery predictions"
       ],
-      technologies: [
-        "React.js + TypeScript",
-        "Supabase with PostgreSQL", 
-        "Tailwind CSS + Vite",
-        "API Service Middleware"
-      ],
-      journeySteps: [
-        "Intelligent order validation",
-        "Automated batch scheduling",
-        "Real-time status updates",
-        "Predictive issue resolution"
-      ],
-      integrations: ["Prompt Engineering & AI Gateway", "Technical APIs: LLM, MCP, n8n", "Reviewing ERP integrations"]
+      integrations: ["ERP integrations (under review)", "MCP"]
     }
   ];
 
@@ -272,33 +280,59 @@ export const BusinessImpactInfographic = () => {
                       </ul>
                     </div>
 
-                    {/* Technologies */}
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2 text-sm">
-                        <Brain className="w-4 h-4" />
-                        Core Technologies
-                      </h4>
-                      <div className="flex flex-wrap gap-1">
-                        {useCase.technologies.map((tech, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
+                    {/* Remove old technologies section - now in 3-phase structure above */}
 
-                    {/* Development Infrastructure */}
+                    {/* Three Phase Structure */}
                     <div>
-                      <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2 text-sm">
-                        <Bot className="w-4 h-4" />
-                        Development Infrastructure
+                      <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-sm">
+                        <Brain className="w-4 h-4" />
+                        Experiment → Validate → Deploy
                       </h4>
-                      <div className="flex flex-wrap gap-1">
-                        {["Lovable", "Cursor", "Replit", "Docker", "GitHub", "Bolt", "Solid"].map((tool, i) => (
-                          <Badge key={i} variant="outline" className="text-xs bg-muted/50">
-                            {tool}
-                          </Badge>
-                        ))}
+                      <div className="space-y-2">
+                        {/* Experiment Phase */}
+                        <div className="border rounded p-2 bg-background/50">
+                          <div className="flex items-center gap-2 mb-1">
+                            <div className="w-4 h-4 rounded-full bg-genie-primary text-white flex items-center justify-center text-xs font-bold">E</div>
+                            <span className="text-xs font-medium">{useCase.experiment.title}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-1">
+                            {useCase.experiment.technologies.slice(0, 3).map((tech, i) => (
+                              <Badge key={i} variant="secondary" className="text-xs bg-genie-primary/10 text-genie-primary">
+                                {tech}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Validate Phase */}
+                        <div className="border rounded p-2 bg-background/50">
+                          <div className="flex items-center gap-2 mb-1">
+                            <div className="w-4 h-4 rounded-full bg-genie-teal text-white flex items-center justify-center text-xs font-bold">V</div>
+                            <span className="text-xs font-medium">{useCase.validate.title}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-1">
+                            {useCase.validate.technologies.slice(0, 3).map((tech, i) => (
+                              <Badge key={i} variant="secondary" className="text-xs bg-genie-teal/10 text-genie-teal">
+                                {tech}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Deploy Phase */}
+                        <div className="border rounded p-2 bg-background/50">
+                          <div className="flex items-center gap-2 mb-1">
+                            <div className="w-4 h-4 rounded-full bg-genie-cyan text-white flex items-center justify-center text-xs font-bold">D</div>
+                            <span className="text-xs font-medium">{useCase.deploy.title}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-1">
+                            {useCase.deploy.technologies.slice(0, 3).map((tech, i) => (
+                              <Badge key={i} variant="secondary" className="text-xs bg-genie-cyan/10 text-genie-cyan">
+                                {tech}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
 
