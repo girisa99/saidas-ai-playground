@@ -22,10 +22,13 @@ import { SplitScreenRenderer } from './SplitScreenRenderer';
 import { SessionManager } from './SessionManager';
 import { ContextSwitcher } from './ContextSwitcher';
 import { ContextualTopicSuggester } from './ContextualTopicSuggester';
+import { ConversationLimitModal } from './ConversationLimitModal';
+import { ExperimentationBanner } from './ExperimentationBanner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { CapabilitiesPrompt, TopicSuggestions } from './ConversationUtils';
 import { NewsletterService } from '@/services/newsletterService';
 import { ContactService } from '@/services/publicContactService';
+import { conversationLimitService, type ConversationLimits } from '@/services/conversationLimitService';
 import genieLogoPopup from '@/assets/genie-logo-popup.png';
 import genieThinking from '@/assets/genie-thinking.png';
 
@@ -132,6 +135,10 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [showConfigWizard, setShowConfigWizard] = useState(false);
   const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
   const [ipAddress, setIpAddress] = useState<string | null>(null);
+  const [showLimitModal, setShowLimitModal] = useState(false);
+  const [conversationLimits, setConversationLimits] = useState<ConversationLimits | null>(null);
+  const [isConversationAllowed, setIsConversationAllowed] = useState(true);
+  const [showExperimentationBanner, setShowExperimentationBanner] = useState(true);
   const [showSessionManager, setShowSessionManager] = useState(false);
   const [loadingStates, setLoadingStates] = useState({
     primary: false,
@@ -165,6 +172,39 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
 useEffect(() => {
   messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
 }, [messages]);
+
+// Check conversation limits on component mount
+useEffect(() => {
+  const checkLimits = async () => {
+    try {
+      const limits = await conversationLimitService.checkConversationLimits(
+        userInfo?.email,
+        userInfo?.firstName
+      );
+      setConversationLimits(limits);
+      setIsConversationAllowed(limits.allowed);
+      
+      if (!limits.allowed) {
+        setShowLimitModal(true);
+      }
+    } catch (error) {
+      console.error('Failed to check conversation limits:', error);
+      // Allow conversation on error
+      setIsConversationAllowed(true);
+    }
+  };
+
+  checkLimits();
+}, [userInfo]);
+
+// Clean up conversation on component unmount
+useEffect(() => {
+  return () => {
+    if (conversationLimitService.isConversationActive()) {
+      conversationLimitService.endConversation();
+    }
+  };
+}, []);
 
 useEffect(() => {
   // Capture user IP (best-effort) for rate limiting
@@ -281,6 +321,31 @@ Ask me anything to get started, or click below to explore my advanced features!`
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
+
+    // Check if conversation is allowed
+    if (!isConversationAllowed) {
+      setShowLimitModal(true);
+      return;
+    }
+
+    // Start conversation if this is the first message
+    if (!conversationLimitService.isConversationActive()) {
+      const startResult = await conversationLimitService.startConversation(
+        context!,
+        userInfo?.email,
+        userInfo?.firstName
+      );
+
+      if (!startResult.allowed) {
+        setShowLimitModal(true);
+        setConversationLimits(startResult.limits || null);
+        setIsConversationAllowed(false);
+        return;
+      }
+    }
+
+    // Update message count
+    await conversationLimitService.updateMessageCount();
 
     const userMessage = inputMessage.trim();
     setInputMessage('');
@@ -912,6 +977,29 @@ ${conversationSummary.transcript}`
             </div>
           )}
         </Card>
+        
+        {/* Conversation Limit Modal */}
+        <ConversationLimitModal
+          isOpen={showLimitModal}
+          onClose={() => setShowLimitModal(false)}
+          limits={conversationLimits || {
+            allowed: false,
+            daily_count: 0,
+            daily_limit: 5,
+            hourly_count: 0,
+            hourly_limit: 2,
+            reset_time: new Date(Date.now() + 3600000).toISOString()
+          }}
+          context={context || 'technology'}
+        />
+        
+        {/* Experimentation Banner */}
+        {showExperimentationBanner && context && (
+          <ExperimentationBanner
+            context={context}
+            onDismiss={() => setShowExperimentationBanner(false)}
+          />
+        )}
         
         {/* Configuration Wizard */}
         <ConfigurationWizard
