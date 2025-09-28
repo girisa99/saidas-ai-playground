@@ -3,7 +3,6 @@ import { MultiHeroSection } from "@/components/MultiHeroSection";
 import { TrustSection } from "@/components/TrustSection";
 import { GartnerValueSection } from "@/components/GartnerValueSection";
 import { QuickStart } from "@/components/QuickStart";
-import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
 import { CTASection } from "@/components/CTASection";
 import { useEffect } from "react";
@@ -26,7 +25,6 @@ const Index = () => {
         <TrustSection />
         <GartnerValueSection />
         <QuickStart />
-        <FAQ />
         {/* Clear navigation flow to guide users */}
         <CTASection currentPage="home" />
       </main>

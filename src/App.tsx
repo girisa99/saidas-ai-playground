@@ -10,7 +10,7 @@ import Journey from "./pages/Journey";
 import About from "./pages/About";
 import TechnologyStack from "./pages/TechnologyStack";
 import CaseStudies from "./pages/CaseStudies";
-import FAQPage from "./pages/FAQPage";
+
 import Docs from "./pages/Docs";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
@@ -38,7 +38,7 @@ const App = () => (
         <Route path="/technology" element={<TechnologyStack />} />
         <Route path="/case-studies" element={<CaseStudies />} />
         <Route path="/business-use-cases" element={<BusinessUseCases />} />
-        <Route path="/faq" element={<FAQPage />} />
+        
         <Route path="/docs" element={<Docs />} />
         <Route path="/contact" element={<Contact />} />
         
