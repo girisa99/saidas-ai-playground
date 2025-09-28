@@ -47,10 +47,10 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
 
   // Group AI responses by their model/source
   const primaryResponses = aiResponses.filter(m => 
-    m.model === primaryModel || (!m.model && aiResponses.indexOf(m) % 2 === 0)
+    m.model === primaryModel || m.provider === 'primary' || (!m.model && !m.provider && aiResponses.indexOf(m) % 2 === 0)
   );
   const secondaryResponses = aiResponses.filter(m => 
-    m.model === secondaryModel || (!m.model && aiResponses.indexOf(m) % 2 === 1)
+    m.model === secondaryModel || m.provider === 'secondary' || (!m.model && !m.provider && aiResponses.indexOf(m) % 2 === 1)
   );
 
   const renderMessageList = (messages: SplitMessage[], modelId: string, isLoadingModel: boolean) => (
@@ -75,7 +75,7 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
   );
 
   return (
-    <div className="grid grid-cols-2 gap-4 h-full">
+    <div className="grid grid-cols-2 gap-4 h-full min-h-[400px]">
       {/* Primary Model Column */}
       <Card className="flex flex-col h-full">
         <div className="p-3 border-b bg-muted/30">
@@ -88,18 +88,34 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
           </div>
         </div>
         
-        <div className="flex-1 p-3 overflow-y-auto space-y-3">
-          {/* Render user messages in both columns */}
-          {userMessages.map((message, index) => (
-            <div key={`user-primary-${index}`} className="flex justify-end">
-              <div className="max-w-[80%] p-3 rounded-lg bg-primary text-primary-foreground">
-                <p className="text-sm">{message.content}</p>
+        <div className="flex-1 p-3 overflow-y-auto space-y-3 max-h-[350px]">
+          {/* Interleave user messages and AI responses chronologically */}
+          {messages
+            .filter(m => m.role === 'user' || m.model === primaryModel || m.provider === 'primary' || (!m.model && !m.provider && aiResponses.indexOf(m) % 2 === 0))
+            .map((message, index) => (
+              <div key={`primary-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[85%] p-3 rounded-lg ${
+                  message.role === 'user' 
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'bg-accent'
+                }`}>
+                  {message.role === 'assistant' ? (
+                    <RichResponseRenderer content={message.content} />
+                  ) : (
+                    <p className="text-sm">{message.content}</p>
+                  )}
+                  {message.role === 'assistant' && message.timestamp && (
+                    <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                      <Bot className="h-3 w-3" />
+                      {modelDisplayNames[primaryModel] || primaryModel}
+                      <span>•</span>
+                      {new Date(message.timestamp).toLocaleTimeString()}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-          
-          {/* Render AI responses for primary model */}
-          {renderMessageList(primaryResponses, primaryModel, loadingStates.primary)}
+            ))}
+          {loadingStates.primary && <TypingIndicator />}
         </div>
       </Card>
 
@@ -115,18 +131,34 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
           </div>
         </div>
         
-        <div className="flex-1 p-3 overflow-y-auto space-y-3">
-          {/* Render user messages in both columns */}
-          {userMessages.map((message, index) => (
-            <div key={`user-secondary-${index}`} className="flex justify-end">
-              <div className="max-w-[80%] p-3 rounded-lg bg-primary text-primary-foreground">
-                <p className="text-sm">{message.content}</p>
+        <div className="flex-1 p-3 overflow-y-auto space-y-3 max-h-[350px]">
+          {/* Interleave user messages and AI responses chronologically */}
+          {messages
+            .filter(m => m.role === 'user' || m.model === secondaryModel || m.provider === 'secondary' || (!m.model && !m.provider && aiResponses.indexOf(m) % 2 === 1))
+            .map((message, index) => (
+              <div key={`secondary-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[85%] p-3 rounded-lg ${
+                  message.role === 'user' 
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'bg-accent'
+                }`}>
+                  {message.role === 'assistant' ? (
+                    <RichResponseRenderer content={message.content} />
+                  ) : (
+                    <p className="text-sm">{message.content}</p>
+                  )}
+                  {message.role === 'assistant' && message.timestamp && (
+                    <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                      <Bot className="h-3 w-3" />
+                      {modelDisplayNames[secondaryModel] || secondaryModel}
+                      <span>•</span>
+                      {new Date(message.timestamp).toLocaleTimeString()}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-          
-          {/* Render AI responses for secondary model */}
-          {renderMessageList(secondaryResponses, secondaryModel, loadingStates.secondary)}
+            ))}
+          {loadingStates.secondary && <TypingIndicator />}
         </div>
       </Card>
     </div>

@@ -56,16 +56,28 @@ const technologyTopics = [
 ];
 
 const healthcareTopics = [
-  'Digital Health',
-  'Telemedicine',
-  'Health Analytics',
-  'Medical AI',
-  'Clinical Trials',
-  'Patient Care',
-  'Health Technology',
-  'Wellness Programs',
-  'Medical Research',
-  'Healthcare Innovation'
+  'Reimbursement (Travel & Logistics)',
+  'Oncology',
+  'Cardiology', 
+  'Cell, Gene & Advanced Therapies',
+  'Radioland Therapies',
+  '340B Drug Pricing',
+  'WAC (Wholesale Acquisition Cost)',
+  'Government Pricing',
+  'Treatment Centers',
+  'Copay Assistance Programs',
+  'Alternative Funding Programs',
+  'Treatment Sharing & Access',
+  'ICD Codes',
+  'Product Information',
+  'Packaging Information',
+  'Authorized Treatment Centers by Therapy',
+  'Treatment Centers by Zip Code',
+  'Specialty Pharmacy Orders & Process',
+  'Adverse Events (AE/SAE)',
+  'Clinical Trials & Enrollment Process',
+  'Competitor Analysis for Trials',
+  'Commercial Product Competitors'
 ];
 
 export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOpen, onClose }) => {
@@ -595,7 +607,19 @@ ${conversationSummary.transcript}`
                 <>
                   {/* Advanced Settings Panel */}
                   {showAdvancedSettings && (
-                    <div className="border-b bg-muted/10">
+                    <div className="border-b bg-muted/10 relative">
+                      <div className="flex items-center justify-between p-2 border-b">
+                        <h3 className="text-sm font-medium">AI Configuration</h3>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setShowAdvancedSettings(false)}
+                          className="h-6 w-6 p-0"
+                          title="Close Settings"
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
                       <AdvancedAISettings 
                         currentConfig={aiConfig}
                         onConfigChange={setAIConfig}
@@ -604,7 +628,7 @@ ${conversationSummary.transcript}`
                   )}
 
                   {/* Messages */}
-                  <div className={`flex-1 overflow-y-auto p-4 space-y-4 ${aiConfig.splitScreenEnabled && aiConfig.mode === 'multi' ? '' : ''}`}>
+                  <div className={`flex-1 overflow-y-auto p-4 space-y-4 ${showAdvancedSettings ? 'max-h-96' : ''}`}>
                     {aiConfig.splitScreenEnabled && aiConfig.mode === 'multi' ? (
                       <SplitScreenRenderer
                         messages={[...messages, ...splitResponses.primary, ...splitResponses.secondary]}
