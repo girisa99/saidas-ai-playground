@@ -377,14 +377,14 @@ export const IntegratedTechnologyExploration = () => {
         <div className="text-center mb-12">
           <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
             <Zap className="w-4 h-4 mr-2" />
-            Technology Ecosystem
+            3-Phase Technology Ecosystem
           </Badge>
           <h2 className="text-4xl lg:text-6xl font-bold mb-6">
-            Technology Stack <span className="text-genie-primary">& Integration Blueprint</span>
+            Technology Stack <span className="text-genie-primary">& 3-Phase Integration</span>
           </h2>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
-            Complete technology ecosystem mapping across healthcare innovation, following Gartner value framework 
-            with 10+ integrated tools and real-world business applications.
+            Technology ecosystem powering the <span className="text-genie-primary font-semibold">Experiment → Validate → Deploy</span> framework. 
+            Following Gartner value methodology with 10+ integrated tools and real-world healthcare applications.
           </p>
           
           {/* Action Buttons */}
@@ -392,7 +392,7 @@ export const IntegratedTechnologyExploration = () => {
             <Link to="/case-studies">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base">
                 <BarChart3 className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
-                See What I Learned & Built
+                See Framework Results
                 <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4 ml-2" />
               </Button>
             </Link>
@@ -813,13 +813,13 @@ export const IntegratedTechnologyExploration = () => {
             <Link to="/journey">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base">
                 <Calendar className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
-                View Complete Journey
+                View 3-Phase Journey
               </Button>
             </Link>
             <Link to="/case-studies">
               <Button variant="outline" size="lg" className="px-8 py-4">
                 <BarChart3 className="w-5 h-5 mr-2" />
-                See Business Impact
+                See Framework Impact
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
