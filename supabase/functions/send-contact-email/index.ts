@@ -139,7 +139,7 @@ serve(async (req) => {
 
     // Send email to the business owner
     const emailResponse = await resend.emails.send({
-      from: 'Genie AI Hub <noreply@resend.dev>',
+      from: 'Genie AI Hub <genieaiexpermentationhub@gmail.com>',
       to: ['genieexpermentationhub@gmail.com'],
       subject: `New Contact Enquiry from ${contactData.senderName}`,
       html: emailHtml,
@@ -236,7 +236,7 @@ Reply directly to this email to respond to ${contactData.senderName}.
 
     // Send auto-reply
     await resend.emails.send({
-      from: 'Genie AI Hub <noreply@resend.dev>',
+      from: 'Genie AI Hub <genieaiexpermentationhub@gmail.com>',
       to: [contactData.senderEmail],
       subject: `Thank you for contacting Genie AI Hub, ${contactData.senderName}!`,
       html: autoReplyHtml,

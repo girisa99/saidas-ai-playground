@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minimize2, Maximize2, MessageCircle, Send, User, Bot, AlertTriangle, Move, Users } from 'lucide-react';
+import { X, Minimize2, Maximize2, MessageCircle, Send, User, Bot, AlertTriangle, Move, Users, Settings, Brain } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -16,6 +16,7 @@ import { TypingIndicator } from '../enrollment-genie/TypingIndicator';
 import { PublicPrivacyBanner } from './PublicPrivacyBanner';
 import { HumanEscalationForm } from './HumanEscalationForm';
 import { RichResponseRenderer } from './RichResponseRenderer';
+import { AdvancedAISettings, AIConfig } from './AdvancedAISettings';
 import { NewsletterService } from '@/services/newsletterService';
 import { ContactService } from '@/services/publicContactService';
 import genieLogoPopup from '@/assets/genie-logo-popup.png';
@@ -72,6 +73,16 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [showHumanEscalation, setShowHumanEscalation] = useState(false);
   const [isLiveAgentAvailable, setIsLiveAgentAvailable] = useState(false);
   const [conversationPersonality, setConversationPersonality] = useState<'formal' | 'casual' | 'empathetic'>('casual');
+  const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
+  const [aiConfig, setAIConfig] = useState<AIConfig>({
+    mode: 'default',
+    ragEnabled: false,
+    knowledgeBaseEnabled: false,
+    mcpEnabled: false,
+    selectedModel: 'gpt-4o-mini',
+    splitScreenEnabled: false,
+    contextualSuggestions: true,
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
@@ -206,8 +217,9 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
       const response = await generateResponse({
         prompt: userMessage,
         systemPrompt: contextPrompt,
-        model: 'gpt-4o-mini',
-        provider: 'openai'
+        model: aiConfig.selectedModel.includes('gpt') ? aiConfig.selectedModel as any : 'gpt-4o-mini',
+        provider: aiConfig.selectedModel.includes('claude') ? 'claude' : 
+                  aiConfig.selectedModel.includes('gemini') ? 'gemini' : 'openai'
       });
 
       if (response) {
@@ -295,14 +307,30 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
           <div className="drag-handle flex items-center justify-between p-4 border-b bg-gradient-to-r from-slate-900 to-slate-800 cursor-move">
             <div className="flex items-center gap-3">
               <img src={genieLogoPopup} alt="Genie AI logo" className="h-10 w-auto object-contain drop-shadow" />
-              <div>
-                <h3 className="font-semibold text-white">Genie AI Assistant</h3>
-                {context && selectedTopic && (
-                  <p className="text-xs text-slate-300">{selectedTopic} • {context}</p>
-                )}
-              </div>
+               <div>
+                 <h3 className="font-semibold text-white">Genie AI Assistant</h3>
+                 {context && selectedTopic && (
+                   <div className="flex items-center gap-2">
+                     <p className="text-xs text-slate-300">{selectedTopic} • {context}</p>
+                     {aiConfig.mode !== 'default' && (
+                       <Badge variant="secondary" className="text-xs px-1 py-0">
+                         {aiConfig.mode.toUpperCase()}
+                       </Badge>
+                     )}
+                   </div>
+                 )}
+               </div>
             </div>
-            <div className="flex items-center gap-1">
+             <div className="flex items-center gap-1">
+               <Button
+                 variant="ghost"
+                 size="sm"
+                 onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}
+                 className="h-6 w-6 p-0 text-white hover:bg-white/20"
+                 title="AI Settings"
+               >
+                 <Settings className="h-3 w-3" />
+               </Button>
               <Button
                 variant="ghost"
                 size="sm"
@@ -352,25 +380,37 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
                 </div>
               ) : (
                 <>
+                  {/* Advanced Settings Panel */}
+                  {showAdvancedSettings && (
+                    <div className="border-b bg-muted/10">
+                      <AdvancedAISettings 
+                        currentConfig={aiConfig}
+                        onConfigChange={setAIConfig}
+                      />
+                    </div>
+                  )}
+
                   {/* Messages */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                    {messages.map((message, index) => (
-                      <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`max-w-[80%] p-3 rounded-lg ${
-                          message.role === 'user' 
-                            ? 'bg-primary text-primary-foreground' 
-                            : 'bg-accent'
-                        }`}>
-                          {message.role === 'assistant' ? (
-                            <RichResponseRenderer content={message.content} />
-                          ) : (
-                            <p className="text-sm">{message.content}</p>
-                          )}
+                  <div className={`flex-1 overflow-y-auto p-4 space-y-4 ${aiConfig.splitScreenEnabled ? 'grid grid-cols-2 gap-4' : ''}`}>
+                    <div className={aiConfig.splitScreenEnabled ? 'space-y-2' : ''}>
+                      {messages.map((message, index) => (
+                        <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                          <div className={`max-w-[80%] p-3 rounded-lg ${
+                            message.role === 'user' 
+                              ? 'bg-primary text-primary-foreground' 
+                              : 'bg-accent'
+                          }`}>
+                            {message.role === 'assistant' ? (
+                              <RichResponseRenderer content={message.content} />
+                            ) : (
+                              <p className="text-sm">{message.content}</p>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                    {isLoading && <TypingIndicator />}
-                    <div ref={messagesEndRef} />
+                      ))}
+                      {isLoading && <TypingIndicator />}
+                      <div ref={messagesEndRef} />
+                    </div>
                   </div>
 
                   {/* Input */}
@@ -393,10 +433,22 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
                           <Send className="h-4 w-4" />
                         </Button>
                       </div>
-                      <div className="flex justify-between items-center mt-2">
-                        <p className="text-xs text-muted-foreground">
-                          Powered by Genie AI • {conversationPersonality} mode
-                        </p>
+                       <div className="flex justify-between items-center mt-2">
+                         <p className="text-xs text-muted-foreground flex items-center gap-2">
+                           <span>Powered by Genie AI • {conversationPersonality} mode</span>
+                           {aiConfig.mode !== 'default' && (
+                             <Badge variant="secondary" className="text-xs">
+                               {aiConfig.mode.toUpperCase()}
+                             </Badge>
+                           )}
+                           {(aiConfig.ragEnabled || aiConfig.knowledgeBaseEnabled || aiConfig.mcpEnabled) && (
+                             <div className="flex gap-1">
+                               {aiConfig.ragEnabled && <Badge variant="outline" className="text-xs">RAG</Badge>}
+                               {aiConfig.knowledgeBaseEnabled && <Badge variant="outline" className="text-xs">KB</Badge>}
+                               {aiConfig.mcpEnabled && <Badge variant="outline" className="text-xs">MCP</Badge>}
+                             </div>
+                           )}
+                         </p>
                         <Button
                           variant="link"
                           size="sm"
