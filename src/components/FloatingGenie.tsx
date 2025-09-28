@@ -155,6 +155,14 @@ const getPageSpecificMessages = (pathname: string) => {
 
 export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) => {
   const dragRef = useRef<HTMLDivElement>(null);
+  const [dragX, setDragX] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('floatingGenieX');
+      return saved ? parseFloat(saved) : 0;
+    } catch {
+      return 0;
+    }
+  });
   const [dragY, setDragY] = useState<number>(() => {
     try {
       const saved = localStorage.getItem('floatingGenieY');
@@ -163,7 +171,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
       return 0;
     }
   });
-  const [dragBounds, setDragBounds] = useState<{ top: number; bottom: number }>({ top: -300, bottom: 0 });
+  const [dragBounds, setDragBounds] = useState<{ top: number; bottom: number; left: number; right: number }>({ top: -300, bottom: 0, left: -300, right: 0 });
   const [isGenieOpen, setIsGenieOpen] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -236,13 +244,15 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
     }
   }, [showTooltip, isHovered]);
 
-  // Compute vertical drag bounds based on viewport height
+  // Compute drag bounds based on viewport
   useEffect(() => {
     const computeBounds = () => {
       const visibleHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
-      // Bottle container height approx 96px; allow moving up to top padding
-      const top = -Math.max(0, visibleHeight - 160);
-      setDragBounds({ top, bottom: 0 });
+      const visibleWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
+      // Approximate bottle size and margins
+      const verticalTop = -Math.max(0, visibleHeight - 160);
+      const horizontalLeft = -Math.max(0, visibleWidth - 120);
+      setDragBounds({ top: verticalTop, bottom: 0, left: horizontalLeft, right: 0 });
     };
     computeBounds();
     window.addEventListener('resize', computeBounds);
@@ -264,13 +274,17 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
     <>
       <AnimatePresence>
         <Draggable
-          axis="y"
+          axis="both"
           nodeRef={dragRef}
           bounds={dragBounds}
-          defaultPosition={{ x: 0, y: dragY }}
+          defaultPosition={{ x: dragX, y: dragY }}
           onStop={(e, data) => {
+            setDragX(data.x);
             setDragY(data.y);
-            try { localStorage.setItem('floatingGenieY', String(data.y)); } catch {}
+            try { 
+              localStorage.setItem('floatingGenieX', String(data.x));
+              localStorage.setItem('floatingGenieY', String(data.y));
+            } catch {}
           }}
         >
           <motion.div
@@ -307,10 +321,6 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.3 }}
                   className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 md:w-72 max-w-[calc(100vw-2rem)]"
-                  style={{
-                    // Smart positioning to prevent cutoff
-                    left: 'clamp(-120px, -50%, calc(-100vw + 16rem))'
-                  }}
                 >
                   {/* Genie Speech Bubble */}
                   <motion.div
@@ -409,23 +419,25 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                   transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
                 />
 
-                {/* "I am your Genie..." message coming from fumes */}
-                <motion.div 
-                  className="absolute -top-8 left-1/2 -translate-x-1/2 z-30"
-                  animate={{
-                    y: [0, -5, 0],
-                    opacity: [0.7, 1, 0.7]
-                  }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity, 
-                    ease: "easeInOut" 
-                  }}
-                >
-                  <div className="bg-gradient-to-r from-purple-600/90 to-blue-600/90 text-white text-xs px-3 py-1 rounded-full shadow-lg backdrop-blur-sm border border-white/20">
-                    💨 I am your Genie...
-                  </div>
-                </motion.div>
+                {/* Fumes teaser only when tooltip is hidden */}
+                {!showTooltip && !hasInteracted && (
+                  <motion.div 
+                    className="absolute -top-8 left-1/2 -translate-x-1/2 z-30"
+                    animate={{
+                      y: [0, -5, 0],
+                      opacity: [0.7, 1, 0.7]
+                    }}
+                    transition={{ 
+                      duration: 3, 
+                      repeat: Infinity, 
+                      ease: "easeInOut" 
+                    }}
+                  >
+                    <div className="bg-gradient-to-r from-purple-600/90 to-blue-600/90 text-white text-xs px-3 py-1 rounded-full shadow-lg backdrop-blur-sm border border-white/20">
+                      💨 I am your Genie...
+                    </div>
+                  </motion.div>
+                )}
                 <motion.div className="absolute -top-1 left-1/2 -translate-x-1/2 z-20">
                   {[...Array(4)].map((_, i) => (
                     <motion.div
