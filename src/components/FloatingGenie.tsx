@@ -15,22 +15,22 @@ interface FloatingGenieProps {
 const getPageSpecificMessages = (pathname: string) => {
   const baseMessages = [
     {
-      text: "🧞 I am your Genie — emerging from the fumes...",
-      description: "Tap the lamp to begin: privacy note first, then we start our intelligent chat.",
+      text: "🧞 I am your Genie!",
+      description: "Tap to chat: privacy first, then magic begins.",
       icon: Sparkles,
-      humor: "No wish limits. Just smart answers."
+      humor: "No wish limits!"
     },
     {
-      text: "🧞‍♂️ *Poof!* Your AI guide appears!",
-      description: "Like a genie from a bottle, I'm here to grant your tech wishes! Well, almost... 😉",
+      text: "🧞‍♂️ *Poof!* AI guide here!",
+      description: "Ready to grant tech wishes! Well, almost... 😉",
       icon: Sparkles,
-      humor: "No rubbing required!"
+      humor: "No rubbing needed!"
     },
     {
-      text: "🌟 Three wishes? I can do better!",
-      description: "Unlimited AI insights, tech magic, and maybe some dad jokes. What more could you want?",
+      text: "🌟 Unlimited AI insights!",
+      description: "Better than 3 wishes: endless tech magic & jokes!",
       icon: Star,
-      humor: "Plot twist: I'm funnier than Aladdin!"
+      humor: "Funnier than Aladdin!"
     }
   ];
 
@@ -298,19 +298,23 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
           >
-            {/* Tooltip */}
+            {/* Tooltip with smart positioning */}
             <AnimatePresence>
               {showTooltip && (
                 <motion.div
-                  initial={{ opacity: 0, x: 20, scale: 0.8 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  exit={{ opacity: 0, x: 20, scale: 0.8 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 max-w-[280px] md:max-w-xs"
+                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 md:w-72 max-w-[calc(100vw-2rem)]"
+                  style={{
+                    // Smart positioning to prevent cutoff
+                    left: 'clamp(-120px, -50%, calc(-100vw + 16rem))'
+                  }}
                 >
                   {/* Genie Speech Bubble */}
                   <motion.div
-                    className="relative bg-gradient-to-br from-primary/95 to-secondary/95 text-primary-foreground rounded-2xl p-3 md:p-4 shadow-2xl border border-primary/20 backdrop-blur-sm"
+                    className="relative bg-gradient-to-br from-primary/95 to-secondary/95 text-primary-foreground rounded-2xl p-2 md:p-3 shadow-2xl border border-primary/20 backdrop-blur-sm"
                     key={currentMessageIndex}
                     initial={{ opacity: 0, scale: 0.8, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -341,7 +345,7 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                     </motion.div>
 
                     <motion.h4 
-                      className="font-bold text-sm md:text-base mb-2 text-white"
+                      className="font-bold text-xs md:text-sm mb-1 text-white leading-tight"
                       animate={{ 
                         textShadow: [
                           "0 0 4px rgba(255,255,255,0.5)",
@@ -353,11 +357,11 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                     >
                       {currentMessage.text}
                     </motion.h4>
-                    <p className="text-xs md:text-sm text-primary-foreground/90 mb-2 leading-relaxed">
+                    <p className="text-[10px] md:text-xs text-primary-foreground/90 mb-1 leading-snug line-clamp-2">
                       {currentMessage.description}
                     </p>
                     <motion.p 
-                      className="text-xs text-yellow-200 font-medium italic"
+                      className="text-[9px] md:text-[10px] text-yellow-200 font-medium italic"
                       animate={{ opacity: [0.7, 1, 0.7] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
