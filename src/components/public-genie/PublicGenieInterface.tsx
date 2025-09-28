@@ -21,6 +21,7 @@ import { ConfigurationWizard } from './ConfigurationWizard';
 import { SplitScreenRenderer } from './SplitScreenRenderer';
 import { SessionManager } from './SessionManager';
 import { ContextSwitcher } from './ContextSwitcher';
+import { ContextualTopicSuggester } from './ContextualTopicSuggester';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { CapabilitiesPrompt, TopicSuggestions } from './ConversationUtils';
 import { NewsletterService } from '@/services/newsletterService';
@@ -673,6 +674,33 @@ ${conversationSummary.transcript}`
                       </div>
                     )}
                   </div>
+
+                   {/* Contextual Topic Suggestions */}
+                   {hasStartedConversation && !showAdvancedSettings && (
+                     <ContextualTopicSuggester
+                       conversationHistory={messages}
+                       currentContext={context}
+                       onTopicSelect={(response, isFollowUp) => {
+                         if (isFollowUp) {
+                           addMessage({
+                             role: 'assistant',
+                             content: response,
+                             timestamp: new Date().toISOString()
+                           });
+                         } else {
+                           setSelectedTopic(response);
+                         }
+                       }}
+                       onContextSwitch={(newContext) => {
+                         setContext(newContext);
+                         addMessage({
+                           role: 'assistant',
+                           content: `Switched to ${newContext} context! 🔄 I'll now provide suggestions and insights tailored to ${newContext}. What would you like to explore?`,
+                           timestamp: new Date().toISOString()
+                         });
+                       }}
+                     />
+                   )}
 
                    {/* Capabilities Prompt */}
                    {showCapabilities && !context && (
