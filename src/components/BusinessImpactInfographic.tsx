@@ -337,20 +337,7 @@ export const BusinessImpactInfographic = () => {
                     </div>
 
                     {/* Journey Steps */}
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2 text-sm">
-                        <Activity className="w-4 h-4" />
-                        Journey Highlights
-                      </h4>
-                      <div className="space-y-1">
-                        {useCase.journeySteps.slice(0, 3).map((step, i) => (
-                          <div key={i} className="flex items-start gap-2">
-                            <div className={`w-1.5 h-1.5 bg-${useCase.landscapeColor} rounded-full mt-2 flex-shrink-0`} />
-                            <span className="text-xs text-muted-foreground leading-relaxed">{step}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                    {/* Journey steps are now integrated in the 3-phase structure above */}
 
                     {/* Integrations */}
                     <div>
