@@ -10,6 +10,7 @@ import { Brain, Mail, Linkedin, ArrowUp, X, ChevronDown } from "lucide-react";
 import { PrivacyDialog, TermsDialog, DisclaimerDialog, CookiesDialog } from "./LegalDialogs";
 import { FAQModal } from "./FAQModal";
 import { SupportModal } from "./SupportModal";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   const scrollToTop = () => {
@@ -73,18 +74,18 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <div className="space-y-2 text-sm">
-              <a href="/journey" className="text-muted-foreground hover:text-foreground transition-colors block">
-                AI Journey
-              </a>
-              <a href="/about" className="text-muted-foreground hover:text-foreground transition-colors block">
-                About Me
-              </a>
-              <a href="/technology" className="text-muted-foreground hover:text-foreground transition-colors block">
-                Technology Stack
-              </a>
-              <a href="/case-studies" className="text-muted-foreground hover:text-foreground transition-colors block">
-                Case Studies
-              </a>
+              <Link to="/journey" className="text-muted-foreground hover:text-foreground transition-colors block">
+                AI Development Journey
+              </Link>
+              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors block">
+                About Sai
+              </Link>
+              <Link to="/technology" className="text-muted-foreground hover:text-foreground transition-colors block">
+                3-Phase Tech Framework
+              </Link>
+              <Link to="/case-studies" className="text-muted-foreground hover:text-foreground transition-colors block">
+                Validated Case Studies
+              </Link>
             </div>
           </div>
 
@@ -92,12 +93,12 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Resources</h4>
             <div className="space-y-2 text-sm">
-              <a href="/business-use-cases" className="text-muted-foreground hover:text-foreground transition-colors block">
-                Business Use Cases
-              </a>
-              <a href="/docs" className="text-muted-foreground hover:text-foreground transition-colors block">
+              <Link to="/business-use-cases" className="text-muted-foreground hover:text-foreground transition-colors block">
+                Gartner Business Solutions
+              </Link>
+              <Link to="/docs" className="text-muted-foreground hover:text-foreground transition-colors block">
                 Documentation Hub
-              </a>
+              </Link>
               <FAQModal 
                 trigger={
                   <button className="text-muted-foreground hover:text-foreground transition-colors text-left block">
@@ -112,9 +113,9 @@ export const Footer = () => {
                   </button>
                 }
               />
-              <a href="/#experimentation" className="text-muted-foreground hover:text-foreground transition-colors block">
+              <Link to="/#experimentation" className="text-muted-foreground hover:text-foreground transition-colors block">
                 AI Experimentation
-              </a>
+              </Link>
             </div>
           </div>
 

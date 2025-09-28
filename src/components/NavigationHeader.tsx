@@ -109,8 +109,7 @@ export const NavigationHeader = () => {
                     }`}
                   >
                     <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span className="hidden xl:inline text-xs">{responsiveLabel.full}</span>
-                    <span className="lg:inline xl:hidden text-xs">{responsiveLabel.short}</span>
+                    <span className="inline text-xs">{responsiveLabel.full}</span>
                   </Link>
                 );
               })}
