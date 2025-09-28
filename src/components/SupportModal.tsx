@@ -67,7 +67,7 @@ export const SupportModal = ({ trigger }: SupportModalProps) => {
         window.open('https://www.linkedin.com/in/saidas/', '_blank');
         break;
       case 'docs':
-        window.open('/docs', '_blank');
+        window.location.href = '/docs';
         break;
       default:
         break;

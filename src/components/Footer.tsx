@@ -100,14 +100,14 @@ export const Footer = () => {
               </a>
               <FAQModal 
                 trigger={
-                  <button className="text-muted-foreground hover:text-foreground transition-colors text-left">
+                  <button className="text-muted-foreground hover:text-foreground transition-colors text-left block">
                     FAQ & Questions
                   </button>
                 }
               />
               <SupportModal 
                 trigger={
-                  <button className="text-muted-foreground hover:text-foreground transition-colors text-left">
+                  <button className="text-muted-foreground hover:text-foreground transition-colors text-left block">
                     Support Center
                   </button>
                 }
