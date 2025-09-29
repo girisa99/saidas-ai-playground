@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -16,22 +17,22 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
       case "home":
         return {
           primary: {
-            title: "Learn the Framework",
-            description: "Discover the Experiment → Validate → Deploy approach that powered 8+ successful AI implementations",
+            title: "Start Your AI Journey",
+            description: "Discover how to build AI capabilities that position you as a change agent in your organization",
             link: "/about",
             icon: Users,
-            buttonText: "See the Framework in Action"
+            buttonText: "Meet Your Guide"
           },
           secondary: {
-            title: "Explore Real Validation",
-            description: "See how business cases validate AI solutions before major investments",
+            title: "Learn Through Real Cases",
+            description: "See how 4+ documented business cases validate AI solutions through systematic experimentation",
             link: "/business-use-cases",
             icon: Target,
             buttonText: "View Business Cases"
           },
           tertiary: {
-            title: "See Deployment Success",
-            description: "Study complete case studies showing end-to-end AI implementations",
+            title: "See Proven Results",
+            description: "Study 2 complete case studies showing real implementations and outcomes",
             link: "/case-studies",
             icon: Trophy,
             buttonText: "View Success Stories"
@@ -41,22 +42,22 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
       case "about":
         return {
           primary: {
-            title: "Experience My AI Journey",
-            description: "Follow my 5-phase transformation from healthcare tech leader to AI innovator",
+            title: "Follow My Learning Journey",
+            description: "See how I transformed from healthcare tech leader to AI change agent through systematic experimentation",
             link: "/journey",
             icon: Map,
             buttonText: "Explore My Journey"
           },
           secondary: {
             title: "See What I Built",
-            description: "Discover practical applications and real-world AI implementations",
+            description: "Discover practical applications and real-world AI implementations that demonstrate the approach",
             link: "/case-studies",
             icon: Trophy,
             buttonText: "View Case Studies"
           },
           tertiary: {
-            title: "Explore Technologies",
-            description: "Deep dive into the AI tools and technologies I've tested",
+            title: "Explore the Tools",
+            description: "Learn about the AI technologies and frameworks I tested during my experimentation",
             link: "/technology",
             icon: Zap,
             buttonText: "Technology Stack"
@@ -288,10 +289,10 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
             What's Next?
           </Badge>
           <h2 className="text-xl lg:text-2xl font-bold mb-3">
-            Continue Your <span className="text-genie-primary">AI Journey</span>
+            Continue Building Your <span className="text-genie-primary">AI Expertise</span>
           </h2>
           <p className="text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Follow the next logical step in your AI exploration
+            Take the next step in developing AI capabilities that position you as a change agent
           </p>
         </div>
 
@@ -388,6 +389,3 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
     </section>
   );
 };
-
-// Fix missing React import
-import React from "react";
