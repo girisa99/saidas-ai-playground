@@ -60,20 +60,24 @@ export const IntegratedTechnologyExploration = () => {
     businessValue: "Demonstrates complete framework execution from experimentation to production deployment"
   };
 
-  // Real Experimentation Results aligned with Journey and current implementations
+  // Comprehensive Integration Mapping for all Technology Categories
   const experimentationMapping = {
     'Artificial Intelligence & ML': {
-      title: '🌟 Genie Conversational Feature - Clinical Intelligence & AI Decision Support',
-      gartnerPhase: 'Envision → LIVE DEPLOYMENT',
-      giveToGartner: ['Flagship AI Implementation', 'Multi-Model Intelligence', 'Advanced RAG Architecture'],
-      getFromGartner: ['Production-Ready Framework', 'Scalable AI Platform', 'Healthcare Innovation Validation'],
-      valueCreationSteps: ['🚀 LIVE: 80+ Knowledge Contexts', '🚀 LIVE: Multi-LLM Orchestration', '🚀 LIVE: Split-Screen Conversations'],
-      cases: [
+      title: '🌟 Genie Conversational Feature - Multi-Model AI Intelligence',
+      integrationBlueprint: 'Model Selection → Context Architecture → RAG Implementation → Multi-LLM Orchestration → Production Deployment',
+      valueCreationSteps: ['🚀 LIVE: 80+ Knowledge Contexts', '🚀 LIVE: Multi-LLM Orchestration', '🚀 LIVE: Split-Screen Conversations', 'Advanced RAG Architecture', 'Real-time Model Switching'],
+      businessUseCases: [
         '🌟 Genie Conversational Feature - Advanced RAG with 80+ healthcare contexts',
         'Multi-Model Intelligence (GPT-4, Claude, Gemini) with real-time switching',
         'Split-screen model comparison for optimal AI selection',
         'Context switching between specialized healthcare knowledge domains',
         'Production deployment demonstrating complete Experiment → Validate → Lead to Deploy framework'
+      ],
+      scenarios: [
+        'Healthcare professional needs specialized AI advice across multiple domains',
+        'Comparative analysis between AI models for specific healthcare scenarios',
+        'Context-aware conversations switching between clinical specialties',
+        'Real-time model performance evaluation for optimal healthcare decision support'
       ],
       realWorldExamples: [
         '🌟 LIVE FEATURE: Advanced conversational AI with 80+ specialized healthcare contexts',
@@ -84,16 +88,20 @@ export const IntegratedTechnologyExploration = () => {
     },
     'MCP (Model Context Protocol)': {
       title: 'Healthcare System Context Integration',
-      gartnerPhase: 'Envision → Engage',
-      giveToGartner: ['Context Enhancement', 'System Integration', 'Workflow Unification'],
-      getFromGartner: ['Platform Assessment', 'Integration Strategy', 'Scalability Planning'],
-      valueCreationSteps: ['Assess Context Needs', 'Design Integration Architecture', 'Optimize Cross-System Workflows'],
-      cases: [
+      integrationBlueprint: 'Context Assessment → MCP Server Setup → Tool Integration → Cross-System Bridges → Unified Workflows',
+      valueCreationSteps: ['Context Protocol Implementation', 'Healthcare System Integration', 'Cross-Platform Data Flows', 'Unified Patient Views', 'Multi-System Orchestration'],
+      businessUseCases: [
         'Unified patient view across oncology and genetics systems',
         'Provider, Treatment Center & Referral Network integration',
         'Medical Records Acquisition from multiple healthcare systems',
         'Cross-platform care coordination between specialists',
         'Multi-system data harmonization for complex cases'
+      ],
+      scenarios: [
+        'Patient with complex medical history needs unified care across multiple specialists',
+        'Healthcare provider needs integrated view of patient data from different systems',
+        'Clinical trial coordination requiring data from multiple healthcare platforms',
+        'Family medical history integration across genetic counseling and oncology'
       ],
       realWorldExamples: [
         'Robert - Complex Onboarding: Multi-disciplinary coordination between oncology, genetics, and clinical trials',
@@ -103,16 +111,20 @@ export const IntegratedTechnologyExploration = () => {
     },
     'Agentic AI': {
       title: 'Autonomous Healthcare Operations',
-      gartnerPhase: 'Engage → Scale',
-      giveToGartner: ['Process Automation', 'Autonomous Decision Support', 'Operational Excellence'],
-      getFromGartner: ['Value Realization', 'ROI Optimization', 'Continuous Process Improvement'],
-      valueCreationSteps: ['Measure Current Care Processes', 'Identify Automation Gaps', 'Deploy Autonomous Systems'],
-      cases: [
+      integrationBlueprint: 'Process Analysis → Agent Design → Workflow Automation → Decision Orchestration → Continuous Optimization',
+      valueCreationSteps: ['Process Automation Implementation', 'Autonomous Decision Support', 'Workflow Optimization', 'Predictive Resource Allocation', 'Continuous Learning Systems'],
+      businessUseCases: [
         'Automated referral tracking and routing optimization',
         'Intelligent specialist matching based on case complexity',
         'Autonomous patient preparation and education systems',
         'Self-optimizing appointment scheduling workflows',
         'Predictive resource allocation for urgent cases'
+      ],
+      scenarios: [
+        'Urgent patient case requires immediate specialist routing and resource allocation',
+        'Complex patient case needs intelligent specialist matching based on multiple factors',
+        'High-volume appointment scheduling requires autonomous optimization',
+        'Patient preparation workflows need automation for consistency and efficiency'
       ],
       realWorldExamples: [
         'David - Urgent Support: AI immediately flags severe symptoms and routes to specialized care',
@@ -122,16 +134,20 @@ export const IntegratedTechnologyExploration = () => {
     },
     'Frontend Development': {
       title: 'Patient & Provider Digital Experience',
-      gartnerPhase: 'Engage',
-      giveToGartner: ['User Experience Optimization', 'Digital Transformation', 'Rapid Prototyping'],
-      getFromGartner: ['Platform Assessment', 'Interface Design Strategy', 'User Adoption Planning'],
-      valueCreationSteps: ['Assess User Journey Pain Points', 'Design Intuitive Interfaces', 'Optimize Digital Experience'],
-      cases: [
+      integrationBlueprint: 'User Research → Design System → Component Architecture → Responsive Implementation → Performance Optimization',
+      valueCreationSteps: ['User Experience Design', 'Digital Interface Development', 'Multi-channel Integration', 'Mobile-first Optimization', 'Accessibility Implementation'],
+      businessUseCases: [
         'Digital Contact Center Transformation - multi-channel patient interfaces',
         'Patient Portal for oncology appointment scheduling and results',
         'Provider dashboards for referral management and care coordination',
         'Mobile-first patient communication and education apps',
         'Real-time insurance verification and financial assistance interfaces'
+      ],
+      scenarios: [
+        'Patient needs seamless experience across web, mobile, and phone interactions',
+        'Healthcare provider requires comprehensive dashboard for patient management',
+        'Digital transformation of traditional paper-based patient intake processes',
+        'Multi-device patient education and preparation workflows'
       ],
       realWorldExamples: [
         'Jennifer - Treatment Inquiry: Multi-channel communication maintaining context across touchpoints',
@@ -141,16 +157,20 @@ export const IntegratedTechnologyExploration = () => {
     },
     'Backend Infrastructure': {
       title: 'Healthcare System Architecture & APIs',
-      gartnerPhase: 'Engage → Scale',
-      giveToGartner: ['Platform Scalability', 'System Integration', 'Performance Optimization'],
-      getFromGartner: ['Architecture Assessment', 'Scalability Framework', 'Performance Standards'],
-      valueCreationSteps: ['Assess Current Systems', 'Design Scalable Architecture', 'Implement & Scale'],
-      cases: [
+      integrationBlueprint: 'Architecture Design → API Development → Microservices Implementation → Load Balancing → Auto-scaling Deployment',
+      valueCreationSteps: ['Scalable Architecture Design', 'API Integration Development', 'Performance Optimization', 'Microservices Implementation', 'Infrastructure Automation'],
+      businessUseCases: [
         'Scalable referral processing infrastructure handling 4-6 hour to 30-minute turnaround',
         'Real-time insurance verification API integration',
         'Multi-tenant healthcare platform supporting multiple specialties',
         'Edge computing for patient communication and case routing',
         'Microservices architecture for care coordination'
+      ],
+      scenarios: [
+        'High-volume patient referral processing requiring rapid turnaround times',
+        'Real-time integration with insurance verification systems',
+        'Multi-specialty healthcare platform needing tenant isolation',
+        'Geographically distributed healthcare system requiring edge computing'
       ],
       realWorldExamples: [
         'Staff efficiency increased by 60% through AI-assisted workflow optimization',
@@ -160,16 +180,20 @@ export const IntegratedTechnologyExploration = () => {
     },
     'Data Management': {
       title: 'Healthcare Data Strategy & Analytics',
-      gartnerPhase: 'Engage → Scale',
-      giveToGartner: ['Data Strategy', 'Analytics Capabilities', 'ROI Measurement'],
-      getFromGartner: ['Data Architecture Framework', 'Analytics Standards', 'Performance Metrics'],
-      valueCreationSteps: ['Measure Data Quality', 'Identify Analytics Opportunities', 'Optimize Data-Driven Decisions'],
-      cases: [
+      integrationBlueprint: 'Data Architecture → ETL Pipeline Development → Analytics Implementation → Visualization → Insights Delivery',
+      valueCreationSteps: ['Data Quality Assessment', 'Analytics Pipeline Development', 'Business Intelligence Implementation', 'Predictive Analytics', 'Data-Driven Decision Support'],
+      businessUseCases: [
         'Oncology care workflow analytics and outcome tracking',
         'Patient referral completion rates and bottleneck analysis',
         'Contact center performance metrics and quality assurance',
         'Healthcare provider burnout reduction measurement',
         'Treatment outcome analytics for continuous improvement'
+      ],
+      scenarios: [
+        'Healthcare organization needs comprehensive care outcome analytics',
+        'Patient referral bottleneck identification and optimization',
+        'Contact center performance monitoring and quality improvement',
+        'Provider burnout prevention through workload analytics'
       ],
       realWorldExamples: [
         'Data accuracy improved to 98% with automated validation and AI error detection',
@@ -179,16 +203,20 @@ export const IntegratedTechnologyExploration = () => {
     },
     'Security & Compliance': {
       title: 'Healthcare Security & Regulatory Compliance',
-      gartnerPhase: 'Scale',
-      giveToGartner: ['Risk Mitigation', 'Compliance Assurance', 'Trust Building'],
-      getFromGartner: ['Security Framework', 'Compliance Standards', 'Risk Management'],
-      valueCreationSteps: ['Assess Security Risks', 'Implement Compliance Controls', 'Monitor & Adjust'],
-      cases: [
+      integrationBlueprint: 'Security Assessment → Compliance Framework → Identity Management → Encryption Implementation → Audit Systems',
+      valueCreationSteps: ['Security Risk Assessment', 'HIPAA Compliance Implementation', 'Identity Verification Systems', 'Data Encryption', 'Audit Trail Development'],
+      businessUseCases: [
         'HIPAA-compliant patient data handling across all touchpoints',
         'Secure multi-channel patient communication and identity verification',
         'Audit trails for oncology care decisions and referral processes',
         'Voice biometrics reducing verification time to under 30 seconds',
         'Zero-trust architecture for healthcare system access'
+      ],
+      scenarios: [
+        'Healthcare system requires comprehensive HIPAA compliance across all touchpoints',
+        'Patient identity verification needs to be both secure and user-friendly',
+        'Clinical decision audit trails required for regulatory compliance',
+        'Multi-channel patient communication requiring secure data handling'
       ],
       realWorldExamples: [
         'Voice biometrics authentication with 99.2% confidence for patient verification',
@@ -198,16 +226,20 @@ export const IntegratedTechnologyExploration = () => {
     },
     'Integration & Communication': {
       title: 'Healthcare Communication & Workflow Integration',
-      gartnerPhase: 'Scale',
-      giveToGartner: ['Business Process Optimization', 'Operational Efficiency', 'Value Realization'],
-      getFromGartner: ['Integration Framework', 'Process Excellence', 'Continuous Value'],
-      valueCreationSteps: ['Measure Communication Efficiency', 'Identify Integration Bottlenecks', 'Optimize & Scale'],
-      cases: [
+      integrationBlueprint: 'Communication Assessment → Integration Architecture → Workflow Automation → Multi-channel Orchestration → Performance Optimization',
+      valueCreationSteps: ['Communication Efficiency Analysis', 'Integration Bottleneck Resolution', 'Workflow Automation', 'Multi-channel Coordination', 'Continuous Process Optimization'],
+      businessUseCases: [
         'Digital Contact Center with 70% hold time reduction',
         'Automated patient education and preparation systems',
         'Multi-channel patient communication maintaining context',
         'Provider-to-provider coordination for complex cases',
         'Automated insurance and pre-authorization workflows'
+      ],
+      scenarios: [
+        'High-volume contact center needs intelligent call routing and hold time reduction',
+        'Patient preparation workflows require automation for consistency',
+        'Multi-channel patient communication needs context preservation',
+        'Complex cases require seamless provider-to-provider coordination'
       ],
       realWorldExamples: [
         'Jennifer - Seamless multi-channel coordination maintains context across all touchpoints',
