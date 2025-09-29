@@ -65,8 +65,8 @@ export const Footer = () => {
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              GenieAI Experimentation Hub - sharing practical AI innovations and progressive implementations. 
-              From framework development to live applications - demonstrating real AI transformation.
+              GenieAI Experimentation Hub - empowering individuals to build AI expertise through hands-on learning. 
+              Develop the skills that position you as a change agent in your organization and stay ahead of AI disruption.
             </p>
           </div>
 
