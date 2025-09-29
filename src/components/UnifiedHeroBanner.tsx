@@ -135,20 +135,20 @@ export const UnifiedHeroBanner = () => {
           {/* Right Tile - Genie AI Announcement */}
           <div className="bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-primary/30">
             <div className="space-y-6">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row items-start gap-3">
                 <Badge className="bg-gradient-to-r from-primary to-accent text-primary-foreground border-none">
                   <Sparkles className="w-4 h-4 mr-1" />
-                  Coming Soon
+                  Now Available
                 </Badge>
                 <div className="flex items-center gap-2 text-sm text-white/70">
                   <Calendar className="w-4 h-4" />
-                  <span>February 2025</span>
+                  <span>September 2025</span>
                 </div>
               </div>
 
               <h2 className="text-2xl lg:text-3xl font-bold text-white">
                 Introducing Genie AI
-                <span className="block text-primary mt-1 text-xl lg:text-2xl">
+                <span className="block text-genie-accent mt-1 text-xl lg:text-2xl font-semibold">
                   Your Experimentation Guide
                 </span>
               </h2>
@@ -160,30 +160,30 @@ export const UnifiedHeroBanner = () => {
               {/* Genie Features */}
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-white/80">
-                  <MessageCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                  <MessageCircle className="w-5 h-5 text-genie-accent flex-shrink-0" />
                   <span>Guides you through Framework phases</span>
                 </div>
                 <div className="flex items-center gap-3 text-white/80">
-                  <Bot className="w-5 h-5 text-primary flex-shrink-0" />
+                  <Bot className="w-5 h-5 text-genie-accent flex-shrink-0" />
                   <span>Gartner-aligned value methodology</span>
                 </div>
                 <div className="flex items-center gap-3 text-white/80">
-                  <Sparkles className="w-5 h-5 text-primary flex-shrink-0" />
+                  <Sparkles className="w-5 h-5 text-genie-accent flex-shrink-0" />
                   <span>AI-powered conversations</span>
                 </div>
               </div>
 
               {/* Genie Visual */}
               <div className="relative py-6">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-3xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-genie-accent/20 to-genie-teal/20 rounded-full blur-3xl"></div>
                 <img 
                   src={genieAnimated} 
                   alt="Genie AI Assistant" 
                   className="relative w-32 h-32 lg:w-40 lg:h-40 object-contain mx-auto animate-float"
                 />
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                  <Badge variant="secondary" className="bg-background/90 text-foreground border border-primary/20">
-                    <Sparkles className="w-3 h-3 mr-1 text-primary" />
+                  <Badge variant="secondary" className="bg-background/90 text-foreground border border-genie-accent/20">
+                    <Sparkles className="w-3 h-3 mr-1 text-genie-accent" />
                     AI-Powered
                   </Badge>
                 </div>
@@ -192,24 +192,26 @@ export const UnifiedHeroBanner = () => {
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3 pt-4">
                 <Button 
-                  asChild 
                   size="lg" 
-                  className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground flex-1"
+                  className="bg-gradient-to-r from-genie-accent to-genie-teal hover:from-genie-accent/90 hover:to-genie-teal/90 text-genie-dark font-semibold flex-1"
+                  onClick={() => {
+                    // Open Genie popup - you can customize this to your popup implementation
+                    const event = new CustomEvent('openGeniePopup');
+                    window.dispatchEvent(event);
+                  }}
                 >
-                  <Link to="/business-use-cases" className="flex items-center justify-center gap-2">
-                    Experience Framework
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Try Genie Now
                 </Button>
                 
                 <Button 
                   asChild 
                   variant="outline" 
                   size="lg"
-                  className="border-primary/30 hover:bg-primary/5 text-white flex-1"
+                  className="border-white/50 text-white bg-transparent hover:bg-white hover:text-genie-dark backdrop-blur-sm flex-1"
                 >
-                  <Link to="/journey">
-                    AI Journey
+                  <Link to="/business-use-cases">
+                    Business Use Cases
                   </Link>
                 </Button>
               </div>
