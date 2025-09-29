@@ -42,14 +42,14 @@ export const GartnerValueSection = () => {
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
           <div className="inline-flex items-center gap-2 bg-genie-primary/10 px-3 sm:px-4 py-2 rounded-full text-genie-primary text-sm font-medium mb-4">
-            <Lightbulb className="w-4 h-4" />
-            Knowledge Sharing & AI Experimentation Hub
+            <Rocket className="w-4 h-4" />
+            2 Live Features: GenieAI Hub & Genie Conversation
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground mb-4 sm:mb-6">
             Aligning <span className="text-genie-primary">Gartner's Value Framework</span> with AI Innovation
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
-            Exploring how AI experimentation creates multi-stakeholder value through strategic framework alignment, differentiated capabilities, and measurable outcomes.
+            Demonstrating the Experiment → Validate → Lead to Deploy framework through <strong>2 live implementations</strong>: GenieAI Experimentation Hub platform and Genie Conversational AI with 80+ knowledge contexts.
           </p>
         </div>
 

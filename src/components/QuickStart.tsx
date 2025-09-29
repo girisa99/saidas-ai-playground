@@ -22,20 +22,20 @@ export const QuickStart = () => {
   const successMetrics = [
     {
       icon: <Target className="h-6 w-6" />,
-      value: "4+",
-      label: "Business Cases Documented",
+      value: "2",
+      label: "Live Features Deployed",
       color: "text-green-600"
     },
     {
       icon: <TrendingUp className="h-6 w-6" />,
-      value: "2",
-      label: "Case Studies Completed", 
+      value: "10+",
+      label: "Experiments in Pipeline", 
       color: "text-blue-600"
     },
     {
       icon: <Users className="h-6 w-6" />,
-      value: "1",
-      label: "Live Implementation",
+      value: "80+",
+      label: "Knowledge Contexts",
       color: "text-purple-600"
     }
   ];
@@ -88,11 +88,11 @@ export const QuickStart = () => {
             Learning Outcomes
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Real <span className="text-primary">Learning</span> From Real <span className="text-primary">Experiments</span>
+            From <span className="text-primary">Experiment</span> to <span className="text-primary">Live Deployment</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Build your AI expertise through documented experiments and proven methodologies. 
-            Learn what works, what doesn't, and position yourself as a change agent in your field.
+            <strong>2 Live Features Launched:</strong> GenieAI Hub Platform & Genie Conversational AI with 80+ knowledge contexts. 
+            Build expertise through real implementations and proven methodologies.
           </p>
         </div>
 
