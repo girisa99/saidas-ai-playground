@@ -7,8 +7,8 @@ export const TrustSection = () => {
     {
       number: "01",
       title: "Experiment",
-      subtitle: "Rapid Prototyping & Testing",
-      description: "Test AI tools and frameworks quickly without long commitments. Validate concepts through hands-on experimentation with real use cases.",
+      subtitle: "Personal Learning & Discovery",
+      description: "Build hands-on experience with AI tools through systematic experimentation. Learn what works through practical trials on your own playground.",
       icon: Brain,
       color: "from-primary/20 to-primary/10",
       iconBg: "bg-primary",
@@ -17,8 +17,8 @@ export const TrustSection = () => {
     {
       number: "02", 
       title: "Validate",
-      subtitle: "Real-World Business Cases",
-      description: "Prove value through documented business cases and measurable outcomes. Build confidence with stakeholders through demonstrated results.",
+      subtitle: "Build Credible Expertise",
+      description: "Document real results and create proven case studies. Build a track record of AI successes that establishes your credibility as an expert.",
       icon: CheckCircle,
       color: "from-green-500/20 to-green-500/10",
       iconBg: "bg-green-500",
@@ -26,9 +26,9 @@ export const TrustSection = () => {
     },
     {
       number: "03",
-      title: "Deploy",
-      subtitle: "Scale What Works",
-      description: "Implement proven solutions at scale. Share learnings and best practices to accelerate adoption across the organization.",
+      title: "Lead",
+      subtitle: "Drive Change & Influence",
+      description: "Use your validated expertise to become a change agent. Influence organizational AI strategy and guide others through proven knowledge.",
       icon: Briefcase,
       color: "from-blue-500/20 to-blue-500/10", 
       iconBg: "bg-blue-500",
@@ -46,7 +46,7 @@ export const TrustSection = () => {
             The Framework
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            <span className="text-primary">Experiment → Validate → Deploy</span>
+            <span className="text-primary">Experiment → Validate → Lead</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto mb-12">
             A proven 3-step approach that transforms individuals into AI change agents. 
