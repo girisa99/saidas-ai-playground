@@ -64,6 +64,9 @@ export const IntegratedTechnologyExploration = () => {
   const experimentationMapping = {
     'Artificial Intelligence & ML': {
       title: '🌟 Genie Conversational Feature - Multi-Model AI Intelligence',
+      gartnerPhase: 'Envision → LIVE DEPLOYMENT',
+      giveToGartner: ['Flagship AI Implementation', 'Multi-Model Intelligence', 'Advanced RAG Architecture', 'Production-Ready AI Platform'],
+      getFromGartner: ['Innovation Framework Validation', 'Scalable AI Architecture', 'Healthcare AI Best Practices', 'Technology Leadership'],
       integrationBlueprint: 'Model Selection → Context Architecture → RAG Implementation → Multi-LLM Orchestration → Production Deployment',
       valueCreationSteps: ['🚀 LIVE: 80+ Knowledge Contexts', '🚀 LIVE: Multi-LLM Orchestration', '🚀 LIVE: Split-Screen Conversations', 'Advanced RAG Architecture', 'Real-time Model Switching'],
       businessUseCases: [
@@ -88,6 +91,9 @@ export const IntegratedTechnologyExploration = () => {
     },
     'MCP (Model Context Protocol)': {
       title: 'Healthcare System Context Integration',
+      gartnerPhase: 'Envision → Engage',
+      giveToGartner: ['Context Enhancement Technology', 'System Integration Expertise', 'Workflow Unification Methods', 'Cross-Platform Orchestration'],
+      getFromGartner: ['Platform Assessment Framework', 'Integration Strategy Guidelines', 'Scalability Planning Methods', 'Context Management Best Practices'],
       integrationBlueprint: 'Context Assessment → MCP Server Setup → Tool Integration → Cross-System Bridges → Unified Workflows',
       valueCreationSteps: ['Context Protocol Implementation', 'Healthcare System Integration', 'Cross-Platform Data Flows', 'Unified Patient Views', 'Multi-System Orchestration'],
       businessUseCases: [
@@ -111,6 +117,9 @@ export const IntegratedTechnologyExploration = () => {
     },
     'Agentic AI': {
       title: 'Autonomous Healthcare Operations',
+      gartnerPhase: 'Engage → Scale',
+      giveToGartner: ['Process Automation Excellence', 'Autonomous Decision Support', 'Operational Intelligence', 'Workflow Optimization'],
+      getFromGartner: ['Value Realization Framework', 'ROI Optimization Methods', 'Process Improvement Standards', 'Operational Excellence Guidelines'],
       integrationBlueprint: 'Process Analysis → Agent Design → Workflow Automation → Decision Orchestration → Continuous Optimization',
       valueCreationSteps: ['Process Automation Implementation', 'Autonomous Decision Support', 'Workflow Optimization', 'Predictive Resource Allocation', 'Continuous Learning Systems'],
       businessUseCases: [
@@ -134,6 +143,9 @@ export const IntegratedTechnologyExploration = () => {
     },
     'Frontend Development': {
       title: 'Patient & Provider Digital Experience',
+      gartnerPhase: 'Engage',
+      giveToGartner: ['User Experience Innovation', 'Digital Transformation Methods', 'Rapid Prototyping Expertise', 'Interface Design Leadership'],
+      getFromGartner: ['Platform Assessment Framework', 'UX Design Strategy', 'User Adoption Planning', 'Digital Experience Standards'],
       integrationBlueprint: 'User Research → Design System → Component Architecture → Responsive Implementation → Performance Optimization',
       valueCreationSteps: ['User Experience Design', 'Digital Interface Development', 'Multi-channel Integration', 'Mobile-first Optimization', 'Accessibility Implementation'],
       businessUseCases: [
@@ -157,6 +169,9 @@ export const IntegratedTechnologyExploration = () => {
     },
     'Backend Infrastructure': {
       title: 'Healthcare System Architecture & APIs',
+      gartnerPhase: 'Engage → Scale',
+      giveToGartner: ['Platform Scalability Expertise', 'System Integration Architecture', 'Performance Optimization Methods', 'Microservices Excellence'],
+      getFromGartner: ['Architecture Assessment Framework', 'Scalability Guidelines', 'Performance Standards', 'Integration Best Practices'],
       integrationBlueprint: 'Architecture Design → API Development → Microservices Implementation → Load Balancing → Auto-scaling Deployment',
       valueCreationSteps: ['Scalable Architecture Design', 'API Integration Development', 'Performance Optimization', 'Microservices Implementation', 'Infrastructure Automation'],
       businessUseCases: [
@@ -180,6 +195,9 @@ export const IntegratedTechnologyExploration = () => {
     },
     'Data Management': {
       title: 'Healthcare Data Strategy & Analytics',
+      gartnerPhase: 'Engage → Scale',
+      giveToGartner: ['Data Strategy Innovation', 'Analytics Excellence', 'ROI Measurement Methods', 'Business Intelligence Leadership'],
+      getFromGartner: ['Data Architecture Framework', 'Analytics Standards', 'Performance Metrics', 'Data Governance Guidelines'],
       integrationBlueprint: 'Data Architecture → ETL Pipeline Development → Analytics Implementation → Visualization → Insights Delivery',
       valueCreationSteps: ['Data Quality Assessment', 'Analytics Pipeline Development', 'Business Intelligence Implementation', 'Predictive Analytics', 'Data-Driven Decision Support'],
       businessUseCases: [
@@ -203,6 +221,9 @@ export const IntegratedTechnologyExploration = () => {
     },
     'Security & Compliance': {
       title: 'Healthcare Security & Regulatory Compliance',
+      gartnerPhase: 'Scale',
+      giveToGartner: ['Risk Mitigation Expertise', 'Compliance Excellence', 'Trust Building Methods', 'Security Innovation'],
+      getFromGartner: ['Security Framework Standards', 'Compliance Guidelines', 'Risk Management Protocols', 'Regulatory Best Practices'],
       integrationBlueprint: 'Security Assessment → Compliance Framework → Identity Management → Encryption Implementation → Audit Systems',
       valueCreationSteps: ['Security Risk Assessment', 'HIPAA Compliance Implementation', 'Identity Verification Systems', 'Data Encryption', 'Audit Trail Development'],
       businessUseCases: [
@@ -226,6 +247,9 @@ export const IntegratedTechnologyExploration = () => {
     },
     'Integration & Communication': {
       title: 'Healthcare Communication & Workflow Integration',
+      gartnerPhase: 'Scale',
+      giveToGartner: ['Business Process Excellence', 'Operational Efficiency Methods', 'Value Realization Expertise', 'Communication Innovation'],
+      getFromGartner: ['Integration Framework', 'Process Excellence Standards', 'Continuous Value Metrics', 'Communication Best Practices'],
       integrationBlueprint: 'Communication Assessment → Integration Architecture → Workflow Automation → Multi-channel Orchestration → Performance Optimization',
       valueCreationSteps: ['Communication Efficiency Analysis', 'Integration Bottleneck Resolution', 'Workflow Automation', 'Multi-channel Coordination', 'Continuous Process Optimization'],
       businessUseCases: [
@@ -378,40 +402,41 @@ export const IntegratedTechnologyExploration = () => {
       description: "API integrations, communication platforms, and workflow automation",
       journeyPhase: "Scale",
       coreStack: {
-        "Communications": ["Twilio", "SendGrid", "WhatsApp API", "SMS/Voice"],
-        "Integrations": ["CMS APIs", "DocuSign", "Insurance APIs", "ERP Connectors"],
-        "Automation": ["n8n", "Zapier", "Workflow Engines", "Event Streaming"]
+        "APIs": ["REST", "GraphQL", "Webhooks", "Message Queues"],
+        "Communication": ["Twilio", "SendGrid", "Slack", "Teams"],
+        "Automation": ["Zapier", "N8N", "Workflow Engines", "Event Streaming"]
       },
-      businessOutcomes: ["Multi-channel Support", "Document Automation", "Customer Communications", "System Integration"],
+      businessOutcomes: ["Multi-channel Communication", "Process Automation", "System Integration", "Real-time Coordination"],
       experimentResults: ["Business Process Optimization", "Operational Efficiency", "Value Realization"],
-      integrationBlueprint: "API Gateway Setup → Service Integration → Communication Channels → Workflow Automation → Performance Optimization"
+      integrationBlueprint: "API Design → Integration Layer → Workflow Automation → Monitoring → Optimization"
     }
   };
 
+  // Experimentation phases aligned with framework
   const experimentationPhases = [
     {
-      phase: "Envision",
-      color: "bg-blue-500/20 text-blue-700 border-blue-500/30",
-      description: "Listen & Sense → Develop Options",
-      focus: "AI Strategy, Innovation Discovery, Proof of Concept",
+      phase: "EXPERIMENT",
       icon: Brain,
-      businessContext: "Healthcare Innovation, AI Experimentation, Strategic Vision"
+      description: "Discover & test new technologies",
+      focus: "Innovation through experimentation",
+      color: "bg-blue-50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-300",
+      context: "GPT, Claude, Cursor IDE"
     },
     {
-      phase: "Engage", 
-      color: "bg-purple-500/20 text-purple-700 border-purple-500/30",
-      description: "Assess Materiality → Trade-Offs",
-      focus: "Platform Assessment, Integration Planning, Scalability Design",
-      icon: Zap,
-      businessContext: "Technology Selection, Implementation Planning, Value Assessment"
+      phase: "VALIDATE", 
+      icon: CheckCircle,
+      description: "Prove value through real implementation",
+      focus: "Real-world validation & refinement",
+      color: "bg-purple-50 dark:bg-purple-950/20 text-purple-700 dark:text-purple-300",
+      context: "Loveable, Bolt, TypeScript"
     },
     {
-      phase: "Scale",
-      color: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30",
-      description: "Optimize Value → Sustain",
-      focus: "Performance Optimization, ROI Maximization, Continuous Improvement",
-      icon: TrendingUp,
-      businessContext: "Enterprise Deployment, Compliance Management, Performance Optimization"
+      phase: "LEAD to DEPLOY",
+      icon: Target,
+      description: "Scale from prototype to production",
+      focus: "Production deployment & scaling",
+      color: "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-300",
+      context: "Supabase, Docker, CI/CD"
     }
   ];
 
@@ -429,6 +454,7 @@ export const IntegratedTechnologyExploration = () => {
             <Zap className="w-4 h-4 mr-2" />
             Genie AI Experimentation Hub - 3-Phase Technology Ecosystem
           </Badge>
+          
           <h2 className="text-4xl lg:text-6xl font-bold mb-6">
             <span className="text-genie-primary">Experiment → Validate → Lead to Deploy</span> Technology Arsenal
           </h2>
@@ -646,8 +672,59 @@ export const IntegratedTechnologyExploration = () => {
                           </div>
                         </div>
 
-                        {/* Integration Blueprint & Value Creation */}
+                        {/* Gartner Give & Get Framework */}
                         <div>
+                          <h5 className="font-semibold text-sm mb-3 flex items-center gap-1">
+                            <TrendingUp className="w-3 h-3" />
+                            Gartner Framework Mapping
+                          </h5>
+                          
+                          <div className="mb-4">
+                            <Badge className={`${details.color} bg-transparent border-current text-xs mb-2`}>
+                              Framework Phase: {experimentationMapping[category]?.gartnerPhase || details.journeyPhase}
+                            </Badge>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div className="p-3 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-lg border border-green-200 dark:border-green-800">
+                              <h6 className="text-xs font-semibold text-green-700 dark:text-green-300 mb-2 flex items-center gap-1">
+                                <ArrowUp className="w-3 h-3" />
+                                Give to Gartner
+                              </h6>
+                              <div className="space-y-1">
+                                {experimentationMapping[category]?.giveToGartner?.map((item, index) => (
+                                  <div key={index} className="flex items-start gap-2">
+                                    <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                                    <span className="text-xs text-green-700 dark:text-green-300">{item}</span>
+                                  </div>
+                                )) || (
+                                  <div className="text-xs text-green-700 dark:text-green-300">
+                                    Technology leadership and innovation expertise
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="p-3 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                              <h6 className="text-xs font-semibold text-blue-700 dark:text-blue-300 mb-2 flex items-center gap-1">
+                                <ArrowDown className="w-3 h-3" />
+                                Get from Gartner
+                              </h6>
+                              <div className="space-y-1">
+                                {experimentationMapping[category]?.getFromGartner?.map((item, index) => (
+                                  <div key={index} className="flex items-start gap-2">
+                                    <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                                    <span className="text-xs text-blue-700 dark:text-blue-300">{item}</span>
+                                  </div>
+                                )) || (
+                                  <div className="text-xs text-blue-700 dark:text-blue-300">
+                                    Framework validation and best practices guidance
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
                           <h5 className="font-semibold text-sm mb-3 flex items-center gap-1">
                             <Network className="w-3 h-3" />
                             Integration Blueprint
@@ -894,7 +971,8 @@ export const IntegratedTechnologyExploration = () => {
                 </div>
               </div>
             </Card>
-         </div>
+          </div>
+        </div>
 
         {/* Call to Action - Experimentation Focus */}
         <div className="text-center">
@@ -915,7 +993,6 @@ export const IntegratedTechnologyExploration = () => {
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
-          </div>
           </div>
         </div>
       </div>
