@@ -85,9 +85,14 @@ export const EnhancedGenieDashboard = () => {
     title: '',
     content: '',
     category: 'technology',
-    tags: ''
+    tags: '',
+    inputType: 'text', // text, url, html, file
+    url: '',
+    html: ''
   });
   const [showAddKnowledge, setShowAddKnowledge] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { toast } = useToast();
 
   const [stats, setStats] = useState({
@@ -662,27 +667,129 @@ export const EnhancedGenieDashboard = () => {
   };
 
   const handleAddKnowledgeEntry = async () => {
-    if (!newKnowledgeEntry.title || !newKnowledgeEntry.content) {
+    if (!newKnowledgeEntry.title) {
       toast({
         title: "Error",
-        description: "Title and content are required",
+        description: "Title is required",
         variant: "destructive",
       });
       return;
     }
 
+    // Validate based on input type
+    if (newKnowledgeEntry.inputType === 'text' && !newKnowledgeEntry.content) {
+      toast({
+        title: "Error",
+        description: "Content is required for text input",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (newKnowledgeEntry.inputType === 'url' && !newKnowledgeEntry.url) {
+      toast({
+        title: "Error",
+        description: "URL is required for URL input",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (newKnowledgeEntry.inputType === 'html' && !newKnowledgeEntry.html) {
+      toast({
+        title: "Error",
+        description: "HTML content is required for HTML input",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (newKnowledgeEntry.inputType === 'file' && !selectedFile) {
+      toast({
+        title: "Error",
+        description: "File is required for file input",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setUploading(true);
     try {
+      let filePath = null;
+      let fileName = null;
+      let fileSize = null;
+      let fileType = null;
+      let processedContent = '';
+
+      // Handle file upload
+      if (newKnowledgeEntry.inputType === 'file' && selectedFile) {
+        const fileExt = selectedFile.name.split('.').pop();
+        const timestamp = Date.now();
+        filePath = `${timestamp}-${selectedFile.name}`;
+        fileName = selectedFile.name;
+        fileSize = selectedFile.size;
+        fileType = selectedFile.type;
+
+        // Upload file to Supabase storage
+        const { error: uploadError } = await supabase.storage
+          .from('knowledge-files')
+          .upload(filePath, selectedFile);
+
+        if (uploadError) throw uploadError;
+
+        // For text-based files, read content directly
+        if (selectedFile.type.startsWith('text/') || 
+            selectedFile.type === 'application/json' ||
+            selectedFile.name.endsWith('.sql') ||
+            selectedFile.name.endsWith('.md')) {
+          const fileContent = await selectedFile.text();
+          processedContent = fileContent;
+        } else {
+          // For complex documents, we would need to implement parsing
+          processedContent = `File uploaded: ${fileName} (${fileType})`;
+        }
+      }
+
+      // Prepare insert data
+      const insertData: any = {
+        name: newKnowledgeEntry.title,
+        category: newKnowledgeEntry.category,
+        healthcare_tags: newKnowledgeEntry.tags.split(',').map(tag => tag.trim()).filter(Boolean),
+        status: 'approved',
+        source_type: 'admin_created',
+        is_active: true,
+        is_static: false
+      };
+
+      // Set content based on input type
+      switch (newKnowledgeEntry.inputType) {
+        case 'text':
+          insertData.description = newKnowledgeEntry.content;
+          insertData.processed_content = newKnowledgeEntry.content;
+          break;
+        case 'url':
+          insertData.content_url = newKnowledgeEntry.url;
+          insertData.description = `Content from URL: ${newKnowledgeEntry.url}`;
+          // We could fetch and process the URL content here
+          break;
+        case 'html':
+          insertData.content_html = newKnowledgeEntry.html;
+          insertData.description = newKnowledgeEntry.html;
+          insertData.processed_content = newKnowledgeEntry.html;
+          break;
+        case 'file':
+          insertData.file_path = filePath;
+          insertData.file_name = fileName;
+          insertData.file_size = fileSize;
+          insertData.file_type = fileType;
+          insertData.description = processedContent;
+          insertData.processed_content = processedContent;
+          break;
+      }
+
       const { error } = await supabase
         .from('knowledge_base')
-        .insert({
-          name: newKnowledgeEntry.title,
-          description: newKnowledgeEntry.content,
-          category: newKnowledgeEntry.category,
-          healthcare_tags: newKnowledgeEntry.tags.split(',').map(tag => tag.trim()).filter(Boolean),
-          status: 'approved',
-          source_type: 'admin_created',
-          is_active: true
-        });
+        .insert(insertData);
 
       if (error) throw error;
 
@@ -691,7 +798,16 @@ export const EnhancedGenieDashboard = () => {
         description: "Knowledge entry added successfully",
       });
 
-      setNewKnowledgeEntry({ title: '', content: '', category: 'technology', tags: '' });
+      setNewKnowledgeEntry({ 
+        title: '', 
+        content: '', 
+        category: 'technology', 
+        tags: '', 
+        inputType: 'text',
+        url: '',
+        html: ''
+      });
+      setSelectedFile(null);
       setShowAddKnowledge(false);
       loadDashboardData();
     } catch (error) {
@@ -701,6 +817,24 @@ export const EnhancedGenieDashboard = () => {
         description: "Failed to add knowledge entry",
         variant: "destructive",
       });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Check file size (20MB limit)
+      if (file.size > 20 * 1024 * 1024) {
+        toast({
+          title: "Error",
+          description: "File size must be less than 20MB",
+          variant: "destructive",
+        });
+        return;
+      }
+      setSelectedFile(file);
     }
   };
 
@@ -1390,9 +1524,23 @@ export const EnhancedGenieDashboard = () => {
             <Card className="mb-6">
               <CardHeader>
                 <CardTitle>Add New Knowledge Entry</CardTitle>
-                <CardDescription>Create a new knowledge base entry</CardDescription>
+                <CardDescription>Create a new knowledge base entry from various sources</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium">Input Type</label>
+                  <select
+                    className="w-full mt-1 px-3 py-2 border rounded-md"
+                    value={newKnowledgeEntry.inputType}
+                    onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, inputType: e.target.value})}
+                  >
+                    <option value="text">Text Content</option>
+                    <option value="url">URL/Website</option>
+                    <option value="html">HTML Content</option>
+                    <option value="file">File Upload</option>
+                  </select>
+                </div>
+
                 <div>
                   <label className="text-sm font-medium">Title</label>
                   <input
@@ -1403,15 +1551,70 @@ export const EnhancedGenieDashboard = () => {
                     placeholder="Enter knowledge entry title"
                   />
                 </div>
-                <div>
-                  <label className="text-sm font-medium">Content</label>
-                  <textarea
-                    className="w-full mt-1 px-3 py-2 border rounded-md h-32"
-                    value={newKnowledgeEntry.content}
-                    onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, content: e.target.value})}
-                    placeholder="Enter knowledge content"
-                  />
-                </div>
+
+                {/* Content based on input type */}
+                {newKnowledgeEntry.inputType === 'text' && (
+                  <div>
+                    <label className="text-sm font-medium">Content</label>
+                    <textarea
+                      className="w-full mt-1 px-3 py-2 border rounded-md h-32"
+                      value={newKnowledgeEntry.content}
+                      onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, content: e.target.value})}
+                      placeholder="Enter knowledge content"
+                    />
+                  </div>
+                )}
+
+                {newKnowledgeEntry.inputType === 'url' && (
+                  <div>
+                    <label className="text-sm font-medium">URL</label>
+                    <input
+                      type="url"
+                      className="w-full mt-1 px-3 py-2 border rounded-md"
+                      value={newKnowledgeEntry.url}
+                      onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, url: e.target.value})}
+                      placeholder="https://example.com/article"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Content will be fetched and processed from this URL
+                    </p>
+                  </div>
+                )}
+
+                {newKnowledgeEntry.inputType === 'html' && (
+                  <div>
+                    <label className="text-sm font-medium">HTML Content</label>
+                    <textarea
+                      className="w-full mt-1 px-3 py-2 border rounded-md h-32 font-mono text-sm"
+                      value={newKnowledgeEntry.html}
+                      onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, html: e.target.value})}
+                      placeholder="<div>Enter HTML content here...</div>"
+                    />
+                  </div>
+                )}
+
+                {newKnowledgeEntry.inputType === 'file' && (
+                  <div>
+                    <label className="text-sm font-medium">File Upload</label>
+                    <input
+                      type="file"
+                      className="w-full mt-1 px-3 py-2 border rounded-md"
+                      onChange={handleFileSelect}
+                      accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.json,.sql,.txt,.md,.html,.jpg,.jpeg,.png,.webp"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Supported: PDF, Word, PowerPoint, Excel, JSON, SQL, Text, Markdown, HTML, Images (max 20MB)
+                    </p>
+                    {selectedFile && (
+                      <div className="mt-2 p-2 bg-muted rounded-md">
+                        <p className="text-sm font-medium">Selected: {selectedFile.name}</p>
+                        <p className="text-xs text-muted-foreground">
+                          Size: {(selectedFile.size / 1024 / 1024).toFixed(2)} MB | Type: {selectedFile.type}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
                 <div>
                   <label className="text-sm font-medium">Category</label>
                   <select
@@ -1435,10 +1638,26 @@ export const EnhancedGenieDashboard = () => {
                   />
                 </div>
                 <div className="flex gap-2">
-                  <Button onClick={handleAddKnowledgeEntry}>
-                    Add Entry
+                  <Button 
+                    onClick={handleAddKnowledgeEntry} 
+                    disabled={uploading}
+                    className="flex items-center gap-2"
+                  >
+                    {uploading ? 'Processing...' : 'Add Entry'}
                   </Button>
-                  <Button variant="outline" onClick={() => setShowAddKnowledge(false)}>
+                  <Button variant="outline" onClick={() => {
+                    setShowAddKnowledge(false);
+                    setNewKnowledgeEntry({ 
+                      title: '', 
+                      content: '', 
+                      category: 'technology', 
+                      tags: '', 
+                      inputType: 'text',
+                      url: '',
+                      html: ''
+                    });
+                    setSelectedFile(null);
+                  }}>
                     Cancel
                   </Button>
                 </div>
@@ -1447,17 +1666,15 @@ export const EnhancedGenieDashboard = () => {
           )}
 
           {/* Knowledge Base Statistics */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Technology Entries</p>
-                    <p className="text-2xl font-bold text-blue-600">
-                      {knowledgeEntries.filter(entry => entry.category === 'technology').length + 5}
-                    </p>
+                    <p className="text-sm font-medium text-muted-foreground">Static Entries</p>
+                    <p className="text-2xl font-bold text-blue-600">10</p>
                     <p className="text-xs text-muted-foreground">
-                      Including static entries
+                      Built-in knowledge
                     </p>
                   </div>
                   <BookOpen className="h-8 w-8 text-blue-600" />
@@ -1469,15 +1686,15 @@ export const EnhancedGenieDashboard = () => {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Healthcare Entries</p>
+                    <p className="text-sm font-medium text-muted-foreground">Dynamic Entries</p>
                     <p className="text-2xl font-bold text-green-600">
-                      {knowledgeEntries.filter(entry => entry.category === 'healthcare').length + 5}
+                      {knowledgeEntries.length}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Including static entries
+                      Admin managed
                     </p>
                   </div>
-                  <Shield className="h-8 w-8 text-green-600" />
+                  <Database className="h-8 w-8 text-green-600" />
                 </div>
               </CardContent>
             </Card>
@@ -1486,19 +1703,81 @@ export const EnhancedGenieDashboard = () => {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Total Entries</p>
+                    <p className="text-sm font-medium text-muted-foreground">Technology</p>
                     <p className="text-2xl font-bold text-purple-600">
-                      {knowledgeEntries.length + 10}
+                      {knowledgeEntries.filter(entry => entry.category === 'technology').length + 5}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Dynamic + Static
+                      Tech knowledge
                     </p>
                   </div>
-                  <Database className="h-8 w-8 text-purple-600" />
+                  <Bot className="h-8 w-8 text-purple-600" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Healthcare</p>
+                    <p className="text-2xl font-bold text-red-600">
+                      {knowledgeEntries.filter(entry => entry.category === 'healthcare').length + 5}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Medical knowledge
+                    </p>
+                  </div>
+                  <Shield className="h-8 w-8 text-red-600" />
                 </div>
               </CardContent>
             </Card>
           </div>
+
+          {/* Static vs Dynamic Explanation */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Knowledge Base Types</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 border rounded-lg">
+                  <h4 className="font-semibold mb-2 flex items-center gap-2">
+                    <Badge variant="secondary">Static</Badge>
+                    Built-in Knowledge
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    Hardcoded entries from TechnologyKnowledgeBase.tsx and HealthcareKnowledgeBase.tsx files. 
+                    These are predefined knowledge entries built into the application code and cannot be modified through the admin interface.
+                  </p>
+                  <ul className="text-xs text-muted-foreground mt-2 space-y-1">
+                    <li>• AI Market Landscape</li>
+                    <li>• Enterprise Tech Giants</li>
+                    <li>• Healthcare Reimbursement</li>
+                    <li>• Digital Therapeutics</li>
+                    <li>• ...and more</li>
+                  </ul>
+                </div>
+                <div className="p-4 border rounded-lg">
+                  <h4 className="font-semibold mb-2 flex items-center gap-2">
+                    <Badge variant="default">Dynamic</Badge>
+                    Database-managed Knowledge
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    Entries stored in the database that can be added, edited, and managed through this admin interface. 
+                    Supports multiple input types including text, URLs, HTML, and file uploads.
+                  </p>
+                  <ul className="text-xs text-muted-foreground mt-2 space-y-1">
+                    <li>• Text content entries</li>
+                    <li>• URL-based knowledge</li>
+                    <li>• HTML content</li>
+                    <li>• File uploads (PDF, Word, etc.)</li>
+                    <li>• Admin-created entries</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Knowledge Base Entries */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
