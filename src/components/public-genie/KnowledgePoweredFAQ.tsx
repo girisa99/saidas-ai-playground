@@ -57,7 +57,7 @@ export const KnowledgePoweredFAQ = ({ onStartConversation }: KnowledgePoweredFAQ
       },
       {
         category: "3-Phase Framework",
-        question: "How does the Experiment → Validate → Deploy framework work?",
+        question: "How does the Experiment → Validate → Lead to Deploy framework work?",
         answer: Object.values(genieKnowledgeBase.framework.phases).join(" → "),
         context: "framework"
       },

@@ -4,11 +4,11 @@ export const genieKnowledgeBase = {
     title: "Genie AI Experimentation Hub",
     description: "3-Phase AI Framework validation journey by Sai Das, following Gartner methodology - sharing structured learning for individual growth and business transformation",
     creator: "Sai Das - AI Innovation Leader and Healthcare Technology Expert",
-    purpose: "Systematic exploration of AI technologies through the Experiment → Validate → Deploy framework, with Gartner value methodology integration"
+    purpose: "Systematic exploration of AI technologies through the Experiment → Validate → Lead to Deploy framework, with Gartner value methodology integration"
   },
 
   framework: {
-    title: "3-Phase AI Framework (Experiment → Validate → Deploy)",
+    title: "3-Phase AI Framework (Experiment → Validate → Lead to Deploy)",
     description: "Structured approach to AI implementation following Gartner value methodology",
     phases: {
       experiment: "Rapid prototyping, hypothesis testing, and proof-of-concept development",
@@ -41,7 +41,7 @@ export const genieKnowledgeBase = {
     },
     technology: {
       title: "3-Phase Tech Framework",
-      description: "Comprehensive technology stack organized by framework phases: Experiment → Validate → Deploy",
+      description: "Comprehensive technology stack organized by framework phases: Experiment → Validate → Lead to Deploy",
       categories: ["Experimentation tools", "Validation platforms", "Deployment infrastructure", "Gartner-aligned technologies"]
     },
     businessUseCases: {
@@ -58,7 +58,7 @@ export const genieKnowledgeBase = {
 
   aiCapabilities: {
     specializations: [
-      "3-Phase AI Framework (Experiment → Validate → Deploy)",
+      "3-Phase AI Framework (Experiment → Validate → Lead to Deploy)",
       "Gartner Value Framework implementation", 
       "Technology stack architecture and validation",
       "Healthcare business use cases with proven ROI",
@@ -178,7 +178,7 @@ export const genieKnowledgeBase = {
   caseStudyExamples: {
     patientOnboarding: {
       challenge: "Complex healthcare patient enrollment process requiring 94% accuracy",
-      solution: "3-Phase AI Framework implementation: Experiment → Validate → Deploy",
+      solution: "3-Phase AI Framework implementation: Experiment → Validate → Lead to Deploy",
       framework: "Built in 3 days using structured methodology with real-world validation",
       technologies: ["Multi-agent AI systems", "Natural language processing", "Clinical decision support"],
       outcomes: ["94% accuracy achieved", "3-day development cycle", "Gartner methodology validated", "Scalable framework proven"]

@@ -33,7 +33,7 @@ export const GenieHeroBanner = () => {
               
               <p className="text-base sm:text-lg text-muted-foreground max-w-2xl">
                 The conversational engine that guides you through our 3-Phase Framework 
-                (Experiment → Validate → Deploy) using Gartner value methodology to democratize AI development.
+                (Experiment → Validate → Lead to Deploy) using Gartner value methodology to democratize AI development.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-3 text-sm text-muted-foreground">

@@ -10,7 +10,7 @@ const BusinessUseCases = () => {
     document.title = "3-Phase Framework Applications - Real-World AI Experiments";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Real-world validation of the Experiment → Validate → Deploy framework through healthcare AI implementations. Strategic technology selection following Gartner value methodology for oncology workflows.');
+      metaDescription.setAttribute('content', 'Real-world validation of the Experiment → Validate → Lead to Deploy framework through healthcare AI implementations. Strategic technology selection following Gartner value methodology for oncology workflows.');
     }
   }, []);
 

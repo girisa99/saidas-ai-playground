@@ -68,7 +68,7 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
         return {
           primary: {
             title: "Apply the Framework",
-            description: "See how the Experiment → Validate → Deploy methodology translates to real business applications and healthcare solutions",
+            description: "See how the Experiment → Validate → Lead to Deploy methodology translates to real business applications and healthcare solutions",
             link: "/business-use-cases",
             icon: Target,
             buttonText: "Business Applications"

@@ -19,7 +19,7 @@ const CaseStudies = () => {
     document.title = "3-Phase Framework Results - What I Learned & Built";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Real-world validation of the Experiment → Validate → Deploy framework through detailed case studies. Following Gartner value methodology with 94% accuracy and proven healthcare implementations.');
+      metaDescription.setAttribute('content', 'Real-world validation of the Experiment → Validate → Lead to Deploy framework through detailed case studies. Following Gartner value methodology with 94% accuracy and proven healthcare implementations.');
     }
   }, []);
 

@@ -106,7 +106,7 @@ export const MultiHeroSection = () => {
         <div className="max-w-5xl mx-auto text-center">
             {/* Bold Value Proposition */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6 animate-fade-in text-center text-white">
-              Experiment. Validate. Deploy. <span className="text-genie-accent">Faster AI Innovation Without Bureaucracy</span>
+              Experiment. Validate. Lead to Deploy. <span className="text-genie-accent">Faster AI Innovation Without Bureaucracy</span>
             </h1>
             <div className="w-16 sm:w-20 md:w-24 h-1 bg-genie-accent mx-auto mb-6 sm:mb-8"></div>
             
@@ -118,7 +118,7 @@ export const MultiHeroSection = () => {
               Learn the practical approach from business idea to working AI application through proven technology stacks and real examples.
             </p>
             
-            {/* Experiment → Validate → Deploy Framework */}
+            {/* Experiment → Validate → Lead to Deploy Framework */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 max-w-4xl mx-auto px-2">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Trophy className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />

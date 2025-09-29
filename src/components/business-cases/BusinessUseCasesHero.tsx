@@ -38,7 +38,7 @@ export const BusinessUseCasesHero = ({
         </h1>
         
         <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-          Real-world validation of the <span className="text-genie-accent font-semibold">Experiment → Validate → Deploy</span> framework through healthcare AI implementations, following Gartner value methodology. Exploring various scenarios where some are implemented and actively being tested, while others are in development phases as part of our ongoing experimentation initiatives.
+          Real-world validation of the <span className="text-genie-accent font-semibold">Experiment → Validate → Lead to Deploy</span> framework through healthcare AI implementations, following Gartner value methodology. Exploring various scenarios where some are implemented and actively being tested, while others are in development phases as part of our ongoing experimentation initiatives.
         </p>
         
         {/* Key Features Grid - Mobile Responsive */}

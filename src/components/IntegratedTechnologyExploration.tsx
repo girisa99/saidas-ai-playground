@@ -383,7 +383,7 @@ export const IntegratedTechnologyExploration = () => {
             Technology Stack <span className="text-genie-primary">& 3-Phase Integration</span>
           </h2>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
-            Technology ecosystem powering the <span className="text-genie-primary font-semibold">Experiment → Validate → Deploy</span> framework. 
+            Technology ecosystem powering the <span className="text-genie-primary font-semibold">Experiment → Validate → Lead to Deploy</span> framework. 
             Following Gartner value methodology with 10+ integrated tools and real-world healthcare applications.
           </p>
           
