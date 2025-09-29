@@ -144,15 +144,15 @@ const About = () => {
             </h1>
             
             <h2 className="text-2xl lg:text-3xl font-bold text-genie-cyan mb-6 max-w-5xl mx-auto lg:mx-0">
-              <AnimatedTextEmergence 
-                text="Creator of the Experiment → Validate → Deploy AI Framework"
-                startDelay={3500}
-                charDelay={50}
-                className="block font-bold"
-                flyFromBottle={true}
-                bottlePosition={{ x: 75, y: 50 }}
-                onComplete={() => setSubtitleDone(true)}
-              />
+               <AnimatedTextEmergence 
+                 text="Creator of the Experiment → Validate → Lead to Deploy AI Framework"
+                 startDelay={3500}
+                 charDelay={50}
+                 className="block font-bold"
+                 flyFromBottle={true}
+                 bottlePosition={{ x: 75, y: 50 }}
+                 onComplete={() => setSubtitleDone(true)}
+               />
             </h2>
             
             {/* Animated Description - AI Innovation Focus */}
@@ -304,14 +304,14 @@ const About = () => {
             {/* Professional Background Narrative */}
             <div className="prose prose-xl max-w-5xl mx-auto text-muted-foreground mb-16 leading-relaxed">
               <Card className="p-8 lg:p-12 bg-gradient-to-br from-genie-primary/5 to-background border-genie-primary/20">
-                <p className="mb-6">
-                  My career spans technology leadership roles at industry giants including <strong className="text-genie-primary">Novartis, Bayer, 
-                  Conduent, Amgen, and Pfizer</strong>, where I consistently observed a common pattern: innovative AI projects often failed not due to technical limitations, 
-                  but because of inadequate validation and rushed deployment. This led me to develop the <strong className="text-genie-teal">Experiment → Validate → Deploy framework</strong> - 
-                  a systematic approach that dramatically improves success rates while reducing risk. Currently serving as 
-                  <strong className="text-genie-primary">Director of Product owner/solution Architect for CGAT (PSaS) supporting InspiroGene at McKesson</strong>, 
-                  I apply this framework across complex healthcare technology initiatives.
-                </p>
+                 <p className="mb-6">
+                   My career spans technology leadership roles at industry giants including <strong className="text-genie-primary">Novartis, Bayer, 
+                   Conduent, Amgen, and Pfizer</strong>, where I consistently observed a common pattern: innovative AI projects often failed not due to technical limitations, 
+                   but because of inadequate validation and rushed deployment. This led me to develop the <strong className="text-genie-teal">Experiment → Validate → Lead to Deploy framework</strong> - 
+                   a systematic approach that dramatically improves success rates while reducing risk. Currently serving as 
+                   <strong className="text-genie-primary">Director of Product owner/solution Architect for CGAT (PSaS) supporting InspiroGene at McKesson</strong>, 
+                   I apply this framework across complex healthcare technology initiatives.
+                 </p>
                 <p className="mb-6">
                   The <strong className="text-genie-cyan">GenieAI Experimentation Hub</strong> emerged from this methodology - 
                   a personal knowledge-sharing initiative that documents real applications of the framework through practical examples and case studies. 

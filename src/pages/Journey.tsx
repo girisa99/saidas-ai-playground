@@ -36,10 +36,10 @@ const ComponentSkeleton = () => (
 
 const Journey = () => {
   useEffect(() => {
-    document.title = "Experiment → Validate → Deploy AI Framework - Genie AI HUB";
+    document.title = "Experiment → Validate → Lead to Deploy AI Framework - Genie AI HUB";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Discover the proven Experiment → Validate → Deploy AI framework - from 45-day experimentation to production-ready healthcare AI solutions with enterprise-grade reliability.');
+      metaDescription.setAttribute('content', 'Discover the proven Experiment → Validate → Lead to Deploy AI framework - from 45-day experimentation to production-ready healthcare AI solutions with enterprise-grade reliability.');
     }
   }, []);
 
@@ -91,11 +91,11 @@ const Journey = () => {
           <div className="max-w-5xl">
             <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-3 sm:mb-4">
               <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-              Experiment → Validate → Deploy Framework
+              Experiment → Validate → Lead to Deploy Framework
             </Badge>
             
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
-              <span className="text-genie-accent">Experiment → Validate → Deploy</span> AI Framework
+              <span className="text-genie-accent">Experiment → Validate → Lead to Deploy</span> AI Framework
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
@@ -163,9 +163,9 @@ const Journey = () => {
             <h2 className="text-3xl lg:text-5xl font-bold mb-6">
               From Framework to <span className="text-genie-cyan">Live Implementation</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              Demonstrating the Experiment → Validate → Deploy framework through real applications and progressive feature releases.
-            </p>
+             <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+               Demonstrating the Experiment → Validate → Lead to Deploy framework through real applications and progressive feature releases.
+             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -262,9 +262,9 @@ const Journey = () => {
           </div>
 
           <div className="text-center">
-            <p className="text-lg text-muted-foreground mb-6">
-              This progressive launch strategy demonstrates the <strong className="text-genie-cyan">Experiment → Validate → Deploy</strong> framework in real-time.
-            </p>
+             <p className="text-lg text-muted-foreground mb-6">
+               This progressive launch strategy demonstrates the <strong className="text-genie-cyan">Experiment → Validate → Lead to Deploy</strong> framework in real-time.
+             </p>
             <Button asChild size="lg" className="bg-genie-cyan hover:bg-genie-cyan/90 text-background">
               <Link to="/business-use-cases">
                 <Target className="w-4 h-4 mr-2" />

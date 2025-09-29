@@ -118,8 +118,8 @@ export const UnifiedHeroBanner = () => {
                 </div>
                 <div className="bg-white/10 rounded-lg p-4 text-center">
                   <Rocket className="h-6 w-6 text-genie-accent mx-auto mb-2" />
-                  <h3 className="font-semibold text-white text-sm">Lead</h3>
-                  <p className="text-white/70 text-xs">Drive organizational change</p>
+                  <h3 className="font-semibold text-white text-sm">Lead to Deploy</h3>
+                  <p className="text-white/70 text-xs">Drive implementation with expertise</p>
                 </div>
               </div>
 
