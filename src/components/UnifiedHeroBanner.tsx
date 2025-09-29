@@ -74,12 +74,12 @@ export const UnifiedHeroBanner = () => {
         {/* Header Section */}
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-6">
-            Experiment. Validate. Deploy.
-            <span className="block text-genie-accent mt-2">Faster AI Innovation Without Bureaucracy</span>
+            Democratize. Learn. Lead.
+            <span className="block text-genie-accent mt-2">Become the AI Change Agent Your Organization Needs</span>
           </h1>
           <div className="w-24 h-1 bg-genie-accent mx-auto mb-6"></div>
           <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto">
-            45 Days of Learning → GenieAI Experimentation Hub Launch
+            Don't wait for permission. Start experimenting. Build capabilities. Drive transformation.
           </p>
         </div>
 
@@ -97,11 +97,11 @@ export const UnifiedHeroBanner = () => {
               </div>
 
               <h2 className="text-2xl lg:text-3xl font-bold text-white">
-                My AI Democratization Journey
+                Your AI Experimentation Playground
               </h2>
               
               <p className="text-white/80 text-lg leading-relaxed">
-                Learn the practical approach from business idea to working AI application through proven technology stacks and real examples.
+                Access proven frameworks and real experiments that help you build AI capabilities independently. Learn through hands-on experimentation that positions you as a change agent.
               </p>
 
               {/* Framework Steps */}
@@ -109,17 +109,17 @@ export const UnifiedHeroBanner = () => {
                 <div className="bg-white/10 rounded-lg p-4 text-center">
                   <Trophy className="h-6 w-6 text-genie-accent mx-auto mb-2" />
                   <h3 className="font-semibold text-white text-sm">Experiment</h3>
-                  <p className="text-white/70 text-xs">Test AI tools without barriers</p>
+                  <p className="text-white/70 text-xs">Learn through practical trials</p>
                 </div>
                 <div className="bg-white/10 rounded-lg p-4 text-center">
                   <Target className="h-6 w-6 text-genie-accent mx-auto mb-2" />
                   <h3 className="font-semibold text-white text-sm">Validate</h3>
-                  <p className="text-white/70 text-xs">Prove concepts with real results</p>
+                  <p className="text-white/70 text-xs">Build credible case studies</p>
                 </div>
                 <div className="bg-white/10 rounded-lg p-4 text-center">
                   <Rocket className="h-6 w-6 text-genie-accent mx-auto mb-2" />
-                  <h3 className="font-semibold text-white text-sm">Deploy</h3>
-                  <p className="text-white/70 text-xs">Launch working solutions</p>
+                  <h3 className="font-semibold text-white text-sm">Lead</h3>
+                  <p className="text-white/70 text-xs">Drive organizational change</p>
                 </div>
               </div>
 
@@ -190,7 +190,7 @@ export const UnifiedHeroBanner = () => {
               </h2>
               
               <p className="text-white/80 text-lg leading-relaxed">
-                Beyond experimentation guidance - a comprehensive AI system with specialized knowledge spanning healthcare, enterprise technology stacks, and advanced deployment strategies across 80+ curated knowledge contexts.
+                Your AI learning companion with 80+ specialized knowledge contexts. Practice conversations, explore use cases, and build expertise that positions you as an AI change agent in your field.
               </p>
 
               {/* Genie Core Capabilities */}

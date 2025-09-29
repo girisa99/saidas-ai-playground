@@ -88,11 +88,11 @@ export const QuickStart = () => {
             Success Proof
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Real <span className="text-primary">Results</span> From Real <span className="text-primary">Experiments</span>
+            Real <span className="text-primary">Learning</span> From Real <span className="text-primary">Experiments</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Don't just take my word for it. Explore documented business cases, complete case studies, 
-            and detailed technology analyses from actual AI implementations.
+            Build your AI expertise through documented experiments and proven methodologies. 
+            Learn what works, what doesn't, and position yourself as a change agent in your field.
           </p>
         </div>
 

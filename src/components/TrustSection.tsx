@@ -49,8 +49,8 @@ export const TrustSection = () => {
             <span className="text-primary">Experiment → Validate → Deploy</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto mb-12">
-            A proven 3-step approach to AI innovation that minimizes risk while maximizing speed to value. 
-            Learn from real implementations and documented failures to accelerate your AI journey.
+            A proven 3-step approach that transforms individuals into AI change agents. 
+            Build personal expertise through systematic experimentation, then influence organizational transformation.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -73,39 +73,39 @@ export const TrustSection = () => {
 
         {/* Experimentation Framework Principles */}
         <div className="bg-gradient-to-r from-primary/5 to-background/50 rounded-2xl p-8 mb-12">
-          <h3 className="text-2xl font-bold text-center mb-8">Core Experimentation Framework Principles</h3>
+          <h3 className="text-2xl font-bold text-center mb-8">Personal AI Leadership Development Principles</h3>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-primary">Rapid Iteration Mindset:</h4>
+              <h4 className="text-lg font-semibold text-primary">Individual Learning Approach:</h4>
               <div className="space-y-2 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>
-                  <span>Small, focused experiments with clear success criteria</span>
+                  <span>Build AI capabilities through hands-on experimentation</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>
-                  <span>Fail fast and learn from each iteration</span>
+                  <span>Develop expertise that makes you indispensable</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>
-                  <span>Document both successes and failures for learning</span>
+                  <span>Learn from real implementations and documented outcomes</span>
                 </div>
               </div>
             </div>
             <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-primary">Framework Benefits:</h4>
+              <h4 className="text-lg font-semibold text-primary">Change Agent Benefits:</h4>
               <div className="space-y-2 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>
-                  <span>Reduces risk through incremental validation</span>
+                  <span>Position yourself as an AI innovation leader</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>
-                  <span>Builds stakeholder confidence with tangible results</span>
+                  <span>Influence organizational strategy through proven results</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>
-                  <span>Accelerates learning and knowledge transfer</span>
+                  <span>Stay ahead of disruption with cutting-edge skills</span>
                 </div>
               </div>
             </div>
