@@ -154,22 +154,42 @@ export const UnifiedHeroBanner = () => {
               </h2>
               
               <p className="text-white/80 text-lg leading-relaxed">
-                The conversational engine that guides you through our 3-Phase Framework using Gartner value methodology to democratize AI development.
+                Advanced conversational AI with specialized knowledge in healthcare, technology stacks, and enterprise AI deployment strategies.
               </p>
 
-              {/* Genie Features */}
-              <div className="space-y-3">
+              {/* Genie Core Capabilities */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex items-center gap-3 text-white/80">
                   <MessageCircle className="w-5 h-5 text-genie-accent flex-shrink-0" />
-                  <span>Guides you through Framework phases</span>
+                  <span>3-Phase Framework Guidance</span>
                 </div>
                 <div className="flex items-center gap-3 text-white/80">
                   <Bot className="w-5 h-5 text-genie-accent flex-shrink-0" />
-                  <span>Gartner-aligned value methodology</span>
+                  <span>Gartner Value Methodology</span>
                 </div>
                 <div className="flex items-center gap-3 text-white/80">
                   <Sparkles className="w-5 h-5 text-genie-accent flex-shrink-0" />
-                  <span>AI-powered conversations</span>
+                  <span>Healthcare AI Expertise</span>
+                </div>
+                <div className="flex items-center gap-3 text-white/80">
+                  <Target className="w-5 h-5 text-genie-accent flex-shrink-0" />
+                  <span>Technology Stack Intelligence</span>
+                </div>
+              </div>
+
+              {/* Advanced Knowledge Base Features */}
+              <div className="bg-white/5 rounded-lg p-4 border border-genie-accent/20">
+                <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <Bot className="w-4 h-4 text-genie-accent" />
+                  Advanced Knowledge Engine
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                  <div className="text-white/70">• RAG-Enhanced Responses</div>
+                  <div className="text-white/70">• Multi-Domain Expertise</div>
+                  <div className="text-white/70">• Real-time Context Switching</div>
+                  <div className="text-white/70">• Enterprise Integration Patterns</div>
+                  <div className="text-white/70">• Healthcare Compliance Guidance</div>
+                  <div className="text-white/70">• Technology Roadmap Planning</div>
                 </div>
               </div>
 
