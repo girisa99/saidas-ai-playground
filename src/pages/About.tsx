@@ -334,83 +334,116 @@ const About = () => {
               <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-genie-primary via-genie-teal to-genie-cyan opacity-30" />
               
               <div className="space-y-16">
-                {[
-                  {
-                    phase: "Current Experience",
-                    companies: "McKesson • Present",
-                    focus: "Director of Product owner/solution Architect for CGAT (PSaS) supporting InspiroGene",
-                    achievements: "Managing 3PL/SD, Specialty Pharmacy (Biologics), Ontada (Provider onboarding/Order management), and Patient services initiatives",
-                    icon: Building2,
-                    color: "genie-primary"
-                  },
-                  {
-                    phase: "AI Innovation & Knowledge Sharing",
-                    companies: "GenieAI Experimentation Hub • Personal Initiative",
-                    focus: "Democratizing AI possibilities through practical experimentation and knowledge sharing. First Success: Genie AI (3 Days) - comprehensive conversational AI with 80+ knowledge contexts.",
-                    achievements: "Creating comprehensive AI application frameworks demonstrating healthcare transformation potential. Live production deployment with advanced RAG architecture and multi-model intelligence.",
-                    icon: Lightbulb,
-                    color: "genie-cyan"
-                  },
-                  {
-                    phase: "Pharmaceutical Technology Leadership",
-                    companies: "Novartis • Bayer • Pfizer • Amgen • Conduent",
-                    focus: "Digital transformation across commercial operations, clinical R&D, regulatory affairs, and supply chain",
-                    achievements: "Led enterprise-wide technology initiatives, streamlined therapeutic development processes",
-                    icon: Briefcase,
-                    color: "genie-primary"
-                  },
-                  {
-                    phase: "Strategic Business Foundation", 
-                    companies: "Cornell University Johnson School • MBA",
-                    focus: "Strategic business acumen combined with deep technical expertise",
-                    achievements: "Developed frameworks bridging technology solutions with business outcomes",
-                    icon: GraduationCap,
-                    color: "genie-teal"
+                {(() => {
+                  const phases = [
+                    {
+                      phase: "Current Experience",
+                      companies: "McKesson • Present",
+                      focus: "Director of Product owner/solution Architect for CGAT (PSaS) supporting InspiroGene",
+                      achievements: "Managing 3PL/SD, Specialty Pharmacy (Biologics), Ontada (Provider onboarding/Order management), and Patient services initiatives",
+                      icon: Building2,
+                      color: "genie-primary"
+                    },
+                    {
+                      phase: "AI Innovation & Knowledge Sharing",
+                      companies: "GenieAI Experimentation Hub • Personal Initiative",
+                      focus: "Democratizing AI possibilities through practical experimentation and knowledge sharing. First Success: Genie AI (3 Days) - comprehensive conversational AI with 80+ knowledge contexts.",
+                      achievements: "Creating comprehensive AI application frameworks demonstrating healthcare transformation potential. Live production deployment with advanced RAG architecture and multi-model intelligence.",
+                      icon: Lightbulb,
+                      color: "genie-cyan"
+                    },
+                    {
+                      phase: "Pharmaceutical Technology Leadership",
+                      companies: "Novartis • Bayer • Pfizer • Amgen • Conduent",
+                      focus: "Digital transformation across commercial operations, clinical R&D, regulatory affairs, and supply chain",
+                      achievements: "Led enterprise-wide technology initiatives, streamlined therapeutic development processes",
+                      icon: Briefcase,
+                      color: "genie-primary"
+                    },
+                    {
+                      phase: "Strategic Business Foundation", 
+                      companies: "Cornell University Johnson School • MBA",
+                      focus: "Strategic business acumen combined with deep technical expertise",
+                      achievements: "Developed frameworks bridging technology solutions with business outcomes",
+                      icon: GraduationCap,
+                      color: "genie-teal"
+                    }
+                  ];
+
+                  const rows: any[] = [];
+                  for (let i = 0; i < phases.length; i += 2) {
+                    rows.push([phases[i], phases[i + 1]]);
                   }
-                ].map((phase, index) => {
-                  const IconComponent = phase.icon;
-                  return (
-                    <div key={index} className={`flex items-center justify-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
-                      <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
-                        <Card className={`p-8 border-${phase.color}/20 bg-gradient-to-br from-${phase.color}/5 to-background hover:shadow-xl transition-all duration-300 group`}>
-                          <div className="flex items-center gap-4 mb-6">
-                            <div className={`p-4 bg-${phase.color}/10 rounded-xl group-hover:scale-110 transition-transform`}>
-                              <IconComponent className={`w-8 h-8 text-${phase.color}`} />
+
+                  return rows.map((pair, rowIndex) => {
+                    const left = pair[0];
+                    const right = pair[1];
+                    const LeftIcon = left.icon as any;
+                    const RightIcon = right?.icon as any;
+                    return (
+                      <div key={rowIndex} className="flex items-stretch">
+                        {/* Left column */}
+                        <div className="w-1/2 pr-8">
+                          <Card className={`p-8 border-${left.color}/20 bg-gradient-to-br from-${left.color}/5 to-background hover:shadow-xl transition-all duration-300 group`}>
+                            <div className="flex items-center gap-4 mb-6">
+                              <div className={`p-4 bg-${left.color}/10 rounded-xl group-hover:scale-110 transition-transform`}>
+                                <LeftIcon className={`w-8 h-8 text-${left.color}`} />
+                              </div>
+                              <div>
+                                <h3 className={`text-xl font-bold text-${left.color} mb-1`}>{left.phase}</h3>
+                                <p className="text-sm text-muted-foreground font-medium">{left.companies}</p>
+                              </div>
                             </div>
-                            <div>
-                              <h3 className={`text-xl font-bold text-${phase.color} mb-1`}>
-                                {phase.phase}
-                              </h3>
-                              <p className="text-sm text-muted-foreground font-medium">
-                                {phase.companies}
-                              </p>
+                            <div className="space-y-4">
+                              <div className={`p-4 bg-${left.color}/5 rounded-lg border border-${left.color}/10`}>
+                                <h4 className="font-bold text-foreground mb-2">🎯 Focus Areas</h4>
+                                <p className="text-muted-foreground">{left.focus}</p>
+                              </div>
+                              <div className={`p-4 bg-${left.color}/5 rounded-lg border border-${left.color}/10`}>
+                                <h4 className="font-bold text-foreground mb-2">🚀 Key Achievements</h4>
+                                <p className="text-muted-foreground">{left.achievements}</p>
+                              </div>
                             </div>
+                          </Card>
+                        </div>
+
+                        {/* Center dot */}
+                        <div className="relative z-10 w-16 h-16 flex items-center justify-center">
+                          <div className={`w-12 h-12 bg-genie-primary rounded-full flex items-center justify-center shadow-2xl`}>
+                            <div className="w-6 h-6 bg-white rounded-full" />
                           </div>
-                          
-                          <div className="space-y-4">
-                            <div className={`p-4 bg-${phase.color}/5 rounded-lg border border-${phase.color}/10`}>
-                              <h4 className="font-bold text-foreground mb-2">🎯 Focus Areas</h4>
-                              <p className="text-muted-foreground">{phase.focus}</p>
-                            </div>
-                            
-                            <div className={`p-4 bg-${phase.color}/5 rounded-lg border border-${phase.color}/10`}>
-                              <h4 className="font-bold text-foreground mb-2">🚀 Key Achievements</h4>
-                              <p className="text-muted-foreground">{phase.achievements}</p>
-                            </div>
-                          </div>
-                        </Card>
-                      </div>
-                      
-                      <div className="relative z-10 w-16 h-16 flex items-center justify-center">
-                        <div className={`w-12 h-12 bg-${phase.color} rounded-full flex items-center justify-center shadow-2xl`}>
-                          <div className="w-6 h-6 bg-white rounded-full" />
+                        </div>
+
+                        {/* Right column */}
+                        <div className="w-1/2 pl-8">
+                          {right ? (
+                            <Card className={`p-8 border-${right.color}/20 bg-gradient-to-br from-${right.color}/5 to-background hover:shadow-xl transition-all duration-300 group`}>
+                              <div className="flex items-center gap-4 mb-6">
+                                <div className={`p-4 bg-${right.color}/10 rounded-xl group-hover:scale-110 transition-transform`}>
+                                  <RightIcon className={`w-8 h-8 text-${right.color}`} />
+                                </div>
+                                <div>
+                                  <h3 className={`text-xl font-bold text-${right.color} mb-1`}>{right.phase}</h3>
+                                  <p className="text-sm text-muted-foreground font-medium">{right.companies}</p>
+                                </div>
+                              </div>
+                              <div className="space-y-4">
+                                <div className={`p-4 bg-${right.color}/5 rounded-lg border border-${right.color}/10`}>
+                                  <h4 className="font-bold text-foreground mb-2">🎯 Focus Areas</h4>
+                                  <p className="text-muted-foreground">{right.focus}</p>
+                                </div>
+                                <div className={`p-4 bg-${right.color}/5 rounded-lg border border-${right.color}/10`}>
+                                  <h4 className="font-bold text-foreground mb-2">🚀 Key Achievements</h4>
+                                  <p className="text-muted-foreground">{right.achievements}</p>
+                                </div>
+                              </div>
+                            </Card>
+                          ) : null}
                         </div>
                       </div>
-                      
-                      <div className="w-1/2" />
-                    </div>
-                  );
-                })}
+                    );
+                  });
+                })()}
               </div>
             </div>
 
