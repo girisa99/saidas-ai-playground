@@ -145,7 +145,7 @@ const About = () => {
             
              <h2 className="text-2xl lg:text-3xl font-bold text-genie-cyan mb-6 max-w-5xl mx-auto lg:mx-0">
                 <AnimatedTextEmergence 
-                  text="Creator of GenieAI Experimentation Hub & AI Learning Framework"
+                  text="Creator & Owner of GenieAI Experimentation Hub Platform"
                   startDelay={3500}
                   charDelay={50}
                   className="block font-bold"
@@ -159,7 +159,7 @@ const About = () => {
             <div className="text-lg lg:text-xl text-white/90 mb-8 leading-relaxed max-w-6xl mx-auto lg:mx-0">
                <div className="mb-4">
                  <AnimatedTextEmergence 
-                   text="Personal AI learning journey spanning 21+ years, transforming curiosity into systematic experimentation. Created the GenieAI Hub as your personal laboratory for AI discovery and skill building."
+                   text="Built my personal GenieAI Experimentation Hub through 21+ years of healthcare innovation. This platform represents my private laboratory where I test, validate, and refine AI solutions."
                    startDelay={5000}
                    charDelay={40}
                    className="block"
@@ -170,7 +170,7 @@ const About = () => {
                </div>
                <div className="text-white/80 font-medium">
                  <AnimatedTextEmergence 
-                   text="Sharing real experiments, practical insights, and proven methodologies that transform individual curiosity into AI expertise. Your journey from 'what if' to working solutions starts here."
+                   text="Sharing my learnings, methodologies, and real-world case studies from this private platform. Learn from my experiments to build your own AI solutions and frameworks."
                    startDelay={6500}
                    charDelay={30}
                    className="block"
