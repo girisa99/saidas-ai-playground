@@ -214,7 +214,6 @@ export const UnifiedHeroBanner = () => {
                     src={genieImages[currentImageIndex]} 
                     alt="Genie AI Assistant" 
                     className="w-full h-full object-contain animate-float transition-all duration-1000"
-                    key={currentImageIndex}
                   />
                 </div>
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
