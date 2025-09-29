@@ -259,6 +259,19 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
     return () => window.removeEventListener('resize', computeBounds);
   }, []);
 
+  // Listen for external requests to open Genie popup
+  useEffect(() => {
+    const handleOpenGeniePopup = () => {
+      console.debug('[FloatingGenie] External open request received');
+      setHasInteracted(true);
+      setShowTooltip(false);
+      setIsGenieOpen(true);
+    };
+
+    window.addEventListener('openGeniePopup', handleOpenGeniePopup);
+    return () => window.removeEventListener('openGeniePopup', handleOpenGeniePopup);
+  }, []);
+
   const handleGenieClick = () => {
     console.debug('[FloatingGenie] Bottle clicked');
     setHasInteracted(true);
