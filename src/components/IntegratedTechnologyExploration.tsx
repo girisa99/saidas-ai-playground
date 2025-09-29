@@ -740,7 +740,7 @@ export const IntegratedTechnologyExploration = () => {
                             Value Creation Steps
                           </h5>
                           <div className="space-y-2 mb-4">
-                            {experimentationMapping[category]?.valueCreationSteps.map((step, index) => (
+                            {experimentationMapping[category]?.valueCreationSteps?.map((step, index) => (
                               <div key={index} className="flex items-center gap-3 p-2 bg-emerald-50 dark:bg-emerald-950/20 rounded border border-emerald-200 dark:border-emerald-800">
                                 <div className="w-5 h-5 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
                                   {index + 1}
@@ -762,7 +762,7 @@ export const IntegratedTechnologyExploration = () => {
                             Business Use Cases
                           </h5>
                           <div className="space-y-2">
-                            {experimentationMapping[category]?.businessUseCases.map((useCase, index) => (
+                            {experimentationMapping[category]?.businessUseCases?.map((useCase, index) => (
                               <div key={index} className="flex items-start gap-2 text-xs p-2 bg-background/50 rounded border border-border/50">
                                 <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                                 <span>{useCase}</span>
@@ -799,7 +799,7 @@ export const IntegratedTechnologyExploration = () => {
                             Real Implementation Examples
                           </h5>
                           <div className="space-y-2">
-                            {experimentationMapping[category]?.realWorldExamples.map((example, index) => (
+                            {experimentationMapping[category]?.realWorldExamples?.map((example, index) => (
                               <div key={index} className="text-xs text-muted-foreground flex items-start gap-2 p-2 bg-gradient-to-r from-primary/5 to-secondary/5 rounded border-l-2 border-primary/30">
                                 <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                                 <span>{example}</span>
@@ -830,7 +830,7 @@ export const IntegratedTechnologyExploration = () => {
                           </p>
                         </div>
                         <div className="space-y-2">
-                          {experimentationMapping[category]?.realWorldExamples.map((example, index) => (
+                          {experimentationMapping[category]?.realWorldExamples?.map((example, index) => (
                             <div key={index} className="text-xs text-muted-foreground flex items-start gap-2">
                               <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                               <span>{example}</span>
