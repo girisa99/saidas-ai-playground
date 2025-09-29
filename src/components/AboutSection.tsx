@@ -97,15 +97,16 @@ export const AboutSection = () => {
                 <div>
                   <h5 className="font-semibold text-sm mb-2 flex items-center">
                     <Rocket className="h-4 w-4 mr-2 text-genie-accent" />
-                    GenieAI Hub Launch
+                    2 Live Implementations Launched
                   </h5>
                   <p className="text-muted-foreground text-sm mb-3">
-                    Platform launch with Genie conversation feature: Comprehensive conversational AI with 80+ knowledge contexts, advanced RAG architecture, and multi-model intelligence.
+                    <strong>1) GenieAI Experimentation Hub Site:</strong> Knowledge sharing platform with framework documentation and business use cases.<br/>
+                    <strong>2) Genie Conversation Feature:</strong> Advanced conversational AI with 80+ knowledge contexts, split-screen mode, and multi-model intelligence.
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="secondary" className="text-xs">Platform Launched</Badge>
-                    <Badge variant="secondary" className="text-xs">80+ Contexts</Badge>
-                    <Badge variant="secondary" className="text-xs">Multi-Model AI</Badge>
+                    <Badge variant="secondary" className="text-xs">2 Live Features</Badge>
+                    <Badge variant="secondary" className="text-xs">10+ In Pipeline</Badge>
+                    <Badge variant="secondary" className="text-xs">Production Ready</Badge>
                   </div>
                 </div>
               </div>
@@ -114,16 +115,16 @@ export const AboutSection = () => {
             <Card className="p-6 bg-gradient-to-r from-primary/10 to-ai-secondary/10 border-primary/20">
               <h4 className="font-bold text-lg mb-4 flex items-center">
                 <Users className="h-6 w-6 mr-2 text-primary" />
-                45 Days of Intensive Learning
+                Framework: Experiment → Validate → Lead to Deploy
               </h4>
               <p className="text-muted-foreground mb-4">
-                Dedicated intensive exploration bringing entire development environments to stable, 
-                reliable states through systematic experimentation and multiple MVPs.
+                Systematic 45-day experimentation journey validating AI technologies and frameworks. 
+                <strong>2 live implementations launched</strong> with <strong>10+ experiments in pipeline</strong> demonstrating the framework's effectiveness.
               </p>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">LLM Experimentation</Badge>
-                <Badge variant="secondary">Prompt Engineering</Badge>
-                <Badge variant="secondary">AI Architecture</Badge>
+                <Badge variant="secondary">2 Live Features</Badge>
+                <Badge variant="secondary">10+ In Development</Badge>
+                <Badge variant="secondary">Proven Framework</Badge>
               </div>
             </Card>
             

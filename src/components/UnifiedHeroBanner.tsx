@@ -126,16 +126,16 @@ export const UnifiedHeroBanner = () => {
               {/* Stats */}
               <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
                 <div className="text-center">
+                  <div className="text-xl font-bold text-genie-accent">2</div>
+                  <div className="text-white/70 text-xs">Live Features</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl font-bold text-genie-accent">10+</div>
+                  <div className="text-white/70 text-xs">In Experimentation</div>
+                </div>
+                <div className="text-center">
                   <div className="text-xl font-bold text-genie-accent">25+</div>
                   <div className="text-white/70 text-xs">Years Experience</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-xl font-bold text-genie-accent">95%</div>
-                  <div className="text-white/70 text-xs">Success Rate</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-xl font-bold text-genie-accent">8+</div>
-                  <div className="text-white/70 text-xs">AI Solutions</div>
                 </div>
               </div>
 
