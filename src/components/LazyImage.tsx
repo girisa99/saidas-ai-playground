@@ -34,11 +34,6 @@ export const LazyImage = ({ src, alt, className = "", placeholder, onLoad }: Laz
     };
   }, []);
 
-  // Reset loaded state when src changes
-  useEffect(() => {
-    setIsLoaded(false);
-  }, [src]);
-
   const handleLoad = () => {
     setIsLoaded(true);
     onLoad?.();
@@ -51,10 +46,9 @@ export const LazyImage = ({ src, alt, className = "", placeholder, onLoad }: Laz
       )}
       {isInView && (
         <img
-          key={src}
           src={src}
           alt={alt}
-          className={`transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${className}`}
+          className={`transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${className}`}
           onLoad={handleLoad}
           loading="lazy"
         />
