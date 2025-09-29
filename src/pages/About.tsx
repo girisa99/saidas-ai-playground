@@ -435,17 +435,29 @@ const About = () => {
                                 
                                 {/* Highlight First Success for AI Innovation */}
                                 {right.phase === "AI Innovation & Knowledge Sharing" && (
-                                  <div className="p-4 bg-gradient-to-r from-genie-accent/20 to-genie-teal/20 rounded-lg border-2 border-genie-accent/40">
-                                    <div className="flex items-center gap-2 mb-2">
-                                      <Badge className="bg-genie-accent text-genie-dark font-bold">🚀 FIRST SUCCESS</Badge>
-                                      <span className="text-sm font-medium text-genie-accent">3 Days to Launch</span>
+                                  <div className="p-6 bg-white border-2 border-genie-accent rounded-lg shadow-lg">
+                                    <div className="flex items-center gap-2 mb-3">
+                                      <Badge className="bg-genie-accent text-white font-bold px-3 py-1">🚀 FIRST SUCCESS</Badge>
+                                      <span className="text-sm font-bold text-genie-accent bg-genie-accent/10 px-2 py-1 rounded">3 Days to Launch</span>
                                     </div>
-                                    <h4 className="font-bold text-genie-accent text-lg mb-2">Genie AI - Live Production System</h4>
-                                    <div className="text-sm text-muted-foreground space-y-1">
-                                      <p>• <strong>80+ Knowledge Contexts</strong> - Comprehensive domain expertise</p>
-                                      <p>• <strong>Advanced RAG Architecture</strong> - Enhanced response accuracy</p>
-                                      <p>• <strong>Multi-Model Intelligence</strong> - Single & split-screen conversations</p>
-                                      <p>• <strong>Live Production Deployment</strong> - Real users, real results</p>
+                                    <h4 className="font-bold text-genie-accent text-xl mb-3">Genie AI - Live Production System</h4>
+                                    <div className="text-sm text-foreground space-y-2">
+                                      <p className="flex items-center gap-2">
+                                        <span className="w-2 h-2 bg-genie-accent rounded-full"></span>
+                                        <strong className="text-genie-accent">80+ Knowledge Contexts</strong> - Comprehensive domain expertise
+                                      </p>
+                                      <p className="flex items-center gap-2">
+                                        <span className="w-2 h-2 bg-genie-accent rounded-full"></span>
+                                        <strong className="text-genie-accent">Advanced RAG Architecture</strong> - Enhanced response accuracy
+                                      </p>
+                                      <p className="flex items-center gap-2">
+                                        <span className="w-2 h-2 bg-genie-accent rounded-full"></span>
+                                        <strong className="text-genie-accent">Multi-Model Intelligence</strong> - Single & split-screen conversations
+                                      </p>
+                                      <p className="flex items-center gap-2">
+                                        <span className="w-2 h-2 bg-genie-accent rounded-full"></span>
+                                        <strong className="text-genie-accent">Live Production Deployment</strong> - Real users, real results
+                                      </p>
                                     </div>
                                   </div>
                                 )}
