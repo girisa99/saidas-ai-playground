@@ -65,8 +65,8 @@ export const Footer = () => {
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Transforming development workflows through AI-accelerated solutions. 
-              From curiosity to reality - building the future of intelligent development.
+              GenieAI Experimentation Hub - sharing practical AI innovations and progressive implementations. 
+              From framework development to live applications - demonstrating real AI transformation.
             </p>
           </div>
 

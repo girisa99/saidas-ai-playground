@@ -97,13 +97,13 @@ export const AboutSection = () => {
                 <div>
                   <h5 className="font-semibold text-sm mb-2 flex items-center">
                     <Rocket className="h-4 w-4 mr-2 text-genie-accent" />
-                    First Success: Genie AI (3 Days)
+                    GenieAI Hub Launch
                   </h5>
                   <p className="text-muted-foreground text-sm mb-3">
-                    First successful launch: Comprehensive conversational AI with 80+ knowledge contexts, advanced RAG architecture, and multi-model intelligence.
+                    Platform launch with Genie conversation feature: Comprehensive conversational AI with 80+ knowledge contexts, advanced RAG architecture, and multi-model intelligence.
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="secondary" className="text-xs">Live in Production</Badge>
+                    <Badge variant="secondary" className="text-xs">Platform Launched</Badge>
                     <Badge variant="secondary" className="text-xs">80+ Contexts</Badge>
                     <Badge variant="secondary" className="text-xs">Multi-Model AI</Badge>
                   </div>
