@@ -79,7 +79,7 @@ export const UnifiedHeroBanner = () => {
           </h1>
           <div className="w-24 h-1 bg-genie-accent mx-auto mb-6"></div>
           <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto">
-            45 Days of Learning, First Launch in 3 Days: Real AI Innovation
+            45 Days of Learning → GenieAI Experimentation Hub Launch
           </p>
         </div>
 
@@ -182,10 +182,10 @@ export const UnifiedHeroBanner = () => {
               <h2 className="text-2xl lg:text-3xl font-bold text-white">
                 Introducing Genie AI
                 <span className="block text-genie-accent mt-1 text-xl lg:text-2xl font-semibold">
-                  First Live Experimentation Use Case
+                  First Feature: Advanced Conversational AI
                 </span>
                 <span className="block text-white/90 mt-1 text-lg font-medium">
-                  80+ Knowledge Contexts • Advanced AI Intelligence
+                  80+ Knowledge Contexts • More Experiments Coming Soon
                 </span>
               </h2>
               

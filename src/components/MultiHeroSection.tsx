@@ -112,7 +112,7 @@ export const MultiHeroSection = () => {
             
             {/* Outcome-Driven Subheading */}
             <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mb-4 sm:mb-6 font-medium max-w-4xl mx-auto px-2">
-              45 Days of Learning, First Launch in 3 Days: Real AI Innovation
+              45 Days of Learning → GenieAI Experimentation Hub Launch
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto px-2">
               Learn the practical approach from business idea to working AI application through proven technology stacks and real examples.

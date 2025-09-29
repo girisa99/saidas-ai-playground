@@ -152,6 +152,95 @@ const Journey = () => {
         </div>
       </section>
 
+      {/* Current Status & Progressive Launch - NEW HIGHLIGHT SECTION */}
+      <section className="py-16 bg-gradient-to-br from-genie-cyan/5 via-background to-genie-primary/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <Badge className="bg-genie-cyan/20 text-genie-cyan border-genie-cyan/30 mb-4">
+              <Rocket className="w-4 h-4 mr-2" />
+              Framework in Action
+            </Badge>
+            <h2 className="text-3xl lg:text-5xl font-bold mb-6">
+              <span className="text-genie-cyan">Current Status:</span> Hub Launched & Experiments Rolling Out
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+              The GenieAI Experimentation Hub is now live, demonstrating the framework through progressive feature releases and continuous experimentation.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <Card className="p-8 border-genie-cyan/20 bg-gradient-to-br from-genie-cyan/5 to-background">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-4 bg-genie-cyan/10 rounded-xl">
+                  <Zap className="w-8 h-8 text-genie-cyan" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-genie-cyan">NOW LIVE</h3>
+                  <p className="text-sm text-muted-foreground">Platform Launch</p>
+                </div>
+              </div>
+              <h4 className="font-bold text-lg mb-3">GenieAI Experimentation Hub</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>• Genie Conversation Feature Active</li>
+                <li>• 80+ Knowledge Contexts Integrated</li>
+                <li>• Advanced RAG Architecture</li>
+                <li>• Multi-Model Intelligence</li>
+              </ul>
+            </Card>
+
+            <Card className="p-8 border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-background">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-4 bg-genie-primary/10 rounded-xl">
+                  <Calendar className="w-8 h-8 text-genie-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-genie-primary">NEXT 2-3 WEEKS</h3>
+                  <p className="text-sm text-muted-foreground">Progressive Releases</p>
+                </div>
+              </div>
+              <h4 className="font-bold text-lg mb-3">Additional Experiments</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>• Incremental feature rollouts</li>
+                <li>• New AI experiment showcases</li>
+                <li>• Enhanced framework demonstrations</li>
+                <li>• Extended use case examples</li>
+              </ul>
+            </Card>
+
+            <Card className="p-8 border-genie-teal/20 bg-gradient-to-br from-genie-teal/5 to-background">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-4 bg-genie-teal/10 rounded-xl">
+                  <TrendingUp className="w-8 h-8 text-genie-teal" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-genie-teal">ONGOING</h3>
+                  <p className="text-sm text-muted-foreground">Continuous Innovation</p>
+                </div>
+              </div>
+              <h4 className="font-bold text-lg mb-3">Active Experimentation</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>• Framework refinement</li>
+                <li>• New technology integration</li>
+                <li>• Knowledge base expansion</li>
+                <li>• Community feedback integration</li>
+              </ul>
+            </Card>
+          </div>
+
+          <div className="text-center">
+            <p className="text-lg text-muted-foreground mb-6">
+              This progressive launch strategy demonstrates the <strong className="text-genie-cyan">Experiment → Validate → Deploy</strong> framework in real-time.
+            </p>
+            <Button asChild size="lg" className="bg-genie-cyan hover:bg-genie-cyan/90 text-background">
+              <Link to="/business-use-cases">
+                <Target className="w-4 h-4 mr-2" />
+                Explore Current Experiments
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
         {/* Vertical Journey Infographic - Lazy loaded */}
         <Suspense fallback={<ComponentSkeleton />}>
           <VerticalJourneyInfographic />
