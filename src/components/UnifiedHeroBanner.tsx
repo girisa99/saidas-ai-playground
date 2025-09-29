@@ -74,12 +74,12 @@ export const UnifiedHeroBanner = () => {
         {/* Header Section */}
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-6">
-            Democratize. Learn. Lead.
-            <span className="block text-genie-accent mt-2">Become the AI Change Agent Your Organization Needs</span>
+            Don't Wait for Permission. Innovate.
+            <span className="block text-genie-accent mt-2">Skip the Red Tape. Build AI Capabilities Now.</span>
           </h1>
           <div className="w-24 h-1 bg-genie-accent mx-auto mb-6"></div>
           <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto">
-            Don't wait for permission. Start experimenting. Build capabilities. Drive transformation.
+            While organizations debate AI strategy, smart individuals are already building the skills that make them indispensable.
           </p>
         </div>
 
