@@ -20,17 +20,17 @@ export const GenieIntegrationShowcase = ({ selectedUseCase }: GenieIntegrationSh
   };
 
   return (
-    <div className="mt-12 space-y-8">
+    <div className="mt-8 sm:mt-12 space-y-6 sm:space-y-8 px-2">
       {/* Header */}
-      <div className="text-center">
+      <div className="text-center px-2">
         <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-4">
           <MessageCircle className="w-4 h-4 mr-2" />
           Live Feature Integration
         </Badge>
-        <h3 className="text-2xl lg:text-3xl font-bold mb-4">
+        <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4">
           <span className="text-genie-accent">Genie Conversation</span> in Action
         </h3>
-        <p className="text-muted-foreground max-w-3xl mx-auto">
+        <p className="text-sm sm:text-base text-muted-foreground max-w-3xl mx-auto">
           Demonstrating how our live Genie Conversational AI feature with 80+ knowledge contexts 
           integrates into real healthcare workflows using the proven 3-phase framework.
         </p>
@@ -60,12 +60,12 @@ export const GenieIntegrationShowcase = ({ selectedUseCase }: GenieIntegrationSh
               return (
                 <Card key={index} className={`border-l-4 border-genie-primary/30 ${statusInfo?.bgColor || 'bg-gray-100'}/20`}>
                   <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-lg flex items-center gap-2">
-                        <span className="text-genie-primary font-bold">#{point.stepId}</span>
-                        {point.stepTitle}
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                      <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                        <span className="text-genie-primary font-bold text-sm sm:text-base">#{point.stepId}</span>
+                        <span className="text-sm sm:text-base">{point.stepTitle}</span>
                       </CardTitle>
-                      <Badge className={`${statusInfo?.bgColor || 'bg-gray-100'} ${statusInfo?.color || 'text-gray-600'} border-0`}>
+                      <Badge className={`${statusInfo?.bgColor || 'bg-gray-100'} ${statusInfo?.color || 'text-gray-600'} border-0 text-xs w-fit`}>
                         <StatusIcon className="w-3 h-3 mr-1" />
                         {point.integration.implementation.split(' - ')[0]}
                       </Badge>
@@ -76,10 +76,10 @@ export const GenieIntegrationShowcase = ({ selectedUseCase }: GenieIntegrationSh
                   </CardHeader>
                   <CardContent className="pt-0">
                     <Tabs defaultValue="capabilities" className="w-full">
-                      <TabsList className="grid w-full grid-cols-3">
-                        <TabsTrigger value="capabilities">Capabilities</TabsTrigger>
-                        <TabsTrigger value="benefits">Benefits</TabsTrigger>
-                        <TabsTrigger value="status">Status</TabsTrigger>
+                      <TabsList className="grid w-full grid-cols-3 h-auto">
+                        <TabsTrigger value="capabilities" className="text-xs sm:text-sm py-2">Capabilities</TabsTrigger>
+                        <TabsTrigger value="benefits" className="text-xs sm:text-sm py-2">Benefits</TabsTrigger>
+                        <TabsTrigger value="status" className="text-xs sm:text-sm py-2">Status</TabsTrigger>
                       </TabsList>
                       
                       <TabsContent value="capabilities" className="mt-4">
@@ -134,7 +134,7 @@ export const GenieIntegrationShowcase = ({ selectedUseCase }: GenieIntegrationSh
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {Object.entries(genieFrameworkIntegration.phases).map(([phaseKey, phase]) => (
               <Card key={phaseKey} className="border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-background">
                 <CardHeader className="pb-3">
@@ -159,9 +159,9 @@ export const GenieIntegrationShowcase = ({ selectedUseCase }: GenieIntegrationSh
 
       {/* Call to Action */}
       <Card className="border-genie-accent/30 bg-gradient-to-r from-genie-accent/10 to-genie-primary/10">
-        <CardContent className="p-8 text-center">
-          <h4 className="text-xl font-bold mb-4">Experience Genie Conversation Live</h4>
-          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+        <CardContent className="p-6 sm:p-8 text-center">
+          <h4 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Experience Genie Conversation Live</h4>
+          <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 max-w-2xl mx-auto">
             Try our live Genie Conversational AI feature with 80+ knowledge contexts. 
             See how the Experiment → Validate → Lead to Deploy framework translates into 
             real, production-ready AI capabilities.

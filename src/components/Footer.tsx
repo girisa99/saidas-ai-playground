@@ -49,8 +49,8 @@ export const Footer = () => {
   ];
   return (
     <footer id="contact" className="bg-muted/50 border-t border-border/40">
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
@@ -72,8 +72,8 @@ export const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
-            <div className="space-y-2 text-sm">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Quick Links</h4>
+            <div className="space-y-2 text-xs sm:text-sm">
               <Link to="/journey" className="text-muted-foreground hover:text-foreground transition-colors block">
                 Personal AI Development Journey
               </Link>
@@ -91,8 +91,8 @@ export const Footer = () => {
 
           {/* Resources */}
           <div>
-            <h4 className="font-semibold mb-4">Resources</h4>
-            <div className="space-y-2 text-sm">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Resources</h4>
+            <div className="space-y-2 text-xs sm:text-sm">
               <Link to="/business-use-cases" className="text-muted-foreground hover:text-foreground transition-colors block">
                 Gartner Business Solutions
               </Link>
@@ -121,15 +121,15 @@ export const Footer = () => {
 
           {/* Connect */}
           <div>
-            <h4 className="font-semibold mb-4">Connect</h4>
-            <div className="space-y-4">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Connect</h4>
+            <div className="space-y-3 sm:space-y-4">
               
               {/* Contact Information */}
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-xs sm:text-sm">
                 <div className="text-muted-foreground">
                   <span className="font-medium">Name:</span> Sai Dasika
                 </div>
-                <div className="text-muted-foreground">
+                <div className="text-muted-foreground text-xs sm:text-sm">
                   936 Villageview Lane<br />
                   Cary, NC 27519
                 </div>

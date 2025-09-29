@@ -8,14 +8,14 @@ import healthcareImpact from "@/assets/healthcare-solutions-impact.png";
 
 export const ValueProposition = () => {
   return (
-    <section className="py-16 bg-gradient-to-b from-background to-muted/30">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section className="py-12 sm:py-16 bg-gradient-to-b from-background to-muted/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Simplified Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-6">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6 px-2">
             Strategic AI Implementation Framework
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-2">
             Transform your organization with our proven 4-phase AI implementation roadmap. 
             From assessment to full transformation in 6 months.
           </p>
@@ -36,14 +36,14 @@ export const ValueProposition = () => {
         </div>
 
         {/* Enhanced Impact Metrics */}
-        <div className="grid md:grid-cols-4 gap-4 mb-16 max-w-5xl mx-auto">
-          <Card className="text-center p-6 bg-gradient-to-br from-genie-primary/5 to-genie-primary/10 border-genie-primary/20 hover:shadow-lg transition-all duration-300">
-            <div className="w-12 h-12 mx-auto mb-3 bg-genie-primary/10 rounded-full flex items-center justify-center">
-              <TrendingUp className="w-6 h-6 text-genie-primary" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-12 sm:mb-16 max-w-5xl mx-auto px-2">
+          <Card className="text-center p-4 sm:p-6 bg-gradient-to-br from-genie-primary/5 to-genie-primary/10 border-genie-primary/20 hover:shadow-lg transition-all duration-300">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 bg-genie-primary/10 rounded-full flex items-center justify-center">
+              <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-genie-primary" />
             </div>
-            <div className="text-3xl font-bold text-genie-primary mb-2">70%</div>
-            <div className="text-sm font-medium text-foreground mb-1">Business Value</div>
-            <div className="text-xs text-muted-foreground">Average Increase</div>
+            <div className="text-2xl sm:text-3xl font-bold text-genie-primary mb-1 sm:mb-2">70%</div>
+            <div className="text-xs sm:text-sm font-medium text-foreground mb-0.5 sm:mb-1">Business Value</div>
+            <div className="text-[10px] sm:text-xs text-muted-foreground">Average Increase</div>
           </Card>
           <Card className="text-center p-6 bg-gradient-to-br from-genie-secondary/5 to-genie-secondary/10 border-genie-secondary/20 hover:shadow-lg transition-all duration-300">
             <div className="w-12 h-12 mx-auto mb-3 bg-genie-secondary/10 rounded-full flex items-center justify-center">
