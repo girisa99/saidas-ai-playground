@@ -1053,22 +1053,22 @@ export const IntegratedTechnologyExploration = () => {
           </div>
         </div>
 
-        {/* Call to Action - Experimentation Focus */}
+        {/* Call to Action - Gartner Framework Focus */}
         <div className="text-center">
           <p className="text-lg text-muted-foreground mb-6">
-            Ready to explore our experimentation journey and see what we've learned?
+            Ready to see how this Gartner-aligned framework translates to real business applications?
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/journey">
+            <Link to="/business-use-cases">
               <Button size="lg" className="bg-genie-primary hover:bg-genie-primary/90 text-background px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base">
-                <Lightbulb className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
-                See Our Experiments
+                <Target className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
+                Apply Framework to Business Cases
               </Button>
             </Link>
-            <Link to="/business-use-cases">
+            <Link to="/journey">
               <Button variant="outline" size="lg" className="px-8 py-4 border-genie-accent text-genie-accent hover:bg-genie-accent/10">
-                <Target className="w-5 h-5 mr-2" />
-                Try Live Features
+                <Lightbulb className="w-5 h-5 mr-2" />
+                See Framework Journey
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
