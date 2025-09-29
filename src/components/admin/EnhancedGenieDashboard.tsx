@@ -838,22 +838,115 @@ export const EnhancedGenieDashboard = () => {
     }
   };
 
-  // Get static knowledge base entries from existing components
+  // Get static knowledge base entries from existing components with accurate counts
   const getStaticKnowledgeEntries = () => {
+    // Technology Knowledge Base entries - comprehensive list
     const techEntries = [
-      { title: "AI Market Landscape", category: "technology", tags: ["AI", "market", "trends"] },
-      { title: "Enterprise Tech Giants", category: "technology", tags: ["enterprise", "SaaS", "cloud"] },
-      { title: "Emerging Technologies 2025", category: "technology", tags: ["emerging", "trends", "innovation"] },
-      { title: "No-Code/Low-Code Platforms", category: "technology", tags: ["no-code", "development", "automation"] },
-      { title: "API Integration Evolution", category: "technology", tags: ["API", "integration", "development"] }
+      // Market Landscape (Big Tech)
+      { title: "OpenAI - GPT Models & ChatGPT", category: "technology", tags: ["AI", "LLM", "OpenAI"] },
+      { title: "Anthropic - Claude & Constitutional AI", category: "technology", tags: ["AI", "safety", "Claude"] },
+      { title: "Google/Alphabet - Gemini & Bard", category: "technology", tags: ["Google", "Gemini", "search"] },
+      { title: "Microsoft - Copilot & Azure AI", category: "technology", tags: ["Microsoft", "Copilot", "Azure"] },
+      { title: "Meta - Llama & Open Source AI", category: "technology", tags: ["Meta", "Llama", "open-source"] },
+      
+      // Enterprise Platforms
+      { title: "Oracle - Database AI & Cloud", category: "technology", tags: ["Oracle", "database", "cloud"] },
+      { title: "Salesforce - Einstein AI & CRM", category: "technology", tags: ["Salesforce", "CRM", "Einstein"] },
+      { title: "SAP - Business AI & ERP", category: "technology", tags: ["SAP", "ERP", "business"] },
+      { title: "ServiceNow - IT Service AI", category: "technology", tags: ["ServiceNow", "ITSM", "workflow"] },
+      { title: "Veeva - Life Sciences AI", category: "technology", tags: ["Veeva", "pharma", "clinical"] },
+      
+      // Emerging Platforms
+      { title: "AI Development Platforms", category: "technology", tags: ["Hugging Face", "Replicate", "deployment"] },
+      { title: "Agentic AI Platforms", category: "technology", tags: ["LangChain", "CrewAI", "agents"] },
+      { title: "No-Code AI Builders", category: "technology", tags: ["Bubble", "Zapier", "no-code"] },
+      { title: "Development Tools Revolution", category: "technology", tags: ["Cursor", "GitHub Copilot", "coding"] },
+      { title: "No-Code/Low-Code Platforms", category: "technology", tags: ["Lovable", "Bolt", "visual development"] },
+      
+      // Language Models
+      { title: "Large Language Models (LLMs)", category: "technology", tags: ["GPT-4", "Claude", "Gemini"] },
+      { title: "Small Language Models (SLMs)", category: "technology", tags: ["Phi-3", "Gemma", "edge AI"] },
+      { title: "Model Context Protocol (MCP)", category: "technology", tags: ["Anthropic", "data integration", "security"] },
+      
+      // Security & Compliance
+      { title: "AI Security Tools", category: "technology", tags: ["Robust Intelligence", "Protect AI", "security"] },
+      { title: "GDPR & Privacy Tools", category: "technology", tags: ["OneTrust", "TrustArc", "privacy"] },
+      { title: "Vulnerability Assessment", category: "technology", tags: ["Veracode", "Checkmarx", "security testing"] },
+      
+      // Workflow Tools
+      { title: "Project Management Evolution", category: "technology", tags: ["Monday.com", "Notion", "Airtable"] },
+      { title: "Communication Platforms", category: "technology", tags: ["Slack", "Teams", "Discord"] },
+      { title: "Analytics & Business Intelligence", category: "technology", tags: ["Tableau", "Power BI", "Looker"] },
+      
+      // Integration Evolution
+      { title: "API Management Platforms", category: "technology", tags: ["Postman", "Insomnia", "API testing"] },
+      { title: "Cloud Infrastructure", category: "technology", tags: ["AWS", "Azure", "GCP"] },
+      { title: "Container & Orchestration", category: "technology", tags: ["Docker", "Kubernetes", "DevOps"] },
+      
+      // Industry Trends
+      { title: "Digital Transformation", category: "technology", tags: ["transformation", "automation", "AI adoption"] },
+      { title: "Cybersecurity Evolution", category: "technology", tags: ["zero trust", "AI security", "threat detection"] },
+      { title: "Quantum Computing", category: "technology", tags: ["quantum", "IBM", "Google Quantum"] },
+      
+      // Upcoming Conferences
+      { title: "Tech Conference Calendar 2025", category: "technology", tags: ["conferences", "events", "networking"] },
+      { title: "AI/ML Conference Schedule", category: "technology", tags: ["NeurIPS", "ICML", "AI events"] },
+      
+      // Digital Health Devices (Tech perspective)
+      { title: "Wearable Technology Integration", category: "technology", tags: ["Apple Watch", "Fitbit", "IoT"] },
+      { title: "Health Monitoring APIs", category: "technology", tags: ["HealthKit", "Google Fit", "integration"] }
     ];
 
+    // Healthcare Knowledge Base entries - comprehensive list
     const healthcareEntries = [
-      { title: "Healthcare Reimbursement Process", category: "healthcare", tags: ["reimbursement", "insurance", "billing"] },
-      { title: "Digital Therapeutics Guide", category: "healthcare", tags: ["digital", "therapeutics", "treatment"] },
-      { title: "Patient Support Services", category: "healthcare", tags: ["patient", "support", "care"] },
-      { title: "Oncology Treatment Options", category: "healthcare", tags: ["oncology", "treatment", "cancer"] },
-      { title: "Healthcare Pricing Ecosystem", category: "healthcare", tags: ["pricing", "340B", "WAC"] }
+      // Emotional Support & Communication
+      { title: "Empathetic Patient Communication", category: "healthcare", tags: ["communication", "empathy", "patient care"] },
+      { title: "Healthcare Navigation Support", category: "healthcare", tags: ["navigation", "insurance", "guidance"] },
+      { title: "Patient Advocacy Responses", category: "healthcare", tags: ["advocacy", "support", "empowerment"] },
+      
+      // Visual References & Process Guides
+      { title: "Pre-Infusion Preparation Guide", category: "healthcare", tags: ["infusion", "preparation", "patient education"] },
+      { title: "During Infusion Care Protocols", category: "healthcare", tags: ["infusion", "monitoring", "safety"] },
+      { title: "Post-Infusion Recovery Process", category: "healthcare", tags: ["infusion", "recovery", "follow-up"] },
+      
+      // Product Education
+      { title: "Oncology Immunotherapy Options", category: "healthcare", tags: ["oncology", "immunotherapy", "cancer treatment"] },
+      { title: "Targeted Therapy Guidelines", category: "healthcare", tags: ["targeted therapy", "precision medicine", "oncology"] },
+      { title: "Cell & Gene Therapy Overview", category: "healthcare", tags: ["cell therapy", "gene therapy", "regenerative medicine"] },
+      
+      // Digital Therapeutics
+      { title: "Digital Therapeutics Categories", category: "healthcare", tags: ["DTx", "digital health", "apps"] },
+      { title: "Mental Health Digital Solutions", category: "healthcare", tags: ["mental health", "apps", "therapy"] },
+      { title: "Chronic Disease Management DTx", category: "healthcare", tags: ["chronic disease", "diabetes", "management"] },
+      { title: "DTx Reimbursement Landscape", category: "healthcare", tags: ["reimbursement", "DTx", "coverage"] },
+      
+      // Therapy Categories
+      { title: "Cell & Gene Therapy Challenges", category: "healthcare", tags: ["CAR-T", "gene therapy", "manufacturing"] },
+      { title: "Oncology Treatment Support Programs", category: "healthcare", tags: ["oncology", "patient support", "access"] },
+      
+      // Reimbursement Processes
+      { title: "Prior Authorization Process", category: "healthcare", tags: ["prior auth", "insurance", "approval"] },
+      { title: "Claims Submission Guidelines", category: "healthcare", tags: ["claims", "billing", "CPT codes"] },
+      { title: "Digital Health Claims Processing", category: "healthcare", tags: ["digital health", "telehealth", "billing"] },
+      
+      // Payer Programs
+      { title: "Medicare Digital Health Coverage", category: "healthcare", tags: ["Medicare", "digital health", "coverage"] },
+      { title: "Medicaid State Variations", category: "healthcare", tags: ["Medicaid", "state programs", "coverage"] },
+      { title: "Commercial Payer Trends", category: "healthcare", tags: ["commercial insurance", "value-based care", "trends"] },
+      
+      // Support Services
+      { title: "Patient Assistance Programs", category: "healthcare", tags: ["patient assistance", "copay", "access"] },
+      { title: "Provider Support Services", category: "healthcare", tags: ["provider support", "prior auth", "appeals"] },
+      { title: "Digital Health Support Programs", category: "healthcare", tags: ["DTx support", "onboarding", "training"] },
+      
+      // Pricing Ecosystem
+      { title: "340B Drug Pricing Program", category: "healthcare", tags: ["340B", "pricing", "safety net"] },
+      { title: "WAC Pricing Structure", category: "healthcare", tags: ["WAC", "wholesale", "pricing"] },
+      { title: "Group Purchasing Organizations", category: "healthcare", tags: ["GPO", "contracting", "procurement"] },
+      
+      // Claims Processing
+      { title: "Inpatient vs Outpatient Claims", category: "healthcare", tags: ["claims", "inpatient", "outpatient"] },
+      { title: "Claims Denial Prevention", category: "healthcare", tags: ["denial prevention", "claims management", "coding"] }
     ];
 
     return [...techEntries, ...healthcareEntries];
@@ -1672,7 +1765,7 @@ export const EnhancedGenieDashboard = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">Static Entries</p>
-                    <p className="text-2xl font-bold text-blue-600">10</p>
+                    <p className="text-2xl font-bold text-blue-600">60+</p>
                     <p className="text-xs text-muted-foreground">
                       Built-in knowledge
                     </p>
@@ -1705,7 +1798,7 @@ export const EnhancedGenieDashboard = () => {
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">Technology</p>
                     <p className="text-2xl font-bold text-purple-600">
-                      {knowledgeEntries.filter(entry => entry.category === 'technology').length + 5}
+                      {knowledgeEntries.filter(entry => entry.category === 'technology').length + 32}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       Tech knowledge
@@ -1722,7 +1815,7 @@ export const EnhancedGenieDashboard = () => {
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">Healthcare</p>
                     <p className="text-2xl font-bold text-red-600">
-                      {knowledgeEntries.filter(entry => entry.category === 'healthcare').length + 5}
+                      {knowledgeEntries.filter(entry => entry.category === 'healthcare').length + 28}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       Medical knowledge
