@@ -11,11 +11,11 @@ export const AIExperimentationBanner = () => {
             <Database className="h-8 w-8 text-genie-teal" />
             <Zap className="h-8 w-8 text-genie-cyan" />
           </div>
-          <h3 className="text-2xl font-bold mb-4">AI Experimentation Hub: From Vision to Enterprise Reality</h3>
+          <h3 className="text-2xl font-bold mb-4">2 Live Features: Personal AI Change Agent Development</h3>
           <p className="text-muted-foreground max-w-3xl mx-auto">
-            Systematic 6-month journey culminating in breakthrough healthcare solutions with proven business impact. 
-            Advanced AI technologies, enterprise-grade infrastructure, and measurable ROI - transforming how organizations 
-            approach digital health innovation and therapeutic development.
+            <strong>GenieAI Hub Platform & Genie Conversation (80+ contexts)</strong> - demonstrating the systematic 
+            Experiment → Validate → Lead to Deploy framework. Real implementations showing how personal curiosity 
+            transforms into professional AI expertise and organizational change leadership.
           </p>
         </div>
       </div>

@@ -6,13 +6,14 @@ import genieAnimated from "@/assets/genie-animated.png";
 import genieLamp from "@/assets/genie-lamp.png";
 import aiJourneyBg from "@/assets/hero-ai-journey.jpg";
 import { useState, useEffect, useMemo } from "react";
+import { LazyImage } from "@/components/LazyImage";
 
 export const UnifiedHeroBanner = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const genieImages = [genieAnimated, genieLamp];
 
   const particles = useMemo(
-    () => Array.from({ length: 20 }, () => ({
+    () => Array.from({ length: 15 }, () => ({
       size: Math.random() * 4 + 2,
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
@@ -30,11 +31,11 @@ export const UnifiedHeroBanner = () => {
     });
   }, []);
 
-  // Rotate every 7 seconds
+  // Rotate every 8 seconds for better UX
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % genieImages.length);
-    }, 7000); // 7 seconds
+    }, 8000);
 
     return () => clearInterval(interval);
   }, [genieImages.length]);
@@ -233,7 +234,7 @@ export const UnifiedHeroBanner = () => {
               <div className="relative py-6">
                 <div className="absolute inset-0 bg-gradient-to-r from-genie-accent/20 to-genie-teal/20 rounded-full blur-3xl"></div>
                 <div className="relative w-32 h-32 lg:w-40 lg:h-40 mx-auto">
-                  <img 
+                  <LazyImage 
                     src={genieImages[currentImageIndex]} 
                     alt="Genie AI Assistant" 
                     className="w-full h-full object-contain animate-float transition-all duration-1000"

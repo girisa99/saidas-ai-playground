@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, Briefcase, GraduationCap, Users, Heart, Globe, Camera, Bike, Code, Lightbulb, Target, Award, Building2, Zap, Rocket } from "lucide-react";
 import { Link } from "react-router-dom";
+import { LazyImage } from "@/components/LazyImage";
 import { useEffect, useState } from "react";
 import saiProfile from "@/assets/sai-profile.jpg";
 import genieAnimated from "@/assets/genie-animated.png";
@@ -194,7 +195,7 @@ const About = () => {
           {/* Genie Bottle - Center for animation source */}
           {showBottle && (
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-scale-in z-30">
-              <img 
+              <LazyImage 
                 src={genieBottle} 
                 alt="Magic Genie Bottle" 
                 className="w-32 h-40 lg:w-40 lg:h-48 object-contain animate-genie-working"

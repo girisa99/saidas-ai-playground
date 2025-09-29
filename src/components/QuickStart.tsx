@@ -153,23 +153,25 @@ export const QuickStart = () => {
           ))}
         </div>
 
-        {/* Call to Action */}
+        {/* Learning Path Navigation */}
         <div className="mt-16 text-center">
           <Card className="p-8 bg-gradient-to-r from-primary/5 to-background border-primary/20">
-            <h3 className="text-2xl font-bold mb-4">Ready to See More?</h3>
+            <h3 className="text-2xl font-bold mb-4">Continue Your AI Change Agent Journey</h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Dive deeper into specific implementations, explore the decision frameworks, 
-              or learn about the technology stacks that made these successes possible.
+              Build expertise through systematic exploration of implementations, decision frameworks, 
+              and technology stacks that drive successful AI transformation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/business-use-cases">
+              <Link to="/journey">
                 <Button size="lg" className="w-full sm:w-auto">
-                  Explore All Business Cases
+                  <Target className="w-4 h-4 mr-2" />
+                  My Learning Journey
                 </Button>
               </Link>
-              <Link to="/case-studies">
+              <Link to="/technology-stack">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                  View Case Studies
+                  <Code className="w-4 h-4 mr-2" />
+                  Technology Stack
                 </Button>
               </Link>
             </div>

@@ -3,6 +3,7 @@ import { Menu, X, Home, User, Map, Wrench, FileText, Trophy, Search, ExternalLin
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
+import { LazyImage } from "@/components/LazyImage";
 import genieLogoMain from "@/assets/genie-logo-main.png";
 
 export const NavigationHeader = () => {
@@ -38,7 +39,7 @@ export const NavigationHeader = () => {
           {/* Logo & Brand - Left aligned, flexible width */}
           <Link to="/" className="enterprise-logo-container group min-w-fit flex-shrink-0 mr-4 sm:mr-6 lg:mr-8 xl:mr-10">
             <div className="relative flex-shrink-0">
-              <img 
+              <LazyImage 
                 src={genieLogoMain} 
                 alt="Genie AI" 
                 className="enterprise-logo-image group-hover:scale-105 transition-transform duration-300"
