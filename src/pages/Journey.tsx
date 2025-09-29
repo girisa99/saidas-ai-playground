@@ -183,7 +183,7 @@ const Journey = () => {
               <ul className="space-y-2 text-muted-foreground text-sm">
                 <li>• Knowledge sharing platform launched</li>
                 <li>• Framework documentation live</li>
-                <li>• Educational resources available</li>
+                <li>• Business use cases and case studies available</li>
                 <li>• Progressive experiment showcase</li>
               </ul>
               
