@@ -183,17 +183,30 @@ const Journey = () => {
               <ul className="space-y-2 text-muted-foreground text-sm">
                 <li>• Knowledge sharing platform launched</li>
                 <li>• Framework documentation live</li>
-                <li>• 80+ curated knowledge contexts</li>
                 <li>• Educational resources available</li>
+                <li>• Progressive experiment showcase</li>
               </ul>
               
               {/* Highlighted Genie Feature */}
-              <div className="mt-6 p-4 bg-genie-accent/10 border border-genie-accent/20 rounded-lg">
-                <div className="flex items-center gap-2 mb-2">
-                  <Badge className="bg-genie-accent text-background text-xs font-bold">✨ FEATURED</Badge>
+              <div className="mt-6 p-4 bg-background border-2 border-genie-accent rounded-lg shadow-sm">
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge className="bg-genie-accent text-background text-xs font-bold px-2 py-1">✨ FEATURED</Badge>
                 </div>
-                <h5 className="font-bold text-genie-accent mb-2">Genie Conversation Feature</h5>
-                <p className="text-xs text-muted-foreground">Advanced conversational AI demonstrating multi-model intelligence and RAG architecture in action.</p>
+                <h5 className="font-bold text-genie-accent text-lg mb-3">Genie Conversation Feature</h5>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
+                    <span className="text-foreground"><strong>80+ Knowledge Contexts</strong> integrated</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
+                    <span className="text-foreground"><strong>Advanced RAG Architecture</strong> deployed</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
+                    <span className="text-foreground"><strong>Multi-Model Intelligence</strong> active</span>
+                  </li>
+                </ul>
               </div>
             </Card>
 
