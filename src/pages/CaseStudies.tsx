@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowRight, TrendingUp, Users, Zap, Target, Shield, Activity, ArrowLeft, Award, BarChart3, FileText, UserCheck } from "lucide-react";
+import { ArrowRight, TrendingUp, Users, Zap, Target, Shield, Activity, ArrowLeft, Award, BarChart3, FileText, UserCheck, Code, MessageCircle, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import successStoriesBg from "@/assets/hero-success-stories.jpg";
@@ -154,7 +154,126 @@ const CaseStudies = () => {
 
               <TabsContent value="overview" className="mt-8">
                 {/* Case Studies Grid */}
-                <div className="max-w-4xl mx-auto">
+                <div className="max-w-6xl mx-auto space-y-8">
+                  
+                  {/* Live Features Case Studies - NEW SECTION */}
+                  <div className="mb-12">
+                    <h3 className="text-2xl font-bold text-center mb-8 text-genie-accent">
+                      🌟 Live Features Case Studies - 2 Production Deployments
+                    </h3>
+                    <div className="grid md:grid-cols-2 gap-8">
+                      
+                      {/* GenieAI Hub Platform Case Study */}
+                      <Card className="p-6 border-genie-cyan/20 hover:border-genie-cyan/40 transition-colors bg-gradient-to-br from-genie-cyan/5 to-background">
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="p-3 bg-genie-cyan/10 rounded-lg">
+                            <Code className="w-6 h-6 text-genie-cyan" />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="text-xl font-bold text-foreground mb-1">
+                              GenieAI Hub Platform
+                            </h4>
+                            <p className="text-genie-cyan font-semibold text-sm mb-2">
+                              🚀 LIVE: Complete Platform - 2 weeks concept to production
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+                          Full-stack experimentation platform built using Lovable + Supabase. Demonstrates complete Experiment → Validate → Lead to Deploy framework with knowledge sharing, case studies, and interactive features.
+                        </p>
+                        
+                        <div className="mb-4">
+                          <div className="grid grid-cols-2 gap-3 text-xs">
+                            <div className="text-center p-2 bg-white/60 rounded border">
+                              <div className="font-bold text-genie-cyan">2</div>
+                              <div className="text-muted-foreground">Weeks Build</div>
+                            </div>
+                            <div className="text-center p-2 bg-white/60 rounded border">
+                              <div className="font-bold text-genie-cyan">100%</div>
+                              <div className="text-muted-foreground">Framework</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-1 mb-4">
+                          <Badge variant="secondary" className="text-xs">Full-Stack Platform</Badge>
+                          <Badge variant="secondary" className="text-xs">Live Production</Badge>
+                        </div>
+                        
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          className="w-full text-genie-cyan border-genie-cyan hover:bg-genie-cyan/10"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setActiveTab("detailed");
+                          }}
+                        >
+                          <Target className="w-4 h-4 mr-2" />
+                          View Platform Case Study
+                        </Button>
+                      </Card>
+
+                      {/* Genie Conversation AI Case Study */}
+                      <Card className="p-6 border-genie-accent/20 hover:border-genie-accent/40 transition-colors bg-gradient-to-br from-genie-accent/5 to-background">
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="p-3 bg-genie-accent/10 rounded-lg">
+                            <MessageCircle className="w-6 h-6 text-genie-accent" />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="text-xl font-bold text-foreground mb-1">
+                              Genie Conversational AI
+                            </h4>
+                            <p className="text-genie-accent font-semibold text-sm mb-2">
+                              🚀 LIVE: Advanced RAG + 80+ Contexts - 3 weeks to production
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+                          Sophisticated conversational AI with multi-model intelligence, split-screen conversations, and advanced RAG architecture. Flagship feature demonstrating professional AI capabilities.
+                        </p>
+                        
+                        <div className="mb-4">
+                          <div className="grid grid-cols-2 gap-3 text-xs">
+                            <div className="text-center p-2 bg-white/60 rounded border">
+                              <div className="font-bold text-genie-accent">80+</div>
+                              <div className="text-muted-foreground">Contexts</div>
+                            </div>
+                            <div className="text-center p-2 bg-white/60 rounded border">
+                              <div className="font-bold text-genie-accent">Multi</div>
+                              <div className="text-muted-foreground">Models</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-1 mb-4">
+                          <Badge variant="secondary" className="text-xs">Advanced RAG</Badge>
+                          <Badge variant="secondary" className="text-xs">Multi-Model AI</Badge>
+                        </div>
+                        
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          className="w-full text-genie-accent border-genie-accent hover:bg-genie-accent/10"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setActiveTab("detailed");
+                          }}
+                        >
+                          <Brain className="w-4 h-4 mr-2" />
+                          View AI Case Study
+                        </Button>
+                      </Card>
+                    </div>
+                  </div>
+
+                  {/* Original Case Study */}
+                  <div>
+                    <h3 className="text-2xl font-bold text-center mb-8">
+                      Healthcare Implementation Case Study
+                    </h3>
                   {/* Featured Case Study Card */}
                   <Card className="lg:col-span-2 p-8 border-genie-primary/20 hover:border-genie-primary/40 transition-colors bg-gradient-to-br from-genie-primary/5 to-genie-secondary/5">
                     <div className="flex items-start gap-4 mb-6">
@@ -218,6 +337,7 @@ const CaseStudies = () => {
                       View Detailed Case Study
                     </Button>
                   </Card>
+                  </div>
                 </div>
               </TabsContent>
 

@@ -315,7 +315,7 @@ export const GartnerValueSection = () => {
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-genie-teal rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-sm"><strong>Influence Leadership:</strong> Shape organizational AI strategy with expertise</span>
+                    <span className="text-sm"><strong>Position Yourself as Leader:</strong> Become the AI change agent your field needs</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-genie-teal rounded-full mt-2 flex-shrink-0"></div>

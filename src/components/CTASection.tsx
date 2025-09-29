@@ -75,7 +75,7 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
           },
           secondary: {
             title: "See Framework Results",
-            description: "Explore detailed case studies showing the 3-phase methodology delivering measurable outcomes and enterprise-grade solutions",
+            description: "Explore detailed case studies showing the 3-phase methodology delivering personal growth impact and expertise development",
             link: "/case-studies",
             icon: Trophy,
             buttonText: "Success Stories"

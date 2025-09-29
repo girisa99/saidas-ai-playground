@@ -151,12 +151,12 @@ export const AboutSection = () => {
             </Card>
             
             <Card className="p-6 bg-gradient-to-r from-ai-accent/10 to-primary/10 border-ai-accent/20">
-              <h4 className="font-bold text-lg mb-4">Enterprise Impact</h4>
+              <h4 className="font-bold text-lg mb-4">Personal Impact</h4>
               <div className="space-y-3 text-muted-foreground">
-                <p>• Accelerated application development by 40-60%</p>
-                <p>• Reduced operational costs by 60-80%</p>
-                <p>• Enabled autonomous business user innovation</p>
-                <p>• Built secure, scalable AI governance frameworks</p>
+                <p>• Accelerated personal development by 40-60%</p>
+                <p>• Built AI expertise that sets you apart</p>
+                <p>• Enabled autonomous learning and innovation</p>
+                <p>• Created secure, scalable personal AI projects</p>
               </div>
             </Card>
           </div>
