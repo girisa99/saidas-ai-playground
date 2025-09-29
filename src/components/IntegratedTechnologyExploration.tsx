@@ -470,7 +470,14 @@ export const IntegratedTechnologyExploration = () => {
                   Experience the Genie AI Experimentation Hub Framework in Action
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button className="bg-genie-accent hover:bg-genie-accent/90 text-background font-semibold">
+                  <Button 
+                    className="bg-genie-accent hover:bg-genie-accent/90 text-background font-semibold"
+                    onClick={() => {
+                      console.debug('[IntegratedTechnologyExploration] Opening Genie popup');
+                      const event = new CustomEvent('openGeniePopup');
+                      window.dispatchEvent(event);
+                    }}
+                  >
                     <Brain className="w-4 h-4 mr-2" />
                     Try Genie Conversation Now
                   </Button>
