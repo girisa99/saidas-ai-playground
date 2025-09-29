@@ -19,15 +19,15 @@ const faqData = [
     questions: [
       {
         q: "What is Genie AI and how can it help me?",
-        a: "Genie AI is your intelligent assistant specializing in Technology and Healthcare concepts. I can support discussions on AI innovation, Gartner Value Framework, tech stack mapping, experimentation hub methodologies, and healthcare business use cases. I'm designed to guide users through complex topics with personalized insights and practical recommendations."
+        a: "Genie AI is your intelligent assistant with 80+ specialized knowledge contexts, featuring advanced RAG architecture and multi-model intelligence. As one of our 2 live features launched through the Experiment → Validate → Lead to Deploy framework, I help you build AI expertise and position yourself as a change agent in your field. I support discussions on AI innovation, Gartner Value Framework, tech stack mapping, experimentation methodologies, and healthcare business use cases."
       },
       {
         q: "What topics can Genie AI discuss?",
-        a: "I specialize in: • AI Innovation & Value Creation • Gartner Value Framework mapping • Technology stack architecture • Healthcare business use cases • Digital therapeutics (DTx) • Cell & gene therapies • Experimentation methodologies • Security and compliance topics • Journey mapping and case studies"
+        a: "As one of 2 live features from our experimentation framework, I specialize in: • 80+ Knowledge Contexts with advanced RAG • Multi-model AI intelligence (GPT-5, Claude, Gemini) • Split-screen conversations and model comparisons • AI Innovation & Value Creation • Gartner Value Framework mapping • Technology stack architecture • Healthcare business use cases • Digital therapeutics (DTx) • Cell & gene therapies • Personal expertise development • Security and compliance topics • Journey mapping and case studies"
       },
       {
         q: "How does Genie AI adapt to different contexts?",
-        a: "I intelligently detect whether you're asking about technology or healthcare topics and adapt my responses accordingly. I can switch between formal, casual, or empathetic communication styles based on your needs and provide contextual suggestions to guide our conversation."
+        a: "I intelligently detect whether you're asking about technology or healthcare topics and adapt my responses accordingly. With 80+ specialized knowledge contexts and advanced RAG architecture, I can switch between formal, casual, or empathetic communication styles. I also offer split-screen conversations, multi-model comparisons, and contextual suggestions to guide our conversation - demonstrating the advanced capabilities achieved through our 3-phase experimentation framework."
       }
     ]
   },
@@ -44,7 +44,7 @@ const faqData = [
       },
       {
         q: "How can I implement AI democratization in my organization?",
-        a: "I can guide you through: • Open source AI adoption strategies • Community-driven development approaches • Accessible AI tool selection • Educational program design • Collaborative research frameworks • Cost-effective AI solution implementation"
+        a: "I can guide you through personal AI expertise development that positions you as a change agent: • Open source AI adoption strategies • Individual skill development approaches • Accessible AI tool selection for personal projects • Self-directed learning program design • Personal experimentation frameworks • Cost-effective AI solution implementation for individual growth • Building expertise that influences organizational adoption"
       }
     ]
   },
@@ -70,11 +70,11 @@ const faqData = [
     questions: [
       {
         q: "How does the Experimentation Hub journey work?",
-        a: "The journey follows three phases: • Discovery & Learning (Months 1-3): Technology exploration, use case identification, skill development • Experimentation & Validation (Months 4-9): Hypothesis testing, pilot implementation, user feedback • Scale & Integration (Months 10-18): Production deployment, system integration, team scaling"
+        a: "The personal AI expertise development journey follows our proven 3-phase framework demonstrated through 2 live implementations: • EXPERIMENT (Months 1-3): Technology exploration, personal skill development, hands-on learning • VALIDATE (Months 4-9): Building credible expertise, creating case studies, proving capabilities • LEAD TO DEPLOY (Months 10-18): Positioning as change agent, influencing adoption, leading implementation. This framework enabled the creation of our GenieAI Hub platform and Genie Conversational AI feature."
       },
       {
         q: "What case studies and success stories can guide my implementation?",
-        a: "I have comprehensive case studies covering healthcare AI transformation (40% reduction in diagnosis time), financial services automation (80% fraud detection improvement), and various industry implementations. Each includes challenges, solutions, technologies used, results achieved, and lessons learned."
+        a: "I have comprehensive case studies including our 2 live feature implementations: • GenieAI Hub Platform: Complete platform built in 2 weeks using the 3-phase framework • Genie Conversational AI: Advanced RAG with 80+ contexts, multi-model intelligence • Healthcare AI transformation case studies (40% reduction in diagnosis time) • Personal expertise development journeys • Technology adoption success stories • Each includes challenges, solutions, technologies used, results achieved, and lessons learned for individual growth"
       },
       {
         q: "How do you handle security and compliance in AI implementations?",
@@ -104,15 +104,15 @@ const faqData = [
     questions: [
       {
         q: "What advanced AI modes does Genie offer?",
-        a: "I support multiple modes: • Default mode for general conversations • Single-agent mode for focused expertise • Multi-agent mode for complex analysis • Split-screen comparisons with different AI models • RAG-enabled responses with knowledge base integration • MCP (Model Context Protocol) tool usage"
+        a: "As one of our flagship live features, I support multiple advanced modes: • Split-screen conversations with model comparisons • Multi-model intelligence (GPT-5, Claude, Gemini) • 80+ specialized knowledge contexts • Advanced RAG-enabled responses • Context switching between domains • Single-agent mode for focused expertise • Multi-agent mode for complex analysis • MCP (Model Context Protocol) tool usage • Real-time knowledge base integration"
       },
       {
         q: "How does the knowledge base integration work?",
-        a: "My knowledge base includes: • Complete website content and topics • Technology stack documentation • Healthcare business use cases • Gartner Value Framework mappings • Case studies and journey examples • Security and compliance guidelines • Real-time updates from experimentation results"
+        a: "My knowledge base represents one of the most comprehensive AI implementations with: • Complete website content from our experimentation platform • 80+ specialized knowledge contexts • Technology stack documentation • Healthcare business use cases • Gartner Value Framework mappings • Case studies from our 2 live feature launches • Security and compliance guidelines • Real-time updates from ongoing experiments • Advanced RAG architecture for contextual responses"
       },
       {
         q: "Can Genie AI help with specific business decisions?",
-        a: "Absolutely! I can provide: • Technology selection guidance • Implementation roadmap development • Risk assessment and mitigation • ROI estimation and KPI definition • Vendor evaluation frameworks • Compliance requirement analysis • Change management strategies"
+        a: "Absolutely! I can help you build expertise and position yourself as a change agent through: • Personal technology selection guidance • Individual implementation roadmap development • Personal risk assessment and skill building • ROI estimation for personal AI projects • Vendor evaluation frameworks for individual use • Compliance requirement analysis • Personal change management strategies • Building credibility for organizational influence"
       }
     ]
   }

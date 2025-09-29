@@ -36,10 +36,10 @@ const ComponentSkeleton = () => (
 
 const Journey = () => {
   useEffect(() => {
-    document.title = "Experiment → Validate → Lead to Deploy AI Framework - Genie AI HUB";
+    document.title = "Personal AI Development Journey - 2 Live Features from 3-Phase Framework";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Discover the proven Experiment → Validate → Lead to Deploy AI framework - from 45-day experimentation to production-ready healthcare AI solutions with enterprise-grade reliability.');
+      metaDescription.setAttribute('content', 'Personal AI development journey using proven Experiment → Validate → Lead to Deploy framework. 2 Live Features: GenieAI Hub Platform & Genie Conversation (80+ contexts) demonstrate framework success.');
     }
   }, []);
 

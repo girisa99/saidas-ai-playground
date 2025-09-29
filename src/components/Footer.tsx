@@ -66,7 +66,7 @@ export const Footer = () => {
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               GenieAI Experimentation Hub - empowering individuals to build AI expertise through hands-on learning. 
-              Develop the skills that position you as a change agent in your organization and stay ahead of AI disruption.
+              Develop the skills that position you as a change agent in your field. <strong>2 Live Features:</strong> GenieAI Hub Platform & Genie Conversation with 80+ knowledge contexts.
             </p>
           </div>
 
@@ -75,16 +75,16 @@ export const Footer = () => {
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <div className="space-y-2 text-sm">
               <Link to="/journey" className="text-muted-foreground hover:text-foreground transition-colors block">
-                AI Development Journey
+                Personal AI Development Journey
               </Link>
               <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors block">
-                About Sai
+                About Sai - Change Agent Creator
               </Link>
               <Link to="/technology" className="text-muted-foreground hover:text-foreground transition-colors block">
-                3-Phase Tech Framework
+                2 Live Features Tech Stack
               </Link>
               <Link to="/case-studies" className="text-muted-foreground hover:text-foreground transition-colors block">
-                Validated Case Studies
+                Live Feature Case Studies
               </Link>
             </div>
           </div>

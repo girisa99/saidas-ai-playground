@@ -13,10 +13,10 @@ import techRoadmapBg from "@/assets/hero-tech-roadmap.jpg";
 
 const TechnologyStack = () => {
   useEffect(() => {
-    document.title = "Genie AI Experimentation Hub - 3-Phase Technology Journey | Experiment → Validate → Lead to Deploy";
+    document.title = "2 Live AI Features Technology Stack - Genie Hub & Conversation Platform";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Genie AI Experimentation Hub: 3-phase technology arsenal powering the Experiment → Validate → Lead to Deploy framework. From Spark & Curiosity tools to Scalable MVP infrastructure - sharing healthcare AI technology knowledge.');
+      metaDescription.setAttribute('content', '2 Live Features Technology Stack: GenieAI Hub Platform & Genie Conversation (80+ contexts). Complete tech analysis using Experiment → Validate → Lead to Deploy framework for personal AI expertise development.');
     }
   }, []);
 

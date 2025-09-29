@@ -24,10 +24,10 @@ const About = () => {
   const [desc1Done, setDesc1Done] = useState(false);
   const [desc2Done, setDesc2Done] = useState(false);
   useEffect(() => {
-    document.title = "About Me - Saidas | AI Innovation Leader & Digital Health Pioneer";
+    document.title = "About Me - Saidas | Personal AI Change Agent & 2 Live Feature Creator";
     const metaDescription = document.querySelector("meta[name=\"description\"]");
     if (metaDescription) {
-      metaDescription.setAttribute("content", "Meet Saidas - AI innovation leader with 21+ years in digital health. Discover my journey from healthcare to AI experimentation and transformation.");
+      metaDescription.setAttribute("content", "Meet Saidas - Personal AI change agent who built 2 live features: GenieAI Hub Platform & Genie Conversation (80+ contexts). 25+ years experience helping individuals become AI leaders through proven 3-phase framework.");
     }
 
     // Animation sequence phases (bottle shows first; text animation begins)

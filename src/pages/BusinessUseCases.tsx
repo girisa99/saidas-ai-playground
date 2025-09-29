@@ -7,10 +7,10 @@ import { useEffect } from "react";
 
 const BusinessUseCases = () => {
   useEffect(() => {
-    document.title = "3-Phase Framework Applications - Real-World AI Experiments";
+    document.title = "3-Phase Framework Applications - 2 Live Features in Healthcare AI";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Real-world validation of the Experiment → Validate → Lead to Deploy framework through healthcare AI implementations. Strategic technology selection following Gartner value methodology for oncology workflows.');
+      metaDescription.setAttribute('content', '2 Live Features demonstrating Experiment → Validate → Lead to Deploy framework: GenieAI Hub Platform & Genie Conversation. Real healthcare AI applications with Genie integration showing personal change agent development.');
     }
   }, []);
 
