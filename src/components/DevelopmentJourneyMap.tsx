@@ -81,8 +81,8 @@ export const DevelopmentJourneyMap = () => {
     },
     {
       step: 5,
-      title: "Deployment",
-      description: "Enterprise-grade deployment and scaling",
+      title: "Lead to Deployment",
+      description: "Enterprise-grade deployment and scaling leadership",
       icon: Rocket,
       color: "genie-teal",
       details: [
@@ -223,7 +223,7 @@ export const DevelopmentJourneyMap = () => {
             Development Process
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            AI Development & <span className="text-genie-teal">Deployment Journey</span>
+            AI Development & <span className="text-genie-teal">Lead to Deployment Journey</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Systematic approach to transforming AI concepts into production-ready solutions 

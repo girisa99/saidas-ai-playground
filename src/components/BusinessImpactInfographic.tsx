@@ -61,7 +61,7 @@ export const BusinessImpactInfographic = () => {
         technologies: ["TypeScript", "Supabase", "Healthcare APIs", "Validation Systems"]
       },
       deploy: {
-        title: "DEPLOY",
+        title: "LEAD to DEPLOY",
         activities: ["Full CMS integration deployment", "Multi-agent orchestration live", "Real-time insurance verification"],
         technologies: ["CMS Credentialing", "FDA APIs", "ICD 9/10", "Multi-Agent Systems"]
       },
@@ -91,7 +91,7 @@ export const BusinessImpactInfographic = () => {
         technologies: ["TypeScript", "Supabase", "Advanced AI Gateway", "Validation Middleware"]
       },
       deploy: {
-        title: "DEPLOY", 
+        title: "LEAD to DEPLOY", 
         activities: ["Automated verification deployment", "AI-driven guidance live", "Multi-channel communication"],
         technologies: ["Experian API", "CMS Verification", "Twilio SMS/Email", "Production AI Systems"]
       },
@@ -121,7 +121,7 @@ export const BusinessImpactInfographic = () => {
         technologies: ["Advanced Twilio", "Customer Data APIs", "AI Gateway", "Real-time Processing"]
       },
       deploy: {
-        title: "DEPLOY",
+        title: "LEAD to DEPLOY",
         activities: ["Smart IVR production deployment", "AI case management live", "Multi-channel orchestration"],
         technologies: ["Twilio WhatsApp/Voice/Email/SMS", "MCP", "Arize", "Production AI Systems"]
       },
@@ -151,7 +151,7 @@ export const BusinessImpactInfographic = () => {
         technologies: ["TypeScript", "Supabase", "Advanced Scheduling", "Analytics APIs"]
       },
       deploy: {
-        title: "DEPLOY", 
+        title: "LEAD to DEPLOY", 
         activities: ["Intelligent validation live", "Automated batch scheduling", "Predictive issue resolution"],
         technologies: ["ERP Integrations", "MCP", "Production Optimization Systems", "Real-time Analytics"]
       },
@@ -286,7 +286,7 @@ export const BusinessImpactInfographic = () => {
                     <div>
                       <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-sm">
                         <Brain className="w-4 h-4" />
-                        Experiment → Validate → Deploy
+                        Experiment → Validate → Lead to Deploy
                       </h4>
                       <div className="space-y-2">
                         {/* Experiment Phase */}
