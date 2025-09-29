@@ -60,8 +60,8 @@ export const IntegratedTechnologyExploration = () => {
     businessValue: "Demonstrates complete framework execution from experimentation to production deployment"
   };
 
-  // Real Business Use Cases aligned with Journey and current implementations
-  const businessUseCasesMapping = {
+  // Real Experimentation Results aligned with Journey and current implementations
+  const experimentationMapping = {
     'Artificial Intelligence & ML': {
       title: '🌟 Genie Conversational Feature - Clinical Intelligence & AI Decision Support',
       gartnerPhase: 'Envision → LIVE DEPLOYMENT',
@@ -232,7 +232,7 @@ export const IntegratedTechnologyExploration = () => {
         "AI Tools": ["LangChain", "LangWatch", "Arize Analytics", "Prompt Engineering"]
       },
       businessOutcomes: ["Healthcare Diagnostics", "Customer Support Automation", "Content Generation", "Predictive Analytics"],
-      gartnerValue: ["Innovation Discovery", "Proof of Concept", "AI Strategy Development"],
+      experimentResults: ["Innovation Discovery", "Proof of Concept", "AI Strategy Development"],
       integrationBlueprint: "AI Model Selection → Training Pipeline → Inference Optimization → Performance Monitoring"
     },
 
@@ -249,7 +249,7 @@ export const IntegratedTechnologyExploration = () => {
         "Tools": ["File System Access", "Database Queries", "Web Scraping", "Custom Functions"]
       },
       businessOutcomes: ["Enhanced AI Context", "Cross-Platform Integration", "Tool Orchestration", "Workflow Automation"],
-      gartnerValue: ["Context Enhancement", "Tool Unification", "Productivity Acceleration"],
+      experimentResults: ["Context Enhancement", "Tool Unification", "Productivity Acceleration"],
       integrationBlueprint: "MCP Server Setup → Tool Registration → Context Bridge Configuration → AI Model Integration"
     },
 
@@ -266,7 +266,7 @@ export const IntegratedTechnologyExploration = () => {
         "Orchestration": ["Task Planning", "Agent Coordination", "Workflow Management", "Result Synthesis"]
       },
       businessOutcomes: ["Autonomous Customer Service", "Healthcare Process Automation", "Complex Task Resolution", "Multi-step Workflows"],
-      gartnerValue: ["Process Automation", "Decision Support", "Operational Excellence"],
+      experimentResults: ["Process Automation", "Decision Support", "Operational Excellence"],
       integrationBlueprint: "Agent Design → Tool Integration → Planning Logic → Execution Monitoring → Feedback Loops"
     },
     
@@ -283,7 +283,7 @@ export const IntegratedTechnologyExploration = () => {
         "Tools": ["Loveable", "Cursor IDE", "GitHub Copilot", "ESLint"]
       },
       businessOutcomes: ["Patient Portals", "Customer Onboarding Apps", "Admin Dashboards", "Mobile-First Interfaces"],
-      gartnerValue: ["User Experience Optimization", "Rapid Prototyping", "Digital Transformation"],
+      experimentResults: ["User Experience Optimization", "Rapid Prototyping", "Digital Transformation"],
       integrationBlueprint: "Component Library → Design System → State Management → Performance Optimization → Testing"
     },
     
@@ -300,7 +300,7 @@ export const IntegratedTechnologyExploration = () => {
         "Cloud": ["AWS", "Vercel", "Railway", "API Gateways"]
       },
       businessOutcomes: ["Scalable Healthcare Systems", "Real-time Communication", "API Integrations", "Multi-tenant Architecture"],
-      gartnerValue: ["Platform Assessment", "Scalability Planning", "Integration Strategy"],
+      experimentResults: ["Platform Assessment", "Scalability Planning", "Integration Strategy"],
       integrationBlueprint: "Infrastructure Design → Container Orchestration → Load Balancing → Auto-scaling → Monitoring"
     },
     
@@ -317,7 +317,7 @@ export const IntegratedTechnologyExploration = () => {
         "Storage": ["Cloud Storage", "File Management", "Backup Systems", "CDN"]
       },
       businessOutcomes: ["Patient Data Management", "Business Intelligence", "Compliance Reporting", "Performance Analytics"],
-      gartnerValue: ["Data Strategy", "Analytics Capabilities", "ROI Measurement"],
+      experimentResults: ["Data Strategy", "Analytics Capabilities", "ROI Measurement"],
       integrationBlueprint: "Data Architecture → ETL Pipeline → Analytics Layer → Visualization → Insights Delivery"
     },
     
@@ -334,7 +334,7 @@ export const IntegratedTechnologyExploration = () => {
         "Monitoring": ["Security Scanning", "Threat Detection", "Access Control"]
       },
       businessOutcomes: ["Healthcare Compliance", "Data Privacy", "Risk Management", "Regulatory Adherence"],
-      gartnerValue: ["Risk Mitigation", "Compliance Assurance", "Trust Building"],
+      experimentResults: ["Risk Mitigation", "Compliance Assurance", "Trust Building"],
       integrationBlueprint: "Security Assessment → Identity Management → Encryption Implementation → Compliance Monitoring → Audit Trails"
     },
     
@@ -351,12 +351,12 @@ export const IntegratedTechnologyExploration = () => {
         "Automation": ["n8n", "Zapier", "Workflow Engines", "Event Streaming"]
       },
       businessOutcomes: ["Multi-channel Support", "Document Automation", "Customer Communications", "System Integration"],
-      gartnerValue: ["Business Process Optimization", "Operational Efficiency", "Value Realization"],
+      experimentResults: ["Business Process Optimization", "Operational Efficiency", "Value Realization"],
       integrationBlueprint: "API Gateway Setup → Service Integration → Communication Channels → Workflow Automation → Performance Optimization"
     }
   };
 
-  const gartnerPhases = [
+  const experimentationPhases = [
     {
       phase: "Envision",
       color: "bg-blue-500/20 text-blue-700 border-blue-500/30",
@@ -536,9 +536,9 @@ export const IntegratedTechnologyExploration = () => {
             </div>
           </div>
 
-          {/* Gartner Framework Alignment */}
+          {/* Experimentation Framework Alignment */}
           <div className="grid md:grid-cols-3 gap-4">
-            {gartnerPhases.map((phase, index) => {
+            {experimentationPhases.map((phase, index) => {
               const IconComponent = phase.icon;
               return (
                 <Card key={index} className={`p-4 text-center ${phase.color}`}>
@@ -634,14 +634,14 @@ export const IntegratedTechnologyExploration = () => {
                             What We Learned
                           </h5>
                           <div className="space-y-2">
-                            {businessUseCasesMapping[category]?.valueCreationSteps.map((step, index) => (
+                            {experimentationMapping[category]?.valueCreationSteps.map((step, index) => (
                               <div key={index} className="flex items-center gap-3 p-2 bg-emerald-50 dark:bg-emerald-950/20 rounded border border-emerald-200 dark:border-emerald-800">
                                 <div className="w-5 h-5 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
                                   {index + 1}
                                 </div>
                                 <span className="text-xs text-emerald-700 dark:text-emerald-300">{step}</span>
                               </div>
-                            )) || details.gartnerValue.slice(0, 3).map((value, index) => (
+                            )) || details.experimentResults.slice(0, 3).map((value, index) => (
                               <div key={index} className="flex items-center gap-3 p-2 bg-emerald-50 dark:bg-emerald-950/20 rounded">
                                 <div className="w-5 h-5 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
                                   {index + 1}
@@ -660,7 +660,7 @@ export const IntegratedTechnologyExploration = () => {
                           Real Implementation Examples
                         </h5>
                         <div className="space-y-2">
-                          {businessUseCasesMapping[category]?.realWorldExamples.map((example, index) => (
+                          {experimentationMapping[category]?.realWorldExamples.map((example, index) => (
                             <div key={index} className="text-xs text-muted-foreground flex items-start gap-2">
                               <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                               <span>{example}</span>
