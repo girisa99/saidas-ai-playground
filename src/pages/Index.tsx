@@ -1,11 +1,10 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
-import { MultiHeroSection } from "@/components/MultiHeroSection";
+import { UnifiedHeroBanner } from "@/components/UnifiedHeroBanner";
 import { TrustSection } from "@/components/TrustSection";
 import { GartnerValueSection } from "@/components/GartnerValueSection";
 import { QuickStart } from "@/components/QuickStart";
 import { Footer } from "@/components/Footer";
 import { CTASection } from "@/components/CTASection";
-import { GenieHeroBanner } from "@/components/GenieHeroBanner";
 import { useEffect } from "react";
 
 const Index = () => {
@@ -21,9 +20,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavigationHeader />
-      <GenieHeroBanner />
+      <UnifiedHeroBanner />
       <main>
-        <MultiHeroSection />
         <TrustSection />
         <GartnerValueSection />
         <QuickStart />
