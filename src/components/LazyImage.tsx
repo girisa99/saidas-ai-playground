@@ -14,6 +14,9 @@ export const LazyImage = ({ src, alt, className = "", placeholder, onLoad }: Laz
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
+    const current = imgRef.current;
+    if (!current) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -24,12 +27,17 @@ export const LazyImage = ({ src, alt, className = "", placeholder, onLoad }: Laz
       { threshold: 0.1 }
     );
 
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
-    }
+    observer.observe(current);
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
+
+  // Reset loaded state when src changes
+  useEffect(() => {
+    setIsLoaded(false);
+  }, [src]);
 
   const handleLoad = () => {
     setIsLoaded(true);
@@ -43,6 +51,7 @@ export const LazyImage = ({ src, alt, className = "", placeholder, onLoad }: Laz
       )}
       {isInView && (
         <img
+          key={src}
           src={src}
           alt={alt}
           className={`transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${className}`}
