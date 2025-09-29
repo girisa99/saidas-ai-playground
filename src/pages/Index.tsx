@@ -5,7 +5,7 @@ import { GartnerValueSection } from "@/components/GartnerValueSection";
 import { QuickStart } from "@/components/QuickStart";
 import { Footer } from "@/components/Footer";
 import { CTASection } from "@/components/CTASection";
-import { NextLaunchBanner } from "@/components/NextLaunchBanner";
+import { GenieHeroBanner } from "@/components/GenieHeroBanner";
 import { useEffect } from "react";
 
 const Index = () => {
@@ -21,7 +21,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavigationHeader />
-      <NextLaunchBanner />
+      <GenieHeroBanner />
       <main>
         <MultiHeroSection />
         <TrustSection />
