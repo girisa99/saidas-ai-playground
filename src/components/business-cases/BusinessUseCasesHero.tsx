@@ -38,7 +38,7 @@ export const BusinessUseCasesHero = ({
         </h1>
         
         <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-          Real-world validation of the <span className="text-genie-accent font-semibold">Experiment → Validate → Lead to Deploy</span> framework through healthcare AI implementations, following Gartner value methodology. Exploring various scenarios where some are implemented and actively being tested, while others are in development phases as part of our ongoing experimentation initiatives.
+          Real-world validation of the <span className="text-genie-accent font-semibold">Experiment → Validate → Lead to Deploy</span> framework through healthcare AI implementations. <strong>2 live features launched:</strong> GenieAI Experimentation Hub platform and Genie Conversational AI with 80+ knowledge contexts, plus <strong>10+ experiments in development pipeline</strong>.
         </p>
         
         {/* Key Features Grid - Mobile Responsive */}
@@ -46,17 +46,17 @@ export const BusinessUseCasesHero = ({
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
             <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 mb-2" />
             <h3 className="font-semibold text-white text-xs sm:text-sm">DEPLOY Phase</h3>
-            <p className="text-white/80 text-xs">Deployed & Working</p>
+            <p className="text-white/80 text-xs">2 Live Features</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
             <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 mb-2" />
             <h3 className="font-semibold text-white text-xs sm:text-sm">VALIDATE Phase</h3>
-            <p className="text-white/80 text-xs">Active Validation</p>
+            <p className="text-white/80 text-xs">Active Testing</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
             <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400 mb-2" />
             <h3 className="font-semibold text-white text-xs sm:text-sm">EXPERIMENT Phase</h3>
-            <p className="text-white/80 text-xs">Building Components</p>
+            <p className="text-white/80 text-xs">10+ In Pipeline</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
             <Target className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400 mb-2" />
