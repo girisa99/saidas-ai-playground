@@ -182,31 +182,34 @@ export const UnifiedHeroBanner = () => {
               <h2 className="text-2xl lg:text-3xl font-bold text-white">
                 Introducing Genie AI
                 <span className="block text-genie-accent mt-1 text-xl lg:text-2xl font-semibold">
-                  Your Experimentation Guide
+                  First Live Experimentation Use Case
+                </span>
+                <span className="block text-white/90 mt-1 text-lg font-medium">
+                  80+ Knowledge Contexts • Advanced AI Intelligence
                 </span>
               </h2>
               
               <p className="text-white/80 text-lg leading-relaxed">
-                Advanced conversational AI with specialized knowledge in healthcare, technology stacks, and enterprise AI deployment strategies.
+                Beyond experimentation guidance - a comprehensive AI system with specialized knowledge spanning healthcare, enterprise technology stacks, and advanced deployment strategies across 80+ curated knowledge contexts.
               </p>
 
               {/* Genie Core Capabilities */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex items-center gap-3 text-white/80">
                   <MessageCircle className="w-5 h-5 text-genie-accent flex-shrink-0" />
-                  <span>3-Phase Framework Guidance</span>
+                  <span>80+ Knowledge Contexts</span>
                 </div>
                 <div className="flex items-center gap-3 text-white/80">
                   <Bot className="w-5 h-5 text-genie-accent flex-shrink-0" />
-                  <span>Gartner Value Methodology</span>
+                  <span>Advanced RAG Architecture</span>
                 </div>
                 <div className="flex items-center gap-3 text-white/80">
                   <Sparkles className="w-5 h-5 text-genie-accent flex-shrink-0" />
-                  <span>Healthcare AI Expertise</span>
+                  <span>Multi-Domain Intelligence</span>
                 </div>
                 <div className="flex items-center gap-3 text-white/80">
                   <Target className="w-5 h-5 text-genie-accent flex-shrink-0" />
-                  <span>Technology Stack Intelligence</span>
+                  <span>Enterprise-Grade Insights</span>
                 </div>
               </div>
 
@@ -214,7 +217,7 @@ export const UnifiedHeroBanner = () => {
               <div className="bg-white/5 rounded-lg p-4 border border-genie-accent/20">
                 <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
                   <Bot className="w-4 h-4 text-genie-accent" />
-                  Advanced AI Capabilities
+                  Live Experimentation Showcase
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                   <div className="text-white/70">• Single & Multi-Model Intelligence</div>
