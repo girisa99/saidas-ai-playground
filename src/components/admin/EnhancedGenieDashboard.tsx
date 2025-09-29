@@ -20,7 +20,16 @@ import {
   UserCheck,
   Globe,
   Phone,
-  MapPin
+  MapPin,
+  Brain,
+  Zap,
+  Database,
+  ArrowRightLeft,
+  Bot,
+  BookOpen,
+  Target,
+  BarChart3,
+  PieChart
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -89,7 +98,35 @@ export const EnhancedGenieDashboard = () => {
     // Session Stats
     averageSessionLength: 0,
     peakHours: '',
-    userRetentionRate: 0
+    userRetentionRate: 0,
+
+    // Advanced Context Analytics
+    technologyContexts: 0,
+    healthcareContexts: 0,
+    generalContexts: 0,
+    contextSwitches: 0,
+    techToHealthSwitches: 0,
+    healthToTechSwitches: 0,
+    
+    // Model Usage Analytics
+    singleModelUsage: 0,
+    multiModelUsage: 0,
+    defaultModelUsage: 0,
+    systemModelUsage: 0,
+    
+    // Knowledge Base Analytics
+    knowledgeBaseEnabled: 0,
+    knowledgeBaseDisabled: 0,
+    ragQueries: 0,
+    
+    // Human Escalation Analytics
+    humanEscalationRequests: 0,
+    escalationSuccessful: 0,
+    escalationPending: 0,
+    
+    // Topic Distribution
+    topicsBreakdown: {} as Record<string, number>,
+    modelBreakdown: {} as Record<string, number>
   });
 
   useEffect(() => {
@@ -160,10 +197,130 @@ export const EnhancedGenieDashboard = () => {
     
     let totalMessages = 0;
     let totalSessionDuration = 0;
+    
+    // Advanced Analytics
+    let technologyContexts = 0;
+    let healthcareContexts = 0;
+    let generalContexts = 0;
+    let contextSwitches = 0;
+    let techToHealthSwitches = 0;
+    let healthToTechSwitches = 0;
+    
+    let singleModelUsage = 0;
+    let multiModelUsage = 0;
+    let defaultModelUsage = 0;
+    let systemModelUsage = 0;
+    
+    let knowledgeBaseEnabled = 0;
+    let knowledgeBaseDisabled = 0;
+    let ragQueries = 0;
+    
+    let humanEscalationRequests = 0;
+    let escalationSuccessful = 0;
+    let escalationPending = 0;
+    
+    const topicsBreakdown: Record<string, number> = {};
+    const modelBreakdown: Record<string, number> = {};
+    
     convs.forEach(conv => {
       if (conv.messages && Array.isArray(conv.messages)) {
         totalMessages += conv.messages.length;
+        
+        // Analyze conversation context and topics
+        const conversationText = conv.messages
+          .map((msg: any) => typeof msg.content === 'string' ? msg.content.toLowerCase() : '')
+          .join(' ');
+        
+        // Detect technology vs healthcare context
+        const technologyKeywords = ['software', 'technology', 'coding', 'programming', 'computer', 'app', 'website', 'digital', 'ai', 'machine learning', 'data'];
+        const healthcareKeywords = ['health', 'medical', 'patient', 'doctor', 'clinic', 'treatment', 'diagnosis', 'medicine', 'healthcare', 'hospital'];
+        
+        const hasTechnology = technologyKeywords.some(keyword => conversationText.includes(keyword));
+        const hasHealthcare = healthcareKeywords.some(keyword => conversationText.includes(keyword));
+        
+        if (hasTechnology && hasHealthcare) {
+          contextSwitches++;
+          // Analyze order to determine switch direction
+          const firstTechIndex = Math.min(...technologyKeywords.map(k => conversationText.indexOf(k)).filter(i => i !== -1));
+          const firstHealthIndex = Math.min(...healthcareKeywords.map(k => conversationText.indexOf(k)).filter(i => i !== -1));
+          
+          if (firstTechIndex < firstHealthIndex) {
+            techToHealthSwitches++;
+          } else {
+            healthToTechSwitches++;
+          }
+        } else if (hasTechnology) {
+          technologyContexts++;
+        } else if (hasHealthcare) {
+          healthcareContexts++;
+        } else {
+          generalContexts++;
+        }
+        
+        // Check for human escalation requests
+        const escalationKeywords = ['human', 'live agent', 'speak to person', 'transfer', 'escalate', 'real person'];
+        const hasEscalationRequest = escalationKeywords.some(keyword => conversationText.includes(keyword));
+        if (hasEscalationRequest) {
+          humanEscalationRequests++;
+          // Check if escalation was handled (based on message patterns)
+          const hasEscalationResponse = conversationText.includes('connecting you') || conversationText.includes('transferring');
+          if (hasEscalationResponse) {
+            escalationSuccessful++;
+          } else {
+            escalationPending++;
+          }
+        }
+        
+        // Check for RAG/Knowledge base usage
+        const hasKnowledgeQuery = conversationText.includes('knowledge') || conversationText.includes('search') || conversationText.includes('find information');
+        if (hasKnowledgeQuery) {
+          ragQueries++;
+        }
       }
+      
+      // Analyze configuration for model usage and knowledge base
+      if (conv.configuration_snapshot) {
+        const config = conv.configuration_snapshot;
+        
+        // Model usage analysis
+        if (config.model_type) {
+          const modelType = config.model_type.toLowerCase();
+          modelBreakdown[modelType] = (modelBreakdown[modelType] || 0) + 1;
+          
+          if (modelType.includes('single')) {
+            singleModelUsage++;
+          } else if (modelType.includes('multi')) {
+            multiModelUsage++;
+          } else if (modelType.includes('system') || modelType.includes('default')) {
+            systemModelUsage++;
+          } else {
+            defaultModelUsage++;
+          }
+        } else {
+          defaultModelUsage++;
+          modelBreakdown['default'] = (modelBreakdown['default'] || 0) + 1;
+        }
+        
+        // Knowledge base analysis
+        if (config.knowledge_base_enabled === true || config.rag_enabled === true) {
+          knowledgeBaseEnabled++;
+        } else {
+          knowledgeBaseDisabled++;
+        }
+        
+        // Topics analysis
+        if (config.topics && Array.isArray(config.topics)) {
+          config.topics.forEach((topic: string) => {
+            topicsBreakdown[topic] = (topicsBreakdown[topic] || 0) + 1;
+          });
+        }
+      } else {
+        // No configuration means default settings
+        defaultModelUsage++;
+        knowledgeBaseDisabled++;
+        modelBreakdown['default'] = (modelBreakdown['default'] || 0) + 1;
+      }
+      
       // Calculate session duration if not active
       if (!conv.is_active) {
         const start = new Date(conv.created_at);
@@ -219,7 +376,25 @@ export const EnhancedGenieDashboard = () => {
       rejectedAccessRequests,
       averageSessionLength,
       peakHours,
-      userRetentionRate
+      userRetentionRate,
+      technologyContexts,
+      healthcareContexts,
+      generalContexts,
+      contextSwitches,
+      techToHealthSwitches,
+      healthToTechSwitches,
+      singleModelUsage,
+      multiModelUsage,
+      defaultModelUsage,
+      systemModelUsage,
+      knowledgeBaseEnabled,
+      knowledgeBaseDisabled,
+      ragQueries,
+      humanEscalationRequests,
+      escalationSuccessful,
+      escalationPending,
+      topicsBreakdown,
+      modelBreakdown
     });
   };
 
@@ -290,12 +465,13 @@ export const EnhancedGenieDashboard = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="context">Context Analytics</TabsTrigger>
+          <TabsTrigger value="models">Model Usage</TabsTrigger>
           <TabsTrigger value="users">Users & Sessions</TabsTrigger>
           <TabsTrigger value="conversations">Conversations</TabsTrigger>
           <TabsTrigger value="access">Access Requests</TabsTrigger>
-          <TabsTrigger value="analytics">Advanced Analytics</TabsTrigger>
         </TabsList>
 
         {/* Overview Tab */}
@@ -432,6 +608,327 @@ export const EnhancedGenieDashboard = () => {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        {/* Context Analytics Tab */}
+        <TabsContent value="context" className="space-y-6">
+          {/* Context Distribution */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Technology Context</p>
+                    <p className="text-2xl font-bold text-blue-600">{stats.technologyContexts}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {Math.round((stats.technologyContexts / Math.max(stats.totalConversations, 1)) * 100)}% of conversations
+                    </p>
+                  </div>
+                  <Bot className="h-8 w-8 text-blue-600" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Healthcare Context</p>
+                    <p className="text-2xl font-bold text-green-600">{stats.healthcareContexts}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {Math.round((stats.healthcareContexts / Math.max(stats.totalConversations, 1)) * 100)}% of conversations
+                    </p>
+                  </div>
+                  <Shield className="h-8 w-8 text-green-600" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">General Context</p>
+                    <p className="text-2xl font-bold text-purple-600">{stats.generalContexts}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {Math.round((stats.generalContexts / Math.max(stats.totalConversations, 1)) * 100)}% of conversations
+                    </p>
+                  </div>
+                  <MessageSquare className="h-8 w-8 text-purple-600" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Context Switching Analytics */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Context Switching Analysis</CardTitle>
+                <CardDescription>Conversations that switched between topics</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <ArrowRightLeft className="h-4 w-4 text-blue-500" />
+                      <span className="text-sm font-medium">Total Context Switches</span>
+                    </div>
+                    <Badge variant="outline" className="text-lg font-bold">
+                      {stats.contextSwitches}
+                    </Badge>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Tech → Healthcare</span>
+                      <span className="text-sm font-bold text-green-600">{stats.techToHealthSwitches}</span>
+                    </div>
+                    <Progress 
+                      value={(stats.techToHealthSwitches / Math.max(stats.contextSwitches, 1)) * 100} 
+                      className="h-2"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Healthcare → Tech</span>
+                      <span className="text-sm font-bold text-blue-600">{stats.healthToTechSwitches}</span>
+                    </div>
+                    <Progress 
+                      value={(stats.healthToTechSwitches / Math.max(stats.contextSwitches, 1)) * 100} 
+                      className="h-2"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Human Escalation Analytics</CardTitle>
+                <CardDescription>Requests for live human assistance</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4 text-orange-500" />
+                      <span className="text-sm font-medium">Escalation Requests</span>
+                    </div>
+                    <Badge variant="outline" className="text-lg font-bold">
+                      {stats.humanEscalationRequests}
+                    </Badge>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Successfully Connected</span>
+                      <span className="text-sm font-bold text-green-600">{stats.escalationSuccessful}</span>
+                    </div>
+                    <Progress 
+                      value={(stats.escalationSuccessful / Math.max(stats.humanEscalationRequests, 1)) * 100} 
+                      className="h-2"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Pending/Failed</span>
+                      <span className="text-sm font-bold text-orange-600">{stats.escalationPending}</span>
+                    </div>
+                    <Progress 
+                      value={(stats.escalationPending / Math.max(stats.humanEscalationRequests, 1)) * 100} 
+                      className="h-2"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Topics Breakdown */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Topics Distribution</CardTitle>
+              <CardDescription>Most discussed topics across conversations</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ScrollArea className="h-64">
+                <div className="space-y-2">
+                  {Object.entries(stats.topicsBreakdown)
+                    .sort(([,a], [,b]) => b - a)
+                    .slice(0, 10)
+                    .map(([topic, count]) => (
+                    <div key={topic} className="flex items-center justify-between p-2 rounded bg-muted">
+                      <span className="text-sm font-medium capitalize">{topic}</span>
+                      <div className="flex items-center gap-2">
+                        <Badge variant="secondary">{count}</Badge>
+                        <div className="w-16">
+                          <Progress 
+                            value={(count / Math.max(stats.totalConversations, 1)) * 100} 
+                            className="h-2"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {Object.keys(stats.topicsBreakdown).length === 0 && (
+                    <div className="text-center text-muted-foreground py-4">
+                      No topic data available
+                    </div>
+                  )}
+                </div>
+              </ScrollArea>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Model Usage Tab */}
+        <TabsContent value="models" className="space-y-6">
+          {/* Model Distribution */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Single Model</p>
+                    <p className="text-2xl font-bold text-blue-600">{stats.singleModelUsage}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {Math.round((stats.singleModelUsage / Math.max(stats.totalConversations, 1)) * 100)}%
+                    </p>
+                  </div>
+                  <Target className="h-8 w-8 text-blue-600" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Multi Model</p>
+                    <p className="text-2xl font-bold text-green-600">{stats.multiModelUsage}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {Math.round((stats.multiModelUsage / Math.max(stats.totalConversations, 1)) * 100)}%
+                    </p>
+                  </div>
+                  <BarChart3 className="h-8 w-8 text-green-600" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">System Default</p>
+                    <p className="text-2xl font-bold text-purple-600">{stats.systemModelUsage}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {Math.round((stats.systemModelUsage / Math.max(stats.totalConversations, 1)) * 100)}%
+                    </p>
+                  </div>
+                  <Bot className="h-8 w-8 text-purple-600" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Default Config</p>
+                    <p className="text-2xl font-bold text-orange-600">{stats.defaultModelUsage}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {Math.round((stats.defaultModelUsage / Math.max(stats.totalConversations, 1)) * 100)}%
+                    </p>
+                  </div>
+                  <PieChart className="h-8 w-8 text-orange-600" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Knowledge Base Analytics */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Knowledge Base Usage</CardTitle>
+                <CardDescription>RAG and knowledge base enablement</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Knowledge Base Enabled</span>
+                      <span className="text-sm font-bold text-green-600">{stats.knowledgeBaseEnabled}</span>
+                    </div>
+                    <Progress 
+                      value={(stats.knowledgeBaseEnabled / Math.max(stats.totalConversations, 1)) * 100} 
+                      className="h-3"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Knowledge Base Disabled</span>
+                      <span className="text-sm font-bold text-gray-600">{stats.knowledgeBaseDisabled}</span>
+                    </div>
+                    <Progress 
+                      value={(stats.knowledgeBaseDisabled / Math.max(stats.totalConversations, 1)) * 100} 
+                      className="h-3"
+                    />
+                  </div>
+                  
+                  <div className="pt-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Database className="h-4 w-4 text-blue-500" />
+                        <span className="text-sm font-medium">RAG Queries Detected</span>
+                      </div>
+                      <Badge variant="outline" className="text-lg font-bold">
+                        {stats.ragQueries}
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Model Breakdown</CardTitle>
+                <CardDescription>Distribution of specific models used</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ScrollArea className="h-64">
+                  <div className="space-y-2">
+                    {Object.entries(stats.modelBreakdown)
+                      .sort(([,a], [,b]) => b - a)
+                      .map(([model, count]) => (
+                      <div key={model} className="flex items-center justify-between p-2 rounded bg-muted">
+                        <span className="text-sm font-medium capitalize">{model}</span>
+                        <div className="flex items-center gap-2">
+                          <Badge variant="secondary">{count}</Badge>
+                          <div className="w-16">
+                            <Progress 
+                              value={(count / Math.max(stats.totalConversations, 1)) * 100} 
+                              className="h-2"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {Object.keys(stats.modelBreakdown).length === 0 && (
+                      <div className="text-center text-muted-foreground py-4">
+                        No model data available
+                      </div>
+                    )}
+                  </div>
+                </ScrollArea>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
         {/* Users & Sessions Tab */}
@@ -697,111 +1194,7 @@ export const EnhancedGenieDashboard = () => {
           </Card>
         </TabsContent>
 
-        {/* Advanced Analytics Tab */}
-        <TabsContent value="analytics" className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Session Analytics</CardTitle>
-                <CardDescription>Advanced conversation metrics</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div>
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium">Completion Rate</span>
-                      <span className="text-sm font-bold">
-                        {Math.round((stats.completedConversations / Math.max(stats.totalConversations, 1)) * 100)}%
-                      </span>
-                    </div>
-                    <Progress 
-                      value={(stats.completedConversations / Math.max(stats.totalConversations, 1)) * 100} 
-                      className="h-2"
-                    />
-                  </div>
-                  
-                  <div>
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium">User Retention (7 days)</span>
-                      <span className="text-sm font-bold">{stats.userRetentionRate}%</span>
-                    </div>
-                    <Progress value={stats.userRetentionRate} className="h-2" />
-                  </div>
-
-                  <div className="pt-4">
-                    <h4 className="text-sm font-medium mb-2">Key Metrics</h4>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-xs text-muted-foreground">Average Session Length</span>
-                        <span className="text-xs font-medium">{stats.averageSessionLength} minutes</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-xs text-muted-foreground">Peak Activity Hours</span>
-                        <span className="text-xs font-medium">{stats.peakHours}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-xs text-muted-foreground">Messages per Session</span>
-                        <span className="text-xs font-medium">
-                          {stats.totalConversations > 0 ? Math.round(stats.totalMessages / stats.totalConversations) : 0}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>User Engagement</CardTitle>
-                <CardDescription>User behavior and interaction patterns</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div>
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium">Registered Users</span>
-                      <span className="text-sm font-bold">{stats.registeredUsers}</span>
-                    </div>
-                    <Progress 
-                      value={(stats.registeredUsers / Math.max(stats.totalUsers, 1)) * 100} 
-                      className="h-2"
-                    />
-                  </div>
-                  
-                  <div>
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium">Anonymous Users</span>
-                      <span className="text-sm font-bold">{stats.anonymousUsers}</span>
-                    </div>
-                    <Progress 
-                      value={(stats.anonymousUsers / Math.max(stats.totalUsers, 1)) * 100} 
-                      className="h-2"
-                    />
-                  </div>
-
-                  <div className="pt-4">
-                    <h4 className="text-sm font-medium mb-2">Growth Metrics</h4>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-xs text-muted-foreground">New Users Today</span>
-                        <span className="text-xs font-medium">{stats.newUsersToday}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-xs text-muted-foreground">New Sessions Today</span>
-                        <span className="text-xs font-medium">{stats.recentConversations}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-xs text-muted-foreground">Pending Access Requests</span>
-                        <span className="text-xs font-medium">{stats.pendingAccessRequests}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
+        {/* Advanced Analytics Tab - Removed and integrated into other tabs */}
       </Tabs>
     </div>
   );
