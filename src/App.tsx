@@ -21,6 +21,7 @@ const Cookies = lazy(() => import("./pages/Cookies"));
 const BusinessUseCases = lazy(() => import("./pages/BusinessUseCases"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const EmailTest = lazy(() => import("./pages/EmailTest"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 
 // Loading component
 const PageLoader = () => (
@@ -51,6 +52,7 @@ const App = () => (
           
           <Route path="/docs" element={<Docs />} />
           <Route path="/email-test" element={<EmailTest />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/contact" element={<Contact />} />
           
 
