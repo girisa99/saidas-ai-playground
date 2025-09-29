@@ -455,13 +455,21 @@ const About = () => {
                                           <p className="text-muted-foreground text-sm">Live experimentation hub for AI innovation</p>
                                         </div>
                                       </div>
-                                      <div className="flex items-start gap-3">
-                                        <div className="w-2 h-2 bg-genie-cyan rounded-full mt-2 flex-shrink-0"></div>
-                                        <div>
-                                          <p className="font-semibold text-foreground">Genie Conversation Feature</p>
-                                          <p className="text-muted-foreground text-sm">Advanced conversational AI with 80+ knowledge contexts</p>
-                                        </div>
-                                      </div>
+                                       <div className="flex items-start gap-3">
+                                         <div className="w-2 h-2 bg-genie-cyan rounded-full mt-2 flex-shrink-0"></div>
+                                         <div>
+                                           <p className="font-semibold text-foreground">Genie Conversation Feature</p>
+                                           <p className="text-muted-foreground text-sm">Advanced conversational AI with comprehensive capabilities</p>
+                                           <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs text-muted-foreground">
+                                             <div>• 80+ Knowledge Contexts</div>
+                                             <div>• Multi-Model Intelligence</div>
+                                             <div>• Split-Screen Conversations</div>
+                                             <div>• Model Comparison Mode</div>
+                                             <div>• Advanced RAG Architecture</div>
+                                             <div>• Context Switching</div>
+                                           </div>
+                                         </div>
+                                       </div>
                                       <div className="flex items-start gap-3">
                                         <div className="w-2 h-2 bg-genie-cyan rounded-full mt-2 flex-shrink-0"></div>
                                         <div>
