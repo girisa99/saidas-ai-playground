@@ -13,19 +13,20 @@ const heroSections = [
   {
     id: 1,
     icon: MapPin,
-    title: "🌟 From Traditional to AI-Powered Development",
-    subtitle: "My Personal Discovery Journey",
-    description: "How I discovered that AI tools are democratizing software development, making it accessible to anyone willing to experiment and learn.",
-    ctaPrimary: "Learning Journey",
-    ctaSecondary: "My Discovery",
-    bgImage: aiJourneyBg
+    title: "🧞‍♂️ Genie Conversational AI",
+    subtitle: "My Experimentation Journey's Breakthrough",
+    description: "After years of experimenting with AI tools and democratization, I'm introducing Genie - the conversational engine that guides you through our proven 3-Phase Framework using Gartner value methodology.",
+    ctaPrimary: "Experience Genie",
+    ctaSecondary: "Coming Feb 2025",
+    bgImage: aiJourneyBg,
+    isGenie: true
   },
   {
     id: 2,
     icon: Trophy,
     title: "🚀 What Works (& What Doesn't)",
-    subtitle: "Honest Experimentation Results",
-    description: "Real results from testing AI development tools - the breakthroughs, the failures, and the surprising insights I gained along the way.",
+    subtitle: "Real Experimentation Results",
+    description: "Honest results from testing AI development tools - the breakthroughs, failures, and insights that led to Genie's conversational approach to democratizing AI development.",
     ctaPrimary: "Experiment Results", 
     ctaSecondary: "Learn More",
     bgImage: successStoriesBg
@@ -33,21 +34,21 @@ const heroSections = [
   {
     id: 3,
     icon: Wrench,
-    title: "🔮 AI Tools That Actually Work",
-    subtitle: "No-Code to Advanced Development",
-    description: "Exploring how AI tools are bridging the gap between business ideas and working software, no computer science degree required.",
-    ctaPrimary: "Tool Exploration",
-    ctaSecondary: "My Findings",
+    title: "🔮 3-Phase Framework in Action",
+    subtitle: "Experiment → Validate → Deploy",
+    description: "The proven methodology that Genie uses to guide business experts through AI development - no coding required, just conversation and domain knowledge.",
+    ctaPrimary: "Framework Deep Dive",
+    ctaSecondary: "See Process",
     bgImage: aiToolsBg
   },
   {
     id: 4,
     icon: Rocket,
-    title: "🎯 The Future is Accessible",
-    subtitle: "AI-Powered Development for Everyone",
-    description: "Sharing insights on how AI is making software development accessible to business professionals and domain experts worldwide.",
-    ctaPrimary: "Future Insights",
-    ctaSecondary: "Accessibility Vision",
+    title: "🎯 AI Democratization Vision",
+    subtitle: "Business Knowledge Becomes AI Power",
+    description: "The future Genie enables: where business professionals and domain experts build enterprise AI solutions through natural conversation, not code.",
+    ctaPrimary: "Future Vision",
+    ctaSecondary: "Join the Movement",
     bgImage: techRoadmapBg
   }
 ];
