@@ -1,12 +1,12 @@
 import React from 'react';
 import { NavigationHeader } from '@/components/NavigationHeader';
-import { GenieConversationDashboard } from '@/components/admin/GenieConversationDashboard';
+import { EnhancedGenieDashboard } from '@/components/admin/EnhancedGenieDashboard';
 
 const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavigationHeader />
-      <GenieConversationDashboard />
+      <EnhancedGenieDashboard />
     </div>
   );
 };
