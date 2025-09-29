@@ -25,25 +25,25 @@ export const GenieHeroBanner = () => {
 
             <div className="space-y-3 lg:space-y-4">
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
-                Meet Your AI Business Assistant
+                Genie Conversational AI
                 <span className="block text-primary mt-1">
-                  Genie Conversational AI
+                  Your Experimentation Hub Guide
                 </span>
               </h1>
               
               <p className="text-base sm:text-lg text-muted-foreground max-w-2xl">
-                Your business knowledge + AI conversation = Enterprise solutions in minutes. 
-                No coding required, just natural conversation with Genie.
+                The conversational engine that guides you through our 3-Phase Framework 
+                (Experiment → Validate → Deploy) using Gartner value methodology to democratize AI development.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-3 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <MessageCircle className="w-4 h-4 text-primary" />
-                  <span>Natural language to working AI</span>
+                  <span>Guides you through Framework phases</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Bot className="w-4 h-4 text-primary" />
-                  <span>Business expert + AI = Enterprise solution</span>
+                  <span>Gartner-aligned value methodology</span>
                 </div>
               </div>
             </div>
@@ -55,7 +55,7 @@ export const GenieHeroBanner = () => {
                 className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground"
               >
                 <Link to="/business-use-cases" className="flex items-center gap-2">
-                  Preview the Future
+                  Experience the Framework
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
@@ -67,7 +67,7 @@ export const GenieHeroBanner = () => {
                 className="border-primary/30 hover:bg-primary/5"
               >
                 <Link to="/journey">
-                  See Development Journey
+                  My AI Democratization Journey
                 </Link>
               </Button>
             </div>
