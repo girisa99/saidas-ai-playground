@@ -32,7 +32,10 @@ import {
   PieChart,
   Server,
   Cpu,
-  Timer
+  Timer,
+  Plus,
+  Edit,
+  Tag
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -75,8 +78,16 @@ export const EnhancedGenieDashboard = () => {
   const [conversations, setConversations] = useState<ConversationRecord[]>([]);
   const [accessRequests, setAccessRequests] = useState<AccessRequest[]>([]);
   const [userProfiles, setUserProfiles] = useState<UserProfile[]>([]);
+  const [knowledgeEntries, setKnowledgeEntries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
+  const [newKnowledgeEntry, setNewKnowledgeEntry] = useState({
+    title: '',
+    content: '',
+    category: 'technology',
+    tags: ''
+  });
+  const [showAddKnowledge, setShowAddKnowledge] = useState(false);
   const { toast } = useToast();
 
   const [stats, setStats] = useState({
@@ -205,10 +216,17 @@ export const EnhancedGenieDashboard = () => {
         .select('*')
         .order('created_at', { ascending: false });
 
+      // Load knowledge base entries (if available)
+      const { data: knowledgeData } = await supabase
+        .from('knowledge_base')
+        .select('*')
+        .order('created_at', { ascending: false });
+
       // Set data
       setConversations(conversationsData || []);
       setAccessRequests(accessRequestsData || []);
       setUserProfiles(profilesData || []);
+      setKnowledgeEntries(knowledgeData || []);
 
       // Calculate stats
       calculateStats(
@@ -643,6 +661,70 @@ export const EnhancedGenieDashboard = () => {
     return 'completed';
   };
 
+  const handleAddKnowledgeEntry = async () => {
+    if (!newKnowledgeEntry.title || !newKnowledgeEntry.content) {
+      toast({
+        title: "Error",
+        description: "Title and content are required",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('knowledge_base')
+        .insert({
+          name: newKnowledgeEntry.title,
+          description: newKnowledgeEntry.content,
+          category: newKnowledgeEntry.category,
+          healthcare_tags: newKnowledgeEntry.tags.split(',').map(tag => tag.trim()).filter(Boolean),
+          status: 'approved',
+          source_type: 'admin_created',
+          is_active: true
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Knowledge entry added successfully",
+      });
+
+      setNewKnowledgeEntry({ title: '', content: '', category: 'technology', tags: '' });
+      setShowAddKnowledge(false);
+      loadDashboardData();
+    } catch (error) {
+      console.error('Error adding knowledge entry:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add knowledge entry",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Get static knowledge base entries from existing components
+  const getStaticKnowledgeEntries = () => {
+    const techEntries = [
+      { title: "AI Market Landscape", category: "technology", tags: ["AI", "market", "trends"] },
+      { title: "Enterprise Tech Giants", category: "technology", tags: ["enterprise", "SaaS", "cloud"] },
+      { title: "Emerging Technologies 2025", category: "technology", tags: ["emerging", "trends", "innovation"] },
+      { title: "No-Code/Low-Code Platforms", category: "technology", tags: ["no-code", "development", "automation"] },
+      { title: "API Integration Evolution", category: "technology", tags: ["API", "integration", "development"] }
+    ];
+
+    const healthcareEntries = [
+      { title: "Healthcare Reimbursement Process", category: "healthcare", tags: ["reimbursement", "insurance", "billing"] },
+      { title: "Digital Therapeutics Guide", category: "healthcare", tags: ["digital", "therapeutics", "treatment"] },
+      { title: "Patient Support Services", category: "healthcare", tags: ["patient", "support", "care"] },
+      { title: "Oncology Treatment Options", category: "healthcare", tags: ["oncology", "treatment", "cancer"] },
+      { title: "Healthcare Pricing Ecosystem", category: "healthcare", tags: ["pricing", "340B", "WAC"] }
+    ];
+
+    return [...techEntries, ...healthcareEntries];
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -667,11 +749,12 @@ export const EnhancedGenieDashboard = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-7">
+        <TabsList className="grid w-full grid-cols-8">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="context">Context Analytics</TabsTrigger>
           <TabsTrigger value="models">Model Usage</TabsTrigger>
           <TabsTrigger value="performance">Performance</TabsTrigger>
+          <TabsTrigger value="knowledge">Knowledge Base</TabsTrigger>
           <TabsTrigger value="users">Users & Sessions</TabsTrigger>
           <TabsTrigger value="conversations">Conversations</TabsTrigger>
           <TabsTrigger value="access">Access Requests</TabsTrigger>
@@ -1282,6 +1365,280 @@ export const EnhancedGenieDashboard = () => {
                     </div>
                   </TabsContent>
                 </Tabs>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        {/* Knowledge Base Tab */}
+        <TabsContent value="knowledge" className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-semibold">Knowledge Base Management</h3>
+              <p className="text-sm text-muted-foreground">
+                View and manage existing technology and healthcare knowledge entries
+              </p>
+            </div>
+            <Button onClick={() => setShowAddKnowledge(true)} className="flex items-center gap-2">
+              <Plus className="h-4 w-4" />
+              Add New Entry
+            </Button>
+          </div>
+
+          {/* Add Knowledge Entry Modal */}
+          {showAddKnowledge && (
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle>Add New Knowledge Entry</CardTitle>
+                <CardDescription>Create a new knowledge base entry</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium">Title</label>
+                  <input
+                    type="text"
+                    className="w-full mt-1 px-3 py-2 border rounded-md"
+                    value={newKnowledgeEntry.title}
+                    onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, title: e.target.value})}
+                    placeholder="Enter knowledge entry title"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Content</label>
+                  <textarea
+                    className="w-full mt-1 px-3 py-2 border rounded-md h-32"
+                    value={newKnowledgeEntry.content}
+                    onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, content: e.target.value})}
+                    placeholder="Enter knowledge content"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Category</label>
+                  <select
+                    className="w-full mt-1 px-3 py-2 border rounded-md"
+                    value={newKnowledgeEntry.category}
+                    onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, category: e.target.value})}
+                  >
+                    <option value="technology">Technology</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="general">General</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Tags (comma separated)</label>
+                  <input
+                    type="text"
+                    className="w-full mt-1 px-3 py-2 border rounded-md"
+                    value={newKnowledgeEntry.tags}
+                    onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, tags: e.target.value})}
+                    placeholder="e.g., AI, technology, innovation"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button onClick={handleAddKnowledgeEntry}>
+                    Add Entry
+                  </Button>
+                  <Button variant="outline" onClick={() => setShowAddKnowledge(false)}>
+                    Cancel
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Knowledge Base Statistics */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Technology Entries</p>
+                    <p className="text-2xl font-bold text-blue-600">
+                      {knowledgeEntries.filter(entry => entry.category === 'technology').length + 5}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Including static entries
+                    </p>
+                  </div>
+                  <BookOpen className="h-8 w-8 text-blue-600" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Healthcare Entries</p>
+                    <p className="text-2xl font-bold text-green-600">
+                      {knowledgeEntries.filter(entry => entry.category === 'healthcare').length + 5}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Including static entries
+                    </p>
+                  </div>
+                  <Shield className="h-8 w-8 text-green-600" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Total Entries</p>
+                    <p className="text-2xl font-bold text-purple-600">
+                      {knowledgeEntries.length + 10}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Dynamic + Static
+                    </p>
+                  </div>
+                  <Database className="h-8 w-8 text-purple-600" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Knowledge Base Entries */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Technology Knowledge Base */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Bot className="h-5 w-5 text-blue-600" />
+                  Technology Knowledge Base
+                </CardTitle>
+                <CardDescription>Technology and AI-related entries</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ScrollArea className="h-96">
+                  <div className="space-y-3">
+                    {/* Static Technology Entries */}
+                    {getStaticKnowledgeEntries()
+                      .filter(entry => entry.category === 'technology')
+                      .map((entry, index) => (
+                      <Card key={`static-tech-${index}`} className="p-3">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h4 className="font-medium text-sm">{entry.title}</h4>
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              {entry.tags.map((tag, tagIndex) => (
+                                <Badge key={tagIndex} variant="outline" className="text-xs">
+                                  <Tag className="h-3 w-3 mr-1" />
+                                  {tag}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                          <Badge variant="secondary" className="text-xs">Static</Badge>
+                        </div>
+                      </Card>
+                    ))}
+                    
+                    {/* Dynamic Technology Entries */}
+                    {knowledgeEntries
+                      .filter(entry => entry.category === 'technology')
+                      .map((entry) => (
+                      <Card key={entry.id} className="p-3">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h4 className="font-medium text-sm">{entry.name}</h4>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {entry.description?.substring(0, 100)}...
+                            </p>
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              {entry.healthcare_tags?.map((tag, tagIndex) => (
+                                <Badge key={tagIndex} variant="outline" className="text-xs">
+                                  <Tag className="h-3 w-3 mr-1" />
+                                  {tag}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <Badge variant="default" className="text-xs">Dynamic</Badge>
+                            {entry.status && (
+                              <Badge variant={entry.status === 'approved' ? 'default' : 'secondary'} className="text-xs">
+                                {entry.status}
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </ScrollArea>
+              </CardContent>
+            </Card>
+
+            {/* Healthcare Knowledge Base */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-green-600" />
+                  Healthcare Knowledge Base
+                </CardTitle>
+                <CardDescription>Healthcare and medical-related entries</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ScrollArea className="h-96">
+                  <div className="space-y-3">
+                    {/* Static Healthcare Entries */}
+                    {getStaticKnowledgeEntries()
+                      .filter(entry => entry.category === 'healthcare')
+                      .map((entry, index) => (
+                      <Card key={`static-health-${index}`} className="p-3">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h4 className="font-medium text-sm">{entry.title}</h4>
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              {entry.tags.map((tag, tagIndex) => (
+                                <Badge key={tagIndex} variant="outline" className="text-xs">
+                                  <Tag className="h-3 w-3 mr-1" />
+                                  {tag}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                          <Badge variant="secondary" className="text-xs">Static</Badge>
+                        </div>
+                      </Card>
+                    ))}
+                    
+                    {/* Dynamic Healthcare Entries */}
+                    {knowledgeEntries
+                      .filter(entry => entry.category === 'healthcare')
+                      .map((entry) => (
+                      <Card key={entry.id} className="p-3">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h4 className="font-medium text-sm">{entry.name}</h4>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {entry.description?.substring(0, 100)}...
+                            </p>
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              {entry.healthcare_tags?.map((tag, tagIndex) => (
+                                <Badge key={tagIndex} variant="outline" className="text-xs">
+                                  <Tag className="h-3 w-3 mr-1" />
+                                  {tag}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <Badge variant="default" className="text-xs">Dynamic</Badge>
+                            {entry.status && (
+                              <Badge variant={entry.status === 'approved' ? 'default' : 'secondary'} className="text-xs">
+                                {entry.status}
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </ScrollArea>
               </CardContent>
             </Card>
           </div>
