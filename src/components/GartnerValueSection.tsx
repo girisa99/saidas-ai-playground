@@ -267,7 +267,7 @@ export const GartnerValueSection = () => {
                 Strategic AI Integration
               </div>
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                Why AI Experimentation Hub <span className="text-primary">Now?</span>
+                Why Learn AI Through <span className="text-primary">Experimentation Now?</span>
               </h3>
             </div>
 
@@ -276,24 +276,24 @@ export const GartnerValueSection = () => {
               <Card className="p-6 bg-gradient-to-br from-genie-primary/10 to-genie-primary/5 border-genie-primary/20">
                 <h4 className="text-xl font-bold mb-4 text-foreground flex items-center gap-2">
                   <Users className="w-6 h-6 text-genie-primary" />
-                  Unlocking Business Drivers
+                  Personal Capability Building
                 </h4>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-genie-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-sm"><strong>Operational Efficiency:</strong> Automate tasks, optimize workflows, reduce costs</span>
+                    <span className="text-sm"><strong>Skill Development:</strong> Build AI expertise that makes you indispensable</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-genie-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-sm"><strong>Enhanced Decision-Making:</strong> Gain deeper insights via smarter data analysis</span>
+                    <span className="text-sm"><strong>Career Future-Proofing:</strong> Stay ahead of disruption with cutting-edge knowledge</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-genie-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-sm"><strong>New Revenue Streams:</strong> Create innovative products and services</span>
+                    <span className="text-sm"><strong>Leadership Positioning:</strong> Become the AI champion your organization needs</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-genie-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-sm"><strong>Superior Customer Experience:</strong> Personalize interactions and improve satisfaction</span>
+                    <span className="text-sm"><strong>Innovation Confidence:</strong> Learn through hands-on experimentation</span>
                   </div>
                 </div>
               </Card>
@@ -302,24 +302,24 @@ export const GartnerValueSection = () => {
               <Card className="p-6 bg-gradient-to-br from-genie-teal/10 to-genie-teal/5 border-genie-teal/20">
                 <h4 className="text-xl font-bold mb-4 text-foreground flex items-center gap-2">
                   <TrendingUp className="w-6 h-6 text-genie-teal" />
-                  Seizing Market Opportunity
+                  Change Agent Advantage
                 </h4>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-genie-teal rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-sm"><strong>Accelerated Innovation:</strong> Rapidly prototype and deploy AI solutions ahead of competitors</span>
+                    <span className="text-sm"><strong>First Mover Advantage:</strong> Lead AI adoption in your field before competitors</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-genie-teal rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-sm"><strong>Data-Driven Advantage:</strong> Leverage proprietary data to create unique AI capabilities</span>
+                    <span className="text-sm"><strong>Proven Credibility:</strong> Build track record through documented success cases</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-genie-teal rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-sm"><strong>Talent Attraction:</strong> Position your organization at the forefront of AI development</span>
+                    <span className="text-sm"><strong>Influence Leadership:</strong> Shape organizational AI strategy with expertise</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-genie-teal rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-sm"><strong>Industry Leadership:</strong> Define new standards and disrupt existing markets</span>
+                    <span className="text-sm"><strong>Market Differentiation:</strong> Stand out with unique AI implementation knowledge</span>
                   </div>
                 </div>
               </Card>

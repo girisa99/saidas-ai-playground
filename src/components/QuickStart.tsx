@@ -85,7 +85,7 @@ export const QuickStart = () => {
         <div className="text-center mb-16">
           <Badge className="bg-primary/20 text-primary border-primary/30 mb-4">
             <CheckCircle className="w-4 h-4 mr-2" />
-            Success Proof
+            Learning Outcomes
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Real <span className="text-primary">Learning</span> From Real <span className="text-primary">Experiments</span>
