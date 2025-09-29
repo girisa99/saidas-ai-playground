@@ -210,16 +210,12 @@ export const UnifiedHeroBanner = () => {
               <div className="relative py-6">
                 <div className="absolute inset-0 bg-gradient-to-r from-genie-accent/20 to-genie-teal/20 rounded-full blur-3xl"></div>
                 <div className="relative w-32 h-32 lg:w-40 lg:h-40 mx-auto">
-                  {genieImages.map((image, index) => (
-                    <img 
-                      key={index}
-                      src={image} 
-                      alt="Genie AI Assistant" 
-                      className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 animate-float ${
-                        index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-                      }`}
-                    />
-                  ))}
+                  <img 
+                    src={genieImages[currentImageIndex]} 
+                    alt="Genie AI Assistant" 
+                    className="w-full h-full object-contain animate-float transition-all duration-1000"
+                    key={currentImageIndex}
+                  />
                 </div>
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
                   <Badge variant="secondary" className="bg-background/90 text-foreground border border-genie-accent/20">
