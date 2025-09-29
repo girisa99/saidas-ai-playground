@@ -76,7 +76,7 @@ const VerticalJourneyInfographic = () => {
         technologies: ["Bolt", "Loveable", "Solid", "TypeScript", "Supabase", "PostgreSQL"]
       },
       deploy: {
-        title: "DEPLOY",
+        title: "LEAD to DEPLOY",
         description: "Successfully integrated healthcare systems with NPI, CMS, FDA, and EMR platforms for patient workflows",
         activities: [
           "Successfully integrated healthcare systems: NPI, CMS credentialing, FDA tracking",
@@ -141,7 +141,7 @@ const VerticalJourneyInfographic = () => {
         technologies: ["TypeScript", "Schema Validation", "RLS Policies", "Security Scanning", "Verification Agents"]
       },
       deploy: {
-        title: "DEPLOY",
+        title: "LEAD to DEPLOY",
         description: "Production deployment of Label Studio for RAG and comprehensive data management with real-time testing",
         activities: [
           "Built modular component verification systems before feature deployment",
@@ -206,7 +206,7 @@ const VerticalJourneyInfographic = () => {
         technologies: ["Monitoring", "Database Optimization", "Duplicate Detection", "Vulnerability Assessment", "Multi-Agent Systems"]
       },
       deploy: {
-        title: "DEPLOY",
+        title: "LEAD to DEPLOY",
         description: "Full-scale healthcare workflow automation with agentic AI and HIPAA-compliant multi-agent coordination",
         activities: [
           "Successfully orchestrated multiple agents for patient onboarding use cases",
