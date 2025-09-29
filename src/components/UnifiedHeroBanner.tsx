@@ -74,12 +74,12 @@ export const UnifiedHeroBanner = () => {
         {/* Header Section */}
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-6">
-            Don't Wait for Permission. Innovate.
-            <span className="block text-genie-accent mt-2">Skip the Red Tape. Build AI Capabilities Now.</span>
+            Learn. Experiment. Transform.
+            <span className="block text-genie-accent mt-2">Individual Passion Driving AI Innovation</span>
           </h1>
           <div className="w-24 h-1 bg-genie-accent mx-auto mb-6"></div>
           <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto">
-            While organizations debate AI strategy, smart individuals are already building the skills that make them indispensable.
+            Personal curiosity and systematic experimentation building real AI expertise. Your individual learning journey starts here.
           </p>
         </div>
 
