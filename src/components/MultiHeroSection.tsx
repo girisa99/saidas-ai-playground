@@ -105,40 +105,59 @@ export const MultiHeroSection = () => {
       {/* Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
-            {/* Bold Value Proposition */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6 animate-fade-in text-center text-white">
-              Experiment. Validate. Deploy. <span className="text-genie-accent">Faster AI Innovation Without Bureaucracy</span>
-            </h1>
-            <div className="w-16 sm:w-20 md:w-24 h-1 bg-genie-accent mx-auto mb-6 sm:mb-8"></div>
-            
-            {/* Outcome-Driven Subheading */}
-            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mb-4 sm:mb-6 font-medium max-w-4xl mx-auto px-2">
-              How I Built 8+ AI Solutions in 90 Days Using No-Code Tools
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto px-2">
-              Learn the practical approach from business idea to working AI application through proven technology stacks and real examples.
-            </p>
-            
-            {/* Experiment → Validate → Deploy Framework */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 max-w-4xl mx-auto px-2">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Trophy className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
-                <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Experiment</h3>
-                <p className="text-white/80 text-xs sm:text-sm">Test AI tools and platforms without technical barriers</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                <Target className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
-                <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Validate</h3>
-                <p className="text-white/80 text-xs sm:text-sm">Prove concepts with real-world use cases and results</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20 sm:col-span-2 md:col-span-1">
-                <Rocket className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
-                <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Deploy</h3>
-                <p className="text-white/80 text-xs sm:text-sm">Launch working solutions that solve real problems</p>
+          {/* Dynamic Hero Content */}
+          <div className="mb-4 sm:mb-6">
+            <IconComponent className="h-12 w-12 sm:h-16 sm:w-16 text-genie-accent mx-auto mb-4" />
+          </div>
+          
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6 animate-fade-in text-center text-white">
+            {currentSection.title}
+          </h1>
+          
+          <div className="w-16 sm:w-20 md:w-24 h-1 bg-genie-accent mx-auto mb-6 sm:mb-8"></div>
+          
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mb-4 sm:mb-6 font-medium max-w-4xl mx-auto px-2">
+            {currentSection.subtitle}
+          </h2>
+          
+          <p className="text-base sm:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto px-2">
+            {currentSection.description}
+          </p>
+
+          {/* Special Genie visual for first hero */}
+          {currentSection.isGenie && (
+            <div className="mb-8 sm:mb-12">
+              <div className="relative inline-block">
+                <div className="absolute inset-0 bg-gradient-to-r from-genie-primary/20 to-genie-accent/20 rounded-full blur-3xl"></div>
+                <img 
+                  src={genieAnimated} 
+                  alt="Genie AI Assistant" 
+                  className="relative w-32 h-32 sm:w-48 sm:h-48 object-contain mx-auto animate-float"
+                />
               </div>
             </div>
+          )}
+          
+          {/* Experiment → Validate → Deploy Framework for all sections */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 max-w-4xl mx-auto px-2">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+              <Trophy className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
+              <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Experiment</h3>
+              <p className="text-white/80 text-xs sm:text-sm">Test AI tools and platforms without technical barriers</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+              <Target className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
+              <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Validate</h3>
+              <p className="text-white/80 text-xs sm:text-sm">Prove concepts with real-world use cases and results</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20 sm:col-span-2 md:col-span-1">
+              <Rocket className="h-6 w-6 sm:h-8 sm:w-8 text-genie-accent mx-auto mb-2 sm:mb-3" />
+              <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Deploy</h3>
+              <p className="text-white/80 text-xs sm:text-sm">Launch working solutions that solve real problems</p>
+            </div>
+          </div>
 
-          {/* Strong Action-Oriented CTAs */}
+          {/* Dynamic CTAs */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12 animate-fade-in justify-center px-2">
             <Button 
               variant="default"
@@ -147,7 +166,7 @@ export const MultiHeroSection = () => {
               asChild
             >
               <Link to={primaryCtaPathMap[currentHero + 1] || "/journey"}>
-                See How It Works
+                {currentSection.ctaPrimary}
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Link>
             </Button>
@@ -157,46 +176,11 @@ export const MultiHeroSection = () => {
               className="border-white/50 text-white bg-transparent hover:bg-white hover:text-genie-dark backdrop-blur-sm w-full sm:w-auto transition-all duration-300"
               asChild
             >
-              <Link to="/case-studies">
-                View Live Examples
+              <Link to="/business-use-cases">
+                {currentSection.ctaSecondary}
               </Link>
             </Button>
           </div>
-        </div>
-
-        {/* Enhanced Hero Navigation Indicators - Mobile Responsive */}
-        <div className="flex justify-center mb-6 sm:mb-8 px-2">
-          <div className="flex items-center space-x-2 sm:space-x-3 bg-white/10 backdrop-blur-md rounded-full px-3 sm:px-6 py-2 sm:py-3 border border-white/20">
-            {heroSections.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentHero(index)}
-                className={`transition-all duration-300 rounded-full border-2 ${
-                  index === currentHero 
-                    ? 'w-8 sm:w-12 h-3 sm:h-4 bg-genie-accent border-genie-accent scale-110' 
-                    : 'w-3 sm:w-4 h-3 sm:h-4 bg-genie-accent/40 border-genie-accent/50 hover:bg-genie-accent/60 hover:border-genie-accent'
-                }`}
-                aria-label={`Go to hero section ${index + 1}: ${heroSections[index].title}`}
-              />
-            ))}
-          </div>
-        </div>
-        
-        {/* Hero Section Thumbnails - Mobile Responsive */}
-        <div className="flex justify-center flex-wrap gap-2 mb-6 sm:mb-8 px-2">
-          {heroSections.map((section, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentHero(index)}
-              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-full transition-all duration-300 ${
-                index === currentHero
-                  ? 'bg-genie-accent text-genie-dark font-medium'
-                  : 'bg-white/10 text-white/80 hover:bg-white/20 backdrop-blur-sm border border-white/20'
-              }`}
-            >
-              {section.ctaPrimary}
-            </button>
-          ))}
         </div>
 
         {/* Professional Stats with Mobile Responsive Styling */}
