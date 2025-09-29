@@ -646,26 +646,23 @@ export const IntegratedTechnologyExploration = () => {
                           </div>
                         </div>
 
-                        {/* Business Outcomes & Use Cases */}
+                        {/* Integration Blueprint & Value Creation */}
                         <div>
                           <h5 className="font-semibold text-sm mb-3 flex items-center gap-1">
-                            <Target className="w-3 h-3" />
-                            Experimentation Results
+                            <Network className="w-3 h-3" />
+                            Integration Blueprint
                           </h5>
-                          <div className="space-y-2 mb-4">
-                            {details.businessOutcomes.map((outcome, index) => (
-                              <div key={index} className="flex items-center gap-2 text-xs">
-                                <div className="w-1.5 h-1.5 bg-current rounded-full flex-shrink-0"></div>
-                                <span>{outcome}</span>
-                              </div>
-                            ))}
+                          <div className="p-3 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 rounded-lg border border-blue-200 dark:border-blue-800 mb-4">
+                            <p className="text-xs text-blue-700 dark:text-blue-300 font-medium">
+                              {experimentationMapping[category]?.integrationBlueprint || details.integrationBlueprint}
+                            </p>
                           </div>
 
-                          <h5 className="font-semibold text-sm mb-2 flex items-center gap-1">
-                            <CheckCircle className="w-3 h-3 text-emerald-600" />
-                            What We Learned
+                          <h5 className="font-semibold text-sm mb-3 flex items-center gap-1">
+                            <Target className="w-3 h-3" />
+                            Value Creation Steps
                           </h5>
-                          <div className="space-y-2">
+                          <div className="space-y-2 mb-4">
                             {experimentationMapping[category]?.valueCreationSteps.map((step, index) => (
                               <div key={index} className="flex items-center gap-3 p-2 bg-emerald-50 dark:bg-emerald-950/20 rounded border border-emerald-200 dark:border-emerald-800">
                                 <div className="w-5 h-5 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
@@ -682,6 +679,61 @@ export const IntegratedTechnologyExploration = () => {
                               </div>
                             ))}
                           </div>
+
+                          <h5 className="font-semibold text-sm mb-2 flex items-center gap-1">
+                            <Building className="w-3 h-3" />
+                            Business Use Cases
+                          </h5>
+                          <div className="space-y-2">
+                            {experimentationMapping[category]?.businessUseCases.map((useCase, index) => (
+                              <div key={index} className="flex items-start gap-2 text-xs p-2 bg-background/50 rounded border border-border/50">
+                                <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                                <span>{useCase}</span>
+                              </div>
+                            )) || details.businessOutcomes.map((outcome, index) => (
+                              <div key={index} className="flex items-start gap-2 text-xs">
+                                <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                                <span>{outcome}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Scenarios & Examples */}
+                        <div>
+                          <h5 className="font-semibold text-sm mb-3 flex items-center gap-1">
+                            <Users className="w-3 h-3" />
+                            Implementation Scenarios
+                          </h5>
+                          <div className="space-y-2 mb-4">
+                            {experimentationMapping[category]?.scenarios?.map((scenario, index) => (
+                              <div key={index} className="p-3 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-950/20 dark:to-yellow-950/20 rounded-lg border border-orange-200 dark:border-orange-800">
+                                <p className="text-xs text-orange-700 dark:text-orange-300">{scenario}</p>
+                              </div>
+                            )) || details.businessOutcomes.slice(0, 2).map((outcome, index) => (
+                              <div key={index} className="p-3 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-950/20 dark:to-yellow-950/20 rounded-lg">
+                                <p className="text-xs text-orange-700 dark:text-orange-300">Scenario: {outcome}</p>
+                              </div>
+                            ))}
+                          </div>
+
+                          <h5 className="font-semibold text-sm mb-2 flex items-center gap-1">
+                            <CheckCircle className="w-3 h-3 text-emerald-600" />
+                            Real Implementation Examples
+                          </h5>
+                          <div className="space-y-2">
+                            {experimentationMapping[category]?.realWorldExamples.map((example, index) => (
+                              <div key={index} className="text-xs text-muted-foreground flex items-start gap-2 p-2 bg-gradient-to-r from-primary/5 to-secondary/5 rounded border-l-2 border-primary/30">
+                                <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                                <span>{example}</span>
+                              </div>
+                            )) || details.businessOutcomes.slice(0, 3).map((outcome, index) => (
+                              <div key={index} className="text-xs text-muted-foreground flex items-start gap-2">
+                                <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                                <span>Implementation: {outcome}</span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
 
@@ -689,8 +741,17 @@ export const IntegratedTechnologyExploration = () => {
                       <div className="mt-6 p-4 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg border-l-4 border-primary/30">
                         <h5 className="font-semibold text-sm mb-3 flex items-center gap-1">
                           <Lightbulb className="w-3 h-3" />
-                          Real Implementation Examples
+                          🌟 Genie AI Experimentation Hub Case Study
                         </h5>
+                        <div className="mb-3 p-3 bg-gradient-to-r from-genie-accent/10 to-genie-primary/10 rounded border border-genie-accent/30">
+                          <p className="text-xs text-genie-accent font-semibold mb-2">
+                            Complete Experiment → Validate → Lead to Deploy Framework (2 weeks)
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            Built this entire experimentation platform using no-code/low-code tools: Lovable + Supabase + AI Integration. 
+                            From concept to production deployment in 2 weeks - demonstrating the complete framework in action.
+                          </p>
+                        </div>
                         <div className="space-y-2">
                           {experimentationMapping[category]?.realWorldExamples.map((example, index) => (
                             <div key={index} className="text-xs text-muted-foreground flex items-start gap-2">
@@ -713,7 +774,7 @@ export const IntegratedTechnologyExploration = () => {
           </div>
         </div>
 
-        {/* Experimentation Metrics */}
+        {/* Updated Experimentation Metrics - Highlighting Both Achievements */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           <Card className="p-4 text-center border-genie-primary/20">
             <div className="w-10 h-10 bg-genie-primary/10 rounded-lg flex items-center justify-center mx-auto mb-3">
@@ -752,6 +813,89 @@ export const IntegratedTechnologyExploration = () => {
           </Card>
         </div>
 
+        {/* Key Achievements - Genie AI Experimentation Hub & Genie Conversational Feature */}
+        <div className="mb-12">
+          <h3 className="text-2xl font-bold text-center mb-6">🌟 Key Achievements</h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Genie AI Experimentation Hub */}
+            <Card className="border-2 border-genie-primary/30 bg-gradient-to-br from-genie-primary/5 via-background to-genie-secondary/5">
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-genie-primary/10 rounded-lg flex items-center justify-center">
+                    <Building className="w-6 h-6 text-genie-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg text-genie-primary">Genie AI Experimentation Hub</h4>
+                    <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 text-xs">
+                      Complete Platform Case Study
+                    </Badge>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-semibold text-genie-primary">2-week timeline:</span> Complete Experiment → Validate → Lead to Deploy framework execution
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-xs">
+                      <CheckCircle className="w-3 h-3 text-emerald-500" />
+                      <span>No-code/Low-code tools: Lovable + Supabase + AI Integration</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs">
+                      <CheckCircle className="w-3 h-3 text-emerald-500" />
+                      <span>Full-stack experimentation platform from concept to production</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs">
+                      <CheckCircle className="w-3 h-3 text-emerald-500" />
+                      <span>Demonstrates framework viability for complex healthcare applications</span>
+                    </div>
+                  </div>
+                  <Badge className="bg-emerald-500/20 text-emerald-700 border-emerald-500/30 text-xs font-bold">
+                    ✅ SUCCESS: Framework Proven
+                  </Badge>
+                </div>
+              </div>
+            </Card>
+
+            {/* Genie Conversational Feature */}
+            <Card className="border-2 border-genie-accent/30 bg-gradient-to-br from-genie-accent/5 via-background to-genie-primary/5">
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-genie-accent/10 rounded-lg flex items-center justify-center">
+                    <Brain className="w-6 h-6 text-genie-accent" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg text-genie-accent">Genie Conversational Feature</h4>
+                    <Badge className="bg-genie-accent text-background text-xs font-bold">
+                      🌟 FLAGSHIP LIVE FEATURE
+                    </Badge>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <p className="text-sm text-muted-foreground">
+                    First flagship implementation demonstrating <span className="font-semibold text-genie-accent">advanced AI capabilities</span> in production
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-xs">
+                      <CheckCircle className="w-3 h-3 text-emerald-500" />
+                      <span>80+ Knowledge Contexts with intelligent switching</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs">
+                      <CheckCircle className="w-3 h-3 text-emerald-500" />
+                      <span>Multi-Model Intelligence (GPT-4, Claude, Gemini)</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs">
+                      <CheckCircle className="w-3 h-3 text-emerald-500" />
+                      <span>Split-screen comparison & Advanced RAG architecture</span>
+                    </div>
+                  </div>
+                  <Badge className="bg-emerald-500/20 text-emerald-700 border-emerald-500/30 text-xs font-bold">
+                    ✅ LIVE: Production Ready
+                  </Badge>
+                </div>
+              </div>
+            </Card>
+         </div>
+
         {/* Call to Action - Experimentation Focus */}
         <div className="text-center">
           <p className="text-lg text-muted-foreground mb-6">
@@ -771,6 +915,7 @@ export const IntegratedTechnologyExploration = () => {
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
+          </div>
           </div>
         </div>
       </div>
