@@ -181,15 +181,15 @@ export const UnifiedHeroBanner = () => {
               <div className="bg-white/5 rounded-lg p-4 border border-genie-accent/20">
                 <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
                   <Bot className="w-4 h-4 text-genie-accent" />
-                  Advanced Knowledge Engine
+                  Advanced AI Capabilities
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                  <div className="text-white/70">• RAG-Enhanced Responses</div>
-                  <div className="text-white/70">• Multi-Domain Expertise</div>
-                  <div className="text-white/70">• Real-time Context Switching</div>
-                  <div className="text-white/70">• Enterprise Integration Patterns</div>
-                  <div className="text-white/70">• Healthcare Compliance Guidance</div>
-                  <div className="text-white/70">• Technology Roadmap Planning</div>
+                  <div className="text-white/70">• Single & Multi-Model Intelligence</div>
+                  <div className="text-white/70">• Split-Screen Conversations</div>
+                  <div className="text-white/70">• Model Comparison Mode</div>
+                  <div className="text-white/70">• Unified Context Management</div>
+                  <div className="text-white/70">• RAG-Enhanced Knowledge Base</div>
+                  <div className="text-white/70">• Healthcare Domain Expertise</div>
                 </div>
               </div>
 
