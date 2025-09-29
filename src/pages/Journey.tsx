@@ -193,20 +193,32 @@ const Journey = () => {
                   <Badge className="bg-genie-accent text-background text-xs font-bold px-2 py-1">✨ FEATURED</Badge>
                 </div>
                 <h5 className="font-bold text-genie-accent text-lg mb-3">Genie Conversation Feature</h5>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm">
+                  <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
-                    <span className="text-foreground"><strong>80+ Knowledge Contexts</strong> integrated</span>
-                  </li>
-                  <li className="flex items-center gap-2">
+                    <span className="text-foreground"><strong>80+ Knowledge Contexts</strong></span>
+                  </div>
+                  <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
-                    <span className="text-foreground"><strong>Advanced RAG Architecture</strong> deployed</span>
-                  </li>
-                  <li className="flex items-center gap-2">
+                    <span className="text-foreground"><strong>Multi-Model Intelligence</strong></span>
+                  </div>
+                  <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
-                    <span className="text-foreground"><strong>Multi-Model Intelligence</strong> active</span>
-                  </li>
-                </ul>
+                    <span className="text-foreground"><strong>Split-Screen Conversations</strong></span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
+                    <span className="text-foreground"><strong>Model Comparison Mode</strong></span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
+                    <span className="text-foreground"><strong>Advanced RAG Architecture</strong></span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
+                    <span className="text-foreground"><strong>Context Switching</strong></span>
+                  </div>
+                </div>
               </div>
             </Card>
 

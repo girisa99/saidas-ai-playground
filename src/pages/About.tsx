@@ -314,17 +314,16 @@ const About = () => {
                 </p>
                 <p className="mb-6">
                   The <strong className="text-genie-cyan">GenieAI Experimentation Hub</strong> emerged from this methodology - 
-                  a knowledge-sharing initiative that documents real applications of the framework across 8+ business cases. 
-                  Rather than theoretical concepts, this hub provides practical blueprints for organizations to follow, 
-                  showing exactly how to experiment with AI tools, validate business impact, and deploy solutions at scale. 
-                  Each documented case study demonstrates measurable outcomes and replicable processes.
+                  a personal knowledge-sharing initiative that documents real applications of the framework through practical examples and case studies. 
+                  Rather than theoretical concepts, this hub provides insights from hands-on experimentation, 
+                  showing how to systematically explore AI tools, validate concepts, and build working implementations. 
+                  Each experiment demonstrates measurable outcomes and lessons learned from real-world application.
                 </p>
                 <p>
-                  What sets this approach apart is its emphasis on <strong className="text-genie-primary">systematic risk reduction</strong>. 
-                  By establishing clear validation criteria in the experimentation phase, organizations can make data-driven decisions 
-                  about which AI initiatives to scale. This framework has enabled teams to achieve 3x faster development cycles 
-                  while reducing implementation risk by 90%. The GenieAI Hub serves as both a learning resource and a practical toolkit 
-                  for healthcare technology leaders seeking proven pathways to AI innovation.
+                  What sets this approach apart is its emphasis on <strong className="text-genie-primary">learning through systematic experimentation</strong>. 
+                  By establishing clear validation criteria and documenting both successes and failures, individuals and teams can learn from proven methodologies 
+                  without repeating common mistakes. The GenieAI Hub serves as both a learning resource and a practical example 
+                  of how to build AI solutions progressively, from framework development to live application deployment.
                 </p>
               </Card>
             </div>
