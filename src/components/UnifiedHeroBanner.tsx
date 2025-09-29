@@ -5,16 +5,36 @@ import { Link } from "react-router-dom";
 import genieAnimated from "@/assets/genie-animated.png";
 import genieLamp from "@/assets/genie-lamp.png";
 import aiJourneyBg from "@/assets/hero-ai-journey.jpg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 export const UnifiedHeroBanner = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const genieImages = [genieAnimated, genieLamp];
 
+  const particles = useMemo(
+    () => Array.from({ length: 20 }, () => ({
+      size: Math.random() * 4 + 2,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      delay: `${Math.random() * 4}s`,
+      duration: `${3 + Math.random() * 3}s`,
+    })),
+    []
+  );
+
+  // Preload images to avoid flicker
+  useEffect(() => {
+    genieImages.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  // Rotate every 7 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % genieImages.length);
-    }, 7000); // 7 seconds interval
+    }, 7000); // 7 seconds
 
     return () => clearInterval(interval);
   }, [genieImages.length]);
@@ -32,17 +52,17 @@ export const UnifiedHeroBanner = () => {
 
       {/* Animated Background Particles */}
       <div className="absolute inset-0">
-        {[...Array(20)].map((_, i) => (
+        {particles.map((p, i) => (
           <div
             key={i}
             className="absolute bg-genie-accent/40 rounded-full animate-float"
             style={{
-              width: `${Math.random() * 4 + 2}px`,
-              height: `${Math.random() * 4 + 2}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 4}s`,
-              animationDuration: `${3 + Math.random() * 3}s`
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              left: p.left,
+              top: p.top,
+              animationDelay: p.delay,
+              animationDuration: p.duration
             }}
           />
         ))}
