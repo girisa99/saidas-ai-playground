@@ -371,13 +371,13 @@ export const IntegratedTechnologyExploration = () => {
       description: "Assess Materiality → Trade-Offs",
       focus: "Platform Assessment, Integration Planning, Scalability Design",
       icon: Zap,
-      businessContext: "Customer Onboarding, Multi-channel Support, System Integration"
+      businessContext: "Technology Selection, Implementation Planning, Value Assessment"
     },
     {
       phase: "Scale",
       color: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30",
-      description: "Measure Gap → Adjust & Iterate",
-      focus: "Value Realization, ROI Optimization, Continuous Improvement",
+      description: "Optimize Value → Sustain",
+      focus: "Performance Optimization, ROI Maximization, Continuous Improvement",
       icon: TrendingUp,
       businessContext: "Enterprise Deployment, Compliance Management, Performance Optimization"
     }
@@ -386,7 +386,6 @@ export const IntegratedTechnologyExploration = () => {
   const toggleCategoryExpansion = (category: string) => {
     setExpandedCategory(expandedCategory === category ? null : category);
   };
-
 
   return (
     <section className="py-16 bg-gradient-to-b from-background via-genie-dark/5 to-background">
@@ -402,9 +401,21 @@ export const IntegratedTechnologyExploration = () => {
             <span className="text-genie-primary">Experiment → Validate → Lead to Deploy</span> Technology Arsenal
           </h2>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
-            Technology ecosystem powering the <span className="text-genie-primary font-semibold">Genie AI Experimentation Hub</span> framework. 
-            From AI models and development tools to scalable infrastructure — each layer designed for healthcare innovation with enterprise-grade reliability.
+            Experimentation-driven technology ecosystem powering the <span className="text-genie-primary font-semibold">Genie AI Experimentation Hub</span>. 
+            Every tool, every integration, every decision stems from hands-on experimentation and real learning. See what we discovered, how we built it, and what's coming next.
           </p>
+
+        {/* Progressive Experimentation Updates */}
+        <div className="mb-8">
+          <Badge className="bg-genie-cyan/20 text-genie-cyan border-genie-cyan/30 mb-4">
+            <Calendar className="w-3 h-3 mr-2" />
+            🚀 Regular Feature Releases
+          </Badge>
+          <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+            New experiments and features launch every <span className="text-genie-cyan font-semibold">2-3 weeks</span>. 
+            Each release shares what we learned, how we built it, and what worked (or didn't!).
+          </p>
+        </div>
 
         {/* FLAGSHIP FEATURE - Genie Conversational Feature */}
         <div className="mb-16">
@@ -490,65 +501,37 @@ export const IntegratedTechnologyExploration = () => {
             </div>
           </Card>
         </div>
-          
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <Link to="/case-studies">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base">
-                <BarChart3 className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
-                See Framework Results
-                <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4 ml-2" />
-              </Button>
-            </Link>
-            <Link to="/journey">
-              <Button variant="outline" size="lg" className="px-8 py-4">
-                <Calendar className="w-5 h-5 mr-2" />
-                View Complete Journey
-              </Button>
-            </Link>
-          </div>
         </div>
 
-        {/* Legend: Technology → Gartner Framework → Business Value */}
+        {/* Technology Ecosystem → Experimentation → Learning */}
         <div className="mb-12">
-          <h3 className="text-xl font-bold text-center mb-6">Technology Ecosystem → Gartner Framework → Business Value</h3>
+          <h3 className="text-xl font-bold text-center mb-6">Technology → Experimentation → Learning</h3>
           
           {/* Flow Legend */}
           <div className="bg-gradient-to-r from-blue-50 via-purple-50 to-emerald-50 dark:from-blue-950/20 dark:via-purple-950/20 dark:to-emerald-950/20 p-6 rounded-xl mb-8">
             <div className="grid md:grid-cols-3 gap-4 items-center">
               <div className="text-center">
                 <div className="inline-flex items-center gap-2 bg-blue-500/20 px-4 py-2 rounded-full text-blue-700 font-medium mb-2">
-                  <Brain className="w-4 h-4" />
-                  Envision Phase
+                  <Code2 className="w-4 h-4" />
+                  Technology Stack
                 </div>
-                <p className="text-xs text-muted-foreground">Innovation Discovery & Strategic Vision</p>
-                <p className="text-xs font-medium text-blue-700 mt-1">AI Strategy & Experimentation</p>
+                <p className="text-xs text-muted-foreground">Tools & platforms we chose for experimentation</p>
               </div>
-              
-              <div className="hidden md:flex justify-center items-center">
-                <ArrowRight className="w-6 h-6 text-purple-600 animate-pulse" />
-              </div>
-              
               <div className="text-center">
+                <ArrowRight className="w-6 h-6 text-purple-500 mx-auto mb-2" />
                 <div className="inline-flex items-center gap-2 bg-purple-500/20 px-4 py-2 rounded-full text-purple-700 font-medium mb-2">
-                  <Zap className="w-4 h-4" />
-                  Engage Phase
+                  <Brain className="w-4 h-4" />
+                  Hands-on Testing
                 </div>
-                <p className="text-xs text-muted-foreground">Platform Assessment & Integration</p>
-                <p className="text-xs font-medium text-purple-700 mt-1">Customer Systems & Support</p>
+                <p className="text-xs text-muted-foreground">Real experiments with real challenges</p>
               </div>
-              
-              <div className="hidden md:flex justify-center items-center md:col-start-2">
-                <ArrowRight className="w-6 h-6 text-emerald-600 animate-pulse" />
-              </div>
-              
-              <div className="text-center md:col-start-3">
+              <div className="text-center">
+                <ArrowRight className="w-6 h-6 text-emerald-500 mx-auto mb-2" />
                 <div className="inline-flex items-center gap-2 bg-emerald-500/20 px-4 py-2 rounded-full text-emerald-700 font-medium mb-2">
-                  <TrendingUp className="w-4 h-4" />
-                  Scale Phase
+                  <Lightbulb className="w-4 h-4" />
+                  Shared Learning
                 </div>
-                <p className="text-xs text-muted-foreground">Value Realization & ROI Optimization</p>
-                <p className="text-xs font-medium text-emerald-700 mt-1">Enterprise & Compliance</p>
+                <p className="text-xs text-muted-foreground">What worked, what didn't, and why</p>
               </div>
             </div>
           </div>
@@ -571,12 +554,12 @@ export const IntegratedTechnologyExploration = () => {
           </div>
         </div>
 
-        {/* Technology Ecosystem Categories with Business Mapping */}
+        {/* Technology Categories with Experimentation Mapping */}
         <div className="mb-16">
-          <h3 className="text-2xl font-bold text-center mb-4">Technology Categories → Business Value Mapping</h3>
+          <h3 className="text-2xl font-bold text-center mb-4">Technology Categories → Experimentation Results</h3>
           <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Each technology category aligns with Gartner framework phases to deliver measurable business outcomes, 
-            creating multi-stakeholder value through strategic implementation.
+            Each technology category represents real experiments, trials, and learnings. 
+            See what we tried, what worked, and what we learned from hands-on testing.
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {Object.entries(technologyEcosystem).map(([category, details]) => {
@@ -592,150 +575,104 @@ export const IntegratedTechnologyExploration = () => {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <IconComponent className={`w-6 h-6 ${details.color}`} />
-                           <div>
-                             <h4 className="font-bold text-sm">{category}</h4>
-                             <div className="flex items-center gap-2">
-                               <span className={`text-xs px-2 py-1 rounded-full ${
-                                 'phaseColor' in details ? details.phaseColor : 
-                                 details.journeyPhase.includes('Envision') ? 'bg-blue-500/20 text-blue-700' :
-                                 details.journeyPhase.includes('Engage') ? 'bg-purple-500/20 text-purple-700' :
-                                 'bg-emerald-500/20 text-emerald-700'
-                               }`}>
-                                 {details.journeyPhase}
-                               </span>
-                             </div>
-                           </div>
+                        <div>
+                          <h4 className="font-semibold text-sm">{category}</h4>
+                          <p className="text-xs text-muted-foreground">{details.description}</p>
                         </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Badge className={`text-xs ${details.color} bg-transparent border-current`}>
+                          {details.journeyPhase}
+                        </Badge>
                         {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                       </div>
-                      <p className="text-xs mt-2 text-muted-foreground">{details.description}</p>
                     </div>
-                  
+                  </div>
+
                   {isExpanded && (
-                    <div className="p-4 border-t">
-                      <div className="grid md:grid-cols-3 gap-4 mb-4">
-                        {Object.entries(details.coreStack).map(([stackType, technologies]) => (
-                          <div key={stackType}>
-                            <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
-                              <Cpu className="w-3 h-3" />
-                              {stackType}
-                            </h5>
-                            <div className="space-y-1">
-                              {technologies.map((tech, index) => (
-                                <Badge key={index} variant="outline" className="text-xs mr-1 mb-1">{tech}</Badge>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      
-                      <div className="grid md:grid-cols-2 gap-4 mb-4">
-                         <div>
-                           <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
-                             <Target className="w-3 h-3 text-genie-primary" />
-                             Real Business Use Cases
-                           </h5>
-                           <div className="space-y-1">
-                             {businessUseCasesMapping[category]?.cases.map((useCase, index) => (
-                               <div key={index} className="text-xs p-2 bg-genie-primary/5 rounded border border-genie-primary/10">{useCase}</div>
-                             )) || details.businessOutcomes.map((outcome, index) => (
-                               <div key={index} className="text-xs p-2 bg-muted/50 rounded">{outcome}</div>
-                             ))}
-                           </div>
-                         </div>
-                        
-                          <div>
-                            <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
-                              <Users className="w-3 h-3 text-genie-teal" />
-                              Real-World Examples
-                            </h5>
-                            <div className="space-y-1">
-                              {businessUseCasesMapping[category]?.realWorldExamples.map((example, index) => (
-                                <div key={index} className="text-xs p-2 bg-genie-teal/5 rounded border border-genie-teal/10">{example}</div>
-                              )) || details.businessOutcomes.slice(0, 3).map((outcome, index) => (
-                                <div key={index} className="text-xs p-2 bg-blue-50 dark:bg-blue-950/20 rounded">{outcome}</div>
-                              ))}
-                            </div>
-                          </div>
-                      </div>
-
-                       {/* Value Creation Steps */}
-                       <div className="mb-4">
-                         <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
-                           <CheckCircle className="w-3 h-3 text-emerald-600" />
-                           Value Creation Steps
-                         </h5>
-                         <div className="space-y-2">
-                           {businessUseCasesMapping[category]?.valueCreationSteps.map((step, index) => (
-                             <div key={index} className="flex items-center gap-3 p-2 bg-emerald-50 dark:bg-emerald-950/20 rounded border border-emerald-200 dark:border-emerald-800">
-                               <div className="w-5 h-5 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
-                                 {index + 1}
-                               </div>
-                               <span className="text-xs text-emerald-700 dark:text-emerald-300">{step}</span>
-                             </div>
-                           )) || details.gartnerValue.slice(0, 3).map((value, index) => (
-                             <div key={index} className="flex items-center gap-3 p-2 bg-emerald-50 dark:bg-emerald-950/20 rounded">
-                               <div className="w-5 h-5 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
-                                 {index + 1}
-                               </div>
-                               <span className="text-xs text-emerald-700 dark:text-emerald-300">{value}</span>
-                             </div>
-                           ))}
-                         </div>
-                       </div>
-
-                       {/* Gartner GIVE and GET Framework */}
-                       <div className="grid md:grid-cols-2 gap-4 mb-4">
-                         <div className="p-3 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950/20 dark:to-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                           <h5 className="font-semibold text-xs mb-3 flex items-center gap-2 text-blue-700 dark:text-blue-300">
-                             <ArrowUp className="w-3 h-3" />
-                             GIVE to Gartner Framework
-                           </h5>
-                           <div className="space-y-2">
-                             {businessUseCasesMapping[category]?.giveToGartner.map((give, index) => (
-                               <div key={index} className="flex items-center gap-2">
-                                 <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
-                                 <span className="text-xs text-blue-700 dark:text-blue-300">{give}</span>
-                               </div>
-                             )) || details.gartnerValue.map((value, index) => (
-                               <div key={index} className="flex items-center gap-2">
-                                 <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
-                                 <span className="text-xs text-blue-700 dark:text-blue-300">{value}</span>
-                               </div>
-                             ))}
-                           </div>
-                         </div>
-
-                         <div className="p-3 bg-gradient-to-r from-green-50 to-green-100 dark:from-green-950/20 dark:to-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
-                           <h5 className="font-semibold text-xs mb-3 flex items-center gap-2 text-green-700 dark:text-green-300">
-                             <ArrowDown className="w-3 h-3" />
-                             GET from Gartner Framework
-                           </h5>
-                           <div className="space-y-2">
-                             {businessUseCasesMapping[category]?.getFromGartner.map((get, index) => (
-                               <div key={index} className="flex items-center gap-2">
-                                 <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
-                                 <span className="text-xs text-green-700 dark:text-green-300">{get}</span>
-                               </div>
-                             )) || ['Strategic Alignment', 'Value Optimization', 'Performance Excellence'].map((get, index) => (
-                               <div key={index} className="flex items-center gap-2">
-                                 <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
-                                 <span className="text-xs text-green-700 dark:text-green-300">{get}</span>
-                               </div>
-                             ))}
-                           </div>
-                         </div>
-                       </div>
-                       
-                        <div className="mb-4">
-                          <h5 className="font-semibold text-xs mb-2 flex items-center gap-1">
-                            <Network className="w-3 h-3" />
-                            Integration Blueprint
+                    <div className="p-6 border-t">
+                      <div className="grid md:grid-cols-2 gap-6">
+                        {/* Core Technology Stack */}
+                        <div>
+                          <h5 className="font-semibold text-sm mb-3 flex items-center gap-1">
+                            <Layers className="w-3 h-3" />
+                            Core Stack & Tools
                           </h5>
-                          <div className="text-xs p-3 bg-gradient-to-r from-primary/5 to-secondary/5 rounded border-l-3 border-primary/30">
-                            {('integrationBlueprint' in details ? details.integrationBlueprint : 'Technology Integration → Platform Assessment → Scalability Design → Value Optimization') as string}
+                          <div className="space-y-3">
+                            {Object.entries(details.coreStack).map(([stackCategory, items]) => (
+                              <div key={stackCategory}>
+                                <h6 className="text-xs font-medium text-muted-foreground mb-1">{stackCategory}</h6>
+                                <div className="flex flex-wrap gap-1">
+                                  {items.map((item, index) => (
+                                    <Badge key={index} variant="secondary" className="text-xs px-2 py-1">
+                                      {item}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
                           </div>
                         </div>
+
+                        {/* Business Outcomes & Use Cases */}
+                        <div>
+                          <h5 className="font-semibold text-sm mb-3 flex items-center gap-1">
+                            <Target className="w-3 h-3" />
+                            Experimentation Results
+                          </h5>
+                          <div className="space-y-2 mb-4">
+                            {details.businessOutcomes.map((outcome, index) => (
+                              <div key={index} className="flex items-center gap-2 text-xs">
+                                <div className="w-1.5 h-1.5 bg-current rounded-full flex-shrink-0"></div>
+                                <span>{outcome}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <h5 className="font-semibold text-sm mb-2 flex items-center gap-1">
+                            <CheckCircle className="w-3 h-3 text-emerald-600" />
+                            What We Learned
+                          </h5>
+                          <div className="space-y-2">
+                            {businessUseCasesMapping[category]?.valueCreationSteps.map((step, index) => (
+                              <div key={index} className="flex items-center gap-3 p-2 bg-emerald-50 dark:bg-emerald-950/20 rounded border border-emerald-200 dark:border-emerald-800">
+                                <div className="w-5 h-5 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                                  {index + 1}
+                                </div>
+                                <span className="text-xs text-emerald-700 dark:text-emerald-300">{step}</span>
+                              </div>
+                            )) || details.gartnerValue.slice(0, 3).map((value, index) => (
+                              <div key={index} className="flex items-center gap-3 p-2 bg-emerald-50 dark:bg-emerald-950/20 rounded">
+                                <div className="w-5 h-5 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                                  {index + 1}
+                                </div>
+                                <span className="text-xs text-emerald-700 dark:text-emerald-300">{value}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Experimentation Examples */}
+                      <div className="mt-6 p-4 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg border-l-4 border-primary/30">
+                        <h5 className="font-semibold text-sm mb-3 flex items-center gap-1">
+                          <Lightbulb className="w-3 h-3" />
+                          Real Implementation Examples
+                        </h5>
+                        <div className="space-y-2">
+                          {businessUseCasesMapping[category]?.realWorldExamples.map((example, index) => (
+                            <div key={index} className="text-xs text-muted-foreground flex items-start gap-2">
+                              <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                              <span>{example}</span>
+                            </div>
+                          )) || details.businessOutcomes.slice(0, 3).map((outcome, index) => (
+                            <div key={index} className="text-xs text-muted-foreground flex items-start gap-2">
+                              <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                              <span>Implementation: {outcome}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   )}
                 </Card>
@@ -744,149 +681,24 @@ export const IntegratedTechnologyExploration = () => {
           </div>
         </div>
 
-        {/* Enhanced Dynamic Technology Integration Blueprint */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-center mb-4">Dynamic Technology Integration Blueprint</h3>
-          <p className="text-center text-muted-foreground mb-8">
-            Integration blueprint adapts based on selected technology category - showing GIVE/GET framework alignment and value creation steps
-          </p>
-          <Card className="p-6">
-            {expandedCategory ? (
-              <div className="space-y-6">
-                <h4 className="font-bold text-center text-lg mb-4">
-                  Integration Blueprint for: <span className="text-genie-primary">{expandedCategory}</span>
-                </h4>
-                
-                {/* Enhanced Integration Flow */}
-                <div className="grid md:grid-cols-2 gap-6">
-                  {/* Gartner Framework Alignment */}
-                  <div className="space-y-4">
-                    <h5 className="font-semibold text-sm flex items-center gap-2 text-genie-primary">
-                      <Brain className="w-4 h-4" />
-                      Gartner Framework Alignment
-                    </h5>
-                    
-                    <div className="space-y-3">
-                      <div className="p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                        <div className="flex items-center gap-2 mb-2">
-                          <ArrowUp className="w-3 h-3 text-blue-600" />
-                          <span className="text-xs font-semibold text-blue-700">GIVE to Framework</span>
-                        </div>
-                        <div className="space-y-1">
-                          {businessUseCasesMapping[expandedCategory]?.giveToGartner.map((give, index) => (
-                            <div key={index} className="text-xs text-blue-600">• {give}</div>
-                          )) || ['Innovation Discovery', 'Platform Assessment', 'Value Creation'].map((give, index) => (
-                            <div key={index} className="text-xs text-blue-600">• {give}</div>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div className="p-3 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800">
-                        <div className="flex items-center gap-2 mb-2">
-                          <ArrowDown className="w-3 h-3 text-green-600" />
-                          <span className="text-xs font-semibold text-green-700">GET from Framework</span>
-                        </div>
-                        <div className="space-y-1">
-                          {businessUseCasesMapping[expandedCategory]?.getFromGartner.map((get, index) => (
-                            <div key={index} className="text-xs text-green-600">• {get}</div>
-                          )) || ['Strategic Vision', 'Technology Assessment', 'Value Optimization'].map((get, index) => (
-                            <div key={index} className="text-xs text-green-600">• {get}</div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Value Creation Steps */}
-                  <div className="space-y-4">
-                    <h5 className="font-semibold text-sm flex items-center gap-2 text-genie-teal">
-                      <Target className="w-4 h-4" />
-                      Value Creation Process
-                    </h5>
-                    
-                    <div className="space-y-2">
-                      {businessUseCasesMapping[expandedCategory]?.valueCreationSteps.map((step, index) => (
-                        <div key={index} className="flex items-center gap-3 p-2 bg-emerald-50 dark:bg-emerald-950/20 rounded border border-emerald-200 dark:border-emerald-800">
-                          <div className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
-                            {index + 1}
-                          </div>
-                          <span className="text-xs text-emerald-700 dark:text-emerald-300">{step}</span>
-                        </div>
-                      )) || ['Define Strategy', 'Assess Platforms', 'Implement Solution'].map((step, index) => (
-                        <div key={index} className="flex items-center gap-3 p-2 bg-emerald-50 dark:bg-emerald-950/20 rounded border border-emerald-200 dark:border-emerald-800">
-                          <div className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
-                            {index + 1}
-                          </div>
-                          <span className="text-xs text-emerald-700 dark:text-emerald-300">{step}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Technology Integration Blueprint */}
-                <div className="p-4 bg-gradient-to-r from-genie-primary/5 to-genie-secondary/5 rounded-lg border-l-4 border-genie-primary">
-                  <h5 className="font-semibold text-sm mb-3 flex items-center gap-2">
-                    <Network className="w-4 h-4" />
-                    Technical Implementation Path
-                  </h5>
-                  <p className="text-sm font-medium text-genie-primary">
-                    {technologyEcosystem[expandedCategory as keyof typeof technologyEcosystem]?.integrationBlueprint || 'Technology Integration → Platform Assessment → Scalability Design → Value Optimization'}
-                  </p>
-                </div>
-                
-                {/* Business Outcomes Preview */}
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <h5 className="font-semibold text-xs mb-2 text-muted-foreground">Business Applications</h5>
-                    <div className="space-y-1">
-                      {businessUseCasesMapping[expandedCategory]?.cases.slice(0, 3).map((useCase, index) => (
-                        <div key={index} className="text-xs p-2 bg-muted/30 rounded">{useCase}</div>
-                      )) || ['Healthcare Innovation', 'Patient Care Enhancement', 'Operational Excellence'].map((useCase, index) => (
-                        <div key={index} className="text-xs p-2 bg-muted/30 rounded">{useCase}</div>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-xs mb-2 text-muted-foreground">Real-World Examples</h5>
-                    <div className="space-y-1">
-                      {businessUseCasesMapping[expandedCategory]?.realWorldExamples.slice(0, 2).map((example, index) => (
-                        <div key={index} className="text-xs p-2 bg-muted/30 rounded">{example}</div>
-                      )) || ['Clinical workflow optimization', 'Patient communication enhancement'].map((example, index) => (
-                        <div key={index} className="text-xs p-2 bg-muted/30 rounded">{example}</div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-8 text-muted-foreground">
-                <Network className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p className="text-sm">Click on any technology category above to see its specific integration blueprint</p>
-                <p className="text-xs mt-2">Each blueprint shows GIVE/GET framework alignment and value creation steps</p>
-              </div>
-            )}
-          </Card>
-        </div>
-
-        {/* Implementation Metrics */}
-        <div className="grid md:grid-cols-4 gap-4 mb-16">
+        {/* Experimentation Metrics */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           <Card className="p-4 text-center border-genie-primary/20">
             <div className="w-10 h-10 bg-genie-primary/10 rounded-lg flex items-center justify-center mx-auto mb-3">
-              <Layers className="w-5 h-5 text-genie-primary" />
+              <Code2 className="w-5 h-5 text-genie-primary" />
             </div>
             <div className="text-xl font-bold text-genie-primary mb-1">8</div>
-            <div className="text-xs font-medium text-foreground mb-1">Technology Categories</div>
-            <div className="text-xs text-muted-foreground">Including MCP & Agentic AI</div>
+            <div className="text-xs font-medium text-foreground mb-1">Tech Categories</div>
+            <div className="text-xs text-muted-foreground">Experimentation areas</div>
           </Card>
           
-          <Card className="p-4 text-center border-genie-teal/20">
-            <div className="w-10 h-10 bg-genie-teal/10 rounded-lg flex items-center justify-center mx-auto mb-3">
-              <Zap className="w-5 h-5 text-genie-teal" />
+          <Card className="p-4 text-center border-genie-secondary/20">
+            <div className="w-10 h-10 bg-genie-secondary/10 rounded-lg flex items-center justify-center mx-auto mb-3">
+              <Brain className="w-5 h-5 text-genie-secondary" />
             </div>
-            <div className="text-xl font-bold text-genie-teal mb-1">10+</div>
-            <div className="text-xs font-medium text-foreground mb-1">Integrated Tools</div>
-            <div className="text-xs text-muted-foreground">Business API integrations</div>
+            <div className="text-xl font-bold text-genie-secondary mb-1">15+</div>
+            <div className="text-xs font-medium text-foreground mb-1">AI Models</div>
+            <div className="text-xs text-muted-foreground">Tested & compared</div>
           </Card>
           
           <Card className="p-4 text-center border-genie-cyan/20">
@@ -894,8 +706,8 @@ export const IntegratedTechnologyExploration = () => {
               <Target className="w-5 h-5 text-genie-cyan" />
             </div>
             <div className="text-xl font-bold text-genie-cyan mb-1">10+</div>
-            <div className="text-xs font-medium text-foreground mb-1">Use Cases</div>
-            <div className="text-xs text-muted-foreground">Real implementations</div>
+            <div className="text-xs font-medium text-foreground mb-1">Live Features</div>
+            <div className="text-xs text-muted-foreground">From experiments</div>
           </Card>
           
           <Card className="p-4 text-center border-genie-accent/20">
@@ -903,27 +715,27 @@ export const IntegratedTechnologyExploration = () => {
               <CheckCircle className="w-5 h-5 text-genie-accent" />
             </div>
             <div className="text-xl font-bold text-genie-accent mb-1">3</div>
-            <div className="text-xs font-medium text-foreground mb-1">Gartner Phases</div>
-            <div className="text-xs text-muted-foreground">Framework aligned</div>
+            <div className="text-xs font-medium text-foreground mb-1">Framework Phases</div>
+            <div className="text-xs text-muted-foreground">Experiment-validated</div>
           </Card>
         </div>
 
-        {/* Call to Action */}
+        {/* Call to Action - Experimentation Focus */}
         <div className="text-center">
           <p className="text-lg text-muted-foreground mb-6">
-            Ready to explore the complete journey and its business impact?
+            Ready to explore our experimentation journey and see what we've learned?
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/journey">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base">
-                <Calendar className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
-                View 3-Phase Journey
+              <Button size="lg" className="bg-genie-primary hover:bg-genie-primary/90 text-background px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base">
+                <Lightbulb className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
+                See Our Experiments
               </Button>
             </Link>
-            <Link to="/case-studies">
-              <Button variant="outline" size="lg" className="px-8 py-4">
-                <BarChart3 className="w-5 h-5 mr-2" />
-                See Framework Impact
+            <Link to="/business-use-cases">
+              <Button variant="outline" size="lg" className="px-8 py-4 border-genie-accent text-genie-accent hover:bg-genie-accent/10">
+                <Target className="w-5 h-5 mr-2" />
+                Try Live Features
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
