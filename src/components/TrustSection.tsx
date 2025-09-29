@@ -26,9 +26,9 @@ export const TrustSection = () => {
     },
     {
       number: "03",
-      title: "Lead",
-      subtitle: "Drive Change & Influence",
-      description: "Use your validated expertise to become a change agent. Influence organizational AI strategy and guide others through proven knowledge.",
+      title: "Lead to Deploy",
+      subtitle: "Drive Implementation",
+      description: "Use your validated expertise to lead and deploy real AI solutions. Guide teams through implementation using your proven knowledge and experience.",
       icon: Briefcase,
       color: "from-blue-500/20 to-blue-500/10", 
       iconBg: "bg-blue-500",
@@ -46,7 +46,7 @@ export const TrustSection = () => {
             The Framework
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            <span className="text-primary">Experiment → Validate → Lead</span>
+            <span className="text-primary">Experiment → Validate → Lead to Deploy</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto mb-12">
             A proven 3-step approach that transforms individuals into AI change agents. 
