@@ -118,7 +118,7 @@ const Journey = () => {
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Network className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">DEPLOY</h3>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">LEAD to DEPLOY</h3>
                 <p className="text-white/80 text-xs">45-day lessons to production MVP</p>
               </div>
             </div>

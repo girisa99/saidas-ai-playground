@@ -170,7 +170,7 @@ const About = () => {
               </div>
               <div className="text-white/80 font-medium">
                 <AnimatedTextEmergence 
-                  text="Now sharing knowledge to help organizations build AI solutions faster and with greater confidence through the GenieAI Hub methodology."
+                  text="Now sharing this knowledge through the GenieAI Hub - empowering individuals to build AI expertise that transforms their careers and drives organizational innovation."
                   startDelay={6500}
                   charDelay={30}
                   className="block"
@@ -312,19 +312,19 @@ const About = () => {
                    <strong className="text-genie-primary">Director of Product owner/solution Architect for CGAT (PSaS) supporting InspiroGene at McKesson</strong>, 
                    I apply this framework across complex healthcare technology initiatives.
                  </p>
-                <p className="mb-6">
-                  The <strong className="text-genie-cyan">GenieAI Experimentation Hub</strong> emerged from this methodology - 
-                  a personal knowledge-sharing initiative that documents real applications of the framework through practical examples and case studies. 
-                  Rather than theoretical concepts, this hub provides insights from hands-on experimentation, 
-                  showing how to systematically explore AI tools, validate concepts, and build working implementations. 
-                  Each experiment demonstrates measurable outcomes and lessons learned from real-world application.
-                </p>
-                <p>
-                  What sets this approach apart is its emphasis on <strong className="text-genie-primary">learning through systematic experimentation</strong>. 
-                  By establishing clear validation criteria and documenting both successes and failures, individuals and teams can learn from proven methodologies 
-                  without repeating common mistakes. The GenieAI Hub serves as both a learning resource and a practical example 
-                  of how to build AI solutions progressively, from framework development to live application deployment.
-                </p>
+                 <p className="mb-6">
+                   The <strong className="text-genie-cyan">GenieAI Experimentation Hub</strong> emerged from this methodology - 
+                   your personal laboratory for AI discovery and skill building. This hub demonstrates how individual curiosity and systematic experimentation 
+                   create the expertise needed to become an AI change agent. Rather than theoretical concepts, every experiment here shows 
+                   real applications, measurable outcomes, and the journey from "what if" to working solution. 
+                   It's where personal learning transforms into professional leadership capability.
+                 </p>
+                 <p>
+                   What sets this Hub apart is its emphasis on <strong className="text-genie-primary">individual empowerment through systematic experimentation</strong>. 
+                   By sharing real experiments, clear validation criteria, and honest documentation of both successes and failures, 
+                   you can accelerate your own AI journey without repeating common mistakes. The GenieAI Hub demonstrates the full spectrum - 
+                   from initial curiosity and experimentation to building production-ready solutions that establish you as an AI innovator in your field.
+                 </p>
               </Card>
             </div>
 

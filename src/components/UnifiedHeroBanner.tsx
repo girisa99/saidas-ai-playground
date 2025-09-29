@@ -97,11 +97,11 @@ export const UnifiedHeroBanner = () => {
               </div>
 
               <h2 className="text-2xl lg:text-3xl font-bold text-white">
-                Your AI Experimentation Playground
+                Genie AI Experimentation Hub
               </h2>
               
               <p className="text-white/80 text-lg leading-relaxed">
-                Access proven frameworks and real experiments that help you build AI capabilities independently. Learn through hands-on experimentation that positions you as a change agent.
+                Your personal AI learning laboratory where curiosity meets systematic experimentation. Discover proven methodologies that transform individual exploration into expertise that drives organizational change.
               </p>
 
               {/* Framework Steps */}
