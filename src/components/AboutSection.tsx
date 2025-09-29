@@ -63,6 +63,54 @@ export const AboutSection = () => {
 
           {/* Journey Highlights */}
           <div className="space-y-6">
+            {/* AI Innovation & Knowledge Sharing - Top Position */}
+            <Card className="p-6 bg-gradient-to-r from-genie-accent/10 to-genie-teal/10 border-genie-accent/20">
+              <div className="flex items-center gap-3 mb-4">
+                <Lightbulb className="h-8 w-8 text-genie-accent" />
+                <div>
+                  <h4 className="font-bold text-xl text-genie-accent">AI Innovation & Knowledge Sharing</h4>
+                  <p className="text-sm text-muted-foreground">GenieAI Experimentation Hub • Personal Initiative</p>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <h5 className="font-semibold text-sm mb-2 flex items-center">
+                    <Rocket className="h-4 w-4 mr-2 text-genie-accent" />
+                    Focus Areas
+                  </h5>
+                  <p className="text-muted-foreground text-sm">
+                    Democratizing AI possibilities through practical experimentation and knowledge sharing
+                  </p>
+                </div>
+                
+                <div>
+                  <h5 className="font-semibold text-sm mb-2 flex items-center">
+                    <Users className="h-4 w-4 mr-2 text-genie-accent" />
+                    Key Achievements
+                  </h5>
+                  <p className="text-muted-foreground text-sm">
+                    Creating comprehensive AI application frameworks demonstrating healthcare transformation potential
+                  </p>
+                </div>
+                
+                <div>
+                  <h5 className="font-semibold text-sm mb-2 flex items-center">
+                    <Rocket className="h-4 w-4 mr-2 text-genie-accent" />
+                    First Success: Genie AI (3 Days)
+                  </h5>
+                  <p className="text-muted-foreground text-sm mb-3">
+                    First successful launch: Comprehensive conversational AI with 80+ knowledge contexts, advanced RAG architecture, and multi-model intelligence.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="secondary" className="text-xs">Live in Production</Badge>
+                    <Badge variant="secondary" className="text-xs">80+ Contexts</Badge>
+                    <Badge variant="secondary" className="text-xs">Multi-Model AI</Badge>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
             <Card className="p-6 bg-gradient-to-r from-primary/10 to-ai-secondary/10 border-primary/20">
               <h4 className="font-bold text-lg mb-4 flex items-center">
                 <Users className="h-6 w-6 mr-2 text-primary" />
@@ -76,21 +124,6 @@ export const AboutSection = () => {
                 <Badge variant="secondary">LLM Experimentation</Badge>
                 <Badge variant="secondary">Prompt Engineering</Badge>
                 <Badge variant="secondary">AI Architecture</Badge>
-              </div>
-            </Card>
-            
-            <Card className="p-6 bg-gradient-to-r from-genie-accent/10 to-genie-teal/10 border-genie-accent/20">
-              <h4 className="font-bold text-lg mb-4 flex items-center">
-                <Rocket className="h-6 w-6 mr-2 text-genie-accent" />
-                First Success: Genie AI (3 Days)
-              </h4>
-              <p className="text-muted-foreground mb-4">
-                After extensive experimentation, the first successful launch was Genie AI - a comprehensive conversational AI with 80+ knowledge contexts, advanced RAG architecture, and multi-model intelligence.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">Live in Production</Badge>
-                <Badge variant="secondary">80+ Contexts</Badge>
-                <Badge variant="secondary">Multi-Model AI</Badge>
               </div>
             </Card>
             
