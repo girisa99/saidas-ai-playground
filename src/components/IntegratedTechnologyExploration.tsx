@@ -41,26 +41,45 @@ import techJourneyBg from "@/assets/journey-phase-02-curiosity-artwork.jpg";
 export const IntegratedTechnologyExploration = () => {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
-  // Real Business Use Cases mapped from existing BusinessUseCases.tsx and Journey sections
+  // FLAGSHIP FEATURE - Genie Conversational Feature Launch
+  const genieConversationalFeature = {
+    title: "🌟 Genie Conversational Feature - LIVE NOW",
+    status: "FEATURED LAUNCH",
+    description: "The first flagship feature of the Genie AI Experimentation Hub, demonstrating the Experiment → Validate → Lead to Deploy framework in action",
+    capabilities: [
+      "80+ Knowledge Contexts across healthcare AI domains",
+      "Multi-Model Intelligence (GPT-4, Claude, Gemini)",
+      "Split-Screen Conversations for model comparison",
+      "Advanced RAG Architecture with intelligent context switching",
+      "Model Comparison Mode for optimal AI selection",
+      "Context Switching between specialized knowledge domains"
+    ],
+    framework: "Experiment → Validate → Lead to Deploy",
+    phase: "LIVE IMPLEMENTATION",
+    technicalStack: ["Advanced RAG", "Multi-LLM Orchestration", "Context Management", "Real-time Model Switching"],
+    businessValue: "Demonstrates complete framework execution from experimentation to production deployment"
+  };
+
+  // Real Business Use Cases aligned with Journey and current implementations
   const businessUseCasesMapping = {
     'Artificial Intelligence & ML': {
-      title: 'Clinical Intelligence & AI Decision Support',
-      gartnerPhase: 'Envision',
-      giveToGartner: ['Innovation Discovery', 'AI Strategy Development', 'Proof of Concept Validation'],
-      getFromGartner: ['Strategic Vision', 'Technology Assessment Framework', 'Innovation Roadmap'],
-      valueCreationSteps: ['Listen & Sense AI Opportunities', 'Develop Clinical AI Options', 'Test AI Feasibility'],
+      title: '🌟 Genie Conversational Feature - Clinical Intelligence & AI Decision Support',
+      gartnerPhase: 'Envision → LIVE DEPLOYMENT',
+      giveToGartner: ['Flagship AI Implementation', 'Multi-Model Intelligence', 'Advanced RAG Architecture'],
+      getFromGartner: ['Production-Ready Framework', 'Scalable AI Platform', 'Healthcare Innovation Validation'],
+      valueCreationSteps: ['🚀 LIVE: 80+ Knowledge Contexts', '🚀 LIVE: Multi-LLM Orchestration', '🚀 LIVE: Split-Screen Conversations'],
       cases: [
-        'Oncology Care Workflow - AI-powered clinical priority assessment',
-        'Patient Referral & Onboarding - Intelligent referral routing based on urgency',
-        'Digital Contact Center - Smart IVR with NLP for treatment inquiries',
-        'AI-powered clinical priority assessment and triage',
-        'Smart data extraction from unstructured documents'
+        '🌟 Genie Conversational Feature - Advanced RAG with 80+ healthcare contexts',
+        'Multi-Model Intelligence (GPT-4, Claude, Gemini) with real-time switching',
+        'Split-screen model comparison for optimal AI selection',
+        'Context switching between specialized healthcare knowledge domains',
+        'Production deployment demonstrating complete Experiment → Validate → Lead to Deploy framework'
       ],
       realWorldExamples: [
-        'Sarah - Routine Screening: AI analyzes family history and flags for BRCA testing',
-        'Maria - Urgent Referral: AI immediately prioritizes pancreatic cancer case',
-        'Jennifer - Treatment Inquiry: Smart IVR recognizes treatment options intent',
-        'AI-powered referral processing reduces response time to under 30 minutes with 95% accuracy'
+        '🌟 LIVE FEATURE: Advanced conversational AI with 80+ specialized healthcare contexts',
+        'Multi-model comparison enabling users to select optimal AI for specific healthcare scenarios',
+        'Split-screen interface demonstrating real-time model performance differences',
+        'Production-ready implementation showcasing the complete framework journey from experimentation to deployment'
       ]
     },
     'MCP (Model Context Protocol)': {
@@ -377,15 +396,93 @@ export const IntegratedTechnologyExploration = () => {
         <div className="text-center mb-12">
           <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-4">
             <Zap className="w-4 h-4 mr-2" />
-            3-Phase Technology Ecosystem
+            Genie AI Experimentation Hub - 3-Phase Technology Ecosystem
           </Badge>
           <h2 className="text-4xl lg:text-6xl font-bold mb-6">
-            Technology Stack <span className="text-genie-primary">& 3-Phase Integration</span>
+            <span className="text-genie-primary">Experiment → Validate → Lead to Deploy</span> Technology Arsenal
           </h2>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
-            Technology ecosystem powering the <span className="text-genie-primary font-semibold">Experiment → Validate → Lead to Deploy</span> framework. 
-            Following Gartner value methodology with 10+ integrated tools and real-world healthcare applications.
+            Technology ecosystem powering the <span className="text-genie-primary font-semibold">Genie AI Experimentation Hub</span> framework. 
+            From AI models and development tools to scalable infrastructure — each layer designed for healthcare innovation with enterprise-grade reliability.
           </p>
+
+        {/* FLAGSHIP FEATURE - Genie Conversational Feature */}
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <Badge className="bg-genie-accent text-background border-genie-accent mb-4 text-sm font-bold px-4 py-2">
+              <Star className="w-4 h-4 mr-2" />
+              🌟 FLAGSHIP FEATURE - NOW LIVE
+            </Badge>
+            <h3 className="text-2xl lg:text-4xl font-bold mb-4">
+              <span className="text-genie-accent">Genie Conversational Feature</span>
+            </h3>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              The first flagship implementation of our Experiment → Validate → Lead to Deploy framework — demonstrating complete journey from experimentation to production deployment.
+            </p>
+          </div>
+
+          <Card className="max-w-6xl mx-auto border-2 border-genie-accent/30 bg-gradient-to-br from-genie-accent/5 via-background to-genie-primary/5">
+            <div className="p-8">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="font-bold text-xl text-genie-accent mb-4 flex items-center gap-2">
+                    <Brain className="w-6 h-6" />
+                    Advanced AI Capabilities
+                  </h4>
+                  <div className="space-y-3">
+                    {genieConversationalFeature.capabilities.map((capability, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-genie-accent rounded-full mt-2 flex-shrink-0"></div>
+                        <span className="text-sm text-foreground">{capability}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-bold text-xl text-genie-primary mb-4 flex items-center gap-2">
+                    <Code2 className="w-6 h-6" />
+                    Technical Implementation
+                  </h4>
+                  <div className="space-y-3 mb-6">
+                    {genieConversationalFeature.technicalStack.map((tech, index) => (
+                      <div key={index} className="flex items-center gap-3">
+                        <CheckCircle className="w-4 h-4 text-genie-primary flex-shrink-0" />
+                        <span className="text-sm text-foreground">{tech}</span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="p-4 bg-gradient-to-r from-genie-accent/10 to-genie-primary/10 rounded-lg border border-genie-accent/20">
+                    <h5 className="font-bold text-genie-accent mb-2 text-sm">Framework Implementation Status</h5>
+                    <Badge className="bg-emerald-500 text-white text-xs font-bold px-3 py-1">
+                      ✅ LIVE DEPLOYMENT
+                    </Badge>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Complete framework execution: Experimentation → Validation → Production Deployment
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-8 text-center">
+                <p className="text-lg text-genie-accent font-semibold mb-4">
+                  Experience the Genie AI Experimentation Hub Framework in Action
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button className="bg-genie-accent hover:bg-genie-accent/90 text-background font-semibold">
+                    <Brain className="w-4 h-4 mr-2" />
+                    Try Genie Conversation Now
+                  </Button>
+                  <Button variant="outline" className="border-genie-primary text-genie-primary hover:bg-genie-primary/10">
+                    <Target className="w-4 h-4 mr-2" />
+                    View Technical Case Study
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
           
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
