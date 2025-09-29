@@ -13,10 +13,10 @@ import techRoadmapBg from "@/assets/hero-tech-roadmap.jpg";
 
 const TechnologyStack = () => {
   useEffect(() => {
-    document.title = "3-Phase Technology Journey - Experiment → Validate → Deploy Tech Stack";
+    document.title = "Genie AI Experimentation Hub - 3-Phase Technology Journey | Experiment → Validate → Lead to Deploy";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', '3-phase technology arsenal powering the Experiment → Validate → Deploy framework. From Spark & Curiosity tools to Scalable MVP infrastructure - sharing healthcare AI technology knowledge.');
+      metaDescription.setAttribute('content', 'Genie AI Experimentation Hub: 3-phase technology arsenal powering the Experiment → Validate → Lead to Deploy framework. From Spark & Curiosity tools to Scalable MVP infrastructure - sharing healthcare AI technology knowledge.');
     }
   }, []);
 
@@ -65,7 +65,7 @@ const TechnologyStack = () => {
           <div className="max-w-5xl">
             <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-3 sm:mb-4">
               <Code2 className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-              Experiment → Validate → Deploy Tech Stack
+              Genie AI Experiment → Validate → Lead to Deploy Tech Stack
             </Badge>
             
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
@@ -73,7 +73,7 @@ const TechnologyStack = () => {
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-              Technology arsenal powering the Experiment → Validate → Deploy framework. From <span className="text-genie-accent font-semibold">Spark & Curiosity</span> tools 
+              Technology arsenal powering the <span className="text-genie-accent font-semibold">Genie AI Experimentation Hub</span> framework: Experiment → Validate → Lead to Deploy. From <span className="text-genie-accent font-semibold">Spark & Curiosity</span> tools 
               through <span className="text-genie-accent font-semibold">Breakthrough Innovation</span> platforms to <span className="text-genie-accent font-semibold">Scalable MVP</span> infrastructure — 
               sharing deep knowledge on healthcare AI technology stacks.
             </p>
@@ -92,7 +92,7 @@ const TechnologyStack = () => {
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">DEPLOY</h3>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">LEAD to DEPLOY</h3>
                 <p className="text-white/80 text-xs">Supabase, Docker, CI/CD</p>
               </div>
             </div>
