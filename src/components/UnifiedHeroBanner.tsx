@@ -31,11 +31,11 @@ export const UnifiedHeroBanner = () => {
     });
   }, []);
 
-  // Rotate every 8 seconds for better UX
+  // Rotate every 6 seconds for better UX
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % genieImages.length);
-    }, 8000);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [genieImages.length]);
