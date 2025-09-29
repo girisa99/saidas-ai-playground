@@ -344,6 +344,14 @@ const About = () => {
                     color: "genie-primary"
                   },
                   {
+                    phase: "AI Innovation & Knowledge Sharing",
+                    companies: "GenieAI Experimentation Hub • Personal Initiative",
+                    focus: "Democratizing AI possibilities through practical experimentation and knowledge sharing. First Success: Genie AI (3 Days) - comprehensive conversational AI with 80+ knowledge contexts.",
+                    achievements: "Creating comprehensive AI application frameworks demonstrating healthcare transformation potential. Live production deployment with advanced RAG architecture and multi-model intelligence.",
+                    icon: Lightbulb,
+                    color: "genie-cyan"
+                  },
+                  {
                     phase: "Pharmaceutical Technology Leadership",
                     companies: "Novartis • Bayer • Pfizer • Amgen • Conduent",
                     focus: "Digital transformation across commercial operations, clinical R&D, regulatory affairs, and supply chain",
@@ -358,14 +366,6 @@ const About = () => {
                     achievements: "Developed frameworks bridging technology solutions with business outcomes",
                     icon: GraduationCap,
                     color: "genie-teal"
-                  },
-                  {
-                    phase: "AI Innovation & Knowledge Sharing",
-                    companies: "GenieAI Experimentation Hub • Personal Initiative",
-                    focus: "Democratizing AI possibilities through practical experimentation and knowledge sharing. First Success: Genie AI (3 Days) - comprehensive conversational AI with 80+ knowledge contexts.",
-                    achievements: "Creating comprehensive AI application frameworks demonstrating healthcare transformation potential. Live production deployment with advanced RAG architecture and multi-model intelligence.",
-                    icon: Lightbulb,
-                    color: "genie-cyan"
                   }
                 ].map((phase, index) => {
                   const IconComponent = phase.icon;
