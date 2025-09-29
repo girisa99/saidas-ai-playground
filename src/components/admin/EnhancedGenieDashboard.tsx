@@ -114,6 +114,14 @@ export const EnhancedGenieDashboard = () => {
     defaultModelUsage: 0,
     systemModelUsage: 0,
     
+    // Detailed Model Breakdowns
+    singleModelBreakdown: {} as Record<string, number>,
+    multiModelBreakdown: {} as Record<string, number>,
+    llmBreakdown: {} as Record<string, number>,
+    smallLMBreakdown: {} as Record<string, number>,
+    visionLMBreakdown: {} as Record<string, number>,
+    modelCombinations: {} as Record<string, number>,
+    
     // Knowledge Base Analytics
     knowledgeBaseEnabled: 0,
     knowledgeBaseDisabled: 0,
@@ -222,6 +230,14 @@ export const EnhancedGenieDashboard = () => {
     const topicsBreakdown: Record<string, number> = {};
     const modelBreakdown: Record<string, number> = {};
     
+    // Detailed model analytics
+    const singleModelBreakdown: Record<string, number> = {};
+    const multiModelBreakdown: Record<string, number> = {};
+    const llmBreakdown: Record<string, number> = {};
+    const smallLMBreakdown: Record<string, number> = {};
+    const visionLMBreakdown: Record<string, number> = {};
+    const modelCombinations: Record<string, number> = {};
+    
     convs.forEach(conv => {
       if (conv.messages && Array.isArray(conv.messages)) {
         totalMessages += conv.messages.length;
@@ -282,22 +298,112 @@ export const EnhancedGenieDashboard = () => {
       if (conv.configuration_snapshot) {
         const config = conv.configuration_snapshot;
         
-        // Model usage analysis
-        if (config.model_type) {
-          const modelType = config.model_type.toLowerCase();
-          modelBreakdown[modelType] = (modelBreakdown[modelType] || 0) + 1;
+        // Enhanced model usage analysis
+        const analyzeModelConfiguration = (config: any) => {
+          const models = [];
+          let modelType = 'default';
           
-          if (modelType.includes('single')) {
-            singleModelUsage++;
-          } else if (modelType.includes('multi')) {
-            multiModelUsage++;
-          } else if (modelType.includes('system') || modelType.includes('default')) {
-            systemModelUsage++;
-          } else {
-            defaultModelUsage++;
+          // Extract model information from various config fields
+          if (config.model_name) models.push(config.model_name);
+          if (config.primary_model) models.push(config.primary_model);
+          if (config.models && Array.isArray(config.models)) models.push(...config.models);
+          if (config.ai_model) models.push(config.ai_model);
+          if (config.model_provider) {
+            if (config.model_id) {
+              models.push(`${config.model_provider}/${config.model_id}`);
+            } else {
+              models.push(config.model_provider);
+            }
           }
+          
+          // Determine model type from configuration
+          if (config.model_type) {
+            modelType = config.model_type.toLowerCase();
+          } else if (models.length > 1) {
+            modelType = 'multi';
+          } else if (models.length === 1) {
+            modelType = 'single';
+          }
+          
+          return { models, modelType };
+        };
+        
+        const { models, modelType: detectedModelType } = analyzeModelConfiguration(config);
+        
+        // Categorize models
+        const categorizeModel = (modelName: string) => {
+          const model = modelName.toLowerCase();
+          
+          // Large Language Models
+          const llmPatterns = [
+            'gpt-4', 'gpt-3.5', 'claude', 'gemini-pro', 'palm-2', 'llama-2-70b', 
+            'claude-opus', 'claude-sonnet', 'gpt-5', 'gemini-2.5-pro'
+          ];
+          
+          // Small Language Models
+          const smallLMPatterns = [
+            'gpt-3.5-turbo', 'claude-haiku', 'gemini-flash', 'llama-2-7b', 'llama-2-13b',
+            'phi-3', 'mistral-7b', 'gemini-2.5-flash', 'gpt-5-mini', 'gpt-5-nano'
+          ];
+          
+          // Vision Language Models
+          const visionLMPatterns = [
+            'gpt-4-vision', 'claude-3-opus', 'claude-3-sonnet', 'claude-3-haiku',
+            'gemini-pro-vision', 'gpt-4o', 'claude-4', 'gemini-2.5-flash-image'
+          ];
+          
+          if (visionLMPatterns.some(pattern => model.includes(pattern))) {
+            return 'vision';
+          } else if (smallLMPatterns.some(pattern => model.includes(pattern))) {
+            return 'small';
+          } else if (llmPatterns.some(pattern => model.includes(pattern))) {
+            return 'llm';
+          }
+          return 'other';
+        };
+        
+        // Process models based on type
+        if (detectedModelType.includes('single') && models.length > 0) {
+          singleModelUsage++;
+          const primaryModel = models[0];
+          singleModelBreakdown[primaryModel] = (singleModelBreakdown[primaryModel] || 0) + 1;
+          
+          const category = categorizeModel(primaryModel);
+          if (category === 'llm') {
+            llmBreakdown[primaryModel] = (llmBreakdown[primaryModel] || 0) + 1;
+          } else if (category === 'small') {
+            smallLMBreakdown[primaryModel] = (smallLMBreakdown[primaryModel] || 0) + 1;
+          } else if (category === 'vision') {
+            visionLMBreakdown[primaryModel] = (visionLMBreakdown[primaryModel] || 0) + 1;
+          }
+        } else if (detectedModelType.includes('multi') && models.length > 1) {
+          multiModelUsage++;
+          const combination = models.sort().join(' + ');
+          multiModelBreakdown[combination] = (multiModelBreakdown[combination] || 0) + 1;
+          modelCombinations[combination] = (modelCombinations[combination] || 0) + 1;
+          
+          // Categorize each model in the combination
+          models.forEach(model => {
+            const category = categorizeModel(model);
+            if (category === 'llm') {
+              llmBreakdown[model] = (llmBreakdown[model] || 0) + 1;
+            } else if (category === 'small') {
+              smallLMBreakdown[model] = (smallLMBreakdown[model] || 0) + 1;
+            } else if (category === 'vision') {
+              visionLMBreakdown[model] = (visionLMBreakdown[model] || 0) + 1;
+            }
+          });
+        } else if (detectedModelType.includes('system')) {
+          systemModelUsage++;
         } else {
           defaultModelUsage++;
+        }
+        
+        // General model breakdown
+        models.forEach(model => {
+          modelBreakdown[model] = (modelBreakdown[model] || 0) + 1;
+        });
+        if (models.length === 0) {
           modelBreakdown['default'] = (modelBreakdown['default'] || 0) + 1;
         }
         
@@ -319,6 +425,7 @@ export const EnhancedGenieDashboard = () => {
         defaultModelUsage++;
         knowledgeBaseDisabled++;
         modelBreakdown['default'] = (modelBreakdown['default'] || 0) + 1;
+        singleModelBreakdown['default'] = (singleModelBreakdown['default'] || 0) + 1;
       }
       
       // Calculate session duration if not active
@@ -394,7 +501,13 @@ export const EnhancedGenieDashboard = () => {
       escalationSuccessful,
       escalationPending,
       topicsBreakdown,
-      modelBreakdown
+      modelBreakdown,
+      singleModelBreakdown,
+      multiModelBreakdown,
+      llmBreakdown,
+      smallLMBreakdown,
+      visionLMBreakdown,
+      modelCombinations
     });
   };
 
@@ -897,35 +1010,188 @@ export const EnhancedGenieDashboard = () => {
 
             <Card>
               <CardHeader>
-                <CardTitle>Model Breakdown</CardTitle>
-                <CardDescription>Distribution of specific models used</CardDescription>
+                <CardTitle>Detailed Model Usage Breakdown</CardTitle>
+                <CardDescription>Specific models used within single and multi configurations</CardDescription>
               </CardHeader>
               <CardContent>
-                <ScrollArea className="h-64">
-                  <div className="space-y-2">
-                    {Object.entries(stats.modelBreakdown)
-                      .sort(([,a], [,b]) => b - a)
-                      .map(([model, count]) => (
-                      <div key={model} className="flex items-center justify-between p-2 rounded bg-muted">
-                        <span className="text-sm font-medium capitalize">{model}</span>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="secondary">{count}</Badge>
-                          <div className="w-16">
-                            <Progress 
-                              value={(count / Math.max(stats.totalConversations, 1)) * 100} 
-                              className="h-2"
-                            />
+                <Tabs defaultValue="single" className="w-full">
+                  <TabsList className="grid w-full grid-cols-4">
+                    <TabsTrigger value="single">Single Models</TabsTrigger>
+                    <TabsTrigger value="multi">Multi Models</TabsTrigger>
+                    <TabsTrigger value="llm">Large LLMs</TabsTrigger>
+                    <TabsTrigger value="categories">Categories</TabsTrigger>
+                  </TabsList>
+                  
+                  <TabsContent value="single" className="space-y-4">
+                    <ScrollArea className="h-48">
+                      <div className="space-y-2">
+                        {Object.entries(stats.singleModelBreakdown)
+                          .sort(([,a], [,b]) => b - a)
+                          .map(([model, count]) => (
+                          <div key={model} className="flex items-center justify-between p-2 rounded bg-muted">
+                            <span className="text-sm font-medium">{model}</span>
+                            <div className="flex items-center gap-2">
+                              <Badge variant="secondary">{count}</Badge>
+                              <div className="w-16">
+                                <Progress 
+                                  value={(count / Math.max(stats.singleModelUsage, 1)) * 100} 
+                                  className="h-2"
+                                />
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                        ))}
+                        {Object.keys(stats.singleModelBreakdown).length === 0 && (
+                          <div className="text-center text-muted-foreground py-4">
+                            No single model data available
+                          </div>
+                        )}
                       </div>
-                    ))}
-                    {Object.keys(stats.modelBreakdown).length === 0 && (
-                      <div className="text-center text-muted-foreground py-4">
-                        No model data available
+                    </ScrollArea>
+                  </TabsContent>
+                  
+                  <TabsContent value="multi" className="space-y-4">
+                    <ScrollArea className="h-48">
+                      <div className="space-y-2">
+                        {Object.entries(stats.multiModelBreakdown)
+                          .sort(([,a], [,b]) => b - a)
+                          .map(([combination, count]) => (
+                          <div key={combination} className="flex items-center justify-between p-2 rounded bg-muted">
+                            <span className="text-xs font-medium">{combination}</span>
+                            <div className="flex items-center gap-2">
+                              <Badge variant="secondary">{count}</Badge>
+                              <div className="w-16">
+                                <Progress 
+                                  value={(count / Math.max(stats.multiModelUsage, 1)) * 100} 
+                                  className="h-2"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        {Object.keys(stats.multiModelBreakdown).length === 0 && (
+                          <div className="text-center text-muted-foreground py-4">
+                            No multi-model combinations available
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                </ScrollArea>
+                    </ScrollArea>
+                  </TabsContent>
+                  
+                  <TabsContent value="llm" className="space-y-4">
+                    <ScrollArea className="h-48">
+                      <div className="space-y-2">
+                        {Object.entries(stats.llmBreakdown)
+                          .sort(([,a], [,b]) => b - a)
+                          .map(([model, count]) => (
+                          <div key={model} className="flex items-center justify-between p-2 rounded bg-muted">
+                            <span className="text-sm font-medium">{model}</span>
+                            <div className="flex items-center gap-2">
+                              <Badge variant="secondary">{count}</Badge>
+                              <div className="w-16">
+                                <Progress 
+                                  value={(count / Math.max(Object.values(stats.llmBreakdown).reduce((a,b) => a+b, 0), 1)) * 100} 
+                                  className="h-2"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        {Object.keys(stats.llmBreakdown).length === 0 && (
+                          <div className="text-center text-muted-foreground py-4">
+                            No Large LLM usage detected
+                          </div>
+                        )}
+                      </div>
+                    </ScrollArea>
+                  </TabsContent>
+                  
+                  <TabsContent value="categories" className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-sm">Large Language Models</CardTitle>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <div className="text-2xl font-bold text-blue-600">
+                            {Object.values(stats.llmBreakdown).reduce((a,b) => a+b, 0)}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            GPT-4, Claude, Gemini Pro
+                          </div>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-sm">Small Language Models</CardTitle>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <div className="text-2xl font-bold text-green-600">
+                            {Object.values(stats.smallLMBreakdown).reduce((a,b) => a+b, 0)}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            Haiku, Flash, Mini models
+                          </div>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-sm">Vision Language Models</CardTitle>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <div className="text-2xl font-bold text-purple-600">
+                            {Object.values(stats.visionLMBreakdown).reduce((a,b) => a+b, 0)}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            Vision-enabled models
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-sm font-medium mb-2">Small Language Models Detail</h4>
+                        <ScrollArea className="h-32">
+                          <div className="space-y-1">
+                            {Object.entries(stats.smallLMBreakdown)
+                              .sort(([,a], [,b]) => b - a)
+                              .map(([model, count]) => (
+                              <div key={model} className="flex justify-between text-sm">
+                                <span>{model}</span>
+                                <Badge variant="outline">{count}</Badge>
+                              </div>
+                            ))}
+                            {Object.keys(stats.smallLMBreakdown).length === 0 && (
+                              <div className="text-xs text-muted-foreground">No small LM usage detected</div>
+                            )}
+                          </div>
+                        </ScrollArea>
+                      </div>
+                      
+                      <div>
+                        <h4 className="text-sm font-medium mb-2">Vision Language Models Detail</h4>
+                        <ScrollArea className="h-32">
+                          <div className="space-y-1">
+                            {Object.entries(stats.visionLMBreakdown)
+                              .sort(([,a], [,b]) => b - a)
+                              .map(([model, count]) => (
+                              <div key={model} className="flex justify-between text-sm">
+                                <span>{model}</span>
+                                <Badge variant="outline">{count}</Badge>
+                              </div>
+                            ))}
+                            {Object.keys(stats.visionLMBreakdown).length === 0 && (
+                              <div className="text-xs text-muted-foreground">No vision LM usage detected</div>
+                            )}
+                          </div>
+                        </ScrollArea>
+                      </div>
+                    </div>
+                  </TabsContent>
+                </Tabs>
               </CardContent>
             </Card>
           </div>
