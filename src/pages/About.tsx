@@ -143,42 +143,42 @@ const About = () => {
               />
             </h1>
             
-            <h2 className="text-2xl lg:text-3xl font-bold text-genie-cyan mb-6 max-w-5xl mx-auto lg:mx-0">
-               <AnimatedTextEmergence 
-                 text="Creator of the Experiment → Validate → Lead to Deploy AI Framework"
-                 startDelay={3500}
-                 charDelay={50}
-                 className="block font-bold"
-                 flyFromBottle={true}
-                 bottlePosition={{ x: 75, y: 50 }}
-                 onComplete={() => setSubtitleDone(true)}
-               />
-            </h2>
+             <h2 className="text-2xl lg:text-3xl font-bold text-genie-cyan mb-6 max-w-5xl mx-auto lg:mx-0">
+                <AnimatedTextEmergence 
+                  text="Creator of GenieAI Experimentation Hub & AI Learning Framework"
+                  startDelay={3500}
+                  charDelay={50}
+                  className="block font-bold"
+                  flyFromBottle={true}
+                  bottlePosition={{ x: 75, y: 50 }}
+                  onComplete={() => setSubtitleDone(true)}
+                />
+             </h2>
             
             {/* Animated Description - AI Innovation Focus */}
             <div className="text-lg lg:text-xl text-white/90 mb-8 leading-relaxed max-w-6xl mx-auto lg:mx-0">
-              <div className="mb-4">
-                <AnimatedTextEmergence 
-                  text="21+ years transforming healthcare through systematic AI experimentation. Developed a proven framework that reduced innovation risk while accelerating time-to-value."
-                  startDelay={5000}
-                  charDelay={40}
-                  className="block"
-                  flyFromBottle={true}
-                  bottlePosition={{ x: 75, y: 50 }}
-                  onComplete={() => setDesc1Done(true)}
-                />
-              </div>
-              <div className="text-white/80 font-medium">
-                <AnimatedTextEmergence 
-                  text="Now sharing this knowledge through the GenieAI Hub - empowering individuals to build AI expertise that transforms their careers and drives organizational innovation."
-                  startDelay={6500}
-                  charDelay={30}
-                  className="block"
-                  flyFromBottle={true}
-                  bottlePosition={{ x: 75, y: 50 }}
-                  onComplete={() => setDesc2Done(true)}
-                />
-              </div>
+               <div className="mb-4">
+                 <AnimatedTextEmergence 
+                   text="Personal AI learning journey spanning 21+ years, transforming curiosity into systematic experimentation. Created the GenieAI Hub as your personal laboratory for AI discovery and skill building."
+                   startDelay={5000}
+                   charDelay={40}
+                   className="block"
+                   flyFromBottle={true}
+                   bottlePosition={{ x: 75, y: 50 }}
+                   onComplete={() => setDesc1Done(true)}
+                 />
+               </div>
+               <div className="text-white/80 font-medium">
+                 <AnimatedTextEmergence 
+                   text="Sharing real experiments, practical insights, and proven methodologies that transform individual curiosity into AI expertise. Your journey from 'what if' to working solutions starts here."
+                   startDelay={6500}
+                   charDelay={30}
+                   className="block"
+                   flyFromBottle={true}
+                   bottlePosition={{ x: 75, y: 50 }}
+                   onComplete={() => setDesc2Done(true)}
+                 />
+               </div>
             </div>
             
             <div className="opacity-0 animate-fade-in mb-8" style={{ animationDelay: "10s", animationFillMode: "forwards" }}>
