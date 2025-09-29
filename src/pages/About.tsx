@@ -370,7 +370,7 @@ const About = () => {
                 ].map((phase, index) => {
                   const IconComponent = phase.icon;
                   return (
-                    <div key={index} className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
+                    <div key={index} className={`flex items-center justify-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
                       <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
                         <Card className={`p-8 border-${phase.color}/20 bg-gradient-to-br from-${phase.color}/5 to-background hover:shadow-xl transition-all duration-300 group`}>
                           <div className="flex items-center gap-4 mb-6">
