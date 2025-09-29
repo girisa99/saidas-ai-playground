@@ -22,20 +22,20 @@ export const QuickStart = () => {
   const successMetrics = [
     {
       icon: <Target className="h-6 w-6" />,
-      value: "8+",
+      value: "4+",
       label: "Business Cases Documented",
       color: "text-green-600"
     },
     {
       icon: <TrendingUp className="h-6 w-6" />,
-      value: "3",
+      value: "2",
       label: "Case Studies Completed", 
       color: "text-blue-600"
     },
     {
       icon: <Users className="h-6 w-6" />,
-      value: "Mixed",
-      label: "Implementation Status",
+      value: "1",
+      label: "Live Implementation",
       color: "text-purple-600"
     }
   ];
