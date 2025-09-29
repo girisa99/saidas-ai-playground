@@ -14,10 +14,10 @@ export const UnifiedHeroBanner = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % genieImages.length);
-    }, 3000);
+    }, 7000); // 7 seconds interval
 
     return () => clearInterval(interval);
-  }, []);
+  }, [genieImages.length]);
 
   return (
     <section className="relative w-full min-h-screen">
