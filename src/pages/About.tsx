@@ -435,29 +435,47 @@ const About = () => {
                                 
                                 {/* Highlight First Success for AI Innovation */}
                                 {right.phase === "AI Innovation & Knowledge Sharing" && (
-                                  <div className="p-6 bg-white border-2 border-genie-accent rounded-lg shadow-lg">
-                                    <div className="flex items-center gap-2 mb-3">
-                                      <Badge className="bg-genie-accent text-white font-bold px-3 py-1">🚀 FIRST SUCCESS</Badge>
-                                      <span className="text-sm font-bold text-genie-accent bg-genie-accent/10 px-2 py-1 rounded">3 Days to Launch</span>
+                                  <div className="p-6 bg-background border-2 border-genie-cyan rounded-lg shadow-lg">
+                                    <div className="flex items-center gap-3 mb-4">
+                                      <Badge className="bg-genie-cyan text-background font-bold px-3 py-1">
+                                        🚀 FIRST SUCCESS
+                                      </Badge>
+                                      <span className="text-sm font-bold text-genie-cyan bg-genie-cyan/10 px-3 py-1 rounded-full">
+                                        3 Days to Launch
+                                      </span>
                                     </div>
-                                    <h4 className="font-bold text-genie-accent text-xl mb-3">Genie AI - Live Production System</h4>
-                                    <div className="text-sm text-foreground space-y-2">
-                                      <p className="flex items-center gap-2">
-                                        <span className="w-2 h-2 bg-genie-accent rounded-full"></span>
-                                        <strong className="text-genie-accent">80+ Knowledge Contexts</strong> - Comprehensive domain expertise
-                                      </p>
-                                      <p className="flex items-center gap-2">
-                                        <span className="w-2 h-2 bg-genie-accent rounded-full"></span>
-                                        <strong className="text-genie-accent">Advanced RAG Architecture</strong> - Enhanced response accuracy
-                                      </p>
-                                      <p className="flex items-center gap-2">
-                                        <span className="w-2 h-2 bg-genie-accent rounded-full"></span>
-                                        <strong className="text-genie-accent">Multi-Model Intelligence</strong> - Single & split-screen conversations
-                                      </p>
-                                      <p className="flex items-center gap-2">
-                                        <span className="w-2 h-2 bg-genie-accent rounded-full"></span>
-                                        <strong className="text-genie-accent">Live Production Deployment</strong> - Real users, real results
-                                      </p>
+                                    <h4 className="font-bold text-genie-cyan text-xl mb-4">
+                                      Genie AI - Functional Web Application
+                                    </h4>
+                                    <div className="space-y-3">
+                                      <div className="flex items-start gap-3">
+                                        <div className="w-2 h-2 bg-genie-cyan rounded-full mt-2 flex-shrink-0"></div>
+                                        <div>
+                                          <p className="font-semibold text-foreground">80+ Knowledge Contexts</p>
+                                          <p className="text-muted-foreground text-sm">Comprehensive domain expertise</p>
+                                        </div>
+                                      </div>
+                                      <div className="flex items-start gap-3">
+                                        <div className="w-2 h-2 bg-genie-cyan rounded-full mt-2 flex-shrink-0"></div>
+                                        <div>
+                                          <p className="font-semibold text-foreground">Advanced RAG Architecture</p>
+                                          <p className="text-muted-foreground text-sm">Enhanced response accuracy</p>
+                                        </div>
+                                      </div>
+                                      <div className="flex items-start gap-3">
+                                        <div className="w-2 h-2 bg-genie-cyan rounded-full mt-2 flex-shrink-0"></div>
+                                        <div>
+                                          <p className="font-semibold text-foreground">Multi-Model Intelligence</p>
+                                          <p className="text-muted-foreground text-sm">Single & split-screen conversations</p>
+                                        </div>
+                                      </div>
+                                      <div className="flex items-start gap-3">
+                                        <div className="w-2 h-2 bg-genie-cyan rounded-full mt-2 flex-shrink-0"></div>
+                                        <div>
+                                          <p className="font-semibold text-foreground">Working Web Application</p>
+                                          <p className="text-muted-foreground text-sm">Accessible via website popup, real user interactions</p>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 )}
