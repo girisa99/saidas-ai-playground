@@ -161,10 +161,10 @@ const Journey = () => {
               Framework in Action
             </Badge>
             <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-              <span className="text-genie-cyan">Current Status:</span> Hub Launched & Experiments Rolling Out
+              From Framework to <span className="text-genie-cyan">Live Implementation</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              The GenieAI Experimentation Hub is now live, demonstrating the framework through progressive feature releases and continuous experimentation.
+              Demonstrating the Experiment → Validate → Deploy framework through real applications and progressive feature releases.
             </p>
           </div>
 
@@ -176,16 +176,25 @@ const Journey = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-genie-cyan">NOW LIVE</h3>
-                  <p className="text-sm text-muted-foreground">Platform Launch</p>
+                  <p className="text-sm text-muted-foreground">Experimentation Platform</p>
                 </div>
               </div>
-              <h4 className="font-bold text-lg mb-3">GenieAI Experimentation Hub</h4>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>• Genie Conversation Feature Active</li>
-                <li>• 80+ Knowledge Contexts Integrated</li>
-                <li>• Advanced RAG Architecture</li>
-                <li>• Multi-Model Intelligence</li>
+              <h4 className="font-bold text-lg mb-3">GenieAI Hub Website</h4>
+              <ul className="space-y-2 text-muted-foreground text-sm">
+                <li>• Knowledge sharing platform launched</li>
+                <li>• Framework documentation live</li>
+                <li>• 80+ curated knowledge contexts</li>
+                <li>• Educational resources available</li>
               </ul>
+              
+              {/* Highlighted Genie Feature */}
+              <div className="mt-6 p-4 bg-genie-accent/10 border border-genie-accent/20 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge className="bg-genie-accent text-background text-xs font-bold">✨ FEATURED</Badge>
+                </div>
+                <h5 className="font-bold text-genie-accent mb-2">Genie Conversation Feature</h5>
+                <p className="text-xs text-muted-foreground">Advanced conversational AI demonstrating multi-model intelligence and RAG architecture in action.</p>
+              </div>
             </Card>
 
             <Card className="p-8 border-genie-primary/20 bg-gradient-to-br from-genie-primary/5 to-background">
