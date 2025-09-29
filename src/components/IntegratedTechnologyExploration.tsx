@@ -945,18 +945,18 @@ export const IntegratedTechnologyExploration = () => {
             <div className="w-10 h-10 bg-genie-secondary/10 rounded-lg flex items-center justify-center mx-auto mb-3">
               <Brain className="w-5 h-5 text-genie-secondary" />
             </div>
-            <div className="text-xl font-bold text-genie-secondary mb-1">15+</div>
-            <div className="text-xs font-medium text-foreground mb-1">AI Models</div>
-            <div className="text-xs text-muted-foreground">Tested & compared</div>
+            <div className="text-xl font-bold text-genie-secondary mb-1">10+</div>
+            <div className="text-xs font-medium text-foreground mb-1">In Experimentation</div>
+            <div className="text-xs text-muted-foreground">Active experiments</div>
           </Card>
           
           <Card className="p-4 text-center border-genie-cyan/20">
             <div className="w-10 h-10 bg-genie-cyan/10 rounded-lg flex items-center justify-center mx-auto mb-3">
               <Target className="w-5 h-5 text-genie-cyan" />
             </div>
-            <div className="text-xl font-bold text-genie-cyan mb-1">10+</div>
+            <div className="text-xl font-bold text-genie-cyan mb-1">2</div>
             <div className="text-xs font-medium text-foreground mb-1">Live Features</div>
-            <div className="text-xs text-muted-foreground">From experiments</div>
+            <div className="text-xs text-muted-foreground">Production deployments</div>
           </Card>
           
           <Card className="p-4 text-center border-genie-accent/20">
