@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { businessCases, journeySteps, scenarioDetails, scenarioImpactAnalysis } from "@/data/businessUseCasesData";
+import { GenieIntegrationShowcase } from "@/components/business-cases/GenieIntegrationShowcase";
 import { BusinessCaseSelector } from "@/components/business-cases/BusinessCaseSelector";
 import { ExperimentStatusCards } from "@/components/business-cases/ExperimentStatusCards";
 import { BusinessCaseDetails } from "@/components/business-cases/BusinessCaseDetails";
@@ -244,7 +245,10 @@ const BusinessUseCases = () => {
         {/* Impact Analysis */}
         <ImpactAnalysisSection currentCase={currentCase} />
       </div>
-    </div>
+
+      {/* Genie AI Integration Showcase - Hybrid Approach */}
+      <GenieIntegrationShowcase selectedUseCase={selectedBusinessCase} />
+      </div>
     </div>
   );
 };
