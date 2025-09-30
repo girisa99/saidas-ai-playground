@@ -25,7 +25,7 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
           },
           secondary: {
             title: "Learn Through Real Cases",
-            description: "See how 4+ documented business cases and 2 live features (GenieAI Hub Platform & Genie Conversation with 80+ contexts) validate AI solutions through systematic experimentation",
+            description: "See how 8+ documented business cases and 2 live features (GenieAI Hub Platform & Genie Conversation with 80+ contexts, advanced RAG, multi-model intelligence) validate AI solutions through systematic experimentation",
             link: "/business-use-cases",
             icon: Target,
             buttonText: "View Business Cases"
@@ -43,7 +43,7 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
         return {
           primary: {
             title: "Follow My Learning Journey",
-            description: "Discover how personal curiosity transforms into professional AI expertise. See the 2 live features and 10+ experiments demonstrating the Experiment → Validate → Lead to Deploy methodology.",
+            description: "Discover how personal curiosity transforms into professional AI expertise. See the 2 live features (GenieAI Hub & Genie Conversation with 80+ contexts, advanced RAG, multi-model intelligence) and 10+ experiments demonstrating the Experiment → Validate → Lead to Deploy methodology.",
             link: "/journey",
             icon: Map,
             buttonText: "Explore My Journey"
@@ -75,7 +75,7 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
           },
           secondary: {
             title: "See Framework Results",
-            description: "Explore systematic approach to building AI expertise. See how the 3-phase framework transforms personal curiosity into professional change agent expertise that drives organizational transformation.",
+            description: "Explore systematic approach to building AI expertise through 2 live features (GenieAI Hub & Genie Conversation with 80+ contexts, advanced RAG). See how the 3-phase framework transforms personal curiosity into professional change agent expertise.",
             link: "/case-studies",
             icon: Trophy,
             buttonText: "Success Stories"

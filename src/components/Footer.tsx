@@ -65,8 +65,8 @@ export const Footer = () => {
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              GenieAI Experimentation Hub - empowering individuals to build AI expertise through hands-on learning. 
-              Develop the skills that position you as a change agent in your field. <strong>2 Live Features:</strong> GenieAI Hub Platform & Genie Conversation with 80+ knowledge contexts.
+              GenieAI Experimentation Hub - empowering individuals to build AI expertise through hands-on learning using the Experiment → Validate → Lead to Deploy framework. 
+              <strong>2 Live Features:</strong> GenieAI Hub Platform & Genie Conversation with 80+ knowledge contexts, advanced RAG architecture, and multi-model intelligence demonstrating professional AI capabilities.
             </p>
           </div>
 

@@ -38,7 +38,7 @@ const FAQPage = () => {
       questions: [
         {
           question: "What is an AI Experimentation Hub and how does it work?",
-          answer: "An AI Experimentation Hub is my personal approach to systematically exploring AI technologies. It's about hands-on learning, testing different tools, documenting what works and what doesn't, and sharing those insights. Think of it as a lab notebook for AI experiments where I try new models, platforms, and techniques to see their real-world applicability.",
+          answer: "An AI Experimentation Hub is my personal approach to systematically exploring AI technologies through the Experiment → Validate → Lead to Deploy framework. It's a live platform where I've launched 2 production features: GenieAI Hub Platform and Genie Conversation with 80+ knowledge contexts. Think of it as a lab where systematic experimentation transforms personal curiosity into professional AI expertise.",
           learnMoreLink: "/about"
         },
         {
@@ -62,7 +62,7 @@ const FAQPage = () => {
       questions: [
         {
           question: "How do you document and share your AI experiments?",
-          answer: "I maintain detailed experiment logs including objectives, tools used, prompts tried, results achieved, and lessons learned. I share both successes and failures because learning what doesn't work is just as valuable. My goal is to help others avoid the same pitfalls I encountered.",
+          answer: "I maintain detailed experiment logs for 2 live features (GenieAI Hub Platform & Genie Conversation with 80+ contexts) plus 10+ active experiments. I document objectives, tools used, advanced RAG architecture, multi-model intelligence testing, and real implementation outcomes. The Genie Conversation feature demonstrates sophisticated conversational AI with split-screen capabilities and healthcare compliance.",
           learnMoreLink: "/journey"
         },
         {
@@ -123,13 +123,13 @@ const FAQPage = () => {
               <Badge className="bg-primary/20 text-primary border-primary/30 mb-4">
                 Knowledge Base
               </Badge>
-              <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                AI Experimentation Questions & Insights
-              </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Real questions and practical insights from my AI experimentation journey. 
-                Learn from my successes, failures, and everything in between.
-              </p>
+            <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+              AI Experimentation Questions & Insights
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Real questions and practical insights from my AI experimentation journey showcasing 2 live features: GenieAI Hub Platform & Genie Conversation with 80+ knowledge contexts. 
+              Learn from my successes, failures, and everything in between.
+            </p>
             </div>
 
             {/* FAQ Categories */}
@@ -198,11 +198,10 @@ const FAQPage = () => {
                     <MessageSquare className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-2xl font-bold text-foreground mb-4">
-                    Have a Question Not Listed Here?
+                    Have a Question About My Live AI Features?
                   </h3>
                   <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                    I'm always learning and experimenting. If you have a specific question about AI tools, 
-                    implementation challenges, or want to share your own experiments, let's connect!
+                    I'm always learning and experimenting with 2 live features (GenieAI Hub & Genie Conversation with 80+ contexts) plus 10+ active experiments. If you have questions about advanced RAG architecture, multi-model intelligence, or implementation challenges, let's connect!
                   </p>
                   <Button 
                     className="bg-blue-500 hover:bg-blue-600 text-white"
