@@ -6,6 +6,7 @@ import { PatientOnboardingCaseStudy } from "@/components/CaseStudyTemplate";
 import { CTASection } from "@/components/CTASection";
 import { genieHubCaseStudy, genieConversationCaseStudy } from "@/data/genieFeaturesCaseStudies";
 import { Card } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -348,6 +349,39 @@ const CaseStudies = () => {
               </TabsContent>
 
               <TabsContent value="detailed" className="mt-8">
+                {/* Case Study Selector */}
+                <div className="max-w-md mx-auto mb-8">
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Select Case Study for Detailed Analysis
+                  </label>
+                  <Select value={selectedDetailedCase} onValueChange={setSelectedDetailedCase}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Choose a case study..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="genie-hub">
+                        <div className="flex items-center gap-2">
+                          <Code className="w-4 h-4 text-genie-cyan" />
+                          GenieAI Hub Platform
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="genie-conversation">
+                        <div className="flex items-center gap-2">
+                          <MessageCircle className="w-4 h-4 text-genie-accent" />
+                          Genie Conversational AI
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="patient-onboarding">
+                        <div className="flex items-center gap-2">
+                          <UserCheck className="w-4 h-4 text-genie-primary" />
+                          Patient Onboarding System
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Dynamic Case Study Content */}
                 {selectedDetailedCase === "patient-onboarding" && <PatientOnboardingCaseStudy />}
                 {selectedDetailedCase === "genie-hub" && <CaseStudyTemplate caseStudyData={genieHubCaseStudy} />}
                 {selectedDetailedCase === "genie-conversation" && <CaseStudyTemplate caseStudyData={genieConversationCaseStudy} />}
