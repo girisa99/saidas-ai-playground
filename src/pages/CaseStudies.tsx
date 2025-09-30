@@ -1,7 +1,8 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 
-import { PatientOnboardingCaseStudy, CaseStudyTemplate } from "@/components/CaseStudyTemplate";
+import { CaseStudyTemplate } from "@/components/CaseStudyTemplate";
+import { PatientOnboardingCaseStudy } from "@/components/CaseStudyTemplate";
 import { CTASection } from "@/components/CTASection";
 import { genieHubCaseStudy, genieConversationCaseStudy } from "@/data/genieFeaturesCaseStudies";
 import { Card } from "@/components/ui/card";
