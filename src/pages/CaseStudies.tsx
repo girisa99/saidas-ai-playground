@@ -1,8 +1,9 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { Footer } from "@/components/Footer";
 
-import { PatientOnboardingCaseStudy } from "@/components/CaseStudyTemplate";
+import { PatientOnboardingCaseStudy, CaseStudyTemplate } from "@/components/CaseStudyTemplate";
 import { CTASection } from "@/components/CTASection";
+import { genieHubCaseStudy, genieConversationCaseStudy } from "@/data/genieFeaturesCaseStudies";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ import successStoriesBg from "@/assets/hero-success-stories.jpg";
 
 const CaseStudies = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  const [selectedDetailedCase, setSelectedDetailedCase] = useState("patient-onboarding");
 
   useEffect(() => {
     document.title = "3-Phase Framework Results - 2 Live Features & Personal AI Expertise";
@@ -207,6 +209,7 @@ const CaseStudies = () => {
                           className="w-full text-genie-cyan border-genie-cyan hover:bg-genie-cyan/10"
                           onClick={(e) => {
                             e.preventDefault();
+                            setSelectedDetailedCase("genie-hub");
                             setActiveTab("detailed");
                           }}
                         >
@@ -259,6 +262,7 @@ const CaseStudies = () => {
                           className="w-full text-genie-accent border-genie-accent hover:bg-genie-accent/10"
                           onClick={(e) => {
                             e.preventDefault();
+                            setSelectedDetailedCase("genie-conversation");
                             setActiveTab("detailed");
                           }}
                         >
@@ -330,6 +334,7 @@ const CaseStudies = () => {
                       className="w-full bg-genie-primary hover:bg-genie-primary/90"
                       onClick={(e) => {
                         e.preventDefault();
+                        setSelectedDetailedCase("patient-onboarding");
                         setActiveTab("detailed");
                       }}
                     >
@@ -342,8 +347,9 @@ const CaseStudies = () => {
               </TabsContent>
 
               <TabsContent value="detailed" className="mt-8">
-                {/* Detailed Patient Onboarding Case Study */}
-                <PatientOnboardingCaseStudy />
+                {selectedDetailedCase === "patient-onboarding" && <PatientOnboardingCaseStudy />}
+                {selectedDetailedCase === "genie-hub" && <CaseStudyTemplate caseStudyData={genieHubCaseStudy} />}
+                {selectedDetailedCase === "genie-conversation" && <CaseStudyTemplate caseStudyData={genieConversationCaseStudy} />}
               </TabsContent>
             </Tabs>
           </div>
