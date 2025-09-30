@@ -79,7 +79,7 @@ export const NavigationHeader = () => {
           </Link>
 
           {/* Desktop Navigation - Center, takes available space */}
-          <nav className="hidden lg:flex items-center justify-center flex-1 min-w-0 px-4 lg:px-6">
+          <nav className="hidden md:flex items-center justify-center flex-1 min-w-0 px-4 lg:px-6">
             <div className="flex items-center justify-center space-x-1 w-full">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -118,7 +118,7 @@ export const NavigationHeader = () => {
           </nav>
 
           {/* Desktop Actions - Right aligned, responsive sizing */}
-          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2 flex-shrink-0 min-w-0">
+          <div className="hidden md:flex items-center space-x-1 xl:space-x-2 flex-shrink-0 min-w-0">
             {/* Search - Hidden on smaller desktop screens */}
             <div className="hidden xl:block relative">
               <SearchBar />
@@ -142,7 +142,7 @@ export const NavigationHeader = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="lg:hidden p-2 flex-shrink-0"
+            className="md:hidden p-2 flex-shrink-0"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
@@ -155,7 +155,7 @@ export const NavigationHeader = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-lg">
+          <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-lg">
             <div className="px-4 py-6 space-y-6">
               {/* Mobile Search */}
               <div className="relative">
