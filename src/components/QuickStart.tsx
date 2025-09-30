@@ -42,6 +42,19 @@ export const QuickStart = () => {
 
   const proofPoints = [
     {
+      title: "Genie Conversational AI Platform",
+      subtitle: "🚀 LIVE: Advanced RAG with 80+ Knowledge Contexts",
+      description: "Production-ready conversational AI with multi-model intelligence (Gemini 2.5, GPT-5), split-screen conversations, healthcare compliance, and real-time streaming. Demonstrating sophisticated RAG architecture and vector database optimization.",
+      icon: <Code className="h-8 w-8" />,
+      link: "/case-studies",
+      status: "Live Feature",
+      highlight: "Advanced AI Implementation",
+      statusColor: "bg-genie-accent/20 text-genie-accent border-genie-accent/30",
+      color: "from-genie-accent/20 to-genie-primary/20",
+      iconBg: "bg-genie-accent",
+      borderColor: "border-genie-accent/30"
+    },
+    {
       title: "Patient Onboarding Automation",
       subtitle: "Healthcare AI Implementation",
       description: "Complete transformation of patient enrollment process using automation and agentic AI. Documented every step from business case to implementation.",

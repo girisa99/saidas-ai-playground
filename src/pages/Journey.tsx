@@ -200,6 +200,27 @@ const Journey = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
+                    <span className="text-foreground"><strong>Multi-Model AI (Gemini & GPT-5)</strong></span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
+                    <span className="text-foreground"><strong>Advanced RAG Architecture</strong></span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
+                    <span className="text-foreground"><strong>Healthcare Compliance</strong></span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
+                    <span className="text-foreground"><strong>Split-Screen Interface</strong></span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
+                    <span className="text-foreground"><strong>Real-Time Streaming</strong></span>
+                  </div>
+                </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-genie-accent rounded-full"></div>
                     <span className="text-foreground"><strong>Multi-Model Intelligence</strong></span>
                   </div>
                   <div className="flex items-center gap-2">
