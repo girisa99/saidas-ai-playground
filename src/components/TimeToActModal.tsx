@@ -39,14 +39,12 @@ export const TimeToActModal = ({ open, onOpenChange, context }: TimeToActModalPr
             {
               stakeholder: "Business Leaders",
               question: "How do we build AI capabilities without massive investment?",
-              answer: "Start with personal experimentation. The 90-Day AI Democratization Journey proves systematic learning delivers results—2 live features launched from individual expertise.",
               icon: Users,
               color: "primary"
             },
             {
               stakeholder: "Technology Teams",
               question: "Where do we even begin with AI integration?",
-              answer: "Follow the Experiment → Validate → Lead to Deploy framework. See how 10+ ongoing experimentations across multiple use cases build toward validated solutions.",
               icon: Target,
               color: "secondary"
             }
@@ -65,15 +63,13 @@ export const TimeToActModal = ({ open, onOpenChange, context }: TimeToActModalPr
           questions: [
             {
               stakeholder: "Individual Contributors",
-              question: "How can I become an AI change agent?",
-              answer: "Through systematic personal experimentation. My journey shows 25+ years experience transformed into AI expertise through curiosity and structured learning.",
+              question: "How can I become an AI change agent in my organization?",
               icon: Lightbulb,
               color: "accent"
             },
             {
               stakeholder: "Department Heads",
               question: "Can individual learning really impact our organization?",
-              answer: "Yes. Personal expertise becomes organizational capability. See how 2 live features (GenieAI Hub & Genie Conversation with 80+ contexts) emerged from individual experimentation.",
               icon: TrendingUp,
               color: "primary"
             }
@@ -92,15 +88,13 @@ export const TimeToActModal = ({ open, onOpenChange, context }: TimeToActModalPr
           questions: [
             {
               stakeholder: "Risk & Compliance",
-              question: "How do we ensure safe AI experimentation?",
-              answer: "Day 0-45 focuses entirely on guardrails: security protocols, privacy standards, and ethical AI guidelines. Build secure foundation first.",
+              question: "How do we ensure safe AI experimentation while moving fast?",
               icon: AlertCircle,
               color: "destructive"
             },
             {
               stakeholder: "Innovation Teams",
-              question: "What's the path from learning to deployment?",
-              answer: "Day 45-90 demonstrates implementation. 2 live features deployed, 10+ ongoing experimentations, multiple use cases validated with documented results.",
+              question: "What's the path from learning to production deployment?",
               icon: Rocket,
               color: "success"
             }
@@ -119,15 +113,13 @@ export const TimeToActModal = ({ open, onOpenChange, context }: TimeToActModalPr
           questions: [
             {
               stakeholder: "Product Managers",
-              question: "How do use cases translate to our products?",
-              answer: "8+ documented business cases show systematic validation. See healthcare solutions, conversation AI, and multi-domain intelligence applied to real scenarios.",
+              question: "How do we translate AI experimentation into our product roadmap?",
               icon: Target,
               color: "primary"
             },
             {
               stakeholder: "Operations Leaders",
-              question: "What's the implementation complexity?",
-              answer: "Start with proven patterns. 80+ knowledge contexts, advanced RAG architecture, and multi-model intelligence demonstrate scalable approaches.",
+              question: "What's the real cost of not experimenting with AI now?",
               icon: TrendingUp,
               color: "secondary"
             }
@@ -146,15 +138,13 @@ export const TimeToActModal = ({ open, onOpenChange, context }: TimeToActModalPr
           questions: [
             {
               stakeholder: "Executive Leadership",
-              question: "Where's the evidence this approach works?",
-              answer: "2 complete case studies with documented outcomes. GenieAI Hub Platform and Genie Conversation showcase systematic progression from experimentation to deployment.",
+              question: "What happens if we wait for AI to mature before we start?",
               icon: CheckCircle,
               color: "success"
             },
             {
-              stakeholder: "Budget Holders",
-              question: "What's the ROI of personal experimentation?",
-              answer: "Individual learning creates organizational assets. 2 live features, 10+ ongoing experiments, 80+ knowledge contexts—all from systematic personal development.",
+              stakeholder: "Partners & Consultants",
+              question: "How do we help clients build AI capabilities they can own?",
               icon: TrendingUp,
               color: "primary"
             }
@@ -173,15 +163,13 @@ export const TimeToActModal = ({ open, onOpenChange, context }: TimeToActModalPr
           questions: [
             {
               stakeholder: "Architecture Teams",
-              question: "Which AI technologies should we invest in?",
-              answer: "Follow validated technology paths. See advanced RAG architecture, multi-model intelligence, and enterprise-grade infrastructure proven through real implementation.",
+              question: "Are we building AI capabilities or just using AI tools?",
               icon: Lightbulb,
               color: "accent"
             },
             {
               stakeholder: "Security Teams",
-              question: "How do we ensure secure AI deployment?",
-              answer: "Day 0-45 establishes security protocols and privacy standards. Technology choices guided by proven security frameworks and ethical AI guidelines.",
+              question: "Can we experiment with AI without compromising security?",
               icon: AlertCircle,
               color: "destructive"
             }
@@ -232,8 +220,8 @@ export const TimeToActModal = ({ open, onOpenChange, context }: TimeToActModalPr
           <DialogTitle className="text-2xl lg:text-3xl font-bold">
             {content.title}
           </DialogTitle>
-          <DialogDescription className="text-base">
-            {content.subtitle}
+          <DialogDescription className="text-base text-muted-foreground">
+            {content.subtitle} — Questions to reflect on with your team, partners, or consultants.
           </DialogDescription>
         </DialogHeader>
 
@@ -250,15 +238,12 @@ export const TimeToActModal = ({ open, onOpenChange, context }: TimeToActModalPr
                     <IconComponent className="w-5 h-5" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <Badge variant="outline" className="mb-2 text-xs">
+                    <Badge variant="outline" className="mb-3 text-xs">
                       {item.stakeholder}
                     </Badge>
-                    <h3 className="font-bold text-foreground mb-2 text-base">
+                    <h3 className="font-semibold text-foreground text-lg leading-relaxed">
                       {item.question}
                     </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {item.answer}
-                    </p>
                   </div>
                 </div>
               </Card>
@@ -269,7 +254,7 @@ export const TimeToActModal = ({ open, onOpenChange, context }: TimeToActModalPr
           <div className="bg-gradient-to-r from-genie-primary/10 to-genie-accent/10 rounded-lg p-6 border border-genie-primary/20">
             <div className="text-center">
               <h3 className="text-lg font-bold text-foreground mb-2">
-                Ready to Take Action?
+                Ready to Explore Further?
               </h3>
               <p className="text-sm text-muted-foreground mb-4">
                 {content.cta.description}
