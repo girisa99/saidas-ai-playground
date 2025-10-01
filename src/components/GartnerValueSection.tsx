@@ -298,11 +298,10 @@ export const GartnerValueSection = () => {
         <div className="mb-12 lg:mb-16">
           <div className="text-center max-w-4xl mx-auto">
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
-              Continue Your AI Change Agent Journey
+              Gartner Value Creation in Action
             </h3>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Build expertise through systematic exploration of implementations, decision frameworks, 
-              and technology stacks that drive successful AI transformation.
+              See how our AI experimentation framework delivers measurable business value across all stakeholder groups through systematic implementation and validation.
             </p>
           </div>
         </div>
