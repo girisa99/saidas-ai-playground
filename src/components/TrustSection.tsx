@@ -24,16 +24,16 @@ export const TrustSection = () => {
       phase: "Day 45-90",
       title: "Implementation & Results",
       subtitle: "Launching First AI Solutions",
-      description: "Deploy validated experiments into production. GenieAI Hub Platform and Genie Conversation live—demonstrating the journey from learning to leadership.",
+      description: "Deploy validated experiments into production. GenieAI Hub Platform and Genie Conversation live—with ongoing experimentations across multiple use cases and scenarios.",
       icon: Rocket,
       color: "from-green-500/20 to-green-500/10",
       iconBg: "bg-green-500",
       borderColor: "border-green-500/30",
       features: [
         "2 Live features deployed",
-        "Real user engagement",
-        "Documented outcomes",
-        "Change agent positioning"
+        "10+ ongoing experimentations",
+        "Multiple use cases & scenarios",
+        "Documented results & insights"
       ]
     }
   ];
