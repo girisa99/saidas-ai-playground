@@ -19,150 +19,150 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
       case "home":
         return {
           primary: {
-            title: "Start Your AI Journey",
-            description: "Discover how to build AI capabilities that position you as a change agent in your organization",
+            title: "Explore What I Learned",
+            description: "See my personal AI experimentation journey - adapt what resonates with your context and needs",
             link: "/about",
             icon: Users,
-            buttonText: "Meet Your Guide"
+            buttonText: "Explore My Story"
           },
           secondary: {
-            title: "Learn Through Real Cases",
-            description: "See how 8+ documented business cases and 2 live features (GenieAI Hub Platform & Genie Conversation with 80+ contexts, advanced RAG, multi-model intelligence) validate AI solutions through systematic experimentation",
+            title: "Browse My Experiments",
+            description: "8+ documented business cases and 2 live features showing what I built. Use what fits your situation, modify what doesn't.",
             link: "/business-use-cases",
             icon: Target,
-            buttonText: "View Business Cases"
+            buttonText: "Browse Experiments"
           },
           tertiary: {
-            title: "See Proven Results",
-            description: "Study 2 complete case studies showing real implementations and outcomes",
+            title: "See What Worked",
+            description: "2 complete implementations documented openly - learn from what worked in my context",
             link: "/case-studies",
             icon: Trophy,
-            buttonText: "View Success Stories"
+            buttonText: "View Implementations"
           }
         };
 
       case "about":
         return {
           primary: {
-            title: "Follow My Learning Journey",
-            description: "Discover how personal curiosity transforms into professional AI expertise. See the 2 live features (GenieAI Hub & Genie Conversation with 80+ contexts, advanced RAG, multi-model intelligence) and 10+ experiments demonstrating the Experiment → Validate → Lead to Deploy methodology.",
+            title: "See How I Learned",
+            description: "My path from curiosity to building 2 live features and 10+ experiments. Adapt the approach to fit your own learning style.",
             link: "/journey",
             icon: Map,
-            buttonText: "Explore My Journey"
+            buttonText: "View My Journey"
           },
           secondary: {
-            title: "See What I Built",
-            description: "Discover practical applications and real-world AI implementations that demonstrate the approach",
+            title: "Browse What I Built",
+            description: "Practical implementations I tested - use them as inspiration for your own projects",
             link: "/case-studies",
             icon: Trophy,
-            buttonText: "View Case Studies"
+            buttonText: "Browse Implementations"
           },
           tertiary: {
-            title: "Explore the Tools",
-            description: "Learn about the AI technologies and frameworks I tested during my experimentation",
+            title: "Explore Technologies I Used",
+            description: "AI tools and frameworks I experimented with - choose what suits your needs",
             link: "/technology",
             icon: Zap,
-            buttonText: "Technology Stack"
+            buttonText: "View Tech Stack"
           }
         };
 
       case "journey":
         return {
           primary: {
-            title: "Apply the Framework",
-            description: "See how the Experiment → Validate → Lead to Deploy methodology translates to real business applications and healthcare solutions",
+            title: "See How I Applied Learning",
+            description: "My experimentation approach in real scenarios - adapt the methodology to fit your context",
             link: "/business-use-cases",
             icon: Target,
-            buttonText: "Business Applications"
+            buttonText: "View Applications"
           },
           secondary: {
-            title: "See Framework Results",
-            description: "Explore systematic approach to building AI expertise through 2 live features (GenieAI Hub & Genie Conversation with 80+ contexts, advanced RAG). See how the 3-phase framework transforms personal curiosity into professional change agent expertise.",
+            title: "Browse Implementation Results",
+            description: "2 live features and experiments showing what worked for me. Use as reference points for your own implementations.",
             link: "/case-studies",
             icon: Trophy,
-            buttonText: "Success Stories"
+            buttonText: "Browse Results"
           },
           tertiary: {
-            title: "Explore the Tech Stack",
-            description: "Discover the AI tools, technologies, and infrastructure that powered each phase of this transformation journey",
+            title: "Explore Technologies I Chose",
+            description: "Tools and infrastructure I used at each phase - select what fits your requirements",
             link: "/technology",
             icon: Zap,
-            buttonText: "Tech Deep Dive"
+            buttonText: "View Technologies"
           }
         };
 
       case "technology":
         return {
           primary: {
-            title: "See Tools in Action",
-            description: "Watch how these technologies solve real business challenges",
+            title: "See Technologies Applied",
+            description: "How I used these tools in my experiments - adapt the stack to your needs",
             link: "/business-use-cases",
             icon: Target,
-            buttonText: "Business Use Cases"
+            buttonText: "Browse Applications"
           },
           secondary: {
-            title: "View Implementation",
-            description: "See detailed case studies showing technology application",
+            title: "View Technology Usage",
+            description: "Detailed examples showing how I applied these technologies",
             link: "/case-studies",
             icon: Trophy,
-            buttonText: "Case Studies"
+            buttonText: "View Examples"
           },
           tertiary: {
-            title: "Understand My Journey",
-            description: "Learn how I discovered and mastered these technologies",
+            title: "See My Learning Path",
+            description: "How I discovered and experimented with these technologies",
             link: "/journey",
             icon: Map,
-            buttonText: "My Learning Path"
+            buttonText: "View Journey"
           }
         };
 
       case "business-cases":
         return {
           primary: {
-            title: "See Real Implementation",
-            description: "Explore detailed case studies with actual results and metrics",
+            title: "View Detailed Examples",
+            description: "Full implementations with metrics from my experiments - use as references for your projects",
             link: "/case-studies",
             icon: Trophy,
-            buttonText: "View Case Studies"
+            buttonText: "Browse Examples"
           },
           secondary: {
-            title: "See Framework Journey",
-            description: "Understand the 3-phase methodology that led to these business insights and real-world applications",
+            title: "See My Approach",
+            description: "The experimentation methodology I followed - adapt it to suit your situation",
             link: "/journey",
             icon: Map,
-            buttonText: "Framework Journey"
+            buttonText: "View Approach"
           },
           tertiary: {
-            title: "Connect & Collaborate",
-            description: "Let's discuss how these insights can benefit your projects",
+            title: "Share Your Learning",
+            description: "Let's exchange insights and learning from our experiences",
             link: "/contact",
             icon: Users,
-            buttonText: "Get in Touch"
+            buttonText: "Connect"
           }
         };
 
       case "case-studies":
         return {
           primary: {
-            title: "Apply Framework Patterns",
-            description: "See how these validated framework results apply to different business scenarios and healthcare implementations",
+            title: "Explore More Experiments",
+            description: "See these patterns applied across different scenarios - adapt them for your context",
             link: "/business-use-cases",
             icon: Target,
-            buttonText: "Business Applications"
+            buttonText: "View More Experiments"
           },
           secondary: {
-            title: "See Framework Journey",
-            description: "Learn the 3-phase experimentation methodology behind these validated results and business outcomes",
+            title: "Understand My Process",
+            description: "The experimentation methodology behind these results - modify to fit your needs",
             link: "/journey",
             icon: Map,
-            buttonText: "Framework Journey"
+            buttonText: "View Process"
           },
           tertiary: {
-            title: "Let's Collaborate",
-            description: "Discuss how we can apply these insights to your challenges",
+            title: "Exchange Insights",
+            description: "Share your learnings and experiences with experimentation",
             link: "/contact",
             icon: Users,
-            buttonText: "Start a Conversation"
+            buttonText: "Let's Connect"
           }
         };
 
@@ -170,24 +170,24 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
         return {
           primary: {
             title: "Start Exploring",
-            description: "Begin your journey with AI experimentation and innovation",
+            description: "Browse my AI experimentation journey - take what's useful for you",
             link: "/about",
             icon: Users,
-            buttonText: "Meet Sai"
+            buttonText: "Explore"
           },
           secondary: {
-            title: "See My Journey",
-            description: "Discover the path from curiosity to AI innovation",
+            title: "See My Path",
+            description: "How I learned through experimentation - adapt to your own style",
             link: "/journey",
             icon: Map,
-            buttonText: "Explore Journey"
+            buttonText: "View Journey"
           },
           tertiary: {
-            title: "View Results",
-            description: "See practical applications and real-world outcomes",
+            title: "Browse Implementations",
+            description: "Practical examples from my experiments - use as references",
             link: "/case-studies",
             icon: Trophy,
-            buttonText: "Success Stories"
+            buttonText: "View Examples"
           }
         };
     }
@@ -311,10 +311,10 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
               What's Next?
             </Badge>
             <h2 className="text-xl lg:text-2xl font-bold mb-3">
-              Continue Building Your <span className="text-genie-primary">AI Expertise</span>
+              Explore What Resonates <span className="text-genie-primary">With You</span>
             </h2>
             <p className="text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Take the next step in developing AI capabilities that position you as a change agent
+              Browse my experiments and learnings - use what fits, adapt what doesn't, enhance based on your needs
             </p>
           </div>
 
