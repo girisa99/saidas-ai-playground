@@ -74,14 +74,28 @@ export const UnifiedHeroBanner = () => {
         
         {/* Header Section */}
         <div className="text-center mb-12">
+          <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-4 text-base px-4 py-2">
+            <Sparkles className="w-4 h-4 mr-2" />
+            AI Democratization Through Personal Experimentation
+          </Badge>
           <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-6">
             Experiment. Validate. Lead.
-            <span className="block text-genie-accent mt-2">Individual Passion Driving AI Transformation</span>
+            <span className="block text-genie-accent mt-2">90-Day AI Transformation Journey</span>
           </h1>
           <div className="w-24 h-1 bg-genie-accent mx-auto mb-6"></div>
-          <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto">
-            Personal curiosity and systematic experimentation building validated AI expertise. Your learning journey to becoming a change agent starts here.
+          <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-4">
+            <strong>May 2025 Launch:</strong> Building AI expertise through systematic experimentation—anyone can start with just a laptop and curiosity.
           </p>
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-white/80">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-genie-accent" />
+              <span><strong>Day 0-45:</strong> Guardrails & Foundation</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-genie-accent" />
+              <span><strong>Day 45-90:</strong> Implementation & Results</span>
+            </div>
+          </div>
         </div>
 
         {/* Two-Tile Layout */}

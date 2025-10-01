@@ -1,8 +1,43 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Award, Briefcase, GraduationCap, Brain } from "lucide-react";
+import { CheckCircle, Award, Briefcase, GraduationCap, Brain, Shield, Rocket } from "lucide-react";
 
 export const TrustSection = () => {
+  const timelinePhases = [
+    {
+      phase: "Day 0-45",
+      title: "Guardrails & Foundation",
+      subtitle: "Building Safe Experimentation Framework",
+      description: "Establish security protocols, privacy standards, and ethical AI guidelines. Create your safe playground for learning and experimentation.",
+      icon: Shield,
+      color: "from-purple-500/20 to-purple-500/10",
+      iconBg: "bg-purple-500",
+      borderColor: "border-purple-500/30",
+      features: [
+        "Security & privacy setup",
+        "Ethical AI framework",
+        "Tool evaluation criteria",
+        "Safe experimentation protocols"
+      ]
+    },
+    {
+      phase: "Day 45-90",
+      title: "Implementation & Results",
+      subtitle: "Launching First AI Solutions",
+      description: "Deploy validated experiments into production. GenieAI Hub Platform and Genie Conversation live—demonstrating the journey from learning to leadership.",
+      icon: Rocket,
+      color: "from-green-500/20 to-green-500/10",
+      iconBg: "bg-green-500",
+      borderColor: "border-green-500/30",
+      features: [
+        "2 Live features deployed",
+        "Real user engagement",
+        "Documented outcomes",
+        "Change agent positioning"
+      ]
+    }
+  ];
+
   const frameworkSteps = [
     {
       number: "01",
@@ -39,6 +74,52 @@ export const TrustSection = () => {
   return (
     <section className="py-16 bg-gradient-to-b from-background to-background/50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        
+        {/* 90-Day Timeline */}
+        <div className="mb-16">
+          <div className="text-center mb-12">
+            <Badge className="bg-genie-accent/20 text-genie-primary border-genie-accent/30 mb-4">
+              <GraduationCap className="w-4 h-4 mr-2" />
+              90-Day AI Democratization Journey
+            </Badge>
+            <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+              From <span className="text-purple-500">Guardrails</span> to <span className="text-green-500">Results</span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
+              <strong>May 2025 Start:</strong> Anyone with a laptop can begin their AI transformation journey. Two distinct phases building foundation to deployment.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            {timelinePhases.map((phase, index) => {
+              const IconComponent = phase.icon;
+              return (
+                <Card key={index} className={`p-8 border-2 ${phase.borderColor} bg-gradient-to-br ${phase.color} hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl group`}>
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className={`w-16 h-16 ${phase.iconBg} rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                      <IconComponent className="h-8 w-8 text-white" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-muted-foreground mb-1">{phase.phase}</div>
+                      <h3 className="text-2xl font-bold text-foreground mb-1">{phase.title}</h3>
+                      <p className="text-sm font-medium text-muted-foreground">{phase.subtitle}</p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">{phase.description}</p>
+                  <div className="space-y-2">
+                    {phase.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Framework Overview */}
         <div className="text-center mb-16">
           <Badge className="bg-primary/20 text-primary border-primary/30 mb-4">
