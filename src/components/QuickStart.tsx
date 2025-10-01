@@ -98,14 +98,14 @@ export const QuickStart = () => {
         <div className="text-center mb-16">
           <Badge className="bg-primary/20 text-primary border-primary/30 mb-4">
             <CheckCircle className="w-4 h-4 mr-2" />
-            Learning Outcomes
+            Value Delivered
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            From <span className="text-primary">Experiment</span> to <span className="text-primary">Live Deployment</span>
+            Proven <span className="text-primary">Value Creation</span> Framework
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             <strong>2 Live Features Launched:</strong> GenieAI Hub Platform & Genie Conversational AI with 80+ knowledge contexts. 
-            Build expertise through real implementations and proven methodologies.
+            Demonstrating measurable business value through systematic AI experimentation and validated implementations.
           </p>
         </div>
 
