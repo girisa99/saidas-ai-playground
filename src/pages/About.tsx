@@ -185,7 +185,7 @@ const About = () => {
             <div className="opacity-0 animate-fade-in mb-8" style={{ animationDelay: "10s", animationFillMode: "forwards" }}>
               <Link to="/journey">
                 <Button size="lg" className="bg-genie-cyan hover:bg-genie-teal text-white px-8 py-4 text-lg font-bold">
-                  🚀 EXPERIENCE THE TRANSFORMATION
+                  🚀 SEE THE VALUE CREATION JOURNEY
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
