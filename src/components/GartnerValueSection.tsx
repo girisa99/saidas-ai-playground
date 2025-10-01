@@ -53,10 +53,112 @@ export const GartnerValueSection = () => {
           </p>
         </div>
 
-        {/* Phased Investment & Returns */}
+        {/* Value Creation vs Value Realization Framework */}
         <div className="mb-12 lg:mb-16">
           <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-foreground">
-            <span className="text-genie-primary">Gartner's Value Framework:</span> Phased Investment & Returns
+            <span className="text-genie-primary">Gartner's Value Framework:</span> Creation vs Realization
+          </h3>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Value Creation (Give) */}
+            <Card className="p-6 sm:p-8 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
+              <div className="flex items-center gap-3 mb-6">
+                <Brain className="w-8 h-8 text-blue-500" />
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Stakeholders' Priorities & Concerns</p>
+                  <h4 className="text-2xl font-bold text-foreground">Value Creation</h4>
+                  <p className="text-sm text-muted-foreground">(Give)</p>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-500/5 border border-blue-500/10">
+                  <Cog className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-foreground">Self-service AI application creation</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-500/5 border border-blue-500/10">
+                  <Zap className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-foreground">Accelerated development frameworks</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-500/5 border border-blue-500/10">
+                  <Shield className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-foreground">Enterprise-grade security & governance</p>
+                  </div>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-blue-500/20">
+                  <div className="flex items-center gap-2 text-blue-500">
+                    <Database className="w-5 h-5" />
+                    <p className="font-semibold">Value Levers</p>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Value Realization (Get) */}
+            <Card className="p-6 sm:p-8 bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border-emerald-500/20">
+              <div className="flex items-center gap-3 mb-6">
+                <Scale className="w-8 h-8 text-emerald-500" />
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Multi-Stakeholder Impacts</p>
+                  <h4 className="text-2xl font-bold text-foreground">Value Realization</h4>
+                  <p className="text-sm text-muted-foreground">(Get)</p>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/10">
+                  <BarChart3 className="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-foreground">Measurable ROI & business impact</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/10">
+                  <Users className="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-foreground">Enhanced team productivity</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/10">
+                  <Target className="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-foreground">Competitive market advantage</p>
+                  </div>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-emerald-500/20">
+                  <div className="flex items-center gap-2 text-emerald-500">
+                    <TrendingUp className="w-5 h-5" />
+                    <p className="font-semibold">Realized Return to Organization</p>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* Value Logic Connector */}
+          <div className="flex justify-center my-8">
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-amber-500/20 border-2 border-amber-500/30 rounded-full">
+              <Lightbulb className="w-5 h-5 text-amber-500" />
+              <span className="font-bold text-amber-600 dark:text-amber-400">Value Logic</span>
+              <ArrowRight className="w-5 h-5 text-amber-500" />
+            </div>
+          </div>
+        </div>
+
+        {/* Mapping to Day 0-45 and Day 45-90 */}
+        <div className="mb-12 lg:mb-16">
+          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-foreground">
+            <span className="text-genie-primary">Phased Implementation:</span> Mapping to Real Outcomes
           </h3>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -68,7 +170,7 @@ export const GartnerValueSection = () => {
                 </div>
                 <div>
                   <h4 className="text-xl font-bold text-foreground">Day 0-45</h4>
-                  <p className="text-sm text-muted-foreground">Foundational Guardrails</p>
+                  <p className="text-sm text-muted-foreground">Foundational Guardrails → Value Creation</p>
                 </div>
               </div>
 
@@ -76,24 +178,24 @@ export const GartnerValueSection = () => {
                 <div>
                   <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                     <Database className="w-4 h-4 text-blue-500" />
-                    What We Invested
+                    What We Invested (Value Creation)
                   </h5>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li className="flex items-start gap-2">
                       <span className="text-blue-500 mt-1">•</span>
-                      <span>Methodology: Defining guardrails, ethical frameworks, compliance standards</span>
+                      <span><strong>Self-service AI:</strong> Defining guardrails, ethical frameworks, compliance standards</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-blue-500 mt-1">•</span>
-                      <span>Infrastructure: Secure, scalable foundational architecture</span>
+                      <span><strong>Accelerated frameworks:</strong> Secure, scalable foundational architecture</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-blue-500 mt-1">•</span>
-                      <span>Risk Mitigation: Security protocols and data governance</span>
+                      <span><strong>Security & governance:</strong> Risk mitigation and data governance protocols</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-blue-500 mt-1">•</span>
-                      <span>Education: AI principles and safe usage guidelines</span>
+                      <span><strong>Education:</strong> AI principles and safe usage guidelines</span>
                     </li>
                   </ul>
                 </div>
@@ -101,7 +203,7 @@ export const GartnerValueSection = () => {
                 <div className="pt-4 border-t border-border">
                   <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                     <TrendingUp className="w-4 h-4 text-emerald-500" />
-                    What We Gained
+                    What We Gained (Value Levers)
                   </h5>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li className="flex items-start gap-2">
@@ -126,38 +228,38 @@ export const GartnerValueSection = () => {
             </Card>
 
             {/* Day 45-90: Practical Implementation */}
-            <Card className="p-6 sm:p-8 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border-purple-500/20">
+            <Card className="p-6 sm:p-8 bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border-emerald-500/20">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold">
+                <div className="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">
                   2
                 </div>
                 <div>
                   <h4 className="text-xl font-bold text-foreground">Day 45-90</h4>
-                  <p className="text-sm text-muted-foreground">Practical Implementation & Results</p>
+                  <p className="text-sm text-muted-foreground">Implementation & Results → Value Realization</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div>
                   <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <Database className="w-4 h-4 text-purple-500" />
-                    What We Invested
+                    <Database className="w-4 h-4 text-emerald-500" />
+                    What We Invested (Continued Creation)
                   </h5>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li className="flex items-start gap-2">
-                      <span className="text-purple-500 mt-1">•</span>
+                      <span className="text-emerald-500 mt-1">•</span>
                       <span>Application: Iterative use case refinement and prototyping</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-purple-500 mt-1">•</span>
+                      <span className="text-emerald-500 mt-1">•</span>
                       <span>Integration: Healthcare systems (NPI, CMS, FDA, EMR)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-purple-500 mt-1">•</span>
+                      <span className="text-emerald-500 mt-1">•</span>
                       <span>Platform Development: Multi-tenant experimental environment</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-purple-500 mt-1">•</span>
+                      <span className="text-emerald-500 mt-1">•</span>
                       <span>Deployment: Validated concepts to public products</span>
                     </li>
                   </ul>
@@ -166,24 +268,24 @@ export const GartnerValueSection = () => {
                 <div className="pt-4 border-t border-border">
                   <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                     <TrendingUp className="w-4 h-4 text-emerald-500" />
-                    What We Gained (ROI)
+                    What We Gained (Value Realization)
                   </h5>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li className="flex items-start gap-2">
                       <span className="text-emerald-500 mt-1">✓</span>
-                      <span>Validated AI Solutions: Real-world applications</span>
+                      <span><strong>Measurable ROI:</strong> Real-world validated AI solutions</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-emerald-500 mt-1">✓</span>
-                      <span>Scalability Proof: 10+ validated use cases across 3 areas</span>
+                      <span><strong>Enhanced productivity:</strong> 10+ validated use cases across 3 areas</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-emerald-500 mt-1">✓</span>
-                      <span>Public Impact: 2 live features launched</span>
+                      <span><strong>Market advantage:</strong> 2 live features launched publicly</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-emerald-500 mt-1">✓</span>
-                      <span>Knowledge Transfer: AI democratization insights</span>
+                      <span><strong>Return to org:</strong> AI democratization insights & knowledge transfer</span>
                     </li>
                   </ul>
                 </div>
