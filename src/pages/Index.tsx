@@ -25,8 +25,6 @@ const Index = () => {
         <TrustSection />
         <GartnerValueSection />
         <QuickStart />
-        {/* Clear navigation flow to guide users */}
-        <CTASection currentPage="home" />
       </main>
       <Footer />
     </div>
