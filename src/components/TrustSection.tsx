@@ -8,7 +8,7 @@ export const TrustSection = () => {
       phase: "Day 0-45",
       title: "Guardrails & Foundation",
       subtitle: "Building Safe Experimentation Framework",
-      description: "Establish security protocols, privacy standards, and ethical AI guidelines. Create your safe playground for learning and experimentation.",
+      description: "Establish security protocols, privacy standards, and ethical AI guidelines. Build secure framework for systematic personal experimentation.",
       icon: Shield,
       color: "from-purple-500/20 to-purple-500/10",
       iconBg: "bg-purple-500",
@@ -86,7 +86,7 @@ export const TrustSection = () => {
               From <span className="text-purple-500">Guardrails</span> to <span className="text-green-500">Results</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-              <strong>May 2025 Start:</strong> Anyone with a laptop can begin their AI transformation journey. Two distinct phases building foundation to deployment.
+              <strong>May 2025 Start:</strong> Systematic personal experimentation journey. Two distinct phases building secure foundation to validated deployment.
             </p>
           </div>
 
