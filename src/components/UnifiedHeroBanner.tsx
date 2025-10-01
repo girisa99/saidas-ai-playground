@@ -84,7 +84,7 @@ export const UnifiedHeroBanner = () => {
           </h1>
           <div className="w-24 h-1 bg-genie-accent mx-auto mb-6"></div>
           <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-4">
-            <strong>May 2025 Launch:</strong> Building AI expertise through systematic experimentation—anyone can start with just a laptop and curiosity.
+            <strong>May 2025 Launch:</strong> Building AI expertise through systematic experimentation—anyone can start with curiosity.
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-sm text-white/80">
             <div className="flex items-center gap-2">
