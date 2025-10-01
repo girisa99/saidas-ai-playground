@@ -160,7 +160,7 @@ const About = () => {
             <div className="text-lg lg:text-xl text-white/90 mb-8 leading-relaxed max-w-6xl mx-auto lg:mx-0">
                <div className="mb-4">
                  <AnimatedTextEmergence 
-                   text="Built my personal GenieAI Experimentation Hub through 21+ years of healthcare innovation. This platform represents my private laboratory where I test, validate, and refine AI solutions."
+                   text="Built my personal GenieAI Experimentation Hub through 21+ years of healthcare innovation. This platform represents my private laboratory where I turn experiments into proven value creation."
                    startDelay={5000}
                    charDelay={40}
                    className="block"
@@ -171,7 +171,7 @@ const About = () => {
                </div>
                <div className="text-white/80 font-medium">
                  <AnimatedTextEmergence 
-                   text="Sharing my learnings, methodologies, and real-world case studies from this private platform. Learn from my experiments to build your own AI solutions and frameworks."
+                   text="Sharing my learnings, methodologies, and real-world case studies from this private platform. Learn from my systematic experiments to build your own AI solutions that deliver measurable value."
                    startDelay={6500}
                    charDelay={30}
                    className="block"
@@ -308,8 +308,8 @@ const About = () => {
                  <p className="mb-6">
                    My career spans technology leadership roles at industry giants including <strong className="text-genie-primary">Novartis, Bayer, 
                    Conduent, Amgen, and Pfizer</strong>, where I consistently observed a common pattern: innovative AI projects often failed not due to technical limitations, 
-                   but because of inadequate validation and rushed deployment. This led me to develop the <strong className="text-genie-teal">Experiment → Validate → Lead to Deploy framework</strong> - 
-                   a systematic approach that dramatically improves success rates while reducing risk. Currently serving as 
+                   but because of inadequate validation and rushed deployment. This led me to develop the <strong className="text-genie-teal">Value-Driven Experimentation Framework</strong> - 
+                   a systematic approach that turns curiosity into proven value through rigorous experimentation, validation, and measured deployment. Currently serving as 
                    <strong className="text-genie-primary">Director of Product owner/solution Architect for CGAT (PSaS) supporting InspiroGene at McKesson</strong>, 
                    I apply this framework across complex healthcare technology initiatives.
                  </p>

@@ -115,16 +115,16 @@ export const AboutSection = () => {
             <Card className="p-6 bg-gradient-to-r from-primary/10 to-ai-secondary/10 border-primary/20">
               <h4 className="font-bold text-lg mb-4 flex items-center">
                 <Users className="h-6 w-6 mr-2 text-primary" />
-                Framework: Experiment → Validate → Lead to Deploy
+                Value-Driven Experimentation Framework
               </h4>
               <p className="text-muted-foreground mb-4">
-                Systematic 45-day experimentation journey validating AI technologies and frameworks. 
-                <strong>2 live implementations launched</strong> with <strong>10+ experiments in pipeline</strong> demonstrating the framework's effectiveness.
+                Systematic approach turning curiosity into proven value through rigorous experimentation and validation. 
+                <strong>2 live implementations launched</strong> with <strong>10+ experiments in pipeline</strong> demonstrating measurable business impact.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary">2 Live Features</Badge>
                 <Badge variant="secondary">10+ In Development</Badge>
-                <Badge variant="secondary">Proven Framework</Badge>
+                <Badge variant="secondary">Proven Value Creation</Badge>
               </div>
             </Card>
             
