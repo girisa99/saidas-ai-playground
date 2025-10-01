@@ -43,107 +43,159 @@ export const GartnerValueSection = () => {
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
           <div className="inline-flex items-center gap-2 bg-genie-primary/10 px-3 sm:px-4 py-2 rounded-full text-genie-primary text-sm font-medium mb-4">
             <Rocket className="w-4 h-4" />
-            2 Live Features: GenieAI Hub & Genie Conversation
+            Personal AI Experimentation Journey
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground mb-4 sm:mb-6">
-            Aligning <span className="text-genie-primary">Gartner's Value Framework</span> with AI Innovation
+            Connecting <span className="text-genie-primary">Personal Experimentation</span> to Enterprise Value
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
-            Demonstrating the Experiment → Validate → Lead to Deploy framework through <strong>2 live implementations</strong>: GenieAI Experimentation Hub platform and Genie Conversational AI with 80+ knowledge contexts.
+            Demonstrating how individual initiatives, when properly structured with robust guardrails, align seamlessly with <strong>Gartner's Value Creation & Realization</strong> framework through the <strong>Experiment → Validate → Lead to Deploy</strong> pipeline.
           </p>
         </div>
 
-        {/* Gartner Value Equation Visual */}
-        <div className="relative mb-12 lg:mb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            
-            {/* Value Creation (Give) */}
-            <Card className="relative p-6 sm:p-8 bg-gradient-to-br from-blue-900/90 to-blue-800/90 text-white border-blue-600/30 overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.2),transparent)]"></div>
-              <div className="relative z-10 text-center">
-                <div className="inline-flex items-center gap-2 mb-4">
-                  <Brain className="w-6 sm:w-8 h-6 sm:h-8 text-cyan-400" />
-                  <span className="text-xs sm:text-sm font-medium text-blue-200">Stakeholders' Priorities & Concerns</span>
+        {/* Phased Investment & Returns */}
+        <div className="mb-12 lg:mb-16">
+          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-foreground">
+            <span className="text-genie-primary">Gartner's Value Framework:</span> Phased Investment & Returns
+          </h3>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Day 0-45: Foundational Guardrails */}
+            <Card className="p-6 sm:p-8 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">
+                  1
                 </div>
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6 text-white">
-                  Value Creation
-                  <div className="text-base sm:text-lg font-normal text-blue-200">(Give)</div>
-                </h3>
-                
-                <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
-                  <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                    <Cog className="w-4 sm:w-5 h-4 sm:h-5 text-cyan-400 flex-shrink-0" />
-                    <span className="text-xs sm:text-sm text-white">Self-service AI application creation</span>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                    <TrendingUp className="w-4 sm:w-5 h-4 sm:h-5 text-cyan-400 flex-shrink-0" />
-                    <span className="text-xs sm:text-sm text-white">Accelerated development frameworks</span>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                    <Shield className="w-4 sm:w-5 h-4 sm:h-5 text-cyan-400 flex-shrink-0" />
-                    <span className="text-xs sm:text-sm text-white">Enterprise-grade security & governance</span>
-                  </div>
+                <div>
+                  <h4 className="text-xl font-bold text-foreground">Day 0-45</h4>
+                  <p className="text-sm text-muted-foreground">Foundational Guardrails</p>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <Database className="w-4 h-4 text-blue-500" />
+                    What We Invested
+                  </h5>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-500 mt-1">•</span>
+                      <span>Methodology: Defining guardrails, ethical frameworks, compliance standards</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-500 mt-1">•</span>
+                      <span>Infrastructure: Secure, scalable foundational architecture</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-500 mt-1">•</span>
+                      <span>Risk Mitigation: Security protocols and data governance</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-500 mt-1">•</span>
+                      <span>Education: AI principles and safe usage guidelines</span>
+                    </li>
+                  </ul>
                 </div>
 
-                <div className="text-center">
-                  <div className="inline-flex items-center gap-2 text-cyan-400 font-medium">
-                    <Database className="w-4 sm:w-5 h-4 sm:h-5" />
-                    <span className="text-xs sm:text-sm">Value Levers</span>
-                  </div>
+                <div className="pt-4 border-t border-border">
+                  <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4 text-emerald-500" />
+                    What We Gained
+                  </h5>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-500 mt-1">✓</span>
+                      <span>Reduced Risk: Minimized legal, ethical, operational pitfalls</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-500 mt-1">✓</span>
+                      <span>Accelerated Setup: Expedited future development</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-500 mt-1">✓</span>
+                      <span>Enhanced Security: Robust data protection</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-500 mt-1">✓</span>
+                      <span>Clear Direction: Framework for safe AI exploration</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </Card>
 
-            {/* Value Realization (Get) */}
-            <Card className="relative p-6 sm:p-8 bg-gradient-to-br from-blue-900/90 to-blue-800/90 text-white border-blue-600/30 overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.2),transparent)]"></div>
-              <div className="relative z-10 text-center">
-                <div className="inline-flex items-center gap-2 mb-4">
-                  <Scale className="w-6 sm:w-8 h-6 sm:h-8 text-cyan-400" />
-                  <span className="text-xs sm:text-sm font-medium text-blue-200">Multi-Stakeholder Impacts</span>
+            {/* Day 45-90: Practical Implementation */}
+            <Card className="p-6 sm:p-8 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border-purple-500/20">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold">
+                  2
                 </div>
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6 text-white">
-                  Value Realization
-                  <div className="text-base sm:text-lg font-normal text-blue-200">(Get)</div>
-                </h3>
-                
-                <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
-                  <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                    <BarChart3 className="w-4 sm:w-5 h-4 sm:h-5 text-cyan-400 flex-shrink-0" />
-                    <span className="text-xs sm:text-sm text-white">Measurable ROI & business impact</span>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                    <Users className="w-4 sm:w-5 h-4 sm:h-5 text-cyan-400 flex-shrink-0" />
-                    <span className="text-xs sm:text-sm text-white">Enhanced team productivity</span>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                    <Target className="w-4 sm:w-5 h-4 sm:h-5 text-cyan-400 flex-shrink-0" />
-                    <span className="text-xs sm:text-sm text-white">Competitive market advantage</span>
-                  </div>
+                <div>
+                  <h4 className="text-xl font-bold text-foreground">Day 45-90</h4>
+                  <p className="text-sm text-muted-foreground">Practical Implementation & Results</p>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <Database className="w-4 h-4 text-purple-500" />
+                    What We Invested
+                  </h5>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-500 mt-1">•</span>
+                      <span>Application: Iterative use case refinement and prototyping</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-500 mt-1">•</span>
+                      <span>Integration: Healthcare systems (NPI, CMS, FDA, EMR)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-500 mt-1">•</span>
+                      <span>Platform Development: Multi-tenant experimental environment</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-purple-500 mt-1">•</span>
+                      <span>Deployment: Validated concepts to public products</span>
+                    </li>
+                  </ul>
                 </div>
 
-                <div className="text-center">
-                  <div className="inline-flex items-center gap-2 text-cyan-400 font-medium">
-                    <TrendingUp className="w-4 sm:w-5 h-4 sm:h-5" />
-                    <span className="text-xs sm:text-sm">Realized Return to Organization</span>
-                  </div>
+                <div className="pt-4 border-t border-border">
+                  <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4 text-emerald-500" />
+                    What We Gained (ROI)
+                  </h5>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-500 mt-1">✓</span>
+                      <span>Validated AI Solutions: Real-world applications</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-500 mt-1">✓</span>
+                      <span>Scalability Proof: 10+ validated use cases across 3 areas</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-500 mt-1">✓</span>
+                      <span>Public Impact: 2 live features launched</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-500 mt-1">✓</span>
+                      <span>Knowledge Transfer: AI democratization insights</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </Card>
-          </div>
-
-          {/* Central Value Logic Connector */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden lg:block">
-            <div className="bg-amber-400 text-blue-900 px-4 py-2 rounded-full font-bold text-sm whitespace-nowrap">
-              Value Logic
-            </div>
           </div>
         </div>
 
-        {/* Steps for Value Framework */}
+        {/* Gartner Value Creation in Action */}
         <div className="mb-12 lg:mb-16">
           <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-foreground">
-            <span className="text-genie-primary">Steps to Create Value</span>
+            <span className="text-genie-primary">Gartner Value Creation in Action:</span> The 'AI Genie' Impact
           </h3>
           
           <div className="relative">
@@ -171,89 +223,71 @@ export const GartnerValueSection = () => {
             
             <div ref={scrollRef} className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-8">
               {/* Step 1: Listen & Sense */}
-              <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-primary/20 hover:border-genie-primary/40 snap-center">
-                <div className="relative w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-background/60">
-                  <span className="relative text-xl font-bold">1</span>
+              <Card className="flex-none w-80 p-6 group hover:shadow-xl transition-all duration-300 border-2 border-genie-primary/20 hover:border-genie-primary/40 snap-center">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-genie-primary text-white flex items-center justify-center font-bold text-lg flex-shrink-0">
+                    01
+                  </div>
+                  <h4 className="font-bold text-lg text-foreground">Listen & Sense</h4>
                 </div>
-                <h4 className="font-bold text-lg mb-2 text-foreground">Listen & Sense</h4>
-                <p className="text-sm text-muted-foreground mb-4">Understanding stakeholder priorities and market demands</p>
-                <div className="flex justify-center">
-                  <Eye className="w-6 h-6 text-genie-primary" />
-                </div>
+                <p className="text-sm text-muted-foreground">
+                  Identified the widespread need for rapid AI prototyping and accessible development, emphasizing the importance of <strong>personal experimentation</strong>.
+                </p>
               </Card>
 
               {/* Step 2: Assess Materiality */}
-              <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-teal/20 hover:border-genie-teal/40 snap-center">
-                <div className="relative w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-background/60">
-                  <span className="relative text-xl font-bold">2</span>
+              <Card className="flex-none w-80 p-6 group hover:shadow-xl transition-all duration-300 border-2 border-genie-teal/20 hover:border-genie-teal/40 snap-center">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-genie-teal text-white flex items-center justify-center font-bold text-lg flex-shrink-0">
+                    02
+                  </div>
+                  <h4 className="font-bold text-lg text-foreground">Assess Materiality</h4>
                 </div>
-                <h4 className="font-bold text-lg mb-2 text-foreground">Assess Materiality</h4>
-                <p className="text-sm text-muted-foreground mb-4">Evaluating business impact and resource requirements</p>
-                <div className="flex justify-center">
-                  <BarChart3 className="w-6 h-6 text-genie-teal" />
-                </div>
+                <p className="text-sm text-muted-foreground">
+                  Recognized the transformative potential of <strong>AI democratization</strong> and individual AI innovation for the enterprise.
+                </p>
               </Card>
 
               {/* Step 3: Develop Options */}
-              <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-genie-cyan/20 hover:border-genie-cyan/40 snap-center">
-                <div className="relative w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-background/60">
-                  <span className="relative text-xl font-bold">3</span>
+              <Card className="flex-none w-80 p-6 group hover:shadow-xl transition-all duration-300 border-2 border-genie-cyan/20 hover:border-genie-cyan/40 snap-center">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-genie-cyan text-white flex items-center justify-center font-bold text-lg flex-shrink-0">
+                    03
+                  </div>
+                  <h4 className="font-bold text-lg text-foreground">Develop Options</h4>
                 </div>
-                <h4 className="font-bold text-lg mb-2 text-foreground">Develop Options</h4>
-                <p className="text-sm text-muted-foreground mb-4">Creating strategic AI implementation pathways</p>
-                <div className="flex justify-center">
-                  <Lightbulb className="w-6 h-6 text-genie-cyan" />
-                </div>
+                <p className="text-sm text-muted-foreground">
+                  Created the AI Genie prototype solution in just 3 days using widely accessible no-code approaches, offering a scalable model for the <strong>GenieAI Experimentation Hub</strong>.
+                </p>
               </Card>
 
-              {/* Step 4: Assess Trade-Offs */}
-              <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-purple-500/20 hover:border-purple-500/40 snap-center">
-                <div className="relative w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-background/60">
-                  <span className="relative text-xl font-bold">4</span>
+              {/* Step 4: Assess Trade-offs */}
+              <Card className="flex-none w-80 p-6 group hover:shadow-xl transition-all duration-300 border-2 border-purple-500/20 hover:border-purple-500/40 snap-center">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold text-lg flex-shrink-0">
+                    04
+                  </div>
+                  <h4 className="font-bold text-lg text-foreground">Assess Trade-offs</h4>
                 </div>
-                <h4 className="font-bold text-lg mb-2 text-foreground">Assess Trade-Offs</h4>
-                <p className="text-sm text-muted-foreground mb-4">Balancing innovation speed with risk management</p>
-                <div className="flex justify-center">
-                  <Scale className="w-6 h-6 text-purple-500" />
-                </div>
-              </Card>
-
-              {/* Step 5: Measure Actual Give/Get Gap */}
-              <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-orange-500/20 hover:border-orange-500/40 snap-center">
-                <div className="relative w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-background/60">
-                  <span className="relative text-xl font-bold">5</span>
-                </div>
-                <h4 className="font-bold text-lg mb-2 text-foreground">Measure Gap</h4>
-                <p className="text-sm text-muted-foreground mb-4">Tracking actual value delivery vs. expectations</p>
-                <div className="flex justify-center">
-                  <Target className="w-6 h-6 text-orange-500" />
-                </div>
-              </Card>
-
-              {/* Step 6: Adjust & Iterate */}
-              <Card className="flex-none w-80 p-6 text-center group hover:shadow-xl transition-all duration-300 border-2 border-emerald-500/20 hover:border-emerald-500/40 snap-center">
-                <div className="relative w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-background/60">
-                  <span className="relative text-xl font-bold">6</span>
-                </div>
-                <h4 className="font-bold text-lg mb-2 text-foreground">Adjust & Iterate</h4>
-                <p className="text-sm text-muted-foreground mb-4">Continuous optimization and scaling successful models</p>
-                <div className="flex justify-center">
-                  <Rocket className="w-6 h-6 text-emerald-500" />
-                </div>
+                <p className="text-sm text-muted-foreground">
+                  Chose speed, accessibility, and replicability over complex traditional development, proving a viable path for broader adoption driven by <strong>personal experimentation</strong>.
+                </p>
               </Card>
             </div>
             
             {/* Scroll indicator */}
             <div className="flex justify-center mt-4">
               <div className="flex gap-2">
-                <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
-                <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
-                <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
                 <div className="w-2 h-2 bg-genie-primary rounded-full"></div>
+                <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
                 <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
                 <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
               </div>
             </div>
+            
+            <p className="text-center text-sm text-muted-foreground mt-6 max-w-3xl mx-auto">
+              This demonstrates how the <strong>Experiment → Validate → Lead to Deploy</strong> pipeline naturally aligns with Gartner's proven value creation methodology, validating personal experimentation as a legitimate and powerful path to accelerating enterprise innovation.
+            </p>
           </div>
         </div>
 
@@ -267,8 +301,11 @@ export const GartnerValueSection = () => {
                 Strategic AI Integration
               </div>
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                Why Learn AI Through <span className="text-primary">Experimentation Now?</span>
+                Why <span className="text-primary">Personal AI Experimentation</span> Now?
               </h3>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Individual experiments showcase AI's immense power, fueling personal growth and driving AI democratization through hands-on learning.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
