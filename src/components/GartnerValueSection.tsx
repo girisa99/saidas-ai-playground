@@ -294,101 +294,15 @@ export const GartnerValueSection = () => {
           </div>
         </div>
 
-        {/* Gartner Value Creation in Action */}
+        {/* CTA Section */}
         <div className="mb-12 lg:mb-16">
-          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-foreground">
-            <span className="text-genie-primary">Gartner Value Creation in Action:</span> The 'AI Genie' Impact
-          </h3>
-          
-          <div className="relative">
-            {/* Scroll Controls */}
-            <div className="absolute top-1/2 -translate-y-1/2 -left-4 z-20">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={scrollLeft}
-                className="h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background shadow-lg"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-            </div>
-            <div className="absolute top-1/2 -translate-y-1/2 -right-4 z-20">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={scrollRight}
-                className="h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background shadow-lg"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-            
-            <div ref={scrollRef} className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-8">
-              {/* Step 1: Listen & Sense */}
-              <Card className="flex-none w-80 p-6 group hover:shadow-xl transition-all duration-300 border-2 border-genie-primary/20 hover:border-genie-primary/40 snap-center">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-genie-primary text-white flex items-center justify-center font-bold text-lg flex-shrink-0">
-                    01
-                  </div>
-                  <h4 className="font-bold text-lg text-foreground">Listen & Sense</h4>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Identified the widespread need for rapid AI prototyping and accessible development, emphasizing the importance of <strong>personal experimentation</strong>.
-                </p>
-              </Card>
-
-              {/* Step 2: Assess Materiality */}
-              <Card className="flex-none w-80 p-6 group hover:shadow-xl transition-all duration-300 border-2 border-genie-teal/20 hover:border-genie-teal/40 snap-center">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-genie-teal text-white flex items-center justify-center font-bold text-lg flex-shrink-0">
-                    02
-                  </div>
-                  <h4 className="font-bold text-lg text-foreground">Assess Materiality</h4>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Recognized the transformative potential of <strong>AI democratization</strong> and individual AI innovation for the enterprise.
-                </p>
-              </Card>
-
-              {/* Step 3: Develop Options */}
-              <Card className="flex-none w-80 p-6 group hover:shadow-xl transition-all duration-300 border-2 border-genie-cyan/20 hover:border-genie-cyan/40 snap-center">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-genie-cyan text-white flex items-center justify-center font-bold text-lg flex-shrink-0">
-                    03
-                  </div>
-                  <h4 className="font-bold text-lg text-foreground">Develop Options</h4>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Created the AI Genie prototype solution in just 3 days using widely accessible no-code approaches, offering a scalable model for the <strong>GenieAI Experimentation Hub</strong>.
-                </p>
-              </Card>
-
-              {/* Step 4: Assess Trade-offs */}
-              <Card className="flex-none w-80 p-6 group hover:shadow-xl transition-all duration-300 border-2 border-purple-500/20 hover:border-purple-500/40 snap-center">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold text-lg flex-shrink-0">
-                    04
-                  </div>
-                  <h4 className="font-bold text-lg text-foreground">Assess Trade-offs</h4>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Chose speed, accessibility, and replicability over complex traditional development, proving a viable path for broader adoption driven by <strong>personal experimentation</strong>.
-                </p>
-              </Card>
-            </div>
-            
-            {/* Scroll indicator */}
-            <div className="flex justify-center mt-4">
-              <div className="flex gap-2">
-                <div className="w-2 h-2 bg-genie-primary rounded-full"></div>
-                <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
-                <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
-                <div className="w-2 h-2 bg-genie-primary/30 rounded-full"></div>
-              </div>
-            </div>
-            
-            <p className="text-center text-sm text-muted-foreground mt-6 max-w-3xl mx-auto">
-              This demonstrates how the <strong>Experiment → Validate → Lead to Deploy</strong> pipeline naturally aligns with Gartner's proven value creation methodology, validating personal experimentation as a legitimate and powerful path to accelerating enterprise innovation.
+          <div className="text-center max-w-4xl mx-auto">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
+              Continue Your AI Change Agent Journey
+            </h3>
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Build expertise through systematic exploration of implementations, decision frameworks, 
+              and technology stacks that drive successful AI transformation.
             </p>
           </div>
         </div>
