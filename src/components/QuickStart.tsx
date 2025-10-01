@@ -169,10 +169,9 @@ export const QuickStart = () => {
         {/* Learning Path Navigation */}
         <div className="mt-16 text-center">
           <Card className="p-8 bg-gradient-to-r from-primary/5 to-background border-primary/20">
-            <h3 className="text-2xl font-bold mb-4">Continue Your AI Change Agent Journey</h3>
+            <h3 className="text-2xl font-bold mb-4">Gartner Value Creation in Action</h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Build expertise through systematic exploration of implementations, decision frameworks, 
-              and technology stacks that drive successful AI transformation.
+              See how our AI experimentation framework delivers measurable business value across all stakeholder groups through systematic implementation and validation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/journey">
