@@ -84,7 +84,7 @@ export const UnifiedHeroBanner = () => {
           </h1>
           <div className="w-24 h-1 bg-genie-accent mx-auto mb-6"></div>
           <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-4">
-            <strong>May 2025 Launch:</strong> Building AI expertise through systematic experimentation—anyone can start with curiosity.
+            <strong>May 2025 Launch:</strong> Building AI expertise through systematic personal experimentation and validation.
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-sm text-white/80">
             <div className="flex items-center gap-2">
@@ -116,7 +116,7 @@ export const UnifiedHeroBanner = () => {
               </h2>
               
               <p className="text-white/80 text-lg leading-relaxed">
-                Your personal AI learning laboratory where curiosity meets systematic experimentation. Discover proven methodologies that transform individual exploration into expertise that drives organizational change.
+                Personal AI experimentation laboratory demonstrating systematic methodologies and proven frameworks that drive organizational AI adoption and change.
               </p>
 
               {/* Framework Steps */}
@@ -205,7 +205,7 @@ export const UnifiedHeroBanner = () => {
               </h2>
               
               <p className="text-white/80 text-lg leading-relaxed">
-                Your AI learning companion with 80+ specialized knowledge contexts. Practice conversations, explore use cases, and build expertise that positions you as an AI change agent in your field.
+                Advanced conversational AI with 80+ specialized knowledge contexts. Experience systematic experimentation with multi-domain intelligence and enterprise-grade capabilities for organizational AI implementation.
               </p>
 
               {/* Genie Core Capabilities */}
