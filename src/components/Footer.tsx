@@ -78,7 +78,7 @@ export const Footer = () => {
                 Personal AI Development Journey
               </Link>
               <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors block">
-                About Sai - Change Agent Creator
+                About Sai - Value Creation Journey
               </Link>
               <Link to="/technology" className="text-muted-foreground hover:text-foreground transition-colors block">
                 2 Live Features Tech Stack

@@ -10,10 +10,10 @@ import { useEffect } from "react";
 const Index = () => {
   useEffect(() => {
     // Update page metadata
-    document.title = "Genie AI Experimentation HUB - 2 Live Features: Personal AI Change Agent Development";
+    document.title = "Genie AI Hub — Proven Value Creation Framework";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', '2 Live Features Launched: GenieAI Hub Platform & Genie Conversation (80+ contexts). Personal AI learning journey building change agent expertise through proven Experiment → Validate → Lead to Deploy framework.');
+      metaDescription.setAttribute('content', '2 live features and 80+ contexts delivering measurable business value through systematic AI experimentation and validation.');
     }
   }, []);
 
