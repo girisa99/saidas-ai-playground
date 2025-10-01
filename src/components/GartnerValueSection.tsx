@@ -354,7 +354,7 @@ export const GartnerValueSection = () => {
               <Card className="p-6 bg-gradient-to-br from-genie-teal/10 to-genie-teal/5 border-genie-teal/20">
                 <h4 className="text-xl font-bold mb-4 text-foreground flex items-center gap-2">
                   <TrendingUp className="w-6 h-6 text-genie-teal" />
-                  Change Agent Advantage
+                  Strategic Value Leadership
                 </h4>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
@@ -367,7 +367,7 @@ export const GartnerValueSection = () => {
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-genie-teal rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-sm"><strong>Position Yourself as Leader:</strong> Become the AI change agent your field needs</span>
+                    <span className="text-sm"><strong>Position Yourself as Leader:</strong> Become the value driver your organization needs</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-genie-teal rounded-full mt-2 flex-shrink-0"></div>
