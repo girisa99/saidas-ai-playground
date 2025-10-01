@@ -73,17 +73,17 @@ export const Footer = () => {
           {/* Quick Links */}
           <div>
             <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Quick Links</h4>
-            <div className="space-y-2 text-xs sm:text-sm">
-              <Link to="/journey" className="text-muted-foreground hover:text-foreground transition-colors block">
+            <div className="space-y-3 text-xs sm:text-sm">
+              <Link to="/journey" className="text-muted-foreground hover:text-foreground transition-colors block leading-relaxed">
                 Personal AI Development Journey
               </Link>
-              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors block">
+              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors block leading-relaxed">
                 About Sai - Value Creation Journey
               </Link>
-              <Link to="/technology" className="text-muted-foreground hover:text-foreground transition-colors block">
+              <Link to="/technology" className="text-muted-foreground hover:text-foreground transition-colors block leading-relaxed">
                 2 Live Features Tech Stack
               </Link>
-              <Link to="/case-studies" className="text-muted-foreground hover:text-foreground transition-colors block">
+              <Link to="/case-studies" className="text-muted-foreground hover:text-foreground transition-colors block leading-relaxed">
                 Live Feature Case Studies
               </Link>
             </div>
