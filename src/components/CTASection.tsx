@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, PlayCircle, BookOpen, Lightbulb, Target, Users, Zap, Trophy, Map, Rocket } from "lucide-react";
+import { ArrowRight, PlayCircle, BookOpen, Lightbulb, Target, Users, Zap, Trophy, Map, Rocket, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
+import { TimeToActModal } from "@/components/TimeToActModal";
 
 interface CTAProps {
   currentPage: "home" | "about" | "journey" | "technology" | "business-cases" | "case-studies" | "contact" | "docs" | "faq";
@@ -11,6 +12,7 @@ interface CTAProps {
 }
 
 export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
+  const [showTimeToAct, setShowTimeToAct] = useState(false);
   // Define logical flow paths for each page
   const getNextSteps = () => {
     switch (currentPage) {
@@ -281,20 +283,40 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
 
   // Primary variant - compact CTA section
   return (
-    <section className="py-10 bg-gradient-to-br from-genie-dark/5 via-genie-primary/5 to-genie-secondary/5">
-      <div className="max-w-5xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-2">
-            <Rocket className="w-3 h-3 mr-1" />
-            What's Next?
-          </Badge>
-          <h2 className="text-xl lg:text-2xl font-bold mb-3">
-            Continue Building Your <span className="text-genie-primary">AI Expertise</span>
-          </h2>
-          <p className="text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Take the next step in developing AI capabilities that position you as a change agent
-          </p>
-        </div>
+    <>
+      <TimeToActModal 
+        open={showTimeToAct} 
+        onOpenChange={setShowTimeToAct}
+        context={currentPage}
+      />
+      
+      <section className="py-10 bg-gradient-to-br from-genie-dark/5 via-genie-primary/5 to-genie-secondary/5">
+        <div className="max-w-5xl mx-auto px-4">
+          {/* Time to Act Banner */}
+          <div className="mb-6 text-center">
+            <Button
+              onClick={() => setShowTimeToAct(true)}
+              className="bg-genie-accent hover:bg-genie-accent/90 text-genie-dark font-semibold shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse"
+              size="lg"
+            >
+              <Clock className="w-4 h-4 mr-2" />
+              Time to Act is Now - See Why
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </div>
+
+          <div className="text-center mb-8">
+            <Badge className="bg-genie-primary/20 text-genie-primary border-genie-primary/30 mb-2">
+              <Rocket className="w-3 h-3 mr-1" />
+              What's Next?
+            </Badge>
+            <h2 className="text-xl lg:text-2xl font-bold mb-3">
+              Continue Building Your <span className="text-genie-primary">AI Expertise</span>
+            </h2>
+            <p className="text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Take the next step in developing AI capabilities that position you as a change agent
+            </p>
+          </div>
 
         <div className="grid lg:grid-cols-3 gap-4">
           {/* Primary CTA */}
@@ -387,5 +409,6 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
         </div>
       </div>
     </section>
+    </>
   );
 };
