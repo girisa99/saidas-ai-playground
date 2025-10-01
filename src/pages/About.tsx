@@ -25,10 +25,10 @@ const About = () => {
   const [desc1Done, setDesc1Done] = useState(false);
   const [desc2Done, setDesc2Done] = useState(false);
   useEffect(() => {
-    document.title = "About Me - Saidas | Personal AI Change Agent & 2 Live Feature Creator";
+    document.title = "About Sai - Value Creation Journey | 2 Live Features Creator";
     const metaDescription = document.querySelector("meta[name=\"description\"]");
     if (metaDescription) {
-      metaDescription.setAttribute("content", "Meet Saidas - Personal AI change agent who built 2 live features: GenieAI Hub Platform & Genie Conversation (80+ contexts). 25+ years experience helping individuals become AI leaders through proven 3-phase framework.");
+      metaDescription.setAttribute("content", "Meet Sai Dasika - Creator of GenieAI Hub Platform with 2 live features: Platform & Genie Conversation (80+ contexts). 21+ years of healthcare innovation leadership demonstrating proven value creation through systematic AI experimentation.");
     }
 
     // Animation sequence phases (bottle shows first; text animation begins)
@@ -313,10 +313,10 @@ const About = () => {
                    <strong className="text-genie-primary">Director of Product owner/solution Architect for CGAT (PSaS) supporting InspiroGene at McKesson</strong>, 
                    I apply this framework across complex healthcare technology initiatives.
                  </p>
-                 <p className="mb-6">
+                  <p className="mb-6">
                    The <strong className="text-genie-cyan">GenieAI Experimentation Hub</strong> emerged from this methodology - 
-                   your personal laboratory for AI discovery and skill building. This hub demonstrates how individual curiosity and systematic experimentation 
-                   create the expertise needed to become an AI change agent. Rather than theoretical concepts, every experiment here shows 
+                   my personal laboratory for AI discovery and skill building. This hub demonstrates how individual curiosity and systematic experimentation 
+                   create expertise through proven value creation. Rather than theoretical concepts, every experiment here shows 
                    real applications, measurable outcomes, and the journey from "what if" to working solution. 
                    It's where personal learning transforms into professional leadership capability.
                  </p>
