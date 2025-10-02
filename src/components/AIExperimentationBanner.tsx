@@ -11,11 +11,11 @@ export const AIExperimentationBanner = () => {
             <Database className="h-8 w-8 text-genie-teal" />
             <Zap className="h-8 w-8 text-genie-cyan" />
           </div>
-          <h3 className="text-2xl font-bold mb-4">2 Live Features: Build AI Expertise Through Personal Experimentation</h3>
+          <h3 className="text-2xl font-bold mb-4">2 Live Features: Dual Context AI with Enterprise Performance</h3>
           <p className="text-muted-foreground max-w-3xl mx-auto">
-            <strong>GenieAI Hub Platform & Genie Conversation (80+ contexts)</strong> - demonstrating the systematic 
-            Experiment → Validate → Lead to Deploy framework. Real implementations showing how personal curiosity 
-            transforms into professional AI expertise and organizational change leadership.
+            <strong>GenieAI Hub Platform & Genie Conversation</strong> - featuring Dual Context System (Tech ↔ Healthcare), 
+            Split-Screen Interface, Smart Session Management, and proven performance (&lt;2.5s response, 1,000+ concurrent users). 
+            Demonstrating the Experiment → Validate → Lead to Deploy framework with real implementations and documented outcomes.
           </p>
         </div>
       </div>

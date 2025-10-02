@@ -27,7 +27,7 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
           },
           secondary: {
             title: "Browse My Experiments",
-            description: "10+ experiments across pipeline and 2 live features showing what I built. Use what fits your situation, modify what doesn't.",
+            description: "10+ experiments across pipeline and 2 live features (including Dual Context AI with <2.5s response). Use what fits your situation, modify what doesn't.",
             link: "/business-use-cases",
             icon: Target,
             buttonText: "Browse Experiments"
@@ -45,7 +45,7 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
         return {
           primary: {
             title: "See How I Learned",
-            description: "My path from curiosity to building 2 live features and 10+ experiments across pipeline. Adapt the approach to fit your own learning style.",
+            description: "My path from curiosity to building 2 live features (Split-Screen AI, Dual Context System) and 10+ experiments. Adapt the approach to fit your own learning style.",
             link: "/journey",
             icon: Map,
             buttonText: "View My Journey"
@@ -77,7 +77,7 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
           },
           secondary: {
             title: "Browse Implementation Results",
-            description: "2 live features and 10+ experiments showing what worked for me. Use as reference points for your own implementations.",
+            description: "2 live features with critical capabilities (Dual Context, Smart Sessions, 1K+ concurrent) and 10+ experiments. Use as reference points for your implementations.",
             link: "/case-studies",
             icon: Trophy,
             buttonText: "Browse Results"

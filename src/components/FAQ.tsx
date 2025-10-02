@@ -19,15 +19,15 @@ const faqData = [
     questions: [
       {
         q: "What is Genie AI and how can it help me?",
-        a: "Genie AI is your intelligent assistant with 80+ specialized knowledge contexts, featuring advanced RAG architecture and multi-model intelligence. As one of our 2 live features launched through the Experiment → Validate → Lead to Deploy framework, I help you build AI expertise and position yourself as an AI-proficient professional in your field. I support discussions on AI innovation, Gartner Value Framework, tech stack mapping, experimentation methodologies, and healthcare business use cases."
+        a: "Genie AI is your intelligent assistant with critical user features: Dual Context System (Tech ↔ Healthcare switching), Split-Screen Interface, Smart Session Management, and <2.5s response times. As one of our 2 live features, I demonstrate 80+ specialized knowledge contexts with multi-model intelligence (5 AI models), proven to handle 1,000+ concurrent users at 99.9% reliability. Built through the Experiment → Validate → Lead to Deploy framework to help you explore AI innovation, Gartner Value Framework, tech stack mapping, and healthcare business use cases."
       },
       {
         q: "What topics can Genie AI discuss?",
-        a: "As one of 2 live features from our experimentation framework, I specialize in: • 80+ Knowledge Contexts with advanced RAG • Multi-model AI intelligence (GPT-5, Claude, Gemini) • Split-screen conversations and model comparisons • AI Innovation & Value Creation • Gartner Value Framework mapping • Technology stack architecture • Healthcare business use cases • Digital therapeutics (DTx) • Cell & gene therapies • Personal expertise development • Security and compliance topics • Journey mapping and case studies"
+        a: "As one of 2 live features, I offer critical user-facing capabilities: • Dual Context System - Intelligent Tech ↔ Healthcare switching • Split-Screen Interface - Compare multiple AI models side-by-side • Smart Session Management - Context-aware conversation handling • Performance - <2.5s response time, 1,000+ concurrent users, 99.9% reliability • Multi-Model Intelligence - 5 AI models (GPT-5, Claude, Gemini) orchestration • 80+ Knowledge Contexts with advanced RAG • Real-time streaming responses • Healthcare domain expertise (DTx, Cell & Gene therapy) • Technology stack architecture guidance • Personal expertise development support"
       },
       {
         q: "How does Genie AI adapt to different contexts?",
-        a: "I intelligently detect whether you're asking about technology or healthcare topics and adapt my responses accordingly. With 80+ specialized knowledge contexts and advanced RAG architecture, I can switch between formal, casual, or empathetic communication styles. I also offer split-screen conversations, multi-model comparisons, and contextual suggestions to guide our conversation - demonstrating the advanced capabilities achieved through our 3-phase experimentation framework."
+        a: "I feature intelligent context detection with seamless Tech ↔ Healthcare switching. My Dual Context System automatically adapts conversation style, knowledge access, and response patterns. The Split-Screen Interface lets you compare multiple AI models simultaneously. With 80+ specialized knowledge contexts, Smart Session Management, and <2.5s response times handling 1,000+ concurrent users, I provide enterprise-grade conversational intelligence. I also offer contextual suggestions, real-time streaming, and advanced RAG-enabled responses - all capabilities proven through our 3-phase experimentation framework."
       }
     ]
   },
@@ -104,7 +104,7 @@ const faqData = [
     questions: [
       {
         q: "What advanced AI modes does Genie offer?",
-        a: "As my flagship experimentation project where I'm demonstrating AI's transformative impact through documented outcomes, I support multiple advanced modes with proven results: • Split-screen conversations with model comparisons • Multi-model intelligence (GPT-5, Claude, Gemini) • 80+ specialized knowledge contexts • Advanced RAG-enabled responses • Context switching between domains • Single-agent mode for focused expertise • Multi-agent mode for complex analysis • MCP (Model Context Protocol) tool usage • Real-time knowledge base integration. Sharing proven results from experimentation: successfully handling 1,000+ concurrent conversations, achieving <2.5s response times, maintaining 99.9% system reliability. These case studies demonstrate how AI disrupts traditional development."
+        a: "As my flagship experimentation demonstrating AI transformation with documented outcomes, I offer critical user features: • Dual Context System - Seamless Tech ↔ Healthcare switching • Split-Screen Interface - Multi-model comparison view • Smart Session Management - Context-aware handling • Performance - <2.5s response, 1,000+ concurrent users, 99.9% reliability • Multi-Model Intelligence - 5 AI models (GPT-5, Claude, Gemini) • 80+ specialized knowledge contexts • Advanced RAG with real-time knowledge integration • Single/Multi-agent modes for focused or complex analysis • MCP (Model Context Protocol) tool usage. These proven results from experimentation show how AI disrupts traditional development with measurable performance and user-focused capabilities."
       },
       {
         q: "How does the knowledge base integration work?",

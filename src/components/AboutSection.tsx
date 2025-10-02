@@ -101,7 +101,7 @@ export const AboutSection = () => {
                   </h5>
                   <p className="text-muted-foreground text-sm mb-3">
                     <strong>1) GenieAI Experimentation Hub Site:</strong> Knowledge sharing platform documenting AI experimentation outcomes, case studies, and proven approaches - demonstrating how AI transforms development workflows.<br/>
-                    <strong>2) Genie Conversation Experiment:</strong> Hands-on AI project with documented results: 80+ knowledge contexts, split-screen mode, multi-model intelligence. Real outcomes from experimentation with scalability (1,000+ concurrent conversations), performance optimization (&lt;2.5s response), and system design patterns.
+                    <strong>2) Genie Conversation:</strong> Critical user features - Dual Context System (Tech ↔ Healthcare), Split-Screen Interface, Smart Session Management. Proven performance: &lt;2.5s response, 1,000+ concurrent users, 99.9% reliability. Built with 80+ knowledge contexts, 5 AI models, real-time streaming, and advanced RAG architecture.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="secondary" className="text-xs">2 Live Features</Badge>
