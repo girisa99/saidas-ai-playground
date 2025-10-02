@@ -293,13 +293,13 @@ const VerticalJourneyInfographic = () => {
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12">
           <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-4">
-            My Journey
+            90-Day Experimentation Framework
           </Badge>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4 sm:mb-6">
-            AI Transformation <span className="text-foreground">Journey</span>
+            My 90-Day <span className="text-genie-primary">AI Learning Journey</span>
           </h2>
           <p className="text-lg sm:text-xl text-foreground mb-6 sm:mb-8 leading-relaxed px-2">
-            An ongoing comprehensive exploration from May 2025 to present - evolving from curiosity to breakthrough AI capabilities and beyond
+            From Day 0-45: Personal experimentation and discovery. Day 45-90: Building scalable MVP foundations through continuous learning and deployment
           </p>
           
           {/* Controls */}
