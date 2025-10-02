@@ -93,7 +93,7 @@ export const WelcomeEmail = ({
 
           {/* About Me Section */}
           <Section style={section}>
-            <Heading style={h2}>About Sai Das - Your AI Guide</Heading>
+            <Heading style={h2}>About Sai Dasika - Your AI Guide</Heading>
             <Text style={text}>
               Building AI expertise through systematic personal experimentation. Sharing proven results, documented 
               learnings, and practical frameworks that transform curiosity into professional capability and organizational 
@@ -133,8 +133,8 @@ export const WelcomeEmail = ({
           {/* Footer */}
           <Text style={footer}>
             Thank you for joining this AI experimentation journey!<br/>
-            <strong>Sai Das - GenieAI Experimentation Hub</strong><br/>
-            <Link href="https://www.linkedin.com/in/saidas/" style={linkStyle}>Connect on LinkedIn</Link> | 
+            <strong>Sai Dasika - GenieAI Experimentation Hub</strong><br/>
+            <Link href="https://www.linkedin.com/in/saidas/" style={linkStyle}>Connect on LinkedIn</Link> |
             <Link href={siteUrl} style={linkStyle}> Visit Hub</Link>
           </Text>
 

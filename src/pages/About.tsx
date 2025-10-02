@@ -25,7 +25,7 @@ const About = () => {
   const [desc1Done, setDesc1Done] = useState(false);
   const [desc2Done, setDesc2Done] = useState(false);
   useEffect(() => {
-    document.title = "About Sai - Value Creation Journey | 2 Live Features Creator";
+    document.title = "About Sai Dasika - Value Creation Journey | 2 Live Features Creator";
     const metaDescription = document.querySelector("meta[name=\"description\"]");
     if (metaDescription) {
       metaDescription.setAttribute("content", "Meet Sai Dasika - Creator of GenieAI Hub Platform with 2 live features: Platform & Genie Conversation (80+ contexts). 21+ years of healthcare innovation leadership demonstrating proven value creation through systematic AI experimentation.");

@@ -11,7 +11,7 @@ import { useEffect } from "react";
 const Contact = () => {
   useEffect(() => {
     // Update page metadata
-    document.title = "Contact Sai - Creator of 2 Live AI Features & AI Expertise Development Expert";
+    document.title = "Contact Sai Dasika - Creator of 2 Live AI Features & AI Expertise Development Expert";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute('content', 'Contact Sai Dasika - Creator of 2 live AI features (GenieAI Hub & Genie Conversation). Learn how to build personal AI expertise and become an AI-proficient professional in your field.');
@@ -108,7 +108,7 @@ const Contact = () => {
                         <div className="flex-1">
                           <h3 className="font-semibold mb-1">Connect on LinkedIn</h3>
                           <p className="text-muted-foreground mb-3">
-                            Sai Das - AI Innovation Leader
+                            Sai Dasika - AI Innovation Leader
                           </p>
                           <Button
                             size="sm"
