@@ -299,7 +299,7 @@ const VerticalJourneyInfographic = () => {
             My 90-Day <span className="text-genie-primary">AI Learning Journey</span>
           </h2>
           <p className="text-lg sm:text-xl text-foreground mb-6 sm:mb-8 leading-relaxed px-2">
-            From Day 0-45: Personal experimentation and discovery. Day 45-90: Building scalable MVP foundations through continuous learning and deployment
+            From Day 0-45: Personal experimentation and discovery. Day 45-90: Building scalable foundation platform through continuous learning and deployment
           </p>
           
           {/* Controls */}
