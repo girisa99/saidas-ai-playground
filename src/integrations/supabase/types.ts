@@ -15504,30 +15504,36 @@ export type Database = {
       service_providers_public: {
         Row: {
           description: string | null
+          geographic_coverage: string[] | null
           id: string | null
           is_active: boolean | null
           name: string | null
           provider_type:
             | Database["public"]["Enums"]["service_provider_type"]
             | null
+          specializations: string[] | null
         }
         Insert: {
           description?: string | null
+          geographic_coverage?: string[] | null
           id?: string | null
           is_active?: boolean | null
           name?: string | null
           provider_type?:
             | Database["public"]["Enums"]["service_provider_type"]
             | null
+          specializations?: string[] | null
         }
         Update: {
           description?: string | null
+          geographic_coverage?: string[] | null
           id?: string | null
           is_active?: boolean | null
           name?: string | null
           provider_type?:
             | Database["public"]["Enums"]["service_provider_type"]
             | null
+          specializations?: string[] | null
         }
         Relationships: []
       }
