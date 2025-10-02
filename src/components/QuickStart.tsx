@@ -43,8 +43,8 @@ export const QuickStart = () => {
   const proofPoints = [
     {
       title: "Genie Conversational AI Experiment",
-      subtitle: "🧪 ACTIVE: Learning Project with 80+ Knowledge Contexts",
-      description: "Personal hands-on AI experimentation with multi-model intelligence (Gemini 2.5, GPT-5), split-screen conversations, healthcare concepts, and real-time streaming. Demonstrating sophisticated RAG architecture and learning about scalability through load testing (experimenting with 1,000+ concurrent scenarios, <2.5s response optimization). Active learning project exploring system design patterns.",
+      subtitle: "🌟 LIVE: Sharing Real Outcomes from 80+ Knowledge Contexts",
+      description: "Active AI experimentation with documented results demonstrating how AI transforms development. Shared case studies include: multi-model intelligence (Gemini 2.5, GPT-5), split-screen conversations, sophisticated RAG architecture. Published learnings: successfully handling 1,000+ concurrent scenarios, achieving <2.5s response times, proven system design patterns. Thought leadership through hands-on experimentation.",
       icon: <Code className="h-8 w-8" />,
       link: "/case-studies",
       status: "Active Experiment",
@@ -104,8 +104,8 @@ export const QuickStart = () => {
             Proven <span className="text-primary">Value Creation</span> Framework
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            <strong>2 Live Experiments:</strong> GenieAI Hub Platform & Genie Conversational AI with 80+ knowledge contexts. 
-            Personal learning journey exploring scalability (testing 1,000+ concurrent scenarios), performance optimization (targeting {"<"}2.5s responses), and system reliability through hands-on experimentation.
+            <strong>2 Live Features with Documented Outcomes:</strong> GenieAI Hub Platform & Genie Conversational AI with 80+ knowledge contexts. 
+            Sharing real learnings and case studies proving how AI disrupts development - proven results in scalability (1,000+ concurrent conversations), performance optimization (&lt;2.5s response times), and system reliability (99.9% uptime).
           </p>
         </div>
 

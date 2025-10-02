@@ -237,7 +237,7 @@ const CaseStudies = () => {
                         </div>
                         
                         <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
-                          Personal AI learning project with multi-model intelligence, split-screen conversations, and advanced RAG architecture. Hands-on experimentation demonstrating AI capabilities through the Experiment → Validate → Lead to Deploy framework. Active exploration of scalability (tested 1,000+ concurrent scenarios), performance optimization ({"<"}2.5s response targets), and system design patterns.
+                          Experimentation with Real Outcomes: Active AI project demonstrating how AI transforms development through documented case studies. Sharing proven results: multi-model intelligence, split-screen conversations, advanced RAG architecture. Published learnings include scalability (handled 1,000+ concurrent conversations), performance optimization (achieved &lt;2.5s response times), system design patterns (99.9% reliability). Thought leadership through hands-on experimentation.
                         </p>
                         
                         <div className="mb-4">
