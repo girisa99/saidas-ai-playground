@@ -130,8 +130,8 @@ export const TrustSection = () => {
             <span className="text-primary">Experiment → Validate → Lead to Deploy</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto mb-12">
-            A proven 3-step approach that transforms individuals into AI change agents. 
-            Build personal expertise through systematic experimentation, then influence organizational transformation.
+            A proven 3-step approach that transforms individuals into AI-proficient professionals. 
+            Build personal expertise through systematic experimentation, then drive innovation in your organization.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -174,7 +174,7 @@ export const TrustSection = () => {
               </div>
             </div>
             <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-primary">Change Agent Benefits:</h4>
+              <h4 className="text-lg font-semibold text-primary">Professional Development Benefits:</h4>
               <div className="space-y-2 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500"></CheckCircle>

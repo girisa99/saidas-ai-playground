@@ -63,7 +63,7 @@ export const TimeToActModal = ({ open, onOpenChange, context }: TimeToActModalPr
           questions: [
             {
               stakeholder: "Individual Contributors",
-              question: "How can I become an AI change agent in my organization?",
+              question: "How can I build AI expertise and develop AI capabilities?",
               icon: Lightbulb,
               color: "accent"
             },

@@ -10,7 +10,7 @@ const BusinessUseCases = () => {
     document.title = "3-Phase Framework Applications - 2 Live Features in Healthcare AI";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', '2 Live Features demonstrating Experiment → Validate → Lead to Deploy framework: GenieAI Hub Platform & Genie Conversation. Real healthcare AI applications with Genie integration showing personal change agent development.');
+      metaDescription.setAttribute('content', '2 Live Features demonstrating Experiment → Validate → Lead to Deploy framework: GenieAI Hub Platform & Genie Conversation. Real healthcare AI applications with Genie integration showing professional AI expertise development.');
     }
   }, []);
 

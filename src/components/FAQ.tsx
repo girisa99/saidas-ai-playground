@@ -19,7 +19,7 @@ const faqData = [
     questions: [
       {
         q: "What is Genie AI and how can it help me?",
-        a: "Genie AI is your intelligent assistant with 80+ specialized knowledge contexts, featuring advanced RAG architecture and multi-model intelligence. As one of our 2 live features launched through the Experiment → Validate → Lead to Deploy framework, I help you build AI expertise and position yourself as a change agent in your field. I support discussions on AI innovation, Gartner Value Framework, tech stack mapping, experimentation methodologies, and healthcare business use cases."
+        a: "Genie AI is your intelligent assistant with 80+ specialized knowledge contexts, featuring advanced RAG architecture and multi-model intelligence. As one of our 2 live features launched through the Experiment → Validate → Lead to Deploy framework, I help you build AI expertise and position yourself as an AI-proficient professional in your field. I support discussions on AI innovation, Gartner Value Framework, tech stack mapping, experimentation methodologies, and healthcare business use cases."
       },
       {
         q: "What topics can Genie AI discuss?",
@@ -44,7 +44,7 @@ const faqData = [
       },
       {
         q: "How can I implement AI democratization in my organization?",
-        a: "I can guide you through personal AI expertise development that positions you as a change agent: • Open source AI adoption strategies • Individual skill development approaches • Accessible AI tool selection for personal projects • Self-directed learning program design • Personal experimentation frameworks • Cost-effective AI solution implementation for individual growth • Building expertise that influences organizational adoption"
+        a: "I can guide you through personal AI expertise development that positions you as an AI expert: • Open source AI adoption strategies • Individual skill development approaches • Accessible AI tool selection for personal projects • Self-directed learning program design • Personal experimentation frameworks • Cost-effective AI solution implementation for individual growth • Building expertise that influences organizational adoption"
       }
     ]
   },
@@ -70,7 +70,7 @@ const faqData = [
     questions: [
       {
         q: "How does the Experimentation Hub journey work?",
-        a: "The personal AI expertise development journey follows our proven 3-phase framework demonstrated through 2 live implementations: • EXPERIMENT (Months 1-3): Technology exploration, personal skill development, hands-on learning • VALIDATE (Months 4-9): Building credible expertise, creating case studies, proving capabilities • LEAD TO DEPLOY (Months 10-18): Positioning as change agent, influencing adoption, leading implementation. This framework enabled the creation of our GenieAI Hub platform and Genie Conversational AI feature."
+        a: "The personal AI expertise development journey follows our proven 3-phase framework demonstrated through 2 live implementations: • EXPERIMENT (Months 1-3): Technology exploration, personal skill development, hands-on learning • VALIDATE (Months 4-9): Building credible expertise, creating case studies, proving capabilities • LEAD TO DEPLOY (Months 10-18): Professional development, influencing adoption, leading implementation. This framework enabled the creation of our GenieAI Hub platform and Genie Conversational AI feature."
       },
       {
         q: "What case studies and success stories can guide my implementation?",
@@ -112,7 +112,7 @@ const faqData = [
       },
       {
         q: "Can Genie AI help with specific business decisions?",
-        a: "Absolutely! I can help you build expertise and position yourself as a change agent through: • Personal technology selection guidance • Individual implementation roadmap development • Personal risk assessment and skill building • ROI estimation for personal AI projects • Vendor evaluation frameworks for individual use • Compliance requirement analysis • Personal change management strategies • Building credibility for organizational influence"
+        a: "Absolutely! I can help you build expertise and position yourself as an AI expert through: • Personal technology selection guidance • Individual implementation roadmap development • Personal risk assessment and skill building • ROI estimation for personal AI projects • Vendor evaluation frameworks for individual use • Compliance requirement analysis • Personal change management strategies • Building credibility for organizational influence"
       }
     ]
   }

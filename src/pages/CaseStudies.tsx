@@ -23,7 +23,7 @@ const CaseStudies = () => {
     document.title = "3-Phase Framework Results - 2 Live Features & Personal AI Expertise";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', '2 Live Features Launched: GenieAI Hub Platform & Genie Conversation with 80+ contexts. Proven Experiment → Validate → Lead to Deploy framework builds personal AI expertise and change agent capabilities.');
+      metaDescription.setAttribute('content', '2 Live Features Launched: GenieAI Hub Platform & Genie Conversation with 80+ contexts. Proven Experiment → Validate → Lead to Deploy framework builds personal AI expertise and professional development capabilities.');
     }
   }, []);
 

@@ -10,10 +10,10 @@ import { useEffect } from "react";
 const Contact = () => {
   useEffect(() => {
     // Update page metadata
-    document.title = "Contact Sai - Creator of 2 Live AI Features & Personal Change Agent Expert";
+    document.title = "Contact Sai - Creator of 2 Live AI Features & AI Expertise Development Expert";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Contact Sai Dasika - Creator of 2 live AI features (GenieAI Hub & Genie Conversation). Learn how to build personal AI expertise and become a change agent in your field.');
+      metaDescription.setAttribute('content', 'Contact Sai Dasika - Creator of 2 live AI features (GenieAI Hub & Genie Conversation). Learn how to build personal AI expertise and become an AI-proficient professional in your field.');
     }
   }, []);
 
