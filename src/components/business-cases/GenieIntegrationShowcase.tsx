@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MessageCircle, Brain, CheckCircle, Target, Lightbulb, ArrowRight, Zap, Users, Star } from "lucide-react";
+import { MessageCircle, Brain, CheckCircle, Target, Lightbulb, ArrowRight, Zap, Users, Star, ArrowRightLeft } from "lucide-react";
 import { genieIntegrationPoints, integrationStatus, genieFrameworkIntegration } from "@/data/genieIntegrationUses";
 
 interface GenieIntegrationShowcaseProps {
@@ -31,22 +31,26 @@ export const GenieIntegrationShowcase = ({ selectedUseCase }: GenieIntegrationSh
           <span className="text-genie-accent">Genie Conversation</span> - Experimentation with Real Results
         </h3>
         <p className="text-sm sm:text-base text-muted-foreground max-w-3xl mx-auto mb-4">
-          Active AI experimentation demonstrating how conversational AI transforms development. Sharing documented results from 80+ knowledge contexts integrated into healthcare workflows through the Experiment → Validate → Lead to Deploy framework.
+          <strong>Critical Features:</strong> Dual Context System (Tech ↔ Healthcare), Split-Screen Interface, Smart Session Management. Active experimentation demonstrating 80+ knowledge contexts with multi-model intelligence integrated into healthcare workflows.
         </p>
         
-        {/* Documented Outcomes */}
-        <div className="flex flex-wrap justify-center gap-3 mt-6">
-          <Badge variant="outline" className="border-purple-500/30 text-purple-600 bg-purple-500/5 text-xs sm:text-sm">
-            <Lightbulb className="w-3 h-3 mr-1" />
-            Proven: 1,000+ concurrent conversations
+        {/* Critical User Features & Performance */}
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6">
+          <Badge variant="outline" className="border-genie-accent/30 text-genie-accent bg-genie-accent/5 text-xs sm:text-sm">
+            <Zap className="w-3 h-3 mr-1" />
+            Dual Context Switching
           </Badge>
           <Badge variant="outline" className="border-purple-500/30 text-purple-600 bg-purple-500/5 text-xs sm:text-sm">
             <Target className="w-3 h-3 mr-1" />
-            Achieved: &lt;2.5s response times
+            &lt;2.5s Response Time
+          </Badge>
+          <Badge variant="outline" className="border-purple-500/30 text-purple-600 bg-purple-500/5 text-xs sm:text-sm">
+            <Users className="w-3 h-3 mr-1" />
+            1,000+ Concurrent Users
           </Badge>
           <Badge variant="outline" className="border-purple-500/30 text-purple-600 bg-purple-500/5 text-xs sm:text-sm">
             <CheckCircle className="w-3 h-3 mr-1" />
-            Documented: 99.9% reliability
+            Split-Screen Interface
           </Badge>
         </div>
       </div>
@@ -175,13 +179,12 @@ export const GenieIntegrationShowcase = ({ selectedUseCase }: GenieIntegrationSh
       {/* Call to Action */}
       <Card className="border-genie-accent/30 bg-gradient-to-r from-genie-accent/10 to-genie-primary/10">
         <CardContent className="p-6 sm:p-8 text-center">
-          <h4 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Experience the Genie Conversation Feature</h4>
+          <h4 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Experience Intelligent Conversational AI</h4>
           <p className="text-sm sm:text-base text-muted-foreground mb-3 max-w-2xl mx-auto">
-            Experimentation with Real Outcomes: Active AI project with 80+ knowledge contexts demonstrating how AI transforms development. 
-            Sharing proven results through documented case studies - scalability, performance optimization, and system design patterns.
+            <strong>User-Focused Features:</strong> Seamless Tech ↔ Healthcare context switching, Split-screen multi-model conversations, Smart session management with real-time streaming. Built for 1,000+ concurrent users with sub-2.5s response times.
           </p>
           <p className="text-xs sm:text-sm text-purple-600 font-semibold mb-4 sm:mb-6">
-            💡 Published Learnings: Handled 1,000+ concurrent conversations | Achieved &lt;2.5s response times | Built 99.9% reliable system
+            🎯 Key Capabilities: Dual Context System • 5 AI Models • 80+ Knowledge Contexts • Real-Time Performance • 99.9% Reliability
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 

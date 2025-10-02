@@ -242,39 +242,39 @@ export const UnifiedHeroBanner = () => {
                   </div>
                 </div>
 
-                {/* Genie Core Capabilities */}
+                {/* Critical User-Facing Capabilities */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-center gap-3 text-white/80">
                     <MessageCircle className="w-5 h-5 text-genie-accent flex-shrink-0" />
-                    <span>80+ Knowledge Contexts</span>
+                    <span className="font-medium">Dual Context System</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-white/80">
+                    <Zap className="w-5 h-5 text-genie-accent flex-shrink-0" />
+                    <span className="font-medium">{"<"}2.5s Response Time</span>
                   </div>
                   <div className="flex items-center gap-3 text-white/80">
                     <Bot className="w-5 h-5 text-genie-accent flex-shrink-0" />
-                    <span>Advanced RAG Architecture</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-white/80">
-                    <Sparkles className="w-5 h-5 text-genie-accent flex-shrink-0" />
-                    <span>Multi-Domain Intelligence</span>
+                    <span className="font-medium">Split-Screen Interface</span>
                   </div>
                   <div className="flex items-center gap-3 text-white/80">
                     <Target className="w-5 h-5 text-genie-accent flex-shrink-0" />
-                    <span>Enterprise-Grade Insights</span>
+                    <span className="font-medium">Smart Session Management</span>
                   </div>
                 </div>
 
-                {/* Advanced Knowledge Base Features */}
+                {/* Advanced Intelligence Features */}
                 <div className="bg-white/5 rounded-lg p-4 border border-genie-accent/20">
                   <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
                     <Bot className="w-4 h-4 text-genie-accent" />
-                    Live Experimentation Showcase
+                    Conversational Intelligence Highlights
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                    <div className="text-white/70">• Single & Multi-Model Intelligence</div>
-                    <div className="text-white/70">• Split-Screen Conversations</div>
-                    <div className="text-white/70">• Model Comparison Mode</div>
-                    <div className="text-white/70">• Unified Context Management</div>
-                    <div className="text-white/70">• RAG-Enhanced Knowledge Base</div>
-                    <div className="text-white/70">• Healthcare Domain Expertise</div>
+                    <div className="text-white/70">• Tech ↔ Healthcare Context Switching</div>
+                    <div className="text-white/70">• 80+ Knowledge Contexts</div>
+                    <div className="text-white/70">• Multi-Model Orchestration (5 AI Models)</div>
+                    <div className="text-white/70">• Real-Time Streaming</div>
+                    <div className="text-white/70">• RAG-Enhanced Responses</div>
+                    <div className="text-white/70">• 1,000+ Concurrent User Handling</div>
                   </div>
                 </div>
 

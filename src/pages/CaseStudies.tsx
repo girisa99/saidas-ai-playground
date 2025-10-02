@@ -237,25 +237,30 @@ const CaseStudies = () => {
                         </div>
                         
                         <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
-                          Experimentation with Real Outcomes: Active AI project demonstrating how AI transforms development through documented case studies. Sharing proven results: multi-model intelligence, split-screen conversations, advanced RAG architecture. Published learnings include scalability (handled 1,000+ concurrent conversations), performance optimization (achieved &lt;2.5s response times), system design patterns (99.9% reliability). Thought leadership through hands-on experimentation.
+                          <strong>Critical User Features:</strong> Dual Context System (Tech ↔ Healthcare switching), Split-Screen Interface for multi-model comparison, Smart Session Management. <strong>Performance:</strong> &lt;2.5s response time, 1,000+ concurrent handling, 99.9% reliability. <strong>Intelligence:</strong> 80+ knowledge contexts, 5 AI models orchestration, real-time streaming, conversational context awareness.
                         </p>
                         
                         <div className="mb-4">
-                          <div className="grid grid-cols-2 gap-3 text-xs">
+                          <div className="grid grid-cols-3 gap-2 text-xs">
                             <div className="text-center p-2 bg-white/60 rounded border">
-                              <div className="font-bold text-genie-accent">80+</div>
-                              <div className="text-muted-foreground">Contexts</div>
+                              <div className="font-bold text-genie-accent">&lt;2.5s</div>
+                              <div className="text-muted-foreground">Response</div>
                             </div>
                             <div className="text-center p-2 bg-white/60 rounded border">
-                              <div className="font-bold text-genie-accent">Multi</div>
-                              <div className="text-muted-foreground">Models</div>
+                              <div className="font-bold text-genie-accent">Dual</div>
+                              <div className="text-muted-foreground">Context</div>
+                            </div>
+                            <div className="text-center p-2 bg-white/60 rounded border">
+                              <div className="font-bold text-genie-accent">1K+</div>
+                              <div className="text-muted-foreground">Concurrent</div>
                             </div>
                           </div>
                         </div>
                         
                         <div className="flex flex-wrap gap-1 mb-4">
-                          <Badge variant="secondary" className="text-xs">Advanced RAG</Badge>
-                          <Badge variant="secondary" className="text-xs">Multi-Model AI</Badge>
+                          <Badge variant="secondary" className="text-xs">Split-Screen</Badge>
+                          <Badge variant="secondary" className="text-xs">Context Switching</Badge>
+                          <Badge variant="secondary" className="text-xs">Session Mgmt</Badge>
                         </div>
                         
                         <Button 
