@@ -48,80 +48,94 @@ export const WelcomeEmail = ({
           <Heading style={h1}>Welcome to GENIE AI Hub! 🧞‍♂️</Heading>
           
           <Text style={text}>
-            Thank you for joining our innovative community at <strong>GENIE AI Hub</strong>! 
-            You've just taken the first step into the future of AI experimentation and discovery.
-            As your Technology Navigator, I'm here to guide you through the exciting world of AI innovation.
+            Thank you for joining our innovative community at <strong>GENIE AI Experimentation Hub</strong>! 
+            You've taken the first step into exploring how personal AI experimentation builds professional expertise 
+            and drives organizational transformation.
           </Text>
-
-          {/* Mission Section */}
-          <Section style={section}>
-            <Heading style={h2}>Our Mission</Heading>
-            <Text style={text}>
-              We're dedicated to democratizing AI experimentation and making advanced artificial intelligence 
-              accessible to innovators, researchers, and curious minds worldwide. Our platform serves as your 
-              gateway to explore, experiment, and excel with cutting-edge AI technologies.
-            </Text>
-          </Section>
 
           {/* Purpose Section */}
           <Section style={section}>
-            <Heading style={h2}>What We Do</Heading>
+            <Heading style={h2}>Our Purpose</Heading>
             <Text style={text}>
-              • <strong>AI Experimentation Platform:</strong> Hands-on tools for testing and developing AI solutions<br/>
-              • <strong>Knowledge Sharing:</strong> Community-driven insights and best practices<br/>
-              • <strong>Innovation Hub:</strong> Collaborate with fellow AI enthusiasts and experts<br/>
-              • <strong>Learning Resources:</strong> Comprehensive guides and tutorials for all skill levels
+              Sharing my personal AI experimentation journey - demonstrating the <strong>Experiment → Validate → Lead to Deploy</strong> framework 
+              through real implementations. I document learnings, proven outcomes, and practical insights to help others 
+              build AI expertise and position themselves as AI-proficient professionals in their organizations.
             </Text>
           </Section>
 
-          {/* Journey Section */}
-          <Section style={section}>
-            <Heading style={h2}>Your AI Journey Starts Here</Heading>
+          {/* Live Features Section */}
+          <Section style={highlightBox}>
+            <Heading style={h2}>🚀 2 Live Features Launched</Heading>
+            
             <Text style={text}>
-              From curiosity to breakthrough, from concept to implementation - we're here to support 
-              your entire AI journey. Whether you're a seasoned developer or just starting out, 
-              our hub provides the tools, community, and resources you need to succeed.
+              <strong>1. GenieAI Experimentation Hub Platform</strong><br/>
+              Full-stack platform built in 2 weeks, showcasing 80-90 days of development. Complete knowledge sharing, 
+              case studies, and interactive features demonstrating modern AI-powered development.
             </Text>
-          </Section>
-
-          {/* About Navigator */}
-          <Section style={section}>
-            <Heading style={h2}>Your Technology Navigator</Heading>
+            
             <Text style={text}>
-              GENIE serves as your personal AI Technology Navigator, combining years of industry experience 
-              with cutting-edge insights to help you navigate the complex landscape of artificial intelligence. 
-              From Cell & Gene Therapeutic Technology to broader AI applications, I'm here to guide your journey 
-              toward technological mastery.
+              <strong>2. Genie Conversational AI</strong><br/>
+              Critical user features proving enterprise-grade capability:<br/>
+              • <strong>Dual Context System</strong> - Seamless Tech ↔ Healthcare switching<br/>
+              • <strong>Split-Screen Interface</strong> - Multi-model comparison<br/>
+              • <strong>Smart Session Management</strong> - Context-aware conversations<br/>
+              • <strong>Performance</strong> - &lt;2.5s response, 1,000+ concurrent users, 99.9% reliability<br/>
+              • <strong>Intelligence</strong> - 5 AI models, 80+ knowledge contexts, real-time streaming
             </Text>
-          </Section>
-
-          {/* Call to Action */}
-          <Section style={ctaSection}>
+            
             <Button
               href={siteUrl}
-              style={button}
+              style={featureButton}
             >
-              Explore the Hub Now
+              Try Live Features Now
             </Button>
           </Section>
 
+          {/* About Me Section */}
+          <Section style={section}>
+            <Heading style={h2}>About Sai Das - Your AI Guide</Heading>
+            <Text style={text}>
+              Building AI expertise through systematic personal experimentation. Sharing proven results, documented 
+              learnings, and practical frameworks that transform curiosity into professional capability and organizational 
+              influence. Connect with me to discuss your AI journey and exchange insights.
+            </Text>
+            
+            <Button
+              href="https://www.linkedin.com/in/saidas/"
+              style={linkedinButton}
+            >
+              Connect on LinkedIn
+            </Button>
+          </Section>
+
+          {/* What You'll Receive */}
+          <Section style={section}>
+            <Heading style={h2}>Your Journey Starts Here</Heading>
+            <Text style={text}>
+              Explore the hub at <Link href={siteUrl} style={linkStyle}>genieaiexperimentationhub.tech</Link>
+            </Text>
+
+          
           <Text style={text}>
             As a subscriber, you'll receive:
           </Text>
           <Text style={text}>
-            ✨ Weekly AI experiment insights and tutorials<br/>
-            🚀 Early access to new platform features<br/>
-            🤝 Invitations to exclusive community events<br/>
-            📊 Industry trends and breakthrough discoveries<br/>
-            🛠️ Tool recommendations and expert tips
+            ✨ Experiment insights and documented outcomes<br/>
+            🚀 Updates on new live features and experiments<br/>
+            🤝 Practical frameworks and proven methodologies<br/>
+            📊 Real performance metrics and learnings<br/>
+            🛠️ Technology recommendations and case studies<br/>
+            💡 Personal AI expertise development strategies
           </Text>
 
           <Hr style={hr} />
 
           {/* Footer */}
           <Text style={footer}>
-            Thank you for joining our mission to advance AI innovation!<br/>
-            <strong>GENIE - Your Technology Navigator</strong>
+            Thank you for joining this AI experimentation journey!<br/>
+            <strong>Sai Das - GenieAI Experimentation Hub</strong><br/>
+            <Link href="https://www.linkedin.com/in/saidas/" style={linkStyle}>Connect on LinkedIn</Link> | 
+            <Link href={siteUrl} style={linkStyle}> Visit Hub</Link>
           </Text>
 
           <Text style={unsubscribe}>
@@ -231,6 +245,48 @@ const button = {
   padding: '16px 32px',
   margin: '0 auto',
   boxShadow: '0 4px 12px rgba(72, 163, 196, 0.3)',
+};
+
+const highlightBox = {
+  backgroundColor: '#f0f9ff',
+  padding: '24px',
+  borderRadius: '8px',
+  border: '2px solid #48a3c4',
+  margin: '32px 0',
+};
+
+const featureButton = {
+  backgroundColor: '#48a3c4',
+  borderRadius: '8px',
+  color: '#fff',
+  fontSize: '15px',
+  fontWeight: 'bold',
+  textDecoration: 'none',
+  textAlign: 'center' as const,
+  display: 'inline-block',
+  padding: '12px 24px',
+  marginTop: '16px',
+  boxShadow: '0 4px 12px rgba(72, 163, 196, 0.3)',
+};
+
+const linkedinButton = {
+  backgroundColor: '#0077b5',
+  borderRadius: '8px',
+  color: '#fff',
+  fontSize: '15px',
+  fontWeight: 'bold',
+  textDecoration: 'none',
+  textAlign: 'center' as const,
+  display: 'inline-block',
+  padding: '12px 24px',
+  marginTop: '16px',
+  boxShadow: '0 4px 12px rgba(0, 119, 181, 0.3)',
+};
+
+const linkStyle = {
+  color: '#48a3c4',
+  textDecoration: 'underline',
+  fontWeight: '500',
 };
 
 const hr = {

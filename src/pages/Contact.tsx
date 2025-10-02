@@ -4,7 +4,8 @@ import { ContactForm } from "@/components/ContactForm";
 import { CTASection } from "@/components/CTASection";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Brain, Mail, MapPin, Clock, MessageSquare } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Brain, Mail, MapPin, Clock, MessageSquare, Linkedin } from "lucide-react";
 import { useEffect } from "react";
 
 const Contact = () => {
@@ -93,6 +94,30 @@ const Contact = () => {
                           <p className="text-sm text-muted-foreground mt-1">
                             Based in North Carolina's tech corridor
                           </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border-blue-500/20 bg-blue-500/5">
+                    <CardContent className="p-6">
+                      <div className="flex items-start space-x-4">
+                        <div className="p-2 bg-blue-500/10 rounded-lg">
+                          <Linkedin className="h-5 w-5 text-blue-500" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold mb-1">Connect on LinkedIn</h3>
+                          <p className="text-muted-foreground mb-3">
+                            Sai Das - AI Innovation Leader
+                          </p>
+                          <Button
+                            size="sm"
+                            className="bg-blue-500 hover:bg-blue-600 text-white"
+                            onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
+                          >
+                            <Linkedin className="h-4 w-4 mr-2" />
+                            Connect & Network
+                          </Button>
                         </div>
                       </div>
                     </CardContent>
