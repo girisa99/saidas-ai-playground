@@ -209,7 +209,7 @@ export const UnifiedHeroBanner = () => {
                 <h2 className="text-2xl lg:text-3xl font-bold text-white">
                   Introducing Genie AI
                   <span className="block text-genie-accent mt-1 text-xl lg:text-2xl font-semibold">
-                    First Feature: Advanced Conversational AI
+                    Live Feature 1
                   </span>
                   <span className="block text-white/90 mt-1 text-lg font-medium">
                     80+ Knowledge Contexts • More Experiments Coming Soon
@@ -339,7 +339,7 @@ export const UnifiedHeroBanner = () => {
                 <h2 className="text-2xl lg:text-3xl font-bold text-white">
                   GenieAI Experimentation Hub
                   <span className="block text-genie-cyan mt-1 text-xl lg:text-2xl font-semibold">
-                    Full-Stack Demonstration Platform
+                    Live Feature 2
                   </span>
                   <span className="block text-white/90 mt-1 text-lg font-medium">
                     Built in 2 Weeks • Showcasing 80-90 Days of Platform Development
