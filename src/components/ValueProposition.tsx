@@ -43,7 +43,7 @@ export const ValueProposition = () => {
             </div>
             <div className="text-2xl sm:text-3xl font-bold text-genie-primary mb-1 sm:mb-2">70%</div>
             <div className="text-xs sm:text-sm font-medium text-foreground mb-0.5 sm:mb-1">Business Value</div>
-            <div className="text-[10px] sm:text-xs text-muted-foreground">Average Increase</div>
+            <div className="text-fluid-xs text-muted-foreground">Average Increase</div>
           </Card>
           <Card className="text-center p-6 bg-gradient-to-br from-genie-secondary/5 to-genie-secondary/10 border-genie-secondary/20 hover:shadow-lg transition-all duration-300">
             <div className="w-12 h-12 mx-auto mb-3 bg-genie-secondary/10 rounded-full flex items-center justify-center">

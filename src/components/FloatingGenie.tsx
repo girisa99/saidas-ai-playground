@@ -382,11 +382,11 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
                     >
                       {currentMessage.text}
                     </motion.h4>
-                    <p className="text-[10px] md:text-xs text-primary-foreground/90 mb-1 leading-snug line-clamp-2">
+                    <p className="text-fluid-xs text-primary-foreground/90 mb-1 leading-snug line-clamp-2">
                       {currentMessage.description}
                     </p>
                     <motion.p 
-                      className="text-[9px] md:text-[10px] text-yellow-200 font-medium italic"
+                      className="text-fluid-xs text-yellow-200 font-medium italic"
                       animate={{ opacity: [0.7, 1, 0.7] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
