@@ -71,7 +71,7 @@ serve(async (req) => {
         );
       }
 
-      // Simple template variable replacement
+      // Simple template variable replacement with sanitization
       subject = template.subject;
       htmlContent = template.html_content;
       textContent = template.text_content;
@@ -79,12 +79,19 @@ serve(async (req) => {
       if (emailData.template_variables) {
         Object.entries(emailData.template_variables).forEach(([key, value]) => {
           const placeholder = `{{${key}}}`;
-          subject = subject.replace(new RegExp(placeholder, 'g'), String(value));
+          // Sanitize value to prevent injection attacks
+          const sanitizedValue = String(value)
+            .replace(/[<>]/g, '') // Remove < and > to prevent HTML injection
+            .replace(/javascript:/gi, '') // Remove javascript: protocol
+            .replace(/on\w+=/gi, '') // Remove event handlers like onclick=
+            .substring(0, 1000); // Limit length
+          
+          subject = subject.replace(new RegExp(placeholder, 'g'), sanitizedValue);
           if (htmlContent) {
-            htmlContent = htmlContent.replace(new RegExp(placeholder, 'g'), String(value));
+            htmlContent = htmlContent.replace(new RegExp(placeholder, 'g'), sanitizedValue);
           }
           if (textContent) {
-            textContent = textContent.replace(new RegExp(placeholder, 'g'), String(value));
+            textContent = textContent.replace(new RegExp(placeholder, 'g'), sanitizedValue);
           }
         });
       }

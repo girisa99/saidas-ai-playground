@@ -126,8 +126,15 @@ export class ConnectionService {
       }
 
       if (status === 'connected' && token) {
-        // Store connection token temporarily if needed
-        sessionStorage.setItem('main_app_connection_token', token);
+        // Validate token format before storing
+        if (typeof token === 'string' && token.length > 0 && token.length < 500) {
+          // Store connection token temporarily with expiration
+          const tokenData = {
+            token: token,
+            expiresAt: new Date(Date.now() + 3600000).toISOString() // 1 hour expiration
+          };
+          sessionStorage.setItem('main_app_connection_token', JSON.stringify(tokenData));
+        }
         
         return {
           success: true,
@@ -200,6 +207,30 @@ export class ConnectionService {
       localStorage.removeItem('main_app_connection_preference');
     } catch (error) {
       console.error('Failed to clear connection data:', error);
+    }
+  }
+
+  /**
+   * Get stored connection token with expiration check
+   */
+  static getConnectionToken(): string | null {
+    try {
+      const tokenDataStr = sessionStorage.getItem('main_app_connection_token');
+      if (!tokenDataStr) return null;
+
+      const tokenData = JSON.parse(tokenDataStr);
+      const expiresAt = new Date(tokenData.expiresAt);
+      
+      // Check if token has expired
+      if (expiresAt < new Date()) {
+        this.clearConnectionData();
+        return null;
+      }
+
+      return tokenData.token;
+    } catch (error) {
+      console.error('Failed to get connection token:', error);
+      return null;
     }
   }
 }

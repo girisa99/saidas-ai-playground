@@ -8,6 +8,38 @@ import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, Building, MessageSquare, Send, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+import { sanitizeInput } from "@/lib/validation";
+
+// Validation schema for contact form
+const contactFormSchema = z.object({
+  senderName: z.string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters")
+    .trim(),
+  senderEmail: z.string()
+    .email("Invalid email address")
+    .max(255, "Email must be less than 255 characters")
+    .trim()
+    .toLowerCase(),
+  companyName: z.string()
+    .max(200, "Company name must be less than 200 characters")
+    .trim()
+    .optional(),
+  phoneNumber: z.string()
+    .max(20, "Phone number must be less than 20 characters")
+    .regex(/^[+\d\s()-]*$/, "Invalid phone number format")
+    .trim()
+    .optional(),
+  subject: z.string()
+    .max(200, "Subject must be less than 200 characters")
+    .trim()
+    .optional(),
+  message: z.string()
+    .min(10, "Message must be at least 10 characters")
+    .max(2000, "Message must be less than 2000 characters")
+    .trim(),
+});
 
 export const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -29,23 +61,24 @@ export const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.senderName || !formData.senderEmail || !formData.message) {
-      toast({
-        title: "Required Fields Missing",
-        description: "Please fill in your name, email, and message.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
+      // Validate and sanitize input
+      const validatedData = contactFormSchema.parse({
+        senderName: sanitizeInput(formData.senderName),
+        senderEmail: sanitizeInput(formData.senderEmail),
+        companyName: formData.companyName ? sanitizeInput(formData.companyName) : undefined,
+        phoneNumber: formData.phoneNumber ? sanitizeInput(formData.phoneNumber) : undefined,
+        subject: formData.subject ? sanitizeInput(formData.subject) : undefined,
+        message: sanitizeInput(formData.message),
+      });
+
       const { data, error } = await supabase.functions.invoke('send-contact-email', {
         body: {
-          ...formData,
+          ...validatedData,
           contactMethod: 'Website Contact Form',
-          subject: formData.subject || 'Contact Form Enquiry from Genie AI Hub'
+          subject: validatedData.subject || 'Contact Form Enquiry from Genie AI Hub'
         }
       });
 
@@ -71,11 +104,22 @@ export const ContactForm = () => {
 
     } catch (error: any) {
       console.error('Error sending contact email:', error);
-      toast({
-        title: "Failed to Send Message",
-        description: error.message || "Please try again or contact us directly.",
-        variant: "destructive",
-      });
+      
+      // Handle validation errors
+      if (error instanceof z.ZodError) {
+        const firstError = error.issues[0];
+        toast({
+          title: "Validation Error",
+          description: firstError.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Failed to Send Message",
+          description: error.message || "Please try again or contact us directly.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
