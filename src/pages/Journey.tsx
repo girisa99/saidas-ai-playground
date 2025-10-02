@@ -94,30 +94,30 @@ const Journey = () => {
               </Badge>
               
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
-                From <span className="text-genie-cyan">Curiosity</span> to 
+                AI Transformation Journey: <span className="text-genie-cyan">Personal Experimentation</span> to 
                 <span className="text-genie-accent"> AI Leadership</span>
               </h1>
               
               <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-                A <strong>personal transformation journey</strong> using the proven <span className="text-genie-cyan font-semibold">Experiment → Validate → Lead to Deploy</span> framework — from healthcare professional to <strong>AI innovation leader</strong> with <strong>2 live features</strong> demonstrating advanced capabilities.
+                A <strong>90-day personal experimentation journey</strong> using the proven <span className="text-genie-cyan font-semibold">Experiment → Validate → Lead to Deploy</span> framework — from healthcare professional to <strong>AI innovation leader</strong>. <span className="text-genie-accent font-semibold">Day 0-45: Personal Experimentation Phase</span> building foundations, <span className="text-genie-accent font-semibold">Day 45-90: Production Architecture</span> with <strong>2 live features</strong> demonstrating advanced capabilities.
               </p>
               
               {/* Journey Impact Metrics Grid - Mobile Responsive */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 px-2">
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                   <Lightbulb className="h-5 w-5 sm:h-6 sm:w-6 text-genie-cyan mb-2" />
-                  <h3 className="font-semibold text-white text-xs sm:text-sm">CURIOSITY</h3>
+                  <h3 className="font-semibold text-white text-xs sm:text-sm">SPARK & CURIOSITY</h3>
                   <p className="text-white/80 text-xs">Healthcare + AI exploration</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
-                  <Cog className="h-5 w-5 sm:h-6 sm:w-6 text-genie-cyan mb-2" />
-                  <h3 className="font-semibold text-white text-xs sm:text-sm">LEARN</h3>
-                  <p className="text-white/80 text-xs">3-Phase framework mastery</p>
+                  <Target className="h-5 w-5 sm:h-6 sm:w-6 text-genie-cyan mb-2" />
+                  <h3 className="font-semibold text-white text-xs sm:text-sm">DAY 0-45</h3>
+                  <p className="text-white/80 text-xs">Personal experimentation phase</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                   <Rocket className="h-5 w-5 sm:h-6 sm:w-6 text-genie-cyan mb-2" />
-                  <h3 className="font-semibold text-white text-xs sm:text-sm">BUILD</h3>
-                  <p className="text-white/80 text-xs">2 live features deployed</p>
+                  <h3 className="font-semibold text-white text-xs sm:text-sm">DAY 45-90</h3>
+                  <p className="text-white/80 text-xs">Production architecture & 2 live features</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                   <Award className="h-5 w-5 sm:h-6 sm:w-6 text-genie-cyan mb-2" />
