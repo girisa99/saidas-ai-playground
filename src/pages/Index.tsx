@@ -9,8 +9,8 @@ import { NewsletterSubscription } from "@/components/NewsletterSubscription";
 import { useEffect } from "react";
 
 const Index = () => {
+  // Set page metadata on mount
   useEffect(() => {
-    // Update page metadata
     document.title = "Genie AI Hub — Proven Value Creation Framework";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
