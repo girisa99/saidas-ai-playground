@@ -99,8 +99,8 @@ const VerticalJourneyInfographic = () => {
     {
       id: 2,
       title: "Breakthrough: Code to Creativity",
-      subtitle: "AI Lab Infrastructure",
-      date: "May-September 2025",
+      subtitle: "AI Lab Infrastructure (Day 0-45)",
+      date: "Personal Experimentation Phase: Day 0-45",
       icon: Target,
       image: phase03BreakthroughArtwork,
       description: "The pivotal shift from viewing AI purely as a utility to embracing it as an invaluable creative partner. This breakthrough came through integrating powerful AI-powered design and development tools, building resilient systems with sophisticated error handling, and creating intelligent data foundations with vector databases.",
@@ -164,8 +164,8 @@ const VerticalJourneyInfographic = () => {
     {
       id: 3,
       title: "Scalable MVP Foundation",
-      subtitle: "45-Day Lessons to Production Architecture",
-      date: "August-September 2025",
+      subtitle: "Production Architecture (Day 45-90)",
+      date: "Personal Experimentation Phase: Day 45-90",
       icon: Network,
       image: phase05ResilientHubArtwork,
       description: "Transforming 45-day experimental lessons into production-ready architecture. Built unbreakable, stable AI platform foundation serving as the backbone for enterprise-scale experimentation and deployment.",
