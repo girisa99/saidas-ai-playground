@@ -4952,6 +4952,13 @@ export type Database = {
             referencedRelation: "service_providers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "enrollment_consent_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       enrollment_documents: {
@@ -5494,10 +5501,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "enrollment_provider_info_pcp_provider_id_fkey"
+            columns: ["pcp_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "enrollment_provider_info_referring_provider_id_fkey"
             columns: ["referring_provider_id"]
             isOneToOne: false
             referencedRelation: "service_providers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "enrollment_provider_info_referring_provider_id_fkey"
+            columns: ["referring_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
             referencedColumns: ["id"]
           },
         ]
@@ -9712,10 +9733,31 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "onboarding_service_selections_selected_provider_id_fkey"
+            columns: ["selected_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "onboarding_service_selections_service_id_fkey"
             columns: ["service_id"]
             isOneToOne: false
             referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "onboarding_service_selections_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services_full"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "onboarding_service_selections_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services_public"
             referencedColumns: ["id"]
           },
         ]
@@ -9999,10 +10041,31 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "onboarding_therapy_selections_selected_provider_id_fkey"
+            columns: ["selected_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "onboarding_therapy_selections_service_id_fkey"
             columns: ["service_id"]
             isOneToOne: false
             referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "onboarding_therapy_selections_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services_full"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "onboarding_therapy_selections_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services_public"
             referencedColumns: ["id"]
           },
           {
@@ -10206,6 +10269,13 @@ export type Database = {
             columns: ["primary_provider_id"]
             isOneToOne: false
             referencedRelation: "service_providers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "patient_enrollments_primary_provider_id_fkey"
+            columns: ["primary_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
             referencedColumns: ["id"]
           },
         ]
@@ -11802,6 +11872,13 @@ export type Database = {
             referencedRelation: "service_providers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "service_provider_capabilities_service_provider_id_fkey"
+            columns: ["service_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       service_providers: {
@@ -11901,6 +11978,13 @@ export type Database = {
             columns: ["service_provider_id"]
             isOneToOne: false
             referencedRelation: "service_providers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "services_service_provider_id_fkey"
+            columns: ["service_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
             referencedColumns: ["id"]
           },
         ]
@@ -15414,6 +15498,129 @@ export type Database = {
           index_size_pretty: string | null
           schema_name: unknown | null
           table_name: unknown | null
+        }
+        Relationships: []
+      }
+      service_providers_public: {
+        Row: {
+          description: string | null
+          id: string | null
+          is_active: boolean | null
+          name: string | null
+          provider_type:
+            | Database["public"]["Enums"]["service_provider_type"]
+            | null
+        }
+        Insert: {
+          description?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          name?: string | null
+          provider_type?:
+            | Database["public"]["Enums"]["service_provider_type"]
+            | null
+        }
+        Update: {
+          description?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          name?: string | null
+          provider_type?:
+            | Database["public"]["Enums"]["service_provider_type"]
+            | null
+        }
+        Relationships: []
+      }
+      services_full: {
+        Row: {
+          capabilities: string[] | null
+          created_at: string | null
+          description: string | null
+          geographic_coverage: string[] | null
+          id: string | null
+          is_active: boolean | null
+          name: string | null
+          pricing_model: Json | null
+          requirements: Json | null
+          service_provider_id: string | null
+          service_type: Database["public"]["Enums"]["service_type"] | null
+          sla_requirements: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          capabilities?: string[] | null
+          created_at?: string | null
+          description?: string | null
+          geographic_coverage?: string[] | null
+          id?: string | null
+          is_active?: boolean | null
+          name?: string | null
+          pricing_model?: Json | null
+          requirements?: Json | null
+          service_provider_id?: string | null
+          service_type?: Database["public"]["Enums"]["service_type"] | null
+          sla_requirements?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          capabilities?: string[] | null
+          created_at?: string | null
+          description?: string | null
+          geographic_coverage?: string[] | null
+          id?: string | null
+          is_active?: boolean | null
+          name?: string | null
+          pricing_model?: Json | null
+          requirements?: Json | null
+          service_provider_id?: string | null
+          service_type?: Database["public"]["Enums"]["service_type"] | null
+          sla_requirements?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "services_service_provider_id_fkey"
+            columns: ["service_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "services_service_provider_id_fkey"
+            columns: ["service_provider_id"]
+            isOneToOne: false
+            referencedRelation: "service_providers_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      services_public: {
+        Row: {
+          capabilities: string[] | null
+          description: string | null
+          geographic_coverage: string[] | null
+          id: string | null
+          is_active: boolean | null
+          name: string | null
+          service_type: Database["public"]["Enums"]["service_type"] | null
+        }
+        Insert: {
+          capabilities?: string[] | null
+          description?: string | null
+          geographic_coverage?: string[] | null
+          id?: string | null
+          is_active?: boolean | null
+          name?: string | null
+          service_type?: Database["public"]["Enums"]["service_type"] | null
+        }
+        Update: {
+          capabilities?: string[] | null
+          description?: string | null
+          geographic_coverage?: string[] | null
+          id?: string | null
+          is_active?: boolean | null
+          name?: string | null
+          service_type?: Database["public"]["Enums"]["service_type"] | null
         }
         Relationships: []
       }
