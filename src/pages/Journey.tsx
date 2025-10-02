@@ -95,7 +95,7 @@ const Journey = () => {
               
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
                 AI Transformation Journey: <span className="text-genie-cyan">Personal Experimentation</span> to 
-                <span className="text-genie-accent"> AI Leadership</span>
+                <span className="text-genie-accent"> Healthcare AI Innovator</span>
               </h1>
               
               <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
