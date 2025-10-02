@@ -99,7 +99,7 @@ const VerticalJourneyInfographic = () => {
     {
       id: 2,
       title: "Breakthrough: Code to Creativity",
-      subtitle: "AI Lab Infrastructure (Day 0-45)",
+      subtitle: "Personal Experimentation (Day 0-45)",
       date: "Personal Experimentation Phase: Day 0-45",
       icon: Target,
       image: phase03BreakthroughArtwork,
@@ -163,8 +163,8 @@ const VerticalJourneyInfographic = () => {
     },
     {
       id: 3,
-      title: "Scalable MVP Foundation",
-      subtitle: "Production Architecture (Day 45-90)",
+      title: "Scalable Foundation Platform",
+      subtitle: "Building Architecture (Day 45-90)",
       date: "Personal Experimentation Phase: Day 45-90",
       icon: Network,
       image: phase05ResilientHubArtwork,
