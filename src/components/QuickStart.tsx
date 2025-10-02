@@ -42,13 +42,13 @@ export const QuickStart = () => {
 
   const proofPoints = [
     {
-      title: "Genie Conversational AI Platform",
-      subtitle: "🚀 LIVE: Advanced RAG with 80+ Knowledge Contexts",
-      description: "Production-ready conversational AI with multi-model intelligence (Gemini 2.5, GPT-5), split-screen conversations, healthcare compliance, and real-time streaming. Enterprise-scale performance: 1,000 concurrent conversations, <2.5s response time, 99.9% uptime. Demonstrating sophisticated RAG architecture and vector database optimization.",
+      title: "Genie Conversational AI Experiment",
+      subtitle: "🧪 ACTIVE: Learning Project with 80+ Knowledge Contexts",
+      description: "Personal hands-on AI experimentation with multi-model intelligence (Gemini 2.5, GPT-5), split-screen conversations, healthcare concepts, and real-time streaming. Demonstrating sophisticated RAG architecture and learning about scalability through load testing (experimenting with 1,000+ concurrent scenarios, <2.5s response optimization). Active learning project exploring system design patterns.",
       icon: <Code className="h-8 w-8" />,
       link: "/case-studies",
-      status: "Live Feature",
-      highlight: "Advanced AI Implementation",
+      status: "Active Experiment",
+      highlight: "Personal AI Learning",
       statusColor: "bg-genie-accent/20 text-genie-accent border-genie-accent/30",
       color: "from-genie-accent/20 to-genie-primary/20",
       iconBg: "bg-genie-accent",
@@ -104,9 +104,8 @@ export const QuickStart = () => {
             Proven <span className="text-primary">Value Creation</span> Framework
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            <strong>2 Live Features Launched:</strong> GenieAI Hub Platform & Genie Conversational AI with 80+ knowledge contexts. 
-            Production-scale performance with 1,000 concurrent conversations, {"<"}2.5s response time, and 99.9% uptime.
-            Demonstrating measurable business value through systematic AI experimentation and validated implementations.
+            <strong>2 Live Experiments:</strong> GenieAI Hub Platform & Genie Conversational AI with 80+ knowledge contexts. 
+            Personal learning journey exploring scalability (testing 1,000+ concurrent scenarios), performance optimization (targeting {"<"}2.5s responses), and system reliability through hands-on experimentation.
           </p>
         </div>
 

@@ -25,29 +25,28 @@ export const GenieIntegrationShowcase = ({ selectedUseCase }: GenieIntegrationSh
       <div className="text-center px-2">
         <Badge className="bg-genie-accent/20 text-genie-accent border-genie-accent/30 mb-4">
           <MessageCircle className="w-4 h-4 mr-2" />
-          Live Feature Integration
+          Experimental Feature Integration
         </Badge>
         <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4">
-          <span className="text-genie-accent">Genie Conversation</span> in Action
+          <span className="text-genie-accent">Genie Conversation</span> Experiment
         </h3>
         <p className="text-sm sm:text-base text-muted-foreground max-w-3xl mx-auto mb-4">
-          Demonstrating how our live Genie Conversational AI feature with 80+ knowledge contexts 
-          integrates into real healthcare workflows using the proven 3-phase framework.
+          Exploring how conversational AI with 80+ knowledge contexts can integrate into real healthcare workflows. Personal learning project using the Experiment → Validate → Lead to Deploy framework.
         </p>
         
-        {/* Performance Highlights */}
+        {/* Learning Highlights */}
         <div className="flex flex-wrap justify-center gap-3 mt-6">
-          <Badge variant="outline" className="border-emerald-500/30 text-emerald-600 bg-emerald-500/5 text-xs sm:text-sm">
-            <Zap className="w-3 h-3 mr-1" />
-            1,000 concurrent conversations
+          <Badge variant="outline" className="border-purple-500/30 text-purple-600 bg-purple-500/5 text-xs sm:text-sm">
+            <Lightbulb className="w-3 h-3 mr-1" />
+            Load testing experiments
           </Badge>
-          <Badge variant="outline" className="border-emerald-500/30 text-emerald-600 bg-emerald-500/5 text-xs sm:text-sm">
+          <Badge variant="outline" className="border-purple-500/30 text-purple-600 bg-purple-500/5 text-xs sm:text-sm">
             <Target className="w-3 h-3 mr-1" />
-            {"<"}2.5s response time
+            Performance optimization learning
           </Badge>
-          <Badge variant="outline" className="border-emerald-500/30 text-emerald-600 bg-emerald-500/5 text-xs sm:text-sm">
+          <Badge variant="outline" className="border-purple-500/30 text-purple-600 bg-purple-500/5 text-xs sm:text-sm">
             <CheckCircle className="w-3 h-3 mr-1" />
-            99.9% uptime
+            Reliability monitoring tests
           </Badge>
         </div>
       </div>
@@ -176,14 +175,13 @@ export const GenieIntegrationShowcase = ({ selectedUseCase }: GenieIntegrationSh
       {/* Call to Action */}
       <Card className="border-genie-accent/30 bg-gradient-to-r from-genie-accent/10 to-genie-primary/10">
         <CardContent className="p-6 sm:p-8 text-center">
-          <h4 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Experience Genie Conversation Live</h4>
+          <h4 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Try the Genie Conversation Experiment</h4>
           <p className="text-sm sm:text-base text-muted-foreground mb-3 max-w-2xl mx-auto">
-            Try our live Genie Conversational AI feature with 80+ knowledge contexts. 
-            See how the Experiment → Validate → Lead to Deploy framework translates into 
-            real, production-ready AI capabilities.
+            Experience my personal AI learning project with 80+ knowledge contexts. 
+            See how the Experiment → Validate → Lead to Deploy framework guides hands-on AI exploration.
           </p>
-          <p className="text-xs sm:text-sm text-emerald-600 font-semibold mb-4 sm:mb-6">
-            ⚡ Production-scale performance: 30,000 messages/hour | Scalable infrastructure | Enterprise-ready reliability
+          <p className="text-xs sm:text-sm text-purple-600 font-semibold mb-4 sm:mb-6">
+            💡 Learning experiments: Scalability testing | Performance optimization | System design exploration
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 

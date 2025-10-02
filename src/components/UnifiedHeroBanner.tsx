@@ -1,4 +1,4 @@
-import { Bot, Sparkles, ArrowRight, Calendar, MessageCircle, Trophy, Target, Rocket, Zap } from "lucide-react";
+import { Bot, Sparkles, ArrowRight, Calendar, MessageCircle, Trophy, Target, Rocket, Zap, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
@@ -205,27 +205,27 @@ export const UnifiedHeroBanner = () => {
               </h2>
               
               <p className="text-white/80 text-lg leading-relaxed">
-                Advanced conversational AI with 80+ specialized knowledge contexts. Experience systematic experimentation with multi-domain intelligence and enterprise-grade capabilities for organizational AI implementation.
+                Personal AI learning project with 80+ specialized knowledge contexts. Hands-on experimentation exploring multi-domain intelligence and system design concepts for organizational AI applications.
               </p>
 
-              {/* Performance Metrics */}
-              <div className="bg-emerald-500/10 rounded-lg p-4 border border-emerald-500/20">
+              {/* Learning Experiments */}
+              <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
                 <h4 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
-                  <Zap className="w-4 h-4 text-emerald-400" />
-                  Production-Scale Performance
+                  <Lightbulb className="w-4 h-4 text-purple-400" />
+                  Active Learning Experiments
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-                  <div className="text-emerald-300">
-                    <div className="font-bold text-white">1,000</div>
-                    <div className="text-white/70">Concurrent conversations</div>
+                  <div className="text-purple-300">
+                    <div className="font-bold text-white">1,000+</div>
+                    <div className="text-white/70">Load testing scenarios</div>
                   </div>
-                  <div className="text-emerald-300">
+                  <div className="text-purple-300">
                     <div className="font-bold text-white">{"<"}2.5s</div>
-                    <div className="text-white/70">Response time</div>
+                    <div className="text-white/70">Response optimization</div>
                   </div>
-                  <div className="text-emerald-300">
-                    <div className="font-bold text-white">99.9%</div>
-                    <div className="text-white/70">Uptime</div>
+                  <div className="text-purple-300">
+                    <div className="font-bold text-white">Ongoing</div>
+                    <div className="text-white/70">Reliability tests</div>
                   </div>
                 </div>
               </div>

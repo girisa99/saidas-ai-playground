@@ -100,8 +100,8 @@ export const AboutSection = () => {
                     2 Live Implementations Launched
                   </h5>
                   <p className="text-muted-foreground text-sm mb-3">
-                    <strong>1) GenieAI Experimentation Hub Site:</strong> Knowledge sharing platform with framework documentation and business use cases.<br/>
-                    <strong>2) Genie Conversation Feature:</strong> Advanced conversational AI with 80+ knowledge contexts, split-screen mode, and multi-model intelligence. Production-ready with 1,000 concurrent conversations capacity, {"<"}2.5s response time, and 99.9% uptime.
+                    <strong>1) GenieAI Experimentation Hub Site:</strong> Knowledge sharing platform documenting my personal AI learning journey.<br/>
+                    <strong>2) Genie Conversation Experiment:</strong> Hands-on conversational AI project with 80+ knowledge contexts, split-screen mode, and multi-model intelligence. Learning through experimentation with scalability, performance optimization, and system design.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="secondary" className="text-xs">2 Live Features</Badge>

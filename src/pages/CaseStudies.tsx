@@ -237,7 +237,7 @@ const CaseStudies = () => {
                         </div>
                         
                         <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
-                          Sophisticated conversational AI with multi-model intelligence, split-screen conversations, and advanced RAG architecture. Flagship feature demonstrating professional AI capabilities with production-scale performance: 1,000 concurrent conversations, {"<"}2.5s response time, 99.9% uptime, 30,000 messages/hour throughput.
+                          Personal AI learning project with multi-model intelligence, split-screen conversations, and advanced RAG architecture. Hands-on experimentation demonstrating AI capabilities through the Experiment → Validate → Lead to Deploy framework. Active exploration of scalability (tested 1,000+ concurrent scenarios), performance optimization ({"<"}2.5s response targets), and system design patterns.
                         </p>
                         
                         <div className="mb-4">

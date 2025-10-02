@@ -41,11 +41,11 @@ import techJourneyBg from "@/assets/journey-phase-02-curiosity-artwork.jpg";
 export const IntegratedTechnologyExploration = () => {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
-  // FLAGSHIP FEATURE - Genie Conversational Feature Launch
+  // FLAGSHIP FEATURE - Genie Conversational Feature Experiment
   const genieConversationalFeature = {
-    title: "🌟 Genie Conversational Feature - LIVE NOW",
-    status: "FEATURED LAUNCH",
-    description: "The first flagship feature of the Genie AI Experimentation Hub, demonstrating the Experiment → Validate → Lead to Deploy framework in action",
+    title: "🌟 Genie Conversational Feature - LIVE EXPERIMENT",
+    status: "ACTIVE EXPERIMENTATION",
+    description: "Personal AI learning project demonstrating the Experiment → Validate → Lead to Deploy framework through hands-on implementation",
     capabilities: [
       "80+ Knowledge Contexts across healthcare AI domains",
       "Multi-Model Intelligence (GPT-5, Claude, Gemini)",
@@ -54,17 +54,17 @@ export const IntegratedTechnologyExploration = () => {
       "Model Comparison Mode for optimal AI selection",
       "Context Switching between specialized knowledge domains"
     ],
-    performanceMetrics: [
-      "1,000 concurrent conversations capacity",
-      "30,000 messages/hour throughput",
-      "<2.5 second average response time",
-      "99.9% uptime reliability",
-      "Scalable infrastructure ready for growth"
+    experimentalLearnings: [
+      "Tested handling 1,000+ concurrent conversation scenarios",
+      "Experimented with 30,000+ messages/hour load patterns",
+      "Optimized for <2.5 second response times in testing",
+      "Built reliability monitoring and learned about uptime tracking",
+      "Explored scalable infrastructure design patterns"
     ],
     framework: "Experiment → Validate → Lead to Deploy",
-    phase: "LIVE IMPLEMENTATION",
-    technicalStack: ["Advanced RAG", "Multi-LLM Orchestration", "Context Management", "Real-time Model Switching", "Production-Scale Performance"],
-    businessValue: "Demonstrates complete framework execution from experimentation to production deployment with enterprise-grade performance"
+    phase: "VALIDATION & LEARNING",
+    technicalStack: ["Advanced RAG", "Multi-LLM Orchestration", "Context Management", "Real-time Model Switching", "Scalability Experiments"],
+    learningValue: "Personal journey demonstrating complete framework execution from curiosity through experimentation to validated learning"
   };
 
   // Comprehensive Integration Mapping for all Technology Categories
@@ -561,18 +561,18 @@ export const IntegratedTechnologyExploration = () => {
           </p>
         </div>
 
-        {/* FLAGSHIP FEATURE - Genie Conversational Feature */}
+        {/* FLAGSHIP EXPERIMENT - Genie Conversational Learning Project */}
         <div className="mb-16">
           <div className="text-center mb-8">
-            <Badge className="bg-genie-accent text-background border-genie-accent mb-4 text-sm font-bold px-4 py-2">
-              <Star className="w-4 h-4 mr-2" />
-              🌟 FLAGSHIP FEATURE - NOW LIVE
+            <Badge className="bg-purple-600 text-white border-purple-600 mb-4 text-sm font-bold px-4 py-2">
+              <Lightbulb className="w-4 h-4 mr-2" />
+              🧪 ACTIVE EXPERIMENTATION
             </Badge>
             <h3 className="text-2xl lg:text-4xl font-bold mb-4">
-              <span className="text-genie-accent">Genie Conversational Feature</span>
+              <span className="text-genie-accent">Genie Conversation</span> Learning Project
             </h3>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              The first flagship implementation of our Experiment → Validate → Lead to Deploy framework — demonstrating complete journey from experimentation to production deployment.
+              My personal AI experimentation journey demonstrating the Experiment → Validate → Lead to Deploy framework — a complete hands-on learning experience from curiosity through testing to validated concepts.
             </p>
           </div>
 
@@ -582,7 +582,7 @@ export const IntegratedTechnologyExploration = () => {
                 <div>
                   <h4 className="font-bold text-xl text-genie-accent mb-4 flex items-center gap-2">
                     <Brain className="w-6 h-6" />
-                    Advanced AI Capabilities
+                    AI Capabilities Explored
                   </h4>
                   <div className="space-y-3">
                     {genieConversationalFeature.capabilities.map((capability, index) => (
@@ -597,7 +597,7 @@ export const IntegratedTechnologyExploration = () => {
                 <div>
                   <h4 className="font-bold text-xl text-genie-primary mb-4 flex items-center gap-2">
                     <Code2 className="w-6 h-6" />
-                    Technical Implementation
+                    Technical Experiments
                   </h4>
                   <div className="space-y-3 mb-6">
                     {genieConversationalFeature.technicalStack.map((tech, index) => (
@@ -609,40 +609,40 @@ export const IntegratedTechnologyExploration = () => {
                   </div>
                   
                   <div className="p-4 bg-gradient-to-r from-genie-accent/10 to-genie-primary/10 rounded-lg border border-genie-accent/20">
-                    <h5 className="font-bold text-genie-accent mb-2 text-sm">Framework Implementation Status</h5>
+                    <h5 className="font-bold text-genie-accent mb-2 text-sm">Learning Journey Status</h5>
                     <Badge className="bg-emerald-500 text-white text-xs font-bold px-3 py-1">
-                      ✅ LIVE DEPLOYMENT
+                      ✅ ACTIVE LEARNING
                     </Badge>
                     <p className="text-xs text-muted-foreground mt-2">
-                      Complete framework execution: Experimentation → Validation → Production Deployment
+                      Personal experimentation: Learning → Testing → Validating concepts
                     </p>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="font-bold text-xl text-emerald-600 mb-4 flex items-center gap-2">
-                    <Zap className="w-6 h-6" />
-                    Production Performance
+                  <h4 className="font-bold text-xl text-purple-600 mb-4 flex items-center gap-2">
+                    <Lightbulb className="w-6 h-6" />
+                    What I Learned
                   </h4>
                   <div className="space-y-3">
-                    {genieConversationalFeature.performanceMetrics.map((metric, index) => (
+                    {genieConversationalFeature.experimentalLearnings.map((learning, index) => (
                       <div key={index} className="flex items-start gap-3">
-                        <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-1" />
-                        <span className="text-sm text-foreground">{metric}</span>
+                        <CheckCircle className="w-4 h-4 text-purple-600 flex-shrink-0 mt-1" />
+                        <span className="text-sm text-foreground">{learning}</span>
                       </div>
                     ))}
                   </div>
-                  <div className="mt-6 p-3 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
+                  <div className="mt-6 p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
                     <p className="text-xs text-muted-foreground">
-                      <strong className="text-emerald-600">Enterprise-Ready:</strong> Built for scale with production-grade reliability and performance monitoring
+                      <strong className="text-purple-600">Experimentation Focus:</strong> Hands-on learning about scalability, performance optimization, and system design
                     </p>
                   </div>
                 </div>
               </div>
               
               <div className="mt-8 text-center">
-                <p className="text-lg text-genie-accent font-semibold mb-4">
-                  Experience the Genie AI Experimentation Hub Framework in Action
+                <p className="text-lg text-purple-600 font-semibold mb-4">
+                  Experience My Personal AI Learning Journey
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button 
@@ -654,11 +654,11 @@ export const IntegratedTechnologyExploration = () => {
                     }}
                   >
                     <Brain className="w-4 h-4 mr-2" />
-                    Try Genie Conversation Now
+                    Try the Experiment
                   </Button>
                   <Button variant="outline" className="border-genie-primary text-genie-primary hover:bg-genie-primary/10">
-                    <Target className="w-4 h-4 mr-2" />
-                    View Technical Case Study
+                    <Lightbulb className="w-4 h-4 mr-2" />
+                    View Learning Journey
                   </Button>
                 </div>
               </div>
