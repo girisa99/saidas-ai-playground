@@ -104,7 +104,7 @@ const faqData = [
     questions: [
       {
         q: "What advanced AI modes does Genie offer?",
-        a: "As one of our flagship live features, I support multiple advanced modes: • Split-screen conversations with model comparisons • Multi-model intelligence (GPT-5, Claude, Gemini) • 80+ specialized knowledge contexts • Advanced RAG-enabled responses • Context switching between domains • Single-agent mode for focused expertise • Multi-agent mode for complex analysis • MCP (Model Context Protocol) tool usage • Real-time knowledge base integration"
+        a: "As one of our flagship live features with enterprise-grade performance (1,000 concurrent conversations, <2.5s response time, 99.9% uptime), I support multiple advanced modes: • Split-screen conversations with model comparisons • Multi-model intelligence (GPT-5, Claude, Gemini) • 80+ specialized knowledge contexts • Advanced RAG-enabled responses • Context switching between domains • Single-agent mode for focused expertise • Multi-agent mode for complex analysis • MCP (Model Context Protocol) tool usage • Real-time knowledge base integration • Production-scale throughput (30,000 messages/hour)"
       },
       {
         q: "How does the knowledge base integration work?",

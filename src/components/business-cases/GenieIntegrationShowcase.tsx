@@ -30,10 +30,26 @@ export const GenieIntegrationShowcase = ({ selectedUseCase }: GenieIntegrationSh
         <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4">
           <span className="text-genie-accent">Genie Conversation</span> in Action
         </h3>
-        <p className="text-sm sm:text-base text-muted-foreground max-w-3xl mx-auto">
+        <p className="text-sm sm:text-base text-muted-foreground max-w-3xl mx-auto mb-4">
           Demonstrating how our live Genie Conversational AI feature with 80+ knowledge contexts 
           integrates into real healthcare workflows using the proven 3-phase framework.
         </p>
+        
+        {/* Performance Highlights */}
+        <div className="flex flex-wrap justify-center gap-3 mt-6">
+          <Badge variant="outline" className="border-emerald-500/30 text-emerald-600 bg-emerald-500/5 text-xs sm:text-sm">
+            <Zap className="w-3 h-3 mr-1" />
+            1,000 concurrent conversations
+          </Badge>
+          <Badge variant="outline" className="border-emerald-500/30 text-emerald-600 bg-emerald-500/5 text-xs sm:text-sm">
+            <Target className="w-3 h-3 mr-1" />
+            {"<"}2.5s response time
+          </Badge>
+          <Badge variant="outline" className="border-emerald-500/30 text-emerald-600 bg-emerald-500/5 text-xs sm:text-sm">
+            <CheckCircle className="w-3 h-3 mr-1" />
+            99.9% uptime
+          </Badge>
+        </div>
       </div>
 
       {/* Integration Overview */}
@@ -161,10 +177,13 @@ export const GenieIntegrationShowcase = ({ selectedUseCase }: GenieIntegrationSh
       <Card className="border-genie-accent/30 bg-gradient-to-r from-genie-accent/10 to-genie-primary/10">
         <CardContent className="p-6 sm:p-8 text-center">
           <h4 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Experience Genie Conversation Live</h4>
-          <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-muted-foreground mb-3 max-w-2xl mx-auto">
             Try our live Genie Conversational AI feature with 80+ knowledge contexts. 
             See how the Experiment → Validate → Lead to Deploy framework translates into 
             real, production-ready AI capabilities.
+          </p>
+          <p className="text-xs sm:text-sm text-emerald-600 font-semibold mb-4 sm:mb-6">
+            ⚡ Production-scale performance: 30,000 messages/hour | Scalable infrastructure | Enterprise-ready reliability
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
