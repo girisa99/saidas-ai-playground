@@ -1,12 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { 
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Brain, Mail, Linkedin, ArrowUp, X, ChevronDown } from "lucide-react";
+import { Brain, Mail, Linkedin, ArrowUp, X } from "lucide-react";
 import { PrivacyDialog, TermsDialog, DisclaimerDialog, CookiesDialog } from "./LegalDialogs";
 import { FAQModal } from "./FAQModal";
 import { SupportModal } from "./SupportModal";
@@ -16,37 +10,9 @@ export const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  const emailServices = [
-    {
-      name: 'Contact Form',
-      action: () => {
-        // Scroll to contact section or open contact form
-        const contactSection = document.getElementById('contact-form');
-        if (contactSection) {
-          contactSection.scrollIntoView({ behavior: 'smooth' });
-        } else {
-          // If no contact form on page, navigate to a contact page
-          window.location.href = '/contact';
-        }
-      }
-    },
-    {
-      name: 'Gmail',
-      action: () => window.open('https://mail.google.com/mail/?view=cm&fs=1&to=genieaiexperimentationhub@gmail.com&su=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
-    },
-    {
-      name: 'Outlook',
-      action: () => window.open('https://outlook.live.com/mail/0/deeplink/compose?to=genieaiexperimentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
-    },
-    {
-      name: 'Yahoo Mail',
-      action: () => window.open('https://compose.mail.yahoo.com/?to=genieaiexperimentationhub@gmail.com&subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
-    },
-    {
-      name: 'Default Email App',
-      action: () => window.open('mailto:genieaiexperimentationhub@gmail.com?subject=Contact%20from%20Genie%20AI%20Hub&body=Hello%20Sai,%0A%0AI%20am%20reaching%20out%20regarding%20your%20Genie%20AI%20Experimentation%20Hub.%0A%0A[Please%20write%20your%20message%20here]%0A%0ABest%20regards', '_blank')
-    }
-  ];
+  const handleEmailClick = () => {
+    window.location.href = 'mailto:genieaiexperimentationhub@gmail.com?subject=Contact from GENIE AI HUB&body=Hello Sai,%0A%0AI am reaching out regarding GENIE AI HUB.%0A%0A[Please write your message here]%0A%0ABest regards';
+  };
   return (
     <footer id="contact" className="bg-muted/50 border-t border-border/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
@@ -57,12 +23,12 @@ export const Footer = () => {
               <div className="p-2 bg-primary/10 rounded-lg ai-glow">
                 <Brain className="h-6 w-6 text-primary" />
               </div>
-              <div>
-                <h3 className="text-lg font-bold">
-                  <span className="text-primary">Genie AI</span> Hub
-                </h3>
-                <p className="text-xs text-muted-foreground">Innovation through AI</p>
-              </div>
+            <div>
+              <h3 className="text-lg font-bold enterprise-gradient-text">
+                GENIE AI HUB
+              </h3>
+              <p className="text-xs text-muted-foreground">I am your Technology Navigator</p>
+            </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               GenieAI Experimentation Hub - empowering individuals to build AI expertise through hands-on learning using the Experiment → Validate → Lead to Deploy framework. 
@@ -92,30 +58,27 @@ export const Footer = () => {
           {/* Resources */}
           <div>
             <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Resources</h4>
-            <div className="space-y-2 text-xs sm:text-sm">
-              <Link to="/business-use-cases" className="text-muted-foreground hover:text-foreground transition-colors block">
-                Gartner Business Solutions
+            <div className="space-y-3 text-xs sm:text-sm">
+              <Link to="/case-studies" className="text-muted-foreground hover:text-foreground transition-colors block leading-relaxed">
+                Genie Use Cases
               </Link>
-              <Link to="/docs" className="text-muted-foreground hover:text-foreground transition-colors block">
-                Documentation Hub
+              <Link to="/docs" className="text-muted-foreground hover:text-foreground transition-colors block leading-relaxed">
+                Documentation
               </Link>
               <FAQModal 
                 trigger={
-                  <button className="text-muted-foreground hover:text-foreground transition-colors text-left block">
-                    FAQ & Questions
+                  <button className="text-muted-foreground hover:text-foreground transition-colors text-left block leading-relaxed">
+                    FAQ & Support
                   </button>
                 }
               />
               <SupportModal 
                 trigger={
-                  <button className="text-muted-foreground hover:text-foreground transition-colors text-left block">
-                    Support Center
+                  <button className="text-muted-foreground hover:text-foreground transition-colors text-left block leading-relaxed">
+                    Help Center
                   </button>
                 }
               />
-              <Link to="/#experimentation" className="text-muted-foreground hover:text-foreground transition-colors block">
-                AI Experimentation
-              </Link>
             </div>
           </div>
 
@@ -150,39 +113,25 @@ export const Footer = () => {
                   variant="ghost" 
                   className="p-2"
                   onClick={() => window.open('https://www.linkedin.com/in/saidas/', '_blank')}
+                  aria-label="LinkedIn"
                 >
                   <Linkedin className="h-4 w-4" />
                 </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button 
-                      size="sm" 
-                      variant="ghost" 
-                      className="p-2"
-                      aria-label="Choose email service"
-                    >
-                      <Mail className="h-4 w-4" />
-                      <ChevronDown className="h-3 w-3 ml-1" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48">
-                    {emailServices.map((service) => (
-                      <DropdownMenuItem
-                        key={service.name}
-                        onClick={service.action}
-                        className="cursor-pointer"
-                      >
-                        <Mail className="h-4 w-4 mr-2" />
-                        {service.name}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <Button 
+                  size="sm" 
+                  variant="ghost" 
+                  className="p-2"
+                  onClick={handleEmailClick}
+                  aria-label="Email"
+                >
+                  <Mail className="h-4 w-4" />
+                </Button>
                 <Button 
                   size="sm" 
                   variant="ghost" 
                   className="p-2"
                   onClick={() => window.open('https://x.com/sai_dasika/', '_blank')}
+                  aria-label="X (Twitter)"
                 >
                   <X className="h-4 w-4" />
                 </Button>
@@ -204,7 +153,7 @@ export const Footer = () => {
         
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p className="text-sm text-muted-foreground">
-            © 2025 Genie AI Experimentation Hub. Powered by innovation and curiosity.
+            © 2025 GENIE AI HUB. Powered by innovation and curiosity.
           </p>
           <div className="flex space-x-6 text-sm text-muted-foreground">
             <PrivacyDialog 
