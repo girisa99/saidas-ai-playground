@@ -119,11 +119,11 @@ export const AboutSection = () => {
               </h4>
               <p className="text-muted-foreground mb-4">
                 Systematic approach turning curiosity into proven value through rigorous experimentation and validation. 
-                <strong>2 live implementations launched</strong> with <strong>10+ experiments in pipeline</strong> demonstrating measurable business impact.
+                <strong>2 live implementations launched</strong> with <strong>8+ validated experiments</strong> demonstrating measurable business impact.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary">2 Live Features</Badge>
-                <Badge variant="secondary">10+ In Development</Badge>
+                <Badge variant="secondary">8+ Validated</Badge>
                 <Badge variant="secondary">Proven Value Creation</Badge>
               </div>
             </Card>
