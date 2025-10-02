@@ -6,15 +6,15 @@ export const genieHubCaseStudy: CaseStudyData = {
   id: "genie-hub-platform",
   title: "GenieAI Experimentation Hub Platform",
   subtitle: "Personal AI Learning Laboratory - Live Implementation",
-  description: "Complete platform built using Experiment → Validate → Lead to Deploy framework - from concept to production in 2 weeks",
+  description: "Showcase website built in 2 weeks to demonstrate platform capabilities developed over 80-90 days using Experiment → Validate → Lead to Deploy framework",
   industry: "Personal AI Development",
   status: "live",
   icon: Code,
   overview: {
     challenge: "Need for a comprehensive AI experimentation platform to document and share personal learning journey while building expertise",
-    solution: "Built full-stack platform using Lovable + Supabase with advanced features: knowledge sharing, case studies, business use cases, and progressive disclosure",
-    impact: "Platform launched successfully with comprehensive documentation, interactive features, and real-time content management",
-    timeline: "2 weeks from concept to production deployment"
+    solution: "Platform functionality developed over 80-90 days, then built showcase website in 2 weeks using Lovable + Supabase to demonstrate advanced features: knowledge sharing, case studies, business use cases, and progressive disclosure",
+    impact: "Showcase website launched successfully demonstrating comprehensive documentation, interactive features, and real-time content management capabilities",
+    timeline: "Platform development: 80-90 days | Showcase website: 2 weeks from concept to production"
   },
   metrics: {
     efficiency: "100% framework adherence",
@@ -40,9 +40,9 @@ export const genieHubCaseStudy: CaseStudyData = {
     {
       id: 1,
       title: "Experiment Phase",
-      description: "Rapid prototyping with Lovable platform, testing various UI/UX approaches and content structures",
+      description: "Platform capabilities developed over 80-90 days. Showcase website rapid prototyping with Lovable platform, testing various UI/UX approaches and content structures",
       icon: Rocket,
-      time: "Week 1",
+      time: "Platform: 80-90 days | Website: Week 1",
       emotion: "positive",
       emotionIcon: CheckCircle,
       approach: "hybrid",
@@ -165,7 +165,7 @@ export const genieConversationCaseStudy: CaseStudyData = {
     challenge: "Create sophisticated conversational AI that demonstrates advanced capabilities while providing practical value for personal learning and professional development. Need to build production-ready AI that showcases expertise in multi-model orchestration, RAG architecture, and healthcare compliance.",
     solution: "Built comprehensive AI conversation system with 80+ knowledge contexts, multi-model support (Gemini 2.5 Pro/Flash, GPT-5/Mini), split-screen mode, advanced RAG implementation, healthcare compliance, and real-time streaming capabilities using Supabase Edge Functions and vector databases.",
     impact: "Live feature demonstrating advanced AI capabilities with real-world utility: 95%+ response accuracy, sub-second response times, 24/7 availability, HIPAA-compliant architecture, and seamless integration across healthcare workflows including oncology care, patient referral, and contact center transformation.",
-    timeline: "3 weeks from concept to production feature with full technical implementation"
+    timeline: "3 days rapid development from concept to production feature"
   },
   metrics: {
     efficiency: "80+ knowledge contexts, 5 AI models, 95%+ accuracy",
@@ -197,7 +197,7 @@ export const genieConversationCaseStudy: CaseStudyData = {
       title: "Experiment Phase - Advanced AI Architecture",
       description: "Research and prototyping of conversational AI architectures with multi-model integration, RAG implementations, vector databases, and healthcare compliance requirements",
       icon: Brain,
-      time: "Week 1-2",
+      time: "Day 1",
       emotion: "positive",
       emotionIcon: CheckCircle,
       approach: "agentic",
@@ -244,7 +244,7 @@ export const genieConversationCaseStudy: CaseStudyData = {
       title: "Validate Phase - Production Testing & Optimization",
       description: "Comprehensive testing of conversational flows, knowledge accuracy, multi-model performance, healthcare compliance, and user experience optimization across all 80+ contexts",
       icon: Shield,
-      time: "Week 2-3",
+      time: "Day 2",
       emotion: "positive",
       emotionIcon: CheckCircle,
       approach: "agentic",
@@ -283,7 +283,7 @@ export const genieConversationCaseStudy: CaseStudyData = {
       title: "Lead to Deploy Phase",
       description: "Production deployment with full conversational AI capabilities, 80+ contexts, and advanced features live",
       icon: Network,
-      time: "Week 3",
+      time: "Day 3",
       emotion: "positive",
       emotionIcon: CheckCircle,
       approach: "agentic",

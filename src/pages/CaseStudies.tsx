@@ -178,24 +178,24 @@ const CaseStudies = () => {
                               GenieAI Hub Platform
                             </h4>
                             <p className="text-genie-cyan font-semibold text-sm mb-2">
-                              🚀 LIVE: Complete Platform - 2 weeks concept to production
+                              🚀 LIVE: Showcase website (2 weeks) demonstrating platform (80-90 days development)
                             </p>
                           </div>
                         </div>
                         
                         <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
-                          Full-stack experimentation platform built using Lovable + Supabase. Demonstrates complete Experiment → Validate → Lead to Deploy framework with knowledge sharing, case studies, and interactive features.
+                          Platform capabilities developed over 80-90 days, then built showcase website in 2 weeks using Lovable + Supabase. Demonstrates complete Experiment → Validate → Lead to Deploy framework with knowledge sharing, case studies, and interactive features.
                         </p>
                         
                         <div className="mb-4">
                           <div className="grid grid-cols-2 gap-3 text-xs">
                             <div className="text-center p-2 bg-white/60 rounded border">
-                              <div className="font-bold text-genie-cyan">2</div>
-                              <div className="text-muted-foreground">Weeks Build</div>
+                              <div className="font-bold text-genie-cyan">80-90</div>
+                              <div className="text-muted-foreground">Days Platform</div>
                             </div>
                             <div className="text-center p-2 bg-white/60 rounded border">
-                              <div className="font-bold text-genie-cyan">100%</div>
-                              <div className="text-muted-foreground">Framework</div>
+                              <div className="font-bold text-genie-cyan">2 Weeks</div>
+                              <div className="text-muted-foreground">Website</div>
                             </div>
                           </div>
                         </div>
@@ -231,7 +231,7 @@ const CaseStudies = () => {
                               Genie Conversational AI
                             </h4>
                             <p className="text-genie-accent font-semibold text-sm mb-2">
-                              🚀 LIVE: Advanced RAG + 80+ Contexts - 3 weeks to production
+                              🚀 LIVE: Advanced RAG + 80+ Contexts - 3 days rapid development
                             </p>
                           </div>
                         </div>
