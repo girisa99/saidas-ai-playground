@@ -52,7 +52,7 @@ const About = () => {
 
   const stats = [
     { number: "21+", label: "Years Experience", icon: Briefcase, color: "genie-primary" },
-    { number: "8+", label: "Validated Use Cases", icon: Lightbulb, color: "genie-teal" },
+    { number: "10+", label: "Validated Use Cases", icon: Lightbulb, color: "genie-teal" },
     { number: "3x", label: "Faster Development", icon: Code, color: "genie-cyan" },
     { number: "90%", label: "Risk Reduction", icon: Target, color: "genie-primary" }
   ];

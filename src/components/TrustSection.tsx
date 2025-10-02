@@ -31,7 +31,7 @@ export const TrustSection = () => {
       borderColor: "border-green-500/30",
       features: [
         "2 Live features deployed",
-        "8+ validated experiments",
+        "10+ experiments across pipeline",
         "Multiple use cases & scenarios",
         "Documented results & insights"
       ]

@@ -94,7 +94,7 @@ export const KnowledgePoweredFAQ = ({ onStartConversation }: KnowledgePoweredFAQ
       {
         category: "Case Studies",
         question: "What are the proven results of your 3-phase framework?",
-        answer: `94% accuracy achieved, 8+ validated use cases, 3-day development cycles`,
+        answer: `94% accuracy achieved, 10+ validated use cases, 3-day development cycles`,
         context: "cases"
       }
     ];

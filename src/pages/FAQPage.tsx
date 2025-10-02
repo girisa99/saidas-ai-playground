@@ -62,7 +62,7 @@ const FAQPage = () => {
       questions: [
         {
           question: "How do you document and share your AI experiments?",
-          answer: "I maintain detailed experiment logs for 2 live features (GenieAI Hub Platform & Genie Conversation with 80+ contexts) plus 8+ validated experiments. I document objectives, tools used, advanced RAG architecture, multi-model intelligence testing, and real implementation outcomes. The Genie Conversation feature demonstrates sophisticated conversational AI with split-screen capabilities and healthcare compliance.",
+          answer: "I maintain detailed experiment logs for 2 live features (GenieAI Hub Platform & Genie Conversation with 80+ contexts) plus 10+ experiments across pipeline. I document objectives, tools used, advanced RAG architecture, multi-model intelligence testing, and real implementation outcomes. The Genie Conversation feature demonstrates sophisticated conversational AI with split-screen capabilities and healthcare compliance.",
           learnMoreLink: "/journey"
         },
         {
@@ -201,7 +201,7 @@ const FAQPage = () => {
                     Have a Question About My Live AI Features?
                   </h3>
                   <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                    I'm always learning and experimenting with 2 live features (GenieAI Hub & Genie Conversation with 80+ contexts) plus 8+ validated experiments. If you have questions about advanced RAG architecture, multi-model intelligence, or implementation challenges, let's connect!
+                    I'm always learning and experimenting with 2 live features (GenieAI Hub & Genie Conversation with 80+ contexts) plus 10+ experiments across pipeline. If you have questions about advanced RAG architecture, multi-model intelligence, or implementation challenges, let's connect!
                   </p>
                   <Button 
                     className="bg-blue-500 hover:bg-blue-600 text-white"

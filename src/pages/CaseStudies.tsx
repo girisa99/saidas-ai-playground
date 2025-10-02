@@ -82,7 +82,7 @@ const CaseStudies = () => {
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed mb-6 sm:mb-8 px-2">
-              Demonstrating the <span className="text-genie-accent font-semibold">Experiment → Validate → Lead to Deploy</span> framework through real implementations — <strong>2 live features launched</strong> (GenieAI Hub + Genie Conversation) with <strong>8+ validated experiments</strong>, sharing comprehensive learning insights for individual growth and transformation.
+              Demonstrating the <span className="text-genie-accent font-semibold">Experiment → Validate → Lead to Deploy</span> framework through real implementations — <strong>2 live features launched</strong> (GenieAI Hub + Genie Conversation) with <strong>10+ experiments across pipeline</strong>, sharing comprehensive learning insights for individual growth and transformation.
             </p>
             
             {/* Framework Impact Metrics Grid - Mobile Responsive */}
@@ -104,8 +104,8 @@ const CaseStudies = () => {
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
                 <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-genie-accent mb-2" />
-                <h3 className="font-semibold text-white text-xs sm:text-sm">VALIDATED</h3>
-                <p className="text-white/80 text-xs">8+ experiments</p>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">PIPELINE</h3>
+                <p className="text-white/80 text-xs">10+ Experiments</p>
               </div>
             </div>
             
@@ -317,8 +317,8 @@ const CaseStudies = () => {
                           <div className="text-xs text-muted-foreground">Live Features Deployed</div>
                         </div>
                         <div className="text-center p-3 bg-white/60 backdrop-blur-sm rounded-lg border">
-                          <div className="text-xl font-bold text-genie-primary">8+</div>
-                          <div className="text-xs text-muted-foreground">Validated Experiments</div>
+                          <div className="text-xl font-bold text-genie-primary">10+</div>
+                          <div className="text-xs text-muted-foreground">Experiments Across Pipeline</div>
                         </div>
                       </div>
                     </div>

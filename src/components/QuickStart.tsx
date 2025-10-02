@@ -28,8 +28,8 @@ export const QuickStart = () => {
     },
     {
       icon: <TrendingUp className="h-6 w-6" />,
-      value: "8+",
-      label: "Validated Experiments", 
+      value: "10+",
+      label: "Experiments Across Pipeline", 
       color: "text-blue-600"
     },
     {
