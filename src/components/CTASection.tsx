@@ -27,7 +27,7 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
           },
           secondary: {
             title: "Browse My Experiments",
-            description: "8+ documented business cases and 2 live features showing what I built. Use what fits your situation, modify what doesn't.",
+            description: "8+ validated business cases and 2 live features showing what I built. Use what fits your situation, modify what doesn't.",
             link: "/business-use-cases",
             icon: Target,
             buttonText: "Browse Experiments"
@@ -45,7 +45,7 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
         return {
           primary: {
             title: "See How I Learned",
-            description: "My path from curiosity to building 2 live features and 10+ experiments. Adapt the approach to fit your own learning style.",
+            description: "My path from curiosity to building 2 live features and 8+ validated experiments. Adapt the approach to fit your own learning style.",
             link: "/journey",
             icon: Map,
             buttonText: "View My Journey"
@@ -70,14 +70,14 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
         return {
           primary: {
             title: "Explore My 90-Day Framework Applications",
-            description: "See how I applied the Day 0-90 experimentation approach across 10+ real healthcare scenarios",
+            description: "See how I applied the Day 0-90 experimentation approach across 8+ validated healthcare scenarios",
             link: "/business-use-cases",
             icon: Target,
             buttonText: "View Day 0-90 Applications"
           },
           secondary: {
             title: "Browse Implementation Results",
-            description: "2 live features and experiments showing what worked for me. Use as reference points for your own implementations.",
+            description: "2 live features and 8+ validated experiments showing what worked for me. Use as reference points for your own implementations.",
             link: "/case-studies",
             icon: Trophy,
             buttonText: "Browse Results"

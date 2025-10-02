@@ -46,9 +46,9 @@ export const IntegratedTechnologyExploration = () => {
     title: "🌟 Genie Conversational Feature - LIVE NOW",
     status: "FEATURED LAUNCH",
     description: "The first flagship feature of the Genie AI Experimentation Hub, demonstrating the Experiment → Validate → Lead to Deploy framework in action",
-    capabilities: [
+      capabilities: [
       "80+ Knowledge Contexts across healthcare AI domains",
-      "Multi-Model Intelligence (GPT-4, Claude, Gemini)",
+      "Multi-Model Intelligence (GPT-5, Claude, Gemini)",
       "Split-Screen Conversations for model comparison",
       "Advanced RAG Architecture with intelligent context switching",
       "Model Comparison Mode for optimal AI selection",
@@ -67,7 +67,7 @@ export const IntegratedTechnologyExploration = () => {
       gartnerPhase: 'Envision → LIVE DEPLOYMENT',
       experiment: {
         businessScenarios: ['AI model selection research', 'Healthcare context analysis', 'Multi-LLM comparison testing'],
-        technologyImplementation: ['GPT-4 API integration', 'Claude model testing', 'Gemini Pro evaluation'],
+        technologyImplementation: ['GPT-5 API integration', 'Claude model testing', 'Gemini Pro evaluation'],
         integrationMapping: 'Model Selection → Context Architecture → RAG Implementation'
       },
       validate: {
@@ -83,7 +83,7 @@ export const IntegratedTechnologyExploration = () => {
       valueCreationSteps: ['🚀 LIVE: 80+ Knowledge Contexts', '🚀 LIVE: Multi-LLM Orchestration', '🚀 LIVE: Split-Screen Conversations', 'Advanced RAG Architecture', 'Real-time Model Switching'],
       businessUseCases: [
         '🌟 Genie Conversational Feature - Advanced RAG with 80+ healthcare contexts',
-        'Multi-Model Intelligence (GPT-4, Claude, Gemini) with real-time switching',
+        'Multi-Model Intelligence (GPT-5, Claude, Gemini) with real-time switching',
         'Split-screen model comparison for optimal AI selection',
         'Context switching between specialized healthcare knowledge domains'
       ],
