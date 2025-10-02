@@ -31,7 +31,7 @@ export const Footer = () => {
             </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Born from a vision to democratize AI expertise, GENIE AI HUB empowers individuals to transform from curious learners to confident AI practitioners. Through the Experiment → Validate → Lead to Deploy framework, we bridge the gap between AI theory and real-world implementation, proving that mastery comes from doing, not just learning.
+              A personal journey of AI experimentation and learning, shared openly. GENIE AI HUB is where curiosity meets hands-on exploration - documenting experiments, sharing knowledge, and collaborating on real-world AI implementations through the Experiment → Validate → Lead to Deploy approach.
             </p>
           </div>
 
