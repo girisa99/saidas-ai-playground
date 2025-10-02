@@ -5,6 +5,7 @@ import { GartnerValueSection } from "@/components/GartnerValueSection";
 import { QuickStart } from "@/components/QuickStart";
 import { Footer } from "@/components/Footer";
 import { CTASection } from "@/components/CTASection";
+import { NewsletterSubscription } from "@/components/NewsletterSubscription";
 import { useEffect } from "react";
 
 const Index = () => {
@@ -26,6 +27,7 @@ const Index = () => {
         <GartnerValueSection />
         <QuickStart />
       </main>
+      <NewsletterSubscription />
       <Footer />
     </div>
   );
