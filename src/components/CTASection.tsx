@@ -69,11 +69,11 @@ export const CTASection = ({ currentPage, variant = "primary" }: CTAProps) => {
       case "journey":
         return {
           primary: {
-            title: "See How I Applied Learning",
-            description: "My experimentation approach in real scenarios - adapt the methodology to fit your context",
+            title: "Explore My 90-Day Framework Applications",
+            description: "See how I applied the Day 0-90 experimentation approach across 10+ real healthcare scenarios",
             link: "/business-use-cases",
             icon: Target,
-            buttonText: "View Applications"
+            buttonText: "View Day 0-90 Applications"
           },
           secondary: {
             title: "Browse Implementation Results",

@@ -35,7 +35,7 @@ const VerticalJourneyInfographic = () => {
       id: 1,
       title: "Spark & Curiosity Combined",
       subtitle: "Initial AI Exploration & Discovery",
-      date: "May-September 2025",
+      date: "Day 0-45",
       icon: Lightbulb,
       image: phase01Spark,
       description: "The initial spark and curiosity phase combining transformative conversations with deep AI exploration across multiple models and frameworks.",
