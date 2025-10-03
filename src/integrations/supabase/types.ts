@@ -7085,6 +7085,42 @@ export type Database = {
           },
         ]
       }
+      genie_popup_analytics: {
+        Row: {
+          context: string | null
+          created_at: string
+          event_data: Json | null
+          event_type: string
+          id: string
+          ip_address: string | null
+          page_url: string | null
+          user_agent: string | null
+          user_email: string | null
+        }
+        Insert: {
+          context?: string | null
+          created_at?: string
+          event_data?: Json | null
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          page_url?: string | null
+          user_agent?: string | null
+          user_email?: string | null
+        }
+        Update: {
+          context?: string | null
+          created_at?: string
+          event_data?: Json | null
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          page_url?: string | null
+          user_agent?: string | null
+          user_email?: string | null
+        }
+        Relationships: []
+      }
       genie_rate_limits: {
         Row: {
           block_reason: string | null

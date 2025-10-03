@@ -34,10 +34,24 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
   });
   const { toast } = useToast();
 
-  const handleSubmit = () => {
-    if (userInfo.firstName && userInfo.email) {
-      onAccept(userInfo);
+  const handleSubmit = async () => {
+    if (!userInfo.firstName.trim() || !userInfo.email || !isEmailValid(userInfo.email)) {
+      return;
     }
+
+    // Track privacy acceptance
+    try {
+      const { genieAnalyticsService } = await import('@/services/genieAnalyticsService');
+      await genieAnalyticsService.trackPrivacyAccept({
+        user_email: userInfo.email,
+        user_name: `${userInfo.firstName} ${userInfo.lastName || ''}`.trim(),
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('Failed to track privacy acceptance:', error);
+    }
+
+    onAccept(userInfo);
   };
 
   const isEmailValid = (email: string) => {

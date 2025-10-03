@@ -39,7 +39,7 @@ export class GenieAnalyticsService {
   async trackPopupClick(data: PopupClickEvent): Promise<void> {
     try {
       const { error } = await supabase
-        .from('genie_popup_analytics')
+        .from('genie_popup_analytics' as any)
         .insert({
           event_type: 'popup_click',
           event_data: data,
@@ -60,7 +60,7 @@ export class GenieAnalyticsService {
   async trackPrivacyAccept(data: PrivacyAcceptEvent): Promise<void> {
     try {
       const { error } = await supabase
-        .from('genie_popup_analytics')
+        .from('genie_popup_analytics' as any)
         .insert({
           event_type: 'privacy_accepted',
           event_data: data,
@@ -82,7 +82,7 @@ export class GenieAnalyticsService {
   async trackUserRegistration(data: UserRegistrationEvent): Promise<void> {
     try {
       const { error } = await supabase
-        .from('genie_popup_analytics')
+        .from('genie_popup_analytics' as any)
         .insert({
           event_type: 'user_registered',
           event_data: data,
