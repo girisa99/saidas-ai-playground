@@ -132,128 +132,128 @@
   }
   
   :root {
-    /* Enterprise Professional Color Palette */
+    /* Professional Neutral Palette */
     --background: 0 0% 100%;
-    --foreground: 220 15% 15%;
+    --foreground: 222 15% 20%;
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 15%;
+    --card-foreground: 222 15% 20%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
+    --popover-foreground: 222 15% 20%;
     
-    /* Primary - Deep Professional Blue */
-    --primary: 220 70% 45%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 220 75% 40%;
+    /* Primary - Subtle Navy Blue */
+    --primary: 222 47% 25%;
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: 222 47% 20%;
     
-    /* Secondary - Slate */
-    --secondary: 220 15% 96%;
-    --secondary-foreground: 220 15% 15%;
+    /* Secondary - Cool Gray */
+    --secondary: 220 13% 95%;
+    --secondary-foreground: 222 15% 20%;
     
-    /* Accent - Modern Teal */
-    --accent: 185 80% 45%;
-    --accent-foreground: 0 0% 100%;
-    --accent-muted: 185 40% 92%;
+    /* Accent - Muted Professional Blue */
+    --accent: 212 30% 45%;
+    --accent-foreground: 0 0% 98%;
+    --accent-muted: 212 20% 93%;
     
     /* Muted Tones */
-    --muted: 220 15% 96%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 220 13% 95%;
+    --muted-foreground: 220 9% 46%;
     
     /* Alerts & Status */
-    --destructive: 0 70% 55%;
-    --destructive-foreground: 0 0% 100%;
-    --success: 145 65% 45%;
-    --success-foreground: 0 0% 100%;
-    --warning: 35 90% 55%;
-    --warning-foreground: 0 0% 100%;
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --success: 142 55% 40%;
+    --success-foreground: 0 0% 98%;
+    --warning: 38 85% 48%;
+    --warning-foreground: 0 0% 98%;
     
     /* UI Elements */
-    --border: 220 15% 90%;
-    --input: 220 15% 96%;
-    --ring: 220 70% 45%;
-    --radius: 6px;
+    --border: 220 13% 88%;
+    --input: 220 13% 95%;
+    --ring: 222 47% 25%;
+    --radius: 8px;
     
     /* Sidebar */
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 220 15% 15%;
-    --sidebar-primary: 220 70% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 96%;
-    --sidebar-accent-foreground: 220 15% 15%;
-    --sidebar-border: 220 15% 90%;
-    --sidebar-ring: 220 70% 45%;
+    --sidebar-foreground: 222 15% 20%;
+    --sidebar-primary: 222 47% 25%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 220 13% 95%;
+    --sidebar-accent-foreground: 222 15% 20%;
+    --sidebar-border: 220 13% 88%;
+    --sidebar-ring: 222 47% 25%;
     
-    /* Genie Theme Colors */
-    --genie-dark: 220 70% 20%;
-    --genie-primary: 220 70% 45%;
-    --genie-teal: 185 80% 45%;
-    --genie-cyan: 195 75% 50%;
-    --genie-accent: 185 80% 45%;
-    --genie-secondary: 195 75% 50%;
-    --genie-muted: 220 15% 90%;
-    --genie-gradient: linear-gradient(135deg, hsl(220 70% 45%), hsl(185 80% 45%));
-    --genie-logo-gradient: linear-gradient(135deg, hsl(220 70% 45%) 0%, hsl(195 75% 50%) 50%, hsl(185 80% 45%) 100%);
+    /* Genie Theme Colors - Muted */
+    --genie-dark: 222 47% 20%;
+    --genie-primary: 222 47% 25%;
+    --genie-teal: 195 30% 50%;
+    --genie-cyan: 200 30% 55%;
+    --genie-accent: 212 30% 45%;
+    --genie-secondary: 200 25% 50%;
+    --genie-muted: 220 13% 88%;
+    --genie-gradient: linear-gradient(135deg, hsl(222 47% 25%), hsl(212 30% 45%));
+    --genie-logo-gradient: linear-gradient(135deg, hsl(222 47% 25%) 0%, hsl(212 30% 45%) 50%, hsl(195 30% 50%) 100%);
   }
 
   .dark {
-    /* Dark Genie Theme */
-    --background: 217 40% 8%;
-    --foreground: 220 15% 92%;
-    --card: 217 40% 10%;
-    --card-foreground: 220 15% 92%;
-    --popover: 217 40% 10%;
-    --popover-foreground: 220 15% 92%;
+    /* Professional Dark Theme */
+    --background: 222 30% 10%;
+    --foreground: 0 0% 95%;
+    --card: 222 30% 12%;
+    --card-foreground: 0 0% 95%;
+    --popover: 222 30% 12%;
+    --popover-foreground: 0 0% 95%;
     
-    /* Dark Primary */
-    --primary: 180 85% 65%;
-    --primary-foreground: 217 40% 8%;
-    --primary-hover: 180 85% 75%;
+    /* Dark Primary - Muted Blue */
+    --primary: 212 40% 55%;
+    --primary-foreground: 222 30% 10%;
+    --primary-hover: 212 40% 60%;
     
     /* Dark Secondary */
-    --secondary: 217 40% 18%;
-    --secondary-foreground: 220 15% 85%;
+    --secondary: 222 20% 18%;
+    --secondary-foreground: 0 0% 90%;
     
     /* Dark Accent */
-    --accent: 195 80% 70%;
-    --accent-foreground: 217 40% 8%;
-    --accent-muted: 195 50% 25%;
+    --accent: 200 35% 55%;
+    --accent-foreground: 222 30% 10%;
+    --accent-muted: 200 25% 25%;
     
     /* Dark Muted */
-    --muted: 217 40% 15%;
-    --muted-foreground: 220 20% 65%;
+    --muted: 222 20% 18%;
+    --muted-foreground: 220 15% 65%;
     
     /* Dark Alerts */
-    --destructive: 0 84% 65%;
-    --destructive-foreground: 217 40% 8%;
-    --success: 142 76% 45%;
-    --success-foreground: 217 40% 8%;
-    --warning: 45 100% 65%;
-    --warning-foreground: 217 40% 8%;
+    --destructive: 0 70% 60%;
+    --destructive-foreground: 222 30% 10%;
+    --success: 142 55% 50%;
+    --success-foreground: 222 30% 10%;
+    --warning: 38 80% 60%;
+    --warning-foreground: 222 30% 10%;
     
     /* Dark UI Elements */
-    --border: 217 40% 18%;
-    --input: 217 40% 15%;
-    --ring: 180 85% 65%;
+    --border: 222 20% 22%;
+    --input: 222 20% 18%;
+    --ring: 212 40% 55%;
     
     /* Dark Sidebar */
-    --sidebar-background: 217 40% 8%;
-    --sidebar-foreground: 220 15% 92%;
-    --sidebar-primary: 180 85% 65%;
-    --sidebar-primary-foreground: 217 40% 8%;
-    --sidebar-accent: 217 40% 18%;
-    --sidebar-accent-foreground: 220 15% 85%;
-    --sidebar-border: 217 40% 18%;
-    --sidebar-ring: 180 85% 65%;
+    --sidebar-background: 222 30% 10%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 212 40% 55%;
+    --sidebar-primary-foreground: 222 30% 10%;
+    --sidebar-accent: 222 20% 18%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 222 20% 22%;
+    --sidebar-ring: 212 40% 55%;
     
-    /* Dark Genie Colors */
-    --genie-dark: 217 50% 5%;
-    --genie-primary: 180 85% 65%;
-    --genie-teal: 195 80% 70%;
-    --genie-cyan: 210 75% 60%;
-    --genie-accent: 195 80% 70%;
-    --genie-secondary: 210 75% 60%;
-    --genie-muted: 217 40% 25%;
-    --genie-gradient: linear-gradient(135deg, hsl(180 85% 65%), hsl(195 80% 70%));
-    --genie-logo-gradient: linear-gradient(135deg, hsl(217 50% 15%) 0%, hsl(195 80% 60%) 50%, hsl(180 85% 75%) 100%);
+    /* Dark Genie Colors - Muted */
+    --genie-dark: 222 35% 8%;
+    --genie-primary: 212 40% 55%;
+    --genie-teal: 195 35% 55%;
+    --genie-cyan: 200 35% 60%;
+    --genie-accent: 200 35% 55%;
+    --genie-secondary: 205 30% 55%;
+    --genie-muted: 222 20% 25%;
+    --genie-gradient: linear-gradient(135deg, hsl(212 40% 55%), hsl(200 35% 55%));
+    --genie-logo-gradient: linear-gradient(135deg, hsl(222 35% 20%) 0%, hsl(212 35% 50%) 50%, hsl(200 35% 55%) 100%);
   }
 
   * {
