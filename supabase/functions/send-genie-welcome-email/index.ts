@@ -48,7 +48,7 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
     
-    const siteUrl = "https://genieexperimentationhub.lovable.app";
+    const siteUrl = "https://genieaiexperimentationhub.tech";
     const userName = firstName && lastName ? `${firstName} ${lastName}` : (firstName || 'there');
 
     // Genie welcome email HTML
@@ -82,7 +82,7 @@ const handler = async (req: Request): Promise<Response> => {
   <div class="container">
     <div class="header">
       <div class="logo">
-        <img src="${siteUrl}/genie-logo.png" width="70" height="70" alt="Genie AI" style="display: block;" />
+        <img src="${siteUrl}/genie-logo-main.png" width="70" height="70" alt="Genie AI" style="display: block;" />
       </div>
       <h1 class="header-title">Welcome to Genie AI! 🧞‍♂️</h1>
     </div>
