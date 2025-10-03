@@ -14,6 +14,7 @@ interface GeniePopupAnalyticsSectionProps {
   modelUsage: any[];
   accessRequests: any[];
   popupStats?: { popupClicks: number; privacyAccepted: number; registrations: number };
+  popupEvents?: any[];
   knowledgeBaseCount?: number;
 }
 
@@ -22,6 +23,7 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
   modelUsage,
   accessRequests,
   popupStats,
+  popupEvents = [],
   knowledgeBaseCount = 0
 }) => {
   const [showAddKnowledge, setShowAddKnowledge] = useState(false);
@@ -339,6 +341,61 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
 
                   <div className="mt-6">
                     <h3 className="font-semibold mb-3">Recent Conversations</h3>
+                    {genieConversations.length === 0 && popupEvents.length > 0 ? (
+                      <Card className="p-6">
+                        <div className="text-center space-y-4">
+                          <p className="text-sm text-muted-foreground">
+                            No active conversations found in genie_conversations table, but we detected {popupEvents.length} popup events:
+                          </p>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <Card className="p-4">
+                              <div className="text-sm font-medium text-muted-foreground">Popup Clicks</div>
+                              <div className="text-2xl font-bold">{popupEvents.filter(e => e.event_type === 'popup_click').length}</div>
+                            </Card>
+                            <Card className="p-4">
+                              <div className="text-sm font-medium text-muted-foreground">Privacy Accepted</div>
+                              <div className="text-2xl font-bold">{popupEvents.filter(e => e.event_type === 'privacy_accepted').length}</div>
+                            </Card>
+                            <Card className="p-4">
+                              <div className="text-sm font-medium text-muted-foreground">User Registrations</div>
+                              <div className="text-2xl font-bold">{popupEvents.filter(e => e.event_type === 'user_registered').length}</div>
+                            </Card>
+                          </div>
+                          <div className="mt-4">
+                            <h4 className="font-medium mb-2">Recent Events:</h4>
+                            <Table>
+                              <TableHeader>
+                                <TableRow>
+                                  <TableHead>Event Type</TableHead>
+                                  <TableHead>User Email</TableHead>
+                                  <TableHead>Context</TableHead>
+                                  <TableHead>IP Address</TableHead>
+                                  <TableHead>Timestamp</TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {popupEvents.slice(0, 10).map((event) => (
+                                  <TableRow key={event.id}>
+                                    <TableCell>
+                                      <Badge variant={
+                                        event.event_type === 'user_registered' ? 'default' :
+                                        event.event_type === 'privacy_accepted' ? 'secondary' : 'outline'
+                                      }>
+                                        {event.event_type}
+                                      </Badge>
+                                    </TableCell>
+                                    <TableCell className="text-xs">{event.user_email || 'anonymous'}</TableCell>
+                                    <TableCell><Badge variant="outline">{event.context || 'general'}</Badge></TableCell>
+                                    <TableCell className="font-mono text-xs">{event.ip_address || 'N/A'}</TableCell>
+                                    <TableCell className="text-xs">{new Date(event.created_at).toLocaleString()}</TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </div>
+                        </div>
+                      </Card>
+                    ) : (
                     <Table>
                       <TableHeader>
                         <TableRow>
@@ -384,6 +441,7 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
                         })}
                       </TableBody>
                     </Table>
+                    )}
                   </div>
                 </div>
               </ScrollArea>
@@ -399,34 +457,40 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
             </CardHeader>
             <CardContent>
               <ScrollArea className="h-[400px]">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>IP Address</TableHead>
-                      <TableHead>Location</TableHead>
-                      <TableHead>Conversations</TableHead>
-                      <TableHead>Messages</TableHead>
-                      <TableHead>Last Active</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {genieConversations.filter(c => c.ip_address).map((conv) => (
-                      <TableRow key={conv.id}>
-                        <TableCell className="font-mono text-xs">{conv.ip_address}</TableCell>
-                        <TableCell className="text-xs">Location data to be enriched</TableCell>
-                        <TableCell><Badge variant="outline">1</Badge></TableCell>
-                        <TableCell>
-                          <Badge variant="secondary">
-                            {Array.isArray(conv.messages) ? conv.messages.length : 0}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-xs">
-                          {new Date(conv.updated_at).toLocaleString()}
-                        </TableCell>
+                {popupEvents.filter(e => e.ip_address).length > 0 ? (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>IP Address</TableHead>
+                        <TableHead>Event Type</TableHead>
+                        <TableHead>User Email</TableHead>
+                        <TableHead>Context</TableHead>
+                        <TableHead>Last Active</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {popupEvents.filter(e => e.ip_address).map((event) => (
+                        <TableRow key={event.id}>
+                          <TableCell className="font-mono text-xs">{event.ip_address}</TableCell>
+                          <TableCell>
+                            <Badge variant="outline">{event.event_type}</Badge>
+                          </TableCell>
+                          <TableCell className="text-xs">{event.user_email || 'anonymous'}</TableCell>
+                          <TableCell>
+                            <Badge variant="secondary">{event.context || 'general'}</Badge>
+                          </TableCell>
+                          <TableCell className="text-xs">
+                            {new Date(event.created_at).toLocaleString()}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                ) : (
+                  <div className="text-center py-12">
+                    <p className="text-muted-foreground">No geographic data available yet. IP addresses will be captured as users interact with the popup.</p>
+                  </div>
+                )}
               </ScrollArea>
             </CardContent>
           </Card>

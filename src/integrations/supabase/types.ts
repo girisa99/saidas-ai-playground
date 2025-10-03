@@ -16093,6 +16093,10 @@ export type Database = {
         Args: { user_uuid: string }
         Returns: Json
       }
+      get_recent_popup_events: {
+        Args: { days_back?: number; limit_count?: number }
+        Returns: Json
+      }
       get_system_integration_status: {
         Args: Record<PropertyKey, never>
         Returns: Json

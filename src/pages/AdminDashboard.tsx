@@ -14,6 +14,7 @@ const AdminDashboard = () => {
   const [genieConversations, setGenieConversations] = useState<any[]>([]);
   const [modelUsage, setModelUsage] = useState<any[]>([]);
   const [accessRequests, setAccessRequests] = useState<any[]>([]);
+  const [popupEvents, setPopupEvents] = useState<any[]>([]);
   const [popupStats, setPopupStats] = useState<{ popupClicks: number; privacyAccepted: number; registrations: number }>({ popupClicks: 0, privacyAccepted: 0, registrations: 0 });
   const [knowledgeBaseCount, setKnowledgeBaseCount] = useState<number>(0);
   const { toast } = useToast();
@@ -42,6 +43,14 @@ const AdminDashboard = () => {
         console.error('Genie conversations RPC error:', genieConvError);
       }
       setGenieConversations(Array.isArray(genieConvJson) ? genieConvJson : []);
+
+      // Load popup events via new RPC
+      const { data: popupEventsJson, error: popupEventsError } = await supabase
+        .rpc('get_recent_popup_events', { days_back: 7, limit_count: 200 });
+      if (popupEventsError) {
+        console.error('Popup events RPC error:', popupEventsError);
+      }
+      setPopupEvents(Array.isArray(popupEventsJson) ? popupEventsJson : []);
 
       // Load popup analytics via RPC (avoids RLS on raw table)
       const { data: popupStatsData, error: popupStatsErr } = await supabase
@@ -139,6 +148,7 @@ const AdminDashboard = () => {
               modelUsage={modelUsage}
               accessRequests={accessRequests}
               popupStats={popupStats}
+              popupEvents={popupEvents}
               knowledgeBaseCount={knowledgeBaseCount}
             />
           </TabsContent>
