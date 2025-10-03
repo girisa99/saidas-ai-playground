@@ -61,21 +61,25 @@ const handler = async (req: Request): Promise<Response> => {
   <title>Welcome to Genie AI! 🧞‍♂️</title>
   <style>
     body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    .container { background-color: #ffffff; margin: 40px auto; padding: 0; border-radius: 12px; max-width: 600px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
-    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center; color: white; }
+    .container { background-color: #ffffff; margin: 40px auto; padding: 0; border-radius: 12px; max-width: 650px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+    .header { background: linear-gradient(135deg, #2d547e 0%, #48a3c4 50%, #7dd3fc 100%); padding: 40px 20px; text-align: center; color: white; }
     .logo { width: 100px; height: 100px; margin: 0 auto 20px; background: white; border-radius: 50%; padding: 15px; }
     .header-title { color: white; font-size: 32px; font-weight: bold; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    .tagline { color: #7dd3fc; font-size: 16px; font-style: italic; margin: 8px 0 0; }
     .content { padding: 40px; }
     .greeting { color: #1a365d; font-size: 24px; font-weight: bold; margin: 0 0 20px; }
     .text { color: #4a5568; font-size: 16px; line-height: 1.8; margin: 16px 0; }
-    .feature-box { background: #f7fafc; border-left: 4px solid #667eea; padding: 20px; margin: 24px 0; border-radius: 8px; }
+    .genesis-box { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-left: 4px solid #48a3c4; padding: 24px; margin: 24px 0; border-radius: 8px; }
+    .feature-box { background: #f7fafc; border-left: 4px solid #48a3c4; padding: 20px; margin: 24px 0; border-radius: 8px; }
     .feature-title { color: #2d3748; font-size: 18px; font-weight: bold; margin: 0 0 12px; }
     .feature-list { color: #4a5568; font-size: 15px; line-height: 1.8; margin: 8px 0; padding-left: 20px; }
-    .cta-button { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; margin: 24px 0; box-shadow: 0 4px 15px rgba(102,126,234,0.4); }
-    .cta-button:hover { box-shadow: 0 6px 20px rgba(102,126,234,0.6); }
+    .rate-limit-box { background: #fff7ed; border: 2px solid #fb923c; padding: 20px; margin: 24px 0; border-radius: 8px; }
+    .cta-button { display: inline-block; background: linear-gradient(135deg, #48a3c4 0%, #2d547e 100%); color: white; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; margin: 24px 0; box-shadow: 0 4px 15px rgba(72, 163, 196, 0.4); }
+    .cta-button:hover { box-shadow: 0 6px 20px rgba(72, 163, 196, 0.6); }
     .divider { border-top: 2px solid #e2e8f0; margin: 32px 0; }
     .footer { text-align: center; color: #718096; font-size: 14px; padding: 20px; background: #f7fafc; }
-    .context-badge { display: inline-block; background: #667eea; color: white; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+    .context-badge { display: inline-block; background: #48a3c4; color: white; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+    .highlight { color: #2d547e; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -85,61 +89,121 @@ const handler = async (req: Request): Promise<Response> => {
         <img src="${siteUrl}/genie-email-logo.png" width="100" height="100" alt="Genie AI" style="display: block;" />
       </div>
       <h1 class="header-title">Welcome to Genie AI! 🧞‍♂️</h1>
+      <p class="tagline">Your Educational AI Experimentation Platform</p>
     </div>
     
     <div class="content">
       <p class="greeting">Hello ${userName}!</p>
       
       <p class="text">
-        🎉 <strong>Your AI journey has begun!</strong> I'm Genie, your intelligent AI companion for exploring 
-        the Experimentation Hub's cutting-edge technology and healthcare innovations.
+        🎉 <strong>Welcome to an extraordinary AI journey!</strong> I'm Genie, your intelligent AI companion born from personal experimentation 
+        and now ready to share knowledge, insights, and proven methodologies with you.
       </p>
 
       <p class="text">
-        <span class="context-badge">Context: ${context}</span>
+        <span class="context-badge">Your Context: ${context}</span>
       </p>
 
+      <div class="genesis-box">
+        <div class="feature-title">🌟 The Genesis of Genie AI</div>
+        <p class="text">
+          <strong>This is an Educational & Knowledge-Sharing Experimentation Platform.</strong> Genie AI was born from 
+          <span class="highlight">Sai Dasika's personal AI experimentation journey</span> - demonstrating the 
+          <strong>"Experiment → Validate → Lead to Deploy"</strong> framework through real implementations.
+        </p>
+        <p class="text">
+          I document learnings, proven outcomes, and practical insights to help others build AI expertise and position 
+          themselves as AI-proficient professionals in their organizations. This platform showcases <strong>80-90 days 
+          of development work</strong> built in just 2 weeks using modern AI-powered methodologies.
+        </p>
+      </div>
+
       <div class="feature-box">
-        <div class="feature-title">💡 What I Can Help You With:</div>
+        <div class="feature-title">🚀 Genie AI Major Features & Capabilities</div>
         <ul class="feature-list">
-          <li><strong>AI Innovation:</strong> Gartner Value Framework mapping to technology stacks</li>
-          <li><strong>Healthcare Insights:</strong> Business use cases, DTx, Cell & Gene therapies</li>
-          <li><strong>Tech Stack Guidance:</strong> Comprehensive technology concepts and journeys</li>
-          <li><strong>Case Studies:</strong> Real-world implementation methodologies</li>
-          <li><strong>Security & Compliance:</strong> Enterprise-grade frameworks and best practices</li>
-          <li><strong>Value Creation:</strong> Strategic planning and realization strategies</li>
+          <li><strong>🤖 Multi-Model AI Intelligence:</strong> Access to 5+ AI models (GPT-4o, Claude, Gemini, Llama) with real-time streaming responses</li>
+          <li><strong>🔄 Dual Context System:</strong> Seamlessly switch between Technology and Healthcare domains with 80+ specialized knowledge contexts</li>
+          <li><strong>👁️ Advanced Vision Analysis:</strong> Medical image processing with DICOM support, GPT-4 Vision, and Claude Vision capabilities</li>
+          <li><strong>⚡ Split-Screen Comparison:</strong> Run multiple AI models side-by-side to compare responses and find the best answers</li>
+          <li><strong>💬 Smart Session Management:</strong> Context-aware conversations with automatic saving and intelligent memory</li>
+          <li><strong>🎯 Specialized Knowledge:</strong> Deep expertise in AI Innovation, Healthcare Solutions, Technology Stacks, Case Studies, and Enterprise Security</li>
+          <li><strong>📊 Gartner Framework Integration:</strong> Value creation mapping and strategic planning tools</li>
+          <li><strong>🔒 Enterprise-Grade Security:</strong> Built with compliance frameworks and best practices</li>
+          <li><strong>⚡ High Performance:</strong> &lt;2.5s response times, 99.9% reliability, supports 1,000+ concurrent users</li>
+        </ul>
+      </div>
+
+      <div class="rate-limit-box">
+        <div class="feature-title">⏱️ Usage Limits & Fair Use Policy</div>
+        <p class="text" style="margin: 8px 0;">
+          To ensure quality experience for everyone on this educational platform:<br/>
+          • <strong>10 conversations per hour</strong> per user<br/>
+          • <strong>50 messages per conversation</strong> (for focused, productive sessions)<br/>
+          • <strong>Unlimited daily access</strong> - just pace your experimentation<br/>
+          • <strong>Full feature access</strong> including vision analysis and multi-model comparison
+        </p>
+        <p class="text" style="margin: 12px 0 0; font-size: 14px; color: #78350f;">
+          💡 <em>These limits help maintain platform stability while you explore and learn.</em>
+        </p>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-title">🎓 Key Use Cases & Learning Paths</div>
+        <ul class="feature-list">
+          <li><strong>AI Technology Exploration:</strong> Learn about modern AI stacks, architectures, and implementation patterns</li>
+          <li><strong>Healthcare Innovation:</strong> Explore Digital Therapeutics (DTx), Cell & Gene therapies, Patient Care AI</li>
+          <li><strong>Enterprise Strategies:</strong> Discover AI value realization frameworks and deployment methodologies</li>
+          <li><strong>Technical Deep-Dives:</strong> Understand Supabase, React, AI integration, and full-stack development</li>
+          <li><strong>Medical Image Analysis:</strong> Experiment with AI-powered medical imaging and DICOM processing</li>
+          <li><strong>Strategic Planning:</strong> Apply Gartner frameworks to real-world business scenarios</li>
         </ul>
       </div>
 
       <div class="feature-box">
-        <div class="feature-title">🚀 Getting Started:</div>
+        <div class="feature-title">🛠️ How to Get Started</div>
         <p class="text" style="margin: 8px 0;">
-          1. <strong>Ask me anything</strong> about our technology stack or healthcare solutions<br/>
-          2. <strong>Explore case studies</strong> and implementation methodologies<br/>
-          3. <strong>Get personalized insights</strong> based on your interests<br/>
-          4. <strong>Access advanced features</strong> through the configuration wizard
+          1. <strong>Start a Conversation:</strong> Click the Genie popup on any page or visit the dedicated chat interface<br/>
+          2. <strong>Choose Your Context:</strong> Select Technology or Healthcare based on your interest<br/>
+          3. <strong>Explore Features:</strong> Try vision analysis, split-screen comparison, or specialized knowledge queries<br/>
+          4. <strong>Ask Questions:</strong> I can help with case studies, technical guidance, strategic planning, and more<br/>
+          5. <strong>Experiment & Learn:</strong> Use this platform to build your own AI expertise through hands-on exploration
         </p>
       </div>
 
       <div style="text-align: center; margin: 32px 0;">
-        <a href="${siteUrl}" class="cta-button">Start Exploring Now →</a>
+        <a href="${siteUrl}" class="cta-button">Start Your AI Journey Now →</a>
+      </div>
+
+      <div class="genesis-box">
+        <div class="feature-title">👨‍💻 About Sai Dasika - Your AI Guide</div>
+        <p class="text">
+          Building AI expertise through systematic personal experimentation. Sharing proven results, documented learnings, 
+          and practical frameworks that transform curiosity into professional capability and organizational influence. 
+          Connect on <a href="https://www.linkedin.com/in/saidas/" style="color: #0077b5; text-decoration: underline;">LinkedIn</a> 
+          to discuss your AI journey and exchange insights.
+        </p>
       </div>
 
       <p class="text">
-        💬 <strong>Your conversation ID:</strong> <code style="background: #edf2f7; padding: 4px 8px; border-radius: 4px; font-size: 13px;">${conversationId || 'New Session'}</code>
+        💬 <strong>Your Conversation ID:</strong> <code style="background: #edf2f7; padding: 4px 8px; border-radius: 4px; font-size: 13px;">${conversationId || 'New Session'}</code>
       </p>
 
       <div class="divider"></div>
 
       <p class="text" style="font-size: 14px; color: #718096;">
         📧 This email was sent to <strong>${email}</strong> because you started a conversation with Genie AI.<br/>
-        ${ipAddress ? `📍 Session started from: ${ipAddress}` : ''}
+        ${ipAddress ? `📍 Session started from: ${ipAddress}<br/>` : ''}
+        🕒 <strong>Started at:</strong> ${new Date().toLocaleString()}
       </p>
     </div>
 
     <div class="footer">
       <p style="margin: 8px 0;"><strong>Genie AI Experimentation Hub</strong></p>
-      <p style="margin: 8px 0;">Empowering Innovation Through Intelligent AI</p>
+      <p style="margin: 8px 0;">Building AI Expertise Through Personal Experimentation</p>
+      <p style="margin: 8px 0; font-size: 12px;">
+        <a href="https://www.linkedin.com/in/saidas/" style="color: #48a3c4; text-decoration: underline;">Connect with Sai Dasika</a> | 
+        <a href="${siteUrl}" style="color: #48a3c4; text-decoration: underline;">Visit Hub</a>
+      </p>
     </div>
   </div>
 </body>
