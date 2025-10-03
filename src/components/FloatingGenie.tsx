@@ -278,13 +278,24 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
     setShowTooltip(false);
     setIsGenieOpen(true);
 
-    // Track popup click event
+    // Track popup click event with IP
     try {
+      // Fetch IP address
+      let ipAddress: string | null = null;
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        ipAddress = data.ip;
+      } catch (error) {
+        console.warn('Failed to fetch IP address:', error);
+      }
+
       const { genieAnalyticsService } = await import('@/services/genieAnalyticsService');
       await genieAnalyticsService.trackPopupClick({
         page_url: window.location.href,
         user_agent: navigator.userAgent,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        ip_address: ipAddress || undefined
       });
       await genieAnalyticsService.incrementPopupClickStat();
     } catch (error) {

@@ -577,42 +577,170 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
           <Card>
             <CardHeader>
               <CardTitle>Geographic Distribution</CardTitle>
-              <CardDescription>Popup users by location</CardDescription>
+              <CardDescription>Popup users by location and session analytics</CardDescription>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-[400px]">
+              <ScrollArea className="h-[500px]">
                 {popupEvents.filter(e => e.ip_address).length > 0 ? (
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>IP Address</TableHead>
-                        <TableHead>Event Type</TableHead>
-                        <TableHead>User Email</TableHead>
-                        <TableHead>Context</TableHead>
-                        <TableHead>Last Active</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {popupEvents.filter(e => e.ip_address).map((event) => (
-                        <TableRow key={event.id}>
-                          <TableCell className="font-mono text-xs">{event.ip_address}</TableCell>
-                          <TableCell>
-                            <Badge variant="outline">{event.event_type}</Badge>
-                          </TableCell>
-                          <TableCell className="text-xs">{event.user_email || 'anonymous'}</TableCell>
-                          <TableCell>
-                            <Badge variant="secondary">{event.context || 'general'}</Badge>
-                          </TableCell>
-                          <TableCell className="text-xs">
-                            {new Date(event.created_at).toLocaleString()}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                  <div className="space-y-6">
+                    {/* Location Summary */}
+                    <div>
+                      <h3 className="text-sm font-semibold mb-3">Location Summary</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {(() => {
+                          const locationStats: Record<string, { count: number; users: Set<string> }> = {};
+                          popupEvents.forEach(event => {
+                            if (event.event_data?.geo_location?.country) {
+                              const country = event.event_data.geo_location.country;
+                              if (!locationStats[country]) {
+                                locationStats[country] = { count: 0, users: new Set() };
+                              }
+                              locationStats[country].count++;
+                              if (event.user_email) {
+                                locationStats[country].users.add(event.user_email);
+                              }
+                            }
+                          });
+                          return Object.entries(locationStats)
+                            .sort((a, b) => b[1].count - a[1].count)
+                            .slice(0, 3)
+                            .map(([country, stats]) => (
+                              <Card key={country}>
+                                <CardContent className="p-4">
+                                  <div className="flex items-start justify-between">
+                                    <div className="flex-1">
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <MapPin className="h-4 w-4 text-primary" />
+                                        <span className="font-semibold">{country}</span>
+                                      </div>
+                                      <div className="text-xs text-muted-foreground space-y-1">
+                                        <div>{stats.count} events</div>
+                                        <div>{stats.users.size} unique user{stats.users.size !== 1 ? 's' : ''}</div>
+                                      </div>
+                                    </div>
+                                    <Badge variant="secondary">{Math.round((stats.count / popupEvents.length) * 100)}%</Badge>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            ));
+                        })()}
+                      </div>
+                    </div>
+
+                    {/* Performance by Region */}
+                    <div>
+                      <h3 className="text-sm font-semibold mb-3">Performance by Region</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {(() => {
+                          const regionStats: Record<string, { 
+                            popupClicks: number; 
+                            privacyAccepts: number; 
+                            registrations: number;
+                            users: Set<string>;
+                          }> = {};
+                          
+                          popupEvents.forEach(event => {
+                            const region = event.event_data?.geo_location?.region || 
+                                         event.event_data?.geo_location?.country || 
+                                         'Unknown';
+                            if (!regionStats[region]) {
+                              regionStats[region] = { 
+                                popupClicks: 0, 
+                                privacyAccepts: 0, 
+                                registrations: 0,
+                                users: new Set()
+                              };
+                            }
+                            
+                            if (event.event_type === 'popup_click') regionStats[region].popupClicks++;
+                            if (event.event_type === 'privacy_accepted') regionStats[region].privacyAccepts++;
+                            if (event.event_type === 'user_registered') regionStats[region].registrations++;
+                            if (event.user_email) regionStats[region].users.add(event.user_email);
+                          });
+                          
+                          return Object.entries(regionStats)
+                            .sort((a, b) => b[1].users.size - a[1].users.size)
+                            .slice(0, 4)
+                            .map(([region, stats]) => (
+                              <Card key={region}>
+                                <CardContent className="p-4">
+                                  <div className="font-semibold mb-3">{region}</div>
+                                  <div className="grid grid-cols-2 gap-3 text-xs">
+                                    <div>
+                                      <div className="text-muted-foreground">Popup Opens</div>
+                                      <div className="text-lg font-bold">{stats.popupClicks}</div>
+                                    </div>
+                                    <div>
+                                      <div className="text-muted-foreground">Privacy Accepts</div>
+                                      <div className="text-lg font-bold">{stats.privacyAccepts}</div>
+                                    </div>
+                                    <div>
+                                      <div className="text-muted-foreground">Registrations</div>
+                                      <div className="text-lg font-bold">{stats.registrations}</div>
+                                    </div>
+                                    <div>
+                                      <div className="text-muted-foreground">Unique Users</div>
+                                      <div className="text-lg font-bold">{stats.users.size}</div>
+                                    </div>
+                                  </div>
+                                  <div className="mt-2 text-xs text-green-600">
+                                    Conversion: {stats.popupClicks > 0 ? Math.round((stats.registrations / stats.popupClicks) * 100) : 0}%
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            ));
+                        })()}
+                      </div>
+                    </div>
+
+                    {/* Detailed Geographic Table */}
+                    <div>
+                      <h3 className="text-sm font-semibold mb-3">Detailed Geographic Table</h3>
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Country</TableHead>
+                            <TableHead>Region</TableHead>
+                            <TableHead>City</TableHead>
+                            <TableHead>User</TableHead>
+                            <TableHead>Event Type</TableHead>
+                            <TableHead>IP Address</TableHead>
+                            <TableHead>Timestamp</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {popupEvents
+                            .filter(e => e.ip_address || e.event_data?.geo_location)
+                            .map((event) => {
+                              const geo = event.event_data?.geo_location || {};
+                              return (
+                                <TableRow key={event.id}>
+                                  <TableCell className="text-xs">
+                                    <div className="flex items-center gap-1">
+                                      <MapPin className="h-3 w-3" />
+                                      {geo.country || 'Unknown'}
+                                    </div>
+                                  </TableCell>
+                                  <TableCell className="text-xs">{geo.region || '-'}</TableCell>
+                                  <TableCell className="text-xs">{geo.city || '-'}</TableCell>
+                                  <TableCell className="text-xs">{event.user_email || 'Anonymous'}</TableCell>
+                                  <TableCell>
+                                    <Badge variant="outline" className="text-xs">{event.event_type}</Badge>
+                                  </TableCell>
+                                  <TableCell className="font-mono text-xs">{event.ip_address || '-'}</TableCell>
+                                  <TableCell className="text-xs">{new Date(event.created_at).toLocaleString()}</TableCell>
+                                </TableRow>
+                              );
+                            })}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  </div>
                 ) : (
                   <div className="text-center py-12">
-                    <p className="text-muted-foreground">No geographic data available yet. IP addresses will be captured as users interact with the popup.</p>
+                    <MapPin className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-50" />
+                    <p className="text-muted-foreground mb-2">No geographic data available yet</p>
+                    <p className="text-sm text-muted-foreground">IP addresses and locations will be captured as users interact with the popup</p>
                   </div>
                 )}
               </ScrollArea>

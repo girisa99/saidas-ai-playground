@@ -36,11 +36,22 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
 
   const handleAcceptTerms = async () => {
     try {
+      // Fetch IP address
+      let ipAddress: string | null = null;
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        ipAddress = data.ip;
+      } catch (error) {
+        console.warn('Failed to fetch IP address:', error);
+      }
+
       const { genieAnalyticsService } = await import('@/services/genieAnalyticsService');
       await genieAnalyticsService.trackPrivacyAccept({
         user_email: userInfo.email || 'anonymous',
         user_name: `${userInfo.firstName || 'Anonymous'} ${userInfo.lastName || ''}`.trim(),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        ip_address: ipAddress || undefined
       });
     } catch (error) {
       console.error('Failed to track privacy acceptance:', error);
@@ -54,13 +65,24 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
       return;
     }
 
-    // Track privacy acceptance
+    // Track privacy acceptance with IP
     try {
+      // Fetch IP address
+      let ipAddress: string | null = null;
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        ipAddress = data.ip;
+      } catch (error) {
+        console.warn('Failed to fetch IP address:', error);
+      }
+
       const { genieAnalyticsService } = await import('@/services/genieAnalyticsService');
       await genieAnalyticsService.trackPrivacyAccept({
         user_email: userInfo.email,
         user_name: `${userInfo.firstName} ${userInfo.lastName || ''}`.trim(),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        ip_address: ipAddress || undefined
       });
     } catch (error) {
       console.error('Failed to track privacy acceptance:', error);

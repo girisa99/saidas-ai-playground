@@ -16197,12 +16197,12 @@ export type Database = {
       log_genie_popup_event: {
         Args: {
           p_context?: string
-          p_event_data: Json
+          p_event_data?: Json
           p_event_type: string
           p_ip_address?: string
           p_user_email?: string
         }
-        Returns: undefined
+        Returns: string
       }
       log_onboarding_audit: {
         Args: {
