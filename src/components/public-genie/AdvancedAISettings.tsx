@@ -5,8 +5,9 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Brain, Database, Network, Settings2, Cpu, Users } from 'lucide-react';
+import { Brain, Database, Network, Settings2, Cpu, Users, Eye, AlertTriangle, ExternalLink, FileImage } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface AdvancedAISettingsProps {
   onConfigChange: (config: AIConfig) => void;
@@ -22,40 +23,144 @@ export interface AIConfig {
   secondaryModel?: string;
   splitScreenEnabled: boolean;
   contextualSuggestions: boolean;
+  visionEnabled?: boolean;
+  medicalImageMode?: boolean;
 }
 
 const modelOptions = [
-  // Large Language Models (LLMs)
-  { id: 'gpt-4o', name: 'GPT-4o', type: 'LLM+Vision', provider: 'OpenAI', category: 'General' },
-  { id: 'gpt-4o-mini', name: 'GPT-4o Mini', type: 'LLM+Vision', provider: 'OpenAI', category: 'General' },
-  { id: 'claude-3-opus', name: 'Claude 3 Opus', type: 'LLM+Vision', provider: 'Anthropic', category: 'General' },
-  { id: 'claude-3-sonnet', name: 'Claude 3 Sonnet', type: 'LLM+Vision', provider: 'Anthropic', category: 'General' },
-  { id: 'claude-3-haiku', name: 'Claude 3 Haiku', type: 'LLM+Vision', provider: 'Anthropic', category: 'General' },
-  { id: 'gemini-pro-vision', name: 'Gemini Pro Vision', type: 'LLM+Vision', provider: 'Google', category: 'General' },
-  { id: 'gemini-pro', name: 'Gemini Pro', type: 'LLM', provider: 'Google', category: 'General' },
+  // Large Language Models (LLMs) with Vision
+  { 
+    id: 'gpt-4o', 
+    name: 'GPT-4o', 
+    type: 'LLM+Vision', 
+    provider: 'OpenAI', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Advanced multimodal model for text and images',
+    learnMoreUrl: 'https://platform.openai.com/docs/models/gpt-4o'
+  },
+  { 
+    id: 'gpt-4o-mini', 
+    name: 'GPT-4o Mini', 
+    type: 'LLM+Vision', 
+    provider: 'OpenAI', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Efficient vision model with good accuracy',
+    learnMoreUrl: 'https://platform.openai.com/docs/models/gpt-4o-mini'
+  },
+  { 
+    id: 'claude-3-opus', 
+    name: 'Claude 3 Opus', 
+    type: 'LLM+Vision', 
+    provider: 'Anthropic', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Most capable Claude model with vision',
+    learnMoreUrl: 'https://www.anthropic.com/claude'
+  },
+  { 
+    id: 'claude-3-sonnet', 
+    name: 'Claude 3 Sonnet', 
+    type: 'LLM+Vision', 
+    provider: 'Anthropic', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Balanced performance and cost',
+    learnMoreUrl: 'https://www.anthropic.com/claude'
+  },
+  { 
+    id: 'claude-3-haiku', 
+    name: 'Claude 3 Haiku', 
+    type: 'LLM+Vision', 
+    provider: 'Anthropic', 
+    category: 'General',
+    vision: true,
+    medicalCapable: false,
+    description: 'Fastest Claude model with vision',
+    learnMoreUrl: 'https://www.anthropic.com/claude'
+  },
+  { 
+    id: 'gemini-pro-vision', 
+    name: 'Gemini Pro Vision', 
+    type: 'LLM+Vision', 
+    provider: 'Google', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Google\'s multimodal AI model',
+    learnMoreUrl: 'https://ai.google.dev/gemini-api/docs'
+  },
+  { 
+    id: 'gemini-pro', 
+    name: 'Gemini Pro', 
+    type: 'LLM', 
+    provider: 'Google', 
+    category: 'General',
+    vision: false,
+    medicalCapable: false,
+    description: 'Text-only Gemini model',
+    learnMoreUrl: 'https://ai.google.dev/gemini-api/docs'
+  },
   
   // Small Language Models (SLMs)
-  { id: 'phi-3.5-mini', name: 'Phi-3.5 Mini', type: 'SLM', provider: 'Microsoft', category: 'Efficient' },
-  { id: 'phi-3-mini', name: 'Phi-3 Mini', type: 'SLM', provider: 'Microsoft', category: 'Efficient' },
-  { id: 'llama-3.1-8b', name: 'Llama 3.1 8B', type: 'SLM', provider: 'Meta', category: 'Efficient' },
-  { id: 'mistral-7b', name: 'Mistral 7B', type: 'SLM', provider: 'Mistral', category: 'Efficient' },
-  { id: 'gemma-7b', name: 'Gemma 7B', type: 'SLM', provider: 'Google', category: 'Efficient' },
-  { id: 'qwen-7b', name: 'Qwen 7B', type: 'SLM', provider: 'Alibaba', category: 'Efficient' },
+  { id: 'phi-3.5-mini', name: 'Phi-3.5 Mini', type: 'SLM', provider: 'Microsoft', category: 'Efficient', vision: false, medicalCapable: false, description: 'Compact efficient model', learnMoreUrl: 'https://azure.microsoft.com/en-us/products/phi' },
+  { id: 'phi-3-mini', name: 'Phi-3 Mini', type: 'SLM', provider: 'Microsoft', category: 'Efficient', vision: false, medicalCapable: false, description: 'Small but capable model', learnMoreUrl: 'https://azure.microsoft.com/en-us/products/phi' },
+  { id: 'llama-3.1-8b', name: 'Llama 3.1 8B', type: 'SLM', provider: 'Meta', category: 'Efficient', vision: false, medicalCapable: false, description: 'Open-source efficient model', learnMoreUrl: 'https://llama.meta.com/' },
+  { id: 'mistral-7b', name: 'Mistral 7B', type: 'SLM', provider: 'Mistral', category: 'Efficient', vision: false, medicalCapable: false, description: 'High-performance 7B model', learnMoreUrl: 'https://mistral.ai/' },
+  { id: 'gemma-7b', name: 'Gemma 7B', type: 'SLM', provider: 'Google', category: 'Efficient', vision: false, medicalCapable: false, description: 'Google\'s lightweight model', learnMoreUrl: 'https://ai.google.dev/gemma' },
+  { id: 'qwen-7b', name: 'Qwen 7B', type: 'SLM', provider: 'Alibaba', category: 'Efficient', vision: false, medicalCapable: false, description: 'Alibaba\'s efficient model', learnMoreUrl: 'https://github.com/QwenLM/Qwen' },
   
   // Vision Language Models (VLMs)
-  { id: 'llava-1.6', name: 'LLaVA 1.6', type: 'VLM', provider: 'LAION', category: 'Vision' },
-  { id: 'cogvlm', name: 'CogVLM', type: 'VLM', provider: 'Tsinghua', category: 'Vision' },
-  { id: 'paligemma', name: 'PaliGemma', type: 'VLM', provider: 'Google', category: 'Vision' },
+  { 
+    id: 'llava-1.6', 
+    name: 'LLaVA 1.6', 
+    type: 'VLM', 
+    provider: 'LAION', 
+    category: 'Vision',
+    vision: true,
+    medicalCapable: true,
+    description: 'Open-source vision-language model',
+    learnMoreUrl: 'https://llava-vl.github.io/'
+  },
+  { 
+    id: 'cogvlm', 
+    name: 'CogVLM', 
+    type: 'VLM', 
+    provider: 'Tsinghua', 
+    category: 'Vision',
+    vision: true,
+    medicalCapable: true,
+    description: 'Advanced vision understanding',
+    learnMoreUrl: 'https://github.com/THUDM/CogVLM'
+  },
+  { 
+    id: 'paligemma', 
+    name: 'PaliGemma', 
+    type: 'VLM', 
+    provider: 'Google', 
+    category: 'Vision',
+    vision: true,
+    medicalCapable: false,
+    description: 'Google\'s VLM based on Gemma',
+    learnMoreUrl: 'https://ai.google.dev/gemma/docs/paligemma'
+  },
   
   // Biotech & Healthcare Models
-  { id: 'biogpt', name: 'BioGPT', type: 'Biotech', provider: 'Microsoft', category: 'Healthcare' },
-  { id: 'med-palm-2', name: 'Med-PaLM 2', type: 'Medical', provider: 'Google', category: 'Healthcare' },
-  { id: 'clinical-bert', name: 'Clinical BERT', type: 'Medical', provider: 'MIT', category: 'Healthcare' },
-  { id: 'bioclinical-bert', name: 'BioClinical BERT', type: 'Medical', provider: 'NCBI', category: 'Healthcare' },
-  { id: 'pubmedbert', name: 'PubMedBERT', type: 'Biotech', provider: 'NIH', category: 'Healthcare' },
-  { id: 'galactica-6.7b', name: 'Galactica 6.7B', type: 'Scientific', provider: 'Meta', category: 'Healthcare' },
-  { id: 'biomistral-7b', name: 'BioMistral 7B', type: 'Medical', provider: 'Mistral', category: 'Healthcare' },
+  { id: 'biogpt', name: 'BioGPT', type: 'Biotech', provider: 'Microsoft', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Biomedical text generation', learnMoreUrl: 'https://github.com/microsoft/BioGPT' },
+  { id: 'med-palm-2', name: 'Med-PaLM 2', type: 'Medical', provider: 'Google', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Medical question answering', learnMoreUrl: 'https://sites.research.google/med-palm/' },
+  { id: 'clinical-bert', name: 'Clinical BERT', type: 'Medical', provider: 'MIT', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Clinical note analysis', learnMoreUrl: 'https://github.com/EmilyAlsentzer/clinicalBERT' },
+  { id: 'bioclinical-bert', name: 'BioClinical BERT', type: 'Medical', provider: 'NCBI', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Biomedical NLP', learnMoreUrl: 'https://github.com/ncbi-nlp/NCBI_BERT' },
+  { id: 'pubmedbert', name: 'PubMedBERT', type: 'Biotech', provider: 'NIH', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Trained on PubMed abstracts', learnMoreUrl: 'https://github.com/ncbi/pubmedbert' },
+  { id: 'galactica-6.7b', name: 'Galactica 6.7B', type: 'Scientific', provider: 'Meta', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Scientific knowledge model', learnMoreUrl: 'https://github.com/paperswithcode/galai' },
+  { id: 'biomistral-7b', name: 'BioMistral 7B', type: 'Medical', provider: 'Mistral', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Medical domain Mistral', learnMoreUrl: 'https://huggingface.co/BioMistral/BioMistral-7B' },
 ];
+
+type ModelOption = typeof modelOptions[0];
 
 export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({ 
   onConfigChange, 
@@ -212,14 +317,50 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
             </SelectContent>
           </Select>
           {selectedModel && (
-            <div className="flex gap-1 items-center">
-              <span className="text-xs text-muted-foreground">Active:</span>
-              <Badge variant="secondary" className="text-xs">
-                {selectedModel.name}
-              </Badge>
-              <Badge variant="outline" className="text-xs">
-                {selectedModel.provider}
-              </Badge>
+            <div className="space-y-2">
+              <div className="flex gap-1 items-center">
+                <span className="text-xs text-muted-foreground">Active:</span>
+                <Badge variant="secondary" className="text-xs">
+                  {selectedModel.name}
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  {selectedModel.provider}
+                </Badge>
+                {selectedModel.vision && (
+                  <Badge variant="default" className="text-xs flex items-center gap-1">
+                    <Eye className="h-2.5 w-2.5" />
+                    Vision
+                  </Badge>
+                )}
+              </div>
+              
+              {/* Model Details Card */}
+              <div className="bg-muted/50 rounded-md p-2 space-y-1">
+                <p className="text-xs text-muted-foreground">{selectedModel.description}</p>
+                <div className="flex items-center gap-2">
+                  {selectedModel.vision && (
+                    <Badge variant="outline" className="text-[10px]">
+                      📸 Image Analysis
+                    </Badge>
+                  )}
+                  {selectedModel.medicalCapable && (
+                    <Badge variant="outline" className="text-[10px]">
+                      🏥 Medical Capable
+                    </Badge>
+                  )}
+                </div>
+                {selectedModel.learnMoreUrl && (
+                  <a 
+                    href={selectedModel.learnMoreUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-xs text-primary hover:underline flex items-center gap-1 mt-1"
+                  >
+                    Learn more about this model
+                    <ExternalLink className="h-2.5 w-2.5" />
+                  </a>
+                )}
+              </div>
             </div>
           )}
         </CardContent>
@@ -357,6 +498,95 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
           </div>
         </CardContent>
       </Card>
+
+      {/* Vision & Medical Image Analysis */}
+      {selectedModel?.vision && (
+        <Card className="border-primary/30">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm flex items-center gap-2">
+              <Eye className="h-4 w-4 text-primary" />
+              Vision Capabilities
+            </CardTitle>
+            <CardDescription className="text-xs">
+              Medical image analysis (Experimental)
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="pt-0 space-y-3">
+            {/* Vision Toggle */}
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label className="text-xs font-medium flex items-center gap-1">
+                  <FileImage className="h-3 w-3" />
+                  Enable Image Analysis
+                </Label>
+                <p className="text-xs text-muted-foreground">Upload and analyze images</p>
+              </div>
+              <Switch
+                checked={config.visionEnabled || false}
+                onCheckedChange={(checked) => updateConfig({ visionEnabled: checked })}
+              />
+            </div>
+            
+            <Separator />
+            
+            {/* Medical Image Mode */}
+            {selectedModel?.medicalCapable && (
+              <>
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label className="text-xs font-medium flex items-center gap-1">
+                      Medical Image Mode
+                      <AlertTriangle className="h-3 w-3 text-orange-500" />
+                    </Label>
+                    <p className="text-xs text-muted-foreground">X-rays, CT, MRI, ECG analysis</p>
+                  </div>
+                  <Switch
+                    checked={config.medicalImageMode || false}
+                    onCheckedChange={(checked) => updateConfig({ medicalImageMode: checked })}
+                  />
+                </div>
+                
+                {config.medicalImageMode && (
+                  <Alert className="border-orange-500/50 bg-orange-50 dark:bg-orange-950/20">
+                    <AlertTriangle className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+                    <AlertTitle className="text-xs font-semibold text-orange-900 dark:text-orange-100">
+                      Educational Use Only - Not for Diagnosis
+                    </AlertTitle>
+                    <AlertDescription className="text-xs text-orange-800 dark:text-orange-200 space-y-1 mt-1">
+                      <p><strong>⚠️ Important Disclaimers:</strong></p>
+                      <ul className="list-disc pl-4 space-y-0.5">
+                        <li>NOT FDA-approved for medical diagnosis</li>
+                        <li>For educational & research purposes only</li>
+                        <li>No PHI is stored or transmitted</li>
+                        <li>Always consult licensed healthcare providers</li>
+                        <li>Results are AI-generated interpretations</li>
+                      </ul>
+                      <p className="mt-2 text-[10px]">
+                        By enabling this feature, you acknowledge this is an experimental technology demonstration for learning purposes only.
+                      </p>
+                    </AlertDescription>
+                  </Alert>
+                )}
+                
+                {/* Vision Model Capabilities */}
+                {config.medicalImageMode && (
+                  <div className="bg-muted/50 rounded-md p-2 space-y-1">
+                    <p className="text-xs font-medium">This model can help analyze:</p>
+                    <div className="grid grid-cols-2 gap-1 text-[10px] text-muted-foreground">
+                      <div className="flex items-center gap-1">✓ X-ray images</div>
+                      <div className="flex items-center gap-1">✓ CT scans</div>
+                      <div className="flex items-center gap-1">✓ MRI images</div>
+                      <div className="flex items-center gap-1">✓ ECG/EKG</div>
+                      <div className="flex items-center gap-1">✓ Ultrasound</div>
+                      <div className="flex items-center gap-1">✓ Pathology slides</div>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Current Configuration Summary */}
       <Card className="bg-muted/50">
