@@ -21,7 +21,7 @@ import { ConfigurationWizard } from './ConfigurationWizard';
 import { SplitScreenRenderer } from './SplitScreenRenderer';
 import { SessionManager } from './SessionManager';
 import { ContextSwitcher } from './ContextSwitcher';
-import { InlineContextualSuggestion } from './InlineContextualSuggestion';
+import { TopicSuggestionPopover } from './TopicSuggestionPopover';
 import { conversationIntelligence } from '@/utils/conversationIntelligence';
 import { ConversationLimitModal } from './ConversationLimitModal';
 import { ExperimentationBanner } from './ExperimentationBanner';
@@ -151,8 +151,10 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
   const [ipAddress, setIpAddress] = useState<string | null>(null);
   
-  // Contextual suggestions state
-  const [activeSuggestion, setActiveSuggestion] = useState<any>(null);
+  // Topic popover state
+  const [showTopicPopover, setShowTopicPopover] = useState(false);
+  const [popoverSuggestions, setPopoverSuggestions] = useState<Array<{topic: string; category: string; icon?: string}>>([]);
+  const [popoverMood, setPopoverMood] = useState<'empathetic' | 'playful' | 'excited' | 'helpful'>('helpful');
   
   // Conversation limit states - explicitly initialized
   const [showLimitModal, setShowLimitModal] = React.useState<boolean>(false);
@@ -198,7 +200,7 @@ useEffect(() => {
 
 // Check for contextual suggestions after messages update
 useEffect(() => {
-  if (messages.length === 0 || !userInfo) return;
+  if (messages.length === 0 || !userInfo || !context) return;
   
   const suggestion = conversationIntelligence.shouldShowSuggestion(
     messages,
@@ -206,8 +208,16 @@ useEffect(() => {
     selectedTopic
   );
   
-  if (suggestion) {
-    setActiveSuggestion(suggestion);
+  if (suggestion && suggestion.type === 'topic' && suggestion.suggestions) {
+    // Convert suggestions to popover format
+    const topics = suggestion.suggestions.map(sug => ({
+      topic: sug.label,
+      category: context === 'healthcare' ? 'clinical' : 'technical',
+      icon: sug.emoji || (context === 'healthcare' ? '🏥' : '💻')
+    }));
+    setPopoverSuggestions(topics);
+    setPopoverMood(suggestion.mood || 'helpful');
+    setShowTopicPopover(true);
   }
 }, [messages.length, context, selectedTopic, userInfo]);
 
@@ -885,20 +895,22 @@ ${conversationSummary.transcript}`
                           </div>
                           ))}
                         
-                        {/* Inline Contextual Suggestions */}
-                        {activeSuggestion && (
-                          <InlineContextualSuggestion
-                            type={activeSuggestion.type}
-                            message={activeSuggestion.message}
-                            suggestions={activeSuggestion.suggestions}
-                            mood={activeSuggestion.mood}
-                            onSelect={(suggestion) => {
-                              setInputMessage(suggestion);
-                              setActiveSuggestion(null);
-                            }}
-                            onDismiss={() => setActiveSuggestion(null)}
-                          />
-                        )}
+              {/* Topic Suggestion Popover */}
+              {context && (
+                <TopicSuggestionPopover
+                  isOpen={showTopicPopover}
+                  onClose={() => setShowTopicPopover(false)}
+                  suggestions={popoverSuggestions}
+                  context={context}
+                  mood={popoverMood}
+                  onTopicSelect={(topic) => {
+                    setInputMessage(`Tell me about ${topic}`);
+                  }}
+                  onContextSwitch={() => {
+                    setContext(context === 'healthcare' ? 'technology' : 'healthcare');
+                  }}
+                />
+              )}
                         
                         {isLoading && (
                           <div className="flex items-center space-x-3 p-4 bg-muted/30 rounded-lg my-2">
