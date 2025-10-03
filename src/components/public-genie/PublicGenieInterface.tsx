@@ -126,8 +126,16 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
-  const [showPrivacyBanner, setShowPrivacyBanner] = useState(true);
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [showPrivacyBanner, setShowPrivacyBanner] = useState(() => {
+    // Skip privacy banner if user has already registered
+    const savedUser = localStorage.getItem('genie_user_info');
+    return !savedUser;
+  });
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(() => {
+    // Check localStorage for returning user
+    const savedUser = localStorage.getItem('genie_user_info');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [context, setContext] = useState<Context | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<string>('');
   const [inputMessage, setInputMessage] = useState('');
@@ -239,6 +247,9 @@ useEffect(() => {
   const handlePrivacyAccept = async (info: UserInfo) => {
     setUserInfo(info);
     setShowPrivacyBanner(false);
+    
+    // Save user info to localStorage for returning users
+    localStorage.setItem('genie_user_info', JSON.stringify(info));
 
     // Start tracking Genie conversation in database FIRST to get conversation ID
     let conversationId: string | undefined;
@@ -793,6 +804,18 @@ ${conversationSummary.transcript}`
                 </div>
               ) : (
                 <>
+                  {/* Welcome Back Message for Returning Users */}
+                  {userInfo && messages.length === 0 && (
+                    <div className="p-4 bg-primary/10 rounded-lg border border-primary/20 mx-4 mt-4">
+                      <p className="text-sm font-medium">
+                        Welcome back, {userInfo.firstName}! 👋
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Ready to continue our conversation? Ask me anything!
+                      </p>
+                    </div>
+                  )}
+
                   {/* Advanced Settings Panel */}
                   {showAdvancedSettings && (
                     <div className="border-b bg-muted/10 relative">
