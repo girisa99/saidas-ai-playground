@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Bot, MessageSquare, Zap, Brain, Target, Shield, Clock, MapPin, Users, Activity } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { Bot, MessageSquare, Zap, Brain, Target, Shield, Clock, MapPin, Users, Activity, Plus, BookOpen, Database, Tag } from 'lucide-react';
 
 interface GeniePopupAnalyticsSectionProps {
   genieConversations: any[];
@@ -21,6 +24,150 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
   popupStats,
   knowledgeBaseCount = 0
 }) => {
+  const [showAddKnowledge, setShowAddKnowledge] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [knowledgeEntries, setKnowledgeEntries] = useState<any[]>([]);
+  const [newKnowledgeEntry, setNewKnowledgeEntry] = useState({
+    title: '',
+    content: '',
+    category: 'technology',
+    tags: '',
+    inputType: 'text',
+    url: '',
+    html: ''
+  });
+  const { toast } = useToast();
+
+  useEffect(() => {
+    loadKnowledgeEntries();
+  }, []);
+
+  const loadKnowledgeEntries = async () => {
+    const { data, error } = await supabase
+      .from('knowledge_base')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (!error && data) {
+      setKnowledgeEntries(data);
+    }
+  };
+
+  const handleAddKnowledgeEntry = async () => {
+    if (!newKnowledgeEntry.title) {
+      toast({ title: "Error", description: "Title is required", variant: "destructive" });
+      return;
+    }
+
+    if (newKnowledgeEntry.inputType === 'text' && !newKnowledgeEntry.content) {
+      toast({ title: "Error", description: "Content is required for text input", variant: "destructive" });
+      return;
+    }
+
+    if (newKnowledgeEntry.inputType === 'url' && !newKnowledgeEntry.url) {
+      toast({ title: "Error", description: "URL is required for URL input", variant: "destructive" });
+      return;
+    }
+
+    if (newKnowledgeEntry.inputType === 'html' && !newKnowledgeEntry.html) {
+      toast({ title: "Error", description: "HTML content is required for HTML input", variant: "destructive" });
+      return;
+    }
+
+    if (newKnowledgeEntry.inputType === 'file' && !selectedFile) {
+      toast({ title: "Error", description: "File is required for file input", variant: "destructive" });
+      return;
+    }
+
+    setUploading(true);
+    try {
+      let filePath = null, fileName = null, fileSize = null, fileType = null, processedContent = '';
+
+      if (newKnowledgeEntry.inputType === 'file' && selectedFile) {
+        const timestamp = Date.now();
+        filePath = `${timestamp}-${selectedFile.name}`;
+        fileName = selectedFile.name;
+        fileSize = selectedFile.size;
+        fileType = selectedFile.type;
+
+        const { error: uploadError } = await supabase.storage.from('knowledge-files').upload(filePath, selectedFile);
+        if (uploadError) throw uploadError;
+
+        if (selectedFile.type.startsWith('text/') || selectedFile.type === 'application/json' || 
+            selectedFile.name.endsWith('.sql') || selectedFile.name.endsWith('.md')) {
+          processedContent = await selectedFile.text();
+        } else {
+          processedContent = `File uploaded: ${fileName} (${fileType})`;
+        }
+      }
+
+      const insertData: any = {
+        name: newKnowledgeEntry.title,
+        category: newKnowledgeEntry.category,
+        healthcare_tags: newKnowledgeEntry.tags.split(',').map(tag => tag.trim()).filter(Boolean),
+        status: 'approved',
+        source_type: 'admin_created',
+        is_active: true,
+        is_static: false
+      };
+
+      switch (newKnowledgeEntry.inputType) {
+        case 'text':
+          insertData.description = newKnowledgeEntry.content;
+          insertData.processed_content = newKnowledgeEntry.content;
+          break;
+        case 'url':
+          insertData.content_url = newKnowledgeEntry.url;
+          insertData.description = `Content from URL: ${newKnowledgeEntry.url}`;
+          break;
+        case 'html':
+          insertData.content_html = newKnowledgeEntry.html;
+          insertData.description = newKnowledgeEntry.html;
+          insertData.processed_content = newKnowledgeEntry.html;
+          break;
+        case 'file':
+          insertData.file_path = filePath;
+          insertData.file_name = fileName;
+          insertData.file_size = fileSize;
+          insertData.file_type = fileType;
+          insertData.description = processedContent;
+          insertData.processed_content = processedContent;
+          break;
+      }
+
+      const { error } = await supabase.from('knowledge_base').insert(insertData);
+      if (error) throw error;
+
+      toast({ title: "Success", description: "Knowledge entry added successfully" });
+      setNewKnowledgeEntry({ title: '', content: '', category: 'technology', tags: '', inputType: 'text', url: '', html: '' });
+      setSelectedFile(null);
+      setShowAddKnowledge(false);
+      loadKnowledgeEntries();
+    } catch (error) {
+      console.error('Error adding knowledge entry:', error);
+      toast({ title: "Error", description: "Failed to add knowledge entry", variant: "destructive" });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
+  const getStaticKnowledgeEntries = () => {
+    return [
+      { title: "AI Market Landscape", category: "technology", tags: ["AI", "Market", "Trends"] },
+      { title: "Enterprise Tech Giants", category: "technology", tags: ["Enterprise", "Cloud"] },
+      { title: "LLM Providers Comparison", category: "technology", tags: ["LLM", "GPT", "Claude"] },
+      { title: "Digital Therapeutics (DTx)", category: "healthcare", tags: ["DTx", "Healthcare"] },
+      { title: "Cell & Gene Therapy", category: "healthcare", tags: ["CGT", "Innovation"] },
+    ];
+  };
+
   // Calculate popup-specific stats
   const popupClicks = popupStats?.popupClicks ?? genieConversations.length;
   const activeConversations = genieConversations.filter(c => c.is_active).length;
@@ -520,107 +667,333 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
         </TabsContent>
 
         <TabsContent value="knowledge">
-          <Card>
-            <CardHeader>
-              <CardTitle>Knowledge Base</CardTitle>
-              <CardDescription>RAG-powered knowledge base for Genie AI</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ScrollArea className="h-[400px]">
-                <div className="space-y-6">
-                  {/* Knowledge Base Overview */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="text-sm font-medium text-muted-foreground">Total Articles</div>
-                        <div className="text-2xl font-bold">{knowledgeBaseCount}</div>
-                        <div className="text-xs text-muted-foreground mt-1">Knowledge base entries</div>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="text-sm font-medium text-muted-foreground">Coverage Areas</div>
-                        <div className="text-2xl font-bold">2</div>
-                        <div className="text-xs text-muted-foreground mt-1">Technology & Healthcare</div>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="text-sm font-medium text-muted-foreground">RAG Enabled</div>
-                        <div className="text-2xl font-bold text-green-600">{ragEnabledCount}</div>
-                        <div className="text-xs text-muted-foreground mt-1">Conversations using KB</div>
-                      </CardContent>
-                    </Card>
+          <div className="space-y-6">
+            {/* Header with Add Button */}
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold">Knowledge Base Management</h3>
+                <p className="text-sm text-muted-foreground">
+                  View and manage existing technology and healthcare knowledge entries
+                </p>
+              </div>
+              <Button onClick={() => setShowAddKnowledge(true)} className="flex items-center gap-2">
+                <Plus className="h-4 w-4" />
+                Add New Entry
+              </Button>
+            </div>
+
+            {/* Add Knowledge Entry Form */}
+            {showAddKnowledge && (
+              <Card className="mb-6">
+                <CardHeader>
+                  <CardTitle>Add New Knowledge Entry</CardTitle>
+                  <CardDescription>Create a new knowledge base entry from various sources</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium">Input Type</label>
+                    <select
+                      className="w-full mt-1 px-3 py-2 border rounded-md"
+                      value={newKnowledgeEntry.inputType}
+                      onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, inputType: e.target.value})}
+                    >
+                      <option value="text">Text Content</option>
+                      <option value="url">URL/Website</option>
+                      <option value="html">HTML Content</option>
+                      <option value="file">File Upload</option>
+                    </select>
                   </div>
 
-                  {/* Knowledge Base Info */}
-                  <div className="mt-6">
-                    <h3 className="font-semibold mb-3">Knowledge Base Structure</h3>
-                    <div className="space-y-4">
-                      <Card>
-                        <CardContent className="p-4">
-                          <div className="flex items-start gap-3">
-                            <Brain className="h-5 w-5 text-primary mt-0.5" />
-                            <div className="flex-1">
-                              <h4 className="font-medium mb-1">Technology Knowledge</h4>
-                              <p className="text-sm text-muted-foreground">
-                                Comprehensive coverage of AI/ML platforms, LLMs, agentic AI, no-code tools, 
-                                MCP (Model Context Protocol), automation platforms, and emerging technologies.
-                              </p>
-                              <div className="flex flex-wrap gap-2 mt-2">
-                                <Badge variant="outline">OpenAI</Badge>
-                                <Badge variant="outline">Claude</Badge>
-                                <Badge variant="outline">Gemini</Badge>
-                                <Badge variant="outline">Hugging Face</Badge>
-                                <Badge variant="outline">n8n</Badge>
-                                <Badge variant="outline">UiPath</Badge>
-                                <Badge variant="outline">Lovable</Badge>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
+                  <div>
+                    <label className="text-sm font-medium">Title</label>
+                    <input
+                      type="text"
+                      className="w-full mt-1 px-3 py-2 border rounded-md"
+                      value={newKnowledgeEntry.title}
+                      onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, title: e.target.value})}
+                      placeholder="Enter knowledge entry title"
+                    />
+                  </div>
 
-                      <Card>
-                        <CardContent className="p-4">
-                          <div className="flex items-start gap-3">
-                            <Shield className="h-5 w-5 text-primary mt-0.5" />
-                            <div className="flex-1">
-                              <h4 className="font-medium mb-1">Healthcare Knowledge</h4>
-                              <p className="text-sm text-muted-foreground">
-                                Detailed information about reimbursement processes, oncology therapies, cardiology treatments, 
-                                cell & gene therapies, 340B pricing, WAC, GPO programs, and claims processing.
-                              </p>
-                              <div className="flex flex-wrap gap-2 mt-2">
-                                <Badge variant="outline">Reimbursement</Badge>
-                                <Badge variant="outline">Oncology</Badge>
-                                <Badge variant="outline">Cardiology</Badge>
-                                <Badge variant="outline">340B</Badge>
-                                <Badge variant="outline">WAC</Badge>
-                                <Badge variant="outline">GPO</Badge>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
+                  {newKnowledgeEntry.inputType === 'text' && (
+                    <div>
+                      <label className="text-sm font-medium">Content</label>
+                      <textarea
+                        className="w-full mt-1 px-3 py-2 border rounded-md h-32"
+                        value={newKnowledgeEntry.content}
+                        onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, content: e.target.value})}
+                        placeholder="Enter knowledge content"
+                      />
+                    </div>
+                  )}
 
-                      {knowledgeBaseCount === 0 && (
-                        <Card className="bg-muted/30">
-                          <CardContent className="p-4">
-                            <div className="text-sm text-muted-foreground">
-                              <strong>Note:</strong> The knowledge base is currently embedded in the codebase as structured data. 
-                              To add more articles to the database, use the Knowledge Base Management interface or contact the system administrator.
-                              The current system uses 80+ hardcoded knowledge base articles covering technology and healthcare topics.
-                            </div>
-                          </CardContent>
-                        </Card>
+                  {newKnowledgeEntry.inputType === 'url' && (
+                    <div>
+                      <label className="text-sm font-medium">URL</label>
+                      <input
+                        type="url"
+                        className="w-full mt-1 px-3 py-2 border rounded-md"
+                        value={newKnowledgeEntry.url}
+                        onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, url: e.target.value})}
+                        placeholder="https://example.com/article"
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Content will be fetched and processed from this URL
+                      </p>
+                    </div>
+                  )}
+
+                  {newKnowledgeEntry.inputType === 'html' && (
+                    <div>
+                      <label className="text-sm font-medium">HTML Content</label>
+                      <textarea
+                        className="w-full mt-1 px-3 py-2 border rounded-md h-32 font-mono text-sm"
+                        value={newKnowledgeEntry.html}
+                        onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, html: e.target.value})}
+                        placeholder="<div>Enter HTML content here...</div>"
+                      />
+                    </div>
+                  )}
+
+                  {newKnowledgeEntry.inputType === 'file' && (
+                    <div>
+                      <label className="text-sm font-medium">File Upload</label>
+                      <input
+                        type="file"
+                        className="w-full mt-1 px-3 py-2 border rounded-md"
+                        onChange={handleFileSelect}
+                        accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.json,.sql,.txt,.md,.html,.jpg,.jpeg,.png,.webp"
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Supported: PDF, Word, PowerPoint, Excel, JSON, SQL, Text, Markdown, HTML, Images (max 20MB)
+                      </p>
+                      {selectedFile && (
+                        <div className="mt-2 p-2 bg-muted rounded-md">
+                          <p className="text-sm font-medium">Selected: {selectedFile.name}</p>
+                          <p className="text-xs text-muted-foreground">
+                            Size: {(selectedFile.size / 1024 / 1024).toFixed(2)} MB | Type: {selectedFile.type}
+                          </p>
+                        </div>
                       )}
                     </div>
+                  )}
+
+                  <div>
+                    <label className="text-sm font-medium">Category</label>
+                    <select
+                      className="w-full mt-1 px-3 py-2 border rounded-md"
+                      value={newKnowledgeEntry.category}
+                      onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, category: e.target.value})}
+                    >
+                      <option value="technology">Technology</option>
+                      <option value="healthcare">Healthcare</option>
+                      <option value="general">General</option>
+                    </select>
                   </div>
-                </div>
-              </ScrollArea>
-            </CardContent>
-          </Card>
+
+                  <div>
+                    <label className="text-sm font-medium">Tags (comma separated)</label>
+                    <input
+                      type="text"
+                      className="w-full mt-1 px-3 py-2 border rounded-md"
+                      value={newKnowledgeEntry.tags}
+                      onChange={(e) => setNewKnowledgeEntry({...newKnowledgeEntry, tags: e.target.value})}
+                      placeholder="e.g., AI, technology, innovation"
+                    />
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button 
+                      onClick={handleAddKnowledgeEntry} 
+                      disabled={uploading}
+                      className="flex items-center gap-2"
+                    >
+                      {uploading ? 'Processing...' : 'Add Entry'}
+                    </Button>
+                    <Button variant="outline" onClick={() => {
+                      setShowAddKnowledge(false);
+                      setNewKnowledgeEntry({ title: '', content: '', category: 'technology', tags: '', inputType: 'text', url: '', html: '' });
+                      setSelectedFile(null);
+                    }}>
+                      Cancel
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Knowledge Base Statistics */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Static Entries</p>
+                      <p className="text-2xl font-bold text-blue-600">80+</p>
+                      <p className="text-xs text-muted-foreground">Built-in knowledge</p>
+                    </div>
+                    <BookOpen className="h-8 w-8 text-blue-600" />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Dynamic Entries</p>
+                      <p className="text-2xl font-bold text-green-600">{knowledgeEntries.length}</p>
+                      <p className="text-xs text-muted-foreground">Admin managed</p>
+                    </div>
+                    <Database className="h-8 w-8 text-green-600" />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Technology</p>
+                      <p className="text-2xl font-bold text-purple-600">
+                        {knowledgeEntries.filter(e => e.category === 'technology').length + 45}
+                      </p>
+                      <p className="text-xs text-muted-foreground">Tech knowledge</p>
+                    </div>
+                    <Bot className="h-8 w-8 text-purple-600" />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Healthcare</p>
+                      <p className="text-2xl font-bold text-red-600">
+                        {knowledgeEntries.filter(e => e.category === 'healthcare').length + 35}
+                      </p>
+                      <p className="text-xs text-muted-foreground">Medical knowledge</p>
+                    </div>
+                    <Shield className="h-8 w-8 text-red-600" />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Knowledge Base Entries List */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Bot className="h-5 w-5 text-blue-600" />
+                    Technology Knowledge Base
+                  </CardTitle>
+                  <CardDescription>Technology and AI-related entries</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ScrollArea className="h-96">
+                    <div className="space-y-3">
+                      {getStaticKnowledgeEntries().filter(e => e.category === 'technology').map((entry, index) => (
+                        <Card key={`static-tech-${index}`} className="p-3">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <h4 className="font-medium text-sm">{entry.title}</h4>
+                              <div className="flex flex-wrap gap-1 mt-2">
+                                {entry.tags.map((tag, tagIndex) => (
+                                  <Badge key={tagIndex} variant="outline" className="text-xs">
+                                    <Tag className="h-3 w-3 mr-1" />
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                            <Badge variant="secondary" className="text-xs">Static</Badge>
+                          </div>
+                        </Card>
+                      ))}
+                      {knowledgeEntries.filter(e => e.category === 'technology').map((entry) => (
+                        <Card key={entry.id} className="p-3">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <h4 className="font-medium text-sm">{entry.name}</h4>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                {entry.description?.substring(0, 100)}...
+                              </p>
+                              <div className="flex flex-wrap gap-1 mt-2">
+                                {entry.healthcare_tags?.map((tag: string, tagIndex: number) => (
+                                  <Badge key={tagIndex} variant="outline" className="text-xs">
+                                    <Tag className="h-3 w-3 mr-1" />
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                            <Badge variant="default" className="text-xs">Dynamic</Badge>
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Shield className="h-5 w-5 text-green-600" />
+                    Healthcare Knowledge Base
+                  </CardTitle>
+                  <CardDescription>Healthcare and medical-related entries</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ScrollArea className="h-96">
+                    <div className="space-y-3">
+                      {getStaticKnowledgeEntries().filter(e => e.category === 'healthcare').map((entry, index) => (
+                        <Card key={`static-health-${index}`} className="p-3">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <h4 className="font-medium text-sm">{entry.title}</h4>
+                              <div className="flex flex-wrap gap-1 mt-2">
+                                {entry.tags.map((tag, tagIndex) => (
+                                  <Badge key={tagIndex} variant="outline" className="text-xs">
+                                    <Tag className="h-3 w-3 mr-1" />
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                            <Badge variant="secondary" className="text-xs">Static</Badge>
+                          </div>
+                        </Card>
+                      ))}
+                      {knowledgeEntries.filter(e => e.category === 'healthcare').map((entry) => (
+                        <Card key={entry.id} className="p-3">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <h4 className="font-medium text-sm">{entry.name}</h4>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                {entry.description?.substring(0, 100)}...
+                              </p>
+                              <div className="flex flex-wrap gap-1 mt-2">
+                                {entry.healthcare_tags?.map((tag: string, tagIndex: number) => (
+                                  <Badge key={tagIndex} variant="outline" className="text-xs">
+                                    <Tag className="h-3 w-3 mr-1" />
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                            <Badge variant="default" className="text-xs">Dynamic</Badge>
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </TabsContent>
 
         <TabsContent value="access">
