@@ -43,57 +43,115 @@ export const UnsubscribeConfirmationEmail = ({
 
         {/* Main Content */}
         <Section style={content}>
-          <Heading style={h1}>You've Been Unsubscribed</Heading>
+          <Heading style={h1}>We're Sorry to See You Go</Heading>
           
           <Text style={text}>
-            We're sorry to see you go! You have been successfully unsubscribed from the 
-            <strong> GENIE AI Hub</strong> newsletter.
+            Dear Friend,
           </Text>
 
           <Text style={text}>
-            Your email address <strong>{subscriberEmail}</strong> will no longer receive our weekly updates, 
-            AI insights, and community announcements.
+            You have been successfully unsubscribed from the <strong>GENIE AI Experimentation Hub</strong> newsletter. 
+            Your email address <strong>{subscriberEmail}</strong> will no longer receive our updates.
           </Text>
 
+          <Text style={text}>
+            While we're sad to see you leave, we completely understand. Sometimes our inboxes need a little breathing room!
+          </Text>
+
+          <Hr style={hr} />
+
           <Section style={section}>
+            <Heading style={h2}>About Our Journey</Heading>
             <Text style={text}>
-              <strong>What you'll miss:</strong><br/>
-              • Weekly AI experiment insights and breakthroughs<br/>
-              • Early access to new platform features<br/>
-              • Exclusive community events and workshops<br/>
-              • Industry trends and expert analysis<br/>
-              • Tool recommendations and tutorials
+              GENIE AI was born from a passion for experimentation and knowledge sharing. Created by <strong>Sai Dasika</strong>, 
+              a healthcare technology innovator, this platform represents a personal journey of exploring AI's potential 
+              to transform how we learn, communicate, and solve complex problems.
+            </Text>
+            <Text style={text}>
+              What started as educational experiments has evolved into an advanced AI platform featuring:
+            </Text>
+            <Text style={featuresList}>
+              <strong>🤖 Multi-Model AI Intelligence</strong> - GPT-4, Claude, Gemini working together<br/>
+              <strong>👁️ Advanced Vision Analysis</strong> - Including medical image processing<br/>
+              <strong>🎯 Dual Context Switching</strong> - Technology & Healthcare expertise<br/>
+              <strong>📊 Split-Screen Comparisons</strong> - Compare AI model responses side-by-side<br/>
+              <strong>🏢 Gartner Framework Integration</strong> - Enterprise decision-making support<br/>
+              <strong>🔒 Enterprise-Grade Security</strong> - Built for real-world applications
+            </Text>
+          </Section>
+
+          <Hr style={hr} />
+
+          <Section style={section}>
+            <Heading style={h2}>What You'll Miss</Heading>
+            <Text style={featuresList}>
+              • <strong>Weekly AI Experiment Insights</strong> - Real discoveries from ongoing experiments<br/>
+              • <strong>Early Access to Features</strong> - Be the first to try new capabilities<br/>
+              • <strong>Educational Resources</strong> - Deep dives into AI, healthcare tech, and innovation<br/>
+              • <strong>Use Case Spotlights</strong> - Practical applications in healthcare and business<br/>
+              • <strong>Technology Trends</strong> - Expert analysis on emerging AI developments<br/>
+              • <strong>Community Learning</strong> - Shared experiences and collaborative growth
             </Text>
           </Section>
 
           <Hr style={hr} />
 
           <Section style={ctaSection}>
+            <Heading style={h2}>The Door Is Always Open</Heading>
             <Text style={text}>
-              Changed your mind? You can always resubscribe by visiting our website.
+              This isn't goodbye—it's "see you later." Whenever you're ready to explore AI experimentation, 
+              continue your learning journey, or just curious about what's new, you're always welcome back.
+            </Text>
+            <Text style={text}>
+              <strong>You can return anytime to:</strong>
+            </Text>
+            <Text style={featuresList}>
+              ✨ Experience GENIE AI's conversational intelligence<br/>
+              📚 Explore our comprehensive knowledge base<br/>
+              🎓 Learn from real-world use cases and experiments<br/>
+              🚀 Discover the latest in AI and healthcare technology
             </Text>
             <Button
               href={siteUrl}
               style={button}
             >
-              Visit GENIE AI Hub
+              Visit GENIE AI Experimentation Hub
             </Button>
+            <Text style={smallText}>
+              Or interact with GENIE AI directly at {siteUrl}
+            </Text>
           </Section>
-
-          <Text style={feedback}>
-            We'd love to hear why you unsubscribed. Your feedback helps us improve our content and community.
-          </Text>
 
           <Hr style={hr} />
 
+          <Section style={messageSection}>
+            <Text style={personalMessage}>
+              "Every experiment, every conversation, every insight shared brings us closer to understanding 
+              how AI can truly serve humanity. Thank you for being part of this journey, even if just for a while."
+            </Text>
+            <Text style={signature}>
+              — Sai Dasika<br/>
+              <span style={signatureTitle}>Creator, GENIE AI Experimentation Hub</span><br/>
+              <span style={signatureTitle}>Healthcare Technology Innovator</span>
+            </Text>
+          </Section>
+
+          <Hr style={hr} />
+
+          <Text style={feedback}>
+            💭 We'd genuinely love to hear your feedback. What could we do better? What topics interest you most? 
+            Your insights help shape our experiments and content.
+          </Text>
+
           {/* Footer */}
           <Text style={footer}>
-            Thank you for being part of our AI community!<br/>
-            <strong>GENIE - Your Technology Navigator</strong>
+            <strong>GENIE - Your Technology Navigator</strong><br/>
+            Exploring AI • Sharing Knowledge • Building Together
           </Text>
 
           <Text style={footerNote}>
-            If you unsubscribed by mistake or have any questions, please contact us through our website.
+            If you unsubscribed by mistake, simply visit our website to resubscribe.<br/>
+            Questions? Reach out through our contact form at {siteUrl}
           </Text>
         </Section>
       </Container>
@@ -154,11 +212,19 @@ const content = {
 
 const h1 = {
   color: '#2d547e',
-  fontSize: '24px',
+  fontSize: '28px',
   fontWeight: 'bold',
   textAlign: 'center' as const,
   margin: '0 0 30px',
   lineHeight: '1.3',
+};
+
+const h2 = {
+  color: '#2d547e',
+  fontSize: '20px',
+  fontWeight: 'bold',
+  margin: '24px 0 16px',
+  lineHeight: '1.4',
 };
 
 const text = {
@@ -168,8 +234,59 @@ const text = {
   margin: '16px 0',
 };
 
+const featuresList = {
+  color: '#4a5568',
+  fontSize: '15px',
+  lineHeight: '1.8',
+  margin: '12px 0',
+  paddingLeft: '8px',
+};
+
 const section = {
-  margin: '24px 0',
+  margin: '32px 0',
+  padding: '24px',
+  backgroundColor: '#f8fafc',
+  borderRadius: '8px',
+  border: '1px solid #e2e8f0',
+};
+
+const messageSection = {
+  margin: '32px 0',
+  padding: '24px',
+  backgroundColor: '#f0f7ff',
+  borderLeft: '4px solid #48a3c4',
+  borderRadius: '8px',
+};
+
+const personalMessage = {
+  color: '#2d547e',
+  fontSize: '16px',
+  lineHeight: '1.7',
+  fontStyle: 'italic',
+  margin: '0 0 20px',
+};
+
+const signature = {
+  color: '#2d547e',
+  fontSize: '16px',
+  fontWeight: '600',
+  lineHeight: '1.5',
+  margin: '20px 0 0',
+  textAlign: 'right' as const,
+};
+
+const signatureTitle = {
+  fontSize: '14px',
+  fontWeight: '400',
+  color: '#718096',
+  fontStyle: 'normal',
+};
+
+const smallText = {
+  color: '#718096',
+  fontSize: '14px',
+  textAlign: 'center' as const,
+  margin: '12px 0 0',
 };
 
 const ctaSection = {
@@ -186,9 +303,10 @@ const button = {
   textDecoration: 'none',
   textAlign: 'center' as const,
   display: 'inline-block',
-  padding: '14px 28px',
-  margin: '16px 0',
-  boxShadow: '0 4px 12px rgba(72, 163, 196, 0.3)',
+  padding: '16px 32px',
+  margin: '20px 0',
+  boxShadow: '0 4px 16px rgba(72, 163, 196, 0.3)',
+  transition: 'all 0.3s ease',
 };
 
 const hr = {
@@ -198,25 +316,29 @@ const hr = {
 
 const feedback = {
   color: '#718096',
-  fontSize: '14px',
-  lineHeight: '1.5',
+  fontSize: '15px',
+  lineHeight: '1.6',
   textAlign: 'center' as const,
   margin: '24px 0',
-  fontStyle: 'italic',
+  padding: '20px',
+  backgroundColor: '#fffbeb',
+  borderRadius: '8px',
+  border: '1px solid #fef3c7',
 };
 
 const footer = {
-  color: '#718096',
-  fontSize: '14px',
-  lineHeight: '1.5',
+  color: '#2d547e',
+  fontSize: '15px',
+  lineHeight: '1.6',
   textAlign: 'center' as const,
-  margin: '32px 0 16px',
+  margin: '40px 0 16px',
+  fontWeight: '500',
 };
 
 const footerNote = {
   color: '#a0aec0',
-  fontSize: '12px',
-  lineHeight: '1.4',
+  fontSize: '13px',
+  lineHeight: '1.5',
   textAlign: 'center' as const,
   margin: '16px 0 0',
 };
