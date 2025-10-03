@@ -15919,9 +15919,7 @@ export type Database = {
         Returns: Json
       }
       check_conversation_limits: {
-        Args:
-          | { p_ip_address: string; p_user_email?: string }
-          | { p_ip_address: unknown; p_user_email?: string }
+        Args: { p_ip_address: string; p_user_email?: string }
         Returns: Json
       }
       check_duplicate_agent_name: {
