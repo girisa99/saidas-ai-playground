@@ -16033,6 +16033,10 @@ export type Database = {
           total_size: string
         }[]
       }
+      get_genie_popup_stats: {
+        Args: { days_back?: number }
+        Returns: Json
+      }
       get_import_statistics: {
         Args: { p_user_id?: string }
         Returns: Json
