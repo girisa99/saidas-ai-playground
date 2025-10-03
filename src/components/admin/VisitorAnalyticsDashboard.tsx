@@ -11,7 +11,9 @@ import {
   Clock, 
   TrendingUp,
   Calendar,
-  RefreshCw
+  RefreshCw,
+  MapPin,
+  Navigation
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -30,6 +32,26 @@ interface AnalyticsSummary {
     page_path: string;
     page_title: string;
     view_count: number;
+  }>;
+  locations: Array<{
+    country: string;
+    region: string;
+    visitor_count: number;
+  }>;
+  session_journeys: Array<{
+    session_id: string;
+    first_visit: string;
+    last_visit: string;
+    total_time_seconds: number;
+    pages_visited: number;
+    country?: string;
+    region?: string;
+    page_journey: Array<{
+      page_path: string;
+      page_title: string;
+      visit_time: string;
+      time_on_page: number;
+    }>;
   }>;
   daily_trend: Array<{
     date: string;
@@ -253,6 +275,121 @@ export const VisitorAnalyticsDashboard = () => {
                 ))}
               </TableBody>
             </Table>
+          </ScrollArea>
+        </CardContent>
+      </Card>
+
+      {/* Locations */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Visitor Locations</CardTitle>
+          <CardDescription>Geographic distribution of visitors</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ScrollArea className="h-[300px]">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Country</TableHead>
+                  <TableHead>Region</TableHead>
+                  <TableHead className="text-right">Visitors</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {analytics.locations?.length > 0 ? (
+                  analytics.locations.map((location, index) => (
+                    <TableRow key={index}>
+                      <TableCell className="font-medium">
+                        <div className="flex items-center gap-2">
+                          <MapPin className="h-4 w-4 text-muted-foreground" />
+                          {location.country || 'Unknown'}
+                        </div>
+                      </TableCell>
+                      <TableCell>{location.region || '-'}</TableCell>
+                      <TableCell className="text-right">
+                        {location.visitor_count.toLocaleString()}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={3} className="text-center text-muted-foreground">
+                      No location data available yet
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </ScrollArea>
+        </CardContent>
+      </Card>
+
+      {/* Session Journeys */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Recent Session Journeys</CardTitle>
+          <CardDescription>Detailed visitor paths and time spent per page</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ScrollArea className="h-[500px]">
+            <div className="space-y-6">
+              {analytics.session_journeys?.map((session, index) => (
+                <div key={index} className="border rounded-lg p-4 space-y-3">
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <Navigation className="h-4 w-4 text-primary" />
+                        <span className="font-mono text-sm text-muted-foreground">
+                          {session.session_id.substring(0, 20)}...
+                        </span>
+                      </div>
+                      {session.country && (
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <MapPin className="h-3 w-3" />
+                          {session.country}{session.region && `, ${session.region}`}
+                        </div>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm font-medium">
+                        {session.pages_visited} pages
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {formatDuration(session.total_time_seconds)} total
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    {session.page_journey.map((page, pageIndex) => (
+                      <div key={pageIndex} className="flex items-center gap-3 text-sm">
+                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-xs font-medium">
+                          {pageIndex + 1}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium truncate">{page.page_title || page.page_path}</div>
+                          <div className="text-xs text-muted-foreground font-mono truncate">
+                            {page.page_path}
+                          </div>
+                        </div>
+                        <div className="flex-shrink-0 text-right">
+                          <div className="flex items-center gap-1 text-muted-foreground">
+                            <Clock className="h-3 w-3" />
+                            <span className="text-xs">{formatDuration(page.time_on_page)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="flex items-center justify-between pt-2 border-t text-xs text-muted-foreground">
+                    <span>{new Date(session.first_visit).toLocaleString()}</span>
+                    <span>→</span>
+                    <span>{new Date(session.last_visit).toLocaleString()}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </ScrollArea>
         </CardContent>
       </Card>

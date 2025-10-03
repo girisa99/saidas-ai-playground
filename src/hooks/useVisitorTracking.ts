@@ -15,6 +15,32 @@ const getSessionId = (): string => {
   return sessionId;
 };
 
+// Get location data from IP (using ipapi.co free tier)
+const getLocationData = async (): Promise<{
+  country?: string;
+  region?: string;
+  city?: string;
+  latitude?: number;
+  longitude?: number;
+}> => {
+  try {
+    const response = await fetch('https://ipapi.co/json/');
+    if (response.ok) {
+      const data = await response.json();
+      return {
+        country: data.country_name,
+        region: data.region,
+        city: data.city,
+        latitude: data.latitude,
+        longitude: data.longitude,
+      };
+    }
+  } catch (error) {
+    console.error('Error fetching location:', error);
+  }
+  return {};
+};
+
 export const useVisitorTracking = () => {
   const location = useLocation();
   const startTime = useRef<number>(Date.now());
@@ -25,6 +51,22 @@ export const useVisitorTracking = () => {
       const sessionId = getSessionId();
       const pagePath = location.pathname;
       const pageTitle = document.title;
+      
+      // Get location data (only once per session)
+      let locationData: any = {};
+      const hasLocation = sessionStorage.getItem('visitor_location');
+      if (!hasLocation) {
+        locationData = await getLocationData();
+        if (locationData.country) {
+          sessionStorage.setItem('visitor_location', JSON.stringify(locationData));
+        }
+      } else {
+        try {
+          locationData = JSON.parse(hasLocation);
+        } catch (e) {
+          locationData = {};
+        }
+      }
 
       // Track time on previous page before navigating
       if (currentPath.current && currentPath.current !== pagePath) {
@@ -38,6 +80,7 @@ export const useVisitorTracking = () => {
             time_on_page_seconds: timeOnPage,
             referrer: document.referrer || null,
             user_agent: navigator.userAgent,
+            ...locationData,
             metadata: {
               screen_width: window.screen.width,
               screen_height: window.screen.height,
@@ -63,6 +106,7 @@ export const useVisitorTracking = () => {
           page_title: pageTitle,
           referrer: document.referrer || null,
           user_agent: navigator.userAgent,
+          ...locationData,
           metadata: {
             screen_width: window.screen.width,
             screen_height: window.screen.height,

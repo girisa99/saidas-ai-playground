@@ -13866,13 +13866,18 @@ export type Database = {
       }
       visitor_analytics: {
         Row: {
+          city: string | null
+          country: string | null
           created_at: string
           id: string
           ip_address: unknown | null
+          latitude: number | null
+          longitude: number | null
           metadata: Json | null
           page_path: string
           page_title: string | null
           referrer: string | null
+          region: string | null
           session_id: string
           time_on_page_seconds: number | null
           user_agent: string | null
@@ -13880,13 +13885,18 @@ export type Database = {
           visit_timestamp: string
         }
         Insert: {
+          city?: string | null
+          country?: string | null
           created_at?: string
           id?: string
           ip_address?: unknown | null
+          latitude?: number | null
+          longitude?: number | null
           metadata?: Json | null
           page_path: string
           page_title?: string | null
           referrer?: string | null
+          region?: string | null
           session_id: string
           time_on_page_seconds?: number | null
           user_agent?: string | null
@@ -13894,13 +13904,18 @@ export type Database = {
           visit_timestamp?: string
         }
         Update: {
+          city?: string | null
+          country?: string | null
           created_at?: string
           id?: string
           ip_address?: unknown | null
+          latitude?: number | null
+          longitude?: number | null
           metadata?: Json | null
           page_path?: string
           page_title?: string | null
           referrer?: string | null
+          region?: string | null
           session_id?: string
           time_on_page_seconds?: number | null
           user_agent?: string | null
