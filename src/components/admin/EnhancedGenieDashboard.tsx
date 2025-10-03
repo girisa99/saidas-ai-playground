@@ -154,7 +154,13 @@ export const EnhancedGenieDashboard = () => {
     
     // Topic Distribution
     topicsBreakdown: {} as Record<string, number>,
-    modelBreakdown: {} as Record<string, number>
+    modelBreakdown: {} as Record<string, number>,
+    
+    // Website Visitor Analytics (from visitor_analytics table)
+    websitePageViews: 0,
+    websiteUniqueVisitors: 0,
+    websiteAvgTimeOnPage: 0,
+    websitePagesVisited: 0
   });
 
   // Performance & Capacity Metrics
@@ -228,17 +234,22 @@ export const EnhancedGenieDashboard = () => {
         .select('*')
         .order('created_at', { ascending: false });
 
+      // Load visitor analytics summary (for unified dashboard)
+      const { data: visitorAnalyticsData } = await supabase
+        .rpc('get_visitor_analytics_summary', { days_back: 30 });
+
       // Set data
       setConversations(conversationsData || []);
       setAccessRequests(accessRequestsData || []);
       setUserProfiles(profilesData || []);
       setKnowledgeEntries(knowledgeData || []);
 
-      // Calculate stats
+      // Calculate stats including visitor analytics
       calculateStats(
         conversationsData || [],
         accessRequestsData || [],
-        profilesData || []
+        profilesData || [],
+        visitorAnalyticsData || null
       );
 
     } catch (error) {
@@ -256,7 +267,8 @@ export const EnhancedGenieDashboard = () => {
   const calculateStats = (
     convs: ConversationRecord[],
     requests: AccessRequest[],
-    profiles: UserProfile[]
+    profiles: UserProfile[],
+    visitorAnalytics: any = null
   ) => {
     const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     
@@ -531,6 +543,12 @@ export const EnhancedGenieDashboard = () => {
     const activeUsers = convs.filter(c => new Date(c.created_at) > weekAgo).length;
     const userRetentionRate = totalUsers > 0 ? Math.round((activeUsers / totalUsers) * 100) : 0;
 
+    // Extract visitor analytics data
+    const websitePageViews = visitorAnalytics?.summary?.total_views || 0;
+    const websiteUniqueVisitors = visitorAnalytics?.summary?.unique_visitors || 0;
+    const websiteAvgTimeOnPage = visitorAnalytics?.summary?.avg_time_on_page_seconds || 0;
+    const websitePagesVisited = visitorAnalytics?.summary?.unique_pages || 0;
+
     setStats({
       totalConversations,
       activeConversations,
@@ -570,7 +588,11 @@ export const EnhancedGenieDashboard = () => {
       llmBreakdown,
       smallLMBreakdown,
       visionLMBreakdown,
-      modelCombinations
+      modelCombinations,
+      websitePageViews,
+      websiteUniqueVisitors,
+      websiteAvgTimeOnPage,
+      websitePagesVisited
     });
 
     // Calculate performance metrics
@@ -991,64 +1013,147 @@ export const EnhancedGenieDashboard = () => {
 
         {/* Overview Tab */}
         <TabsContent value="overview" className="space-y-6">
-          {/* Primary Metrics */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
+          {/* Unified Analytics Header */}
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold">Unified Analytics Dashboard</h2>
+            <p className="text-muted-foreground">Combined metrics for genieaiexperimentationhub.tech website and Genie AI chatbot</p>
+          </div>
+
+          {/* Website Analytics (from visitor_analytics table) */}
+          <Card className="border-2 border-blue-500/20 bg-blue-50/10">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Globe className="h-5 w-5 text-blue-600" />
+                Website Traffic Analytics (genieaiexperimentationhub.tech)
+              </CardTitle>
+              <CardDescription>Data from visitor_analytics table - Last 30 days</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="flex items-center justify-between p-4 rounded-lg bg-background">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Total Users</p>
-                    <p className="text-2xl font-bold">{stats.totalUsers}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {stats.registeredUsers} registered, {stats.anonymousUsers} anonymous
-                    </p>
+                    <p className="text-sm font-medium text-muted-foreground">Total Page Views</p>
+                    <p className="text-3xl font-bold text-blue-600">{stats.websitePageViews}</p>
+                    <p className="text-xs text-muted-foreground">All website pageviews</p>
+                  </div>
+                  <Activity className="h-8 w-8 text-blue-600" />
+                </div>
+
+                <div className="flex items-center justify-between p-4 rounded-lg bg-background">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Unique Visitors</p>
+                    <p className="text-3xl font-bold text-green-600">{stats.websiteUniqueVisitors}</p>
+                    <p className="text-xs text-muted-foreground">Unique sessions</p>
+                  </div>
+                  <Users className="h-8 w-8 text-green-600" />
+                </div>
+
+                <div className="flex items-center justify-between p-4 rounded-lg bg-background">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Avg Time on Page</p>
+                    <p className="text-3xl font-bold text-purple-600">{Math.floor(stats.websiteAvgTimeOnPage / 60)}m {stats.websiteAvgTimeOnPage % 60}s</p>
+                    <p className="text-xs text-muted-foreground">Per page view</p>
+                  </div>
+                  <Clock className="h-8 w-8 text-purple-600" />
+                </div>
+
+                <div className="flex items-center justify-between p-4 rounded-lg bg-background">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Pages Visited</p>
+                    <p className="text-3xl font-bold text-orange-600">{stats.websitePagesVisited}</p>
+                    <p className="text-xs text-muted-foreground">Unique pages</p>
+                  </div>
+                  <Globe className="h-8 w-8 text-orange-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Genie AI Conversation Analytics (from genie_conversations table) */}
+          <Card className="border-2 border-purple-500/20 bg-purple-50/10">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-purple-600" />
+                Genie AI Chatbot Analytics
+              </CardTitle>
+              <CardDescription>Data from genie_conversations table - Conversational AI interactions</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="flex items-center justify-between p-4 rounded-lg bg-background">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Total Conversations</p>
+                    <p className="text-3xl font-bold text-primary">{stats.totalConversations}</p>
+                    <p className="text-xs text-muted-foreground">{stats.recentConversations} in last 24h</p>
+                  </div>
+                  <MessageSquare className="h-8 w-8 text-primary" />
+                </div>
+
+                <div className="flex items-center justify-between p-4 rounded-lg bg-background">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Chatbot Users</p>
+                    <p className="text-3xl font-bold text-blue-600">{stats.totalUsers}</p>
+                    <p className="text-xs text-muted-foreground">{stats.registeredUsers} registered</p>
                   </div>
                   <Users className="h-8 w-8 text-blue-600" />
                 </div>
-              </CardContent>
-            </Card>
 
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between p-4 rounded-lg bg-background">
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">Active Sessions</p>
-                    <p className="text-2xl font-bold text-green-600">{stats.activeConversations}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {stats.recentConversations} started today
-                    </p>
+                    <p className="text-3xl font-bold text-green-600">{stats.activeConversations}</p>
+                    <p className="text-xs text-muted-foreground">{stats.recentConversations} started today</p>
                   </div>
-                  <MessageSquare className="h-8 w-8 text-green-600" />
+                  <Activity className="h-8 w-8 text-green-600" />
                 </div>
-              </CardContent>
-            </Card>
 
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between p-4 rounded-lg bg-background">
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">Completed Sessions</p>
-                    <p className="text-2xl font-bold text-purple-600">{stats.completedConversations}</p>
-                    <p className="text-xs text-muted-foreground">
-                      Avg: {stats.averageSessionLength} min
-                    </p>
+                    <p className="text-3xl font-bold text-purple-600">{stats.completedConversations}</p>
+                    <p className="text-xs text-muted-foreground">Avg: {stats.averageSessionLength} min</p>
                   </div>
                   <CheckCircle className="h-8 w-8 text-purple-600" />
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </CardContent>
+          </Card>
 
+          {/* Quick Secondary Metrics */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">Access Requests</p>
                     <p className="text-2xl font-bold text-orange-600">{stats.pendingAccessRequests}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {stats.approvedAccessRequests} approved
-                    </p>
+                    <p className="text-xs text-muted-foreground">{stats.approvedAccessRequests} approved</p>
                   </div>
                   <AlertTriangle className="h-8 w-8 text-orange-600" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Total Messages</p>
+                    <p className="text-2xl font-bold">{stats.totalMessages}</p>
+                  </div>
+                  <TrendingUp className="h-8 w-8 text-blue-500" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Peak Hours</p>
+                    <p className="text-2xl font-bold">{stats.peakHours}</p>
+                  </div>
+                  <Clock className="h-8 w-8 text-green-500" />
                 </div>
               </CardContent>
             </Card>
