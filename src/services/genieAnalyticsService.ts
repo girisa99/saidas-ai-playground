@@ -46,22 +46,25 @@ export class GenieAnalyticsService {
     return GenieAnalyticsService.instance;
   }
 
-  // Fetch geolocation data from IP address
+  // Fetch geolocation data. If ipAddress is not provided, fall back to auto-detect.
   async getGeoLocation(ipAddress?: string): Promise<GeoLocation | null> {
-    if (!ipAddress) return null;
-    
+    const parse = (data: any): GeoLocation => ({
+      country: data.country_name,
+      region: data.region,
+      city: data.city,
+      latitude: data.latitude,
+      longitude: data.longitude
+    });
+
     try {
-      const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
-      if (!response.ok) return null;
-      
-      const data = await response.json();
-      return {
-        country: data.country_name,
-        region: data.region,
-        city: data.city,
-        latitude: data.latitude,
-        longitude: data.longitude
-      };
+      if (ipAddress) {
+        const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
+        if (response.ok) return parse(await response.json());
+      }
+      // Fallback: auto-detect client IP geolocation
+      const fallback = await fetch('https://ipapi.co/json/');
+      if (!fallback.ok) return null;
+      return parse(await fallback.json());
     } catch (error) {
       console.error('Failed to fetch geolocation:', error);
       return null;
@@ -70,9 +73,9 @@ export class GenieAnalyticsService {
 
   async trackPopupClick(data: PopupClickEvent): Promise<void> {
     try {
-      // Add geolocation if IP address is provided
+      // Add geolocation enrichment (fallbacks if IP missing)
       let enrichedData = { ...data };
-      if (data.ip_address && !data.geo_location) {
+      if (!data.geo_location) {
         const geoLocation = await this.getGeoLocation(data.ip_address);
         if (geoLocation) {
           enrichedData.geo_location = geoLocation;
@@ -99,9 +102,9 @@ export class GenieAnalyticsService {
 
   async trackPrivacyAccept(data: PrivacyAcceptEvent): Promise<void> {
     try {
-      // Add geolocation if IP address is provided
+      // Add geolocation enrichment (fallbacks if IP missing)
       let enrichedData = { ...data };
-      if (data.ip_address && !data.geo_location) {
+      if (!data.geo_location) {
         const geoLocation = await this.getGeoLocation(data.ip_address);
         if (geoLocation) {
           enrichedData.geo_location = geoLocation;
@@ -129,9 +132,9 @@ export class GenieAnalyticsService {
   // Track user registration/subscription
   async trackUserRegistration(data: UserRegistrationEvent): Promise<void> {
     try {
-      // Add geolocation if IP address is provided
+      // Add geolocation enrichment (fallbacks if IP missing)
       let enrichedData = { ...data };
-      if (data.ip_address && !data.geo_location) {
+      if (!data.geo_location) {
         const geoLocation = await this.getGeoLocation(data.ip_address);
         if (geoLocation) {
           enrichedData.geo_location = geoLocation;

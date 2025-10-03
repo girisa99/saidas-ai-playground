@@ -79,25 +79,6 @@ const Contact = () => {
                     </CardContent>
                   </Card>
 
-                  <Card className="border-primary/20">
-                    <CardContent className="p-6">
-                      <div className="flex items-start space-x-4">
-                        <div className="p-2 bg-primary/10 rounded-lg">
-                          <MapPin className="h-5 w-5 text-primary" />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold mb-1">Location</h3>
-                          <p className="text-muted-foreground">
-                            936 Villageview Lane<br />
-                            Cary, NC 27519
-                          </p>
-                          <p className="text-sm text-muted-foreground mt-1">
-                            Based in North Carolina's tech corridor
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
 
                   <Card className="border-blue-500/20 bg-blue-500/5">
                     <CardContent className="p-6">
