@@ -89,7 +89,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email
     const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
-    const siteUrl = "https://genieexperimentationhub.lovable.app";
+    const siteUrl = "https://genieaiexperimentationhub.tech";
 
     const unsubscribeConfirmationHtml = `
 <!DOCTYPE html>

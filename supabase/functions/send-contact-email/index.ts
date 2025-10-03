@@ -218,7 +218,7 @@ Reply directly to this email to respond to ${contactData.senderName}.
         </ul>
         
         <p style="color: #475569; font-size: 16px; line-height: 24px;">
-          In the meantime, feel free to explore our <a href="https://genieaiexperimentationhub.com" style="color: #3b82f6;">AI Journey</a> and learn more about our innovative approach to AI-driven development.
+          In the meantime, feel free to explore our <a href="https://genieaiexperimentationhub.tech" style="color: #3b82f6;">AI Journey</a> and learn more about our innovative approach to AI-driven development.
         </p>
         
         <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 32px 0;">

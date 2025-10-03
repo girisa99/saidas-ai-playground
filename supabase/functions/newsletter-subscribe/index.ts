@@ -100,7 +100,7 @@ const handler = async (req: Request): Promise<Response> => {
     const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
     
     const unsubscribeUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/newsletter-unsubscribe?email=${encodeURIComponent(email)}&id=${subscriberId}`;
-    const siteUrl = "https://genieexperimentationhub.lovable.app";
+    const siteUrl = "https://genieaiexperimentationhub.tech";
 
     // Welcome email HTML template
     const welcomeEmailHtml = `
