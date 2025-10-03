@@ -279,7 +279,7 @@ export const VisitorAnalyticsDashboard = () => {
         </CardContent>
       </Card>
 
-      {/* Locations */}
+      {/* Visitor Locations */}
       <Card>
         <CardHeader>
           <CardTitle>Visitor Locations</CardTitle>
@@ -340,7 +340,7 @@ export const VisitorAnalyticsDashboard = () => {
                       <div className="flex items-center gap-2">
                         <Navigation className="h-4 w-4 text-primary" />
                         <span className="font-mono text-sm text-muted-foreground">
-                          {session.session_id.substring(0, 20)}...
+                          Session #{index + 1}
                         </span>
                       </div>
                       {session.country && (
@@ -386,97 +386,6 @@ export const VisitorAnalyticsDashboard = () => {
                     <span>{new Date(session.first_visit).toLocaleString()}</span>
                     <span>→</span>
                     <span>{new Date(session.last_visit).toLocaleString()}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
-        </CardContent>
-      </Card>
-
-      {/* Visitor Locations */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Visitor Locations</CardTitle>
-          <CardDescription>Geographic distribution of visitors</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ScrollArea className="h-[300px]">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Country</TableHead>
-                  <TableHead>Region</TableHead>
-                  <TableHead className="text-right">Visitors</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {analytics.locations?.length > 0 ? (
-                  analytics.locations.map((location, index) => (
-                    <TableRow key={index}>
-                      <TableCell className="font-medium">{location.country}</TableCell>
-                      <TableCell>{location.region || '-'}</TableCell>
-                      <TableCell className="text-right">{location.visitor_count}</TableCell>
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={3} className="text-center text-muted-foreground">
-                      Location data not available yet
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </ScrollArea>
-        </CardContent>
-      </Card>
-
-      {/* Session Journeys */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Session Journeys</CardTitle>
-          <CardDescription>Detailed visitor paths and time spent per page</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ScrollArea className="h-[500px]">
-            <div className="space-y-4">
-              {analytics.session_journeys?.map((session, index) => (
-                <div key={index} className="border rounded-lg p-4 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <Badge variant="outline">
-                          {session.pages_visited} pages
-                        </Badge>
-                        <span className="text-sm text-muted-foreground">
-                          {formatDuration(session.total_time_seconds)} total
-                        </span>
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {new Date(session.first_visit).toLocaleString()}
-                        {session.country && ` • ${session.country}`}
-                        {session.region && `, ${session.region}`}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    {session.page_journey?.map((page, pageIndex) => (
-                      <div key={pageIndex} className="flex items-start gap-2 text-sm">
-                        <Badge variant="secondary" className="mt-0.5">
-                          {pageIndex + 1}
-                        </Badge>
-                        <div className="flex-1 min-w-0">
-                          <div className="font-mono text-xs truncate">{page.page_path}</div>
-                          <div className="text-xs text-muted-foreground truncate">
-                            {page.page_title || 'Untitled'}
-                          </div>
-                        </div>
-                        <div className="text-xs text-muted-foreground whitespace-nowrap">
-                          {formatDuration(page.time_on_page)}
-                        </div>
-                      </div>
-                    ))}
                   </div>
                 </div>
               ))}

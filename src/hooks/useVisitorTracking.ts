@@ -15,24 +15,30 @@ const getSessionId = (): string => {
   return sessionId;
 };
 
-// Get location data from IP (using ipapi.co free tier)
-const getLocationData = async (): Promise<{
-  country?: string;
-  region?: string;
-  city?: string;
-  latitude?: number;
-  longitude?: number;
-}> => {
+// Get IP address
+const getIPAddress = async (): Promise<string | null> => {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+  } catch (error) {
+    console.error('Error getting IP:', error);
+    return null;
+  }
+};
+
+// Get location data from IP
+const getLocationData = async () => {
   try {
     const response = await fetch('https://ipapi.co/json/');
     if (response.ok) {
       const data = await response.json();
       return {
-        country: data.country_name,
-        region: data.region,
-        city: data.city,
-        latitude: data.latitude,
-        longitude: data.longitude,
+        country: data.country_name || null,
+        region: data.region || null,
+        city: data.city || null,
+        latitude: data.latitude || null,
+        longitude: data.longitude || null,
       };
     }
   } catch (error) {
@@ -45,27 +51,33 @@ export const useVisitorTracking = () => {
   const location = useLocation();
   const startTime = useRef<number>(Date.now());
   const currentPath = useRef<string>('');
+  const ipAddress = useRef<string | null>(null);
+  const locationData = useRef<any>(null);
+
+  useEffect(() => {
+    // Get IP and location once per session
+    const initializeTracking = async () => {
+      if (!ipAddress.current) {
+        ipAddress.current = await getIPAddress();
+        locationData.current = await getLocationData();
+      }
+    };
+    
+    initializeTracking();
+  }, []);
 
   useEffect(() => {
     const trackPageView = async () => {
       const sessionId = getSessionId();
       const pagePath = location.pathname;
       const pageTitle = document.title;
-      
-      // Get location data (only once per session)
-      let locationData: any = {};
-      const hasLocation = sessionStorage.getItem('visitor_location');
-      if (!hasLocation) {
-        locationData = await getLocationData();
-        if (locationData.country) {
-          sessionStorage.setItem('visitor_location', JSON.stringify(locationData));
-        }
-      } else {
-        try {
-          locationData = JSON.parse(hasLocation);
-        } catch (e) {
-          locationData = {};
-        }
+
+      // Ensure we have IP and location
+      if (!ipAddress.current) {
+        ipAddress.current = await getIPAddress();
+      }
+      if (!locationData.current) {
+        locationData.current = await getLocationData();
       }
 
       // Track time on previous page before navigating
@@ -75,12 +87,13 @@ export const useVisitorTracking = () => {
         try {
           await supabase.from('visitor_analytics').insert({
             session_id: sessionId,
+            ip_address: ipAddress.current,
             page_path: currentPath.current,
             page_title: document.title,
             time_on_page_seconds: timeOnPage,
             referrer: document.referrer || null,
             user_agent: navigator.userAgent,
-            ...locationData,
+            ...locationData.current,
             metadata: {
               screen_width: window.screen.width,
               screen_height: window.screen.height,
@@ -102,11 +115,12 @@ export const useVisitorTracking = () => {
       try {
         await supabase.from('visitor_analytics').insert({
           session_id: sessionId,
+          ip_address: ipAddress.current,
           page_path: pagePath,
           page_title: pageTitle,
           referrer: document.referrer || null,
           user_agent: navigator.userAgent,
-          ...locationData,
+          ...locationData.current,
           metadata: {
             screen_width: window.screen.width,
             screen_height: window.screen.height,
@@ -129,11 +143,13 @@ export const useVisitorTracking = () => {
         
         const data = {
           session_id: getSessionId(),
+          ip_address: ipAddress.current,
           page_path: currentPath.current,
           page_title: document.title,
           time_on_page_seconds: timeOnPage,
           referrer: document.referrer || null,
           user_agent: navigator.userAgent,
+          ...locationData.current,
           metadata: {
             screen_width: window.screen.width,
             screen_height: window.screen.height,
