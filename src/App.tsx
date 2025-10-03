@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CookieConsent } from "@/components/CookieConsent";
 import { FloatingGenie } from "@/components/FloatingGenie";
+import { MobileOptimizations } from "@/components/MobileOptimizations";
 import { useVisitorTracking } from "@/hooks/useVisitorTracking";
 import { lazy, Suspense } from "react";
 
@@ -68,6 +69,7 @@ const AppContent = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <MobileOptimizations />
     <Toaster />
     <Sonner />
     <CookieConsent />

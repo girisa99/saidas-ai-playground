@@ -121,7 +121,6 @@ const healthcareTopics = [
 ];
 
 export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOpen, onClose }) => {
-  console.log('PublicGenieInterface rendering...');
   
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
@@ -176,37 +175,37 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const { state, addMessage, resetConversation } = useConversationState();
   const messages = state.messages;
 
+// Memoized scroll to bottom effect
 useEffect(() => {
-  messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-}, [messages]);
+  if (messagesEndRef.current) {
+    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  }
+}, [messages.length]);
 
-// Check conversation limits on component mount
+// Check conversation limits only when user info changes and is available
 useEffect(() => {
-  console.log('useEffect for checking limits triggered, userInfo:', userInfo);
+  if (!userInfo) return;
+
   const checkLimits = async () => {
     try {
-      console.log('showLimitModal state:', showLimitModal);
       const limits = await conversationLimitService.checkConversationLimits(
-        userInfo?.email,
-        userInfo?.firstName
+        userInfo.email,
+        userInfo.firstName
       );
-      console.log('Limits received:', limits);
       setConversationLimits(limits);
       setIsConversationAllowed(limits.allowed);
       
       if (!limits.allowed) {
-        console.log('Setting showLimitModal to true');
         setShowLimitModal(true);
       }
     } catch (error) {
       console.error('Failed to check conversation limits:', error);
-      // Allow conversation on error
       setIsConversationAllowed(true);
     }
   };
 
   checkLimits();
-}, [userInfo]);
+}, [userInfo?.email]); // Only re-run when email changes
 
 // Clean up conversation on component unmount
 useEffect(() => {
@@ -217,12 +216,19 @@ useEffect(() => {
   };
 }, []);
 
+// Fetch IP address only once on mount
 useEffect(() => {
-  // Capture user IP (best-effort) for rate limiting
-  fetch('https://api.ipify.org?format=json')
-    .then((r) => r.json())
-    .then((d) => setIpAddress(d.ip))
-    .catch(() => setIpAddress(null));
+  const fetchIP = async () => {
+    try {
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      setIpAddress(data.ip);
+    } catch {
+      setIpAddress(null);
+    }
+  };
+  
+  fetchIP();
 }, []);
 
   const handlePrivacyAccept = async (info: UserInfo) => {
