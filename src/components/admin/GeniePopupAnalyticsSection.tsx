@@ -11,13 +11,15 @@ interface GeniePopupAnalyticsSectionProps {
   modelUsage: any[];
   accessRequests: any[];
   popupStats?: { popupClicks: number; privacyAccepted: number; registrations: number };
+  knowledgeBaseCount?: number;
 }
 
 export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProps> = ({
   genieConversations,
   modelUsage,
   accessRequests,
-  popupStats
+  popupStats,
+  knowledgeBaseCount = 0
 }) => {
   // Calculate popup-specific stats
   const popupClicks = popupStats?.popupClicks ?? genieConversations.length;
@@ -127,13 +129,14 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
       </div>
 
       <Tabs defaultValue="engagement" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-7">
+        <TabsList className="grid w-full grid-cols-8">
           <TabsTrigger value="engagement">Engagement</TabsTrigger>
           <TabsTrigger value="geographic">Geographic</TabsTrigger>
           <TabsTrigger value="context">Context</TabsTrigger>
           <TabsTrigger value="models">Models</TabsTrigger>
           <TabsTrigger value="performance">Performance</TabsTrigger>
           <TabsTrigger value="rag">RAG & Features</TabsTrigger>
+          <TabsTrigger value="knowledge">Knowledge Base</TabsTrigger>
           <TabsTrigger value="access">Access Requests</TabsTrigger>
         </TabsList>
 
@@ -509,6 +512,110 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
                         <div className="text-xs text-muted-foreground mt-1">Advanced features activated</div>
                       </CardContent>
                     </Card>
+                  </div>
+                </div>
+              </ScrollArea>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="knowledge">
+          <Card>
+            <CardHeader>
+              <CardTitle>Knowledge Base</CardTitle>
+              <CardDescription>RAG-powered knowledge base for Genie AI</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ScrollArea className="h-[400px]">
+                <div className="space-y-6">
+                  {/* Knowledge Base Overview */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="text-sm font-medium text-muted-foreground">Total Articles</div>
+                        <div className="text-2xl font-bold">{knowledgeBaseCount}</div>
+                        <div className="text-xs text-muted-foreground mt-1">Knowledge base entries</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="text-sm font-medium text-muted-foreground">Coverage Areas</div>
+                        <div className="text-2xl font-bold">2</div>
+                        <div className="text-xs text-muted-foreground mt-1">Technology & Healthcare</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="text-sm font-medium text-muted-foreground">RAG Enabled</div>
+                        <div className="text-2xl font-bold text-green-600">{ragEnabledCount}</div>
+                        <div className="text-xs text-muted-foreground mt-1">Conversations using KB</div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Knowledge Base Info */}
+                  <div className="mt-6">
+                    <h3 className="font-semibold mb-3">Knowledge Base Structure</h3>
+                    <div className="space-y-4">
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="flex items-start gap-3">
+                            <Brain className="h-5 w-5 text-primary mt-0.5" />
+                            <div className="flex-1">
+                              <h4 className="font-medium mb-1">Technology Knowledge</h4>
+                              <p className="text-sm text-muted-foreground">
+                                Comprehensive coverage of AI/ML platforms, LLMs, agentic AI, no-code tools, 
+                                MCP (Model Context Protocol), automation platforms, and emerging technologies.
+                              </p>
+                              <div className="flex flex-wrap gap-2 mt-2">
+                                <Badge variant="outline">OpenAI</Badge>
+                                <Badge variant="outline">Claude</Badge>
+                                <Badge variant="outline">Gemini</Badge>
+                                <Badge variant="outline">Hugging Face</Badge>
+                                <Badge variant="outline">n8n</Badge>
+                                <Badge variant="outline">UiPath</Badge>
+                                <Badge variant="outline">Lovable</Badge>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="flex items-start gap-3">
+                            <Shield className="h-5 w-5 text-primary mt-0.5" />
+                            <div className="flex-1">
+                              <h4 className="font-medium mb-1">Healthcare Knowledge</h4>
+                              <p className="text-sm text-muted-foreground">
+                                Detailed information about reimbursement processes, oncology therapies, cardiology treatments, 
+                                cell & gene therapies, 340B pricing, WAC, GPO programs, and claims processing.
+                              </p>
+                              <div className="flex flex-wrap gap-2 mt-2">
+                                <Badge variant="outline">Reimbursement</Badge>
+                                <Badge variant="outline">Oncology</Badge>
+                                <Badge variant="outline">Cardiology</Badge>
+                                <Badge variant="outline">340B</Badge>
+                                <Badge variant="outline">WAC</Badge>
+                                <Badge variant="outline">GPO</Badge>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {knowledgeBaseCount === 0 && (
+                        <Card className="bg-muted/30">
+                          <CardContent className="p-4">
+                            <div className="text-sm text-muted-foreground">
+                              <strong>Note:</strong> The knowledge base is currently embedded in the codebase as structured data. 
+                              To add more articles to the database, use the Knowledge Base Management interface or contact the system administrator.
+                              The current system uses 80+ hardcoded knowledge base articles covering technology and healthcare topics.
+                            </div>
+                          </CardContent>
+                        </Card>
+                      )}
+                    </div>
                   </div>
                 </div>
               </ScrollArea>

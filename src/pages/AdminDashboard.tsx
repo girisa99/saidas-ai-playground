@@ -15,6 +15,7 @@ const AdminDashboard = () => {
   const [modelUsage, setModelUsage] = useState<any[]>([]);
   const [accessRequests, setAccessRequests] = useState<any[]>([]);
   const [popupStats, setPopupStats] = useState<{ popupClicks: number; privacyAccepted: number; registrations: number }>({ popupClicks: 0, privacyAccepted: 0, registrations: 0 });
+  const [knowledgeBaseCount, setKnowledgeBaseCount] = useState<number>(0);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -73,6 +74,15 @@ const AdminDashboard = () => {
       }
       setAccessRequests(Array.isArray(accessRequestsJson) ? accessRequestsJson : []);
 
+      // Load knowledge base count
+      const { count: kbCount, error: kbError } = await supabase
+        .from('knowledge_base')
+        .select('*', { count: 'exact', head: true });
+      
+      if (!kbError && kbCount !== null) {
+        setKnowledgeBaseCount(kbCount);
+      }
+
     } catch (error) {
       console.error('Error loading dashboard data:', error);
       toast({
@@ -129,6 +139,7 @@ const AdminDashboard = () => {
               modelUsage={modelUsage}
               accessRequests={accessRequests}
               popupStats={popupStats}
+              knowledgeBaseCount={knowledgeBaseCount}
             />
           </TabsContent>
         </Tabs>
