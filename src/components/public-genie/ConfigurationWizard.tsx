@@ -276,7 +276,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto z-[100001]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <span>Genie AI Configuration</span>

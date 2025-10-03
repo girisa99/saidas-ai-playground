@@ -699,69 +699,60 @@ ${conversationSummary.transcript}`
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
-          className={`fixed ${isMaximized ? 'inset-4' : isMinimized ? 'bottom-4 right-4 w-80 h-16' : 'bottom-4 right-4 w-96 h-[600px]'} z-[100000]`}
+          className={`fixed ${isMaximized ? 'inset-4' : isMinimized ? 'bottom-4 right-4 w-80 h-16' : 'bottom-4 right-4 w-96 h-[600px]'} z-[99999]`}
         >
         <Card className="h-full bg-gradient-to-br from-background to-muted border shadow-2xl">
           {/* Header */}
-          <div className="drag-handle flex items-center justify-between p-4 border-b bg-gradient-to-r from-slate-900 to-slate-800 cursor-move">
-            <div className="flex items-center gap-3">
-              <img src={genieLogoPopup} alt="Genie AI logo" className="h-10 w-auto object-contain drop-shadow" />
-               <div>
-                 <h3 className="font-semibold text-white">Genie AI Assistant</h3>
-                 {context && selectedTopic && (
-                   <div className="flex items-center gap-2">
-                     <p className="text-xs text-slate-300">{selectedTopic} • {context}</p>
-                     {aiConfig.mode !== 'default' && (
-                       <Badge variant="secondary" className="text-xs px-1 py-0">
-                         {aiConfig.mode.toUpperCase()}
-                       </Badge>
-                     )}
-                   </div>
-                 )}
+          <div className="drag-handle flex items-center justify-between p-3 border-b bg-gradient-to-r from-slate-900 to-slate-800 cursor-move">
+            <div className="flex items-center gap-2">
+              <img src={genieLogoPopup} alt="Genie AI logo" className="h-8 w-auto object-contain drop-shadow" />
+               <div className="flex-1">
+                 <h3 className="font-semibold text-white text-sm">Genie AI</h3>
+                 <p className="text-xs text-slate-300">Your Technology Navigator</p>
                </div>
             </div>
-             <div className="flex items-center gap-1">
+             <div className="flex items-center gap-1.5">
                <Button
                  variant="ghost"
                  size="sm"
                  onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}
-                 className="h-6 w-6 p-0 text-white hover:bg-white/20"
+                 className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
                  title="AI Settings"
                >
-                 <Settings className="h-3 w-3" />
+                 <Settings className="h-3.5 w-3.5" />
                </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleConnectLiveAgent}
-                className="h-6 w-6 p-0 text-white hover:bg-white/20"
+                className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
                 title="Connect with human agent"
               >
-                <Users className="h-3 w-3" />
+                <Users className="h-3.5 w-3.5" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsMinimized(!isMinimized)}
-                className="h-6 w-6 p-0 text-white hover:bg-white/20"
+                className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
               >
-                <Minimize2 className="h-3 w-3" />
+                <Minimize2 className="h-3.5 w-3.5" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsMaximized(!isMaximized)}
-                className="h-6 w-6 p-0 text-white hover:bg-white/20"
+                className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
               >
-                <Maximize2 className="h-3 w-3" />
+                <Maximize2 className="h-3.5 w-3.5" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleClose}
-                className="h-6 w-6 p-0 text-white hover:bg-white/20"
+                className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
               >
-                <X className="h-3 w-3" />
+                <X className="h-3.5 w-3.5" />
               </Button>
             </div>
           </div>
