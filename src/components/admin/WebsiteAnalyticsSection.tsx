@@ -7,10 +7,52 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Globe, MapPin, Clock, TrendingUp, Eye, Zap, BarChart3 } from 'lucide-react';
 
 interface WebsiteAnalyticsSectionProps {
-  visitorAnalytics: any;
+  visitorAnalytics: {
+    summary: {
+      total_views: number;
+      unique_visitors: number;
+      avg_time_on_page_seconds: number;
+      unique_pages: number;
+    };
+    locations: Array<{
+      country: string;
+      region: string | null;
+      visitor_count: number;
+    }>;
+    top_pages: Array<{
+      page_path: string;
+      page_title: string;
+      view_count: number;
+    }>;
+    session_journeys: Array<{
+      session_id: string;
+      country: string;
+      region: string | null;
+      pages_visited: number;
+      total_time_seconds: number;
+      page_journey: Array<{
+        page_path: string;
+        page_title: string;
+        time_on_page: number;
+      }>;
+    }>;
+  } | null;
 }
 
 export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = ({ visitorAnalytics }) => {
+  // Calculate unique countries
+  const uniqueCountries = visitorAnalytics?.locations 
+    ? new Set(visitorAnalytics.locations.map(l => l.country)).size 
+    : 0;
+
+  // Format average time
+  const formatTime = (seconds: number) => {
+    if (seconds < 60) return `${seconds}s`;
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}m ${remainingSeconds}s`;
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
@@ -28,7 +70,7 @@ export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = (
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Total Visitors</p>
-                <p className="text-2xl font-bold">{visitorAnalytics?.total_visitors || 0}</p>
+                <p className="text-2xl font-bold">{visitorAnalytics?.summary?.unique_visitors || 0}</p>
               </div>
               <Eye className="h-8 w-8 text-blue-600" />
             </div>
@@ -40,7 +82,7 @@ export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = (
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Page Views</p>
-                <p className="text-2xl font-bold">{visitorAnalytics?.total_page_views || 0}</p>
+                <p className="text-2xl font-bold">{visitorAnalytics?.summary?.total_views || 0}</p>
               </div>
               <BarChart3 className="h-8 w-8 text-green-600" />
             </div>
@@ -52,7 +94,11 @@ export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = (
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Avg Time on Page</p>
-                <p className="text-2xl font-bold">{visitorAnalytics?.avg_time_on_page || '0s'}</p>
+                <p className="text-2xl font-bold">
+                  {visitorAnalytics?.summary?.avg_time_on_page_seconds 
+                    ? formatTime(visitorAnalytics.summary.avg_time_on_page_seconds)
+                    : '0s'}
+                </p>
               </div>
               <Clock className="h-8 w-8 text-purple-600" />
             </div>
@@ -63,8 +109,8 @@ export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = (
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Unique Regions</p>
-                <p className="text-2xl font-bold">{visitorAnalytics?.unique_countries || 0}</p>
+                <p className="text-sm font-medium text-muted-foreground">Unique Countries</p>
+                <p className="text-2xl font-bold">{uniqueCountries}</p>
               </div>
               <MapPin className="h-8 w-8 text-orange-600" />
             </div>
@@ -94,18 +140,32 @@ export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = (
                     <TableRow>
                       <TableHead>Country</TableHead>
                       <TableHead>Region</TableHead>
-                      <TableHead>City</TableHead>
                       <TableHead>Visitors</TableHead>
-                      <TableHead>Page Views</TableHead>
-                      <TableHead>Avg Time</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    <TableRow>
-                      <TableCell colSpan={6} className="text-center text-muted-foreground">
-                        Geographic data coming from visitor_analytics table
-                      </TableCell>
-                    </TableRow>
+                    {visitorAnalytics?.locations && visitorAnalytics.locations.length > 0 ? (
+                      visitorAnalytics.locations.map((location, idx) => (
+                        <TableRow key={idx}>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              <Globe className="h-4 w-4 text-muted-foreground" />
+                              {location.country}
+                            </div>
+                          </TableCell>
+                          <TableCell>{location.region || 'N/A'}</TableCell>
+                          <TableCell>
+                            <Badge variant="secondary">{location.visitor_count}</Badge>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={3} className="text-center text-muted-foreground">
+                          No geographic data available
+                        </TableCell>
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </ScrollArea>
@@ -128,18 +188,28 @@ export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = (
                       <TableHeader>
                         <TableRow>
                           <TableHead>Page Path</TableHead>
+                          <TableHead>Page Title</TableHead>
                           <TableHead>Views</TableHead>
-                          <TableHead>Unique Visitors</TableHead>
-                          <TableHead>Avg Time</TableHead>
-                          <TableHead>Bounce Rate</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        <TableRow>
-                          <TableCell colSpan={5} className="text-center text-muted-foreground">
-                            Page data from visitor_analytics table
-                          </TableCell>
-                        </TableRow>
+                        {visitorAnalytics?.top_pages && visitorAnalytics.top_pages.length > 0 ? (
+                          visitorAnalytics.top_pages.map((page, idx) => (
+                            <TableRow key={idx}>
+                              <TableCell className="font-mono text-xs">{page.page_path}</TableCell>
+                              <TableCell className="max-w-md truncate">{page.page_title}</TableCell>
+                              <TableCell>
+                                <Badge variant="secondary">{page.view_count}</Badge>
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={3} className="text-center text-muted-foreground">
+                              No page data available
+                            </TableCell>
+                          </TableRow>
+                        )}
                       </TableBody>
                     </Table>
                   </div>
@@ -157,24 +227,50 @@ export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = (
             </CardHeader>
             <CardContent>
               <ScrollArea className="h-[400px]">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Region</TableHead>
-                      <TableHead>Avg Load Time</TableHead>
-                      <TableHead>Fastest Page</TableHead>
-                      <TableHead>Slowest Page</TableHead>
-                      <TableHead>Performance Score</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell colSpan={5} className="text-center text-muted-foreground">
-                        Performance metrics from visitor_analytics
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="font-semibold mb-3">Session Journey Analysis</h3>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Country/Region</TableHead>
+                          <TableHead>Pages Visited</TableHead>
+                          <TableHead>Total Time</TableHead>
+                          <TableHead>Journey Path</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {visitorAnalytics?.session_journeys && visitorAnalytics.session_journeys.length > 0 ? (
+                          visitorAnalytics.session_journeys.slice(0, 20).map((journey, idx) => (
+                            <TableRow key={idx}>
+                              <TableCell>
+                                <div className="text-xs">
+                                  {journey.country}
+                                  {journey.region && ` / ${journey.region}`}
+                                </div>
+                              </TableCell>
+                              <TableCell>
+                                <Badge variant="secondary">{journey.pages_visited}</Badge>
+                              </TableCell>
+                              <TableCell className="text-xs">
+                                {formatTime(journey.total_time_seconds)}
+                              </TableCell>
+                              <TableCell className="text-xs max-w-md">
+                                {journey.page_journey.map(p => p.page_path).join(' → ')}
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={4} className="text-center text-muted-foreground">
+                              No session data available
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
               </ScrollArea>
             </CardContent>
           </Card>
