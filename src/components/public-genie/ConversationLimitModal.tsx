@@ -33,19 +33,24 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-sm sm:max-w-md md:max-w-2xl w-full h-[85vh] max-h-[90vh] overflow-hidden flex flex-col">
-        <DialogHeader>
-          <div className="flex items-center space-x-3">
-            <div className={`p-2 rounded-full ${getContextColor()} text-white`}>
-              {getContextIcon()}
+        <DialogHeader className="flex-shrink-0">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className={`p-2 rounded-full ${getContextColor()} text-white`}>
+                {getContextIcon()}
+              </div>
+              <div>
+                <DialogTitle className="text-xl font-bold">
+                  Conversation Limit Reached
+                </DialogTitle>
+                <p className="text-sm text-muted-foreground">
+                  Help us maintain quality conversations for everyone
+                </p>
+              </div>
             </div>
-            <div>
-              <DialogTitle className="text-xl font-bold">
-                Conversation Limit Reached
-              </DialogTitle>
-              <p className="text-sm text-muted-foreground">
-                Help us maintain quality conversations for everyone
-              </p>
-            </div>
+            <Button onClick={onClose} className="min-w-[100px]">
+              Understood
+            </Button>
           </div>
         </DialogHeader>
 
@@ -140,32 +145,6 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
             </div>
           </Card>
 
-          {/* Knowledge Sharing */}
-          <Card className="p-4 border-l-4 border-l-purple-500">
-            <div className="flex items-center space-x-2 mb-3">
-              <Users className="w-4 h-4 text-purple-500" />
-              <h3 className="font-semibold text-purple-700">Community & Learning</h3>
-            </div>
-            <div className="space-y-3 text-sm">
-              <p className="text-muted-foreground">
-                This platform is designed for experimentation and learning. We encourage responsible use and knowledge sharing.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Button variant="outline" size="sm" className="text-xs">
-                  <BookOpen className="w-3 h-3 mr-1" />
-                  Documentation
-                </Button>
-                <Button variant="outline" size="sm" className="text-xs">
-                  <ExternalLink className="w-3 h-3 mr-1" />
-                  GitHub Examples
-                </Button>
-                <Button variant="outline" size="sm" className="text-xs">
-                  <Users className="w-3 h-3 mr-1" />
-                  Community
-                </Button>
-              </div>
-            </div>
-          </Card>
 
           {/* Access Request Section */}
           {limits.restriction_reason === 'permanent_block' || (limits.daily_count >= limits.daily_limit && limits.hourly_count >= limits.hourly_limit) ? (
@@ -224,12 +203,6 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
               Limits reset automatically every hour
             </div>
           )}
-        </div>
-
-        <div className="sticky bottom-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t px-2 py-3 mt-0 flex justify-end">
-          <Button onClick={onClose} className="min-w-[100px]">
-            Understood
-          </Button>
         </div>
       </DialogContent>
     </Dialog>
