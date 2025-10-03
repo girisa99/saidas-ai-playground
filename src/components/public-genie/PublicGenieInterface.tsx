@@ -33,6 +33,7 @@ import { NewsletterService } from '@/services/newsletterService';
 import { ContactService } from '@/services/publicContactService';
 import { conversationLimitService, type ConversationLimits } from '@/services/conversationLimitService';
 import { genieConversationService } from '@/services/genieConversationService';
+import { supabase } from '@/integrations/supabase/client';
 import genieLogoPopup from '@/assets/genie-logo-popup.png';
 import genieThinking from '@/assets/genie-thinking.png';
 
@@ -239,25 +240,27 @@ useEffect(() => {
     setUserInfo(info);
     setShowPrivacyBanner(false);
 
-    // Subscribe user to newsletter (public edge function)
+    // Start tracking Genie conversation in database FIRST to get conversation ID
+    let conversationId: string | undefined;
     try {
-      const res = await NewsletterService.subscribe({
-        email: info.email,
-        firstName: info.firstName,
-        lastName: info.lastName,
-        interests: ['AI Conversation']
+      const result = await genieConversationService.startConversation({
+        userEmail: info.email,
+        userName: info.firstName + (info.lastName ? ` ${info.lastName}` : ''),
+        context: context || 'general',
+        ipAddress: ipAddress || undefined
       });
-      if (res.success) {
-        toast({ title: 'Subscribed', description: 'Welcome email sent. You can unsubscribe anytime.' });
+      
+      if (result.success) {
+        conversationId = result.conversationId;
+        console.log('✅ Genie conversation tracking started:', conversationId);
       } else {
-        toast({ title: 'Subscription issue', description: res.message, variant: 'destructive' });
+        console.warn('⚠️ Failed to start conversation tracking:', result.error);
       }
-    } catch (e: any) {
-      console.error('Subscription error', e);
-      toast({ title: 'Subscription failed', description: 'Please try again later.', variant: 'destructive' });
+    } catch (error) {
+      console.error('Failed to initialize conversation tracking:', error);
     }
     
-    // Track user registration/subscription
+    // Track user registration analytics
     try {
       const { genieAnalyticsService } = await import('@/services/genieAnalyticsService');
       await genieAnalyticsService.trackUserRegistration({
@@ -271,22 +274,35 @@ useEffect(() => {
       console.error('Failed to track user registration:', error);
     }
 
-    // Start tracking Genie conversation in database
+    // Send Genie welcome email with conversation details
     try {
-      const result = await genieConversationService.startConversation({
-        userEmail: info.email,
-        userName: info.firstName + (info.lastName ? ` ${info.lastName}` : ''),
-        context: context || 'general',
-        ipAddress: ipAddress || undefined
+      const { data, error } = await supabase.functions.invoke('send-genie-welcome-email', {
+        body: {
+          email: info.email,
+          firstName: info.firstName,
+          lastName: info.lastName,
+          context: context || 'general',
+          ipAddress: ipAddress || undefined,
+          conversationId: conversationId
+        }
       });
-      
-      if (result.success) {
-        console.log('✅ Genie conversation tracking started:', result.conversationId);
+
+      if (error) {
+        console.error('Failed to send welcome email:', error);
+        toast({ 
+          title: 'Note', 
+          description: 'You\'re all set! Welcome email will arrive shortly.',
+          variant: 'default'
+        });
       } else {
-        console.warn('⚠️ Failed to start conversation tracking:', result.error);
+        console.log('✅ Welcome email sent successfully');
+        toast({ 
+          title: 'Welcome! 🧞‍♂️', 
+          description: 'Check your email for your personalized welcome message!',
+        });
       }
     } catch (error) {
-      console.error('Failed to initialize conversation tracking:', error);
+      console.error('Failed to send welcome email:', error);
     }
     
     // Add capabilities introduction message

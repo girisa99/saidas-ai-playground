@@ -30,3 +30,6 @@ verify_jwt = false
 
 [functions.ai-universal-processor]
 verify_jwt = false
+
+[functions.send-genie-welcome-email]
+verify_jwt = false
