@@ -33,7 +33,25 @@ const AdminDashboard = () => {
       if (visitorError) {
         console.error('Error loading visitor analytics:', visitorError);
       }
-      setVisitorAnalytics(visitorData);
+
+      // Transform the data to match expected structure
+      const transformedVisitorData = visitorData ? {
+        summary: {
+          total_views: (visitorData as any).total_page_views || 0,
+          unique_visitors: (visitorData as any).total_visitors || 0,
+          avg_time_on_page_seconds: Math.round((visitorData as any).avg_time_on_page || 0),
+          unique_pages: (visitorData as any).unique_countries || 0 // Using countries as proxy for now
+        },
+        locations: ((visitorData as any).geographic_distribution || []).map((geo: any) => ({
+          country: geo.country,
+          region: geo.region,
+          visitor_count: geo.visitors
+        })),
+        top_pages: [], // Will need separate query for this
+        session_journeys: [] // Will need separate query for this
+      } : null;
+      
+      setVisitorAnalytics(transformedVisitorData);
 
       // Load Genie AI popup conversations via RPC (bypass RLS)
       const { data: genieConvJson, error: genieConvError } = await supabase
