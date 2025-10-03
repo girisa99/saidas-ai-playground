@@ -234,15 +234,16 @@ export const EnhancedGenieDashboard = () => {
         .select('*')
         .order('created_at', { ascending: false });
 
-      // Load visitor analytics summary (for unified dashboard)
+      // Load visitor analytics summary for the same time period as conversations
+      // Use 30 days to match the default conversation filter
       const { data: visitorAnalyticsData, error: visitorError } = await supabase
-        .rpc('get_visitor_analytics_summary', { days_back: 30 });
+        .rpc('get_visitor_analytics_summary', { days_back: 7 }); // Match the 7-day filter
 
       if (visitorError) {
         console.error('Error loading visitor analytics:', visitorError);
       }
 
-      console.log('Visitor Analytics Data:', visitorAnalyticsData);
+      console.log('Visitor Analytics Data (7 days):', visitorAnalyticsData);
 
       // Set data
       setConversations(conversationsData || []);
@@ -549,19 +550,25 @@ export const EnhancedGenieDashboard = () => {
     const activeUsers = convs.filter(c => new Date(c.created_at) > weekAgo).length;
     const userRetentionRate = totalUsers > 0 ? Math.round((activeUsers / totalUsers) * 100) : 0;
 
-    // Extract visitor analytics data
-    console.log('Processing visitor analytics:', visitorAnalytics);
+    // Extract visitor analytics data and log for debugging
+    console.log('========== VISITOR ANALYTICS DEBUG ==========');
+    console.log('Full visitor analytics object:', JSON.stringify(visitorAnalytics, null, 2));
+    console.log('Summary object:', visitorAnalytics?.summary);
+    
     const websitePageViews = visitorAnalytics?.summary?.total_views || 0;
     const websiteUniqueVisitors = visitorAnalytics?.summary?.unique_visitors || 0;
     const websiteAvgTimeOnPage = visitorAnalytics?.summary?.avg_time_on_page_seconds || 0;
     const websitePagesVisited = visitorAnalytics?.summary?.unique_pages || 0;
     
-    console.log('Website Analytics Stats:', {
+    console.log('Extracted values:', {
       pageViews: websitePageViews,
       uniqueVisitors: websiteUniqueVisitors,
       avgTime: websiteAvgTimeOnPage,
-      pagesVisited: websitePagesVisited
+      pagesVisited: websitePagesVisited,
+      rawTotal: visitorAnalytics?.summary?.total_views,
+      rawUnique: visitorAnalytics?.summary?.unique_visitors
     });
+    console.log('=============================================');
 
     setStats({
       totalConversations,
@@ -1040,7 +1047,7 @@ export const EnhancedGenieDashboard = () => {
                 <Globe className="h-5 w-5 text-blue-600" />
                 Website Traffic Analytics (genieaiexperimentationhub.tech)
               </CardTitle>
-              <CardDescription>Data from visitor_analytics table - Last 30 days</CardDescription>
+              <CardDescription>Data from visitor_analytics table - Last 7 days (matches conversation filter)</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

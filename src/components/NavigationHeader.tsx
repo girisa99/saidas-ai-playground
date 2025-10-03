@@ -22,7 +22,7 @@ export const NavigationHeader = () => {
     { to: "/", label: "Home", icon: Home },
     { to: "/about", label: "About Sai Dasika", icon: User },
     { to: "/journey", label: "AI Development Journey", icon: Map },
-    { to: "/technology", label: "3-Phase Tech Framework", icon: Wrench },
+    { to: "/technology", label: "Tech Stack", icon: Wrench },
     { to: "/business-use-cases", label: "Gartner Business Solutions", icon: Briefcase },
     { to: "/case-studies", label: "Validated Case Studies", icon: Trophy },
   ];
