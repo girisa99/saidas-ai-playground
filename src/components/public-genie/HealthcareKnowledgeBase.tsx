@@ -393,6 +393,183 @@ export const HealthcareKnowledgeBase = {
       visualAid: "✅ Claims Success: Get it right the first time!",
       emotionalNote: "Claims processing is like baking - measure twice, bake once! Miss an ingredient and you might get a denial soufflé instead of payment cake! 🎂😅"
     }
+  },
+
+  medicalImaging: {
+    overview: {
+      title: "Medical Imaging & AI Analysis",
+      description: "Advanced imaging modalities for diagnosis and treatment planning with AI-assisted interpretation",
+      educationalNote: "⚕️ Educational analysis only - not for clinical diagnosis. Always consult healthcare professionals."
+    },
+    modalities: {
+      xray: {
+        name: "X-Ray (Radiography)",
+        icon: "📷",
+        description: "Uses electromagnetic radiation to create images of bones and dense tissues",
+        commonUses: [
+          "Bone fractures and joint injuries",
+          "Chest imaging (pneumonia, lung conditions)",
+          "Dental examinations",
+          "Abdominal screening"
+        ],
+        fileFormats: ["DICOM", "JPEG", "PNG"],
+        aiApplications: [
+          "Fracture detection and classification",
+          "Pneumonia and lung lesion screening",
+          "Bone age assessment",
+          "Foreign object detection"
+        ],
+        emotionalNote: "X-rays are quick and painless - like taking a photo, but of your bones! 📸"
+      },
+      mri: {
+        name: "MRI (Magnetic Resonance Imaging)",
+        icon: "🧲",
+        description: "Uses magnetic fields and radio waves for detailed soft tissue imaging",
+        commonUses: [
+          "Brain and spinal cord imaging",
+          "Soft tissue injuries (ligaments, tendons)",
+          "Joint and cartilage assessment",
+          "Organ evaluation (liver, kidneys, heart)"
+        ],
+        fileFormats: ["DICOM", "NIfTI"],
+        aiApplications: [
+          "Tumor detection and segmentation",
+          "Multiple sclerosis lesion tracking",
+          "Brain structure analysis",
+          "Stroke assessment and planning"
+        ],
+        emotionalNote: "MRIs are noisy but incredibly detailed - like having super vision into your body! 🔍"
+      },
+      ctscan: {
+        name: "CT Scan (Computed Tomography)",
+        icon: "🔄",
+        description: "Uses X-rays from multiple angles to create detailed cross-sectional images",
+        commonUses: [
+          "Cancer detection and staging",
+          "Trauma and emergency assessment",
+          "Vascular imaging (angiography)",
+          "Surgical planning and guidance"
+        ],
+        fileFormats: ["DICOM"],
+        aiApplications: [
+          "Lung nodule detection and characterization",
+          "Hemorrhage and trauma identification",
+          "Liver and kidney lesion analysis",
+          "Bone density and fracture assessment"
+        ],
+        emotionalNote: "CT scans are like creating a 3D map of your body - incredibly detailed! 🗺️"
+      },
+      ultrasound: {
+        name: "Ultrasound (Sonography)",
+        icon: "🔊",
+        description: "Uses sound waves to create real-time images of soft tissues and organs",
+        commonUses: [
+          "Prenatal imaging and fetal monitoring",
+          "Cardiac function assessment (echocardiography)",
+          "Abdominal organ evaluation",
+          "Vascular studies (blood flow)"
+        ],
+        fileFormats: ["DICOM", "AVI", "MP4"],
+        aiApplications: [
+          "Fetal anomaly detection",
+          "Cardiac function quantification",
+          "Thyroid nodule classification",
+          "Breast lesion characterization"
+        ],
+        emotionalNote: "Ultrasound is safe, painless, and lets us see your baby in real-time! 👶💕"
+      },
+      mammography: {
+        name: "Mammography",
+        icon: "🎀",
+        description: "Specialized low-dose X-ray for breast tissue examination and cancer screening",
+        commonUses: [
+          "Breast cancer screening",
+          "Tumor detection and characterization",
+          "Calcification assessment",
+          "Diagnostic follow-up imaging"
+        ],
+        fileFormats: ["DICOM"],
+        aiApplications: [
+          "Cancer detection and risk scoring",
+          "Breast density assessment",
+          "False positive reduction",
+          "Lesion classification and characterization"
+        ],
+        emotionalNote: "Early detection saves lives - you're being proactive about your health! 💪🎀"
+      }
+    },
+    dicomStandard: {
+      title: "DICOM - Digital Imaging Standard",
+      description: "The international standard for medical imaging that ensures images can be viewed and shared across different systems",
+      keyFeatures: [
+        "Standardized format for all medical images",
+        "Embedded patient and study metadata",
+        "Supports all imaging modalities",
+        "Ensures interoperability between systems"
+      ],
+      metadata: [
+        "Patient demographics (de-identified for privacy)",
+        "Study date, time, and description",
+        "Imaging modality and acquisition protocol",
+        "Image dimensions and pixel spacing",
+        "Equipment and technical parameters"
+      ],
+      emotionalNote: "DICOM makes sure your images travel safely between hospitals - like a universal language for medical imaging! 🌐"
+    },
+    aiInRadiology: {
+      title: "AI in Medical Imaging",
+      applications: [
+        "Automated lesion detection and segmentation",
+        "Image quality assessment and enhancement",
+        "Radiologist workflow optimization",
+        "Clinical decision support systems",
+        "Predictive analytics for patient outcomes",
+        "Multi-modal image fusion and analysis"
+      ],
+      benefits: [
+        "⚡ Faster image analysis and reporting",
+        "🎯 Improved diagnostic accuracy",
+        "👨‍⚕️ Reduced radiologist workload and burnout",
+        "🔍 Earlier disease detection",
+        "📊 Standardized interpretation and reporting",
+        "💡 Highlighting subtle findings humans might miss"
+      ],
+      limitations: [
+        "Requires large, diverse training datasets",
+        "May not generalize across different populations",
+        "Needs validation in real clinical settings",
+        "Regulatory approval and compliance requirements",
+        "Integration challenges with existing workflows",
+        "Cannot replace human radiologist expertise"
+      ],
+      emotionalNote: "AI is like having a second set of expert eyes reviewing images - it helps doctors help you better! 👁️‍🗨️✨"
+    },
+    educationalContext: {
+      title: "GENIE AI Medical Imaging Capabilities",
+      note: "🎓 Educational and knowledge-sharing purposes only",
+      capabilities: [
+        "Identifying anatomical structures in images",
+        "Explaining different imaging modalities",
+        "Discussing common imaging findings",
+        "Educational interpretation guidance",
+        "DICOM metadata extraction and explanation",
+        "Image quality and technical assessment"
+      ],
+      limitations: [
+        "❌ Not for clinical diagnosis or medical advice",
+        "❌ Not a replacement for trained radiologists",
+        "❌ Educational insights and learning only",
+        "✅ Always consult healthcare professionals for medical concerns"
+      ],
+      whenToUse: [
+        "Learning about imaging modalities",
+        "Understanding imaging reports",
+        "Educational exploration of anatomy",
+        "Technical imaging questions",
+        "Research and knowledge sharing"
+      ],
+      emotionalNote: "Think of me as your friendly imaging tutor - I'm here to help you learn and understand, but your doctor makes the medical decisions! 📚👨‍⚕️"
+    }
   }
 };
 
@@ -418,6 +595,16 @@ export const getReimbursementInfo = (topic: string) => {
       return HealthcareKnowledgeBase.gpoInformation;
     case 'claims':
       return HealthcareKnowledgeBase.claimsProcessing;
+    case 'imaging':
+    case 'radiology':
+    case 'dicom':
+    case 'medical imaging':
+    case 'x-ray':
+    case 'mri':
+    case 'ct scan':
+    case 'ultrasound':
+    case 'mammography':
+      return HealthcareKnowledgeBase.medicalImaging;
     default:
       return HealthcareKnowledgeBase;
   }
@@ -435,4 +622,25 @@ export const getEmotionalSupport = (context: string) => {
 
 export const getVisualReference = (process: string) => {
   return HealthcareKnowledgeBase.visualReferences[process] || null;
+};
+
+export const getMedicalImagingInfo = (modality?: string) => {
+  if (modality) {
+    const normalizedModality = modality.toLowerCase().replace(/[\s-]/g, '');
+    const modalityMap: { [key: string]: keyof typeof HealthcareKnowledgeBase.medicalImaging.modalities } = {
+      'xray': 'xray',
+      'mri': 'mri',
+      'ctscan': 'ctscan',
+      'ct': 'ctscan',
+      'ultrasound': 'ultrasound',
+      'mammography': 'mammography',
+      'mammogram': 'mammography'
+    };
+    
+    const modalityKey = modalityMap[normalizedModality];
+    if (modalityKey) {
+      return HealthcareKnowledgeBase.medicalImaging.modalities[modalityKey];
+    }
+  }
+  return HealthcareKnowledgeBase.medicalImaging;
 };

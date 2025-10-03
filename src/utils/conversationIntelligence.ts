@@ -71,6 +71,27 @@ export class ConversationIntelligence {
   }
 
   /**
+   * Detect if conversation involves images or visual content
+   */
+  detectVisionRequirement(messages: ConversationMessage[]): boolean {
+    const recentContent = messages
+      .slice(-3)
+      .map(m => m.content.toLowerCase())
+      .join(' ');
+
+    // Image and visual keywords
+    const visionKeywords = [
+      'image', 'picture', 'photo', 'visual', 'scan', 'x-ray', 'xray',
+      'mri', 'ct scan', 'ultrasound', 'dicom', 'radiology', 'imaging',
+      'medical image', 'radiograph', 'mammogram', 'echocardiogram',
+      'look at', 'show me', 'analyze this', 'what do you see',
+      'screenshot', 'diagram', 'chart', 'graph', 'visualization'
+    ];
+
+    return visionKeywords.some(keyword => recentContent.includes(keyword));
+  }
+
+  /**
    * Detect topic patterns to suggest related areas
    */
   detectTopicPatterns(messages: ConversationMessage[]): string[] {
@@ -87,6 +108,11 @@ export class ConversationIntelligence {
     }
     if (recentContent.match(/(?:therapy|treatment|patient|clinical|medical)/i)) {
       topics.push('healthcare-treatment');
+    }
+    
+    // Medical imaging topics
+    if (recentContent.match(/(?:image|imaging|scan|x-?ray|mri|ct|ultrasound|dicom|radiology|radiograph)/i)) {
+      topics.push('healthcare-imaging');
     }
 
     // Technology topics
@@ -193,6 +219,14 @@ export class ConversationIntelligence {
       suggestions.push(
         { label: 'Treatment Plans', emoji: '🩺' },
         { label: 'Clinical Protocols', emoji: '📊' }
+      );
+    }
+
+    if (topics.includes('healthcare-imaging')) {
+      suggestions.push(
+        { label: 'Medical Imaging', emoji: '🔬' },
+        { label: 'DICOM Analysis', emoji: '📸' },
+        { label: 'Radiology Insights', emoji: '🏥' }
       );
     }
 

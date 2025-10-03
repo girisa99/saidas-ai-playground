@@ -474,6 +474,19 @@ Ask me anything to get started, or click below to explore my advanced features!`
 
     const userMessage = inputMessage.trim();
     setInputMessage('');
+
+    // Intelligent vision model auto-switching
+    const messagesForAnalysis = [...messages, { role: 'user' as const, content: userMessage, timestamp: new Date().toISOString() }];
+    const requiresVision = conversationIntelligence.detectVisionRequirement(messagesForAnalysis);
+    
+    if (requiresVision && !aiConfig.visionEnabled) {
+      // Auto-enable vision if discussing images
+      setAIConfig(prev => ({ ...prev, visionEnabled: true }));
+      toast({
+        title: "Vision Analysis Enabled",
+        description: "I've detected you're discussing images. Vision capabilities are now active! 👁️",
+      });
+    }
     
     // Mark that conversation has started
     if (!hasStartedConversation) {
