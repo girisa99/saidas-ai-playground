@@ -257,6 +257,20 @@ useEffect(() => {
       toast({ title: 'Subscription failed', description: 'Please try again later.', variant: 'destructive' });
     }
     
+    // Track user registration/subscription
+    try {
+      const { genieAnalyticsService } = await import('@/services/genieAnalyticsService');
+      await genieAnalyticsService.trackUserRegistration({
+        user_email: info.email,
+        user_name: info.firstName + (info.lastName ? ` ${info.lastName}` : ''),
+        context: context || 'general',
+        ip_address: ipAddress || undefined,
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('Failed to track user registration:', error);
+    }
+
     // Start tracking Genie conversation in database
     try {
       const result = await genieConversationService.startConversation({

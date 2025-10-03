@@ -272,11 +272,24 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
     return () => window.removeEventListener('openGeniePopup', handleOpenGeniePopup);
   }, []);
 
-  const handleGenieClick = () => {
+  const handleGenieClick = async () => {
     console.debug('[FloatingGenie] Bottle clicked');
     setHasInteracted(true);
     setShowTooltip(false);
     setIsGenieOpen(true);
+
+    // Track popup click event
+    try {
+      const { genieAnalyticsService } = await import('@/services/genieAnalyticsService');
+      await genieAnalyticsService.trackPopupClick({
+        page_url: window.location.href,
+        user_agent: navigator.userAgent,
+        timestamp: new Date().toISOString()
+      });
+      await genieAnalyticsService.incrementPopupClickStat();
+    } catch (error) {
+      console.error('Failed to track popup click:', error);
+    }
   };
 
   // Removed hard-close; Genie stays docked and always available
