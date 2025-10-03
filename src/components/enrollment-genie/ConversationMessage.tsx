@@ -1,6 +1,7 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
-import { User, Bot } from 'lucide-react';
+import { User, Sparkles } from 'lucide-react';
+import genieFloating from '@/assets/genie-floating.png';
 
 interface ConversationMessage {
   role: 'user' | 'assistant';
@@ -21,9 +22,15 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({ messag
   return (
     <div className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
       {!isUser && (
-        <div className="flex-shrink-0">
-          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-            <Bot className="h-4 w-4 text-primary" />
+        <div className="flex-shrink-0 relative group">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/10 to-purple-500/10 flex items-center justify-center relative overflow-hidden hover:scale-110 transition-transform">
+            <img 
+              src={genieFloating} 
+              alt="GENIE" 
+              className="w-6 h-6 object-contain"
+            />
+            {/* Subtle sparkle on hover */}
+            <Sparkles className="w-2 h-2 text-primary absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
         </div>
       )}
