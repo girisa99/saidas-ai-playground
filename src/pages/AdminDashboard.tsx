@@ -14,6 +14,7 @@ const AdminDashboard = () => {
   const [genieConversations, setGenieConversations] = useState<any[]>([]);
   const [modelUsage, setModelUsage] = useState<any[]>([]);
   const [accessRequests, setAccessRequests] = useState<any[]>([]);
+  const [popupStats, setPopupStats] = useState<{ popupClicks: number; privacyAccepted: number; registrations: number }>({ popupClicks: 0, privacyAccepted: 0, registrations: 0 });
   const { toast } = useToast();
 
   useEffect(() => {
@@ -41,8 +42,27 @@ const AdminDashboard = () => {
       if (genieConvError) {
         console.error('Genie conversations error:', genieConvError);
       }
-      
       setGenieConversations(genieConvData || []);
+
+      // Load popup analytics events for drop-off tracking
+      const { data: popupEvents, error: popupErr } = await supabase
+        .from('genie_popup_analytics' as any)
+        .select('event_type, created_at')
+        .order('created_at', { ascending: false });
+      if (popupErr) {
+        console.error('Popup analytics error:', popupErr);
+      } else {
+        const stats = (popupEvents || []).reduce(
+          (acc: any, ev: any) => {
+            if (ev.event_type === 'popup_click') acc.popupClicks += 1;
+            if (ev.event_type === 'privacy_accepted') acc.privacyAccepted += 1;
+            if (ev.event_type === 'user_registered') acc.registrations += 1;
+            return acc;
+          },
+          { popupClicks: 0, privacyAccepted: 0, registrations: 0 }
+        );
+        setPopupStats(stats);
+      }
       
       // Extract model usage from messages
       const models: any[] = [];
@@ -130,6 +150,7 @@ const AdminDashboard = () => {
               genieConversations={genieConversations}
               modelUsage={modelUsage}
               accessRequests={accessRequests}
+              popupStats={popupStats}
             />
           </TabsContent>
         </Tabs>

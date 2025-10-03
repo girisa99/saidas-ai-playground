@@ -34,6 +34,21 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
   });
   const { toast } = useToast();
 
+  const handleAcceptTerms = async () => {
+    try {
+      const { genieAnalyticsService } = await import('@/services/genieAnalyticsService');
+      await genieAnalyticsService.trackPrivacyAccept({
+        user_email: userInfo.email || 'anonymous',
+        user_name: `${userInfo.firstName || 'Anonymous'} ${userInfo.lastName || ''}`.trim(),
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('Failed to track privacy acceptance:', error);
+    } finally {
+      setStep('info');
+    }
+  };
+
   const handleSubmit = async () => {
     if (!userInfo.firstName.trim() || !userInfo.email || !isEmailValid(userInfo.email)) {
       return;
@@ -87,7 +102,7 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
               </AlertDescription>
             </Alert>
 
-            <Button onClick={() => setStep('info')} className="w-full">
+            <Button onClick={handleAcceptTerms} className="w-full">
               I Accept Terms & Continue
             </Button>
           </div>

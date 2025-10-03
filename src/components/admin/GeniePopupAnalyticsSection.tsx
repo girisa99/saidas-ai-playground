@@ -10,15 +10,17 @@ interface GeniePopupAnalyticsSectionProps {
   genieConversations: any[];
   modelUsage: any[];
   accessRequests: any[];
+  popupStats?: { popupClicks: number; privacyAccepted: number; registrations: number };
 }
 
 export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProps> = ({
   genieConversations,
   modelUsage,
-  accessRequests
+  accessRequests,
+  popupStats
 }) => {
   // Calculate popup-specific stats
-  const popupClicks = genieConversations.length;
+  const popupClicks = popupStats?.popupClicks ?? genieConversations.length;
   const activeConversations = genieConversations.filter(c => c.is_active).length;
   const totalMessages = genieConversations.reduce((sum, c) => 
     sum + (Array.isArray(c.messages) ? c.messages.length : 0), 0
@@ -149,15 +151,20 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
                       <CardContent className="p-4">
                         <div className="text-sm font-medium text-muted-foreground">Total Popup Opens</div>
                         <div className="text-2xl font-bold">{popupClicks}</div>
-                        <div className="text-xs text-muted-foreground mt-1">Unique sessions initiated</div>
+                        <div className="text-xs text-muted-foreground mt-1">Tracked via popup_click events</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="text-sm font-medium text-muted-foreground">Privacy Accepted</div>
+                        <div className="text-2xl font-bold">{popupStats?.privacyAccepted ?? 0}</div>
+                        <div className="text-xs text-muted-foreground mt-1">Users who accepted terms</div>
                       </CardContent>
                     </Card>
                     <Card>
                       <CardContent className="p-4">
                         <div className="text-sm font-medium text-muted-foreground">User Registrations</div>
-                        <div className="text-2xl font-bold">
-                          {genieConversations.filter(c => c.user_email || c.user_name).length}
-                        </div>
+                        <div className="text-2xl font-bold">{popupStats?.registrations ?? 0}</div>
                         <div className="text-xs text-muted-foreground mt-1">Users who provided info</div>
                       </CardContent>
                     </Card>
