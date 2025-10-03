@@ -283,14 +283,31 @@ export const EnhancedGenieDashboard = () => {
 
       // Load visitor analytics summary for the same time period as conversations
       // Use 30 days to match the default conversation filter
-      const { data: visitorAnalyticsData, error: visitorError } = await supabase
+      const { data: visitorAnalyticsRawData, error: visitorError } = await supabase
         .rpc('get_visitor_analytics_summary', { days_back: 7 }); // Match the 7-day filter
 
       if (visitorError) {
         console.error('Error loading visitor analytics:', visitorError);
       }
 
-      console.log('Visitor Analytics Data (7 days):', visitorAnalyticsData);
+      console.log('Visitor Analytics Raw Data (7 days):', visitorAnalyticsRawData);
+
+      // Transform the visitor analytics data to match the expected format for WebsiteAnalyticsSection
+      const visitorAnalyticsData = visitorAnalyticsRawData ? {
+        summary: {
+          total_views: (visitorAnalyticsRawData as any).total_page_views || 0,
+          unique_visitors: (visitorAnalyticsRawData as any).total_visitors || 0,
+          avg_time_on_page_seconds: Math.round((visitorAnalyticsRawData as any).avg_time_on_page || 0),
+          unique_pages: (visitorAnalyticsRawData as any).unique_countries || 0
+        },
+        locations: ((visitorAnalyticsRawData as any).geographic_distribution || []).map((geo: any) => ({
+          country: geo.country || 'Unknown',
+          region: geo.region || geo.city || null,
+          visitor_count: geo.visitors || 0
+        })),
+        top_pages: [], // Not yet available in the current function
+        session_journeys: [] // Not yet available in the current function
+      } : null;
 
       // Set data
       console.log('========== DATA LOADING DEBUG ==========');
@@ -300,6 +317,7 @@ export const EnhancedGenieDashboard = () => {
       console.log('User Profiles loaded:', profilesData?.length || 0, 'records');
       console.log('Knowledge Entries loaded:', knowledgeData?.length || 0, 'records');
       console.log('Model Usage Records:', models.length);
+      console.log('Transformed Visitor Analytics:', visitorAnalyticsData);
       console.log('=========================================');
       
       setAccessRequests(accessRequestsData || []);
