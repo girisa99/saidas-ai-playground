@@ -33,16 +33,14 @@ const AdminDashboard = () => {
       }
       setVisitorAnalytics(visitorData);
 
-      // Load Genie AI popup conversations
-      const { data: genieConvData, error: genieConvError } = await supabase
-        .from('genie_conversations')
-        .select('*')
-        .order('created_at', { ascending: false });
+      // Load Genie AI popup conversations via RPC (bypass RLS)
+      const { data: genieConvJson, error: genieConvError } = await supabase
+        .rpc('get_genie_conversations_overview', { days_back: 7, limit_count: 200 });
 
       if (genieConvError) {
-        console.error('Genie conversations error:', genieConvError);
+        console.error('Genie conversations RPC error:', genieConvError);
       }
-      setGenieConversations(genieConvData || []);
+      setGenieConversations(Array.isArray(genieConvJson) ? genieConvJson : []);
 
       // Load popup analytics via RPC (avoids RLS on raw table)
       const { data: popupStatsData, error: popupStatsErr } = await supabase
@@ -58,36 +56,22 @@ const AdminDashboard = () => {
         });
       }
       
-      // Extract model usage from messages
-      const models: any[] = [];
-      genieConvData?.forEach((conv: any) => {
-        if (conv.messages && Array.isArray(conv.messages)) {
-          conv.messages.forEach((msg: any) => {
-            if (msg.provider && msg.model) {
-              models.push({
-                conversation_id: conv.conversation_id,
-                provider: msg.provider,
-                model: msg.model,
-                timestamp: msg.timestamp,
-                context: conv.context || 'general',
-                session_name: conv.session_name
-              });
-            }
-          });
-        }
-      });
-      setModelUsage(models);
+      // Load model usage via RPC
+      const { data: modelUsageJson, error: modelUsageErr } = await supabase
+        .rpc('get_genie_model_usage', { days_back: 7 });
+      if (modelUsageErr) {
+        console.error('Model usage RPC error:', modelUsageErr);
+      }
+      setModelUsage(Array.isArray(modelUsageJson) ? modelUsageJson : []);
 
-      // Load access requests
-      const { data: accessRequestsData, error: accessRequestsError } = await supabase
-        .from('access_requests')
-        .select('*')
-        .order('requested_at', { ascending: false });
+      // Load access requests via RPC (bypass RLS)
+      const { data: accessRequestsJson, error: accessRequestsError } = await supabase
+        .rpc('get_access_requests_recent', { days_back: 30, limit_count: 200 });
 
       if (accessRequestsError) {
-        console.error('Access requests error:', accessRequestsError);
+        console.error('Access requests RPC error:', accessRequestsError);
       }
-      setAccessRequests(accessRequestsData || []);
+      setAccessRequests(Array.isArray(accessRequestsJson) ? accessRequestsJson : []);
 
     } catch (error) {
       console.error('Error loading dashboard data:', error);

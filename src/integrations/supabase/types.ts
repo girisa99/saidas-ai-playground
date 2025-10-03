@@ -16030,6 +16030,10 @@ export type Database = {
           | { target_role?: string }
         Returns: Json
       }
+      get_access_requests_recent: {
+        Args: { days_back?: number; limit_count?: number }
+        Returns: Json
+      }
       get_complete_schema_info: {
         Args: Record<PropertyKey, never>
         Returns: Json
@@ -16054,7 +16058,19 @@ export type Database = {
           total_size: string
         }[]
       }
+      get_genie_conversations_overview: {
+        Args: { days_back?: number; limit_count?: number }
+        Returns: Json
+      }
+      get_genie_model_usage: {
+        Args: { days_back?: number }
+        Returns: Json
+      }
       get_genie_popup_stats: {
+        Args: { days_back?: number }
+        Returns: Json
+      }
+      get_genie_registration_details: {
         Args: { days_back?: number }
         Returns: Json
       }
@@ -16171,6 +16187,16 @@ export type Database = {
           p_field_changed?: string
           p_new_value?: string
           p_old_value?: string
+        }
+        Returns: undefined
+      }
+      log_genie_popup_event: {
+        Args: {
+          p_context?: string
+          p_event_data: Json
+          p_event_type: string
+          p_ip_address?: string
+          p_user_email?: string
         }
         Returns: undefined
       }

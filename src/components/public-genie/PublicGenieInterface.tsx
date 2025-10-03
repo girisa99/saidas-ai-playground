@@ -537,14 +537,16 @@ Ask me anything to get started, or click below to explore my advanced features!`
           maxTokens: 1000
         });
 
-        if (response) {
-          const personalizedResponse = addPersonalityToResponse(response.content);
-          addMessage({
-            role: 'assistant',
-            content: personalizedResponse,
-            timestamp: new Date().toISOString()
-          });
-        }
+          if (response) {
+            const personalizedResponse = addPersonalityToResponse(response.content);
+            addMessage({
+              role: 'assistant',
+              content: personalizedResponse,
+              timestamp: new Date().toISOString(),
+              provider: response.provider,
+              model: response.model
+            });
+          }
       }
       
       // Randomly change conversation personality to keep it dynamic

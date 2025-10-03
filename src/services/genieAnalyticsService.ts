@@ -35,16 +35,15 @@ export class GenieAnalyticsService {
     return GenieAnalyticsService.instance;
   }
 
-  // Track popup click
   async trackPopupClick(data: PopupClickEvent): Promise<void> {
     try {
-      const { error } = await supabase
-        .from('genie_popup_analytics' as any)
-        .insert({
-          event_type: 'popup_click',
-          event_data: data,
-          created_at: new Date().toISOString()
-        });
+      const { error } = await supabase.rpc('log_genie_popup_event', {
+        p_event_type: 'popup_click',
+        p_event_data: data as any,
+        p_user_email: null,
+        p_context: null,
+        p_ip_address: data.ip_address || null
+      });
 
       if (error) {
         console.error('Failed to track popup click:', error);
@@ -56,17 +55,15 @@ export class GenieAnalyticsService {
     }
   }
 
-  // Track privacy acceptance
   async trackPrivacyAccept(data: PrivacyAcceptEvent): Promise<void> {
     try {
-      const { error } = await supabase
-        .from('genie_popup_analytics' as any)
-        .insert({
-          event_type: 'privacy_accepted',
-          event_data: data,
-          user_email: data.user_email,
-          created_at: new Date().toISOString()
-        });
+      const { error } = await supabase.rpc('log_genie_popup_event', {
+        p_event_type: 'privacy_accepted',
+        p_event_data: data as any,
+        p_user_email: data.user_email,
+        p_context: null,
+        p_ip_address: data.ip_address || null
+      });
 
       if (error) {
         console.error('Failed to track privacy acceptance:', error);
@@ -81,15 +78,13 @@ export class GenieAnalyticsService {
   // Track user registration/subscription
   async trackUserRegistration(data: UserRegistrationEvent): Promise<void> {
     try {
-      const { error } = await supabase
-        .from('genie_popup_analytics' as any)
-        .insert({
-          event_type: 'user_registered',
-          event_data: data,
-          user_email: data.user_email,
-          context: data.context,
-          created_at: new Date().toISOString()
-        });
+      const { error } = await supabase.rpc('log_genie_popup_event', {
+        p_event_type: 'user_registered',
+        p_event_data: data as any,
+        p_user_email: data.user_email,
+        p_context: data.context,
+        p_ip_address: data.ip_address || null
+      });
 
       if (error) {
         console.error('Failed to track user registration:', error);
