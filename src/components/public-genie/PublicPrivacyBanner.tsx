@@ -74,35 +74,35 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
   };
 
   return (
-    <div className="p-6 h-full overflow-y-auto">
-      <div className="space-y-6">
+    <div className="p-4 h-full overflow-y-auto">
+      <div className="space-y-4">
         {/* Privacy & Terms */}
         {step === 'privacy' && (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <Shield className="h-6 w-6 text-primary" />
-              <h2 className="text-xl font-bold">Welcome to Genie AI</h2>
+              <Shield className="h-5 w-5 text-primary" />
+              <h2 className="text-lg font-bold">Welcome to Genie AI</h2>
             </div>
             
-            <Alert>
+            <Alert className="max-h-[400px] overflow-y-auto">
               <Cookie className="h-4 w-4" />
-              <AlertDescription className="text-sm">
-                <strong>Privacy & Terms Agreement:</strong>
-                <ul className="list-disc list-inside mt-3 space-y-2 text-sm">
-                  <li>This is an experimental demonstration of AI capabilities</li>
-                  <li>Conversations may be monitored for quality and safety</li>
-                  <li>AI responses should be verified with experts</li>
-                  <li>Medical advice should be confirmed with healthcare providers</li>
-                  <li>We will send you welcome emails and newsletters (you can unsubscribe anytime)</li>
-                  <li>Rate limits apply (2 conversations per hour, 5 per day)</li>
-                  <li>Extended access available upon request for legitimate use cases</li>
-                  <li>All access requests are reviewed by me personally upon receiving the request at genieaiexperimentationhub@gmail.com</li>
-                  <li>We use minimal cookies to maintain your session</li>
+              <AlertDescription className="text-xs leading-relaxed">
+                <strong className="text-sm">Privacy & Terms Agreement:</strong>
+                <ul className="list-disc list-inside mt-2 space-y-1.5 text-xs">
+                  <li className="leading-tight">Experimental AI demonstration</li>
+                  <li className="leading-tight">Conversations monitored for quality</li>
+                  <li className="leading-tight">Verify AI responses with experts</li>
+                  <li className="leading-tight">Confirm medical advice with providers</li>
+                  <li className="leading-tight">Welcome emails sent (unsubscribe anytime)</li>
+                  <li className="leading-tight">Rate limits: 2/hour, 5/day</li>
+                  <li className="leading-tight">Request extended access for legitimate use</li>
+                  <li className="leading-tight">Requests reviewed at genieaiexperimentationhub@gmail.com</li>
+                  <li className="leading-tight">Minimal cookies for session management</li>
                 </ul>
               </AlertDescription>
             </Alert>
 
-            <Button onClick={handleAcceptTerms} className="w-full">
+            <Button onClick={handleAcceptTerms} className="w-full" size="sm">
               I Accept Terms & Continue
             </Button>
           </div>
@@ -110,54 +110,55 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
 
         {/* User Information */}
         {step === 'info' && (
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-center">Tell us about yourself</h3>
-            <p className="text-sm text-muted-foreground text-center">
-              Skip topic selection - I'll detect your interests and adapt during our conversation!
+          <div className="space-y-3">
+            <h3 className="text-base font-semibold text-center">Tell us about yourself</h3>
+            <p className="text-xs text-muted-foreground text-center">
+              I'll detect your interests and adapt during our conversation!
             </p>
-            <div className="space-y-4">
+            <div className="space-y-3">
               <div>
-                <Label htmlFor="firstName">First Name *</Label>
+                <Label htmlFor="firstName" className="text-xs">First Name *</Label>
                 <Input
                   id="firstName"
                   value={userInfo.firstName}
                   onChange={(e) => setUserInfo(prev => ({ ...prev, firstName: e.target.value }))}
                   placeholder="Enter your first name"
-                  className="mt-1"
+                  className="mt-1 h-9 text-sm"
                 />
               </div>
               <div>
-                <Label htmlFor="lastName">Last Name (Optional)</Label>
+                <Label htmlFor="lastName" className="text-xs">Last Name (Optional)</Label>
                 <Input
                   id="lastName"
                   value={userInfo.lastName || ''}
                   onChange={(e) => setUserInfo(prev => ({ ...prev, lastName: e.target.value }))}
                   placeholder="Enter your last name"
-                  className="mt-1"
+                  className="mt-1 h-9 text-sm"
                 />
               </div>
               <div>
-                <Label htmlFor="email">Email Address *</Label>
+                <Label htmlFor="email" className="text-xs">Email Address *</Label>
                 <Input
                   id="email"
                   type="email"
                   value={userInfo.email}
                   onChange={(e) => setUserInfo(prev => ({ ...prev, email: e.target.value }))}
                   placeholder="Enter your email address"
-                  className="mt-1"
+                  className="mt-1 h-9 text-sm"
                 />
               </div>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setStep('privacy')} className="flex-1">
+              <Button variant="outline" onClick={() => setStep('privacy')} className="flex-1" size="sm">
                 Back
               </Button>
               <Button 
                 onClick={handleSubmit}
                 disabled={!userInfo.firstName || !userInfo.email || !isEmailValid(userInfo.email)}
                 className="flex-1"
+                size="sm"
               >
-                Start Intelligent Chat
+                Start Chat
               </Button>
             </div>
           </div>
