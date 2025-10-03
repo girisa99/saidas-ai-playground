@@ -21,7 +21,8 @@ import { ConfigurationWizard } from './ConfigurationWizard';
 import { SplitScreenRenderer } from './SplitScreenRenderer';
 import { SessionManager } from './SessionManager';
 import { ContextSwitcher } from './ContextSwitcher';
-
+import { InlineContextualSuggestion } from './InlineContextualSuggestion';
+import { conversationIntelligence } from '@/utils/conversationIntelligence';
 import { ConversationLimitModal } from './ConversationLimitModal';
 import { ExperimentationBanner } from './ExperimentationBanner';
 
@@ -150,6 +151,9 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
   const [ipAddress, setIpAddress] = useState<string | null>(null);
   
+  // Contextual suggestions state
+  const [activeSuggestion, setActiveSuggestion] = useState<any>(null);
+  
   // Conversation limit states - explicitly initialized
   const [showLimitModal, setShowLimitModal] = React.useState<boolean>(false);
   const [conversationLimits, setConversationLimits] = React.useState<ConversationLimits | null>(null);
@@ -191,6 +195,21 @@ useEffect(() => {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
   }
 }, [messages.length]);
+
+// Check for contextual suggestions after messages update
+useEffect(() => {
+  if (messages.length === 0 || !userInfo) return;
+  
+  const suggestion = conversationIntelligence.shouldShowSuggestion(
+    messages,
+    context,
+    selectedTopic
+  );
+  
+  if (suggestion) {
+    setActiveSuggestion(suggestion);
+  }
+}, [messages.length, context, selectedTopic, userInfo]);
 
 // Check conversation limits only when user info changes and is available
 useEffect(() => {
@@ -864,8 +883,22 @@ ${conversationSummary.transcript}`
                               )}
                             </div>
                           </div>
-                        ))}
+                          ))}
                         
+                        {/* Inline Contextual Suggestions */}
+                        {activeSuggestion && (
+                          <InlineContextualSuggestion
+                            type={activeSuggestion.type}
+                            message={activeSuggestion.message}
+                            suggestions={activeSuggestion.suggestions}
+                            mood={activeSuggestion.mood}
+                            onSelect={(suggestion) => {
+                              setInputMessage(suggestion);
+                              setActiveSuggestion(null);
+                            }}
+                            onDismiss={() => setActiveSuggestion(null)}
+                          />
+                        )}
                         
                         {isLoading && (
                           <div className="flex items-center space-x-3 p-4 bg-muted/30 rounded-lg my-2">
