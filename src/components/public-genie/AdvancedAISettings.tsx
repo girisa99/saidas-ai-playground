@@ -167,6 +167,7 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
   currentConfig 
 }) => {
   const [config, setConfig] = useState<AIConfig>(currentConfig);
+  const [modelFilter, setModelFilter] = useState<'all' | 'general' | 'slm' | 'vision' | 'healthcare'>('all');
 
   const updateConfig = (updates: Partial<AIConfig>) => {
     const newConfig = { ...config, ...updates };
@@ -175,6 +176,24 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
   };
 
   const selectedModel = modelOptions.find(m => m.id === config.selectedModel);
+  
+  // Filter models based on selected filter
+  const getFilteredModels = () => {
+    switch (modelFilter) {
+      case 'general':
+        return modelOptions.filter(m => m.category === 'General');
+      case 'slm':
+        return modelOptions.filter(m => m.category === 'Efficient');
+      case 'vision':
+        return modelOptions.filter(m => m.category === 'Vision');
+      case 'healthcare':
+        return modelOptions.filter(m => m.category === 'Healthcare');
+      default:
+        return modelOptions;
+    }
+  };
+
+  const filteredModels = getFilteredModels();
 
   return (
     <div className="space-y-4 p-4 max-h-96 overflow-y-auto">
@@ -229,91 +248,80 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
             Model Selection
           </CardTitle>
           <CardDescription className="text-xs">
-            Primary model for responses
+            Filter and select your AI model
           </CardDescription>
         </CardHeader>
-        <CardContent className="pt-0 space-y-2">
+        <CardContent className="pt-0 space-y-3">
+          {/* Model Type Filter */}
+          <div className="flex flex-wrap gap-1">
+            <Button
+              variant={modelFilter === 'all' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setModelFilter('all')}
+              className="h-6 text-xs"
+            >
+              All Models ({modelOptions.length})
+            </Button>
+            <Button
+              variant={modelFilter === 'general' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setModelFilter('general')}
+              className="h-6 text-xs"
+            >
+              LLM+Vision ({modelOptions.filter(m => m.category === 'General').length})
+            </Button>
+            <Button
+              variant={modelFilter === 'slm' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setModelFilter('slm')}
+              className="h-6 text-xs"
+            >
+              Small LM ({modelOptions.filter(m => m.category === 'Efficient').length})
+            </Button>
+            <Button
+              variant={modelFilter === 'vision' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setModelFilter('vision')}
+              className="h-6 text-xs"
+            >
+              Vision ({modelOptions.filter(m => m.category === 'Vision').length})
+            </Button>
+            <Button
+              variant={modelFilter === 'healthcare' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setModelFilter('healthcare')}
+              className="h-6 text-xs"
+            >
+              Healthcare ({modelOptions.filter(m => m.category === 'Healthcare').length})
+            </Button>
+          </div>
+          {/* Model Dropdown */}
           <Select value={config.selectedModel} onValueChange={(value) => updateConfig({ selectedModel: value })}>
             <SelectTrigger className="h-8 bg-background">
               <SelectValue placeholder="Select primary model" />
             </SelectTrigger>
-            <SelectContent className="bg-background border-border z-[100000] max-h-[400px] overflow-y-auto">
-              {/* Group by category */}
-              <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground sticky top-0 bg-background">
-                General Purpose (LLM + Vision)
-              </div>
-              {modelOptions.filter(m => m.category === 'General').map((model) => (
-                <SelectItem key={model.id} value={model.id} className="cursor-pointer pl-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs">{model.name}</span>
-                    <div className="flex gap-1">
-                      <Badge variant="secondary" className="text-[10px] px-1 py-0">
-                        {model.type}
-                      </Badge>
-                      <Badge variant="outline" className="text-[10px] px-1 py-0">
-                        {model.provider}
-                      </Badge>
+            <SelectContent className="bg-background border-border z-[100000] max-h-[300px] overflow-y-auto">
+              {filteredModels.length === 0 ? (
+                <div className="px-2 py-4 text-xs text-center text-muted-foreground">
+                  No models in this category
+                </div>
+              ) : (
+                filteredModels.map((model) => (
+                  <SelectItem key={model.id} value={model.id} className="cursor-pointer">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs">{model.name}</span>
+                      <div className="flex gap-1">
+                        <Badge variant="secondary" className="text-[10px] px-1 py-0">
+                          {model.type}
+                        </Badge>
+                        <Badge variant="outline" className="text-[10px] px-1 py-0">
+                          {model.provider}
+                        </Badge>
+                      </div>
                     </div>
-                  </div>
-                </SelectItem>
-              ))}
-              
-              <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground sticky top-0 bg-background border-t mt-1">
-                Small Language Models (SLM)
-              </div>
-              {modelOptions.filter(m => m.category === 'Efficient').map((model) => (
-                <SelectItem key={model.id} value={model.id} className="cursor-pointer pl-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs">{model.name}</span>
-                    <div className="flex gap-1">
-                      <Badge variant="secondary" className="text-[10px] px-1 py-0">
-                        {model.type}
-                      </Badge>
-                      <Badge variant="outline" className="text-[10px] px-1 py-0">
-                        {model.provider}
-                      </Badge>
-                    </div>
-                  </div>
-                </SelectItem>
-              ))}
-              
-              <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground sticky top-0 bg-background border-t mt-1">
-                Vision Language Models (VLM)
-              </div>
-              {modelOptions.filter(m => m.category === 'Vision').map((model) => (
-                <SelectItem key={model.id} value={model.id} className="cursor-pointer pl-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs">{model.name}</span>
-                    <div className="flex gap-1">
-                      <Badge variant="secondary" className="text-[10px] px-1 py-0">
-                        {model.type}
-                      </Badge>
-                      <Badge variant="outline" className="text-[10px] px-1 py-0">
-                        {model.provider}
-                      </Badge>
-                    </div>
-                  </div>
-                </SelectItem>
-              ))}
-              
-              <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground sticky top-0 bg-background border-t mt-1">
-                Healthcare & Biotech Models
-              </div>
-              {modelOptions.filter(m => m.category === 'Healthcare').map((model) => (
-                <SelectItem key={model.id} value={model.id} className="cursor-pointer pl-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs">{model.name}</span>
-                    <div className="flex gap-1">
-                      <Badge variant="secondary" className="text-[10px] px-1 py-0">
-                        {model.type}
-                      </Badge>
-                      <Badge variant="outline" className="text-[10px] px-1 py-0">
-                        {model.provider}
-                      </Badge>
-                    </div>
-                  </div>
-                </SelectItem>
-              ))}
+                  </SelectItem>
+                ))
+              )}
             </SelectContent>
           </Select>
           {selectedModel && (
