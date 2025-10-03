@@ -770,8 +770,8 @@ ${conversationSummary.transcript}`
           exit={{ opacity: 0, scale: 0.9 }}
           className={`fixed ${isMaximized ? 'inset-4' : isMinimized ? 'bottom-4 right-4 w-80 h-16' : 'bottom-4 right-4 w-96 h-[600px]'} z-[99999]`}
         >
-        <Card className="h-full bg-gradient-to-br from-background to-muted border shadow-2xl">
-          {/* Header */}
+          <Card className="h-full bg-gradient-to-br from-background to-muted border shadow-2xl">
+            {/* Header */}
           <div className="drag-handle flex items-center justify-between p-3 border-b bg-gradient-to-r from-slate-900 to-slate-800 cursor-move">
             <div className="flex items-center gap-2">
               <img src={genieLogoPopup} alt="Genie AI logo" className="h-8 w-auto object-contain drop-shadow" />
@@ -1112,7 +1112,7 @@ ${conversationSummary.transcript}`
                               {aiConfig.mcpEnabled && <Badge variant="outline" className="text-xs">MCP</Badge>}
                             </div>
                           )}
-                         </p>
+                        </p>
                         <Button
                           variant="link"
                           size="sm"
@@ -1151,8 +1151,8 @@ ${conversationSummary.transcript}`
               </Button>
             </div>
           )}
-        </Card>
-      </motion.div>
+          </Card>
+        </motion.div>
       </Draggable>
 
       {/* Conversation Limit Modal */}
