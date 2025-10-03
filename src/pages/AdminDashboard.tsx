@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationHeader } from '@/components/NavigationHeader';
 import { WebsiteAnalyticsSection } from '@/components/admin/WebsiteAnalyticsSection';
 import { GeniePopupAnalyticsSection } from '@/components/admin/GeniePopupAnalyticsSection';
+import { EnhancedGenieDashboard } from '@/components/admin/EnhancedGenieDashboard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -124,9 +125,10 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="website" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="website">Website Analytics</TabsTrigger>
             <TabsTrigger value="genie">Genie AI Popup Analytics</TabsTrigger>
+            <TabsTrigger value="enhanced">Knowledge Base Management</TabsTrigger>
           </TabsList>
 
           <TabsContent value="website">
@@ -141,6 +143,10 @@ const AdminDashboard = () => {
               popupStats={popupStats}
               knowledgeBaseCount={knowledgeBaseCount}
             />
+          </TabsContent>
+
+          <TabsContent value="enhanced">
+            <EnhancedGenieDashboard />
           </TabsContent>
         </Tabs>
       </div>
