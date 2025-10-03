@@ -21,10 +21,10 @@ import { ConfigurationWizard } from './ConfigurationWizard';
 import { SplitScreenRenderer } from './SplitScreenRenderer';
 import { SessionManager } from './SessionManager';
 import { ContextSwitcher } from './ContextSwitcher';
-import { ContextualTopicSuggester } from './ContextualTopicSuggester';
+
 import { ConversationLimitModal } from './ConversationLimitModal';
 import { ExperimentationBanner } from './ExperimentationBanner';
-import { ContactCenterOptimizer } from './ContactCenterOptimizer';
+
 import { TechnologyKnowledgeBase, getTechnologyKnowledge } from '../comprehensive-knowledge/TechnologyKnowledgeBase';
 import { HealthcareKnowledgeBase, getReimbursementInfo } from './HealthcareKnowledgeBase';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
@@ -843,19 +843,6 @@ ${conversationSummary.transcript}`
                           </div>
                         ))}
                         
-                        {/* Contact Center Intelligence (shows after meaningful conversation) */}
-                        {messages.length >= 4 && (
-                          <ContactCenterOptimizer
-                            conversationHistory={messages}
-                            onOptimizationSuggestion={(suggestion) => {
-                              addMessage({
-                                role: 'assistant',
-                                content: suggestion,
-                                timestamp: new Date().toISOString()
-                              });
-                            }}
-                          />
-                        )}
                         
                         {isLoading && (
                           <div className="flex items-center space-x-3 p-4 bg-muted/30 rounded-lg my-2">
@@ -874,33 +861,6 @@ ${conversationSummary.transcript}`
                       </div>
                     )}
                   </div>
-
-                   {/* Contextual Topic Suggestions */}
-                   {hasStartedConversation && !showAdvancedSettings && (
-                     <ContextualTopicSuggester
-                       conversationHistory={messages}
-                       currentContext={context}
-                       onTopicSelect={(response, isFollowUp) => {
-                         if (isFollowUp) {
-                           addMessage({
-                             role: 'assistant',
-                             content: response,
-                             timestamp: new Date().toISOString()
-                           });
-                         } else {
-                           setSelectedTopic(response);
-                         }
-                       }}
-                       onContextSwitch={(newContext) => {
-                         setContext(newContext);
-                         addMessage({
-                           role: 'assistant',
-                           content: `Switched to ${newContext} context! 🔄 I'll now provide suggestions and insights tailored to ${newContext}. What would you like to explore?`,
-                           timestamp: new Date().toISOString()
-                         });
-                       }}
-                     />
-                   )}
 
                    {/* Capabilities Prompt */}
                    {showCapabilities && !context && (
