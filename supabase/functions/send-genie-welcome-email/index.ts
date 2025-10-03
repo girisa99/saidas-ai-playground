@@ -82,7 +82,7 @@ const handler = async (req: Request): Promise<Response> => {
   <div class="container">
     <div class="header">
       <div class="logo">
-        <img src="${siteUrl}/genie-logo-main.png" width="70" height="70" alt="Genie AI" style="display: block;" />
+        <img src="${siteUrl}/genie-email-logo.png" width="100" height="100" alt="Genie AI" style="display: block;" />
       </div>
       <h1 class="header-title">Welcome to Genie AI! 🧞‍♂️</h1>
     </div>

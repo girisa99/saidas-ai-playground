@@ -131,7 +131,7 @@ const handler = async (req: Request): Promise<Response> => {
 <body>
   <div class="container">
     <div class="logo-section">
-      <img src="${siteUrl}/genie-logo.png" width="120" height="120" alt="Genie AI Logo" class="logo" />
+      <img src="${siteUrl}/genie-email-logo.png" width="150" height="150" alt="Genie AI Logo" class="logo" />
     </div>
     <div class="content">
       <h1 class="h1">Welcome to Genie AI Experimentation Hub! 🧞‍♂️</h1>
@@ -236,7 +236,7 @@ const handler = async (req: Request): Promise<Response> => {
 <body>
   <div class="container">
     <div class="header">
-      <img src="${siteUrl}/genie-logo.png" width="60" height="60" alt="Genie AI Logo" class="logo" />
+      <img src="${siteUrl}/genie-email-logo.png" width="80" height="80" alt="Genie AI Logo" class="logo" />
       <h1 class="title">New Newsletter Subscription! 🎉</h1>
       <p class="subtitle">Someone just joined your AI community</p>
     </div>
@@ -274,7 +274,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send welcome email to subscriber
     const { data: welcomeEmailResult, error: welcomeEmailError } = await resend.emails.send({
-      from: "Genie AI Experimentation Hub <noreply@lovableproject.com>",
+      from: "Genie AI Experimentation Hub <newsletter@genieaiexperimentationhub.tech>",
       to: [email],
       subject: "Welcome to Genie AI Experimentation Hub! 🧞‍♂️",
       html: welcomeEmailHtml,
@@ -282,7 +282,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send notification email to admin
     const { data: adminEmailResult, error: adminEmailError } = await resend.emails.send({
-      from: "Genie AI Experimentation Hub <noreply@lovableproject.com>",
+      from: "Genie AI Experimentation Hub <notifications@genieaiexperimentationhub.tech>",
       to: ["genieaiexperimentationhub@gmail.com"],
       subject: "New Newsletter Subscription - Genie AI Hub",
       html: adminNotificationHtml,

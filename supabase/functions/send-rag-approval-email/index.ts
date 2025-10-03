@@ -27,7 +27,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Subject: ${subject}`);
 
     const emailResponse = await resend.emails.send({
-      from: "Genie AI Hub <onboarding@resend.dev>",
+      from: "Genie AI Hub <rag@genieaiexperimentationhub.tech>",
       to: [to_email],
       subject: subject,
       html: html_content,

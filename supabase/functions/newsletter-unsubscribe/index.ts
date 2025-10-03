@@ -118,7 +118,7 @@ const handler = async (req: Request): Promise<Response> => {
 <body>
   <div class="container">
     <div class="logo-section">
-      <img src="${siteUrl}/genie-logo.png" width="80" height="80" alt="Genie AI Logo" class="logo" />
+      <img src="${siteUrl}/genie-email-logo.png" width="100" height="100" alt="Genie AI Logo" class="logo" />
     </div>
     <div class="content">
       <h1 class="h1">You've Been Unsubscribed</h1>
@@ -174,7 +174,7 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     const { error: emailError } = await resend.emails.send({
-      from: "Genie AI Experimentation Hub <noreply@lovableproject.com>",
+      from: "Genie AI Experimentation Hub <newsletter@genieaiexperimentationhub.tech>",
       to: [email],
       subject: "You've been unsubscribed - Genie AI Hub",
       html: unsubscribeConfirmationHtml,
@@ -238,7 +238,7 @@ const handler = async (req: Request): Promise<Response> => {
       </head>
       <body>
         <div class="container">
-          <img src="${siteUrl}/genie-logo.png" alt="Genie AI Logo" class="logo" />
+          <img src="${siteUrl}/genie-email-logo.png" alt="Genie AI Logo" class="logo" />
           <h1>Successfully Unsubscribed</h1>
           <div class="success">✅ You've been unsubscribed from our newsletter</div>
           <p>We're sorry to see you go! You have been successfully unsubscribed from the Genie AI Experimentation Hub newsletter.</p>

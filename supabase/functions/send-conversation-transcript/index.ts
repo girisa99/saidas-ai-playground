@@ -175,7 +175,7 @@ serve(async (req) => {
 
     // Send transcript email to both user and admin
     const emailResponse = await resend.emails.send({
-      from: 'Genie AI Hub <genieaiexperimentationhub@gmail.com>',
+      from: 'Genie AI Hub <transcripts@genieaiexperimentationhub.tech>',
       to: [userInfo.email, 'genieaiexperimentationhub@gmail.com'],
       subject: `Your Genie AI Conversation Transcript - ${context}/${topic}`,
       html: emailHtml,
