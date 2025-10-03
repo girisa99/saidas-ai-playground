@@ -39,6 +39,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { VisitorAnalyticsDashboard } from './VisitorAnalyticsDashboard';
 
 interface ConversationRecord {
   id: string;
@@ -976,15 +977,16 @@ export const EnhancedGenieDashboard = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-8">
+        <TabsList className="grid w-full grid-cols-9">
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="context">Context Analytics</TabsTrigger>
-          <TabsTrigger value="models">Model Usage</TabsTrigger>
+          <TabsTrigger value="visitors">Visitor Analytics</TabsTrigger>
+          <TabsTrigger value="context">Context</TabsTrigger>
+          <TabsTrigger value="models">Models</TabsTrigger>
           <TabsTrigger value="performance">Performance</TabsTrigger>
-          <TabsTrigger value="knowledge">Knowledge Base</TabsTrigger>
-          <TabsTrigger value="users">Users & Sessions</TabsTrigger>
+          <TabsTrigger value="knowledge">Knowledge</TabsTrigger>
+          <TabsTrigger value="users">Users</TabsTrigger>
           <TabsTrigger value="conversations">Conversations</TabsTrigger>
-          <TabsTrigger value="access">Access Requests</TabsTrigger>
+          <TabsTrigger value="access">Access</TabsTrigger>
         </TabsList>
 
         {/* Overview Tab */}
@@ -1121,6 +1123,11 @@ export const EnhancedGenieDashboard = () => {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        {/* Visitor Analytics Tab */}
+        <TabsContent value="visitors" className="space-y-6">
+          <VisitorAnalyticsDashboard />
         </TabsContent>
 
         {/* Context Analytics Tab */}

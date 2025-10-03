@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CookieConsent } from "@/components/CookieConsent";
 import { FloatingGenie } from "@/components/FloatingGenie";
+import { useVisitorTracking } from "@/hooks/useVisitorTracking";
 import { lazy, Suspense } from "react";
 
 // Lazy load pages for better performance
@@ -32,14 +33,11 @@ const PageLoader = () => (
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <Toaster />
-    <Sonner />
-    <CookieConsent />
-    
-    <BrowserRouter>
-      {/* Floating Genie AI Assistant */}
+const AppContent = () => {
+  useVisitorTracking();
+  
+  return (
+    <>
       <FloatingGenie />
       <Suspense fallback={<PageLoader />}>
         <Routes>
@@ -64,6 +62,17 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
+    </>
+  );
+};
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <Toaster />
+    <Sonner />
+    <CookieConsent />
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   </QueryClientProvider>
 );

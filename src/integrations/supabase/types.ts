@@ -13864,6 +13864,51 @@ export type Database = {
         }
         Relationships: []
       }
+      visitor_analytics: {
+        Row: {
+          created_at: string
+          id: string
+          ip_address: unknown | null
+          metadata: Json | null
+          page_path: string
+          page_title: string | null
+          referrer: string | null
+          session_id: string
+          time_on_page_seconds: number | null
+          user_agent: string | null
+          user_id: string | null
+          visit_timestamp: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          metadata?: Json | null
+          page_path: string
+          page_title?: string | null
+          referrer?: string | null
+          session_id: string
+          time_on_page_seconds?: number | null
+          user_agent?: string | null
+          user_id?: string | null
+          visit_timestamp?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          metadata?: Json | null
+          page_path?: string
+          page_title?: string | null
+          referrer?: string | null
+          session_id?: string
+          time_on_page_seconds?: number | null
+          user_agent?: string | null
+          user_id?: string | null
+          visit_timestamp?: string
+        }
+        Relationships: []
+      }
       voice_analytics_events: {
         Row: {
           agent_id: string | null
@@ -15991,6 +16036,10 @@ export type Database = {
         Returns: {
           role_name: string
         }[]
+      }
+      get_visitor_analytics_summary: {
+        Args: { days_back?: number }
+        Returns: Json
       }
       has_permission: {
         Args: { permission_name: string; user_id: string }
