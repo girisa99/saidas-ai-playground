@@ -404,33 +404,27 @@ Ask me anything to get started, or click below to explore my advanced features!`
 
     // Start conversation if this is the first message
     if (!conversationLimitService.isConversationActive()) {
-      try {
-        const startResult = await conversationLimitService.startConversation(
-          context!,
-          userInfo?.email,
-          userInfo?.firstName
-        );
+      const startResult = await conversationLimitService.startConversation(
+        context!,
+        userInfo?.email,
+        userInfo?.firstName
+      ).catch(err => {
+        console.error('Error starting conversation:', err);
+        return { allowed: true, session_id: undefined, message: undefined, limits: undefined }; // Allow conversation on error
+      });
 
-        if (!startResult.allowed) {
-          setShowLimitModal(true);
-          setConversationLimits(startResult.limits || null);
-          setIsConversationAllowed(false);
-          return;
-        }
-      } catch (error) {
-        console.error('Error starting conversation:', error);
-        // Continue anyway - don't block the user from chatting
-        // Just log the error for debugging
+      if (startResult && !startResult.allowed) {
+        setShowLimitModal(true);
+        setConversationLimits(startResult.limits || null);
+        setIsConversationAllowed(false);
+        return;
       }
     }
 
-    // Update message count (but don't block if it fails)
-    try {
-      await conversationLimitService.updateMessageCount();
-    } catch (error) {
-      console.error('Error updating message count:', error);
-      // Continue anyway - don't block the conversation
-    }
+    // Update message count
+    conversationLimitService.updateMessageCount().catch(err => {
+      console.error('Error updating message count:', err);
+    });
 
     const userMessage = inputMessage.trim();
     setInputMessage('');
