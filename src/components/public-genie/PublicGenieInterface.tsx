@@ -778,9 +778,13 @@ ${conversationSummary.transcript}`
                <Button
                  variant="ghost"
                  size="sm"
-                 onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}
+                 onClick={() => {
+                   setShowAdvancedSettings(!showAdvancedSettings);
+                   // If capabilities is showing, close it
+                   if (showCapabilities) setShowCapabilities(false);
+                 }}
                  className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
-                 title="AI Settings"
+                 title="AI Configuration & Settings"
                >
                  <Settings className="h-3.5 w-3.5" />
                </Button>
@@ -848,8 +852,16 @@ ${conversationSummary.transcript}`
                   {/* Advanced Settings Panel */}
                   {showAdvancedSettings && (
                     <div className="border-b bg-muted/10 relative">
-                      <div className="flex items-center justify-between p-2 border-b">
-                        <h3 className="text-sm font-medium">AI Configuration</h3>
+                      <div className="flex items-center justify-between p-2 border-b bg-gradient-to-r from-primary/5 to-primary/10">
+                        <div>
+                          <h3 className="text-sm font-medium flex items-center gap-2">
+                            <Settings className="h-4 w-4 text-primary" />
+                            AI Configuration & Settings
+                          </h3>
+                          <p className="text-xs text-muted-foreground mt-0.5">
+                            Switch between single or multi-model mode
+                          </p>
+                        </div>
                         <Button
                           variant="ghost"
                           size="sm"
@@ -1040,16 +1052,6 @@ ${conversationSummary.transcript}`
                             className="text-xs h-6"
                           >
                             {context === 'technology' ? '🚀' : '🏥'} {selectedTopic || 'Choose Topic'}
-                          </Button>
-                        )}
-                        {!context && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setShowCapabilities(!showCapabilities)}
-                            className="text-xs h-6"
-                          >
-                            ⚙️ Configure AI
                           </Button>
                         )}
                       </div>
