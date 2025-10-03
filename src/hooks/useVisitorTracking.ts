@@ -127,7 +127,6 @@ export const useVisitorTracking = () => {
       if (currentPath.current) {
         const timeOnPage = Math.floor((Date.now() - startTime.current) / 1000);
         
-        // Use sendBeacon for reliable tracking on page unload
         const data = {
           session_id: getSessionId(),
           page_path: currentPath.current,
