@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minimize2, Maximize2, MessageCircle, Send, User, Bot, AlertTriangle, Move, Users, Settings, Brain } from 'lucide-react';
+import { X, Minimize2, Maximize2, MessageCircle, Send, User, Bot, AlertTriangle, Move, Users, Settings, Brain, ImagePlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -22,6 +22,8 @@ import { SplitScreenRenderer } from './SplitScreenRenderer';
 import { SessionManager } from './SessionManager';
 import { ContextSwitcher } from './ContextSwitcher';
 import { TopicSuggestionPopover } from './TopicSuggestionPopover';
+import { MedicalImageUploader, UploadedImage } from './MedicalImageUploader';
+import { VisionModelIndicator } from './VisionModelIndicator';
 import { conversationIntelligence } from '@/utils/conversationIntelligence';
 import { ConversationLimitModal } from './ConversationLimitModal';
 import { ExperimentationBanner } from './ExperimentationBanner';
@@ -182,7 +184,11 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
     secondaryModel: 'claude-3-haiku',
     splitScreenEnabled: false,
     contextualSuggestions: true,
+    visionEnabled: false,
+    medicalImageMode: false,
   });
+  const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
+  const [showImageUploader, setShowImageUploader] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
@@ -881,6 +887,27 @@ ${conversationSummary.transcript}`
 
                   {/* Messages */}
                   <div className={`flex-1 overflow-y-auto p-4 space-y-4 ${showAdvancedSettings ? 'max-h-96' : ''}`}>
+                    {/* Vision Model Indicator */}
+                    {aiConfig.visionEnabled && (
+                      <VisionModelIndicator
+                        isVisionEnabled={aiConfig.visionEnabled}
+                        isMedicalMode={aiConfig.medicalImageMode || false}
+                        modelName={aiConfig.selectedModel}
+                        className="mb-4"
+                      />
+                    )}
+
+                    {/* Image Uploader */}
+                    {showImageUploader && aiConfig.visionEnabled && (
+                      <div className="mb-4">
+                        <MedicalImageUploader
+                          onImageUpload={setUploadedImages}
+                          medicalMode={aiConfig.medicalImageMode || false}
+                          maxFiles={5}
+                        />
+                      </div>
+                    )}
+
                     {aiConfig.splitScreenEnabled && aiConfig.mode === 'multi' ? (
                       <SplitScreenRenderer
                         messages={[...messages, ...splitResponses.primary, ...splitResponses.secondary]}
@@ -898,49 +925,44 @@ ${conversationSummary.transcript}`
                                 ? 'bg-primary text-primary-foreground' 
                                 : 'bg-accent'
                             }`}>
-                              {message.role === 'assistant' ? (
-                                <RichResponseRenderer content={message.content} />
-                              ) : (
-                                <p className="text-sm">{message.content}</p>
+                              {message.role === 'user' && (
+                                <div className="flex items-center gap-2 mb-1">
+                                  <User className="h-3 w-3" />
+                                  <span className="text-xs font-medium">
+                                    {userInfo?.firstName || 'You'}
+                                  </span>
+                                </div>
                               )}
+                              {message.role === 'assistant' && (
+                                <div className="flex items-center gap-2 mb-1">
+                                  <img src={genieLogoPopup} alt="Genie" className="h-5 w-5 rounded-full" />
+                                  <span className="text-xs font-medium">Genie AI</span>
+                                </div>
+                              )}
+                              <div className="prose prose-sm max-w-none">
+                                {message.role === 'assistant' ? (
+                                  <RichResponseRenderer content={message.content} />
+                                ) : (
+                                  <p className="text-sm">{message.content}</p>
+                                )}
+                              </div>
                             </div>
                           </div>
-                          ))}
-                        
-              {/* Topic Suggestion Popover */}
-              {context && (
-                <TopicSuggestionPopover
-                  isOpen={showTopicPopover}
-                  onClose={() => setShowTopicPopover(false)}
-                  suggestions={popoverSuggestions}
-                  context={context}
-                  mood={popoverMood}
-                  onTopicSelect={(topic) => {
-                    setInputMessage(`Tell me about ${topic}`);
-                  }}
-                  onContextSwitch={() => {
-                    setContext(context === 'healthcare' ? 'technology' : 'healthcare');
-                  }}
-                />
-              )}
-                        
+                        ))}
                         {isLoading && (
-                          <div className="flex items-center space-x-3 p-4 bg-muted/30 rounded-lg my-2">
-                            <img 
-                              src={genieThinking} 
-                              alt="Genie thinking" 
-                              className="w-12 h-12 animate-pulse"
-                            />
-                            <div className="flex flex-col">
-                              <span className="text-sm font-medium text-foreground">Genie is thinking...</span>
-                              <span className="text-xs text-muted-foreground">Analyzing your question with AI magic ✨</span>
+                          <div className="flex justify-start">
+                            <div className="bg-accent p-3 rounded-lg max-w-[80%]">
+                              <div className="flex items-center gap-2 mb-1">
+                                <img src={genieThinking} alt="Genie" className="h-5 w-5 rounded-full animate-pulse" />
+                                <span className="text-xs font-medium">Genie AI</span>
+                              </div>
+                              <TypingIndicator />
                             </div>
                           </div>
                         )}
                         <div ref={messagesEndRef} />
                       </div>
                     )}
-                  </div>
 
                    {/* Capabilities Prompt */}
                    {showCapabilities && !context && (
@@ -1023,23 +1045,42 @@ ${conversationSummary.transcript}`
                          />
                        </div>
                      )}
-                    <div className="flex gap-2">
-                      <Input
-                        value={inputMessage}
-                        onChange={(e) => setInputMessage(e.target.value)}
-                        placeholder={selectedTopic ? `Ask me about ${selectedTopic}...` : "Ask me anything..."}
-                        onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                        disabled={isLoading}
-                        className="flex-1"
-                      />
-                      <Button
-                        onClick={handleSendMessage}
-                        disabled={isLoading || !inputMessage.trim()}
-                        size="sm"
-                      >
-                        <Send className="h-4 w-4" />
-                      </Button>
-                    </div>
+                     <div className="flex gap-2">
+                       {/* Image Upload Button */}
+                       {aiConfig.visionEnabled && (
+                         <Button
+                           variant="outline"
+                           size="sm"
+                           onClick={() => setShowImageUploader(!showImageUploader)}
+                           className="h-9 w-9 p-0"
+                           title={showImageUploader ? "Hide image uploader" : "Upload images"}
+                         >
+                           <ImagePlus className="h-4 w-4" />
+                         </Button>
+                       )}
+
+                       <Input
+                         value={inputMessage}
+                         onChange={(e) => setInputMessage(e.target.value)}
+                         placeholder={
+                           aiConfig.medicalImageMode && aiConfig.visionEnabled
+                             ? "Upload medical images or ask a question..."
+                             : selectedTopic 
+                               ? `Ask me about ${selectedTopic}...` 
+                               : "Ask me anything..."
+                         }
+                         onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                         disabled={isLoading}
+                         className="flex-1"
+                       />
+                       <Button
+                         onClick={handleSendMessage}
+                         disabled={isLoading || !inputMessage.trim()}
+                         size="sm"
+                       >
+                         <Send className="h-4 w-4" />
+                       </Button>
+                     </div>
                     
                     {/* Context and Topic Switcher */}
                     <div className="flex justify-between items-center mt-2">
