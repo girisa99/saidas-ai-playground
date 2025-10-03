@@ -296,56 +296,170 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
               <CardDescription>User interactions with the Genie AI popup</CardDescription>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-[400px]">
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="text-sm font-medium text-muted-foreground">Total Popup Opens</div>
-                        <div className="text-2xl font-bold">{popupClicks}</div>
-                        <div className="text-xs text-muted-foreground mt-1">Tracked via popup_click events</div>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="text-sm font-medium text-muted-foreground">Privacy Accepted</div>
-                        <div className="text-2xl font-bold">{popupStats?.privacyAccepted ?? 0}</div>
-                        <div className="text-xs text-muted-foreground mt-1">Users who accepted terms</div>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="text-sm font-medium text-muted-foreground">User Registrations</div>
-                        <div className="text-2xl font-bold">{popupStats?.registrations ?? 0}</div>
-                        <div className="text-xs text-muted-foreground mt-1">Users who provided info</div>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="text-sm font-medium text-muted-foreground">Time Spent (Avg)</div>
-                        <div className="text-2xl font-bold">
-                          {(() => {
-                            const completedConvs = genieConversations.filter(c => c.session_end && c.session_start);
-                            if (completedConvs.length === 0) return '0';
-                            const totalDuration = completedConvs.reduce((sum, c) => {
-                              const duration = new Date(c.session_end).getTime() - new Date(c.session_start).getTime();
-                              return sum + duration;
-                            }, 0);
-                            return (totalDuration / completedConvs.length / 60000).toFixed(1);
-                          })()}min
-                        </div>
-                        <div className="text-xs text-muted-foreground mt-1">Average conversation length</div>
-                      </CardContent>
-                    </Card>
+              <ScrollArea className="h-[500px]">
+                <div className="space-y-6">
+                  {/* Engagement Overview */}
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3">Engagement Funnel</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <Card className="border-l-4 border-l-blue-500">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-xs text-muted-foreground">Popup Opens</div>
+                              <div className="text-3xl font-bold mt-1">{popupClicks}</div>
+                              <div className="text-xs text-green-600 mt-1">100%</div>
+                            </div>
+                            <MessageSquare className="h-8 w-8 text-blue-500" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <Card className="border-l-4 border-l-purple-500">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-xs text-muted-foreground">Privacy Accepted</div>
+                              <div className="text-3xl font-bold mt-1">{popupStats?.privacyAccepted ?? 0}</div>
+                              <div className="text-xs text-green-600 mt-1">
+                                {popupClicks > 0 ? Math.round((popupStats?.privacyAccepted ?? 0) / popupClicks * 100) : 0}%
+                              </div>
+                            </div>
+                            <Shield className="h-8 w-8 text-purple-500" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <Card className="border-l-4 border-l-green-500">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-xs text-muted-foreground">Registrations</div>
+                              <div className="text-3xl font-bold mt-1">{popupStats?.registrations ?? 0}</div>
+                              <div className="text-xs text-green-600 mt-1">
+                                {popupClicks > 0 ? Math.round((popupStats?.registrations ?? 0) / popupClicks * 100) : 0}%
+                              </div>
+                            </div>
+                            <Users className="h-8 w-8 text-green-500" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
                   </div>
 
-                  <div className="mt-6">
-                    <h3 className="font-semibold mb-3">Recent Conversations</h3>
-                    {genieConversations.length === 0 && popupEvents.length > 0 ? (
+                  {/* Time Metrics */}
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3">Time & Activity Metrics</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-xs text-muted-foreground">Avg Time Spent</div>
+                              <div className="text-2xl font-bold mt-1">
+                                {(() => {
+                                  const completedConvs = genieConversations.filter(c => c.session_end && c.session_start);
+                                  if (completedConvs.length === 0) return '0';
+                                  const totalDuration = completedConvs.reduce((sum, c) => {
+                                    const duration = new Date(c.session_end).getTime() - new Date(c.session_start).getTime();
+                                    return sum + duration;
+                                  }, 0);
+                                  return (totalDuration / completedConvs.length / 60000).toFixed(1);
+                                })()}min
+                              </div>
+                            </div>
+                            <Clock className="h-8 w-8 text-orange-500" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-xs text-muted-foreground">Active Now</div>
+                              <div className="text-2xl font-bold mt-1 text-green-600">{activeConversations}</div>
+                            </div>
+                            <Activity className="h-8 w-8 text-green-500" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </div>
+
+                  {/* User Analytics */}
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3">User Analytics</h3>
+                    {popupEvents.length > 0 ? (
+                      <div className="space-y-4">
+                        {/* Per-user conversation counts */}
+                        <Card>
+                          <CardContent className="p-4">
+                            <h4 className="text-sm font-medium mb-3">Users by Activity</h4>
+                            <Table>
+                              <TableHeader>
+                                <TableRow>
+                                  <TableHead>User</TableHead>
+                                  <TableHead>Email</TableHead>
+                                  <TableHead>Events</TableHead>
+                                  <TableHead>Last Activity</TableHead>
+                                  <TableHead>Location</TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {(() => {
+                                  const userMap = new Map<string, any>();
+                                  popupEvents.forEach((event: any) => {
+                                    const email = event.user_email || 'Anonymous';
+                                    if (!userMap.has(email)) {
+                                      userMap.set(email, {
+                                        email,
+                                        name: event.event_data?.user_name || 'N/A',
+                                        count: 0,
+                                        lastActivity: event.created_at,
+                                        location: event.event_data?.geo_location || null
+                                      });
+                                    }
+                                    const user = userMap.get(email);
+                                    user.count++;
+                                    if (new Date(event.created_at) > new Date(user.lastActivity)) {
+                                      user.lastActivity = event.created_at;
+                                      user.location = event.event_data?.geo_location || user.location;
+                                    }
+                                  });
+                                  return Array.from(userMap.values())
+                                    .sort((a, b) => b.count - a.count)
+                                    .slice(0, 10);
+                                })().map((user: any, idx: number) => (
+                                  <TableRow key={idx}>
+                                    <TableCell className="font-medium">{user.name}</TableCell>
+                                    <TableCell className="text-sm">{user.email}</TableCell>
+                                    <TableCell>
+                                      <Badge variant="outline">{user.count} events</Badge>
+                                    </TableCell>
+                                    <TableCell className="text-xs text-muted-foreground">
+                                      {new Date(user.lastActivity).toLocaleString()}
+                                    </TableCell>
+                                    <TableCell className="text-xs">
+                                      {user.location ? (
+                                        <div className="flex items-center gap-1">
+                                          <MapPin className="h-3 w-3" />
+                                          {user.location.city && `${user.location.city}, `}
+                                          {user.location.country || 'Unknown'}
+                                        </div>
+                                      ) : (
+                                        <span className="text-muted-foreground">Unknown</span>
+                                      )}
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    ) : (
                       <Card className="p-6">
                         <div className="text-center space-y-4">
                           <p className="text-sm text-muted-foreground">
-                            No active conversations found in genie_conversations table, but we detected {popupEvents.length} popup events:
+                            No popup events tracked yet
                           </p>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <Card className="p-4">
@@ -395,7 +509,13 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
                           </div>
                         </div>
                       </Card>
-                    ) : (
+                    )}
+                  </div>
+
+                  {/* Recent Conversations */}
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3">Recent Conversations</h3>
+                    {genieConversations.length > 0 ? (
                     <Table>
                       <TableHeader>
                         <TableRow>
@@ -441,6 +561,10 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
                         })}
                       </TableBody>
                     </Table>
+                    ) : (
+                      <div className="text-center py-8 text-muted-foreground">
+                        No conversations found
+                      </div>
                     )}
                   </div>
                 </div>

@@ -1,10 +1,19 @@
 import { supabase } from '@/integrations/supabase/client';
 
+interface GeoLocation {
+  country?: string;
+  region?: string;
+  city?: string;
+  latitude?: number;
+  longitude?: number;
+}
+
 interface PopupClickEvent {
   ip_address?: string;
   user_agent?: string;
   page_url: string;
   timestamp: string;
+  geo_location?: GeoLocation;
 }
 
 interface PrivacyAcceptEvent {
@@ -12,6 +21,7 @@ interface PrivacyAcceptEvent {
   user_name: string;
   ip_address?: string;
   timestamp: string;
+  geo_location?: GeoLocation;
 }
 
 interface UserRegistrationEvent {
@@ -20,6 +30,7 @@ interface UserRegistrationEvent {
   context: string;
   ip_address?: string;
   timestamp: string;
+  geo_location?: GeoLocation;
 }
 
 export class GenieAnalyticsService {
@@ -35,11 +46,42 @@ export class GenieAnalyticsService {
     return GenieAnalyticsService.instance;
   }
 
+  // Fetch geolocation data from IP address
+  async getGeoLocation(ipAddress?: string): Promise<GeoLocation | null> {
+    if (!ipAddress) return null;
+    
+    try {
+      const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
+      if (!response.ok) return null;
+      
+      const data = await response.json();
+      return {
+        country: data.country_name,
+        region: data.region,
+        city: data.city,
+        latitude: data.latitude,
+        longitude: data.longitude
+      };
+    } catch (error) {
+      console.error('Failed to fetch geolocation:', error);
+      return null;
+    }
+  }
+
   async trackPopupClick(data: PopupClickEvent): Promise<void> {
     try {
+      // Add geolocation if IP address is provided
+      let enrichedData = { ...data };
+      if (data.ip_address && !data.geo_location) {
+        const geoLocation = await this.getGeoLocation(data.ip_address);
+        if (geoLocation) {
+          enrichedData.geo_location = geoLocation;
+        }
+      }
+
       const { error } = await supabase.rpc('log_genie_popup_event', {
         p_event_type: 'popup_click',
-        p_event_data: data as any,
+        p_event_data: enrichedData as any,
         p_user_email: null,
         p_context: null,
         p_ip_address: data.ip_address || null
@@ -57,9 +99,18 @@ export class GenieAnalyticsService {
 
   async trackPrivacyAccept(data: PrivacyAcceptEvent): Promise<void> {
     try {
+      // Add geolocation if IP address is provided
+      let enrichedData = { ...data };
+      if (data.ip_address && !data.geo_location) {
+        const geoLocation = await this.getGeoLocation(data.ip_address);
+        if (geoLocation) {
+          enrichedData.geo_location = geoLocation;
+        }
+      }
+
       const { error } = await supabase.rpc('log_genie_popup_event', {
         p_event_type: 'privacy_accepted',
-        p_event_data: data as any,
+        p_event_data: enrichedData as any,
         p_user_email: data.user_email,
         p_context: null,
         p_ip_address: data.ip_address || null
@@ -78,9 +129,18 @@ export class GenieAnalyticsService {
   // Track user registration/subscription
   async trackUserRegistration(data: UserRegistrationEvent): Promise<void> {
     try {
+      // Add geolocation if IP address is provided
+      let enrichedData = { ...data };
+      if (data.ip_address && !data.geo_location) {
+        const geoLocation = await this.getGeoLocation(data.ip_address);
+        if (geoLocation) {
+          enrichedData.geo_location = geoLocation;
+        }
+      }
+
       const { error } = await supabase.rpc('log_genie_popup_event', {
         p_event_type: 'user_registered',
-        p_event_data: data as any,
+        p_event_data: enrichedData as any,
         p_user_email: data.user_email,
         p_context: data.context,
         p_ip_address: data.ip_address || null
