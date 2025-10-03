@@ -44,24 +44,18 @@ const AdminDashboard = () => {
       }
       setGenieConversations(genieConvData || []);
 
-      // Load popup analytics events for drop-off tracking
-      const { data: popupEvents, error: popupErr } = await supabase
-        .from('genie_popup_analytics' as any)
-        .select('event_type, created_at')
-        .order('created_at', { ascending: false });
-      if (popupErr) {
-        console.error('Popup analytics error:', popupErr);
+      // Load popup analytics via RPC (avoids RLS on raw table)
+      const { data: popupStatsData, error: popupStatsErr } = await supabase
+        .rpc('get_genie_popup_stats', { days_back: 7 });
+      if (popupStatsErr) {
+        console.error('Popup stats RPC error:', popupStatsErr);
       } else {
-        const stats = (popupEvents || []).reduce(
-          (acc: any, ev: any) => {
-            if (ev.event_type === 'popup_click') acc.popupClicks += 1;
-            if (ev.event_type === 'privacy_accepted') acc.privacyAccepted += 1;
-            if (ev.event_type === 'user_registered') acc.registrations += 1;
-            return acc;
-          },
-          { popupClicks: 0, privacyAccepted: 0, registrations: 0 }
-        );
-        setPopupStats(stats);
+        const stats: any = popupStatsData || {};
+        setPopupStats({
+          popupClicks: Number(stats.popupClicks ?? 0),
+          privacyAccepted: Number(stats.privacyAccepted ?? 0),
+          registrations: Number(stats.registrations ?? 0),
+        });
       }
       
       // Extract model usage from messages
