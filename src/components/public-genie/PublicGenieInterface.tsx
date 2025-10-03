@@ -32,6 +32,7 @@ import { CapabilitiesPrompt, TopicSuggestions } from './ConversationUtils';
 import { NewsletterService } from '@/services/newsletterService';
 import { ContactService } from '@/services/publicContactService';
 import { conversationLimitService, type ConversationLimits } from '@/services/conversationLimitService';
+import { genieConversationService } from '@/services/genieConversationService';
 import genieLogoPopup from '@/assets/genie-logo-popup.png';
 import genieThinking from '@/assets/genie-thinking.png';
 
@@ -213,6 +214,9 @@ useEffect(() => {
     if (conversationLimitService.isConversationActive()) {
       conversationLimitService.endConversation();
     }
+    if (genieConversationService.isConversationActive()) {
+      genieConversationService.endConversation();
+    }
   };
 }, []);
 
@@ -251,6 +255,24 @@ useEffect(() => {
     } catch (e: any) {
       console.error('Subscription error', e);
       toast({ title: 'Subscription failed', description: 'Please try again later.', variant: 'destructive' });
+    }
+    
+    // Start tracking Genie conversation in database
+    try {
+      const result = await genieConversationService.startConversation({
+        userEmail: info.email,
+        userName: info.firstName + (info.lastName ? ` ${info.lastName}` : ''),
+        context: context || 'general',
+        ipAddress: ipAddress || undefined
+      });
+      
+      if (result.success) {
+        console.log('✅ Genie conversation tracking started:', result.conversationId);
+      } else {
+        console.warn('⚠️ Failed to start conversation tracking:', result.error);
+      }
+    } catch (error) {
+      console.error('Failed to initialize conversation tracking:', error);
     }
     
     // Add capabilities introduction message

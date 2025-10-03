@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { genieConversationService } from '@/services/genieConversationService';
 
 interface ConversationMessage {
   role: 'user' | 'assistant';
@@ -30,10 +31,19 @@ export const useConversationState = () => {
   });
 
   const addMessage = useCallback((message: ConversationMessage) => {
-    setState(prev => ({
-      ...prev,
-      messages: [...prev.messages, message]
-    }));
+    setState(prev => {
+      const newMessages = [...prev.messages, message];
+      
+      // Auto-save to database if conversation is active
+      if (genieConversationService.isConversationActive()) {
+        genieConversationService.updateConversation(newMessages);
+      }
+      
+      return {
+        ...prev,
+        messages: newMessages
+      };
+    });
   }, []);
 
   const updateConversationConfig = useCallback((config: ConversationConfig) => {
