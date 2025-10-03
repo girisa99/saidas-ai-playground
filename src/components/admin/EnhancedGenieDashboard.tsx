@@ -246,6 +246,13 @@ export const EnhancedGenieDashboard = () => {
       console.log('Visitor Analytics Data (7 days):', visitorAnalyticsData);
 
       // Set data
+      console.log('========== DATA LOADING DEBUG ==========');
+      console.log('Conversations loaded:', conversationsData?.length || 0, 'records');
+      console.log('Access Requests loaded:', accessRequestsData?.length || 0, 'records');
+      console.log('User Profiles loaded:', profilesData?.length || 0, 'records');
+      console.log('Knowledge Entries loaded:', knowledgeData?.length || 0, 'records');
+      console.log('=========================================');
+      
       setConversations(conversationsData || []);
       setAccessRequests(accessRequestsData || []);
       setUserProfiles(profilesData || []);
@@ -1019,7 +1026,16 @@ export const EnhancedGenieDashboard = () => {
         </Button>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+      <Tabs value={activeTab} onValueChange={(value) => {
+        console.log('Tab changed to:', value);
+        console.log('Current data counts:', {
+          conversations: conversations.length,
+          userProfiles: userProfiles.length,
+          accessRequests: accessRequests.length,
+          knowledgeEntries: knowledgeEntries.length
+        });
+        setActiveTab(value);
+      }} className="space-y-4">
         <TabsList className="grid w-full grid-cols-9">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="visitors">Visitor Analytics</TabsTrigger>
@@ -2168,20 +2184,28 @@ export const EnhancedGenieDashboard = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {userProfiles.map((user) => (
-                        <TableRow key={user.id}>
-                          <TableCell>
-                            {user.first_name && user.last_name 
-                              ? `${user.first_name} ${user.last_name}` 
-                              : 'Not provided'
-                            }
-                          </TableCell>
-                          <TableCell>{user.email}</TableCell>
-                          <TableCell className="text-xs">
-                            {formatDate(user.created_at)}
+                      {userProfiles.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={3} className="text-center text-muted-foreground py-8">
+                            No registered users found. User profiles will appear here once users register.
                           </TableCell>
                         </TableRow>
-                      ))}
+                      ) : (
+                        userProfiles.map((user) => (
+                          <TableRow key={user.id}>
+                            <TableCell>
+                              {user.first_name && user.last_name 
+                                ? `${user.first_name} ${user.last_name}` 
+                                : 'Not provided'
+                              }
+                            </TableCell>
+                            <TableCell>{user.email}</TableCell>
+                            <TableCell className="text-xs">
+                              {formatDate(user.created_at)}
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
                     </TableBody>
                   </Table>
                 </ScrollArea>
@@ -2274,7 +2298,14 @@ export const EnhancedGenieDashboard = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {conversations.map((conv) => {
+                    {conversations.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
+                          No conversations found. Conversations with Genie AI will appear here.
+                        </TableCell>
+                      </TableRow>
+                    ) : (
+                      conversations.map((conv) => {
                       const sessionDuration = !conv.is_active ? 
                         Math.round((new Date(conv.updated_at).getTime() - new Date(conv.created_at).getTime()) / 60000) 
                         : null;
@@ -2334,7 +2365,8 @@ export const EnhancedGenieDashboard = () => {
                           </TableCell>
                         </TableRow>
                       );
-                    })}
+                      })
+                    )}
                   </TableBody>
                 </Table>
               </ScrollArea>
@@ -2363,7 +2395,14 @@ export const EnhancedGenieDashboard = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {accessRequests.map((request) => (
+                    {accessRequests.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
+                          No access requests found. Access requests will appear here when users request access.
+                        </TableCell>
+                      </TableRow>
+                    ) : (
+                      accessRequests.map((request) => (
                       <TableRow key={request.id}>
                         <TableCell>
                           <div className="space-y-1">
@@ -2404,7 +2443,8 @@ export const EnhancedGenieDashboard = () => {
                           {request.admin_notes || 'No notes'}
                         </TableCell>
                       </TableRow>
-                    ))}
+                      ))
+                    )}
                   </TableBody>
                 </Table>
               </ScrollArea>
