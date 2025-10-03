@@ -7,24 +7,8 @@ interface RichResponseRendererProps {
 }
 
 export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ content }) => {
-  // Enhanced content processing for richer responses
-  const processContent = (rawContent: string): string => {
-    return rawContent
-      // Convert emojis to larger display
-      .replace(/([💡🚀🎯🔥⚡🤖🧞‍♂️✨🩺💊🏥🫀💉🔬])/g, '<span class="text-lg inline-block">$1</span>')
-      // Add visual separators for sections
-      .replace(/---/g, '\n<div class="border-t border-muted my-4"></div>\n')
-      // Enhance bullet points
-      .replace(/^• /gm, '🔹 ')
-      // Add call-out boxes for important info
-      .replace(/\*\*Important:\*\*(.*?)(?=\n\n|\n$|$)/gs, '<div class="bg-yellow-50 dark:bg-yellow-950/20 border-l-4 border-yellow-400 p-3 my-2 rounded-r"><strong>💡 Important:</strong>$1</div>')
-      // Add success boxes
-      .replace(/\*\*Success:\*\*(.*?)(?=\n\n|\n$|$)/gs, '<div class="bg-green-50 dark:bg-green-950/20 border-l-4 border-green-400 p-3 my-2 rounded-r"><strong>✅ Success:</strong>$1</div>')
-      // Add warning boxes
-      .replace(/\*\*Warning:\*\*(.*?)(?=\n\n|\n$|$)/gs, '<div class="bg-red-50 dark:bg-red-950/20 border-l-4 border-red-400 p-3 my-2 rounded-r"><strong>⚠️ Warning:</strong>$1</div>');
-  };
-
-  const enhancedContent = processContent(content);
+  // Clean content - just enhance bullet points, no HTML injection
+  const enhancedContent = content.replace(/^• /gm, '🔹 ');
 
   return (
     <div className="prose prose-sm max-w-none dark:prose-invert">
@@ -93,14 +77,15 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
           td: ({ node, ...props }) => (
             <td className="px-3 py-2 border-b border-muted/30" {...props} />
           ),
-          // Custom components for enhanced content
-          div: ({ node, ...props }) => {
-            const className = props.className as string;
-            if (className?.includes('bg-yellow-50') || className?.includes('bg-green-50') || className?.includes('bg-red-50')) {
-              return <div {...props} />;
-            }
-            return <div {...props} />;
-          }
+          p: ({ node, ...props }) => (
+            <p className="my-2 leading-relaxed" {...props} />
+          ),
+          strong: ({ node, ...props }) => (
+            <strong className="font-semibold text-foreground" {...props} />
+          ),
+          em: ({ node, ...props }) => (
+            <em className="italic text-muted-foreground" {...props} />
+          )
         }}
       >
         {enhancedContent}
