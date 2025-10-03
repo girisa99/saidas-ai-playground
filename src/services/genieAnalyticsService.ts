@@ -73,27 +73,44 @@ export class GenieAnalyticsService {
 
   async trackPopupClick(data: PopupClickEvent): Promise<void> {
     try {
-      // Add geolocation enrichment (fallbacks if IP missing)
-      let enrichedData = { ...data };
-      if (!data.geo_location) {
-        const geoLocation = await this.getGeoLocation(data.ip_address);
-        if (geoLocation) {
-          enrichedData.geo_location = geoLocation;
+      // Ensure we have IP address - fetch if not provided
+      let ipAddress = data.ip_address;
+      if (!ipAddress) {
+        try {
+          const ipResponse = await fetch('https://api.ipify.org?format=json');
+          const ipData = await ipResponse.json();
+          ipAddress = ipData.ip;
+        } catch (err) {
+          console.warn('Could not fetch IP address:', err);
         }
       }
+
+      // Fetch geolocation if we have IP and don't have geo data
+      let geoLocation = data.geo_location;
+      if (!geoLocation && ipAddress) {
+        console.log('[Popup Click] Fetching geolocation for IP:', ipAddress);
+        geoLocation = await this.getGeoLocation(ipAddress);
+        console.log('[Popup Click] Geolocation result:', geoLocation);
+      }
+
+      const enrichedData = { 
+        ...data, 
+        ip_address: ipAddress,
+        geo_location: geoLocation 
+      };
 
       const { error } = await supabase.rpc('log_genie_popup_event', {
         p_event_type: 'popup_click',
         p_event_data: enrichedData as any,
         p_user_email: null,
         p_context: null,
-        p_ip_address: data.ip_address || null
+        p_ip_address: ipAddress || null
       });
 
       if (error) {
         console.error('Failed to track popup click:', error);
       } else {
-        console.log('✅ Popup click tracked');
+        console.log('✅ Popup click tracked with geo:', geoLocation ? `${geoLocation.city}, ${geoLocation.country}` : 'no location');
       }
     } catch (error) {
       console.error('Error tracking popup click:', error);
@@ -102,27 +119,44 @@ export class GenieAnalyticsService {
 
   async trackPrivacyAccept(data: PrivacyAcceptEvent): Promise<void> {
     try {
-      // Add geolocation enrichment (fallbacks if IP missing)
-      let enrichedData = { ...data };
-      if (!data.geo_location) {
-        const geoLocation = await this.getGeoLocation(data.ip_address);
-        if (geoLocation) {
-          enrichedData.geo_location = geoLocation;
+      // Ensure we have IP address - fetch if not provided
+      let ipAddress = data.ip_address;
+      if (!ipAddress) {
+        try {
+          const ipResponse = await fetch('https://api.ipify.org?format=json');
+          const ipData = await ipResponse.json();
+          ipAddress = ipData.ip;
+        } catch (err) {
+          console.warn('Could not fetch IP address:', err);
         }
       }
+
+      // Fetch geolocation if we have IP and don't have geo data
+      let geoLocation = data.geo_location;
+      if (!geoLocation && ipAddress) {
+        console.log('[Privacy Accept] Fetching geolocation for IP:', ipAddress);
+        geoLocation = await this.getGeoLocation(ipAddress);
+        console.log('[Privacy Accept] Geolocation result:', geoLocation);
+      }
+
+      const enrichedData = { 
+        ...data, 
+        ip_address: ipAddress,
+        geo_location: geoLocation 
+      };
 
       const { error } = await supabase.rpc('log_genie_popup_event', {
         p_event_type: 'privacy_accepted',
         p_event_data: enrichedData as any,
         p_user_email: data.user_email,
         p_context: null,
-        p_ip_address: data.ip_address || null
+        p_ip_address: ipAddress || null
       });
 
       if (error) {
         console.error('Failed to track privacy acceptance:', error);
       } else {
-        console.log('✅ Privacy acceptance tracked');
+        console.log('✅ Privacy acceptance tracked with geo:', geoLocation ? `${geoLocation.city}, ${geoLocation.country}` : 'no location');
       }
     } catch (error) {
       console.error('Error tracking privacy acceptance:', error);
@@ -132,27 +166,44 @@ export class GenieAnalyticsService {
   // Track user registration/subscription
   async trackUserRegistration(data: UserRegistrationEvent): Promise<void> {
     try {
-      // Add geolocation enrichment (fallbacks if IP missing)
-      let enrichedData = { ...data };
-      if (!data.geo_location) {
-        const geoLocation = await this.getGeoLocation(data.ip_address);
-        if (geoLocation) {
-          enrichedData.geo_location = geoLocation;
+      // Ensure we have IP address - fetch if not provided
+      let ipAddress = data.ip_address;
+      if (!ipAddress) {
+        try {
+          const ipResponse = await fetch('https://api.ipify.org?format=json');
+          const ipData = await ipResponse.json();
+          ipAddress = ipData.ip;
+        } catch (err) {
+          console.warn('Could not fetch IP address:', err);
         }
       }
+
+      // Fetch geolocation if we have IP and don't have geo data
+      let geoLocation = data.geo_location;
+      if (!geoLocation && ipAddress) {
+        console.log('[User Registration] Fetching geolocation for IP:', ipAddress);
+        geoLocation = await this.getGeoLocation(ipAddress);
+        console.log('[User Registration] Geolocation result:', geoLocation);
+      }
+
+      const enrichedData = { 
+        ...data, 
+        ip_address: ipAddress,
+        geo_location: geoLocation 
+      };
 
       const { error } = await supabase.rpc('log_genie_popup_event', {
         p_event_type: 'user_registered',
         p_event_data: enrichedData as any,
         p_user_email: data.user_email,
         p_context: data.context,
-        p_ip_address: data.ip_address || null
+        p_ip_address: ipAddress || null
       });
 
       if (error) {
         console.error('Failed to track user registration:', error);
       } else {
-        console.log('✅ User registration tracked');
+        console.log('✅ User registration tracked with geo:', geoLocation ? `${geoLocation.city}, ${geoLocation.country}` : 'no location');
       }
     } catch (error) {
       console.error('Error tracking user registration:', error);
