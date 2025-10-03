@@ -25,13 +25,36 @@ export interface AIConfig {
 }
 
 const modelOptions = [
-  { id: 'gpt-4o-mini', name: 'GPT-4o Mini', type: 'LLM', provider: 'OpenAI' },
-  { id: 'gpt-4o', name: 'GPT-4o', type: 'LLM', provider: 'OpenAI' },
-  { id: 'claude-3-haiku', name: 'Claude 3 Haiku', type: 'LLM', provider: 'Anthropic' },
-  { id: 'claude-3-sonnet', name: 'Claude 3 Sonnet', type: 'LLM', provider: 'Anthropic' },
-  { id: 'gemini-pro', name: 'Gemini Pro', type: 'LLM', provider: 'Google' },
-  { id: 'phi-3-mini', name: 'Phi-3 Mini', type: 'SLM', provider: 'Microsoft' },
-  { id: 'llama-3.1-8b', name: 'Llama 3.1 8B', type: 'SLM', provider: 'Meta' },
+  // Large Language Models (LLMs)
+  { id: 'gpt-4o', name: 'GPT-4o', type: 'LLM+Vision', provider: 'OpenAI', category: 'General' },
+  { id: 'gpt-4o-mini', name: 'GPT-4o Mini', type: 'LLM+Vision', provider: 'OpenAI', category: 'General' },
+  { id: 'claude-3-opus', name: 'Claude 3 Opus', type: 'LLM+Vision', provider: 'Anthropic', category: 'General' },
+  { id: 'claude-3-sonnet', name: 'Claude 3 Sonnet', type: 'LLM+Vision', provider: 'Anthropic', category: 'General' },
+  { id: 'claude-3-haiku', name: 'Claude 3 Haiku', type: 'LLM+Vision', provider: 'Anthropic', category: 'General' },
+  { id: 'gemini-pro-vision', name: 'Gemini Pro Vision', type: 'LLM+Vision', provider: 'Google', category: 'General' },
+  { id: 'gemini-pro', name: 'Gemini Pro', type: 'LLM', provider: 'Google', category: 'General' },
+  
+  // Small Language Models (SLMs)
+  { id: 'phi-3.5-mini', name: 'Phi-3.5 Mini', type: 'SLM', provider: 'Microsoft', category: 'Efficient' },
+  { id: 'phi-3-mini', name: 'Phi-3 Mini', type: 'SLM', provider: 'Microsoft', category: 'Efficient' },
+  { id: 'llama-3.1-8b', name: 'Llama 3.1 8B', type: 'SLM', provider: 'Meta', category: 'Efficient' },
+  { id: 'mistral-7b', name: 'Mistral 7B', type: 'SLM', provider: 'Mistral', category: 'Efficient' },
+  { id: 'gemma-7b', name: 'Gemma 7B', type: 'SLM', provider: 'Google', category: 'Efficient' },
+  { id: 'qwen-7b', name: 'Qwen 7B', type: 'SLM', provider: 'Alibaba', category: 'Efficient' },
+  
+  // Vision Language Models (VLMs)
+  { id: 'llava-1.6', name: 'LLaVA 1.6', type: 'VLM', provider: 'LAION', category: 'Vision' },
+  { id: 'cogvlm', name: 'CogVLM', type: 'VLM', provider: 'Tsinghua', category: 'Vision' },
+  { id: 'paligemma', name: 'PaliGemma', type: 'VLM', provider: 'Google', category: 'Vision' },
+  
+  // Biotech & Healthcare Models
+  { id: 'biogpt', name: 'BioGPT', type: 'Biotech', provider: 'Microsoft', category: 'Healthcare' },
+  { id: 'med-palm-2', name: 'Med-PaLM 2', type: 'Medical', provider: 'Google', category: 'Healthcare' },
+  { id: 'clinical-bert', name: 'Clinical BERT', type: 'Medical', provider: 'MIT', category: 'Healthcare' },
+  { id: 'bioclinical-bert', name: 'BioClinical BERT', type: 'Medical', provider: 'NCBI', category: 'Healthcare' },
+  { id: 'pubmedbert', name: 'PubMedBERT', type: 'Biotech', provider: 'NIH', category: 'Healthcare' },
+  { id: 'galactica-6.7b', name: 'Galactica 6.7B', type: 'Scientific', provider: 'Meta', category: 'Healthcare' },
+  { id: 'biomistral-7b', name: 'BioMistral 7B', type: 'Medical', provider: 'Mistral', category: 'Healthcare' },
 ];
 
 export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({ 
@@ -109,9 +132,70 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
             <SelectTrigger className="h-8 bg-background">
               <SelectValue placeholder="Select primary model" />
             </SelectTrigger>
-            <SelectContent className="bg-background border-border z-[100000] max-h-[300px]">
-              {modelOptions.map((model) => (
-                <SelectItem key={model.id} value={model.id} className="cursor-pointer">
+            <SelectContent className="bg-background border-border z-[100000] max-h-[400px] overflow-y-auto">
+              {/* Group by category */}
+              <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground sticky top-0 bg-background">
+                General Purpose (LLM + Vision)
+              </div>
+              {modelOptions.filter(m => m.category === 'General').map((model) => (
+                <SelectItem key={model.id} value={model.id} className="cursor-pointer pl-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs">{model.name}</span>
+                    <div className="flex gap-1">
+                      <Badge variant="secondary" className="text-[10px] px-1 py-0">
+                        {model.type}
+                      </Badge>
+                      <Badge variant="outline" className="text-[10px] px-1 py-0">
+                        {model.provider}
+                      </Badge>
+                    </div>
+                  </div>
+                </SelectItem>
+              ))}
+              
+              <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground sticky top-0 bg-background border-t mt-1">
+                Small Language Models (SLM)
+              </div>
+              {modelOptions.filter(m => m.category === 'Efficient').map((model) => (
+                <SelectItem key={model.id} value={model.id} className="cursor-pointer pl-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs">{model.name}</span>
+                    <div className="flex gap-1">
+                      <Badge variant="secondary" className="text-[10px] px-1 py-0">
+                        {model.type}
+                      </Badge>
+                      <Badge variant="outline" className="text-[10px] px-1 py-0">
+                        {model.provider}
+                      </Badge>
+                    </div>
+                  </div>
+                </SelectItem>
+              ))}
+              
+              <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground sticky top-0 bg-background border-t mt-1">
+                Vision Language Models (VLM)
+              </div>
+              {modelOptions.filter(m => m.category === 'Vision').map((model) => (
+                <SelectItem key={model.id} value={model.id} className="cursor-pointer pl-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs">{model.name}</span>
+                    <div className="flex gap-1">
+                      <Badge variant="secondary" className="text-[10px] px-1 py-0">
+                        {model.type}
+                      </Badge>
+                      <Badge variant="outline" className="text-[10px] px-1 py-0">
+                        {model.provider}
+                      </Badge>
+                    </div>
+                  </div>
+                </SelectItem>
+              ))}
+              
+              <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground sticky top-0 bg-background border-t mt-1">
+                Healthcare & Biotech Models
+              </div>
+              {modelOptions.filter(m => m.category === 'Healthcare').map((model) => (
+                <SelectItem key={model.id} value={model.id} className="cursor-pointer pl-4">
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-xs">{model.name}</span>
                     <div className="flex gap-1">
