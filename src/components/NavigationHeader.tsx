@@ -33,9 +33,9 @@ export const NavigationHeader = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-lg border-b border-border shadow-sm overflow-hidden">
-      <div className="w-full max-w-none px-2 sm:px-4 lg:px-6">
-        <div className="flex h-14 sm:h-16 items-center justify-between gap-2 max-w-full overflow-hidden">{/* Mobile-optimized height */}
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-lg border-b border-border shadow-sm">
+      <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+        <div className="flex h-14 sm:h-16 items-center justify-between gap-2">{/* Mobile-optimized height */}
           {/* Logo & Brand - Left aligned, flexible width */}
           <Link to="/" className="enterprise-logo-container group min-w-fit flex-shrink-0 mr-4 sm:mr-6 lg:mr-8 xl:mr-10">
             <div className="relative flex-shrink-0">
@@ -79,8 +79,8 @@ export const NavigationHeader = () => {
           </Link>
 
           {/* Desktop Navigation - Center, takes available space */}
-          <nav className="hidden md:flex items-center justify-center flex-1 min-w-0 px-4 lg:px-6">
-            <div className="flex items-center justify-center space-x-1 w-full">
+          <nav className="hidden lg:flex items-center justify-center flex-1 min-w-0 px-2">
+            <div className="flex items-center justify-center gap-1 flex-wrap">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = isActivePath(item.to);
@@ -103,14 +103,15 @@ export const NavigationHeader = () => {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`flex items-center gap-1 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-200 whitespace-nowrap ${
+                    className={`flex items-center gap-1 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 whitespace-nowrap ${
                       isActive
                         ? 'bg-primary text-primary-foreground shadow-md'
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                     }`}
                   >
-                    <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span className="inline text-xs">{responsiveLabel.full}</span>
+                    <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span className="hidden xl:inline text-xs">{responsiveLabel.full}</span>
+                    <span className="xl:hidden text-xs">{responsiveLabel.short}</span>
                   </Link>
                 );
               })}
@@ -118,7 +119,7 @@ export const NavigationHeader = () => {
           </nav>
 
           {/* Desktop Actions - Right aligned, responsive sizing */}
-          <div className="hidden md:flex items-center space-x-1 xl:space-x-2 flex-shrink-0 min-w-0">
+          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2 flex-shrink-0">
             {/* Search - Hidden on smaller desktop screens */}
             <div className="hidden xl:block relative">
               <SearchBar />
@@ -142,7 +143,7 @@ export const NavigationHeader = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="md:hidden p-2 flex-shrink-0"
+            className="lg:hidden p-2 flex-shrink-0"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
@@ -155,7 +156,7 @@ export const NavigationHeader = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-lg">
+          <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-lg">
             <div className="px-4 py-6 space-y-6">
               {/* Mobile Search */}
               <div className="relative">
