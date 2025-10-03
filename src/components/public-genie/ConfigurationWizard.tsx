@@ -57,7 +57,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
   };
 
   const renderStep1 = () => (
-    <div className="space-y-6">
+      <div className="space-y-4">
       <div className="text-center space-y-2">
         <Brain className="h-12 w-12 text-primary mx-auto" />
         <h3 className="text-lg font-semibold">Choose Your AI Mode</h3>
@@ -117,7 +117,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
   );
 
   const renderStep2 = () => (
-    <div className="space-y-6">
+      <div className="space-y-4">
       <div className="text-center space-y-2">
         <Settings className="h-12 w-12 text-primary mx-auto" />
         <h3 className="text-lg font-semibold">Select AI Models</h3>
@@ -191,7 +191,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
   );
 
   const renderStep3 = () => (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="text-center space-y-2">
         <Layers className="h-12 w-12 text-primary mx-auto" />
         <h3 className="text-lg font-semibold">Advanced Features</h3>
@@ -276,7 +276,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="max-w-md w-full h-[85vh] max-h-[85vh] overflow-hidden flex flex-col z-[100001]">
+      <DialogContent className="max-w-sm sm:max-w-md w-full h-[80vh] sm:h-[85vh] max-h-[85vh] overflow-hidden flex flex-col z-[100001]">
         <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <span>Genie AI Configuration</span>
@@ -290,7 +290,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
           {step === 3 && renderStep3()}
         </div>
 
-        <DialogFooter className="flex-shrink-0 flex justify-between border-t pt-4 mt-4">
+        <DialogFooter className="sticky bottom-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex-shrink-0 flex justify-between border-t px-2 py-3 mt-0">
           <div className="flex gap-2">
             <Button variant="outline" onClick={onCancel}>
               Cancel
