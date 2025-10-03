@@ -842,7 +842,7 @@ ${conversationSummary.transcript}`
                   />
                 </div>
               ) : (
-                <>
+                <React.Fragment>
                   {/* Welcome Back Message for Returning Users */}
                   {userInfo && messages.length === 0 && (
                     <div className="p-4 bg-primary/10 rounded-lg border border-primary/20 mx-4 mt-4">
@@ -1012,10 +1012,12 @@ ${conversationSummary.transcript}`
                        onContinue={() => setShowSessionManager(false)}
                        showControls={hasStartedConversation}
                      />
-                   )}
+                    )}
 
-                   {/* Input */}
-                   <div className="p-4 border-t bg-background/50">
+                    </div>
+
+                    {/* Input */}
+                    <div className="p-4 border-t bg-background/50">
                      {/* Context Switcher */}
                      {hasStartedConversation && (
                        <div className="mb-3">
@@ -1124,7 +1126,7 @@ ${conversationSummary.transcript}`
                       </div>
                     </div>
                   </div>
-                </>
+                </React.Fragment>
               )}
             </div>
           )}
