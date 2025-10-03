@@ -84,12 +84,23 @@ const AdminDashboard = () => {
           const sinceIso = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
           const { data: vaRows, error: vaErr } = await supabase
             .from('visitor_analytics')
-            .select('session_id,country,region,page_path,page_title,time_on_page_seconds,visit_timestamp')
-            .gte('visit_timestamp', sinceIso)
-            .order('visit_timestamp', { ascending: true })
+            .select('session_id,country,region,page_path,page_title,time_on_page_seconds,visit_timestamp,created_at')
+            .or(`visit_timestamp.gte.${sinceIso},created_at.gte.${sinceIso}`)
+            .order('visit_timestamp', { ascending: true, nullsFirst: true })
             .limit(5000);
 
-          if (!vaErr && Array.isArray(vaRows)) {
+          // If still empty, try a broader fallback (last 2000 records overall)
+          let rows = vaRows || [];
+          if ((!rows || rows.length === 0) && !vaErr) {
+            const { data: vaRowsAll, error: vaErrAll } = await supabase
+              .from('visitor_analytics')
+              .select('session_id,country,region,page_path,page_title,time_on_page_seconds,visit_timestamp,created_at')
+              .order('created_at', { ascending: false })
+              .limit(2000);
+            if (!vaErrAll && Array.isArray(vaRowsAll)) rows = vaRowsAll;
+          }
+
+          if (Array.isArray(rows)) {
             // Derive Top Pages
             if ((transformedVisitorData.top_pages?.length ?? 0) === 0) {
               const pageCountMap = new Map<string, { page_path: string; page_title: string; view_count: number }>();
