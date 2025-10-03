@@ -32,7 +32,7 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-sm sm:max-w-md md:max-w-2xl w-full h-[85vh] max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <div className="flex items-center space-x-3">
             <div className={`p-2 rounded-full ${getContextColor()} text-white`}>
@@ -49,7 +49,7 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
           </div>
         </DialogHeader>
 
-        <div className="space-y-6">
+        <div className="flex-1 overflow-y-auto px-2 sm:px-0 space-y-4">
           {/* Current Usage */}
           <Card className="p-4 bg-muted/30">
             <div className="flex items-center space-x-2 mb-3">
@@ -224,13 +224,12 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
               Limits reset automatically every hour
             </div>
           )}
+        </div>
 
-          {/* Action Buttons */}
-          <div className="flex justify-end pt-4 border-t">
-            <Button onClick={onClose} className="min-w-[100px]">
-              Understood
-            </Button>
-          </div>
+        <div className="sticky bottom-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t px-2 py-3 mt-0 flex justify-end">
+          <Button onClick={onClose} className="min-w-[100px]">
+            Understood
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
