@@ -9,10 +9,13 @@ import { Brain, Database, Network, Settings2, Cpu, Users, Eye, AlertTriangle, Ex
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { genieAnalyticsService } from '@/services/genieAnalyticsService';
 
 interface AdvancedAISettingsProps {
   onConfigChange: (config: AIConfig) => void;
   currentConfig: AIConfig;
+  userEmail?: string;
+  context?: string;
 }
 
 export interface AIConfig {
@@ -165,7 +168,9 @@ type ModelOption = typeof modelOptions[0];
 
 export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({ 
   onConfigChange, 
-  currentConfig 
+  currentConfig,
+  userEmail,
+  context = 'healthcare'
 }) => {
   const [config, setConfig] = useState<AIConfig>(currentConfig);
   const [modelFilter, setModelFilter] = useState<'all' | 'general' | 'slm' | 'vision' | 'healthcare'>('all');
@@ -174,6 +179,33 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
     const newConfig = { ...config, ...updates };
     setConfig(newConfig);
     onConfigChange(newConfig);
+
+    // Track vision feature toggles
+    if (userEmail) {
+      if (updates.visionEnabled !== undefined && updates.visionEnabled !== config.visionEnabled) {
+        genieAnalyticsService.trackVisionFeature({
+          user_email: userEmail,
+          feature_type: 'vision_enabled',
+          context,
+          metadata: {
+            model_name: newConfig.selectedModel
+          },
+          timestamp: new Date().toISOString()
+        });
+      }
+
+      if (updates.medicalImageMode !== undefined && updates.medicalImageMode !== config.medicalImageMode) {
+        genieAnalyticsService.trackVisionFeature({
+          user_email: userEmail,
+          feature_type: 'medical_mode_enabled',
+          context,
+          metadata: {
+            model_name: newConfig.selectedModel
+          },
+          timestamp: new Date().toISOString()
+        });
+      }
+    }
   };
 
   const selectedModel = modelOptions.find(m => m.id === config.selectedModel);

@@ -33,6 +33,23 @@ interface UserRegistrationEvent {
   geo_location?: GeoLocation;
 }
 
+interface VisionFeatureEvent {
+  user_email: string;
+  feature_type: 'vision_enabled' | 'medical_mode_enabled' | 'image_uploaded' | 'dicom_processed';
+  context: string;
+  metadata?: {
+    model_name?: string;
+    image_count?: number;
+    image_type?: string;
+    file_size?: number;
+    has_phi?: boolean;
+    dicom_modality?: string;
+  };
+  ip_address?: string;
+  timestamp: string;
+  geo_location?: GeoLocation;
+}
+
 export class GenieAnalyticsService {
   private static instance: GenieAnalyticsService;
   private sessionId: string | null = null;
@@ -207,6 +224,51 @@ export class GenieAnalyticsService {
       }
     } catch (error) {
       console.error('Error tracking user registration:', error);
+    }
+  }
+
+  // Track vision feature usage
+  async trackVisionFeature(data: VisionFeatureEvent): Promise<void> {
+    try {
+      let ipAddress = data.ip_address;
+      if (!ipAddress) {
+        try {
+          const ipResponse = await fetch('https://api.ipify.org?format=json');
+          const ipData = await ipResponse.json();
+          ipAddress = ipData.ip;
+        } catch (err) {
+          console.warn('Could not fetch IP address:', err);
+        }
+      }
+
+      let geoLocation = data.geo_location;
+      if (!geoLocation && ipAddress) {
+        console.log('[Vision Feature] Fetching geolocation for IP:', ipAddress);
+        geoLocation = await this.getGeoLocation(ipAddress);
+        console.log('[Vision Feature] Geolocation result:', geoLocation);
+      }
+
+      const enrichedData = { 
+        ...data, 
+        ip_address: ipAddress,
+        geo_location: geoLocation 
+      };
+
+      const { error } = await supabase.rpc('log_genie_popup_event', {
+        p_event_type: data.feature_type,
+        p_event_data: enrichedData as any,
+        p_user_email: data.user_email,
+        p_context: data.context,
+        p_ip_address: ipAddress || null
+      });
+
+      if (error) {
+        console.error('Failed to track vision feature:', error);
+      } else {
+        console.log(`✅ Vision feature tracked (${data.feature_type}):`, data.metadata);
+      }
+    } catch (error) {
+      console.error('Error tracking vision feature:', error);
     }
   }
 

@@ -7,7 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Bot, MessageSquare, Zap, Brain, Target, Shield, Clock, MapPin, Users, Activity, Plus, BookOpen, Database, Tag } from 'lucide-react';
+import { Bot, MessageSquare, Zap, Brain, Target, Shield, Clock, MapPin, Users, Activity, Plus, BookOpen, Database, Tag, Eye, Stethoscope, FileImage, ImageIcon } from 'lucide-react';
 
 interface GeniePopupAnalyticsSectionProps {
   genieConversations: any[];
@@ -278,11 +278,12 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
       </div>
 
       <Tabs defaultValue="engagement" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-8">
+        <TabsList className="grid w-full grid-cols-9">
           <TabsTrigger value="engagement">Engagement</TabsTrigger>
           <TabsTrigger value="geographic">Geographic</TabsTrigger>
           <TabsTrigger value="context">Context</TabsTrigger>
           <TabsTrigger value="models">Models</TabsTrigger>
+          <TabsTrigger value="vision">Vision & Medical</TabsTrigger>
           <TabsTrigger value="performance">Performance</TabsTrigger>
           <TabsTrigger value="rag">RAG & Features</TabsTrigger>
           <TabsTrigger value="knowledge">Knowledge Base</TabsTrigger>
@@ -881,6 +882,301 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
                             </TableCell>
                           </TableRow>
                         ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
+              </ScrollArea>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="vision">
+          <Card>
+            <CardHeader>
+              <CardTitle>Vision & Medical Image Features</CardTitle>
+              <CardDescription>Usage of vision models and medical image analysis</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ScrollArea className="h-[500px]">
+                <div className="space-y-6">
+                  {/* Vision Feature Stats */}
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3">Vision Feature Adoption</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      <Card className="border-l-4 border-l-purple-500">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-xs text-muted-foreground">Vision Enabled</div>
+                              <div className="text-3xl font-bold mt-1">
+                                {popupEvents.filter(e => e.event_type === 'vision_enabled').length}
+                              </div>
+                            </div>
+                            <Eye className="h-8 w-8 text-purple-500" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <Card className="border-l-4 border-l-red-500">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-xs text-muted-foreground">Medical Mode</div>
+                              <div className="text-3xl font-bold mt-1">
+                                {popupEvents.filter(e => e.event_type === 'medical_mode_enabled').length}
+                              </div>
+                            </div>
+                            <Stethoscope className="h-8 w-8 text-red-500" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <Card className="border-l-4 border-l-blue-500">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-xs text-muted-foreground">Images Uploaded</div>
+                              <div className="text-3xl font-bold mt-1">
+                                {popupEvents.filter(e => e.event_type === 'image_uploaded').length}
+                              </div>
+                            </div>
+                            <FileImage className="h-8 w-8 text-blue-500" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <Card className="border-l-4 border-l-green-500">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-xs text-muted-foreground">DICOM Processed</div>
+                              <div className="text-3xl font-bold mt-1">
+                                {popupEvents.filter(e => e.event_type === 'dicom_processed').length}
+                              </div>
+                            </div>
+                            <ImageIcon className="h-8 w-8 text-green-500" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </div>
+
+                  {/* Vision Models Used */}
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3">Vision Models Used</h3>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Model Name</TableHead>
+                          <TableHead>Feature Activations</TableHead>
+                          <TableHead>Medical Mode</TableHead>
+                          <TableHead>Context</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {(() => {
+                          const visionStats: Record<string, { 
+                            count: number; 
+                            medicalMode: number; 
+                            contexts: Set<string> 
+                          }> = {};
+                          
+                          popupEvents
+                            .filter(e => ['vision_enabled', 'medical_mode_enabled'].includes(e.event_type))
+                            .forEach(event => {
+                              const modelName = event.event_data?.metadata?.model_name || 'Unknown';
+                              if (!visionStats[modelName]) {
+                                visionStats[modelName] = { count: 0, medicalMode: 0, contexts: new Set() };
+                              }
+                              visionStats[modelName].count++;
+                              if (event.event_type === 'medical_mode_enabled') {
+                                visionStats[modelName].medicalMode++;
+                              }
+                              if (event.context) {
+                                visionStats[modelName].contexts.add(event.context);
+                              }
+                            });
+                          
+                          return Object.entries(visionStats).map(([model, stats]) => (
+                            <TableRow key={model}>
+                              <TableCell className="font-medium">{model}</TableCell>
+                              <TableCell><Badge variant="secondary">{stats.count}</Badge></TableCell>
+                              <TableCell>
+                                <Badge variant="outline" className="bg-red-50">
+                                  {stats.medicalMode} activations
+                                </Badge>
+                              </TableCell>
+                              <TableCell className="text-xs">
+                                {Array.from(stats.contexts).join(', ') || 'N/A'}
+                              </TableCell>
+                            </TableRow>
+                          ));
+                        })()}
+                      </TableBody>
+                    </Table>
+                  </div>
+
+                  {/* Image Type Distribution */}
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3">Medical Image Types</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {(() => {
+                        const imageTypeStats: Record<string, number> = {};
+                        const dicomModalityStats: Record<string, number> = {};
+                        
+                        popupEvents
+                          .filter(e => ['image_uploaded', 'dicom_processed'].includes(e.event_type))
+                          .forEach(event => {
+                            const imageType = event.event_data?.metadata?.image_type || 'unknown';
+                            imageTypeStats[imageType] = (imageTypeStats[imageType] || 0) + 1;
+                            
+                            if (event.event_data?.metadata?.dicom_modality) {
+                              const modality = event.event_data.metadata.dicom_modality;
+                              dicomModalityStats[modality] = (dicomModalityStats[modality] || 0) + 1;
+                            }
+                          });
+                        
+                        return (
+                          <>
+                            <Card>
+                              <CardContent className="p-4">
+                                <h4 className="text-sm font-medium mb-3">Image Types</h4>
+                                <div className="space-y-2">
+                                  {Object.entries(imageTypeStats).map(([type, count]) => (
+                                    <div key={type} className="flex justify-between items-center">
+                                      <span className="text-sm capitalize">{type}</span>
+                                      <Badge>{count}</Badge>
+                                    </div>
+                                  ))}
+                                </div>
+                              </CardContent>
+                            </Card>
+                            <Card>
+                              <CardContent className="p-4">
+                                <h4 className="text-sm font-medium mb-3">DICOM Modalities</h4>
+                                <div className="space-y-2">
+                                  {Object.entries(dicomModalityStats).length > 0 ? (
+                                    Object.entries(dicomModalityStats).map(([modality, count]) => (
+                                      <div key={modality} className="flex justify-between items-center">
+                                        <span className="text-sm">{modality}</span>
+                                        <Badge variant="outline">{count}</Badge>
+                                      </div>
+                                    ))
+                                  ) : (
+                                    <p className="text-sm text-muted-foreground">No DICOM files processed yet</p>
+                                  )}
+                                </div>
+                              </CardContent>
+                            </Card>
+                          </>
+                        );
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* File Size Analytics */}
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3">Upload Statistics</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="text-sm text-muted-foreground">Total Uploads</div>
+                          <div className="text-2xl font-bold">
+                            {popupEvents.filter(e => ['image_uploaded', 'dicom_processed'].includes(e.event_type)).length}
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="text-sm text-muted-foreground">Avg File Size</div>
+                          <div className="text-2xl font-bold">
+                            {(() => {
+                              const uploads = popupEvents.filter(e => ['image_uploaded', 'dicom_processed'].includes(e.event_type));
+                              if (uploads.length === 0) return '0 KB';
+                              const avgSize = uploads.reduce((sum, e) => 
+                                sum + (e.event_data?.metadata?.file_size || 0), 0) / uploads.length;
+                              return `${(avgSize / 1024).toFixed(1)} KB`;
+                            })()}
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="text-sm text-muted-foreground">PHI Redacted</div>
+                          <div className="text-2xl font-bold">
+                            {popupEvents.filter(e => e.event_data?.metadata?.has_phi === true).length}
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-1">DICOM files with PHI</div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </div>
+
+                  {/* User Adoption */}
+                  <div>
+                    <h3 className="text-sm font-semibold mb-3">Vision Feature Users</h3>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>User Email</TableHead>
+                          <TableHead>Vision Enabled</TableHead>
+                          <TableHead>Medical Mode</TableHead>
+                          <TableHead>Images Uploaded</TableHead>
+                          <TableHead>Last Activity</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {(() => {
+                          const userStats: Record<string, {
+                            visionEnabled: number;
+                            medicalMode: number;
+                            imagesUploaded: number;
+                            lastActivity: string;
+                          }> = {};
+                          
+                          popupEvents
+                            .filter(e => ['vision_enabled', 'medical_mode_enabled', 'image_uploaded', 'dicom_processed'].includes(e.event_type))
+                            .forEach(event => {
+                              const email = event.user_email || 'anonymous';
+                              if (!userStats[email]) {
+                                userStats[email] = {
+                                  visionEnabled: 0,
+                                  medicalMode: 0,
+                                  imagesUploaded: 0,
+                                  lastActivity: event.created_at || ''
+                                };
+                              }
+                              
+                              if (event.event_type === 'vision_enabled') userStats[email].visionEnabled++;
+                              if (event.event_type === 'medical_mode_enabled') userStats[email].medicalMode++;
+                              if (['image_uploaded', 'dicom_processed'].includes(event.event_type)) {
+                                userStats[email].imagesUploaded++;
+                              }
+                              
+                              if (event.created_at && event.created_at > userStats[email].lastActivity) {
+                                userStats[email].lastActivity = event.created_at;
+                              }
+                            });
+                          
+                          return Object.entries(userStats)
+                            .sort((a, b) => b[1].imagesUploaded - a[1].imagesUploaded)
+                            .slice(0, 10)
+                            .map(([email, stats]) => (
+                              <TableRow key={email}>
+                                <TableCell className="font-medium">{email}</TableCell>
+                                <TableCell>
+                                  <Badge variant="secondary">{stats.visionEnabled}</Badge>
+                                </TableCell>
+                                <TableCell>
+                                  <Badge variant="outline">{stats.medicalMode}</Badge>
+                                </TableCell>
+                                <TableCell>
+                                  <Badge>{stats.imagesUploaded}</Badge>
+                                </TableCell>
+                                <TableCell className="text-xs">
+                                  {new Date(stats.lastActivity).toLocaleDateString()}
+                                </TableCell>
+                              </TableRow>
+                            ));
+                        })()}
                       </TableBody>
                     </Table>
                   </div>

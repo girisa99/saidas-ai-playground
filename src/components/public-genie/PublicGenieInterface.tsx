@@ -881,6 +881,8 @@ ${conversationSummary.transcript}`
                       <AdvancedAISettings 
                         currentConfig={aiConfig}
                         onConfigChange={setAIConfig}
+                        userEmail={userInfo?.email}
+                        context={context || 'technology'}
                       />
                     </div>
                   )}
@@ -904,6 +906,8 @@ ${conversationSummary.transcript}`
                           onImageUpload={setUploadedImages}
                           medicalMode={aiConfig.medicalImageMode || false}
                           maxFiles={5}
+                          userEmail={userInfo?.email}
+                          context={context || 'healthcare'}
                         />
                       </div>
                     )}

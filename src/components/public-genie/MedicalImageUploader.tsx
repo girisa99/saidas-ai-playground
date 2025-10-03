@@ -6,11 +6,14 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
+import { genieAnalyticsService } from '@/services/genieAnalyticsService';
 
 interface MedicalImageUploaderProps {
   onImageUpload: (images: UploadedImage[]) => void;
   medicalMode: boolean;
   maxFiles?: number;
+  userEmail?: string;
+  context?: string;
 }
 
 export interface UploadedImage {
@@ -35,7 +38,9 @@ interface DicomMetadata {
 export const MedicalImageUploader: React.FC<MedicalImageUploaderProps> = ({
   onImageUpload,
   medicalMode,
-  maxFiles = 5
+  maxFiles = 5,
+  userEmail,
+  context = 'healthcare'
 }) => {
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [isDragging, setIsDragging] = useState(false);
@@ -151,6 +156,24 @@ export const MedicalImageUploader: React.FC<MedicalImageUploaderProps> = ({
     const newImages = [...uploadedImages, ...processed];
     setUploadedImages(newImages);
     onImageUpload(newImages);
+
+    // Track image uploads in analytics
+    if (userEmail) {
+      processed.forEach(img => {
+        genieAnalyticsService.trackVisionFeature({
+          user_email: userEmail,
+          feature_type: img.type === 'dicom' ? 'dicom_processed' : 'image_uploaded',
+          context,
+          metadata: {
+            image_type: img.type,
+            file_size: img.file.size,
+            has_phi: img.type === 'dicom',
+            dicom_modality: img.metadata?.modality
+          },
+          timestamp: new Date().toISOString()
+        });
+      });
+    }
 
     toast({
       title: "Images uploaded",
