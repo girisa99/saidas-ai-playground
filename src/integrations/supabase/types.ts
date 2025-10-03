@@ -6751,36 +6751,57 @@ export type Database = {
       genie_conversations: {
         Row: {
           configuration_snapshot: Json | null
+          context: string | null
           conversation_id: string
           created_at: string
           id: string
+          ip_address: string | null
           is_active: boolean | null
           messages: Json | null
+          metadata: Json | null
+          session_end: string | null
           session_name: string | null
+          session_start: string | null
           updated_at: string
+          user_email: string | null
           user_id: string | null
+          user_name: string | null
         }
         Insert: {
           configuration_snapshot?: Json | null
+          context?: string | null
           conversation_id: string
           created_at?: string
           id?: string
+          ip_address?: string | null
           is_active?: boolean | null
           messages?: Json | null
+          metadata?: Json | null
+          session_end?: string | null
           session_name?: string | null
+          session_start?: string | null
           updated_at?: string
+          user_email?: string | null
           user_id?: string | null
+          user_name?: string | null
         }
         Update: {
           configuration_snapshot?: Json | null
+          context?: string | null
           conversation_id?: string
           created_at?: string
           id?: string
+          ip_address?: string | null
           is_active?: boolean | null
           messages?: Json | null
+          metadata?: Json | null
+          session_end?: string | null
           session_name?: string | null
+          session_start?: string | null
           updated_at?: string
+          user_email?: string | null
           user_id?: string | null
+          user_name?: string | null
         }
         Relationships: []
       }
