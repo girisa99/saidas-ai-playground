@@ -29,15 +29,55 @@ serve(async (req) => {
 
     const { ip_address, user_email, user_name, context, action, session_id, message_count } = await req.json() as ConversationLimitRequest
 
-    // Check conversation limits using the database function
-    const { data: limitCheck, error: limitError } = await supabase
-      .rpc('check_conversation_limits', {
-        p_ip_address: ip_address,
-        p_user_email: user_email
-      })
+    // Use direct table queries instead of RPC to avoid type mismatch issues
+    const now = new Date()
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000)
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000)
 
-    if (limitError) {
-      throw limitError
+    // Count IP-based conversations (last 24 hours)
+    const { count: ipDailyCount } = await supabase
+      .from('conversation_tracking')
+      .select('*', { count: 'exact', head: true })
+      .eq('ip_address', ip_address)
+      .gte('started_at', oneDayAgo.toISOString())
+
+    // Count IP-based conversations (last hour)
+    const { count: ipHourlyCount } = await supabase
+      .from('conversation_tracking')
+      .select('*', { count: 'exact', head: true })
+      .eq('ip_address', ip_address)
+      .gte('started_at', oneHourAgo.toISOString())
+
+    // Count email-based conversations if email provided
+    let emailDailyCount = 0
+    if (user_email) {
+      const { count } = await supabase
+        .from('conversation_tracking')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_email', user_email)
+        .gte('started_at', oneDayAgo.toISOString())
+      
+      emailDailyCount = count || 0
+    }
+
+    // Define limits
+    const DAILY_IP_LIMIT = 10
+    const HOURLY_IP_LIMIT = 5
+    const DAILY_EMAIL_LIMIT = 20
+
+    const allowed = (ipDailyCount || 0) < DAILY_IP_LIMIT && 
+                    (ipHourlyCount || 0) < HOURLY_IP_LIMIT && 
+                    (!user_email || emailDailyCount < DAILY_EMAIL_LIMIT)
+
+    const limitCheck = {
+      allowed,
+      daily_count: ipDailyCount || 0,
+      daily_limit: DAILY_IP_LIMIT,
+      hourly_count: ipHourlyCount || 0,
+      hourly_limit: HOURLY_IP_LIMIT,
+      email_daily_count: emailDailyCount,
+      email_daily_limit: DAILY_EMAIL_LIMIT,
+      reset_time: new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString()
     }
 
     // If action is just checking limits, return the status
