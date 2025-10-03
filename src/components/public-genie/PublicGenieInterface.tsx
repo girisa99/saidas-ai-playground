@@ -1112,7 +1112,7 @@ ${conversationSummary.transcript}`
                               {aiConfig.mcpEnabled && <Badge variant="outline" className="text-xs">MCP</Badge>}
                             </div>
                           )}
-                        </p>
+                         </p>
                         <Button
                           variant="link"
                           size="sm"
@@ -1152,57 +1152,57 @@ ${conversationSummary.transcript}`
             </div>
           )}
         </Card>
-        
-        {/* Conversation Limit Modal */}
-        <ConversationLimitModal
-          isOpen={showLimitModal}
-          onClose={() => {
-            console.log('Closing limit modal');
-            setShowLimitModal(false);
-          }}
-          limits={conversationLimits || {
-            allowed: false,
-            daily_count: 0,
-            daily_limit: 5,
-            hourly_count: 0,
-            hourly_limit: 2,
-            reset_time: new Date(Date.now() + 3600000).toISOString()
-          }}
-          context={context || 'technology'}
-        />
-        
-        {/* Experimentation Banner */}
-        {showExperimentationBanner && context && (
-          <ExperimentationBanner
-            context={context}
-            onDismiss={() => setShowExperimentationBanner(false)}
-          />
-        )}
-        
-        {/* Configuration Wizard */}
-        <ConfigurationWizard
-          isOpen={showConfigWizard}
-          onComplete={(config) => {
-            setAIConfig(config);
-            setShowConfigWizard(false);
-          }}
-          onCancel={() => setShowConfigWizard(false)}
-        />
-        
-        {/* Human Escalation Form */}
-        <AnimatePresence>
-          {showHumanEscalation && userInfo && (
-            <HumanEscalationForm
-              isOpen={showHumanEscalation}
-              onClose={() => setShowHumanEscalation(false)}
-              onSubmit={handleHumanEscalation}
-              userInfo={userInfo}
-              context={context!}
-            />
-          )}
-        </AnimatePresence>
       </motion.div>
       </Draggable>
+
+      {/* Conversation Limit Modal */}
+      <ConversationLimitModal
+        isOpen={showLimitModal}
+        onClose={() => {
+          console.log('Closing limit modal');
+          setShowLimitModal(false);
+        }}
+        limits={conversationLimits || {
+          allowed: false,
+          daily_count: 0,
+          daily_limit: 5,
+          hourly_count: 0,
+          hourly_limit: 2,
+          reset_time: new Date(Date.now() + 3600000).toISOString()
+        }}
+        context={context || 'technology'}
+      />
+      
+      {/* Experimentation Banner */}
+      {showExperimentationBanner && context && (
+        <ExperimentationBanner
+          context={context}
+          onDismiss={() => setShowExperimentationBanner(false)}
+        />
+      )}
+      
+      {/* Configuration Wizard */}
+      <ConfigurationWizard
+        isOpen={showConfigWizard}
+        onComplete={(config) => {
+          setAIConfig(config);
+          setShowConfigWizard(false);
+        }}
+        onCancel={() => setShowConfigWizard(false)}
+      />
+      
+      {/* Human Escalation Form */}
+      <AnimatePresence>
+        {showHumanEscalation && userInfo && (
+          <HumanEscalationForm
+            isOpen={showHumanEscalation}
+            onClose={() => setShowHumanEscalation(false)}
+            onSubmit={handleHumanEscalation}
+            userInfo={userInfo}
+            context={context!}
+          />
+        )}
+      </AnimatePresence>
     </AnimatePresence>
   );
 };
