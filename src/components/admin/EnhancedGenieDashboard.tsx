@@ -44,13 +44,18 @@ import { VisitorAnalyticsDashboard } from './VisitorAnalyticsDashboard';
 interface ConversationRecord {
   id: string;
   user_id?: string;
-  conversation_id: string;
+  conversation_id?: string;
+  session_id?: string;
   session_name?: string;
-  messages: any;
+  messages?: any;
+  conversation_data?: any;
   configuration_snapshot?: any;
-  is_active: boolean;
+  is_active?: boolean;
+  status?: string;
   created_at: string;
   updated_at: string;
+  context?: string;
+  agent_id?: string;
 }
 
 interface AccessRequest {
@@ -80,6 +85,8 @@ export const EnhancedGenieDashboard = () => {
   const [accessRequests, setAccessRequests] = useState<AccessRequest[]>([]);
   const [userProfiles, setUserProfiles] = useState<UserProfile[]>([]);
   const [knowledgeEntries, setKnowledgeEntries] = useState<any[]>([]);
+  const [genieConversations, setGenieConversations] = useState<any[]>([]);
+  const [modelUsageData, setModelUsageData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [newKnowledgeEntry, setNewKnowledgeEntry] = useState({
@@ -206,13 +213,53 @@ export const EnhancedGenieDashboard = () => {
   const loadDashboardData = async () => {
     setLoading(true);
     try {
-      // Load conversations
-      const { data: conversationsData, error: conversationsError } = await supabase
+      // Load Genie AI popup conversations
+      const { data: genieConvData, error: genieConvError } = await supabase
         .from('genie_conversations')
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (conversationsError) throw conversationsError;
+      if (genieConvError) {
+        console.error('Genie conversations error:', genieConvError);
+      }
+      
+      console.log('📊 LOADED GENIE CONVERSATIONS (Popup):', genieConvData?.length || 0);
+      setGenieConversations(genieConvData || []);
+      
+      // Extract model usage from messages
+      const models: any[] = [];
+      genieConvData?.forEach((conv: any) => {
+        if (conv.messages && Array.isArray(conv.messages)) {
+          conv.messages.forEach((msg: any) => {
+            if (msg.provider && msg.model) {
+              models.push({
+                conversation_id: conv.conversation_id,
+                provider: msg.provider,
+                model: msg.model,
+                timestamp: msg.timestamp,
+                context: conv.context || 'general',
+                session_name: conv.session_name
+              });
+            }
+          });
+        }
+      });
+      console.log('🤖 EXTRACTED MODEL USAGE:', models.length);
+      setModelUsageData(models);
+      
+      // Load main site agent conversations
+      const { data: conversationsData, error: conversationsError } = await supabase
+        .from('agent_conversations')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (conversationsError) {
+        console.log('Agent conversations error (may not exist):', conversationsError);
+      } else {
+        console.log('📊 LOADED AGENT CONVERSATIONS (Main Site):', conversationsData?.length || 0);
+      }
+      
+      setConversations(conversationsData || []);
 
       // Load access requests
       const { data: accessRequestsData, error: accessRequestsError } = await supabase
@@ -247,19 +294,21 @@ export const EnhancedGenieDashboard = () => {
 
       // Set data
       console.log('========== DATA LOADING DEBUG ==========');
-      console.log('Conversations loaded:', conversationsData?.length || 0, 'records');
+      console.log('Genie Conversations (Popup):', genieConvData?.length || 0, 'records');
+      console.log('Agent Conversations (Main Site):', conversationsData?.length || 0, 'records');
       console.log('Access Requests loaded:', accessRequestsData?.length || 0, 'records');
       console.log('User Profiles loaded:', profilesData?.length || 0, 'records');
       console.log('Knowledge Entries loaded:', knowledgeData?.length || 0, 'records');
+      console.log('Model Usage Records:', models.length);
       console.log('=========================================');
       
-      setConversations(conversationsData || []);
       setAccessRequests(accessRequestsData || []);
       setUserProfiles(profilesData || []);
       setKnowledgeEntries(knowledgeData || []);
 
-      // Calculate stats including visitor analytics
+      // Calculate stats including visitor analytics and genie conversations
       calculateStats(
+        genieConvData || [],
         conversationsData || [],
         accessRequestsData || [],
         profilesData || [],
@@ -279,6 +328,7 @@ export const EnhancedGenieDashboard = () => {
   };
 
   const calculateStats = (
+    genieConvs: any[],
     convs: ConversationRecord[],
     requests: AccessRequest[],
     profiles: UserProfile[],
@@ -286,11 +336,11 @@ export const EnhancedGenieDashboard = () => {
   ) => {
     const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     
-    // Conversation stats
-    const totalConversations = convs.length;
-    const activeConversations = convs.filter(c => c.is_active).length;
-    const completedConversations = convs.filter(c => !c.is_active).length;
-    const recentConversations = convs.filter(c => new Date(c.created_at) > dayAgo).length;
+    // Combined conversation stats from both genie_conversations and agent_conversations
+    const totalConversations = (genieConvs?.length || 0) + (convs?.length || 0);
+    const activeConversations = (genieConvs?.filter((c: any) => c.is_active).length || 0) + (convs?.filter((c: any) => c.is_active || c.status === 'active').length || 0);
+    const completedConversations = (genieConvs?.filter((c: any) => !c.is_active).length || 0) + (convs?.filter((c: any) => !c.is_active && c.status !== 'active').length || 0);
+    const recentConversations = (genieConvs?.filter((c: any) => new Date(c.created_at) > dayAgo).length || 0) + (convs?.filter((c: any) => new Date(c.created_at) > dayAgo).length || 0);
     
     let totalMessages = 0;
     let totalSessionDuration = 0;
@@ -327,7 +377,21 @@ export const EnhancedGenieDashboard = () => {
     const visionLMBreakdown: Record<string, number> = {};
     const modelCombinations: Record<string, number> = {};
     
-    convs.forEach(conv => {
+    // Process genie conversations (popup data)
+    genieConvs?.forEach((conv: any) => {
+      if (conv.messages && Array.isArray(conv.messages)) {
+        totalMessages += conv.messages.length;
+      }
+      
+      // Extract context analytics from genie conversations
+      const context = conv.context || 'general';
+      if (context.includes('tech')) technologyContexts++;
+      else if (context.includes('health')) healthcareContexts++;
+      else generalContexts++;
+    });
+    
+    // Process agent conversations (main site data)
+    convs?.forEach((conv: any) => {
       if (conv.messages && Array.isArray(conv.messages)) {
         totalMessages += conv.messages.length;
         
