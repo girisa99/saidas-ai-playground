@@ -79,8 +79,8 @@ export const NavigationHeader = () => {
           </Link>
 
           {/* Desktop Navigation - Center, takes available space */}
-          <nav className="hidden lg:flex items-center justify-center flex-1 min-w-0 px-2">
-            <div className="flex items-center justify-center gap-1 flex-wrap">
+          <nav className="hidden lg:flex items-center justify-center flex-1 min-w-0 px-1">
+            <div className="flex items-center justify-center gap-0.5 flex-nowrap">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = isActivePath(item.to);
@@ -103,15 +103,15 @@ export const NavigationHeader = () => {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`flex items-center gap-1 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 whitespace-nowrap ${
+                    className={`flex items-center gap-1 px-1.5 lg:px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 whitespace-nowrap ${
                       isActive
-                        ? 'bg-primary text-primary-foreground shadow-md'
+                        ? 'bg-primary text-primary-foreground shadow-sm'
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                     }`}
                   >
-                    <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                    <Icon className="w-3 h-3 flex-shrink-0" />
                     <span className="hidden xl:inline text-xs">{responsiveLabel.full}</span>
-                    <span className="xl:hidden text-xs">{responsiveLabel.short}</span>
+                    <span className="xl:hidden text-[11px]">{responsiveLabel.short}</span>
                   </Link>
                 );
               })}
@@ -119,18 +119,18 @@ export const NavigationHeader = () => {
           </nav>
 
           {/* Desktop Actions - Right aligned, responsive sizing */}
-          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2 flex-shrink-0">
-            {/* Search - Hidden on smaller desktop screens */}
-            <div className="hidden xl:block relative">
-              <SearchBar />
+          <div className="hidden lg:flex items-center space-x-1 flex-shrink-0">
+            {/* Search - Compact size */}
+            <div className="relative">
+              <SearchBar compact />
             </div>
             
             {/* Action Buttons - Responsive sizing */}
-            <div className="flex items-center space-x-1 pl-2 xl:pl-3 border-l border-border min-w-0">
+            <div className="flex items-center space-x-1 pl-1.5 border-l border-border min-w-0">
               <Button 
                 variant="outline"
                 size="sm" 
-                className="text-xs font-medium hover:bg-muted/80 whitespace-nowrap h-8 px-3"
+                className="text-xs font-medium hover:bg-muted/80 whitespace-nowrap h-7 px-2"
                 onClick={() => window.open('https://www.genieaiexpermentationhub.com', '_blank')}
               >
                 <ExternalLink className="w-3 h-3 mr-1 flex-shrink-0" />

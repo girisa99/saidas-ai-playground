@@ -11,7 +11,11 @@ interface SearchResult {
   category: string;
 }
 
-export const SearchBar = () => {
+interface SearchBarProps {
+  compact?: boolean;
+}
+
+export const SearchBar = ({ compact = false }: SearchBarProps) => {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -70,24 +74,24 @@ export const SearchBar = () => {
   };
 
   return (
-    <div className="relative w-full max-w-xs lg:max-w-sm xl:max-w-md">
+    <div className={`relative w-full ${compact ? 'max-w-[140px] lg:max-w-[160px]' : 'max-w-xs lg:max-w-sm xl:max-w-md'}`}>
       <div className="relative">
-        <Search className="absolute left-2 lg:left-3 top-1/2 transform -translate-y-1/2 h-3 lg:h-4 w-3 lg:w-4 text-muted-foreground" />
+        <Search className={`absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground ${compact ? 'h-3 w-3' : 'h-3 lg:h-4 w-3 lg:w-4'}`} />
         <Input
           type="text"
           placeholder="Search..."
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
-          className="pl-8 lg:pl-10 pr-8 lg:pr-10 w-full text-xs lg:text-sm h-8 lg:h-10"
+          className={`w-full ${compact ? 'pl-7 pr-7 text-xs h-7' : 'pl-8 lg:pl-10 pr-8 lg:pr-10 text-xs lg:text-sm h-8 lg:h-10'}`}
         />
         {query && (
           <Button
             variant="ghost"
             size="sm"
             onClick={clearSearch}
-            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
+            className={`absolute right-0.5 top-1/2 transform -translate-y-1/2 p-0 ${compact ? 'h-5 w-5' : 'h-6 w-6'}`}
           >
-            <X className="h-4 w-4" />
+            <X className={compact ? 'h-3 w-3' : 'h-4 w-4'} />
           </Button>
         )}
       </div>
