@@ -8,8 +8,12 @@ export interface ConversationLimits {
   hourly_limit: number;
   email_daily_count?: number;
   email_daily_limit?: number;
+  email_hourly_count?: number;
+  email_hourly_limit?: number;
+  duplicate_email_ips?: number;
   reset_time: string;
   restriction_reason?: string;
+  is_returning_user?: boolean;
 }
 
 export interface ConversationSession {

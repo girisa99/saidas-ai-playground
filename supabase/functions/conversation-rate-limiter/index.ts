@@ -50,24 +50,66 @@ serve(async (req) => {
 
     // Count email-based conversations if email provided
     let emailDailyCount = 0
+    let emailHourlyCount = 0
+    let existingEmailUsers: any[] = []
+    
     if (user_email) {
-      const { count } = await supabase
+      // Check daily email usage
+      const { count: emailDaily } = await supabase
         .from('conversation_tracking')
         .select('*', { count: 'exact', head: true })
         .eq('user_email', user_email)
         .gte('started_at', oneDayAgo.toISOString())
       
-      emailDailyCount = count || 0
+      emailDailyCount = emailDaily || 0
+
+      // Check hourly email usage
+      const { count: emailHourly } = await supabase
+        .from('conversation_tracking')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_email', user_email)
+        .gte('started_at', oneHourAgo.toISOString())
+      
+      emailHourlyCount = emailHourly || 0
+
+      // Check if this email is used from multiple IP addresses (potential abuse)
+      const { data: emailIPs } = await supabase
+        .from('conversation_tracking')
+        .select('ip_address, user_email')
+        .eq('user_email', user_email)
+        .gte('started_at', oneDayAgo.toISOString())
+      
+      existingEmailUsers = emailIPs || []
+      
+      // Detect if same email is being used from multiple IPs
+      const uniqueIPs = new Set(existingEmailUsers.map(record => record.ip_address))
+      if (uniqueIPs.size > 3 && !uniqueIPs.has(ip_address)) {
+        console.warn(`Potential abuse: Email ${user_email} used from ${uniqueIPs.size} different IP addresses`)
+      }
     }
 
     // Define limits
     const DAILY_IP_LIMIT = 10
     const HOURLY_IP_LIMIT = 5
     const DAILY_EMAIL_LIMIT = 20
+    const HOURLY_EMAIL_LIMIT = 10
 
-    const allowed = (ipDailyCount || 0) < DAILY_IP_LIMIT && 
-                    (ipHourlyCount || 0) < HOURLY_IP_LIMIT && 
-                    (!user_email || emailDailyCount < DAILY_EMAIL_LIMIT)
+    // Comprehensive limit check: both IP and email must be within limits
+    const ipAllowed = (ipDailyCount || 0) < DAILY_IP_LIMIT && 
+                     (ipHourlyCount || 0) < HOURLY_IP_LIMIT
+    
+    const emailAllowed = !user_email || 
+                        (emailDailyCount < DAILY_EMAIL_LIMIT && 
+                         emailHourlyCount < HOURLY_EMAIL_LIMIT)
+
+    const allowed = ipAllowed && emailAllowed
+
+    let restrictionReason = null
+    if (!ipAllowed) {
+      restrictionReason = `IP address limit exceeded. You've made ${ipHourlyCount} requests in the last hour (limit: ${HOURLY_IP_LIMIT}) and ${ipDailyCount} requests today (limit: ${DAILY_IP_LIMIT}).`
+    } else if (!emailAllowed) {
+      restrictionReason = `Email limit exceeded. ${user_email} has made ${emailHourlyCount} requests in the last hour (limit: ${HOURLY_EMAIL_LIMIT}) and ${emailDailyCount} requests today (limit: ${DAILY_EMAIL_LIMIT}).`
+    }
 
     const limitCheck = {
       allowed,
@@ -77,7 +119,11 @@ serve(async (req) => {
       hourly_limit: HOURLY_IP_LIMIT,
       email_daily_count: emailDailyCount,
       email_daily_limit: DAILY_EMAIL_LIMIT,
-      reset_time: new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString()
+      email_hourly_count: emailHourlyCount,
+      email_hourly_limit: HOURLY_EMAIL_LIMIT,
+      reset_time: new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString(),
+      restriction_reason: restrictionReason,
+      duplicate_email_ips: existingEmailUsers.length > 0 ? existingEmailUsers.length : 0
     }
 
     // If action is just checking limits, return the status
@@ -91,10 +137,14 @@ serve(async (req) => {
             hourly_count: limitCheck.hourly_count,
             hourly_limit: limitCheck.hourly_limit,
             email_daily_count: limitCheck.email_daily_count,
-            email_daily_limit: limitCheck.email_daily_limit
+            email_daily_limit: limitCheck.email_daily_limit,
+            email_hourly_count: limitCheck.email_hourly_count,
+            email_hourly_limit: limitCheck.email_hourly_limit,
+            duplicate_email_ips: limitCheck.duplicate_email_ips
           },
           reset_time: limitCheck.reset_time,
-          restriction_reason: !limitCheck.allowed ? 'Rate limit exceeded' : null
+          restriction_reason: limitCheck.restriction_reason,
+          is_returning_user: user_email && emailDailyCount > 0
         }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 

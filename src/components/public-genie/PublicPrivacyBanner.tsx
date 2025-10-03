@@ -61,8 +61,44 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
   };
 
   const handleSubmit = async () => {
-    if (!userInfo.firstName.trim() || !userInfo.email || !isEmailValid(userInfo.email)) {
+    if (!userInfo.firstName.trim()) {
+      toast({
+        title: "First name required",
+        description: "Please enter your first name to continue.",
+        variant: "destructive",
+      });
       return;
+    }
+
+    const emailValue = userInfo.email.trim().toLowerCase();
+    
+    // Enhanced email validation
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailValue || !emailRegex.test(emailValue)) {
+      toast({
+        title: "Valid email required",
+        description: "Please enter a valid email address (e.g., user@example.com).",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Check if this email is already registered (for returning users)
+    const existingUser = localStorage.getItem('genie_user_info');
+    if (existingUser) {
+      const parsed = JSON.parse(existingUser);
+      if (parsed.email === emailValue) {
+        toast({
+          title: "Welcome back! 👋",
+          description: `You're already registered as ${parsed.firstName}. Continuing your conversation.`,
+        });
+      } else {
+        // Different email - notify user they're switching accounts
+        toast({
+          title: "Account Switched",
+          description: `Switching from ${parsed.email} to ${emailValue}. Rate limits apply to each email.`,
+        });
+      }
     }
 
     // Track privacy acceptance with IP
@@ -79,7 +115,7 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
 
       const { genieAnalyticsService } = await import('@/services/genieAnalyticsService');
       await genieAnalyticsService.trackPrivacyAccept({
-        user_email: userInfo.email,
+        user_email: emailValue,
         user_name: `${userInfo.firstName} ${userInfo.lastName || ''}`.trim(),
         timestamp: new Date().toISOString(),
         ip_address: ipAddress || undefined
@@ -88,7 +124,12 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
       console.error('Failed to track privacy acceptance:', error);
     }
 
-    onAccept(userInfo);
+    const finalUserInfo = {
+      ...userInfo,
+      email: emailValue
+    };
+
+    onAccept(finalUserInfo);
   };
 
   const isEmailValid = (email: string) => {
