@@ -62,31 +62,34 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-0">
-          <Select value={config.mode} onValueChange={(value: any) => updateConfig({ mode: value })}>
-            <SelectTrigger className="h-8">
-              <SelectValue />
+          <Select value={config.mode} onValueChange={(value: 'default' | 'single' | 'multi') => updateConfig({ mode: value })}>
+            <SelectTrigger className="h-8 bg-background">
+              <SelectValue placeholder="Select mode" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="default">
+            <SelectContent className="bg-background border-border z-[100000]">
+              <SelectItem value="default" className="cursor-pointer">
                 <div className="flex items-center gap-2">
                   <Settings2 className="h-3 w-3" />
-                  Default - Balanced responses
+                  <span>Default - Balanced responses</span>
                 </div>
               </SelectItem>
-              <SelectItem value="single">
+              <SelectItem value="single" className="cursor-pointer">
                 <div className="flex items-center gap-2">
                   <Cpu className="h-3 w-3" />
-                  Single - Focused model responses
+                  <span>Single - Focused model responses</span>
                 </div>
               </SelectItem>
-              <SelectItem value="multi">
+              <SelectItem value="multi" className="cursor-pointer">
                 <div className="flex items-center gap-2">
                   <Users className="h-3 w-3" />
-                  Multi - Cross-model consensus
+                  <span>Multi - Cross-model consensus</span>
                 </div>
               </SelectItem>
             </SelectContent>
           </Select>
+          <p className="text-xs text-muted-foreground mt-1">
+            Current: <strong>{config.mode}</strong>
+          </p>
         </CardContent>
       </Card>
 
@@ -103,19 +106,19 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
         </CardHeader>
         <CardContent className="pt-0 space-y-2">
           <Select value={config.selectedModel} onValueChange={(value) => updateConfig({ selectedModel: value })}>
-            <SelectTrigger className="h-8">
-              <SelectValue />
+            <SelectTrigger className="h-8 bg-background">
+              <SelectValue placeholder="Select primary model" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-background border-border z-[100000] max-h-[300px]">
               {modelOptions.map((model) => (
-                <SelectItem key={model.id} value={model.id}>
-                  <div className="flex items-center justify-between w-full">
+                <SelectItem key={model.id} value={model.id} className="cursor-pointer">
+                  <div className="flex items-center justify-between gap-2">
                     <span className="text-xs">{model.name}</span>
-                    <div className="flex gap-1 ml-2">
-                      <Badge variant="secondary" className="text-xs px-1 py-0">
+                    <div className="flex gap-1">
+                      <Badge variant="secondary" className="text-[10px] px-1 py-0">
                         {model.type}
                       </Badge>
-                      <Badge variant="outline" className="text-xs px-1 py-0">
+                      <Badge variant="outline" className="text-[10px] px-1 py-0">
                         {model.provider}
                       </Badge>
                     </div>
@@ -125,9 +128,10 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
             </SelectContent>
           </Select>
           {selectedModel && (
-            <div className="flex gap-1">
+            <div className="flex gap-1 items-center">
+              <span className="text-xs text-muted-foreground">Active:</span>
               <Badge variant="secondary" className="text-xs">
-                {selectedModel.type}
+                {selectedModel.name}
               </Badge>
               <Badge variant="outline" className="text-xs">
                 {selectedModel.provider}
@@ -154,21 +158,21 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
               value={config.secondaryModel || 'claude-3-haiku'}
               onValueChange={(value) => updateConfig({ secondaryModel: value })}
             >
-              <SelectTrigger className="h-8">
-                <SelectValue />
+              <SelectTrigger className="h-8 bg-background">
+                <SelectValue placeholder="Select comparison model" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-background border-border z-[100000] max-h-[300px]">
                 {modelOptions
                   .filter((m) => m.id !== config.selectedModel)
                   .map((model) => (
-                    <SelectItem key={model.id} value={model.id}>
-                      <div className="flex items-center justify-between w-full">
+                    <SelectItem key={model.id} value={model.id} className="cursor-pointer">
+                      <div className="flex items-center justify-between gap-2">
                         <span className="text-xs">{model.name}</span>
-                        <div className="flex gap-1 ml-2">
-                          <Badge variant="secondary" className="text-xs px-1 py-0">
+                        <div className="flex gap-1">
+                          <Badge variant="secondary" className="text-[10px] px-1 py-0">
                             {model.type}
                           </Badge>
-                          <Badge variant="outline" className="text-xs px-1 py-0">
+                          <Badge variant="outline" className="text-[10px] px-1 py-0">
                             {model.provider}
                           </Badge>
                         </div>
