@@ -14,10 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        'poppins': ['Poppins', 'system-ui', 'sans-serif'],
-        'inter': ['Inter', 'system-ui', 'sans-serif'],
-        'dm-sans': ['DM Sans', 'system-ui', 'sans-serif'],
-        'sans': ['DM Sans', 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        'inter': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        'sans': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1.5', letterSpacing: '0.025em' }],
