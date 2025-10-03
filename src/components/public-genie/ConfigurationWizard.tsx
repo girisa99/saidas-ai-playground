@@ -276,28 +276,28 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto z-[100001]">
-        <DialogHeader>
+      <DialogContent className="max-w-md max-h-[85vh] flex flex-col z-[100001]">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <span>Genie AI Configuration</span>
             <Badge variant="outline" className="text-xs">Step {step}/3</Badge>
           </DialogTitle>
         </DialogHeader>
 
-        <div className="py-4">
+        <div className="flex-1 overflow-y-auto py-4 px-1 min-h-0">
           {step === 1 && renderStep1()}
           {step === 2 && renderStep2()}
           {step === 3 && renderStep3()}
         </div>
 
-        <DialogFooter className="flex justify-between">
+        <DialogFooter className="flex-shrink-0 flex justify-between border-t pt-4 mt-4">
           <div className="flex gap-2">
             <Button variant="outline" onClick={onCancel}>
               Cancel
             </Button>
             {step > 1 && (
               <Button variant="outline" onClick={handleBack}>
-                <ChevronLeft className="h-4 w-4" />
+                <ChevronLeft className="h-4 w-4 mr-1" />
                 Back
               </Button>
             )}
@@ -306,7 +306,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
             {step < 3 ? (
               <Button onClick={handleNext}>
                 Next
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
             ) : (
               <Button onClick={handleComplete}>
