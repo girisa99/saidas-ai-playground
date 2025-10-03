@@ -34,21 +34,44 @@ const AdminDashboard = () => {
         console.error('Error loading visitor analytics:', visitorError);
       }
 
-      // Transform the data to match expected structure
+      // Transform the data to match expected structure and handle multiple RPC shapes
+      const summarySource: any = visitorData && (visitorData as any).summary ? (visitorData as any).summary : (visitorData as any);
+
       const transformedVisitorData = visitorData ? {
         summary: {
-          total_views: (visitorData as any).total_page_views || 0,
-          unique_visitors: (visitorData as any).total_visitors || 0,
-          avg_time_on_page_seconds: Math.round((visitorData as any).avg_time_on_page || 0),
-          unique_pages: (visitorData as any).unique_countries || 0 // Using countries as proxy for now
+          total_views: Number(summarySource?.total_page_views ?? summarySource?.total_views ?? 0),
+          unique_visitors: Number(summarySource?.total_visitors ?? summarySource?.unique_visitors ?? 0),
+          avg_time_on_page_seconds: Math.round(Number(summarySource?.avg_time_on_page_seconds ?? summarySource?.avg_time_on_page ?? 0)),
+          unique_pages: Number(summarySource?.unique_pages ?? summarySource?.unique_countries ?? 0)
         },
-        locations: ((visitorData as any).geographic_distribution || []).map((geo: any) => ({
-          country: geo.country,
-          region: geo.region,
-          visitor_count: geo.visitors
+        locations: (
+          (visitorData as any).locations ?? (visitorData as any).geographic_distribution ?? []
+        ).map((geo: any) => ({
+          country: geo?.country ?? 'Unknown',
+          region: geo?.region ?? geo?.city ?? null,
+          visitor_count: Number(geo?.visitors ?? geo?.visitor_count ?? geo?.count ?? 0)
         })),
-        top_pages: [], // Will need separate query for this
-        session_journeys: [] // Will need separate query for this
+        top_pages: (
+          (visitorData as any).top_pages ?? []
+        ).map((p: any) => ({
+          page_path: p?.page_path ?? p?.path ?? '',
+          page_title: p?.page_title ?? p?.title ?? '',
+          view_count: Number(p?.view_count ?? p?.views ?? 0)
+        })),
+        session_journeys: (
+          (visitorData as any).session_journeys ?? []
+        ).map((s: any) => ({
+          session_id: s?.session_id ?? '',
+          country: s?.country ?? 'Unknown',
+          region: s?.region ?? s?.city ?? null,
+          pages_visited: Number(s?.pages_visited ?? s?.page_count ?? (Array.isArray(s?.page_journey) ? s.page_journey.length : 0)),
+          total_time_seconds: Number(s?.total_time_seconds ?? s?.total_time ?? 0),
+          page_journey: Array.isArray(s?.page_journey) ? s.page_journey.map((pj: any) => ({
+            page_path: pj?.page_path ?? pj?.path ?? '',
+            page_title: pj?.page_title ?? pj?.title ?? '',
+            time_on_page: Number(pj?.time_on_page ?? pj?.time ?? 0)
+          })) : []
+        }))
       } : null;
       
       setVisitorAnalytics(transformedVisitorData);
