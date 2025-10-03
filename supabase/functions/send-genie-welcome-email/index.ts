@@ -148,10 +148,11 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send welcome email
     const { data: emailResult, error: emailError } = await resend.emails.send({
-      from: "Genie AI 🧞‍♂️ <genie@lovableproject.com>",
+      from: "Genie AI Experimentation Hub <onboarding@resend.dev>",
       to: [email],
       subject: `Welcome to Genie AI, ${firstName || 'Explorer'}! 🧞‍♂️`,
       html: genieWelcomeHtml,
+      reply_to: "genieaiexperimentationhub@gmail.com",
     });
 
     if (emailError) {
@@ -204,7 +205,7 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     const { error: adminEmailError } = await resend.emails.send({
-      from: "Genie AI Notifications <notifications@lovableproject.com>",
+      from: "Genie AI Notifications <onboarding@resend.dev>",
       to: ["genieaiexperimentationhub@gmail.com"],
       subject: "🧞‍♂️ New Genie AI User Registration",
       html: adminNotificationHtml,

@@ -276,7 +276,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="max-w-md max-h-[85vh] flex flex-col z-[100001]">
+      <DialogContent className="max-w-md w-full h-[85vh] max-h-[85vh] overflow-hidden flex flex-col z-[100001]">
         <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <span>Genie AI Configuration</span>
@@ -284,7 +284,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex-1 overflow-y-auto py-4 px-1 min-h-0">
+        <div className="flex-1 overflow-y-auto py-4 px-2 min-h-0">
           {step === 1 && renderStep1()}
           {step === 2 && renderStep2()}
           {step === 3 && renderStep3()}
