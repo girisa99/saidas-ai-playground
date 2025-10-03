@@ -235,8 +235,14 @@ export const EnhancedGenieDashboard = () => {
         .order('created_at', { ascending: false });
 
       // Load visitor analytics summary (for unified dashboard)
-      const { data: visitorAnalyticsData } = await supabase
+      const { data: visitorAnalyticsData, error: visitorError } = await supabase
         .rpc('get_visitor_analytics_summary', { days_back: 30 });
+
+      if (visitorError) {
+        console.error('Error loading visitor analytics:', visitorError);
+      }
+
+      console.log('Visitor Analytics Data:', visitorAnalyticsData);
 
       // Set data
       setConversations(conversationsData || []);
@@ -544,10 +550,18 @@ export const EnhancedGenieDashboard = () => {
     const userRetentionRate = totalUsers > 0 ? Math.round((activeUsers / totalUsers) * 100) : 0;
 
     // Extract visitor analytics data
+    console.log('Processing visitor analytics:', visitorAnalytics);
     const websitePageViews = visitorAnalytics?.summary?.total_views || 0;
     const websiteUniqueVisitors = visitorAnalytics?.summary?.unique_visitors || 0;
     const websiteAvgTimeOnPage = visitorAnalytics?.summary?.avg_time_on_page_seconds || 0;
     const websitePagesVisited = visitorAnalytics?.summary?.unique_pages || 0;
+    
+    console.log('Website Analytics Stats:', {
+      pageViews: websitePageViews,
+      uniqueVisitors: websiteUniqueVisitors,
+      avgTime: websiteAvgTimeOnPage,
+      pagesVisited: websitePagesVisited
+    });
 
     setStats({
       totalConversations,
