@@ -5,9 +5,10 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Brain, Database, Network, Settings2, Cpu, Users, Eye, AlertTriangle, ExternalLink, FileImage } from 'lucide-react';
+import { Brain, Database, Network, Settings2, Cpu, Users, Eye, AlertTriangle, ExternalLink, FileImage, Zap, Image, Stethoscope } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface AdvancedAISettingsProps {
   onConfigChange: (config: AIConfig) => void;
@@ -196,127 +197,151 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
   const filteredModels = getFilteredModels();
 
   return (
-    <div className="space-y-4 p-4 max-h-96 overflow-y-auto">
-      {/* Mode Selection */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm flex items-center gap-2">
-            <Brain className="h-4 w-4" />
-            AI Mode
-          </CardTitle>
-          <CardDescription className="text-xs">
-            Choose how the AI handles conversations
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="pt-0">
+    <TooltipProvider>
+      <div className="space-y-6 p-4 max-h-96 overflow-y-auto">
+        {/* Mode Selection - Cleaner */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Brain className="h-4 w-4 text-primary" />
+            <h3 className="font-medium text-sm">AI Mode</h3>
+          </div>
+          
           <Select value={config.mode} onValueChange={(value: 'default' | 'single' | 'multi') => updateConfig({ mode: value })}>
-            <SelectTrigger className="h-8 bg-background">
+            <SelectTrigger className="h-9 bg-card border-border/50">
               <SelectValue placeholder="Select mode" />
             </SelectTrigger>
-            <SelectContent className="bg-background border-border z-[100000]">
+            <SelectContent className="bg-popover border-border z-[100000]">
               <SelectItem value="default" className="cursor-pointer">
                 <div className="flex items-center gap-2">
-                  <Settings2 className="h-3 w-3" />
-                  <span>Default - Balanced responses</span>
+                  <Settings2 className="h-3.5 w-3.5" />
+                  <span>Balanced</span>
                 </div>
               </SelectItem>
               <SelectItem value="single" className="cursor-pointer">
                 <div className="flex items-center gap-2">
-                  <Cpu className="h-3 w-3" />
-                  <span>Single - Focused model responses</span>
+                  <Cpu className="h-3.5 w-3.5" />
+                  <span>Focused</span>
                 </div>
               </SelectItem>
               <SelectItem value="multi" className="cursor-pointer">
                 <div className="flex items-center gap-2">
-                  <Users className="h-3 w-3" />
-                  <span>Multi - Cross-model consensus</span>
+                  <Users className="h-3.5 w-3.5" />
+                  <span>Consensus</span>
                 </div>
               </SelectItem>
             </SelectContent>
           </Select>
-          <p className="text-xs text-muted-foreground mt-1">
-            Current: <strong>{config.mode}</strong>
-          </p>
-        </CardContent>
-      </Card>
+        </div>
 
-      {/* Model Selection */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm flex items-center gap-2">
-            <Cpu className="h-4 w-4" />
-            Model Selection
-          </CardTitle>
-          <CardDescription className="text-xs">
-            Filter and select your AI model
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="pt-0 space-y-3">
-          {/* Model Type Filter */}
-          <div className="flex flex-wrap gap-1">
-            <Button
-              variant={modelFilter === 'all' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setModelFilter('all')}
-              className="h-6 text-xs"
-            >
-              All Models ({modelOptions.length})
-            </Button>
-            <Button
-              variant={modelFilter === 'general' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setModelFilter('general')}
-              className="h-6 text-xs"
-            >
-              LLM+Vision ({modelOptions.filter(m => m.category === 'General').length})
-            </Button>
-            <Button
-              variant={modelFilter === 'slm' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setModelFilter('slm')}
-              className="h-6 text-xs"
-            >
-              Small LM ({modelOptions.filter(m => m.category === 'Efficient').length})
-            </Button>
-            <Button
-              variant={modelFilter === 'vision' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setModelFilter('vision')}
-              className="h-6 text-xs"
-            >
-              Vision ({modelOptions.filter(m => m.category === 'Vision').length})
-            </Button>
-            <Button
-              variant={modelFilter === 'healthcare' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setModelFilter('healthcare')}
-              className="h-6 text-xs"
-            >
-              Healthcare ({modelOptions.filter(m => m.category === 'Healthcare').length})
-            </Button>
+        <Separator />
+
+        {/* Model Selection - Cleaner with Icon Filters */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Cpu className="h-4 w-4 text-primary" />
+            <h3 className="font-medium text-sm">Model Selection</h3>
           </div>
-          {/* Model Dropdown */}
+          
+          {/* Icon-based Filter Buttons */}
+          <div className="flex gap-1.5">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={modelFilter === 'all' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setModelFilter('all')}
+                  className="h-8 w-8 p-0 transition-all"
+                >
+                  <Settings2 className="h-3.5 w-3.5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-xs">All ({modelOptions.length})</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={modelFilter === 'general' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setModelFilter('general')}
+                  className="h-8 w-8 p-0 transition-all"
+                >
+                  <Brain className="h-3.5 w-3.5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-xs">LLM+Vision ({modelOptions.filter(m => m.category === 'General').length})</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={modelFilter === 'slm' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setModelFilter('slm')}
+                  className="h-8 w-8 p-0 transition-all"
+                >
+                  <Zap className="h-3.5 w-3.5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-xs">Small LM ({modelOptions.filter(m => m.category === 'Efficient').length})</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={modelFilter === 'vision' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setModelFilter('vision')}
+                  className="h-8 w-8 p-0 transition-all"
+                >
+                  <Image className="h-3.5 w-3.5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-xs">Vision ({modelOptions.filter(m => m.category === 'Vision').length})</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={modelFilter === 'healthcare' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setModelFilter('healthcare')}
+                  className="h-8 w-8 p-0 transition-all"
+                >
+                  <Stethoscope className="h-3.5 w-3.5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-xs">Healthcare ({modelOptions.filter(m => m.category === 'Healthcare').length})</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+          {/* Model Dropdown - Cleaner */}
           <Select value={config.selectedModel} onValueChange={(value) => updateConfig({ selectedModel: value })}>
-            <SelectTrigger className="h-8 bg-background">
-              <SelectValue placeholder="Select primary model" />
+            <SelectTrigger className="h-9 bg-card border-border/50">
+              <SelectValue placeholder="Select model" />
             </SelectTrigger>
-            <SelectContent className="bg-background border-border z-[100000] max-h-[300px] overflow-y-auto">
+            <SelectContent className="bg-popover border-border z-[100000] max-h-[280px]">
               {filteredModels.length === 0 ? (
-                <div className="px-2 py-4 text-xs text-center text-muted-foreground">
+                <div className="px-3 py-6 text-xs text-center text-muted-foreground">
                   No models in this category
                 </div>
               ) : (
                 filteredModels.map((model) => (
                   <SelectItem key={model.id} value={model.id} className="cursor-pointer">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs">{model.name}</span>
+                    <div className="flex items-center justify-between gap-3 w-full">
+                      <span className="text-sm font-medium">{model.name}</span>
                       <div className="flex gap-1">
-                        <Badge variant="secondary" className="text-[10px] px-1 py-0">
-                          {model.type}
-                        </Badge>
-                        <Badge variant="outline" className="text-[10px] px-1 py-0">
-                          {model.provider}
-                        </Badge>
+                        {model.vision && <Eye className="h-3 w-3 text-primary" />}
+                        {model.medicalCapable && <Stethoscope className="h-3 w-3 text-primary" />}
                       </div>
                     </div>
                   </SelectItem>
@@ -324,55 +349,53 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
               )}
             </SelectContent>
           </Select>
+
+          {/* Selected Model Info - Streamlined */}
           {selectedModel && (
-            <div className="space-y-2">
-              <div className="flex gap-1 items-center">
-                <span className="text-xs text-muted-foreground">Active:</span>
-                <Badge variant="secondary" className="text-xs">
-                  {selectedModel.name}
-                </Badge>
-                <Badge variant="outline" className="text-xs">
+            <div className="rounded-lg border border-border/50 bg-card/50 p-3 space-y-2 animate-in fade-in duration-200">
+              <div className="flex items-start justify-between gap-2">
+                <div className="space-y-0.5 flex-1">
+                  <p className="text-sm font-medium">{selectedModel.name}</p>
+                  <p className="text-xs text-muted-foreground">{selectedModel.description}</p>
+                </div>
+                <Badge variant="outline" className="text-[10px] shrink-0">
                   {selectedModel.provider}
                 </Badge>
-                {selectedModel.vision && (
-                  <Badge variant="default" className="text-xs flex items-center gap-1">
-                    <Eye className="h-2.5 w-2.5" />
-                    Vision
-                  </Badge>
-                )}
               </div>
               
-              {/* Model Details Card */}
-              <div className="bg-muted/50 rounded-md p-2 space-y-1">
-                <p className="text-xs text-muted-foreground">{selectedModel.description}</p>
-                <div className="flex items-center gap-2">
+              {(selectedModel.vision || selectedModel.medicalCapable) && (
+                <div className="flex gap-1.5 flex-wrap">
                   {selectedModel.vision && (
-                    <Badge variant="outline" className="text-[10px]">
-                      📸 Image Analysis
+                    <Badge variant="secondary" className="text-[10px] px-2 py-0.5">
+                      <Eye className="h-2.5 w-2.5 mr-1" />
+                      Vision
                     </Badge>
                   )}
                   {selectedModel.medicalCapable && (
-                    <Badge variant="outline" className="text-[10px]">
-                      🏥 Medical Capable
+                    <Badge variant="secondary" className="text-[10px] px-2 py-0.5">
+                      <Stethoscope className="h-2.5 w-2.5 mr-1" />
+                      Medical
                     </Badge>
                   )}
                 </div>
-                {selectedModel.learnMoreUrl && (
-                  <a 
-                    href={selectedModel.learnMoreUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-xs text-primary hover:underline flex items-center gap-1 mt-1"
-                  >
-                    Learn more about this model
-                    <ExternalLink className="h-2.5 w-2.5" />
-                  </a>
-                )}
-              </div>
+              )}
+              
+              {selectedModel.learnMoreUrl && (
+                <a 
+                  href={selectedModel.learnMoreUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-xs text-primary hover:text-primary/80 flex items-center gap-1 transition-colors"
+                >
+                  Documentation
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              )}
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+
+        <Separator />
 
       {/* Comparison Model (for Multi + Split) */}
       {(config.mode === 'multi' || config.splitScreenEnabled) && (
@@ -596,26 +619,25 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
         </Card>
       )}
 
-      {/* Current Configuration Summary */}
-      <Card className="bg-muted/50">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-xs">Active Configuration</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="flex flex-wrap gap-1">
-            <Badge variant="default" className="text-xs">
-              {config.mode.toUpperCase()}
+        {/* Current Configuration Summary */}
+        <div className="rounded-lg border border-border/50 bg-muted/30 p-3">
+          <p className="text-xs font-medium mb-2">Active Configuration</p>
+          <div className="flex flex-wrap gap-1.5">
+            <Badge variant="default" className="text-[10px] px-2">
+              {config.mode.charAt(0).toUpperCase() + config.mode.slice(1)}
             </Badge>
-            <Badge variant="secondary" className="text-xs">
+            <Badge variant="secondary" className="text-[10px] px-2">
               {selectedModel?.name || 'No model'}
             </Badge>
-            {config.ragEnabled && <Badge variant="outline" className="text-xs">RAG</Badge>}
-            {config.knowledgeBaseEnabled && <Badge variant="outline" className="text-xs">KB</Badge>}
-            {config.mcpEnabled && <Badge variant="outline" className="text-xs">MCP</Badge>}
-            {config.splitScreenEnabled && <Badge variant="outline" className="text-xs">Split</Badge>}
+            {config.ragEnabled && <Badge variant="outline" className="text-[10px] px-2">RAG</Badge>}
+            {config.knowledgeBaseEnabled && <Badge variant="outline" className="text-[10px] px-2">Knowledge</Badge>}
+            {config.mcpEnabled && <Badge variant="outline" className="text-[10px] px-2">MCP</Badge>}
+            {config.splitScreenEnabled && <Badge variant="outline" className="text-[10px] px-2">Split</Badge>}
+            {config.visionEnabled && <Badge variant="outline" className="text-[10px] px-2">Vision</Badge>}
+            {config.medicalImageMode && <Badge variant="outline" className="text-[10px] px-2">Medical</Badge>}
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </div>
+    </TooltipProvider>
   );
 };
