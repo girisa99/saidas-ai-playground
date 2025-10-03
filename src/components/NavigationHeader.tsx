@@ -33,110 +33,79 @@ export const NavigationHeader = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-lg border-b border-border shadow-sm">
-      <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-        <div className="flex h-14 sm:h-16 items-center justify-between gap-2">{/* Mobile-optimized height */}
-          {/* Logo & Brand - Left aligned, flexible width */}
-          <Link to="/" className="enterprise-logo-container group min-w-fit flex-shrink-0 mr-4 sm:mr-6 lg:mr-8 xl:mr-10">
-            <div className="relative flex-shrink-0">
+    <header className="sticky top-0 z-50 w-full bg-background/98 backdrop-blur-md border-b border-border/40 shadow-sm">
+      <div className="w-full max-w-[1600px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
+        <div className="flex h-16 items-center justify-between gap-3">{/* Increased height for better spacing */}
+          <Link to="/" className="enterprise-logo-container group flex-shrink-0">
+            <div className="relative">
               <LazyImage 
                 src={genieLogoMain} 
                 alt="Genie AI" 
-                className="enterprise-logo-image group-hover:scale-105 transition-transform duration-300"
+                className="h-11 w-11 object-contain group-hover:scale-105 transition-transform duration-300"
               />
             </div>
-            {/* Full brand text for extra large screens */}
-            <div className="hidden xl:block">
-              <div className="flex items-center space-x-2">
-                <span className="text-lg font-bold enterprise-gradient-text whitespace-nowrap">
-                  GENIE AI HUB
-                </span>
-              </div>
-              <p className="text-xs professional-tagline whitespace-nowrap leading-tight">
-                I am your Technology Navigator
-              </p>
-            </div>
-            {/* Compact brand text for large screens */}
-            <div className="hidden lg:block xl:hidden">
-              <div className="flex items-center space-x-1">
-                <span className="text-base font-bold enterprise-gradient-text whitespace-nowrap">
-                  GENIE AI HUB
-                </span>
-              </div>
-              <p className="text-xs professional-tagline whitespace-nowrap">
-                I am your Technology Navigator
-              </p>
-            </div>
-            {/* Mobile - GENIE AI HUB with tagline */}
-            <div className="hidden sm:block lg:hidden">
-              <span className="text-sm font-bold enterprise-gradient-text whitespace-nowrap">
+            <div className="hidden sm:flex flex-col">
+              <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent whitespace-nowrap">
                 GENIE AI HUB
               </span>
-              <p className="text-xs professional-tagline whitespace-nowrap">
-                I am your Technology Navigator
+              <p className="text-[10px] text-muted-foreground font-medium whitespace-nowrap -mt-0.5">
+                Technology Navigator
               </p>
             </div>
           </Link>
 
-          {/* Desktop Navigation - Center, takes available space */}
-          <nav className="hidden lg:flex items-center justify-center flex-1 min-w-0 px-1">
-            <div className="flex items-center justify-center gap-0.5 flex-nowrap">
+          {/* Desktop Navigation - Single line, no wrapping */}
+          <nav className="hidden lg:flex items-center justify-center flex-1 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center gap-1 whitespace-nowrap">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = isActivePath(item.to);
                 
-                // Custom labels for responsive display
-                const getResponsiveLabel = (label: string) => {
-                  switch(label) {
-                    case "About Sai Dasika": return { full: "About Sai", short: "About" };
-                    case "AI Development Journey": return { full: "AI Journey", short: "Journey" };
-                    case "3-Phase Tech Framework": return { full: "Tech Framework", short: "Tech" };
-                    case "Gartner Business Solutions": return { full: "Business Solutions", short: "Business" };
-                    case "Validated Case Studies": return { full: "Case Studies", short: "Studies" };
-                    default: return { full: label, short: label };
-                  }
+                const getCompactLabel = (label: string) => {
+                  const labels: Record<string, string> = {
+                    "About Sai Dasika": "About",
+                    "AI Development Journey": "Journey",
+                    "Tech Stack": "Tech",
+                    "Gartner Business Solutions": "Solutions",
+                    "Validated Case Studies": "Studies",
+                    "Home": "Home"
+                  };
+                  return labels[label] || label;
                 };
-                
-                const responsiveLabel = getResponsiveLabel(item.label);
                 
                 return (
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`flex items-center gap-1 px-1.5 lg:px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 whitespace-nowrap ${
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                       isActive
                         ? 'bg-primary text-primary-foreground shadow-sm'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        : 'text-foreground/70 hover:text-foreground hover:bg-muted/60'
                     }`}
                   >
-                    <Icon className="w-3 h-3 flex-shrink-0" />
-                    <span className="hidden xl:inline text-xs">{responsiveLabel.full}</span>
-                    <span className="xl:hidden text-[11px]">{responsiveLabel.short}</span>
+                    <Icon className="w-4 h-4 flex-shrink-0" />
+                    <span className="whitespace-nowrap">{getCompactLabel(item.label)}</span>
                   </Link>
                 );
               })}
             </div>
           </nav>
 
-          {/* Desktop Actions - Right aligned, responsive sizing */}
-          <div className="hidden lg:flex items-center space-x-1 flex-shrink-0">
-            {/* Search - Compact size */}
+          {/* Desktop Actions */}
+          <div className="hidden lg:flex items-center gap-2 flex-shrink-0">
             <div className="relative">
               <SearchBar compact />
             </div>
             
-            {/* Action Buttons - Responsive sizing */}
-            <div className="flex items-center space-x-1 pl-1.5 border-l border-border min-w-0">
-              <Button 
-                variant="outline"
-                size="sm" 
-                className="text-xs font-medium hover:bg-muted/80 whitespace-nowrap h-7 px-2"
-                onClick={() => window.open('https://www.genieaiexpermentationhub.com', '_blank')}
-              >
-                <ExternalLink className="w-3 h-3 mr-1 flex-shrink-0" />
-                <span>Login</span>
-              </Button>
-            </div>
+            <Button 
+              variant="outline"
+              size="sm" 
+              className="text-sm font-medium hover:bg-muted/80 whitespace-nowrap border-border/60"
+              onClick={() => window.open('https://www.genieaiexpermentationhub.com', '_blank')}
+            >
+              <ExternalLink className="w-4 h-4 mr-1.5" />
+              Login
+            </Button>
           </div>
 
           {/* Mobile Menu Button - Right aligned */}
@@ -154,10 +123,9 @@ export const NavigationHeader = () => {
           </Button>
         </div>
 
-        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-lg">
-            <div className="px-4 py-6 space-y-6">
+          <div className="lg:hidden border-t border-border/40 bg-background/98 backdrop-blur-md">
+            <div className="px-4 py-5 space-y-5 max-h-[calc(100vh-4rem)] overflow-y-auto">
               {/* Mobile Search */}
               <div className="relative">
                 <SearchBar />
@@ -173,10 +141,10 @@ export const NavigationHeader = () => {
                       key={item.to}
                       to={item.to}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                      className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
                         isActive
                           ? 'bg-primary text-primary-foreground shadow-md'
-                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                          : 'text-foreground/70 hover:text-foreground hover:bg-muted/60'
                       }`}
                     >
                       <Icon className="w-5 h-5 flex-shrink-0" />
