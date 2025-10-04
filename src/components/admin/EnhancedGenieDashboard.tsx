@@ -275,9 +275,9 @@ export const EnhancedGenieDashboard = () => {
         .select('*')
         .order('created_at', { ascending: false });
 
-      // Load knowledge base entries (if available)
+      // Load universal knowledge base entries
       const { data: knowledgeData } = await supabase
-        .from('knowledge_base')
+        .from('universal_knowledge_base')
         .select('*')
         .order('created_at', { ascending: false });
 
@@ -804,131 +804,54 @@ export const EnhancedGenieDashboard = () => {
       toast({
         title: "Error",
         description: "Title is required",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Validate based on input type
-    if (newKnowledgeEntry.inputType === 'text' && !newKnowledgeEntry.content) {
-      toast({
-        title: "Error",
-        description: "Content is required for text input",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (newKnowledgeEntry.inputType === 'url' && !newKnowledgeEntry.url) {
-      toast({
-        title: "Error",
-        description: "URL is required for URL input",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (newKnowledgeEntry.inputType === 'html' && !newKnowledgeEntry.html) {
-      toast({
-        title: "Error",
-        description: "HTML content is required for HTML input",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (newKnowledgeEntry.inputType === 'file' && !selectedFile) {
-      toast({
-        title: "Error",
-        description: "File is required for file input",
-        variant: "destructive",
+        variant: "destructive"
       });
       return;
     }
 
     setUploading(true);
     try {
-      let filePath = null;
-      let fileName = null;
-      let fileSize = null;
-      let fileType = null;
-      let processedContent = '';
+      let content = newKnowledgeEntry.content;
+      let metadata: any = { source_type: 'manual_entry' };
 
-      // Handle file upload
-      if (newKnowledgeEntry.inputType === 'file' && selectedFile) {
-        const fileExt = selectedFile.name.split('.').pop();
-        const timestamp = Date.now();
-        filePath = `${timestamp}-${selectedFile.name}`;
-        fileName = selectedFile.name;
-        fileSize = selectedFile.size;
-        fileType = selectedFile.type;
-
-        // Upload file to Supabase storage
-        const { error: uploadError } = await supabase.storage
-          .from('knowledge-files')
-          .upload(filePath, selectedFile);
-
-        if (uploadError) throw uploadError;
-
-        // For text-based files, read content directly
-        if (selectedFile.type.startsWith('text/') || 
-            selectedFile.type === 'application/json' ||
-            selectedFile.name.endsWith('.sql') ||
-            selectedFile.name.endsWith('.md')) {
-          const fileContent = await selectedFile.text();
-          processedContent = fileContent;
-        } else {
-          // For complex documents, we would need to implement parsing
-          processedContent = `File uploaded: ${fileName} (${fileType})`;
-        }
+      // Handle different input types
+      if (newKnowledgeEntry.inputType === 'url' && newKnowledgeEntry.url) {
+        metadata.source_url = newKnowledgeEntry.url;
+        metadata.source_type = 'url';
+      } else if (newKnowledgeEntry.inputType === 'html' && newKnowledgeEntry.html) {
+        content = newKnowledgeEntry.html;
+        metadata.source_type = 'html';
+      } else if (selectedFile) {
+        metadata.file_name = selectedFile.name;
+        metadata.file_type = selectedFile.type;
+        metadata.source_type = 'document';
       }
 
-      // Prepare insert data
-      const insertData: any = {
-        name: newKnowledgeEntry.title,
-        category: newKnowledgeEntry.category,
-        healthcare_tags: newKnowledgeEntry.tags.split(',').map(tag => tag.trim()).filter(Boolean),
-        status: 'approved',
-        source_type: 'admin_created',
-        is_active: true,
-        is_static: false
-      };
+      // Determine domain and content type
+      const domain = newKnowledgeEntry.category === 'healthcare' ? 'conversational' : 'conversational';
+      const contentType = newKnowledgeEntry.inputType === 'url' ? 'faq' : 'educational_content';
 
-      // Set content based on input type
-      switch (newKnowledgeEntry.inputType) {
-        case 'text':
-          insertData.description = newKnowledgeEntry.content;
-          insertData.processed_content = newKnowledgeEntry.content;
-          break;
-        case 'url':
-          insertData.content_url = newKnowledgeEntry.url;
-          insertData.description = `Content from URL: ${newKnowledgeEntry.url}`;
-          // We could fetch and process the URL content here
-          break;
-        case 'html':
-          insertData.content_html = newKnowledgeEntry.html;
-          insertData.description = newKnowledgeEntry.html;
-          insertData.processed_content = newKnowledgeEntry.html;
-          break;
-        case 'file':
-          insertData.file_path = filePath;
-          insertData.file_name = fileName;
-          insertData.file_size = fileSize;
-          insertData.file_type = fileType;
-          insertData.description = processedContent;
-          insertData.processed_content = processedContent;
-          break;
-      }
-
-      const { error } = await supabase
-        .from('knowledge_base')
-        .insert(insertData);
+      // Insert into universal_knowledge_base
+      const { error } = await supabase.from('universal_knowledge_base').insert({
+        finding_name: newKnowledgeEntry.title,
+        description: content,
+        domain,
+        content_type: contentType,
+        metadata: {
+          ...metadata,
+          tags: newKnowledgeEntry.tags?.split(',').map(t => t.trim()).filter(Boolean) || [],
+          created_via: 'admin_dashboard'
+        },
+        clinical_context: {},
+        quality_score: 75,
+        is_approved: true
+      });
 
       if (error) throw error;
 
       toast({
         title: "Success",
-        description: "Knowledge entry added successfully",
+        description: "Knowledge entry added to universal knowledge base"
       });
 
       setNewKnowledgeEntry({ 

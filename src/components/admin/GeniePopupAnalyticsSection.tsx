@@ -47,7 +47,7 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
 
   const loadKnowledgeEntries = async () => {
     const { data, error } = await supabase
-      .from('knowledge_base')
+      .from('universal_knowledge_base')
       .select('*')
       .order('created_at', { ascending: false });
     
@@ -62,83 +62,44 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
       return;
     }
 
-    if (newKnowledgeEntry.inputType === 'text' && !newKnowledgeEntry.content) {
-      toast({ title: "Error", description: "Content is required for text input", variant: "destructive" });
-      return;
-    }
-
-    if (newKnowledgeEntry.inputType === 'url' && !newKnowledgeEntry.url) {
-      toast({ title: "Error", description: "URL is required for URL input", variant: "destructive" });
-      return;
-    }
-
-    if (newKnowledgeEntry.inputType === 'html' && !newKnowledgeEntry.html) {
-      toast({ title: "Error", description: "HTML content is required for HTML input", variant: "destructive" });
-      return;
-    }
-
-    if (newKnowledgeEntry.inputType === 'file' && !selectedFile) {
-      toast({ title: "Error", description: "File is required for file input", variant: "destructive" });
-      return;
-    }
-
     setUploading(true);
     try {
-      let filePath = null, fileName = null, fileSize = null, fileType = null, processedContent = '';
+      let content = newKnowledgeEntry.content;
+      let metadata: any = { source_type: 'manual_entry' };
 
-      if (newKnowledgeEntry.inputType === 'file' && selectedFile) {
-        const timestamp = Date.now();
-        filePath = `${timestamp}-${selectedFile.name}`;
-        fileName = selectedFile.name;
-        fileSize = selectedFile.size;
-        fileType = selectedFile.type;
-
-        const { error: uploadError } = await supabase.storage.from('knowledge-files').upload(filePath, selectedFile);
-        if (uploadError) throw uploadError;
-
-        if (selectedFile.type.startsWith('text/') || selectedFile.type === 'application/json' || 
-            selectedFile.name.endsWith('.sql') || selectedFile.name.endsWith('.md')) {
-          processedContent = await selectedFile.text();
-        } else {
-          processedContent = `File uploaded: ${fileName} (${fileType})`;
-        }
+      // Handle different input types
+      if (newKnowledgeEntry.inputType === 'url' && newKnowledgeEntry.url) {
+        metadata.source_url = newKnowledgeEntry.url;
+        metadata.source_type = 'url';
+      } else if (newKnowledgeEntry.inputType === 'html' && newKnowledgeEntry.html) {
+        content = newKnowledgeEntry.html;
+        metadata.source_type = 'html';
+      } else if (selectedFile) {
+        metadata.file_name = selectedFile.name;
+        metadata.file_type = selectedFile.type;
+        metadata.source_type = 'document';
       }
 
-      const insertData: any = {
-        name: newKnowledgeEntry.title,
-        category: newKnowledgeEntry.category,
-        healthcare_tags: newKnowledgeEntry.tags.split(',').map(tag => tag.trim()).filter(Boolean),
-        status: 'approved',
-        source_type: 'admin_created',
-        is_active: true,
-        is_static: false
-      };
+      // Determine domain and content type
+      const domain = newKnowledgeEntry.category === 'healthcare' ? 'conversational' : 'conversational';
+      const contentType = newKnowledgeEntry.inputType === 'url' ? 'faq' : 'educational_content';
 
-      switch (newKnowledgeEntry.inputType) {
-        case 'text':
-          insertData.description = newKnowledgeEntry.content;
-          insertData.processed_content = newKnowledgeEntry.content;
-          break;
-        case 'url':
-          insertData.content_url = newKnowledgeEntry.url;
-          insertData.description = `Content from URL: ${newKnowledgeEntry.url}`;
-          break;
-        case 'html':
-          insertData.content_html = newKnowledgeEntry.html;
-          insertData.description = newKnowledgeEntry.html;
-          insertData.processed_content = newKnowledgeEntry.html;
-          break;
-        case 'file':
-          insertData.file_path = filePath;
-          insertData.file_name = fileName;
-          insertData.file_size = fileSize;
-          insertData.file_type = fileType;
-          insertData.description = processedContent;
-          insertData.processed_content = processedContent;
-          break;
-      }
+      // Insert into universal_knowledge_base (consolidated)
+      const { error } = await supabase.from('universal_knowledge_base').insert({
+        finding_name: newKnowledgeEntry.title,
+        description: content,
+        domain,
+        content_type: contentType,
+        metadata: {
+          ...metadata,
+          tags: newKnowledgeEntry.tags?.split(',').map(t => t.trim()).filter(Boolean) || [],
+          created_via: 'genie_popup_analytics'
+        },
+        clinical_context: {},
+        quality_score: 75,
+        is_approved: true
+      });
 
-      const { error } = await supabase.from('knowledge_base').insert(insertData);
       if (error) throw error;
 
       toast({ title: "Success", description: "Knowledge entry added successfully" });
