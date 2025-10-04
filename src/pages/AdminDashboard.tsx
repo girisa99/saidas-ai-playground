@@ -75,81 +75,10 @@ const AdminDashboard = () => {
         }))
       } : null;
 
-      // Fallback enrichment: if RPC didn't include top_pages/session_journeys, derive them from visitor_analytics table (last 7 days)
-      if (transformedVisitorData && (
-        (transformedVisitorData.top_pages?.length ?? 0) === 0 ||
-        (transformedVisitorData.session_journeys?.length ?? 0) === 0
-      )) {
-        try {
-          const sinceIso = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
-          const { data: vaRows, error: vaErr } = await supabase
-            .from('visitor_analytics')
-            .select('session_id,country,region,page_path,page_title,time_on_page_seconds,visit_timestamp,created_at')
-            .or(`visit_timestamp.gte.${sinceIso},created_at.gte.${sinceIso}`)
-            .order('visit_timestamp', { ascending: true, nullsFirst: true })
-            .limit(5000);
-
-          // If still empty, try a broader fallback (last 2000 records overall)
-          let rows = vaRows || [];
-          if ((!rows || rows.length === 0) && !vaErr) {
-            const { data: vaRowsAll, error: vaErrAll } = await supabase
-              .from('visitor_analytics')
-              .select('session_id,country,region,page_path,page_title,time_on_page_seconds,visit_timestamp,created_at')
-              .order('created_at', { ascending: false })
-              .limit(2000);
-            if (!vaErrAll && Array.isArray(vaRowsAll)) rows = vaRowsAll;
-          }
-
-          if (Array.isArray(rows)) {
-            // Derive Top Pages
-            if ((transformedVisitorData.top_pages?.length ?? 0) === 0) {
-              const pageCountMap = new Map<string, { page_path: string; page_title: string; view_count: number }>();
-              for (const row of vaRows) {
-                const key = `${row.page_path}__${row.page_title ?? ''}`;
-                if (!pageCountMap.has(key)) {
-                  pageCountMap.set(key, {
-                    page_path: row.page_path,
-                    page_title: row.page_title ?? '',
-                    view_count: 0,
-                  });
-                }
-                pageCountMap.get(key)!.view_count += 1;
-              }
-              transformedVisitorData.top_pages = Array.from(pageCountMap.values())
-                .sort((a, b) => b.view_count - a.view_count)
-                .slice(0, 100);
-            }
-
-            // Derive Session Journeys
-            if ((transformedVisitorData.session_journeys?.length ?? 0) === 0) {
-              const sessionsMap = new Map<string, any[]>();
-              for (const row of vaRows) {
-                if (!sessionsMap.has(row.session_id)) sessionsMap.set(row.session_id, []);
-                sessionsMap.get(row.session_id)!.push(row);
-              }
-
-              transformedVisitorData.session_journeys = Array.from(sessionsMap.entries()).map(([session_id, rows]) => {
-                const first = rows[0];
-                const total_time_seconds = rows.reduce((sum, r) => sum + (Number(r.time_on_page_seconds ?? 0)), 0);
-                return {
-                  session_id,
-                  country: first?.country ?? 'Unknown',
-                  region: first?.region ?? null,
-                  pages_visited: rows.length,
-                  total_time_seconds,
-                  page_journey: rows.map(r => ({
-                    page_path: r.page_path,
-                    page_title: r.page_title ?? '',
-                    time_on_page: Number(r.time_on_page_seconds ?? 0),
-                  })),
-                };
-              });
-            }
-          }
-        } catch (e) {
-          console.error('Fallback enrichment from visitor_analytics failed:', e);
-        }
-      }
+      // No fallback enrichment from visitor_analytics table to avoid RLS/empty results.
+      // The RPC now returns all required fields (summary, locations, top_pages, session_journeys, daily_trend, hourly_distribution).
+      // If needed in the future, consider adding a server-side view or RPC instead of direct table access.
+      
       
       setVisitorAnalytics(transformedVisitorData);
 
