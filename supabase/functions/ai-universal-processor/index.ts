@@ -28,33 +28,23 @@ interface AIRequest {
 
 async function searchKnowledgeBase(query: string, context?: string) {
   try {
-    console.log('Searching knowledge base for:', query);
+    console.log('Searching universal knowledge base for:', query);
     
-    // Search the existing knowledge_base table
-    const { data: kbResults, error: kbError } = await supabase
-      .from('knowledge_base')
-      .select('content, metadata, context, tags')
-      .or(`content.ilike.%${query}%, tags.cs.{${query}}`)
+    // Search the consolidated universal_knowledge_base table
+    const { data: results, error } = await supabase
+      .from('universal_knowledge_base')
+      .select('finding_name, description, clinical_context, clinical_significance, domain, content_type, metadata')
+      .eq('is_approved', true)
+      .or(`finding_name.ilike.%${query}%, description.ilike.%${query}%`)
       .limit(5);
 
-    if (kbError) {
-      console.error('Knowledge base search error:', kbError);
+    if (error) {
+      console.error('Universal knowledge base search error:', error);
       return [];
     }
 
-    // Also search RAG recommendations for relevant context
-    const { data: ragResults, error: ragError } = await supabase
-      .from('rag_recommendations')
-      .select('content, context, confidence_score')
-      .or(`content.ilike.%${query}%, context.ilike.%${query}%`)
-      .gte('confidence_score', 0.7)
-      .limit(3);
-
-    if (ragError) {
-      console.error('RAG search error:', ragError);
-    }
-
-    return [...(kbResults || []), ...(ragResults || [])];
+    console.log(`Found ${results?.length || 0} relevant knowledge entries`);
+    return results || [];
   } catch (error) {
     console.error('Search knowledge base error:', error);
     return [];

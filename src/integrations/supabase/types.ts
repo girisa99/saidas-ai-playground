@@ -16858,6 +16858,20 @@ export type Database = {
           usage_count: number
         }[]
       }
+      search_universal_knowledge_vector: {
+        Args: {
+          limit_count?: number
+          query_domain?: string
+          query_embedding: string
+        }
+        Returns: {
+          description: string
+          domain: string
+          finding_name: string
+          id: string
+          similarity: number
+        }[]
+      }
       secure_assign_user_role: {
         Args: { target_role_name: string; target_user_id: string }
         Returns: Json
