@@ -2,6 +2,7 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { User, Sparkles } from 'lucide-react';
 import genieFloating from '@/assets/genie-floating.png';
+import { MessageFeedback } from './MessageFeedback';
 
 interface ConversationMessage {
   role: 'user' | 'assistant';
@@ -14,9 +15,19 @@ interface ConversationMessage {
 
 interface ConversationMessageProps {
   message: ConversationMessage;
+  messageIndex?: number;
+  conversationId?: string;
+  domain?: string;
+  showFeedback?: boolean;
 }
 
-export const ConversationMessage: React.FC<ConversationMessageProps> = ({ message }) => {
+export const ConversationMessage: React.FC<ConversationMessageProps> = ({ 
+  message, 
+  messageIndex, 
+  conversationId, 
+  domain = 'conversational',
+  showFeedback = false 
+}) => {
   const isUser = message.role === 'user';
 
   return (
@@ -44,14 +55,24 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({ messag
           <p className="text-sm whitespace-pre-wrap">{message.content}</p>
         </div>
         
-        <div className={`mt-1 flex items-center gap-2 text-xs text-muted-foreground ${
-          isUser ? 'justify-end' : 'justify-start'
-        }`}>
-          <span>{new Date(message.timestamp).toLocaleTimeString()}</span>
-          {message.model && (
-            <Badge variant="outline" className="text-xs">
-              {message.model}
-            </Badge>
+        <div className={`mt-1 space-y-1`}>
+          <div className={`flex items-center gap-2 text-xs text-muted-foreground ${
+            isUser ? 'justify-end' : 'justify-start'
+          }`}>
+            <span>{new Date(message.timestamp).toLocaleTimeString()}</span>
+            {message.model && (
+              <Badge variant="outline" className="text-xs">
+                {message.model}
+              </Badge>
+            )}
+          </div>
+          
+          {!isUser && showFeedback && conversationId && messageIndex !== undefined && (
+            <MessageFeedback
+              conversationId={conversationId}
+              messageIndex={messageIndex}
+              domain={domain}
+            />
           )}
         </div>
       </div>
