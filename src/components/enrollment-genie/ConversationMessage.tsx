@@ -18,15 +18,17 @@ interface ConversationMessageProps {
   messageIndex?: number;
   conversationId?: string;
   domain?: string;
+  knowledgeBaseIds?: string[];
   showFeedback?: boolean;
 }
 
 export const ConversationMessage: React.FC<ConversationMessageProps> = ({ 
   message, 
-  messageIndex, 
-  conversationId, 
+  messageIndex,
+  conversationId,
   domain = 'conversational',
-  showFeedback = false 
+  knowledgeBaseIds = [],
+  showFeedback = true
 }) => {
   const isUser = message.role === 'user';
 
@@ -40,7 +42,6 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
               alt="GENIE" 
               className="w-6 h-6 object-contain"
             />
-            {/* Subtle sparkle on hover */}
             <Sparkles className="w-2 h-2 text-primary absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
         </div>
@@ -68,11 +69,14 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
           </div>
           
           {!isUser && showFeedback && conversationId && messageIndex !== undefined && (
-            <MessageFeedback
-              conversationId={conversationId}
-              messageIndex={messageIndex}
-              domain={domain}
-            />
+            <div className={isUser ? 'flex justify-end' : 'flex justify-start'}>
+              <MessageFeedback
+                conversationId={conversationId}
+                messageIndex={messageIndex}
+                domain={domain}
+                knowledgeBaseIds={knowledgeBaseIds}
+              />
+            </div>
           )}
         </div>
       </div>
