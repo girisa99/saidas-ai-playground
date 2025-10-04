@@ -3699,6 +3699,59 @@ export type Database = {
           },
         ]
       }
+      conversation_learning_feedback: {
+        Row: {
+          conversation_id: string | null
+          created_at: string | null
+          domain: string | null
+          feedback_score: number | null
+          feedback_text: string | null
+          feedback_type: string
+          id: string
+          knowledge_base_ids: string[] | null
+          message_index: number
+          metadata: Json | null
+          suggested_correction: string | null
+          user_id: string | null
+        }
+        Insert: {
+          conversation_id?: string | null
+          created_at?: string | null
+          domain?: string | null
+          feedback_score?: number | null
+          feedback_text?: string | null
+          feedback_type: string
+          id?: string
+          knowledge_base_ids?: string[] | null
+          message_index: number
+          metadata?: Json | null
+          suggested_correction?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          conversation_id?: string | null
+          created_at?: string | null
+          domain?: string | null
+          feedback_score?: number | null
+          feedback_text?: string | null
+          feedback_type?: string
+          id?: string
+          knowledge_base_ids?: string[] | null
+          message_index?: number
+          metadata?: Json | null
+          suggested_correction?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversation_learning_feedback_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "agent_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       conversation_message_routing: {
         Row: {
           conversation_id: string | null
@@ -7986,6 +8039,56 @@ export type Database = {
             columns: ["conversation_id"]
             isOneToOne: false
             referencedRelation: "user_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      knowledge_usage_analytics: {
+        Row: {
+          created_at: string | null
+          domain: string
+          id: string
+          knowledge_base_id: string | null
+          metadata: Json | null
+          query_text: string | null
+          response_quality_score: number | null
+          session_id: string | null
+          use_case: string
+          user_id: string | null
+          was_helpful: boolean | null
+        }
+        Insert: {
+          created_at?: string | null
+          domain: string
+          id?: string
+          knowledge_base_id?: string | null
+          metadata?: Json | null
+          query_text?: string | null
+          response_quality_score?: number | null
+          session_id?: string | null
+          use_case: string
+          user_id?: string | null
+          was_helpful?: boolean | null
+        }
+        Update: {
+          created_at?: string | null
+          domain?: string
+          id?: string
+          knowledge_base_id?: string | null
+          metadata?: Json | null
+          query_text?: string | null
+          response_quality_score?: number | null
+          session_id?: string | null
+          use_case?: string
+          user_id?: string | null
+          was_helpful?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "knowledge_usage_analytics_knowledge_base_id_fkey"
+            columns: ["knowledge_base_id"]
+            isOneToOne: false
+            referencedRelation: "universal_knowledge_base"
             referencedColumns: ["id"]
           },
         ]
@@ -13447,6 +13550,167 @@ export type Database = {
         }
         Relationships: []
       }
+      universal_knowledge_base: {
+        Row: {
+          body_part: string | null
+          clinical_context: Json | null
+          clinical_significance: string | null
+          content_type: string
+          created_at: string | null
+          dataset_source: string | null
+          description: string
+          differential_diagnosis: string[] | null
+          domain: string
+          embedding: string | null
+          finding_category: string | null
+          finding_name: string
+          id: string
+          is_approved: boolean | null
+          key_features: Json | null
+          metadata: Json | null
+          modality: string | null
+          negative_feedback_count: number | null
+          positive_feedback_count: number | null
+          quality_score: number | null
+          source_repository_id: string | null
+          updated_at: string | null
+          usage_count: number | null
+        }
+        Insert: {
+          body_part?: string | null
+          clinical_context?: Json | null
+          clinical_significance?: string | null
+          content_type: string
+          created_at?: string | null
+          dataset_source?: string | null
+          description: string
+          differential_diagnosis?: string[] | null
+          domain: string
+          embedding?: string | null
+          finding_category?: string | null
+          finding_name: string
+          id?: string
+          is_approved?: boolean | null
+          key_features?: Json | null
+          metadata?: Json | null
+          modality?: string | null
+          negative_feedback_count?: number | null
+          positive_feedback_count?: number | null
+          quality_score?: number | null
+          source_repository_id?: string | null
+          updated_at?: string | null
+          usage_count?: number | null
+        }
+        Update: {
+          body_part?: string | null
+          clinical_context?: Json | null
+          clinical_significance?: string | null
+          content_type?: string
+          created_at?: string | null
+          dataset_source?: string | null
+          description?: string
+          differential_diagnosis?: string[] | null
+          domain?: string
+          embedding?: string | null
+          finding_category?: string | null
+          finding_name?: string
+          id?: string
+          is_approved?: boolean | null
+          key_features?: Json | null
+          metadata?: Json | null
+          modality?: string | null
+          negative_feedback_count?: number | null
+          positive_feedback_count?: number | null
+          quality_score?: number | null
+          source_repository_id?: string | null
+          updated_at?: string | null
+          usage_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "universal_knowledge_base_source_repository_id_fkey"
+            columns: ["source_repository_id"]
+            isOneToOne: false
+            referencedRelation: "universal_knowledge_repositories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      universal_knowledge_repositories: {
+        Row: {
+          access_type: string | null
+          certificates: string[] | null
+          content_types: string[] | null
+          created_at: string | null
+          data_upload_types: string[] | null
+          database_access_types: string[] | null
+          description: string | null
+          domain: string
+          fair_compliant: boolean | null
+          id: string
+          is_active: boolean | null
+          is_medical_imaging: boolean | null
+          last_synced_at: string | null
+          metadata: Json | null
+          quality_score: number | null
+          repository_name: string
+          repository_url: string | null
+          software_used: string[] | null
+          source_id: string
+          source_platform: string
+          subject_areas: string[] | null
+          updated_at: string | null
+        }
+        Insert: {
+          access_type?: string | null
+          certificates?: string[] | null
+          content_types?: string[] | null
+          created_at?: string | null
+          data_upload_types?: string[] | null
+          database_access_types?: string[] | null
+          description?: string | null
+          domain: string
+          fair_compliant?: boolean | null
+          id?: string
+          is_active?: boolean | null
+          is_medical_imaging?: boolean | null
+          last_synced_at?: string | null
+          metadata?: Json | null
+          quality_score?: number | null
+          repository_name: string
+          repository_url?: string | null
+          software_used?: string[] | null
+          source_id: string
+          source_platform: string
+          subject_areas?: string[] | null
+          updated_at?: string | null
+        }
+        Update: {
+          access_type?: string | null
+          certificates?: string[] | null
+          content_types?: string[] | null
+          created_at?: string | null
+          data_upload_types?: string[] | null
+          database_access_types?: string[] | null
+          description?: string | null
+          domain?: string
+          fair_compliant?: boolean | null
+          id?: string
+          is_active?: boolean | null
+          is_medical_imaging?: boolean | null
+          last_synced_at?: string | null
+          metadata?: Json | null
+          quality_score?: number | null
+          repository_name?: string
+          repository_url?: string | null
+          software_used?: string[] | null
+          source_id?: string
+          source_platform?: string
+          subject_areas?: string[] | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       universal_save_sessions: {
         Row: {
           channel_type: string
@@ -16236,6 +16500,16 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: Json
       }
+      get_top_knowledge_by_domain: {
+        Args: { limit_count?: number; query_domain: string }
+        Returns: {
+          finding_name: string
+          negative_feedback: number
+          positive_feedback: number
+          quality_score: number
+          usage_count: number
+        }[]
+      }
       get_user_accessible_facilities: {
         Args: { user_id: string }
         Returns: {
@@ -16321,6 +16595,10 @@ export type Database = {
       hnswhandler: {
         Args: { "": unknown }
         Returns: unknown
+      }
+      increment_knowledge_usage: {
+        Args: { knowledge_id: string }
+        Returns: undefined
       }
       initialize_conversation_journey: {
         Args: { p_agent_id: string; p_conversation_id: string }
@@ -16526,6 +16804,24 @@ export type Database = {
           similarity: number
         }[]
       }
+      search_universal_knowledge: {
+        Args: {
+          limit_count?: number
+          query_content_type?: string
+          query_domain: string
+          query_text?: string
+        }
+        Returns: {
+          content_type: string
+          description: string
+          domain: string
+          feedback_ratio: number
+          finding_name: string
+          id: string
+          quality_score: number
+          usage_count: number
+        }[]
+      }
       secure_assign_user_role: {
         Args: { target_role_name: string; target_user_id: string }
         Returns: Json
@@ -16590,6 +16886,10 @@ export type Database = {
       update_api_services_documentation: {
         Args: Record<PropertyKey, never>
         Returns: Json
+      }
+      update_knowledge_feedback: {
+        Args: { is_positive: boolean; knowledge_id: string }
+        Returns: undefined
       }
       update_site_stat: {
         Args: { increment_value?: number; stat_name_param: string }
