@@ -16189,6 +16189,10 @@ export type Database = {
           total_size: string
         }[]
       }
+      get_dataset_statistics: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
       get_genie_conversations_overview: {
         Args: { days_back?: number; limit_count?: number }
         Returns: Json
@@ -16493,6 +16497,16 @@ export type Database = {
       schedule_maintenance: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      search_knowledge_by_dataset: {
+        Args: { dataset_name: string; limit_count?: number }
+        Returns: {
+          dataset_source: string
+          description: string
+          finding_name: string
+          id: string
+          modality: string
+        }[]
       }
       search_medical_imaging_knowledge: {
         Args: {
