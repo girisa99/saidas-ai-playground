@@ -1088,31 +1088,9 @@ ${conversationSummary.transcript}`
 
                     </div>
 
-                      {/* Image Uploader - Drawer */}
-                      <Sheet open={showImageUploader && aiConfig.visionEnabled} onOpenChange={setShowImageUploader}>
-                        <SheetContent side="right" className="sm:max-w-md z-[100]">
-                          <SheetHeader>
-                            <SheetTitle>Upload images for analysis</SheetTitle>
-                          </SheetHeader>
-                          <div className="p-2">
-                            <MedicalImageUploader
-                              onImageUpload={(images) => {
-                                setUploadedImages(images);
-                                if (images.length > 0) {
-                                  toast({
-                                    title: "Images ready",
-                                    description: `${images.length} image(s) ready for analysis. Send your question to analyze.`,
-                                  });
-                                }
-                              }}
-                              medicalMode={aiConfig.medicalImageMode || false}
-                              maxFiles={5}
-                              userEmail={userInfo?.email}
-                              context={context || 'healthcare'}
-                            />
-                          </div>
-                        </SheetContent>
-                      </Sheet>
+                      {/* Input Area */}
+                      <div className="p-4 border-t bg-background/50 flex-shrink-0">
+                      {/* Context Switcher */}
                       {hasStartedConversation && (
                         <div className="mb-3">
                           <ContextSwitcher
@@ -1300,6 +1278,32 @@ ${conversationSummary.transcript}`
             </motion.div>
           </Draggable>
         )}
+
+      {/* Image Uploader Drawer */}
+      <Sheet open={showImageUploader && aiConfig.visionEnabled} onOpenChange={setShowImageUploader}>
+        <SheetContent side="right" className="sm:max-w-md z-[100]">
+          <SheetHeader>
+            <SheetTitle>Upload Images for Analysis</SheetTitle>
+          </SheetHeader>
+          <div className="mt-4">
+            <MedicalImageUploader
+              onImageUpload={(images) => {
+                setUploadedImages(images);
+                if (images.length > 0) {
+                  toast({
+                    title: "Images ready",
+                    description: `${images.length} image(s) ready for analysis. Send your question to analyze.`,
+                  });
+                }
+              }}
+              medicalMode={aiConfig.medicalImageMode || false}
+              maxFiles={5}
+              userEmail={userInfo?.email}
+              context={context || 'healthcare'}
+            />
+          </div>
+        </SheetContent>
+      </Sheet>
 
       {/* Conversation Limit Modal */}
       <ConversationLimitModal
