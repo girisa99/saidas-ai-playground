@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
 import { useUniversalAI } from '@/hooks/useUniversalAI';
 import { useConversationState } from '@/hooks/useConversationState';
@@ -785,13 +786,16 @@ ${conversationSummary.transcript}`
   if (!isOpen) return null;
 
   return (
-    <AnimatePresence>
-      <motion.div
-        ref={dragRef}
-        initial={{ opacity: 0, scale: 0.9, x: 300 }}
-        animate={{ opacity: 1, scale: 1, x: 0 }}
-        exit={{ opacity: 0, scale: 0.9, x: 300 }}
-        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+    <TooltipProvider>
+      <AnimatePresence>
+        {isOpen && !showPrivacyBanner && (
+          <Draggable handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
+            <motion.div
+              ref={dragRef}
+              initial={{ opacity: 0, scale: 0.9, x: 300 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0.9, x: 300 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
         className={`
           fixed z-[100] flex flex-col bg-gradient-to-br from-background via-background to-primary/5
           ${isMaximized 
@@ -812,52 +816,85 @@ ${conversationSummary.transcript}`
                </div>
             </div>
              <div className="flex items-center gap-1.5">
-               <Button
-                 variant="ghost"
-                 size="sm"
-                 onClick={() => {
-                   setShowAdvancedSettings(!showAdvancedSettings);
-                   // If capabilities is showing, close it
-                   if (showCapabilities) setShowCapabilities(false);
-                 }}
-                 className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
-                 title="AI Configuration & Settings"
-               >
-                 <Settings className="h-3.5 w-3.5" />
-               </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleConnectLiveAgent}
-                className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
-                title="Connect with human agent"
-              >
-                <Users className="h-3.5 w-3.5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsMinimized(!isMinimized)}
-                className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
-              >
-                <Minimize2 className="h-3.5 w-3.5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsMaximized(!isMaximized)}
-                className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
-              >
-                <Maximize2 className="h-3.5 w-3.5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleClose}
-                className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
-              >
-                <X className="h-3.5 w-3.5" />
-              </Button>
+               <Tooltip>
+                 <TooltipTrigger asChild>
+                   <Button
+                     variant="ghost"
+                     size="sm"
+                     onClick={() => {
+                       setShowAdvancedSettings(!showAdvancedSettings);
+                       // If capabilities is showing, close it
+                       if (showCapabilities) setShowCapabilities(false);
+                     }}
+                     className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                   >
+                     <Settings className="h-4 w-4" />
+                   </Button>
+                 </TooltipTrigger>
+                 <TooltipContent>
+                   <p>AI Configuration & Settings</p>
+                 </TooltipContent>
+               </Tooltip>
+               <Tooltip>
+                 <TooltipTrigger asChild>
+                   <Button
+                     variant="ghost"
+                     size="sm"
+                     onClick={handleConnectLiveAgent}
+                     className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                   >
+                     <Users className="h-4 w-4" />
+                   </Button>
+                 </TooltipTrigger>
+                 <TooltipContent>
+                   <p>Connect with human agent</p>
+                 </TooltipContent>
+               </Tooltip>
+               <Tooltip>
+                 <TooltipTrigger asChild>
+                   <Button
+                     variant="ghost"
+                     size="sm"
+                     onClick={() => setIsMinimized(!isMinimized)}
+                     className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                   >
+                     <Minimize2 className="h-4 w-4" />
+                   </Button>
+                 </TooltipTrigger>
+                 <TooltipContent>
+                   <p>Minimize chat window</p>
+                 </TooltipContent>
+               </Tooltip>
+               <Tooltip>
+                 <TooltipTrigger asChild>
+                   <Button
+                     variant="ghost"
+                     size="sm"
+                     onClick={() => setIsMaximized(!isMaximized)}
+                     className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                   >
+                     <Maximize2 className="h-4 w-4" />
+                   </Button>
+                 </TooltipTrigger>
+                 <TooltipContent>
+                   <p>{isMaximized ? 'Exit fullscreen' : 'Fullscreen'} mode</p>
+                 </TooltipContent>
+               </Tooltip>
+               <Tooltip>
+                 <TooltipTrigger asChild>
+                   <Button
+                     variant="ghost"
+                     size="sm"
+                     onClick={handleClose}
+                     className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                   >
+                     <X className="h-4 w-4" />
+                   </Button>
+                 </TooltipTrigger>
+                 <TooltipContent>
+                   <p>Close chat</p>
+                 </TooltipContent>
+               </Tooltip>
             </div>
           </div>
 
@@ -1120,25 +1157,38 @@ ${conversationSummary.transcript}`
                         
                         {/* Image Upload Button - Right of input */}
                         {aiConfig.visionEnabled && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setShowImageUploader(!showImageUploader)}
-                            className="h-9 w-9 p-0 shrink-0"
-                            title={showImageUploader ? "Hide image uploader" : "Upload images"}
-                          >
-                            <ImagePlus className="h-4 w-4" />
-                          </Button>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setShowImageUploader(!showImageUploader)}
+                                className="h-9 w-9 p-0 shrink-0"
+                              >
+                                <ImagePlus className="h-5 w-5" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{showImageUploader ? "Hide" : "Upload"} images or medical scans (DICOM supported)</p>
+                            </TooltipContent>
+                          </Tooltip>
                         )}
 
-                        <Button
-                          onClick={handleSendMessage}
-                          disabled={isLoading || (!inputMessage.trim() && uploadedImages.length === 0)}
-                          size="sm"
-                          className="shrink-0"
-                        >
-                          <Send className="h-4 w-4" />
-                        </Button>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              onClick={handleSendMessage}
+                              disabled={isLoading || (!inputMessage.trim() && uploadedImages.length === 0)}
+                              size="sm"
+                              className="shrink-0"
+                            >
+                              <Send className="h-5 w-5" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Send message (or press Enter)</p>
+                          </TooltipContent>
+                        </Tooltip>
                       </div>
                     
                     {/* Context and Topic Switcher */}
@@ -1211,7 +1261,9 @@ ${conversationSummary.transcript}`
             </div>
           )}
           </Card>
-        </motion.div>
+            </motion.div>
+          </Draggable>
+        )}
 
       {/* Conversation Limit Modal */}
       <ConversationLimitModal
@@ -1261,6 +1313,7 @@ ${conversationSummary.transcript}`
           />
         )}
       </AnimatePresence>
-    </AnimatePresence>
+      </AnimatePresence>
+    </TooltipProvider>
   );
 };
