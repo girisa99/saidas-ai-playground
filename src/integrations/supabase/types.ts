@@ -8271,6 +8271,96 @@ export type Database = {
         }
         Relationships: []
       }
+      medical_imaging_knowledge: {
+        Row: {
+          body_part: string | null
+          clinical_significance: string | null
+          created_at: string | null
+          dataset_source: string | null
+          description: string
+          differential_diagnosis: string[] | null
+          embedding: string | null
+          finding_category: string | null
+          finding_name: string
+          id: string
+          key_features: Json | null
+          metadata: Json | null
+          modality: string
+          updated_at: string | null
+        }
+        Insert: {
+          body_part?: string | null
+          clinical_significance?: string | null
+          created_at?: string | null
+          dataset_source?: string | null
+          description: string
+          differential_diagnosis?: string[] | null
+          embedding?: string | null
+          finding_category?: string | null
+          finding_name: string
+          id?: string
+          key_features?: Json | null
+          metadata?: Json | null
+          modality: string
+          updated_at?: string | null
+        }
+        Update: {
+          body_part?: string | null
+          clinical_significance?: string | null
+          created_at?: string | null
+          dataset_source?: string | null
+          description?: string
+          differential_diagnosis?: string[] | null
+          embedding?: string | null
+          finding_category?: string | null
+          finding_name?: string
+          id?: string
+          key_features?: Json | null
+          metadata?: Json | null
+          modality?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      medical_imaging_references: {
+        Row: {
+          body_part: string | null
+          created_at: string | null
+          dataset_source: string | null
+          diagnosis: string | null
+          embedding: string | null
+          id: string
+          image_characteristics: Json | null
+          key_findings: string[] | null
+          modality: string
+          report_text: string | null
+        }
+        Insert: {
+          body_part?: string | null
+          created_at?: string | null
+          dataset_source?: string | null
+          diagnosis?: string | null
+          embedding?: string | null
+          id?: string
+          image_characteristics?: Json | null
+          key_findings?: string[] | null
+          modality: string
+          report_text?: string | null
+        }
+        Update: {
+          body_part?: string | null
+          created_at?: string | null
+          dataset_source?: string | null
+          diagnosis?: string | null
+          embedding?: string | null
+          id?: string
+          image_characteristics?: Json | null
+          key_findings?: string[] | null
+          modality?: string
+          report_text?: string | null
+        }
+        Relationships: []
+      }
       modalities: {
         Row: {
           administration_requirements: Json | null
@@ -13921,6 +14011,45 @@ export type Database = {
         }
         Relationships: []
       }
+      vision_analysis_logs: {
+        Row: {
+          ai_model: string | null
+          analysis_result: string | null
+          created_at: string | null
+          id: string
+          image_metadata: Json | null
+          modality: string | null
+          rag_context_used: Json | null
+          session_id: string | null
+          user_email: string | null
+          user_feedback: string | null
+        }
+        Insert: {
+          ai_model?: string | null
+          analysis_result?: string | null
+          created_at?: string | null
+          id?: string
+          image_metadata?: Json | null
+          modality?: string | null
+          rag_context_used?: Json | null
+          session_id?: string | null
+          user_email?: string | null
+          user_feedback?: string | null
+        }
+        Update: {
+          ai_model?: string | null
+          analysis_result?: string | null
+          created_at?: string | null
+          id?: string
+          image_metadata?: Json | null
+          modality?: string | null
+          rag_context_used?: Json | null
+          session_id?: string | null
+          user_email?: string | null
+          user_feedback?: string | null
+        }
+        Relationships: []
+      }
       visitor_analytics: {
         Row: {
           city: string | null
@@ -15892,6 +16021,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: Json
       }
+      binary_quantize: {
+        Args: { "": string } | { "": unknown }
+        Returns: unknown
+      }
       bulk_deactivate_patient_enrollments: {
         Args:
           | { p_deactivation_reason?: string; p_facility_id: string }
@@ -16135,6 +16268,22 @@ export type Database = {
         Args: { days_back?: number }
         Returns: Json
       }
+      halfvec_avg: {
+        Args: { "": number[] }
+        Returns: unknown
+      }
+      halfvec_out: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      halfvec_send: {
+        Args: { "": unknown }
+        Returns: string
+      }
+      halfvec_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
+      }
       has_permission: {
         Args: { permission_name: string; user_id: string }
         Returns: boolean
@@ -16152,6 +16301,22 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      hnsw_bit_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnsw_halfvec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnsw_sparsevec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnswhandler: {
+        Args: { "": unknown }
+        Returns: unknown
       }
       initialize_conversation_journey: {
         Args: { p_agent_id: string; p_conversation_id: string }
@@ -16180,6 +16345,26 @@ export type Database = {
       is_demo_user_or_admin: {
         Args: { check_user_id?: string }
         Returns: boolean
+      }
+      ivfflat_bit_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflat_halfvec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflathandler: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      l2_norm: {
+        Args: { "": unknown } | { "": unknown }
+        Returns: number
+      }
+      l2_normalize: {
+        Args: { "": string } | { "": unknown } | { "": unknown }
+        Returns: string
       }
       log_credit_application_audit: {
         Args: {
@@ -16309,6 +16494,24 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      search_medical_imaging_knowledge: {
+        Args: {
+          filter_modality?: string
+          match_count?: number
+          match_threshold?: number
+          query_embedding: string
+        }
+        Returns: {
+          clinical_significance: string
+          dataset_source: string
+          description: string
+          finding_name: string
+          id: string
+          key_features: Json
+          modality: string
+          similarity: number
+        }[]
+      }
       secure_assign_user_role: {
         Args: { target_role_name: string; target_user_id: string }
         Returns: Json
@@ -16337,6 +16540,18 @@ export type Database = {
           p_variables?: Json
         }
         Returns: Json
+      }
+      sparsevec_out: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      sparsevec_send: {
+        Args: { "": unknown }
+        Returns: string
+      }
+      sparsevec_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
       }
       sync_active_issues: {
         Args: { issues_data: Json }
@@ -16396,6 +16611,30 @@ export type Database = {
       validate_data_against_schema: {
         Args: { data_row: Json; schema_def: Json }
         Returns: Json
+      }
+      vector_avg: {
+        Args: { "": number[] }
+        Returns: string
+      }
+      vector_dims: {
+        Args: { "": string } | { "": unknown }
+        Returns: number
+      }
+      vector_norm: {
+        Args: { "": string }
+        Returns: number
+      }
+      vector_out: {
+        Args: { "": string }
+        Returns: unknown
+      }
+      vector_send: {
+        Args: { "": string }
+        Returns: string
+      }
+      vector_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
       }
       verify_jsonb_migration_integrity: {
         Args: Record<PropertyKey, never>

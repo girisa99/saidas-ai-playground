@@ -7,6 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { genieAnalyticsService } from '@/services/genieAnalyticsService';
+import { parseDicomFile, dicomCanvasToBase64 } from '@/utils/dicomParser';
 
 interface MedicalImageUploaderProps {
   onImageUpload: (images: UploadedImage[]) => void;
@@ -65,23 +66,20 @@ export const MedicalImageUploader: React.FC<MedicalImageUploaderProps> = ({
   };
 
   const processDicomFile = async (file: File): Promise<DicomMetadata> => {
-    // Basic DICOM metadata extraction
-    // In production, use a library like cornerstone.js or dicom-parser
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        // Simplified DICOM header parsing
-        const metadata: DicomMetadata = {
-          patientName: 'Anonymous (PHI Removed)',
-          patientID: 'REDACTED',
-          studyDate: new Date().toISOString().split('T')[0],
-          modality: 'Unknown',
-          imageType: 'DICOM Image'
-        };
-        resolve(metadata);
+    try {
+      const dicomData = await parseDicomFile(file);
+      return dicomData.metadata;
+    } catch (error) {
+      console.error('DICOM processing error:', error);
+      // Fallback to basic metadata
+      return {
+        patientName: 'Anonymous (PHI Removed)',
+        patientID: 'REDACTED',
+        studyDate: new Date().toISOString().split('T')[0],
+        modality: 'Unknown',
+        imageType: 'DICOM Image'
       };
-      reader.readAsArrayBuffer(file);
-    });
+    }
   };
 
   const processImage = async (file: File): Promise<UploadedImage> => {
@@ -94,9 +92,20 @@ export const MedicalImageUploader: React.FC<MedicalImageUploaderProps> = ({
     try {
       // Create preview
       if (imageType === 'dicom') {
-        // For DICOM, we'll show a placeholder or use cornerstone to render
-        preview = '/placeholder.svg'; // Replace with actual DICOM rendering
-        metadata = await processDicomFile(file);
+        try {
+          const dicomData = await parseDicomFile(file);
+          metadata = dicomData.metadata;
+          // Convert DICOM canvas to base64 for preview
+          if (dicomData.canvas) {
+            preview = dicomCanvasToBase64(dicomData.canvas);
+          } else {
+            preview = '/placeholder.svg';
+          }
+        } catch (error) {
+          console.error('DICOM rendering error:', error);
+          preview = '/placeholder.svg';
+          metadata = await processDicomFile(file);
+        }
       } else {
         preview = URL.createObjectURL(file);
       }
