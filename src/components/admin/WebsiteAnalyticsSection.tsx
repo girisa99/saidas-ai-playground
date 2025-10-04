@@ -37,9 +37,11 @@ interface WebsiteAnalyticsSectionProps {
       }>;
     }>;
   } | null;
+  sessionAnalytics?: any;
+  retentionAnalytics?: any;
 }
 
-export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = ({ visitorAnalytics }) => {
+export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = ({ visitorAnalytics, sessionAnalytics, retentionAnalytics }) => {
   // Calculate unique countries
   const uniqueCountries = visitorAnalytics?.locations 
     ? new Set(visitorAnalytics.locations.map(l => l.country)).size 
@@ -287,10 +289,15 @@ export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = (
                 <div className="space-y-6">
                   <div>
                     <h3 className="font-semibold mb-3">Peak Hours</h3>
-                    <div className="grid grid-cols-4 gap-2">
-                      {Array.from({ length: 24 }, (_, i) => (
+                    <div className="grid grid-cols-6 gap-2">
+                      {sessionAnalytics?.hourly_distribution?.map((hour: any) => (
+                        <Badge key={hour.hour} variant="secondary" className="justify-center">
+                          {hour.hour}:00
+                          <span className="ml-1 text-xs text-muted-foreground">({hour.sessions})</span>
+                        </Badge>
+                      )) || Array.from({ length: 24 }, (_, i) => (
                         <Badge key={i} variant="outline" className="justify-center">
-                          {i}:00 - {(i + 1) % 24}:00
+                          {i}:00
                         </Badge>
                       ))}
                     </div>
@@ -307,11 +314,21 @@ export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = (
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        <TableRow>
-                          <TableCell colSpan={3} className="text-center text-muted-foreground">
-                            Session data from visitor_analytics
-                          </TableCell>
-                        </TableRow>
+                        {sessionAnalytics?.duration_distribution?.length > 0 ? (
+                          sessionAnalytics.duration_distribution.map((bucket: any, idx: number) => (
+                            <TableRow key={idx}>
+                              <TableCell>{bucket.range}</TableCell>
+                              <TableCell><Badge variant="secondary">{bucket.count}</Badge></TableCell>
+                              <TableCell>{bucket.percentage}%</TableCell>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={3} className="text-center text-muted-foreground">
+                              No session duration data available
+                            </TableCell>
+                          </TableRow>
+                        )}
                       </TableBody>
                     </Table>
                   </div>
@@ -334,19 +351,34 @@ export const WebsiteAnalyticsSection: React.FC<WebsiteAnalyticsSectionProps> = (
                     <Card>
                       <CardContent className="p-4">
                         <div className="text-sm font-medium text-muted-foreground">New Visitors</div>
-                        <div className="text-2xl font-bold">-</div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          {retentionAnalytics?.new_visitors || 0}
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-1">
+                          First-time visitors
+                        </div>
                       </CardContent>
                     </Card>
                     <Card>
                       <CardContent className="p-4">
                         <div className="text-sm font-medium text-muted-foreground">Returning Visitors</div>
-                        <div className="text-2xl font-bold">-</div>
+                        <div className="text-2xl font-bold text-green-600">
+                          {retentionAnalytics?.returning_visitors || 0}
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-1">
+                          Avg {retentionAnalytics?.avg_visits_per_user || 0} visits/user
+                        </div>
                       </CardContent>
                     </Card>
                     <Card>
                       <CardContent className="p-4">
                         <div className="text-sm font-medium text-muted-foreground">Retention Rate</div>
-                        <div className="text-2xl font-bold">-</div>
+                        <div className="text-2xl font-bold text-purple-600">
+                          {retentionAnalytics?.retention_rate || 0}%
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-1">
+                          Of {retentionAnalytics?.total_unique_visitors || 0} total
+                        </div>
                       </CardContent>
                     </Card>
                   </div>

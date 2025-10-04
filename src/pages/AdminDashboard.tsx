@@ -17,6 +17,8 @@ const AdminDashboard = () => {
   const [popupEvents, setPopupEvents] = useState<any[]>([]);
   const [popupStats, setPopupStats] = useState<{ popupClicks: number; privacyAccepted: number; registrations: number }>({ popupClicks: 0, privacyAccepted: 0, registrations: 0 });
   const [knowledgeBaseCount, setKnowledgeBaseCount] = useState<number>(0);
+  const [sessionAnalytics, setSessionAnalytics] = useState<any>(null);
+  const [retentionAnalytics, setRetentionAnalytics] = useState<any>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -130,13 +132,33 @@ const AdminDashboard = () => {
       }
       setAccessRequests(Array.isArray(accessRequestsJson) ? accessRequestsJson : []);
 
-      // Load knowledge base count
+      // Load universal knowledge base count
       const { count: kbCount, error: kbError } = await supabase
-        .from('knowledge_base')
+        .from('universal_knowledge_base')
         .select('*', { count: 'exact', head: true });
       
       if (!kbError && kbCount !== null) {
         setKnowledgeBaseCount(kbCount);
+      }
+
+      // Load session analytics
+      const { data: sessionData, error: sessionError } = await supabase
+        .rpc('get_session_analytics', { days_back: 7 });
+      
+      if (sessionError) {
+        console.error('Session analytics error:', sessionError);
+      } else {
+        setSessionAnalytics(sessionData);
+      }
+
+      // Load retention analytics
+      const { data: retentionData, error: retentionError } = await supabase
+        .rpc('get_retention_analytics', { days_back: 30 });
+      
+      if (retentionError) {
+        console.error('Retention analytics error:', retentionError);
+      } else {
+        setRetentionAnalytics(retentionData);
       }
 
     } catch (error) {
@@ -186,7 +208,11 @@ const AdminDashboard = () => {
           </TabsList>
 
           <TabsContent value="website">
-            <WebsiteAnalyticsSection visitorAnalytics={visitorAnalytics} />
+            <WebsiteAnalyticsSection 
+              visitorAnalytics={visitorAnalytics} 
+              sessionAnalytics={sessionAnalytics}
+              retentionAnalytics={retentionAnalytics}
+            />
           </TabsContent>
 
           <TabsContent value="genie">

@@ -16532,6 +16532,14 @@ export type Database = {
         Args: { days_back?: number; limit_count?: number }
         Returns: Json
       }
+      get_retention_analytics: {
+        Args: { days_back?: number }
+        Returns: Json
+      }
+      get_session_analytics: {
+        Args: { days_back?: number }
+        Returns: Json
+      }
       get_system_integration_status: {
         Args: Record<PropertyKey, never>
         Returns: Json
