@@ -440,7 +440,7 @@ Ask me anything to get started, or click below to explore my advanced features!`
   };
 
   const handleSendMessage = async () => {
-    if (!inputMessage.trim() || isLoading) return;
+    if ((!inputMessage.trim() && uploadedImages.length === 0) || isLoading) return;
 
     // Check if conversation is allowed
     if (!isConversationAllowed) {
@@ -475,12 +475,18 @@ Ask me anything to get started, or click below to explore my advanced features!`
     const userMessage = inputMessage.trim();
     setInputMessage('');
 
+    // Process uploaded images
+    const imageUrls = uploadedImages
+      .filter(img => img.status === 'ready')
+      .map(img => img.preview)
+      .filter(Boolean) as string[];
+
     // Intelligent vision model auto-switching
     const messagesForAnalysis = [...messages, { role: 'user' as const, content: userMessage, timestamp: new Date().toISOString() }];
-    const requiresVision = conversationIntelligence.detectVisionRequirement(messagesForAnalysis);
+    const requiresVision = conversationIntelligence.detectVisionRequirement(messagesForAnalysis) || imageUrls.length > 0;
     
     if (requiresVision && !aiConfig.visionEnabled) {
-      // Auto-enable vision if discussing images
+      // Auto-enable vision if discussing images or has uploaded images
       setAIConfig(prev => ({ ...prev, visionEnabled: true }));
       toast({
         title: "Vision Analysis Enabled",
@@ -567,7 +573,8 @@ Ask me anything to get started, or click below to explore my advanced features!`
             prompt: enhancedPrompt,
             systemPrompt,
             temperature: 0.7,
-            maxTokens: 1000
+            maxTokens: 1000,
+            ...(imageUrls.length > 0 && { images: imageUrls })
           }),
           generateResponse({
             provider: 'claude',
@@ -575,7 +582,8 @@ Ask me anything to get started, or click below to explore my advanced features!`
             prompt: enhancedPrompt,
             systemPrompt,
             temperature: 0.7,
-            maxTokens: 1000
+            maxTokens: 1000,
+            ...(imageUrls.length > 0 && { images: imageUrls })
           })
         ]);
 
@@ -614,7 +622,8 @@ Ask me anything to get started, or click below to explore my advanced features!`
           prompt: enhancedPrompt,
           systemPrompt,
           temperature: 0.7,
-          maxTokens: 1000
+          maxTokens: 1000,
+          ...(imageUrls.length > 0 && { images: imageUrls })
         });
 
           if (response) {
@@ -627,6 +636,12 @@ Ask me anything to get started, or click below to explore my advanced features!`
               model: response.model
             });
           }
+      }
+
+      // Clear uploaded images after sending
+      if (imageUrls.length > 0) {
+        setUploadedImages([]);
+        setShowImageUploader(false);
       }
       
       // Randomly change conversation personality to keep it dynamic
@@ -901,28 +916,15 @@ ${conversationSummary.transcript}`
                   )}
 
                   {/* Messages */}
-                  <div className={`flex-1 overflow-y-auto p-4 space-y-4 ${showAdvancedSettings ? 'max-h-96' : ''}`}>
+                  <div className="flex-1 overflow-y-auto p-4 space-y-4">
                     {/* Vision Model Indicator */}
                     {aiConfig.visionEnabled && (
                       <VisionModelIndicator
                         isVisionEnabled={aiConfig.visionEnabled}
                         isMedicalMode={aiConfig.medicalImageMode || false}
                         modelName={aiConfig.selectedModel}
-                        className="mb-4"
+                        className="mb-2"
                       />
-                    )}
-
-                    {/* Image Uploader */}
-                    {showImageUploader && aiConfig.visionEnabled && (
-                      <div className="mb-4">
-                        <MedicalImageUploader
-                          onImageUpload={setUploadedImages}
-                          medicalMode={aiConfig.medicalImageMode || false}
-                          maxFiles={5}
-                          userEmail={userInfo?.email}
-                          context={context || 'healthcare'}
-                        />
-                      </div>
                     )}
 
                     {aiConfig.splitScreenEnabled && aiConfig.mode === 'multi' ? (
@@ -1033,73 +1035,88 @@ ${conversationSummary.transcript}`
 
                     </div>
 
-                    {/* Input */}
-                    <div className="p-4 border-t bg-background/50">
-                     {/* Context Switcher */}
-                     {hasStartedConversation && (
-                       <div className="mb-3">
-                         <ContextSwitcher
-                           currentContext={context}
-                           onContextSwitch={(newContext) => {
-                             setContext(newContext);
-                             setSelectedTopic('');
-                             addMessage({
-                               role: 'assistant',
-                               content: `Switched to ${newContext} context! 🔄 What would you like to explore?`,
-                               timestamp: new Date().toISOString()
-                             });
-                           }}
-                           onTopicSelect={(topic) => {
-                             setSelectedTopic(topic);
-                             addMessage({
-                               role: 'assistant',
-                               content: `Great! I'm now focused on ${topic}. What specific questions do you have?`,
-                               timestamp: new Date().toISOString()
-                             });
-                           }}
-                           availableTopics={{
-                             technology: technologyTopics,
-                             healthcare: healthcareTopics
-                           }}
-                         />
-                       </div>
-                     )}
-                     <div className="flex gap-2">
-                       {/* Image Upload Button */}
-                       {aiConfig.visionEnabled && (
-                         <Button
-                           variant="outline"
-                           size="sm"
-                           onClick={() => setShowImageUploader(!showImageUploader)}
-                           className="h-9 w-9 p-0"
-                           title={showImageUploader ? "Hide image uploader" : "Upload images"}
-                         >
-                           <ImagePlus className="h-4 w-4" />
-                         </Button>
-                       )}
+                     {/* Input */}
+                     <div className="p-4 border-t bg-background/50">
+                      {/* Image Uploader - Compact */}
+                      {showImageUploader && aiConfig.visionEnabled && (
+                        <div className="mb-3 max-h-32 overflow-y-auto">
+                          <MedicalImageUploader
+                            onImageUpload={setUploadedImages}
+                            medicalMode={aiConfig.medicalImageMode || false}
+                            maxFiles={5}
+                            userEmail={userInfo?.email}
+                            context={context || 'healthcare'}
+                          />
+                        </div>
+                      )}
 
-                       <Input
-                         value={inputMessage}
-                         onChange={(e) => setInputMessage(e.target.value)}
-                         placeholder={
-                           aiConfig.medicalImageMode && aiConfig.visionEnabled
-                             ? "Upload medical images or ask a question..."
-                             : selectedTopic 
-                               ? `Ask me about ${selectedTopic}...` 
-                               : "Ask me anything..."
-                         }
-                         onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                         disabled={isLoading}
-                         className="flex-1"
-                       />
-                       <Button
-                         onClick={handleSendMessage}
-                         disabled={isLoading || !inputMessage.trim()}
-                         size="sm"
-                       >
-                         <Send className="h-4 w-4" />
-                       </Button>
-                     </div>
+                      {/* Context Switcher */}
+                      {hasStartedConversation && (
+                        <div className="mb-3">
+                          <ContextSwitcher
+                            currentContext={context}
+                            onContextSwitch={(newContext) => {
+                              setContext(newContext);
+                              setSelectedTopic('');
+                              addMessage({
+                                role: 'assistant',
+                                content: `Switched to ${newContext} context! 🔄 What would you like to explore?`,
+                                timestamp: new Date().toISOString()
+                              });
+                            }}
+                            onTopicSelect={(topic) => {
+                              setSelectedTopic(topic);
+                              addMessage({
+                                role: 'assistant',
+                                content: `Great! I'm now focused on ${topic}. What specific questions do you have?`,
+                                timestamp: new Date().toISOString()
+                              });
+                            }}
+                            availableTopics={{
+                              technology: technologyTopics,
+                              healthcare: healthcareTopics
+                            }}
+                          />
+                        </div>
+                      )}
+                      <div className="flex gap-2">
+                        <Input
+                          value={inputMessage}
+                          onChange={(e) => setInputMessage(e.target.value)}
+                          placeholder={
+                            aiConfig.medicalImageMode && aiConfig.visionEnabled
+                              ? "Upload medical images or ask a question..."
+                              : selectedTopic 
+                                ? `Ask me about ${selectedTopic}...` 
+                                : "Ask me anything..."
+                          }
+                          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                          disabled={isLoading}
+                          className="flex-1"
+                        />
+                        
+                        {/* Image Upload Button - Right of input */}
+                        {aiConfig.visionEnabled && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setShowImageUploader(!showImageUploader)}
+                            className="h-9 w-9 p-0 shrink-0"
+                            title={showImageUploader ? "Hide image uploader" : "Upload images"}
+                          >
+                            <ImagePlus className="h-4 w-4" />
+                          </Button>
+                        )}
+
+                        <Button
+                          onClick={handleSendMessage}
+                          disabled={isLoading || (!inputMessage.trim() && uploadedImages.length === 0)}
+                          size="sm"
+                          className="shrink-0"
+                        >
+                          <Send className="h-4 w-4" />
+                        </Button>
+                      </div>
                     
                     {/* Context and Topic Switcher */}
                     <div className="flex justify-between items-center mt-2">
