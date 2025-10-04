@@ -786,18 +786,21 @@ ${conversationSummary.transcript}`
 
   return (
     <AnimatePresence>
-      <Draggable
-        handle=".drag-handle"
-        disabled={isMaximized}
-        nodeRef={dragRef}
+      <motion.div
+        ref={dragRef}
+        initial={{ opacity: 0, scale: 0.9, x: 300 }}
+        animate={{ opacity: 1, scale: 1, x: 0 }}
+        exit={{ opacity: 0, scale: 0.9, x: 300 }}
+        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+        className={`
+          fixed z-[100] flex flex-col bg-gradient-to-br from-background via-background to-primary/5
+          ${isMaximized 
+            ? 'top-0 right-0 bottom-0 w-full md:w-3/4 lg:w-2/3 h-full rounded-none' 
+            : 'top-4 right-4 w-[90vw] md:w-[500px] lg:w-[600px] h-[calc(100vh-2rem)] rounded-xl shadow-2xl border-2 border-primary/20'
+          }
+        `}
+        style={{ isolation: 'isolate', backdropFilter: 'blur(12px)' }}
       >
-        <motion.div
-          ref={dragRef}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.9 }}
-          className={`fixed ${isMaximized ? 'inset-4' : isMinimized ? 'bottom-4 right-4 w-80 h-16' : 'bottom-4 right-4 w-96 h-[600px]'} z-[99999]`}
-        >
           <Card className="h-full bg-gradient-to-br from-background to-muted border shadow-2xl">
             {/* Header */}
           <div className="drag-handle flex items-center justify-between p-3 border-b bg-gradient-to-r from-slate-900 to-slate-800 cursor-move">
@@ -915,8 +918,8 @@ ${conversationSummary.transcript}`
                     </div>
                   )}
 
-                  {/* Messages */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                   {/* Messages */}
+                  <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
                     {/* Vision Model Indicator */}
                     {aiConfig.visionEnabled && (
                       <VisionModelIndicator
@@ -925,6 +928,18 @@ ${conversationSummary.transcript}`
                         modelName={aiConfig.selectedModel}
                         className="mb-2"
                       />
+                    )}
+                    
+                    {/* Show uploaded images status when there are images */}
+                    {uploadedImages.length > 0 && (
+                      <div className="bg-primary/5 border border-primary/20 rounded-lg p-3">
+                        <p className="text-xs font-medium text-primary mb-1">
+                          📷 {uploadedImages.length} image{uploadedImages.length > 1 ? 's' : ''} ready for analysis
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {aiConfig.medicalImageMode ? 'Medical imaging mode active - DICOM support enabled' : 'Standard image analysis mode'}
+                        </p>
+                      </div>
                     )}
 
                     {aiConfig.splitScreenEnabled && aiConfig.mode === 'multi' ? (
@@ -938,7 +953,7 @@ ${conversationSummary.transcript}`
                     ) : (
                       <div className="space-y-2">
                         {messages.map((message, index) => (
-                          <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                          <div key={`message-${index}-${message.timestamp}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                             <div className={`max-w-[80%] p-3 rounded-lg ${
                               message.role === 'user' 
                                 ? 'bg-primary text-primary-foreground' 
@@ -1035,20 +1050,28 @@ ${conversationSummary.transcript}`
 
                     </div>
 
-                     {/* Input */}
-                     <div className="p-4 border-t bg-background/50">
-                      {/* Image Uploader - Compact */}
-                      {showImageUploader && aiConfig.visionEnabled && (
-                        <div className="mb-3 max-h-32 overflow-y-auto">
-                          <MedicalImageUploader
-                            onImageUpload={setUploadedImages}
-                            medicalMode={aiConfig.medicalImageMode || false}
-                            maxFiles={5}
-                            userEmail={userInfo?.email}
-                            context={context || 'healthcare'}
-                          />
-                        </div>
-                      )}
+                      {/* Input */}
+                      <div className="p-4 border-t bg-background/50 flex-shrink-0">
+                       {/* Image Uploader - Compact */}
+                       {showImageUploader && aiConfig.visionEnabled && (
+                         <div className="mb-3 max-h-48 overflow-y-auto border rounded-lg p-2 bg-card">
+                           <MedicalImageUploader
+                             onImageUpload={(images) => {
+                               setUploadedImages(images);
+                               if (images.length > 0) {
+                                 toast({
+                                   title: "Images ready",
+                                   description: `${images.length} image(s) ready for analysis. Send your question to analyze.`,
+                                 });
+                               }
+                             }}
+                             medicalMode={aiConfig.medicalImageMode || false}
+                             maxFiles={5}
+                             userEmail={userInfo?.email}
+                             context={context || 'healthcare'}
+                           />
+                         </div>
+                       )}
 
                       {/* Context Switcher */}
                       {hasStartedConversation && (
@@ -1189,7 +1212,6 @@ ${conversationSummary.transcript}`
           )}
           </Card>
         </motion.div>
-      </Draggable>
 
       {/* Conversation Limit Modal */}
       <ConversationLimitModal

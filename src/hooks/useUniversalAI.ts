@@ -8,6 +8,8 @@ interface AIRequest {
   systemPrompt?: string;
   temperature?: number;
   maxTokens?: number;
+  imageUrl?: string;
+  images?: string[];
 }
 
 interface AIResponse {
@@ -42,7 +44,9 @@ export const useUniversalAI = () => {
           prompt: request.prompt,
           systemPrompt: request.systemPrompt || '',
           temperature: request.temperature || 0.7,
-          maxTokens: request.maxTokens || 1500
+          maxTokens: request.maxTokens || 1500,
+          imageUrl: request.imageUrl,
+          images: request.images
         }
       });
 
