@@ -56,12 +56,13 @@ export const searchMedicalKnowledge = async (
   modality?: string
 ): Promise<any[]> => {
   try {
-    // First, generate embedding for the query (requires OpenAI)
-    // For now, return empty array - embeddings will be generated server-side
+    // Now using universal_knowledge_base with domain filter
     const { data, error } = await supabase
-      .from('medical_imaging_knowledge')
+      .from('universal_knowledge_base')
       .select('*')
-      .eq('modality', modality || 'X-Ray')
+      .eq('domain', 'medical_imaging')
+      .ilike('metadata->>modality', modality || 'X-Ray')
+      .order('quality_score', { ascending: false })
       .limit(5);
 
     if (error) {

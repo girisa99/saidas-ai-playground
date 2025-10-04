@@ -15,25 +15,9 @@ import {
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import type { Database } from "@/integrations/supabase/types";
 
-interface RAGRecommendation {
-  id: string;
-  conversation_id: string;
-  knowledge_base_ids: string[];
-  query_context: string;
-  recommendations: any;
-  next_best_actions: any;
-  confidence_score: number;
-  healthcare_context: any;
-  treatment_recommendations: any;
-  clinical_insights: any;
-  created_at: string;
-  knowledge_base_entry_id: string | null;
-  reviewed_by: string | null;
-  reviewed_at: string | null;
-  review_notes: string | null;
-  status: string;
-}
+type RAGRecommendation = Database['public']['Tables']['universal_knowledge_base']['Row'];
 
 interface RAGReviewModalProps {
   trigger: React.ReactNode;
@@ -49,12 +33,15 @@ export const RAGReviewModal = ({ trigger }: RAGReviewModalProps) => {
   const fetchRecommendations = async () => {
     setIsLoading(true);
     try {
+      // Now using universal_knowledge_base with domain filter
       const { data, error } = await supabase
-        .from('rag_recommendations')
+        .from('universal_knowledge_base')
         .select('*')
-        .eq('status', 'pending')
-        .order('confidence_score', { ascending: false })
-        .order('frequency_count', { ascending: false });
+        .eq('domain', 'conversational')
+        .eq('content_type', 'recommendation')
+        .eq('is_approved', false)
+        .order('quality_score', { ascending: false })
+        .order('usage_count', { ascending: false });
 
       if (error) throw error;
       setRecommendations(data || []);
@@ -72,17 +59,21 @@ export const RAGReviewModal = ({ trigger }: RAGReviewModalProps) => {
 
   const processRecommendation = async (id: string, action: string) => {
     try {
-      const { data, error } = await supabase.rpc('process_rag_recommendation', {
-        p_recommendation_id: id,
-        p_action: action,
-        p_review_notes: reviewNotes || null
-      });
+      // Update approval status in universal_knowledge_base
+      const isApproved = action === 'approve';
+      
+      const { error } = await supabase
+        .from('universal_knowledge_base')
+        .update({
+          is_approved: isApproved
+        })
+        .eq('id', id);
 
       if (error) throw error;
 
       toast({
         title: "Success",
-        description: `Recommendation ${action}d successfully`,
+        description: `Knowledge ${action}d successfully`,
       });
 
       // Refresh recommendations
@@ -152,37 +143,40 @@ export const RAGReviewModal = ({ trigger }: RAGReviewModalProps) => {
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <Badge className={getStatusColor(rec.status)}>
-                          {rec.status.charAt(0).toUpperCase() + rec.status.slice(1)}
+                        <Badge className={getStatusColor(rec.is_approved ? 'approved' : 'pending')}>
+                          {rec.is_approved ? 'Approved' : 'Pending'}
                         </Badge>
                         <Badge variant="outline">
-                          Confidence: {(rec.confidence_score * 100).toFixed(1)}%
+                          Quality: {((rec.quality_score || 0) * 100).toFixed(1)}%
                         </Badge>
                         <Badge variant="outline">
-                          KB IDs: {rec.knowledge_base_ids?.length || 0}
+                          Usage: {rec.usage_count || 0}
+                        </Badge>
+                        <Badge variant="secondary">
+                          {rec.domain} / {rec.content_type}
                         </Badge>
                       </div>
                       <h3 className="font-semibold text-lg mb-2">
-                        Knowledge Base Improvement
+                        {rec.finding_name}
                       </h3>
                       <p className="text-sm text-muted-foreground mb-2">
-                        Conversation: {rec.conversation_id}
+                        Source: {rec.dataset_source || 'Manual'}
                       </p>
                     </div>
                   </div>
 
                   <div className="mb-4">
-                    <h4 className="font-medium mb-2">Recommendations:</h4>
+                    <h4 className="font-medium mb-2">Description:</h4>
                     <div className="bg-secondary/50 p-4 rounded-md">
-                      <pre className="text-sm whitespace-pre-wrap">{JSON.stringify(rec.recommendations, null, 2)}</pre>
+                      <p className="text-sm whitespace-pre-wrap">{rec.description}</p>
                     </div>
                   </div>
 
-                  {rec.clinical_insights && (
+                  {rec.metadata && (
                     <div className="mb-4">
-                      <h4 className="font-medium mb-2">Clinical Insights:</h4>
+                      <h4 className="font-medium mb-2">Additional Metadata:</h4>
                       <div className="bg-secondary/50 p-4 rounded-md">
-                        <pre className="text-sm whitespace-pre-wrap">{JSON.stringify(rec.clinical_insights, null, 2)}</pre>
+                        <pre className="text-sm whitespace-pre-wrap">{JSON.stringify(rec.metadata, null, 2)}</pre>
                       </div>
                     </div>
                   )}
