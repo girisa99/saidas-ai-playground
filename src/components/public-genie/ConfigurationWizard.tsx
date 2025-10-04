@@ -32,10 +32,12 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
   const [config, setConfig] = useState<AIConfig>({
     mode: 'default',
     ragEnabled: false,
+    knowledgeBase: false,
     knowledgeBaseEnabled: false,
     mcpEnabled: false,
     selectedModel: 'gpt-4o-mini',
     secondaryModel: 'claude-3-haiku',
+    splitScreen: false,
     splitScreenEnabled: false,
     contextualSuggestions: true,
   });

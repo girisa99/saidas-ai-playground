@@ -180,10 +180,12 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [aiConfig, setAIConfig] = useState<AIConfig>({
     mode: 'default',
     ragEnabled: false,
+    knowledgeBase: false,
     knowledgeBaseEnabled: false,
     mcpEnabled: false,
     selectedModel: 'gpt-4o-mini',
     secondaryModel: 'claude-3-haiku',
+    splitScreen: false,
     splitScreenEnabled: false,
     contextualSuggestions: true,
     visionEnabled: false,
@@ -617,7 +619,7 @@ Ask me anything to get started, or click below to explore my advanced features!`
           }));
         }
       } else {
-        // Standard single response
+        // Standard single response with RAG, Knowledge Base, MCP
         const response = await generateResponse({
           provider: 'openai',
           model: aiConfig.selectedModel,
@@ -625,14 +627,29 @@ Ask me anything to get started, or click below to explore my advanced features!`
           systemPrompt,
           temperature: 0.7,
           maxTokens: 1000,
+          useRAG: aiConfig.ragEnabled,
+          knowledgeBase: aiConfig.knowledgeBase,
+          useMCP: aiConfig.mcpEnabled,
+          labelStudio: false,
+          context: context || 'general',
           ...(imageUrls.length > 0 && { images: imageUrls })
-        });
+        } as any);
 
           if (response) {
             const personalizedResponse = addPersonalityToResponse(response.content);
+            
+            // Add RAG context indicator if used
+            let messageContent = personalizedResponse;
+            if (response.ragContext) {
+              messageContent += `\n\n_📚 Response enhanced with knowledge base context_`;
+            }
+            if (response.knowledgeBaseResults) {
+              messageContent += `\n\n_🔍 Used ${response.knowledgeBaseResults.length || 0} knowledge entries_`;
+            }
+            
             addMessage({
               role: 'assistant',
-              content: personalizedResponse,
+              content: messageContent,
               timestamp: new Date().toISOString(),
               provider: response.provider,
               model: response.model

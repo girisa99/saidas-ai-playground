@@ -21,11 +21,13 @@ interface AdvancedAISettingsProps {
 export interface AIConfig {
   mode: 'default' | 'single' | 'multi';
   ragEnabled: boolean;
-  knowledgeBaseEnabled: boolean;
+  knowledgeBase: boolean;  // Renamed from knowledgeBaseEnabled for consistency
+  knowledgeBaseEnabled: boolean;  // Keep for backwards compatibility
   mcpEnabled: boolean;
   selectedModel: string;
   secondaryModel?: string;
-  splitScreenEnabled: boolean;
+  splitScreen: boolean;  // Renamed from splitScreenEnabled for consistency
+  splitScreenEnabled: boolean;  // Keep for backwards compatibility
   contextualSuggestions: boolean;
   visionEnabled?: boolean;
   medicalImageMode?: boolean;
