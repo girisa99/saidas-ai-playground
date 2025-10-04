@@ -487,7 +487,17 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
         <CardContent className="pt-0 space-y-3">
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label className="text-xs font-medium">RAG (Retrieval Augmented Generation)</Label>
+              <Label className="text-xs font-medium flex items-center gap-1">
+                RAG (Retrieval Augmented Generation)
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="inline-flex items-center justify-center h-4 w-4 rounded-full bg-muted text-[10px] cursor-help">i</span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="text-xs max-w-xs">Grounds answers by retrieving relevant snippets from your indexed sources.</p>
+                  </TooltipContent>
+                </Tooltip>
+              </Label>
               <p className="text-xs text-muted-foreground">Real-time knowledge retrieval</p>
             </div>
             <Switch
@@ -500,7 +510,17 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
           
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label className="text-xs font-medium">Knowledge Base</Label>
+              <Label className="text-xs font-medium flex items-center gap-1">
+                Knowledge Base
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="inline-flex items-center justify-center h-4 w-4 rounded-full bg-muted text-[10px] cursor-help">i</span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="text-xs max-w-xs">Uses the unified Universal Knowledge Base topics to enrich responses.</p>
+                  </TooltipContent>
+                </Tooltip>
+              </Label>
               <p className="text-xs text-muted-foreground">Domain-specific knowledge</p>
             </div>
             <Switch
@@ -516,6 +536,14 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
               <Label className="text-xs font-medium flex items-center gap-1">
                 <Network className="h-3 w-3" />
                 MCP (Model Context Protocol)
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="inline-flex items-center justify-center h-4 w-4 rounded-full bg-muted text-[10px] cursor-help">i</span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="text-xs max-w-xs">Connects the model to tools, APIs, and data connectors for richer context.</p>
+                  </TooltipContent>
+                </Tooltip>
               </Label>
               <p className="text-xs text-muted-foreground">Enhanced model connectivity</p>
             </div>

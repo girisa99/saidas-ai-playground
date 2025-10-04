@@ -25,6 +25,7 @@ import { ContextSwitcher } from './ContextSwitcher';
 import { TopicSuggestionPopover } from './TopicSuggestionPopover';
 import { MedicalImageUploader, UploadedImage } from './MedicalImageUploader';
 import { VisionModelIndicator } from './VisionModelIndicator';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { conversationIntelligence } from '@/utils/conversationIntelligence';
 import { ConversationLimitModal } from './ConversationLimitModal';
 import { ExperimentationBanner } from './ExperimentationBanner';
@@ -990,7 +991,7 @@ ${conversationSummary.transcript}`
                     ) : (
                       <div className="space-y-2">
                         {messages.map((message, index) => (
-                          <div key={`message-${index}-${message.timestamp}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                          <div key={`msg-${index}-${message.role}-${message.timestamp || index}-${(message.content || '').length}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                             <div className={`max-w-[80%] p-3 rounded-lg ${
                               message.role === 'user' 
                                 ? 'bg-primary text-primary-foreground' 
@@ -1087,30 +1088,31 @@ ${conversationSummary.transcript}`
 
                     </div>
 
-                      {/* Input */}
-                      <div className="p-4 border-t bg-background/50 flex-shrink-0">
-                       {/* Image Uploader - Compact */}
-                       {showImageUploader && aiConfig.visionEnabled && (
-                         <div className="mb-3 max-h-48 overflow-y-auto border rounded-lg p-2 bg-card">
-                           <MedicalImageUploader
-                             onImageUpload={(images) => {
-                               setUploadedImages(images);
-                               if (images.length > 0) {
-                                 toast({
-                                   title: "Images ready",
-                                   description: `${images.length} image(s) ready for analysis. Send your question to analyze.`,
-                                 });
-                               }
-                             }}
-                             medicalMode={aiConfig.medicalImageMode || false}
-                             maxFiles={5}
-                             userEmail={userInfo?.email}
-                             context={context || 'healthcare'}
-                           />
-                         </div>
-                       )}
-
-                      {/* Context Switcher */}
+                      {/* Image Uploader - Drawer */}
+                      <Sheet open={showImageUploader && aiConfig.visionEnabled} onOpenChange={setShowImageUploader}>
+                        <SheetContent side="right" className="sm:max-w-md z-[100]">
+                          <SheetHeader>
+                            <SheetTitle>Upload images for analysis</SheetTitle>
+                          </SheetHeader>
+                          <div className="p-2">
+                            <MedicalImageUploader
+                              onImageUpload={(images) => {
+                                setUploadedImages(images);
+                                if (images.length > 0) {
+                                  toast({
+                                    title: "Images ready",
+                                    description: `${images.length} image(s) ready for analysis. Send your question to analyze.`,
+                                  });
+                                }
+                              }}
+                              medicalMode={aiConfig.medicalImageMode || false}
+                              maxFiles={5}
+                              userEmail={userInfo?.email}
+                              context={context || 'healthcare'}
+                            />
+                          </div>
+                        </SheetContent>
+                      </Sheet>
                       {hasStartedConversation && (
                         <div className="mb-3">
                           <ContextSwitcher
@@ -1210,15 +1212,49 @@ ${conversationSummary.transcript}`
                         <p className="text-xs text-muted-foreground flex items-center gap-1">
                           <span>Genie AI</span>
                           {aiConfig.mode !== 'default' && (
-                            <Badge variant="secondary" className="text-xs">
-                              {aiConfig.mode.toUpperCase()}
-                            </Badge>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Badge variant="secondary" className="text-xs cursor-help">
+                                  {aiConfig.mode.toUpperCase()}
+                                </Badge>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{aiConfig.mode === 'multi' ? 'Consensus mode: compare multiple models' : 'Focused mode: single model optimized'}</p>
+                              </TooltipContent>
+                            </Tooltip>
                           )}
                           {(aiConfig.ragEnabled || aiConfig.knowledgeBaseEnabled || aiConfig.mcpEnabled) && (
                             <div className="flex gap-1">
-                              {aiConfig.ragEnabled && <Badge variant="outline" className="text-xs">RAG</Badge>}
-                              {aiConfig.knowledgeBaseEnabled && <Badge variant="outline" className="text-xs">KB</Badge>}
-                              {aiConfig.mcpEnabled && <Badge variant="outline" className="text-xs">MCP</Badge>}
+                              {aiConfig.ragEnabled && (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Badge variant="outline" className="text-xs cursor-help">RAG</Badge>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>Retrieval Augmented Generation: pulls relevant docs to ground answers</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              )}
+                              {aiConfig.knowledgeBaseEnabled && (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Badge variant="outline" className="text-xs cursor-help">KB</Badge>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>Knowledge Base: uses curated universal topics for context</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              )}
+                              {aiConfig.mcpEnabled && (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Badge variant="outline" className="text-xs cursor-help">MCP</Badge>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>Model Context Protocol: connect tools and data sources</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              )}
                             </div>
                           )}
                         </p>
