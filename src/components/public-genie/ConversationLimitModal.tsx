@@ -32,7 +32,7 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-sm sm:max-w-md md:max-w-2xl w-full h-[85vh] max-h-[90vh] overflow-hidden flex flex-col">
+      <DialogContent className="max-w-sm sm:max-w-md md:max-w-2xl w-full h-[85vh] max-h-[90vh] overflow-hidden flex flex-col z-[100002]">
         <DialogHeader className="flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -41,15 +41,15 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
               </div>
               <div>
                 <DialogTitle className="text-xl font-bold">
-                  Conversation Limit Reached
+                  Conversation Limit Info
                 </DialogTitle>
                 <p className="text-sm text-muted-foreground">
-                  Help us maintain quality conversations for everyone
+                  Understanding conversation limits
                 </p>
               </div>
             </div>
-            <Button onClick={onClose} className="min-w-[100px]">
-              Understood
+            <Button onClick={onClose} size="sm" className="min-w-[100px]">
+              Continue
             </Button>
           </div>
         </DialogHeader>

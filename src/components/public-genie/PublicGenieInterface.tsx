@@ -231,7 +231,7 @@ useEffect(() => {
   }
 }, [messages.length, context, selectedTopic, userInfo]);
 
-// Check conversation limits only when user info changes and is available
+  // Check conversation limits only when user info changes and is available
 useEffect(() => {
   if (!userInfo) return;
 
@@ -244,9 +244,8 @@ useEffect(() => {
       setConversationLimits(limits);
       setIsConversationAllowed(limits.allowed);
       
-      if (!limits.allowed) {
-        setShowLimitModal(true);
-      }
+      // Only show modal if conversation is not allowed and user tries to send message
+      // Don't auto-show on context switch
     } catch (error) {
       console.error('Failed to check conversation limits:', error);
       setIsConversationAllowed(true);
@@ -1110,22 +1109,24 @@ ${conversationSummary.transcript}`
                       {/* Context Switcher */}
                       {hasStartedConversation && (
                         <div className="mb-3">
-                          <ContextSwitcher
+                           <ContextSwitcher
                             currentContext={context}
                             onContextSwitch={(newContext) => {
                               setContext(newContext);
                               setSelectedTopic('');
                               addMessage({
                                 role: 'assistant',
-                                content: `Switched to ${newContext} context! 🔄 What would you like to explore?`,
+                                content: `Switched to ${newContext} context! 🔄 Your conversation history is preserved. What would you like to explore in ${newContext}?`,
                                 timestamp: new Date().toISOString()
                               });
+                              
+                              // Don't show limit modal on context switch, conversation continues
                             }}
                             onTopicSelect={(topic) => {
                               setSelectedTopic(topic);
                               addMessage({
                                 role: 'assistant',
-                                content: `Great! I'm now focused on ${topic}. What specific questions do you have?`,
+                                content: `Great! I'm now focused on ${topic}. Your previous conversation is still here. What specific questions do you have about ${topic}?`,
                                 timestamp: new Date().toISOString()
                               });
                             }}
@@ -1322,12 +1323,15 @@ ${conversationSummary.transcript}`
         </SheetContent>
       </Sheet>
 
-      {/* Conversation Limit Modal */}
+      {/* Conversation Limit Modal - with proper z-index and close handler */}
       <ConversationLimitModal
         isOpen={showLimitModal}
         onClose={() => {
-          console.log('Closing limit modal');
           setShowLimitModal(false);
+          // Allow user to continue if they still have hourly quota
+          if (conversationLimits && conversationLimits.hourly_count < conversationLimits.hourly_limit) {
+            setIsConversationAllowed(true);
+          }
         }}
         limits={conversationLimits || {
           allowed: false,

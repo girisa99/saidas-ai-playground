@@ -178,16 +178,18 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
           </div>
         )}
 
-        <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-          <div className="space-y-1">
-            <h4 className="text-sm font-medium">Enable Split Screen</h4>
-            <p className="text-xs text-muted-foreground">Compare responses side-by-side</p>
+        {config.mode === 'multi' && (
+          <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+            <div className="space-y-1">
+              <h4 className="text-sm font-medium">Enable Split Screen</h4>
+              <p className="text-xs text-muted-foreground">Compare responses side-by-side</p>
+            </div>
+            <Switch
+              checked={config.splitScreenEnabled}
+              onCheckedChange={(checked) => updateConfig({ splitScreenEnabled: checked })}
+            />
           </div>
-          <Switch
-            checked={config.splitScreenEnabled}
-            onCheckedChange={(checked) => updateConfig({ splitScreenEnabled: checked })}
-          />
-        </div>
+        )}
       </div>
     </div>
   );
