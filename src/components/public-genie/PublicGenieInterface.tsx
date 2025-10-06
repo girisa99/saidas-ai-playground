@@ -806,8 +806,8 @@ ${conversationSummary.transcript}`
   return (
     <TooltipProvider>
       <AnimatePresence>
-        {isOpen && !showPrivacyBanner && (
-          <Draggable handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
+        {isOpen && (
+          <Draggable key="genie-window" handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
             <motion.div
               ref={dragRef}
               initial={{ opacity: 0, scale: 0.9, x: 300 }}
@@ -1359,7 +1359,7 @@ ${conversationSummary.transcript}`
       />
       
       {/* Human Escalation Form */}
-      <AnimatePresence>
+      <AnimatePresence key="human-escalation-presence">
         {showHumanEscalation && userInfo && (
           <HumanEscalationForm
             isOpen={showHumanEscalation}
