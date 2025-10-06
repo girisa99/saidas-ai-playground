@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.58.0';
+import { checkRateLimit, getClientIP, getRateLimitHeaders } from "../_shared/rateLimiter.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,6 +28,29 @@ serve(async (req) => {
   }
 
   try {
+    // Rate limiting
+    const clientIP = getClientIP(req);
+    const rateLimitResult = await checkRateLimit(clientIP, 'receive-email');
+    const rateLimitHeaders = getRateLimitHeaders(rateLimitResult, 'receive-email');
+    
+    if (!rateLimitResult.allowed) {
+      console.log(`Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ 
+          error: 'Rate limit exceeded. Too many emails received.',
+          resetAt: rateLimitResult.resetAt 
+        }),
+        { 
+          status: 429, 
+          headers: { 
+            ...corsHeaders, 
+            ...rateLimitHeaders,
+            'Content-Type': 'application/json' 
+          } 
+        }
+      );
+    }
+
     // Initialize Supabase client with service role key for webhook
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',

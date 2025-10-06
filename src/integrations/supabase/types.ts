@@ -11561,6 +11561,33 @@ export type Database = {
           },
         ]
       }
+      rate_limit_tracking: {
+        Row: {
+          created_at: string | null
+          endpoint: string
+          ip_address: string
+          request_count: number | null
+          updated_at: string | null
+          window_start: number
+        }
+        Insert: {
+          created_at?: string | null
+          endpoint: string
+          ip_address: string
+          request_count?: number | null
+          updated_at?: string | null
+          window_start: number
+        }
+        Update: {
+          created_at?: string | null
+          endpoint?: string
+          ip_address?: string
+          request_count?: number | null
+          updated_at?: string | null
+          window_start?: number
+        }
+        Relationships: []
+      }
       received_emails: {
         Row: {
           attachments: Json | null
@@ -16388,6 +16415,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: number
       }
+      cleanup_rate_limits: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       cleanup_universal_save_sessions: {
         Args: Record<PropertyKey, never>
         Returns: Json
@@ -16739,14 +16770,23 @@ export type Database = {
         Returns: string
       }
       log_security_event: {
-        Args: {
-          p_description: string
-          p_event_type: string
-          p_metadata?: Json
-          p_severity: string
-          p_user_id: string
-        }
-        Returns: undefined
+        Args:
+          | {
+              p_description: string
+              p_event_type: string
+              p_metadata?: Json
+              p_severity: string
+              p_user_id: string
+            }
+          | {
+              p_details?: Json
+              p_endpoint?: string
+              p_event_type: string
+              p_ip_address?: string
+              p_severity: string
+              p_user_agent?: string
+            }
+        Returns: string
       }
       log_sensitive_data_access: {
         Args: { operation_type: string; record_id?: string; table_name: string }

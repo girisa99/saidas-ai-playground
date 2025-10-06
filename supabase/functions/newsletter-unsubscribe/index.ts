@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "https://esm.sh/resend@2.0.0";
+import { checkRateLimit, getClientIP, getRateLimitHeaders } from "../_shared/rateLimiter.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -14,6 +15,37 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Rate limiting
+    const clientIP = getClientIP(req);
+    const rateLimitResult = await checkRateLimit(clientIP, 'newsletter-unsubscribe');
+    const rateLimitHeaders = getRateLimitHeaders(rateLimitResult, 'newsletter-unsubscribe');
+    
+    if (!rateLimitResult.allowed) {
+      console.log(`Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(
+        `<!DOCTYPE html>
+        <html>
+        <head>
+          <title>Too Many Requests</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <style>
+            body { font-family: Arial, sans-serif; margin: 40px; text-align: center; }
+            .container { max-width: 600px; margin: 0 auto; }
+            .error { color: #e53e3e; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1 class="error">Too Many Requests</h1>
+            <p>Please wait a few minutes before trying again.</p>
+          </div>
+        </body>
+        </html>`,
+        { status: 429, headers: { 'Content-Type': 'text/html', ...corsHeaders, ...rateLimitHeaders } }
+      );
+    }
+
     const url = new URL(req.url);
     const email = url.searchParams.get('email');
     const subscriberId = url.searchParams.get('id');

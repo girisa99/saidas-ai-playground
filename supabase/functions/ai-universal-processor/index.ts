@@ -1,6 +1,9 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { checkRateLimit, getClientIP, getRateLimitHeaders } from "../_shared/rateLimiter.ts";
+import { AIRequestSchema, createValidationErrorResponse } from "../_shared/validation.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -453,7 +456,42 @@ serve(async (req) => {
   }
 
   try {
-    const request: AIRequest = await req.json();
+    // Rate limiting
+    const clientIP = getClientIP(req);
+    const rateLimitResult = await checkRateLimit(clientIP, 'ai-universal-processor');
+    const rateLimitHeaders = getRateLimitHeaders(rateLimitResult, 'ai-universal-processor');
+    
+    if (!rateLimitResult.allowed) {
+      console.log(`Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ 
+          error: 'Rate limit exceeded. Please try again in a minute.',
+          resetAt: rateLimitResult.resetAt 
+        }),
+        { 
+          status: 429, 
+          headers: { 
+            ...corsHeaders, 
+            ...rateLimitHeaders,
+            'Content-Type': 'application/json' 
+          } 
+        }
+      );
+    }
+
+    // Parse and validate request
+    const rawData = await req.json();
+    let request: AIRequest;
+    
+    try {
+      request = AIRequestSchema.parse(rawData) as AIRequest;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return createValidationErrorResponse(error, corsHeaders);
+      }
+      throw error;
+    }
+    
     console.log('Processing AI request:', request.provider, request.model);
 
     let ragContext = '';
