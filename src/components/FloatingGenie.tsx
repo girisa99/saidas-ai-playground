@@ -309,8 +309,8 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
 
   return (
     <>
-      {!isGenieOpen && (
-        <AnimatePresence>
+      <AnimatePresence>
+        {!isGenieOpen && (
         <Draggable
           axis="both"
           nodeRef={dragRef}
@@ -589,8 +589,8 @@ export const FloatingGenie: React.FC<FloatingGenieProps> = ({ className = '' }) 
             </motion.div>
           </motion.div>
         </Draggable>
+        )}
         </AnimatePresence>
-      )}
 
       {/* Genie Interface Modal */}
       <PublicGenieInterface
