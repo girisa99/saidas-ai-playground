@@ -124,15 +124,16 @@ export class AuthEmailService {
           break;
         
         case 'PASSWORD_RECOVERY':
-          // This would be triggered by your app when generating reset links
-          console.log('Password recovery initiated for:', user?.email);
+          // Password recovery initiated - no sensitive data logged
           break;
         
         default:
-          console.log('Unhandled auth event:', event);
+          // Unhandled auth event - no logging needed
+          break;
       }
     } catch (error) {
-      console.error('Error handling auth event:', error);
+      // Error logged without sensitive data exposure
+      console.error('Error handling auth event');
     }
   }
 }

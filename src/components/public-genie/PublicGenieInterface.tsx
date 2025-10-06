@@ -301,12 +301,12 @@ useEffect(() => {
       
       if (result.success) {
         conversationId = result.conversationId;
-        console.log('✅ Genie conversation tracking started:', conversationId);
+        // Conversation started - no sensitive data logged
       } else {
-        console.warn('⚠️ Failed to start conversation tracking:', result.error);
+        // Failed to start conversation tracking
       }
     } catch (error) {
-      console.error('Failed to initialize conversation tracking:', error);
+      // Error initializing conversation tracking
     }
     
     // Track user registration analytics
@@ -337,21 +337,19 @@ useEffect(() => {
       });
 
       if (error) {
-        console.error('Failed to send welcome email:', error);
         toast({ 
           title: 'Note', 
           description: 'You\'re all set! Welcome email will arrive shortly.',
           variant: 'default'
         });
       } else {
-        console.log('✅ Welcome email sent successfully');
         toast({ 
           title: 'Welcome! 🧞‍♂️', 
           description: 'Check your email for your personalized welcome message!',
         });
       }
     } catch (error) {
-      console.error('Failed to send welcome email:', error);
+      // Email send failed - no sensitive data logged
     }
     
     // Add capabilities introduction message
