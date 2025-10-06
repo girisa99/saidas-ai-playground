@@ -38,7 +38,8 @@ export async function checkRateLimit(
     
     if (error && error.code !== 'PGRST116') {
       console.error('Rate limit check error:', error);
-      // Fail open on database errors
+      // FAIL OPEN: Never block users due to infrastructure issues
+      // This ensures the security layer doesn't become a point of failure
       return { allowed: true };
     }
     
