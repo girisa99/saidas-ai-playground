@@ -10,13 +10,11 @@ max_rows = 1000
 [db]
 major_version = 15
 
+# Public edge functions (keep verify_jwt = false with rate limiting)
 [functions.newsletter-subscribe]
 verify_jwt = false
 
 [functions.newsletter-unsubscribe]
-verify_jwt = false
-
-[functions.update-site-stats]
 verify_jwt = false
 
 [functions.send-contact-email]
@@ -25,23 +23,28 @@ verify_jwt = false
 [functions.receive-email]
 verify_jwt = false
 
-[functions.send-email]
-verify_jwt = false
-
+# Public AI functions (keep verify_jwt = false, add rate limiting in function)
 [functions.ai-universal-processor]
-verify_jwt = false
-
-[functions.send-genie-welcome-email]
 verify_jwt = false
 
 [functions.analyze-medical-image]
 verify_jwt = false
 
+# System/Admin-only functions (enable JWT verification)
+[functions.update-site-stats]
+verify_jwt = true
+
+[functions.send-email]
+verify_jwt = true
+
+[functions.send-genie-welcome-email]
+verify_jwt = true
+
 [functions.sync-re3data-repositories]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-knowledge-embeddings]
-verify_jwt = false
+verify_jwt = true
 
 [functions.sync-kaggle-datasets]
-verify_jwt = false
+verify_jwt = true

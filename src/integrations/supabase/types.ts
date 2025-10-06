@@ -16965,6 +16965,10 @@ export type Database = {
         Args: { check_user_id: string; role_names: string[] }
         Returns: boolean
       }
+      user_has_facility_access: {
+        Args: { p_facility_id: string; p_user_id: string }
+        Returns: boolean
+      }
       user_has_permission: {
         Args: {
           check_user_id: string
