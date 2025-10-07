@@ -27,6 +27,7 @@ import { MedicalImageUploader, UploadedImage } from './MedicalImageUploader';
 import { VisionModelIndicator } from './VisionModelIndicator';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { conversationIntelligence } from '@/utils/conversationIntelligence';
+import { useUniversalKnowledgeTopics } from '@/hooks/useUniversalKnowledgeTopics';
 import { ConversationLimitModal } from './ConversationLimitModal';
 import { ExperimentationBanner } from './ExperimentationBanner';
 
@@ -212,6 +213,9 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const { generateResponse, isLoading } = useUniversalAI();
   const { state, addMessage, resetConversation } = useConversationState();
   const messages = state.messages;
+  
+  // Fetch dynamic topics from universal knowledge base
+  const { topics: dynamicTopics } = useUniversalKnowledgeTopics(context);
 
 // Memoized scroll to bottom effect
 useEffect(() => {
@@ -220,10 +224,42 @@ useEffect(() => {
   }
 }, [messages.length]);
 
-// Check for contextual suggestions after messages update
+// Check for contextual suggestions and context shifts after messages update
 useEffect(() => {
   if (messages.length === 0 || !userInfo || !context) return;
   
+  // Check if conversation context has shifted
+  const contextShift = conversationIntelligence.detectContextShift(messages, context);
+  
+  if (contextShift.shifted && contextShift.newContext && contextShift.confidence > 0.2) {
+    // User's conversation has clearly shifted to a different domain
+    const newContextName = contextShift.newContext === 'technology' ? 'Technology' : 'Healthcare';
+    
+    addMessage({
+      role: 'assistant',
+      content: `I notice you're now discussing ${newContextName} topics. Would you like me to switch contexts? I can provide more specialized and relevant information in ${newContextName} mode. 🔄`,
+      timestamp: new Date().toISOString()
+    });
+    
+    // Show relevant topic suggestions for the new context
+    const suggestions = dynamicTopics.length > 0 
+      ? dynamicTopics.slice(0, 6)
+      : (contextShift.newContext === 'technology' ? technologyTopics : healthcareTopics)
+          .slice(0, 6)
+          .map(topic => ({
+            topic,
+            category: contextShift.newContext === 'healthcare' ? 'clinical' : 'technical',
+            icon: contextShift.newContext === 'healthcare' ? '🏥' : '💻'
+          }));
+    
+    setPopoverSuggestions(suggestions);
+    setPopoverMood('helpful');
+    setShowTopicPopover(true);
+    
+    return; // Don't check for regular suggestions if we detected a context shift
+  }
+  
+  // Check for regular contextual suggestions (only at strategic points)
   const suggestion = conversationIntelligence.shouldShowSuggestion(
     messages,
     context,
@@ -231,17 +267,20 @@ useEffect(() => {
   );
   
   if (suggestion && suggestion.type === 'topic' && suggestion.suggestions) {
-    // Convert suggestions to popover format
-    const topics = suggestion.suggestions.map(sug => ({
-      topic: sug.label,
-      category: context === 'healthcare' ? 'clinical' : 'technical',
-      icon: sug.emoji || (context === 'healthcare' ? '🏥' : '💻')
-    }));
+    // Use dynamic topics if available, otherwise use generated suggestions
+    const topics = dynamicTopics.length > 0
+      ? dynamicTopics.slice(0, 6)
+      : suggestion.suggestions.map(sug => ({
+          topic: sug.label,
+          category: context === 'healthcare' ? 'clinical' : 'technical',
+          icon: sug.emoji || (context === 'healthcare' ? '🏥' : '💻')
+        }));
+    
     setPopoverSuggestions(topics);
     setPopoverMood(suggestion.mood || 'helpful');
     setShowTopicPopover(true);
   }
-}, [messages.length, context, selectedTopic, userInfo]);
+}, [messages.length, context, selectedTopic, userInfo, dynamicTopics]);
 
   // Check conversation limits only when user info changes and is available
 useEffect(() => {
@@ -477,14 +516,16 @@ I'm using your previous configuration. Ask me anything to get started!`;
     setSelectedTopic('');
     setShowTopicPopover(false);
     
-    // Show topic suggestions for the new context
-    const suggestions = (newContext === 'technology' ? technologyTopics : healthcareTopics)
-      .slice(0, 6)
-      .map(topic => ({
-        topic,
-        category: newContext === 'healthcare' ? 'clinical' : 'technical',
-        icon: newContext === 'healthcare' ? '🏥' : '💻'
-      }));
+    // Use dynamic topics from universal knowledge base if available
+    const suggestions = dynamicTopics.length > 0
+      ? dynamicTopics.slice(0, 6)
+      : (newContext === 'technology' ? technologyTopics : healthcareTopics)
+          .slice(0, 6)
+          .map(topic => ({
+            topic,
+            category: newContext === 'healthcare' ? 'clinical' : 'technical',
+            icon: newContext === 'healthcare' ? '🏥' : '💻'
+          }));
     
     setPopoverSuggestions(suggestions);
     setPopoverMood('helpful');
@@ -492,7 +533,7 @@ I'm using your previous configuration. Ask me anything to get started!`;
     
     toast({
       title: `Switched to ${newContext}`,
-      description: `Select a topic to continue the conversation`,
+      description: `I'm now specialized for ${newContext} topics!`,
     });
   };
 
@@ -531,36 +572,9 @@ I'm using your previous configuration. Ask me anything to get started!`;
 
     const userMessage = inputMessage.trim();
     
-    // Intelligent context switching detection
-    if (userMessage && context) {
-      const detectedContext = detectContextFromMessage(userMessage);
-      if (detectedContext && detectedContext !== context && messages.length > 2) {
-        // User is switching context - show topic suggestions
-        const contextName = detectedContext === 'technology' ? 'Technology' : 'Healthcare';
-        
-        addMessage({
-          role: 'assistant',
-          content: `I notice you're asking about ${contextName} topics now. Would you like me to switch to ${contextName} context? This will help me provide more relevant and specialized responses.`,
-          timestamp: new Date().toISOString()
-        });
-        
-        // Show context switch suggestions
-        const suggestions = (detectedContext === 'technology' ? technologyTopics : healthcareTopics)
-          .slice(0, 6)
-          .map(topic => ({
-            topic,
-            category: detectedContext === 'healthcare' ? 'clinical' : 'technical',
-            icon: detectedContext === 'healthcare' ? '🏥' : '💻'
-          }));
-        
-        setPopoverSuggestions(suggestions);
-        setPopoverMood('helpful');
-        setShowTopicPopover(true);
-        setInputMessage(''); // Clear input
-        
-        return; // Don't process the message yet
-      }
-    }
+    // Note: Intelligent context switching is now handled by the useEffect hook
+    // which uses conversationIntelligence.detectContextShift() for more accurate detection
+    // This prevents constant context switch prompts and only triggers on genuine intent shifts
     
     setInputMessage('');
 
@@ -899,8 +913,8 @@ ${conversationSummary.transcript}`
               animate={{ opacity: 1, scale: 1, x: 0 }}
               exit={{ opacity: 0, scale: 0.9, x: 300 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-        className={`
-          fixed z-[100] flex flex-col bg-gradient-to-br from-background via-background to-primary/5
+              className={`
+          fixed z-[9998] flex flex-col bg-gradient-to-br from-background via-background to-primary/5
           ${isMaximized 
             ? 'top-0 right-0 bottom-0 w-full md:w-3/4 lg:w-2/3 h-full rounded-none' 
             : 'top-4 right-4 w-[90vw] md:w-[500px] lg:w-[600px] h-[calc(100vh-2rem)] rounded-xl shadow-2xl border-2 border-primary/20'

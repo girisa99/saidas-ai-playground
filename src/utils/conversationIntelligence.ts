@@ -259,6 +259,64 @@ export class ConversationIntelligence {
     return allSuggestions.slice(0, 3);
   }
 
+  /**
+   * Detect if user's intent has shifted to a different domain
+   */
+  detectContextShift(
+    messages: ConversationMessage[], 
+    currentContext: 'technology' | 'healthcare' | null
+  ): { 
+    shifted: boolean; 
+    newContext: 'technology' | 'healthcare' | null;
+    confidence: number;
+  } {
+    if (!currentContext || messages.length < 4) {
+      return { shifted: false, newContext: null, confidence: 0 };
+    }
+
+    // Analyze last 3 messages for context
+    const recentMessages = messages.slice(-3);
+    const recentText = recentMessages
+      .filter(m => m.role === 'user')
+      .map(m => m.content.toLowerCase())
+      .join(' ');
+
+    const techKeywords = [
+      'ai', 'technology', 'software', 'programming', 'code', 'automation', 
+      'llm', 'model', 'api', 'cloud', 'platform', 'digital transformation', 
+      'innovation', 'stack', 'framework', 'algorithm', 'data science', 
+      'machine learning', 'neural', 'computer', 'system', 'application'
+    ];
+    
+    const healthKeywords = [
+      'health', 'medical', 'patient', 'clinical', 'wellness', 'treatment', 
+      'diagnosis', 'healthcare', 'medicine', 'therapy', 'infusion', 'oncology', 
+      'cardiology', 'reimbursement', 'insurance', 'coverage', 'drug', 'physician', 
+      'hospital', 'doctor', 'nurse', 'disease', 'symptom', 'care'
+    ];
+
+    const techScore = techKeywords.filter(kw => recentText.includes(kw)).length;
+    const healthScore = healthKeywords.filter(kw => recentText.includes(kw)).length;
+
+    // Calculate confidence based on keyword density
+    const totalWords = recentText.split(' ').length;
+    const techConfidence = Math.min((techScore / Math.max(totalWords, 1)) * 10, 1);
+    const healthConfidence = Math.min((healthScore / Math.max(totalWords, 1)) * 10, 1);
+
+    // Only consider it a shift if:
+    // 1. Strong keyword presence in opposite context (confidence > 0.15)
+    // 2. Clear difference between scores (at least 2 keyword difference)
+    if (currentContext === 'technology' && healthScore > techScore && healthScore - techScore >= 2 && healthConfidence > 0.15) {
+      return { shifted: true, newContext: 'healthcare', confidence: healthConfidence };
+    }
+
+    if (currentContext === 'healthcare' && techScore > healthScore && techScore - healthScore >= 2 && techConfidence > 0.15) {
+      return { shifted: true, newContext: 'technology', confidence: techConfidence };
+    }
+
+    return { shifted: false, newContext: null, confidence: 0 };
+  }
+
   reset() {
     this.messageCount = 0;
     this.lastSuggestionAt = 0;
