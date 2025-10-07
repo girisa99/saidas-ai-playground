@@ -18,7 +18,7 @@ interface TopicSuggestionPopoverProps {
   context: 'technology' | 'healthcare';
   mood?: 'empathetic' | 'playful' | 'excited' | 'helpful';
   onTopicSelect: (topic: string) => void;
-  onContextSwitch?: () => void;
+  onContextSwitch?: (newContext: 'technology' | 'healthcare') => void;
 }
 
 export const TopicSuggestionPopover: React.FC<TopicSuggestionPopoverProps> = ({
@@ -120,7 +120,7 @@ export const TopicSuggestionPopover: React.FC<TopicSuggestionPopoverProps> = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => {
-                      onContextSwitch();
+                      onContextSwitch(context === 'healthcare' ? 'technology' : 'healthcare');
                       onClose();
                     }}
                     className="w-full text-xs text-muted-foreground hover:text-foreground"

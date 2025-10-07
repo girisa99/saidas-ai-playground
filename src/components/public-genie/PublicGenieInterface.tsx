@@ -352,30 +352,7 @@ useEffect(() => {
       // Email send failed - no sensitive data logged
     }
     
-    // Add capabilities introduction message
-    const capabilitiesMessage = `Hello ${info.firstName}! 🧞‍♂️ Welcome to Genie AI! 
-
-I am Genie and I can support and discuss with you on Experimentation Hub Technology and Healthcare concepts.
-
-💡 **My comprehensive knowledge includes:**
-• 🚀 AI Innovation & Gartner Value Framework mapping to tech stacks
-• 🏥 Healthcare business use cases, DTx, Cell & Gene therapies  
-• 🔬 Technology stack concepts and journey use cases
-• 📊 Case studies and implementation methodologies
-• 🛡️ Security topics and compliance frameworks
-• 🗺️ Value creation and realization strategies
-
-I'm continuously updated with all website content and can intelligently guide you through complex topics with personalized insights!
-
-Ask me anything to get started, or click below to explore my advanced features!`;
-
-    addMessage({
-      role: 'assistant',
-      content: capabilitiesMessage,
-      timestamp: new Date().toISOString()
-    });
-
-    // Show configuration wizard before starting conversation
+    // Show configuration wizard before starting conversation (welcome message will be shown after config)
     setShowConfigWizard(true);
   };
 
@@ -424,8 +401,8 @@ Ask me anything to get started, or click below to explore my advanced features!`
   };
 
   const detectContextFromMessage = (message: string): Context | null => {
-    const techKeywords = ['ai', 'technology', 'software', 'programming', 'code', 'automation', 'llm', 'model', 'api', 'cloud', 'data'];
-    const healthcareKeywords = ['health', 'medical', 'patient', 'clinical', 'wellness', 'treatment', 'diagnosis', 'healthcare', 'medicine'];
+    const techKeywords = ['ai', 'technology', 'software', 'programming', 'code', 'automation', 'llm', 'model', 'api', 'cloud', 'data', 'platform', 'digital', 'innovation', 'stack'];
+    const healthcareKeywords = ['health', 'medical', 'patient', 'clinical', 'wellness', 'treatment', 'diagnosis', 'healthcare', 'medicine', 'therapy', 'infusion', 'oncology', 'cardiology', 'reimbursement'];
     
     const lowerMessage = message.toLowerCase();
     const techMatches = techKeywords.filter(keyword => lowerMessage.includes(keyword)).length;
@@ -438,6 +415,30 @@ Ask me anything to get started, or click below to explore my advanced features!`
 
   const suggestTopicsForContext = (detectedContext: Context): string[] => {
     return detectedContext === 'technology' ? technologyTopics.slice(0, 5) : healthcareTopics.slice(0, 5);
+  };
+
+  const handleContextSwitch = (newContext: Context) => {
+    setContext(newContext);
+    setSelectedTopic('');
+    setShowTopicPopover(false);
+    
+    // Show topic suggestions for the new context
+    const suggestions = (newContext === 'technology' ? technologyTopics : healthcareTopics)
+      .slice(0, 6)
+      .map(topic => ({
+        topic,
+        category: newContext === 'healthcare' ? 'clinical' : 'technical',
+        icon: newContext === 'healthcare' ? '🏥' : '💻'
+      }));
+    
+    setPopoverSuggestions(suggestions);
+    setPopoverMood('helpful');
+    setShowTopicPopover(true);
+    
+    toast({
+      title: `Switched to ${newContext}`,
+      description: `Select a topic to continue the conversation`,
+    });
   };
 
   const handleSendMessage = async () => {
@@ -474,6 +475,38 @@ Ask me anything to get started, or click below to explore my advanced features!`
     });
 
     const userMessage = inputMessage.trim();
+    
+    // Intelligent context switching detection
+    if (userMessage && context) {
+      const detectedContext = detectContextFromMessage(userMessage);
+      if (detectedContext && detectedContext !== context && messages.length > 2) {
+        // User is switching context - show topic suggestions
+        const contextName = detectedContext === 'technology' ? 'Technology' : 'Healthcare';
+        
+        addMessage({
+          role: 'assistant',
+          content: `I notice you're asking about ${contextName} topics now. Would you like me to switch to ${contextName} context? This will help me provide more relevant and specialized responses.`,
+          timestamp: new Date().toISOString()
+        });
+        
+        // Show context switch suggestions
+        const suggestions = (detectedContext === 'technology' ? technologyTopics : healthcareTopics)
+          .slice(0, 6)
+          .map(topic => ({
+            topic,
+            category: detectedContext === 'healthcare' ? 'clinical' : 'technical',
+            icon: detectedContext === 'healthcare' ? '🏥' : '💻'
+          }));
+        
+        setPopoverSuggestions(suggestions);
+        setPopoverMood('helpful');
+        setShowTopicPopover(true);
+        setInputMessage(''); // Clear input
+        
+        return; // Don't process the message yet
+      }
+    }
+    
     setInputMessage('');
 
     // Process uploaded images
@@ -1356,6 +1389,33 @@ ${conversationSummary.transcript}`
         onComplete={(config) => {
           setAIConfig(config);
           setShowConfigWizard(false);
+          
+          // Now add welcome message after configuration
+          const capabilitiesMessage = `Hello ${userInfo?.firstName}! 🧞‍♂️ Welcome to Genie AI! 
+
+I am Genie and I can support and discuss with you on Experimentation Hub Technology and Healthcare concepts.
+
+💡 **My comprehensive knowledge includes:**
+• 🚀 AI Innovation & Gartner Value Framework mapping to tech stacks
+• 🏥 Healthcare business use cases, DTx, Cell & Gene therapies  
+• 🔬 Technology stack concepts and journey use cases
+• 📊 Case studies and implementation methodologies
+• 🛡️ Security topics and compliance frameworks
+• 🗺️ Value creation and realization strategies
+
+I'm continuously updated with all website content and can intelligently guide you through complex topics with personalized insights!
+
+${config.mode === 'default' ? '🤖 I\'ll automatically select the best AI model for each query.' : 
+  config.mode === 'single' ? `🎯 Using ${config.selectedModel} as your specialized model.` : 
+  `🔀 Running multi-agent mode with ${config.selectedModel} and ${config.secondaryModel}.`}
+
+Ask me anything to get started!`;
+
+          addMessage({
+            role: 'assistant',
+            content: capabilitiesMessage,
+            timestamp: new Date().toISOString()
+          });
         }}
         onCancel={() => setShowConfigWizard(false)}
       />

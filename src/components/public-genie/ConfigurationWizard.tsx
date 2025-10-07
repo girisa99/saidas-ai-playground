@@ -123,46 +123,65 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
       <div className="text-center space-y-2">
         <Settings className="h-12 w-12 text-primary mx-auto" />
         <h3 className="text-lg font-semibold">Select AI Models</h3>
-        <p className="text-sm text-muted-foreground">Choose your primary {config.mode === 'multi' ? 'and secondary ' : ''}model{config.mode === 'multi' ? 's' : ''}</p>
+        <p className="text-sm text-muted-foreground">
+          {config.mode === 'default' ? 'System will auto-select the best model' : 
+           config.mode === 'single' ? 'Choose your specialized model' : 
+           'Choose primary and secondary models'}
+        </p>
       </div>
 
       <div className="space-y-4">
-        <div>
-          <label className="text-sm font-medium mb-2 block">Primary Model</label>
-          <Select value={config.selectedModel} onValueChange={(value) => updateConfig({ selectedModel: value })}>
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {modelOptions.map((model) => (
-                <SelectItem key={model.id} value={model.id}>
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium">{model.name}</span>
-                      <Badge variant="secondary" className="text-xs">{model.type}</Badge>
-                    </div>
-                    <span className="text-xs text-muted-foreground">{model.description}</span>
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        {config.mode === 'default' && (
+          <Card className="p-4 bg-primary/5 border-primary/20">
+            <div className="flex items-center gap-3">
+              <Zap className="h-8 w-8 text-primary" />
+              <div>
+                <h4 className="font-medium">Auto-Selected Model</h4>
+                <p className="text-sm text-muted-foreground">Genie will intelligently choose the best model based on your query</p>
+                <div className="mt-2 flex gap-2 flex-wrap">
+                  <Badge variant="outline">GPT-4o Mini</Badge>
+                  <Badge variant="outline">Claude Haiku</Badge>
+                  <Badge variant="outline">Gemini Pro</Badge>
+                </div>
+              </div>
+            </div>
+          </Card>
+        )}
 
-        {config.mode === 'multi' && (
+        {config.mode === 'single' && (
           <div>
-            <label className="text-sm font-medium mb-2 block">Secondary Model</label>
-            <Select 
-              value={config.secondaryModel} 
-              onValueChange={(value) => updateConfig({ secondaryModel: value })}
-            >
+            <label className="text-sm font-medium mb-2 block">Select Your Specialized Model</label>
+            <Select value={config.selectedModel} onValueChange={(value) => updateConfig({ selectedModel: value })}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {modelOptions
-                  .filter(m => m.id !== config.selectedModel)
-                  .map((model) => (
+                {modelOptions.map((model) => (
+                  <SelectItem key={model.id} value={model.id}>
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{model.name}</span>
+                        <Badge variant="secondary" className="text-xs">{model.type}</Badge>
+                      </div>
+                      <span className="text-xs text-muted-foreground">{model.description}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
+        {config.mode === 'multi' && (
+          <>
+            <div>
+              <label className="text-sm font-medium mb-2 block">Primary Model</label>
+              <Select value={config.selectedModel} onValueChange={(value) => updateConfig({ selectedModel: value })}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {modelOptions.map((model) => (
                     <SelectItem key={model.id} value={model.id}>
                       <div className="flex flex-col">
                         <div className="flex items-center gap-2">
@@ -173,22 +192,48 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                       </div>
                     </SelectItem>
                   ))}
-              </SelectContent>
-            </Select>
-          </div>
-        )}
-
-        {config.mode === 'multi' && (
-          <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-            <div className="space-y-1">
-              <h4 className="text-sm font-medium">Enable Split Screen</h4>
-              <p className="text-xs text-muted-foreground">Compare responses side-by-side</p>
+                </SelectContent>
+              </Select>
             </div>
-            <Switch
-              checked={config.splitScreenEnabled}
-              onCheckedChange={(checked) => updateConfig({ splitScreenEnabled: checked })}
-            />
-          </div>
+
+            <div>
+              <label className="text-sm font-medium mb-2 block">Secondary Model</label>
+              <Select 
+                value={config.secondaryModel} 
+                onValueChange={(value) => updateConfig({ secondaryModel: value })}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {modelOptions
+                    .filter(m => m.id !== config.selectedModel)
+                    .map((model) => (
+                      <SelectItem key={model.id} value={model.id}>
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium">{model.name}</span>
+                            <Badge variant="secondary" className="text-xs">{model.type}</Badge>
+                          </div>
+                          <span className="text-xs text-muted-foreground">{model.description}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+              <div className="space-y-1">
+                <h4 className="text-sm font-medium">Enable Split Screen</h4>
+                <p className="text-xs text-muted-foreground">Compare responses side-by-side</p>
+              </div>
+              <Switch
+                checked={config.splitScreenEnabled}
+                onCheckedChange={(checked) => updateConfig({ splitScreenEnabled: checked })}
+              />
+            </div>
+          </>
         )}
       </div>
     </div>
