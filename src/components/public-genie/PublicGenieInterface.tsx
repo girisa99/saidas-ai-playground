@@ -177,19 +177,31 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
     primary: [],
     secondary: []
   });
-  const [aiConfig, setAIConfig] = useState<AIConfig>({
-    mode: 'default',
-    ragEnabled: false,
-    knowledgeBase: false,
-    knowledgeBaseEnabled: false,
-    mcpEnabled: false,
-    selectedModel: 'gpt-4o-mini',
-    secondaryModel: 'claude-3-haiku',
-    splitScreen: false,
-    splitScreenEnabled: false,
-    contextualSuggestions: true,
-    visionEnabled: false,
-    medicalImageMode: false,
+  const [aiConfig, setAIConfig] = useState<AIConfig>(() => {
+    // Check if user has saved configuration in this session
+    const savedConfig = sessionStorage.getItem('genie_ai_config');
+    if (savedConfig) {
+      try {
+        return JSON.parse(savedConfig);
+      } catch (e) {
+        console.error('Failed to parse saved config:', e);
+      }
+    }
+    // Default configuration
+    return {
+      mode: 'default',
+      ragEnabled: false,
+      knowledgeBase: false,
+      knowledgeBaseEnabled: false,
+      mcpEnabled: false,
+      selectedModel: 'gpt-4o-mini',
+      secondaryModel: 'claude-3-haiku',
+      splitScreen: false,
+      splitScreenEnabled: false,
+      contextualSuggestions: true,
+      visionEnabled: false,
+      medicalImageMode: false,
+    };
   });
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [showImageUploader, setShowImageUploader] = useState(false);
@@ -243,6 +255,18 @@ useEffect(() => {
       );
       setConversationLimits(limits);
       setIsConversationAllowed(limits.allowed);
+      
+      // Check if user has existing configuration for this session/IP
+      const savedConfig = sessionStorage.getItem('genie_ai_config');
+      const configTimestamp = sessionStorage.getItem('genie_config_timestamp');
+      const currentTime = Date.now();
+      const oneHour = 60 * 60 * 1000;
+      
+      // Skip wizard if config exists and is less than 1 hour old
+      if (savedConfig && configTimestamp && (currentTime - parseInt(configTimestamp)) < oneHour) {
+        console.log('Using existing configuration from this session');
+        setShowConfigWizard(false);
+      }
       
       // Only show modal if conversation is not allowed and user tries to send message
       // Don't auto-show on context switch
@@ -352,8 +376,39 @@ useEffect(() => {
       // Email send failed - no sensitive data logged
     }
     
-    // Show configuration wizard before starting conversation (welcome message will be shown after config)
-    setShowConfigWizard(true);
+    // Check if user already has a configuration in this session
+    const savedConfig = sessionStorage.getItem('genie_ai_config');
+    const configTimestamp = sessionStorage.getItem('genie_config_timestamp');
+    const currentTime = Date.now();
+    const oneHour = 60 * 60 * 1000;
+    
+    // Only show wizard if no config exists or config is older than 1 hour
+    if (!savedConfig || !configTimestamp || (currentTime - parseInt(configTimestamp)) >= oneHour) {
+      setShowConfigWizard(true);
+    } else {
+      // User has recent config, start conversation directly with welcome message
+      setHasStartedConversation(true);
+      
+      const welcomeMessage = `Hello ${userInfo?.firstName}! 🧞‍♂️ Welcome back to Genie AI! 
+  
+I am Genie and I can support and discuss with you on Experimentation Hub Technology and Healthcare concepts.
+
+💡 **My comprehensive knowledge includes:**
+• 🚀 AI Innovation & Gartner Value Framework mapping to tech stacks
+• 🏥 Healthcare business use cases, DTx, Cell & Gene therapies  
+• 🔬 Technology stack concepts and journey use cases
+• 📊 Case studies and implementation methodologies
+• 🛡️ Security topics and compliance frameworks
+• 🗺️ Value creation and realization strategies
+
+I'm using your previous configuration. Ask me anything to get started!`;
+
+      addMessage({
+        role: 'assistant',
+        content: welcomeMessage,
+        timestamp: new Date().toISOString()
+      });
+    }
   };
 
   const addPersonalityToResponse = (response: string): string => {
@@ -1390,6 +1445,10 @@ ${conversationSummary.transcript}`
           setAIConfig(config);
           setShowConfigWizard(false);
           
+          // Save configuration to session storage with timestamp
+          sessionStorage.setItem('genie_ai_config', JSON.stringify(config));
+          sessionStorage.setItem('genie_config_timestamp', Date.now().toString());
+          
           // Now add welcome message after configuration
           const capabilitiesMessage = `Hello ${userInfo?.firstName}! 🧞‍♂️ Welcome to Genie AI! 
 
@@ -1415,6 +1474,11 @@ Ask me anything to get started!`;
             role: 'assistant',
             content: capabilitiesMessage,
             timestamp: new Date().toISOString()
+          });
+          
+          toast({
+            title: "Configuration Saved",
+            description: "Your AI preferences have been saved for this session",
           });
         }}
         onCancel={() => setShowConfigWizard(false)}
