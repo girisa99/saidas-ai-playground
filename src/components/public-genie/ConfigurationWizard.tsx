@@ -5,7 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Brain, Settings, Layers, Zap, Database, Network, Cpu, Users, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Brain, Settings, Layers, Zap, Database, Network, Cpu, Users, ChevronRight, ChevronLeft, Filter } from 'lucide-react';
 import { AIConfig } from './AdvancedAISettings';
 
 interface ConfigurationWizardProps {
@@ -15,12 +16,136 @@ interface ConfigurationWizardProps {
 }
 
 const modelOptions = [
-  { id: 'gpt-4o-mini', name: 'GPT-4o Mini', type: 'LLM', provider: 'OpenAI', description: 'Fast & efficient for most tasks' },
-  { id: 'gpt-4o', name: 'GPT-4o', type: 'LLM', provider: 'OpenAI', description: 'Most capable OpenAI model' },
-  { id: 'claude-3-haiku', name: 'Claude 3 Haiku', type: 'LLM', provider: 'Anthropic', description: 'Quick responses, good reasoning' },
-  { id: 'claude-3-sonnet', name: 'Claude 3 Sonnet', type: 'LLM', provider: 'Anthropic', description: 'Balanced performance & quality' },
-  { id: 'gemini-pro', name: 'Gemini Pro', type: 'LLM', provider: 'Google', description: 'Google\'s flagship model' },
-  { id: 'phi-3-mini', name: 'Phi-3 Mini', type: 'SLM', provider: 'Microsoft', description: 'Compact but powerful' },
+  // Large Language Models (LLMs) with Vision
+  { 
+    id: 'gpt-4o', 
+    name: 'GPT-4o', 
+    type: 'LLM+Vision', 
+    provider: 'OpenAI', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Advanced multimodal model for text and images',
+    learnMoreUrl: 'https://platform.openai.com/docs/models/gpt-4o'
+  },
+  { 
+    id: 'gpt-4o-mini', 
+    name: 'GPT-4o Mini', 
+    type: 'LLM+Vision', 
+    provider: 'OpenAI', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Efficient vision model with good accuracy',
+    learnMoreUrl: 'https://platform.openai.com/docs/models/gpt-4o-mini'
+  },
+  { 
+    id: 'claude-3-opus', 
+    name: 'Claude 3 Opus', 
+    type: 'LLM+Vision', 
+    provider: 'Anthropic', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Most capable Claude model with vision',
+    learnMoreUrl: 'https://www.anthropic.com/claude'
+  },
+  { 
+    id: 'claude-3-sonnet', 
+    name: 'Claude 3 Sonnet', 
+    type: 'LLM+Vision', 
+    provider: 'Anthropic', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Balanced performance and cost',
+    learnMoreUrl: 'https://www.anthropic.com/claude'
+  },
+  { 
+    id: 'claude-3-haiku', 
+    name: 'Claude 3 Haiku', 
+    type: 'LLM+Vision', 
+    provider: 'Anthropic', 
+    category: 'General',
+    vision: true,
+    medicalCapable: false,
+    description: 'Fastest Claude model with vision',
+    learnMoreUrl: 'https://www.anthropic.com/claude'
+  },
+  { 
+    id: 'gemini-pro-vision', 
+    name: 'Gemini Pro Vision', 
+    type: 'LLM+Vision', 
+    provider: 'Google', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Google\'s multimodal AI model',
+    learnMoreUrl: 'https://ai.google.dev/gemini-api/docs'
+  },
+  { 
+    id: 'gemini-pro', 
+    name: 'Gemini Pro', 
+    type: 'LLM', 
+    provider: 'Google', 
+    category: 'General',
+    vision: false,
+    medicalCapable: false,
+    description: 'Text-only Gemini model',
+    learnMoreUrl: 'https://ai.google.dev/gemini-api/docs'
+  },
+  
+  // Small Language Models (SLMs)
+  { id: 'phi-3.5-mini', name: 'Phi-3.5 Mini', type: 'SLM', provider: 'Microsoft', category: 'Efficient', vision: false, medicalCapable: false, description: 'Compact efficient model', learnMoreUrl: 'https://azure.microsoft.com/en-us/products/phi' },
+  { id: 'phi-3-mini', name: 'Phi-3 Mini', type: 'SLM', provider: 'Microsoft', category: 'Efficient', vision: false, medicalCapable: false, description: 'Small but capable model', learnMoreUrl: 'https://azure.microsoft.com/en-us/products/phi' },
+  { id: 'llama-3.1-8b', name: 'Llama 3.1 8B', type: 'SLM', provider: 'Meta', category: 'Efficient', vision: false, medicalCapable: false, description: 'Open-source efficient model', learnMoreUrl: 'https://llama.meta.com/' },
+  { id: 'mistral-7b', name: 'Mistral 7B', type: 'SLM', provider: 'Mistral', category: 'Efficient', vision: false, medicalCapable: false, description: 'High-performance 7B model', learnMoreUrl: 'https://mistral.ai/' },
+  { id: 'gemma-7b', name: 'Gemma 7B', type: 'SLM', provider: 'Google', category: 'Efficient', vision: false, medicalCapable: false, description: 'Google\'s lightweight model', learnMoreUrl: 'https://ai.google.dev/gemma' },
+  { id: 'qwen-7b', name: 'Qwen 7B', type: 'SLM', provider: 'Alibaba', category: 'Efficient', vision: false, medicalCapable: false, description: 'Alibaba\'s efficient model', learnMoreUrl: 'https://github.com/QwenLM/Qwen' },
+  
+  // Vision Language Models (VLMs)
+  { 
+    id: 'llava-1.6', 
+    name: 'LLaVA 1.6', 
+    type: 'VLM', 
+    provider: 'LAION', 
+    category: 'Vision',
+    vision: true,
+    medicalCapable: true,
+    description: 'Open-source vision-language model',
+    learnMoreUrl: 'https://llava-vl.github.io/'
+  },
+  { 
+    id: 'cogvlm', 
+    name: 'CogVLM', 
+    type: 'VLM', 
+    provider: 'Tsinghua', 
+    category: 'Vision',
+    vision: true,
+    medicalCapable: true,
+    description: 'Advanced vision understanding',
+    learnMoreUrl: 'https://github.com/THUDM/CogVLM'
+  },
+  { 
+    id: 'paligemma', 
+    name: 'PaliGemma', 
+    type: 'VLM', 
+    provider: 'Google', 
+    category: 'Vision',
+    vision: true,
+    medicalCapable: false,
+    description: 'Google\'s VLM based on Gemma',
+    learnMoreUrl: 'https://ai.google.dev/gemma/docs/paligemma'
+  },
+  
+  // Biotech & Healthcare Models
+  { id: 'biogpt', name: 'BioGPT', type: 'Biotech', provider: 'Microsoft', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Biomedical text generation', learnMoreUrl: 'https://github.com/microsoft/BioGPT' },
+  { id: 'med-palm-2', name: 'Med-PaLM 2', type: 'Medical', provider: 'Google', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Medical question answering', learnMoreUrl: 'https://sites.research.google/med-palm/' },
+  { id: 'clinical-bert', name: 'Clinical BERT', type: 'Medical', provider: 'MIT', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Clinical note analysis', learnMoreUrl: 'https://github.com/EmilyAlsentzer/clinicalBERT' },
+  { id: 'bioclinical-bert', name: 'BioClinical BERT', type: 'Medical', provider: 'NCBI', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Biomedical NLP', learnMoreUrl: 'https://github.com/ncbi-nlp/NCBI_BERT' },
+  { id: 'pubmedbert', name: 'PubMedBERT', type: 'Biotech', provider: 'NIH', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Trained on PubMed abstracts', learnMoreUrl: 'https://github.com/ncbi/pubmedbert' },
+  { id: 'galactica-6.7b', name: 'Galactica 6.7B', type: 'Scientific', provider: 'Meta', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Scientific knowledge model', learnMoreUrl: 'https://github.com/paperswithcode/galai' },
+  { id: 'biomistral-7b', name: 'BioMistral 7B', type: 'Medical', provider: 'Mistral', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Medical domain Mistral', learnMoreUrl: 'https://huggingface.co/BioMistral/BioMistral-7B' },
 ];
 
 export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
@@ -29,6 +154,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
   onCancel
 }) => {
   const [step, setStep] = useState(1);
+  const [modelFilter, setModelFilter] = useState<'all' | 'general' | 'slm' | 'vision' | 'healthcare'>('all');
   const [config, setConfig] = useState<AIConfig>({
     mode: 'default',
     ragEnabled: false,
@@ -41,6 +167,15 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
     splitScreenEnabled: false,
     contextualSuggestions: true,
   });
+
+  const getFilteredModels = () => {
+    if (modelFilter === 'all') return modelOptions;
+    if (modelFilter === 'general') return modelOptions.filter(m => m.category === 'General');
+    if (modelFilter === 'slm') return modelOptions.filter(m => m.type === 'SLM');
+    if (modelFilter === 'vision') return modelOptions.filter(m => m.category === 'Vision' || m.vision);
+    if (modelFilter === 'healthcare') return modelOptions.filter(m => m.category === 'Healthcare');
+    return modelOptions;
+  };
 
   const updateConfig = (updates: Partial<AIConfig>) => {
     setConfig(prev => ({ ...prev, ...updates }));
@@ -149,16 +284,27 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
         )}
 
         {config.mode === 'single' && (
-          <div>
+          <div className="space-y-3">
             <label className="text-sm font-medium mb-2 block">Select Your Specialized Model</label>
+            
+            <Tabs value={modelFilter} onValueChange={(v) => setModelFilter(v as any)} className="w-full">
+              <TabsList className="grid grid-cols-5 w-full">
+                <TabsTrigger value="all" className="text-xs">All</TabsTrigger>
+                <TabsTrigger value="general" className="text-xs">General</TabsTrigger>
+                <TabsTrigger value="slm" className="text-xs">SLM</TabsTrigger>
+                <TabsTrigger value="vision" className="text-xs">Vision</TabsTrigger>
+                <TabsTrigger value="healthcare" className="text-xs">Health</TabsTrigger>
+              </TabsList>
+            </Tabs>
+
             <Select value={config.selectedModel} onValueChange={(value) => updateConfig({ selectedModel: value })}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
-                {modelOptions.map((model) => (
+              <SelectContent className="max-h-[300px]">
+                {getFilteredModels().map((model) => (
                   <SelectItem key={model.id} value={model.id}>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col py-1">
                       <div className="flex items-center gap-2">
                         <span className="font-medium">{model.name}</span>
                         <Badge variant="secondary" className="text-xs">{model.type}</Badge>
@@ -174,16 +320,27 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
 
         {config.mode === 'multi' && (
           <>
-            <div>
+            <div className="space-y-3">
               <label className="text-sm font-medium mb-2 block">Primary Model</label>
+              
+              <Tabs value={modelFilter} onValueChange={(v) => setModelFilter(v as any)} className="w-full">
+                <TabsList className="grid grid-cols-5 w-full">
+                  <TabsTrigger value="all" className="text-xs">All</TabsTrigger>
+                  <TabsTrigger value="general" className="text-xs">General</TabsTrigger>
+                  <TabsTrigger value="slm" className="text-xs">SLM</TabsTrigger>
+                  <TabsTrigger value="vision" className="text-xs">Vision</TabsTrigger>
+                  <TabsTrigger value="healthcare" className="text-xs">Health</TabsTrigger>
+                </TabsList>
+              </Tabs>
+
               <Select value={config.selectedModel} onValueChange={(value) => updateConfig({ selectedModel: value })}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  {modelOptions.map((model) => (
+                <SelectContent className="max-h-[300px]">
+                  {getFilteredModels().map((model) => (
                     <SelectItem key={model.id} value={model.id}>
-                      <div className="flex flex-col">
+                      <div className="flex flex-col py-1">
                         <div className="flex items-center gap-2">
                           <span className="font-medium">{model.name}</span>
                           <Badge variant="secondary" className="text-xs">{model.type}</Badge>
@@ -205,12 +362,12 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  {modelOptions
+                <SelectContent className="max-h-[300px]">
+                  {getFilteredModels()
                     .filter(m => m.id !== config.selectedModel)
                     .map((model) => (
                       <SelectItem key={model.id} value={model.id}>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col py-1">
                           <div className="flex items-center gap-2">
                             <span className="font-medium">{model.name}</span>
                             <Badge variant="secondary" className="text-xs">{model.type}</Badge>
