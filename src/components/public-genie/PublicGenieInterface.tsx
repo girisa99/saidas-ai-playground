@@ -1383,10 +1383,23 @@ ${conversationSummary.transcript}`
           </Draggable>
 
           {/* Privacy Modal inside Genie container */}
-          <Dialog open={showPrivacyBanner}>
+          <Dialog 
+            open={showPrivacyBanner}
+            onOpenChange={(open) => {
+              if (!open) {
+                setShowPrivacyBanner(false);
+                onClose(); // allow users to close Genie without accepting
+              }
+            }}
+          >
             <DialogContent container={dragRef.current} className="max-w-sm sm:max-w-md w-full p-0 z-[100001]">
+              {/* Accessible title for screen readers + enables built-in close button semantics */}
+              <DialogHeader className="sr-only">
+                <DialogTitle>Welcome to Genie AI</DialogTitle>
+              </DialogHeader>
               <PublicPrivacyBanner 
                 onAccept={handlePrivacyAccept}
+                onClose={() => { setShowPrivacyBanner(false); onClose(); }}
                 technologyTopics={technologyTopics}
                 healthcareTopics={healthcareTopics}
               />
