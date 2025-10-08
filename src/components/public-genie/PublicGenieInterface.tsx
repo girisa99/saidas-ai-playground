@@ -895,7 +895,16 @@ ${conversationSummary.transcript}`
     <TooltipProvider>
       <AnimatePresence>
         {isOpen && (
-          <Draggable key="genie-window" handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
+          <>
+            <motion.div
+              key="genie-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              className="fixed inset-0 z-[99996] bg-background/60 backdrop-blur-sm"
+            />
+            <Draggable key="genie-window" handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
             <motion.div
               ref={dragRef}
               initial={{ opacity: 0, scale: 0.9, x: 300 }}
@@ -1305,6 +1314,7 @@ ${conversationSummary.transcript}`
           </Card>
             </motion.div>
           </Draggable>
+          </>
         )}
 
       {/* Image Uploader Drawer */}
