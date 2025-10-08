@@ -6479,6 +6479,36 @@ export type Database = {
           },
         ]
       }
+      genie_ab_test_config: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          milestones: number[]
+          updated_at: string
+          variant_name: string
+          weight: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          milestones: number[]
+          updated_at?: string
+          variant_name: string
+          weight?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          milestones?: number[]
+          updated_at?: string
+          variant_name?: string
+          weight?: number
+        }
+        Relationships: []
+      }
       genie_brand_configs: {
         Row: {
           brand_name: string
@@ -6665,6 +6695,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      genie_configuration_analytics: {
+        Row: {
+          context: string | null
+          created_at: string
+          features_enabled: Json | null
+          id: string
+          mode: string
+          selected_models: Json | null
+          session_id: string | null
+          user_email: string
+        }
+        Insert: {
+          context?: string | null
+          created_at?: string
+          features_enabled?: Json | null
+          id?: string
+          mode: string
+          selected_models?: Json | null
+          session_id?: string | null
+          user_email: string
+        }
+        Update: {
+          context?: string | null
+          created_at?: string
+          features_enabled?: Json | null
+          id?: string
+          mode?: string
+          selected_models?: Json | null
+          session_id?: string | null
+          user_email?: string
+        }
+        Relationships: []
       }
       genie_configurations: {
         Row: {

@@ -28,6 +28,8 @@ import { VisionModelIndicator } from './VisionModelIndicator';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { conversationIntelligence } from '@/utils/conversationIntelligence';
 import { useUniversalKnowledgeTopics } from '@/hooks/useUniversalKnowledgeTopics';
+import { useGeniePreferences } from '@/hooks/useGeniePreferences';
+import { useABTestMilestones } from '@/hooks/useABTestMilestones';
 import { ConversationLimitModal } from './ConversationLimitModal';
 import { ExperimentationBanner } from './ExperimentationBanner';
 
@@ -158,6 +160,9 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [popoverSuggestions, setPopoverSuggestions] = useState<Array<{topic: string; category: string; icon?: string}>>([]);
   const [popoverMood, setPopoverMood] = useState<'empathetic' | 'playful' | 'excited' | 'helpful'>('helpful');
   
+  // Hooks for enhancements
+  const { milestones: abTestMilestones } = useABTestMilestones();
+  
   // Conversation limit states - explicitly initialized
   const [showLimitModal, setShowLimitModal] = React.useState<boolean>(false);
   const [conversationLimits, setConversationLimits] = React.useState<ConversationLimits | null>(null);
@@ -277,8 +282,8 @@ useEffect(() => {
       setPopoverMood(suggestion.mood || 'helpful');
       setShowTopicPopover(true);
     }
-  }
-}, [messages.length, context, selectedTopic, userInfo, dynamicTopics]);
+    }
+  }, [messages.length, context, selectedTopic, userInfo, dynamicTopics, abTestMilestones]);
 
   // Check conversation limits only when user info changes and is available
 useEffect(() => {

@@ -13,6 +13,8 @@ interface ConfigurationWizardProps {
   isOpen: boolean;
   onComplete: (config: AIConfig) => void;
   onCancel: () => void;
+  initialConfig?: Partial<AIConfig>;
+  showSmartDefaults?: boolean;
 }
 
 const modelOptions = [
