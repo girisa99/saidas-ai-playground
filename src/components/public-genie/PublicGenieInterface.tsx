@@ -53,6 +53,15 @@ interface UserInfo {
 
 type Context = 'technology' | 'healthcare';
 
+// Derive provider from selected model id so LLM/SLM/VLM selections route correctly
+const providerFromModel = (model?: string): 'openai' | 'claude' | 'gemini' => {
+  const m = (model || '').toLowerCase();
+  if (m.startsWith('gpt') || m.includes('openai')) return 'openai';
+  if (m.startsWith('claude')) return 'claude';
+  if (m.startsWith('gemini') || m.startsWith('google/')) return 'gemini';
+  return 'gemini';
+};
+
 interface PublicGenieInterfaceProps {
   isOpen: boolean;
   onClose: () => void;
@@ -677,13 +686,13 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
         // Handle split-screen multi-model responses with per-model resilience
         setLoadingStates({ primary: true, secondary: true });
 
-        const secondaryIsClaude = (aiConfig.secondaryModel || '').startsWith('claude');
-        const secondaryProvider = secondaryIsClaude ? 'gemini' : 'claude';
-        const secondaryModel = secondaryIsClaude ? 'gemini-pro' : (aiConfig.secondaryModel || 'claude-3-haiku');
+        const primaryProvider = providerFromModel(aiConfig.selectedModel);
+        const secondaryModel = aiConfig.secondaryModel || 'gemini-2.5-flash';
+        const secondaryProvider = providerFromModel(secondaryModel);
 
         const results = await Promise.allSettled([
           generateResponse({
-            provider: 'openai',
+            provider: primaryProvider as any,
             model: aiConfig.selectedModel,
             prompt: enhancedPrompt,
             systemPrompt,
@@ -739,7 +748,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
       } else {
         // Standard single response with RAG, Knowledge Base, MCP
         const response = await generateResponse({
-          provider: 'openai',
+          provider: providerFromModel(aiConfig.selectedModel) as any,
           model: aiConfig.selectedModel,
           prompt: enhancedPrompt,
           systemPrompt,
