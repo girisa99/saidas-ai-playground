@@ -142,16 +142,13 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
     const savedUser = localStorage.getItem('genie_user_info');
     return savedUser ? JSON.parse(savedUser) : null;
   });
-  const [context, setContext] = useState<Context | null>(null);
+  const [context, setContext] = useState<Context>('technology'); // Default to technology
   const [selectedTopic, setSelectedTopic] = useState<string>('');
   const [inputMessage, setInputMessage] = useState('');
   const [showHumanEscalation, setShowHumanEscalation] = useState(false);
   const [isLiveAgentAvailable, setIsLiveAgentAvailable] = useState(false);
   const [conversationPersonality, setConversationPersonality] = useState<'formal' | 'casual' | 'empathetic'>('casual');
-  const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
   const [hasStartedConversation, setHasStartedConversation] = useState(false);
-  const [showCapabilities, setShowCapabilities] = useState(false);
-  const [showTopicSuggestions, setShowTopicSuggestions] = useState(false);
   const [showConfigWizard, setShowConfigWizard] = useState(false);
   const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
   const [ipAddress, setIpAddress] = useState<string | null>(null);
@@ -166,7 +163,6 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [conversationLimits, setConversationLimits] = React.useState<ConversationLimits | null>(null);
   const [isConversationAllowed, setIsConversationAllowed] = React.useState<boolean>(true);
   const [showExperimentationBanner, setShowExperimentationBanner] = React.useState<boolean>(true);
-  const [showSessionManager, setShowSessionManager] = useState(false);
   const [loadingStates, setLoadingStates] = useState({
     primary: false,
     secondary: false
@@ -224,11 +220,11 @@ useEffect(() => {
   }
 }, [messages.length]);
 
-// Check for contextual suggestions and context shifts after messages update
+  // Check for contextual suggestions and context shifts after messages update
 useEffect(() => {
-  if (messages.length === 0 || !userInfo || !context) return;
+  if (messages.length === 0 || !userInfo) return;
   
-  // Check if conversation context has shifted
+  // Check if conversation context has shifted (intelligent auto-detection)
   const contextShift = conversationIntelligence.detectContextShift(messages, context);
   
   if (contextShift.shifted && contextShift.newContext && contextShift.confidence > 0.2) {
@@ -237,7 +233,7 @@ useEffect(() => {
     
     addMessage({
       role: 'assistant',
-      content: `I notice you're now discussing ${newContextName} topics. Would you like me to switch contexts? I can provide more specialized and relevant information in ${newContextName} mode. 🔄`,
+      content: `I notice you're now discussing ${newContextName} topics. Would you like me to switch contexts to provide more specialized information? 🔄`,
       timestamp: new Date().toISOString()
     });
     
@@ -259,26 +255,28 @@ useEffect(() => {
     return; // Don't check for regular suggestions if we detected a context shift
   }
   
-  // Check for regular contextual suggestions (only at strategic points)
-  const suggestion = conversationIntelligence.shouldShowSuggestion(
-    messages,
-    context,
-    selectedTopic
-  );
-  
-  if (suggestion && suggestion.type === 'topic' && suggestion.suggestions) {
-    // Use dynamic topics if available, otherwise use generated suggestions
-    const topics = dynamicTopics.length > 0
-      ? dynamicTopics.slice(0, 6)
-      : suggestion.suggestions.map(sug => ({
-          topic: sug.label,
-          category: context === 'healthcare' ? 'clinical' : 'technical',
-          icon: sug.emoji || (context === 'healthcare' ? '🏥' : '💻')
-        }));
+  // Show proactive topic suggestions at strategic conversation milestones (3, 5, 7 messages)
+  const milestones = [3, 5, 7];
+  if (milestones.includes(messages.length)) {
+    const suggestion = conversationIntelligence.shouldShowSuggestion(
+      messages,
+      context,
+      selectedTopic
+    );
     
-    setPopoverSuggestions(topics);
-    setPopoverMood(suggestion.mood || 'helpful');
-    setShowTopicPopover(true);
+    if (suggestion && suggestion.type === 'topic' && suggestion.suggestions) {
+      const topics = dynamicTopics.length > 0
+        ? dynamicTopics.slice(0, 6)
+        : suggestion.suggestions.map(sug => ({
+            topic: sug.label,
+            category: context === 'healthcare' ? 'clinical' : 'technical',
+            icon: sug.emoji || (context === 'healthcare' ? '🏥' : '💻')
+          }));
+      
+      setPopoverSuggestions(topics);
+      setPopoverMood(suggestion.mood || 'helpful');
+      setShowTopicPopover(true);
+    }
   }
 }, [messages.length, context, selectedTopic, userInfo, dynamicTopics]);
 
@@ -602,22 +600,8 @@ I'm using your previous configuration. Ask me anything to get started!`;
       setHasStartedConversation(true);
     }
 
-    // Auto-detect context if not set
-    if (!context) {
-      const detectedContext = detectContextFromMessage(userMessage);
-      if (detectedContext) {
-        setContext(detectedContext);
-        // Show topic suggestions
-        setTimeout(() => {
-          setShowTopicSuggestions(true);
-          addMessage({
-            role: 'assistant',
-            content: `I detected you're interested in ${detectedContext}! 🎯 I can provide specialized assistance in this area. You can select a specific topic below or continue with your question.`,
-            timestamp: new Date().toISOString()
-          });
-        }, 1000);
-      }
-    }
+    // Context is automatically detected by intelligent conversation intelligence
+    // No need for manual context detection here
     
     addMessage({
       role: 'user',
@@ -774,10 +758,10 @@ I'm using your previous configuration. Ask me anything to get started!`;
       if (error.message?.includes('token') || error.message?.includes('limit') || error.message?.includes('quota')) {
         addMessage({
           role: 'assistant',
-          content: '⚠️ **Demo Limit Reached** \n\nI\'ve hit the token or conversation limit for this demonstration. This showcases the technology feasibility and experimentation capabilities. \n\nWould you like to start a new session or connect with a human agent? 🤝',
+          content: '⚠️ **Demo Limit Reached** \n\nI\'ve hit the token or conversation limit for this demonstration. This showcases the technology feasibility and experimentation capabilities. \n\nWould you like to connect with a human agent? 🤝',
           timestamp: new Date().toISOString()
         });
-        setShowSessionManager(true);
+        setShowHumanEscalation(true);
       } else {
         addMessage({
           role: 'assistant',
@@ -925,7 +909,7 @@ ${conversationSummary.transcript}`
           <Card className="h-full bg-gradient-to-br from-background to-muted border shadow-2xl">
             {/* Header */}
           <div className="drag-handle flex items-center justify-between p-3 border-b bg-gradient-to-r from-slate-900 to-slate-800 cursor-move">
-            <div className="flex items-center gap-2">
+             <div className="flex items-center gap-2">
               <img src={genieLogoPopup} alt="Genie AI logo" className="h-8 w-auto object-contain drop-shadow" />
                <div className="flex-1">
                  <h3 className="font-semibold text-white text-sm">Genie AI</h3>
@@ -938,18 +922,14 @@ ${conversationSummary.transcript}`
                    <Button
                      variant="ghost"
                      size="sm"
-                     onClick={() => {
-                       setShowAdvancedSettings(!showAdvancedSettings);
-                       // If capabilities is showing, close it
-                       if (showCapabilities) setShowCapabilities(false);
-                     }}
+                     onClick={() => setShowConfigWizard(true)}
                      className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
                    >
                      <Settings className="h-4 w-4" />
                    </Button>
                  </TooltipTrigger>
                  <TooltipContent>
-                   <p>AI Configuration & Settings</p>
+                   <p>Configure AI Settings</p>
                  </TooltipContent>
                </Tooltip>
                <Tooltip>
@@ -1040,35 +1020,57 @@ ${conversationSummary.transcript}`
                     </div>
                   )}
 
-                  {/* Advanced Settings Panel */}
-                  {showAdvancedSettings && (
-                    <div className="border-b bg-muted/10 relative">
-                      <div className="flex items-center justify-between p-2 border-b bg-gradient-to-r from-primary/5 to-primary/10">
-                        <div>
-                          <h3 className="text-sm font-medium flex items-center gap-2">
-                            <Settings className="h-4 w-4 text-primary" />
-                            AI Configuration & Settings
-                          </h3>
-                          <p className="text-xs text-muted-foreground mt-0.5">
-                            Switch between single or multi-model mode
-                          </p>
+                  {/* Configuration Banner */}
+                  {hasStartedConversation && (
+                    <div className="border-b bg-gradient-to-r from-primary/5 to-primary/10 px-4 py-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <Badge variant="secondary" className="text-xs">
+                            {aiConfig.mode === 'default' ? '🤖 Auto-Select' : 
+                             aiConfig.mode === 'single' ? '🎯 Single Model' : 
+                             '🔀 Multi-Agent'}
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">|</span>
+                          <span className="text-xs text-muted-foreground">
+                            {aiConfig.mode === 'default' 
+                              ? 'Intelligent model selection'
+                              : aiConfig.mode === 'single'
+                              ? Object.entries(aiConfig)
+                                  .filter(([key, val]) => key.endsWith('Model') && val && typeof val === 'string')
+                                  .map(([_, model]) => model)
+                                  .filter((m, i, arr) => arr.indexOf(m) === i)
+                                  .join(', ')
+                              : `${aiConfig.selectedModel}, ${aiConfig.secondaryModel || 'default'}`}
+                          </span>
+                          {aiConfig.ragEnabled && (
+                            <>
+                              <span className="text-xs text-muted-foreground">|</span>
+                              <Badge variant="outline" className="text-xs">🔍 RAG</Badge>
+                            </>
+                          )}
+                          {aiConfig.knowledgeBaseEnabled && (
+                            <>
+                              <span className="text-xs text-muted-foreground">|</span>
+                              <Badge variant="outline" className="text-xs">📚 KB</Badge>
+                            </>
+                          )}
+                          {aiConfig.visionEnabled && (
+                            <>
+                              <span className="text-xs text-muted-foreground">|</span>
+                              <Badge variant="outline" className="text-xs">👁️ Vision</Badge>
+                            </>
+                          )}
                         </div>
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => setShowAdvancedSettings(false)}
-                          className="h-6 w-6 p-0"
-                          title="Close Settings"
+                          onClick={() => setShowConfigWizard(true)}
+                          className="h-6 text-xs"
                         >
-                          <X className="h-3 w-3" />
+                          <Settings className="h-3 w-3 mr-1" />
+                          Reconfigure
                         </Button>
                       </div>
-                      <AdvancedAISettings 
-                        currentConfig={aiConfig}
-                        onConfigChange={setAIConfig}
-                        userEmail={userInfo?.email}
-                        context={context || 'technology'}
-                      />
                     </div>
                   )}
 
@@ -1152,91 +1154,13 @@ ${conversationSummary.transcript}`
                       </div>
                     )}
 
-                   {/* Capabilities Prompt */}
-                   {showCapabilities && !context && (
-                     <CapabilitiesPrompt
-                       onModeSelect={(mode) => {
-                         setAIConfig(prev => ({ ...prev, mode }));
-                         setShowCapabilities(false);
-                       }}
-                       onFeatureToggle={(feature) => {
-                         const featureKey = feature.toLowerCase().replace(' ', '') + 'Enabled';
-                         setAIConfig(prev => ({ ...prev, [featureKey]: !prev[featureKey as keyof AIConfig] }));
-                       }}
-                       currentConfig={aiConfig}
-                     />
-                   )}
-
-                   {/* Topic Suggestions */}
-                   {showTopicSuggestions && context && (
-                     <TopicSuggestions
-                       context={context}
-                       topics={context === 'technology' ? technologyTopics.slice(0, 6) : healthcareTopics.slice(0, 6)}
-                       onTopicSelect={(topic) => {
-                         setSelectedTopic(topic);
-                        setShowTopicSuggestions(false);
-                        addMessage({
-                          role: 'assistant',
-                          content: `Great! I'm now focused on ${topic}. What specific questions do you have about this topic?`,
-                          timestamp: new Date().toISOString()
-                        });
-                      }}
-                    />
-                  )}
 
                    {/* Session Manager */}
-                   {showSessionManager && (
-                     <SessionManager
-                       ipAddress={ipAddress}
-                       messageCount={messages.length}
-                       onRestart={() => {
-                         resetConversation();
-                         setSplitResponses({ primary: [], secondary: [] });
-                         setContext(null);
-                         setSelectedTopic('');
-                         setShowSessionManager(false);
-                         setShowConfigWizard(true);
-                       }}
-                       onContinue={() => setShowSessionManager(false)}
-                       showControls={hasStartedConversation}
-                     />
-                    )}
 
                     </div>
 
                       {/* Input Area */}
                       <div className="p-4 border-t bg-background/50 flex-shrink-0">
-                      {/* Context Switcher */}
-                      {hasStartedConversation && (
-                        <div className="mb-3">
-                           <ContextSwitcher
-                            currentContext={context}
-                            onContextSwitch={(newContext) => {
-                              setContext(newContext);
-                              setSelectedTopic('');
-                              addMessage({
-                                role: 'assistant',
-                                content: `Switched to ${newContext} context! 🔄 Your conversation history is preserved. What would you like to explore in ${newContext}?`,
-                                timestamp: new Date().toISOString()
-                              });
-                              
-                              // Don't show limit modal on context switch, conversation continues
-                            }}
-                            onTopicSelect={(topic) => {
-                              setSelectedTopic(topic);
-                              addMessage({
-                                role: 'assistant',
-                                content: `Great! I'm now focused on ${topic}. Your previous conversation is still here. What specific questions do you have about ${topic}?`,
-                                timestamp: new Date().toISOString()
-                              });
-                            }}
-                            availableTopics={{
-                              technology: technologyTopics,
-                              healthcare: healthcareTopics
-                            }}
-                          />
-                        </div>
-                      )}
                       <div className="flex gap-2">
                         <Input
                           value={inputMessage}
@@ -1289,36 +1213,17 @@ ${conversationSummary.transcript}`
                         </Tooltip>
                       </div>
                     
-                    {/* Context and Topic Switcher */}
+                     {/* Simple status indicator */}
                     <div className="flex justify-between items-center mt-2">
                       <div className="flex items-center gap-2">
-                        {context && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setShowTopicSuggestions(!showTopicSuggestions)}
-                            className="text-xs h-6"
-                          >
-                            {context === 'technology' ? '🚀' : '🏥'} {selectedTopic || 'Choose Topic'}
-                          </Button>
-                        )}
+                        <p className="text-xs text-muted-foreground">
+                          {selectedTopic && `📍 ${selectedTopic}`}
+                        </p>
                       </div>
                       
                       <div className="flex items-center gap-2">
                         <p className="text-xs text-muted-foreground flex items-center gap-1">
                           <span>Genie AI</span>
-                          {aiConfig.mode !== 'default' && (
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Badge variant="secondary" className="text-xs cursor-help">
-                                  {aiConfig.mode.toUpperCase()}
-                                </Badge>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{aiConfig.mode === 'multi' ? 'Consensus mode: compare multiple models' : 'Focused mode: single model optimized'}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          )}
                           {(aiConfig.ragEnabled || aiConfig.knowledgeBaseEnabled || aiConfig.mcpEnabled) && (
                             <div className="flex gap-1">
                               {aiConfig.ragEnabled && (
