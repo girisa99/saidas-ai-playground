@@ -15,6 +15,7 @@ interface ConfigurationWizardProps {
   onCancel: () => void;
   initialConfig?: Partial<AIConfig>;
   showSmartDefaults?: boolean;
+  portalContainer?: HTMLElement | null;
 }
 
 const modelOptions = [
@@ -155,7 +156,8 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
   onComplete,
   onCancel,
   initialConfig,
-  showSmartDefaults
+  showSmartDefaults,
+  portalContainer
 }) => {
   const [step, setStep] = useState(1);
   const [modelFilter, setModelFilter] = useState<'all' | 'general' | 'slm' | 'vision' | 'healthcare'>('all');
@@ -699,7 +701,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
-      <DialogContent className="max-w-sm sm:max-w-md w-full h-[80vh] sm:h-[85vh] max-h-[85vh] overflow-hidden flex flex-col z-[100001]">
+      <DialogContent container={portalContainer} className="max-w-sm sm:max-w-md w-full h-[80vh] sm:h-[85vh] max-h-[85vh] overflow-hidden flex flex-col z-[100001]">
         <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <span>Genie AI Configuration</span>

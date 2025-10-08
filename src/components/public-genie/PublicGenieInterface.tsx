@@ -912,14 +912,6 @@ ${conversationSummary.transcript}`
       <AnimatePresence>
         {isOpen && (
           <>
-            <motion.div
-              key="genie-backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-              className="fixed inset-0 z-[99996] bg-background/60 backdrop-blur-sm"
-            />
             <Draggable key="genie-window-container" handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
             <motion.div
               ref={dragRef}
@@ -1202,7 +1194,12 @@ ${conversationSummary.transcript}`
                                 ? `Ask me about ${selectedTopic}...` 
                                 : "Ask me anything..."
                           }
-                          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                              e.preventDefault();
+                              handleSendMessage();
+                            }
+                          }}
                           disabled={isLoading}
                           className="flex-1"
                         />
@@ -1391,6 +1388,7 @@ ${conversationSummary.transcript}`
       {/* Configuration Wizard */}
       <ConfigurationWizard
         isOpen={showConfigWizard}
+        portalContainer={dragRef.current}
         onComplete={(config) => {
           setAIConfig(config);
           setShowConfigWizard(false);
