@@ -447,33 +447,19 @@ useEffect(() => {
     const currentTime = Date.now();
     const oneHour = 60 * 60 * 1000;
     
-    // Only show wizard if no config exists or config is older than 1 hour
-    if (!savedConfig || !configTimestamp || (currentTime - parseInt(configTimestamp)) >= oneHour) {
-      setShowConfigWizard(true);
-    } else {
-      // User has recent config, start conversation directly with welcome message
-      setHasStartedConversation(true);
-      
-      const welcomeMessage = `Hello ${userInfo?.firstName}! 🧞‍♂️ Welcome back to Genie AI! 
-  
-I am Genie and I can support and discuss with you on Experimentation Hub Technology and Healthcare concepts.
+    // Start conversation immediately with a welcome message; configuration can be changed via the header button
+    setShowConfigWizard(false);
+    setHasStartedConversation(true);
 
-💡 **My comprehensive knowledge includes:**
-• 🚀 AI Innovation & Gartner Value Framework mapping to tech stacks
-• 🏥 Healthcare business use cases, DTx, Cell & Gene therapies  
-• 🔬 Technology stack concepts and journey use cases
-• 📊 Case studies and implementation methodologies
-• 🛡️ Security topics and compliance frameworks
-• 🗺️ Value creation and realization strategies
+    const welcomeMessage = `Hello ${info.firstName}! 🧞‍♂️ Welcome to Genie AI! 
 
-I'm using your previous configuration. Ask me anything to get started!`;
+I can help you navigate Technology and Healthcare topics across our Experimentation Hub. Ask me anything to get started.`;
 
-      addMessage({
-        role: 'assistant',
-        content: welcomeMessage,
-        timestamp: new Date().toISOString()
-      });
-    }
+    addMessage({
+      role: 'assistant',
+      content: welcomeMessage,
+      timestamp: new Date().toISOString()
+    });
   };
 
   const addPersonalityToResponse = (response: string): string => {
