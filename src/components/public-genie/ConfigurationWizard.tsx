@@ -698,7 +698,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
   );
 
   return (
-    <Dialog open={isOpen} onOpenChange={() => {}}>
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
       <DialogContent className="max-w-sm sm:max-w-md w-full h-[80vh] sm:h-[85vh] max-h-[85vh] overflow-hidden flex flex-col z-[100001]">
         <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">

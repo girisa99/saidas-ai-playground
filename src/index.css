@@ -645,4 +645,11 @@
   .touch-target {
     @apply min-h-[44px] min-w-[44px];
   }
+
+  /* Lock scroll when Genie popup is open */
+  body.genie-open {
+    overflow: hidden;
+    overscroll-behavior: contain;
+    touch-action: none;
+  }
 }

@@ -333,6 +333,22 @@ useEffect(() => {
   };
 }, []);
 
+// Lock page and close background menus when Genie opens
+useEffect(() => {
+  if (isOpen) {
+    try { document.body.classList.add('genie-open'); } catch {}
+    // Close any open Radix dropdowns/popovers/selects
+    const esc = new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 27, bubbles: true } as any);
+    window.dispatchEvent(esc);
+    setTimeout(() => window.dispatchEvent(esc), 0);
+  } else {
+    try { document.body.classList.remove('genie-open'); } catch {}
+  }
+  return () => {
+    try { document.body.classList.remove('genie-open'); } catch {}
+  };
+}, [isOpen]);
+
 // Fetch IP address only once on mount
 useEffect(() => {
   const fetchIP = async () => {
@@ -904,7 +920,7 @@ ${conversationSummary.transcript}`
               transition={{ duration: 0.15 }}
               className="fixed inset-0 z-[99996] bg-background/60 backdrop-blur-sm"
             />
-            <Draggable key="genie-window" handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
+            <Draggable key="genie-window-container" handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
             <motion.div
               ref={dragRef}
               initial={{ opacity: 0, scale: 0.9, x: 300 }}
