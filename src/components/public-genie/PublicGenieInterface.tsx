@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minimize2, Maximize2, MessageCircle, Send, User, Bot, AlertTriangle, Move, Users, Settings, Brain, ImagePlus } from 'lucide-react';
+import { X, Minimize2, Maximize2, MessageCircle, Send, User, Bot, AlertTriangle, Move, Users, Settings, Brain, ImagePlus, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -143,11 +143,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
       return true;
     }
   });
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(() => {
-    // Check localStorage for returning user
-    const savedUser = localStorage.getItem('genie_user_info');
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [context, setContext] = useState<Context>('technology'); // Default to technology
   const [selectedTopic, setSelectedTopic] = useState<string>('');
   const [inputMessage, setInputMessage] = useState('');
@@ -382,8 +378,9 @@ useEffect(() => {
     // Also mark cookie consent accepted so the site-wide banner doesn't show behind Genie
     try { localStorage.setItem('cookie-consent', 'accepted'); } catch {}
     
-    // Save user info to localStorage for returning users
+    // Save user info to localStorage for returning users (analytics) and session for current tab
     localStorage.setItem('genie_user_info', JSON.stringify(info));
+    try { sessionStorage.setItem('genie_user_info_session', JSON.stringify(info)); } catch {}
 
     // Start tracking Genie conversation in database FIRST to get conversation ID
     let conversationId: string | undefined;
@@ -454,7 +451,13 @@ useEffect(() => {
     const currentTime = Date.now();
     const oneHour = 60 * 60 * 1000;
     
-    // Start conversation immediately with a welcome message; configuration can be changed via the header button
+    // If no recent config, open the configuration wizard; otherwise greet and continue
+    if (!savedConfig || !configTimestamp || (currentTime - parseInt(configTimestamp)) >= oneHour) {
+      setShowConfigWizard(true);
+      setHasStartedConversation(false);
+      return;
+    }
+
     setShowConfigWizard(false);
     setHasStartedConversation(true);
 
@@ -671,10 +674,14 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
         Note: If no context is set, try to identify if this relates to technology or healthcare and suggest relevant topics.`;
 
       if (aiConfig.splitScreenEnabled && aiConfig.mode === 'multi') {
-        // Handle split-screen multi-model responses
+        // Handle split-screen multi-model responses with per-model resilience
         setLoadingStates({ primary: true, secondary: true });
 
-        const [primaryResponse, secondaryResponse] = await Promise.all([
+        const secondaryIsClaude = (aiConfig.secondaryModel || '').startsWith('claude');
+        const secondaryProvider = secondaryIsClaude ? 'gemini' : 'claude';
+        const secondaryModel = secondaryIsClaude ? 'gemini-pro' : (aiConfig.secondaryModel || 'claude-3-haiku');
+
+        const results = await Promise.allSettled([
           generateResponse({
             provider: 'openai',
             model: aiConfig.selectedModel,
@@ -685,8 +692,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             ...(imageUrls.length > 0 && { images: imageUrls })
           }),
           generateResponse({
-            provider: 'claude',
-            model: aiConfig.secondaryModel || 'claude-3-haiku',
+            provider: secondaryProvider as any,
+            model: secondaryModel,
             prompt: enhancedPrompt,
             systemPrompt,
             temperature: 0.7,
@@ -697,8 +704,11 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
 
         setLoadingStates({ primary: false, secondary: false });
 
-        if (primaryResponse) {
-          const personalizedPrimary = addPersonalityToResponse(primaryResponse.content);
+        const primaryRes = results[0].status === 'fulfilled' ? results[0].value : null;
+        const secondaryRes = results[1].status === 'fulfilled' ? results[1].value : null;
+
+        if (primaryRes) {
+          const personalizedPrimary = addPersonalityToResponse(primaryRes.content);
           setSplitResponses(prev => ({
             ...prev,
             primary: [...prev.primary, {
@@ -708,19 +718,23 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
               model: aiConfig.selectedModel
             }]
           }));
+        } else {
+          toast({ title: 'Primary model unavailable', description: 'Falling back; please try again or reconfigure.', variant: 'destructive' });
         }
 
-        if (secondaryResponse) {
-          const personalizedSecondary = addPersonalityToResponse(secondaryResponse.content);
+        if (secondaryRes) {
+          const personalizedSecondary = addPersonalityToResponse(secondaryRes.content);
           setSplitResponses(prev => ({
             ...prev,
             secondary: [...prev.secondary, {
               role: 'assistant',
               content: personalizedSecondary,
               timestamp: new Date().toISOString(),
-              model: aiConfig.secondaryModel
+              model: secondaryModel
             }]
           }));
+        } else {
+          toast({ title: 'Secondary model unavailable', description: 'We adjusted to improve reliability. You can change it in settings.', variant: 'default' });
         }
       } else {
         // Standard single response with RAG, Knowledge Base, MCP
@@ -840,6 +854,26 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
     onClose();
   };
 
+  const handleResetSession = async () => {
+    try {
+      sessionStorage.removeItem('genie_ai_config');
+      sessionStorage.removeItem('genie_config_timestamp');
+      sessionStorage.removeItem('genie_privacy_accepted');
+      sessionStorage.removeItem('genie_user_info_session');
+      localStorage.removeItem('genie_user_info');
+    } catch {}
+    resetConversation();
+    if (conversationLimitService.isConversationActive()) {
+      await conversationLimitService.endConversation();
+    }
+    if (genieConversationService.isConversationActive()) {
+      await genieConversationService.endConversation();
+    }
+    setShowConfigWizard(false);
+    setShowTopicPopover(false);
+    setUserInfo(null);
+    setShowPrivacyBanner(true);
+  };
   const sendConversationTranscript = async () => {
     try {
       // Limit transcript length to avoid validation errors
@@ -938,83 +972,98 @@ ${conversationSummary.transcript}`
                  <p className="text-xs text-slate-300">Your Technology Navigator</p>
                </div>
             </div>
-             <div className="flex items-center gap-1.5">
-               <Tooltip>
-                 <TooltipTrigger asChild>
-                   <Button
-                     variant="ghost"
-                     size="sm"
-                     onClick={() => setShowConfigWizard(true)}
-                     className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
-                   >
-                     <Settings className="h-4 w-4" />
-                   </Button>
-                 </TooltipTrigger>
-                 <TooltipContent>
-                   <p>Configure AI Settings</p>
-                 </TooltipContent>
-               </Tooltip>
-               <Tooltip>
-                 <TooltipTrigger asChild>
-                   <Button
-                     variant="ghost"
-                     size="sm"
-                     onClick={handleConnectLiveAgent}
-                     className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
-                   >
-                     <Users className="h-4 w-4" />
-                   </Button>
-                 </TooltipTrigger>
-                 <TooltipContent>
-                   <p>Connect with human agent</p>
-                 </TooltipContent>
-               </Tooltip>
-               <Tooltip>
-                 <TooltipTrigger asChild>
-                   <Button
-                     variant="ghost"
-                     size="sm"
-                     onClick={() => setIsMinimized(!isMinimized)}
-                     className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
-                   >
-                     <Minimize2 className="h-4 w-4" />
-                   </Button>
-                 </TooltipTrigger>
-                 <TooltipContent>
-                   <p>Minimize chat window</p>
-                 </TooltipContent>
-               </Tooltip>
-               <Tooltip>
-                 <TooltipTrigger asChild>
-                   <Button
-                     variant="ghost"
-                     size="sm"
-                     onClick={() => setIsMaximized(!isMaximized)}
-                     className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
-                   >
-                     <Maximize2 className="h-4 w-4" />
-                   </Button>
-                 </TooltipTrigger>
-                 <TooltipContent>
-                   <p>{isMaximized ? 'Exit fullscreen' : 'Fullscreen'} mode</p>
-                 </TooltipContent>
-               </Tooltip>
-               <Tooltip>
-                 <TooltipTrigger asChild>
-                   <Button
-                     variant="ghost"
-                     size="sm"
-                     onClick={handleClose}
-                     className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
-                   >
-                     <X className="h-4 w-4" />
-                   </Button>
-                 </TooltipTrigger>
-                 <TooltipContent>
-                   <p>Close chat</p>
-                 </TooltipContent>
-               </Tooltip>
-            </div>
+               <div className="flex items-center gap-1.5">
+                 <Tooltip>
+                   <TooltipTrigger asChild>
+                     <Button
+                       variant="ghost"
+                       size="sm"
+                       onClick={() => setShowConfigWizard(true)}
+                       className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                     >
+                       <Settings className="h-4 w-4" />
+                     </Button>
+                   </TooltipTrigger>
+                   <TooltipContent>
+                     <p>Configure AI Settings</p>
+                   </TooltipContent>
+                 </Tooltip>
+                 <Tooltip>
+                   <TooltipTrigger asChild>
+                     <Button
+                       variant="ghost"
+                       size="sm"
+                       onClick={handleResetSession}
+                       className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                     >
+                       <RefreshCw className="h-4 w-4" />
+                     </Button>
+                   </TooltipTrigger>
+                   <TooltipContent>
+                     <p>New session</p>
+                   </TooltipContent>
+                 </Tooltip>
+                 <Tooltip>
+                   <TooltipTrigger asChild>
+                     <Button
+                       variant="ghost"
+                       size="sm"
+                       onClick={handleConnectLiveAgent}
+                       className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                     >
+                       <Users className="h-4 w-4" />
+                     </Button>
+                   </TooltipTrigger>
+                   <TooltipContent>
+                     <p>Connect with human agent</p>
+                   </TooltipContent>
+                 </Tooltip>
+                 <Tooltip>
+                   <TooltipTrigger asChild>
+                     <Button
+                       variant="ghost"
+                       size="sm"
+                       onClick={() => setIsMinimized(!isMinimized)}
+                       className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                     >
+                       <Minimize2 className="h-4 w-4" />
+                     </Button>
+                   </TooltipTrigger>
+                   <TooltipContent>
+                     <p>Minimize chat window</p>
+                   </TooltipContent>
+                 </Tooltip>
+                 <Tooltip>
+                   <TooltipTrigger asChild>
+                     <Button
+                       variant="ghost"
+                       size="sm"
+                       onClick={() => setIsMaximized(!isMaximized)}
+                       className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                     >
+                       <Maximize2 className="h-4 w-4" />
+                     </Button>
+                   </TooltipTrigger>
+                   <TooltipContent>
+                     <p>{isMaximized ? 'Exit fullscreen' : 'Fullscreen'} mode</p>
+                   </TooltipContent>
+                 </Tooltip>
+                 <Tooltip>
+                   <TooltipTrigger asChild>
+                     <Button
+                       variant="ghost"
+                       size="sm"
+                       onClick={handleClose}
+                       className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                     >
+                       <X className="h-4 w-4" />
+                     </Button>
+                   </TooltipTrigger>
+                   <TooltipContent>
+                     <p>Close chat</p>
+                   </TooltipContent>
+                 </Tooltip>
+               </div>
           </div>
 
           {/* Content */}

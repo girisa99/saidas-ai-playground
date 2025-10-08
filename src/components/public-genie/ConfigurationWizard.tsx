@@ -354,7 +354,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   <SelectTrigger>
                     <SelectValue placeholder="Select SLM (optional)" />
                   </SelectTrigger>
-                  <SelectContent className="max-h-[200px]">
+                  <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     <SelectItem value="none">None</SelectItem>
                     {modelOptions.filter(m => m.type === 'SLM').map((model) => (
                       <SelectItem key={model.id} value={model.id}>
@@ -389,7 +389,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   <SelectTrigger>
                     <SelectValue placeholder="Select Vision model (optional)" />
                   </SelectTrigger>
-                  <SelectContent className="max-h-[200px]">
+                  <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     <SelectItem value="none">None</SelectItem>
                     {modelOptions.filter(m => m.category === 'Vision' || (m.vision && m.type.includes('VLM'))).map((model) => (
                       <SelectItem key={model.id} value={model.id}>
@@ -424,7 +424,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   <SelectTrigger>
                     <SelectValue placeholder="Select Healthcare model (optional)" />
                   </SelectTrigger>
-                  <SelectContent className="max-h-[200px]">
+                  <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     <SelectItem value="none">None</SelectItem>
                     {modelOptions.filter(m => m.category === 'Healthcare').map((model) => (
                       <SelectItem key={model.id} value={model.id}>
@@ -467,7 +467,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   <SelectTrigger>
                     <SelectValue placeholder="Select LLM" />
                   </SelectTrigger>
-                  <SelectContent className="max-h-[200px]">
+                  <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     {modelOptions.filter(m => m.category === 'General' && !m.type.includes('SLM')).map((model) => (
                       <SelectItem key={model.id} value={model.id}>
                         <div className="flex flex-col py-1">
@@ -501,7 +501,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   <SelectTrigger>
                     <SelectValue placeholder="Select SLM (optional)" />
                   </SelectTrigger>
-                  <SelectContent className="max-h-[200px]">
+                  <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     <SelectItem value="none">None</SelectItem>
                     {modelOptions.filter(m => m.type === 'SLM').map((model) => (
                       <SelectItem key={model.id} value={model.id}>
@@ -534,7 +534,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   <SelectTrigger>
                     <SelectValue placeholder="Select Vision model (optional)" />
                   </SelectTrigger>
-                  <SelectContent className="max-h-[200px]">
+                  <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     <SelectItem value="none">None</SelectItem>
                     {modelOptions.filter(m => m.category === 'Vision' || (m.vision && m.type.includes('VLM'))).map((model) => (
                       <SelectItem key={model.id} value={model.id}>
@@ -566,7 +566,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   <SelectTrigger>
                     <SelectValue placeholder="Select Healthcare model (optional)" />
                   </SelectTrigger>
-                  <SelectContent className="max-h-[200px]">
+                  <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     <SelectItem value="none">None</SelectItem>
                     {modelOptions.filter(m => m.category === 'Healthcare').map((model) => (
                       <SelectItem key={model.id} value={model.id}>
