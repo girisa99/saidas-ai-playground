@@ -135,9 +135,13 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
   const [showPrivacyBanner, setShowPrivacyBanner] = useState(() => {
-    // Skip privacy banner if user has already registered
-    const savedUser = localStorage.getItem('genie_user_info');
-    return !savedUser;
+    try {
+      // Require privacy acceptance once per session
+      const acceptedThisSession = sessionStorage.getItem('genie_privacy_accepted') === 'true';
+      return !acceptedThisSession;
+    } catch {
+      return true;
+    }
   });
   const [userInfo, setUserInfo] = useState<UserInfo | null>(() => {
     // Check localStorage for returning user
@@ -367,6 +371,9 @@ useEffect(() => {
   const handlePrivacyAccept = async (info: UserInfo) => {
     setUserInfo(info);
     setShowPrivacyBanner(false);
+
+    // Mark accepted for this session
+    try { sessionStorage.setItem('genie_privacy_accepted', 'true'); } catch {}
     
     // Save user info to localStorage for returning users
     localStorage.setItem('genie_user_info', JSON.stringify(info));
@@ -1021,12 +1028,8 @@ ${conversationSummary.transcript}`
           {!isMinimized && (
             <div className="flex flex-col h-full">
               {showPrivacyBanner ? (
-                <div className="flex-1 overflow-y-auto p-4">
-                  <PublicPrivacyBanner 
-                    onAccept={handlePrivacyAccept} 
-                    technologyTopics={technologyTopics}
-                    healthcareTopics={healthcareTopics}
-                  />
+                <div className="flex-1 p-4 flex items-center justify-center text-center text-sm text-muted-foreground">
+                  Please review and accept the privacy terms to start chatting.
                 </div>
               ) : (
                 <React.Fragment>
@@ -1327,6 +1330,17 @@ ${conversationSummary.transcript}`
           </Card>
             </motion.div>
           </Draggable>
+
+          {/* Privacy Modal inside Genie container */}
+          <Dialog open={showPrivacyBanner}>
+            <DialogContent container={dragRef.current} className="max-w-sm sm:max-w-md w-full p-0 z-[100001]">
+              <PublicPrivacyBanner 
+                onAccept={handlePrivacyAccept}
+                technologyTopics={technologyTopics}
+                healthcareTopics={healthcareTopics}
+              />
+            </DialogContent>
+          </Dialog>
           </>
         )}
 
