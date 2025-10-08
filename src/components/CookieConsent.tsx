@@ -6,13 +6,24 @@ import { Cookie, X } from "lucide-react";
 
 export const CookieConsent = () => {
   const [showConsent, setShowConsent] = useState(false);
+  const [isGenieOpen, setIsGenieOpen] = useState(false);
 
   useEffect(() => {
-    // Check if user has already consented
+    // Check if user has already consented OR accepted via Genie privacy modal
     const hasConsented = localStorage.getItem('cookie-consent');
-    if (!hasConsented) {
+    const genieAccepted = sessionStorage.getItem('genie_privacy_accepted') === 'true';
+    if (!hasConsented && !genieAccepted) {
       setShowConsent(true);
     }
+  }, []);
+
+  useEffect(() => {
+    // Track when Genie is opened/closed by observing body class
+    const check = () => setIsGenieOpen(document.body.classList.contains('genie-open'));
+    try { check(); } catch {}
+    const observer = new MutationObserver(check);
+    try { observer.observe(document.body, { attributes: true, attributeFilter: ['class'] }); } catch {}
+    return () => observer.disconnect();
   }, []);
 
   const acceptCookies = () => {
@@ -25,10 +36,11 @@ export const CookieConsent = () => {
     setShowConsent(false);
   };
 
-  if (!showConsent) return null;
+// Hide while Genie is open to avoid overlapping with the Genie modal
+if (!showConsent || isGenieOpen) return null;
 
-  return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4">
+return (
+  <div className="fixed bottom-0 left-0 right-0 z-[99990] p-4">
       <Card className="max-w-4xl mx-auto border-primary/20 bg-background/95 backdrop-blur-sm shadow-lg">
         <CardHeader className="pb-4">
           <CardTitle className="flex items-center gap-2">

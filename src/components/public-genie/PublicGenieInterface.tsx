@@ -338,20 +338,24 @@ useEffect(() => {
 }, []);
 
 // Lock page and close background menus when Genie opens
-useEffect(() => {
-  if (isOpen) {
-    try { document.body.classList.add('genie-open'); } catch {}
-    // Close any open Radix dropdowns/popovers/selects
-    const esc = new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 27, bubbles: true } as any);
-    window.dispatchEvent(esc);
-    setTimeout(() => window.dispatchEvent(esc), 0);
-  } else {
-    try { document.body.classList.remove('genie-open'); } catch {}
-  }
-  return () => {
-    try { document.body.classList.remove('genie-open'); } catch {}
-  };
-}, [isOpen]);
+  useEffect(() => {
+    if (isOpen) {
+      try { document.body.classList.add('genie-open'); } catch {}
+      // Close any open Radix dropdowns/popovers/selects
+      const esc = new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 27, bubbles: true } as any);
+      window.dispatchEvent(esc);
+      setTimeout(() => window.dispatchEvent(esc), 0);
+      // Prevent background scroll/interaction behind Genie
+      try { document.documentElement.style.overflow = 'hidden'; } catch {}
+    } else {
+      try { document.body.classList.remove('genie-open'); } catch {}
+      try { document.documentElement.style.overflow = ''; } catch {}
+    }
+    return () => {
+      try { document.body.classList.remove('genie-open'); } catch {}
+      try { document.documentElement.style.overflow = ''; } catch {}
+    };
+  }, [isOpen]);
 
 // Fetch IP address only once on mount
 useEffect(() => {
@@ -374,6 +378,9 @@ useEffect(() => {
 
     // Mark accepted for this session
     try { sessionStorage.setItem('genie_privacy_accepted', 'true'); } catch {}
+
+    // Also mark cookie consent accepted so the site-wide banner doesn't show behind Genie
+    try { localStorage.setItem('cookie-consent', 'accepted'); } catch {}
     
     // Save user info to localStorage for returning users
     localStorage.setItem('genie_user_info', JSON.stringify(info));

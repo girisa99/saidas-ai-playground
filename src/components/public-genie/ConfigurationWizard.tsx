@@ -320,7 +320,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   <SelectTrigger>
                     <SelectValue placeholder="Select General LLM" />
                   </SelectTrigger>
-                  <SelectContent className="max-h-[200px]">
+                  <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     {modelOptions.filter(m => m.category === 'General' && !m.type.includes('SLM')).map((model) => (
                       <SelectItem key={model.id} value={model.id}>
                         <div className="flex flex-col py-1">
