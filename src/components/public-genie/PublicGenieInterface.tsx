@@ -903,8 +903,8 @@ ${conversationSummary.transcript}`
               exit={{ opacity: 0, scale: 0.9, x: 300 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className={`
-          fixed z-[9998] flex flex-col bg-gradient-to-br from-background via-background to-primary/5
-          ${isMaximized 
+          fixed z-[99997] flex flex-col bg-gradient-to-br from-background via-background to-primary/5
+          ${isMaximized
             ? 'top-0 right-0 bottom-0 w-full md:w-3/4 lg:w-2/3 h-full rounded-none' 
             : 'top-4 right-4 w-[90vw] md:w-[500px] lg:w-[600px] h-[calc(100vh-2rem)] rounded-xl shadow-2xl border-2 border-primary/20'
           }

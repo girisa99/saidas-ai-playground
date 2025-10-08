@@ -153,7 +153,9 @@ const modelOptions = [
 export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
   isOpen,
   onComplete,
-  onCancel
+  onCancel,
+  initialConfig,
+  showSmartDefaults
 }) => {
   const [step, setStep] = useState(1);
   const [modelFilter, setModelFilter] = useState<'all' | 'general' | 'slm' | 'vision' | 'healthcare'>('all');

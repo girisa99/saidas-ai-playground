@@ -67,7 +67,7 @@ export const TopicSuggestionPopover: React.FC<TopicSuggestionPopoverProps> = ({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="absolute bottom-24 left-4 right-4 z-[9999]"
+          className="absolute bottom-24 left-4 right-4 z-[100001]"
         >
           <Card className="bg-gradient-to-br from-background to-muted/30 border-2 border-primary/20 shadow-xl backdrop-blur-sm">
             <div className="p-4 space-y-4">
