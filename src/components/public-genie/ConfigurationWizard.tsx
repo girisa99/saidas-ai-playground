@@ -292,38 +292,150 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
         )}
 
         {config.mode === 'single' && (
-          <div className="space-y-3">
-            <label className="text-sm font-medium mb-2 block">Select Your Specialized Model</label>
-            
-            <Tabs value={modelFilter} onValueChange={(v) => setModelFilter(v as any)} className="w-full">
-              <TabsList className="grid grid-cols-5 w-full">
-                <TabsTrigger value="all" className="text-xs">All</TabsTrigger>
-                <TabsTrigger value="general" className="text-xs">General</TabsTrigger>
-                <TabsTrigger value="slm" className="text-xs">SLM</TabsTrigger>
-                <TabsTrigger value="vision" className="text-xs">Vision</TabsTrigger>
-                <TabsTrigger value="healthcare" className="text-xs">Health</TabsTrigger>
-              </TabsList>
-            </Tabs>
+          <>
+            <div className="text-center mb-3">
+              <p className="text-sm text-muted-foreground">Choose your preferred model for this conversation</p>
+            </div>
 
-            <Select value={config.selectedModel} onValueChange={(value) => updateConfig({ selectedModel: value })}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="max-h-[300px]">
-                {getFilteredModels().map((model) => (
-                  <SelectItem key={model.id} value={model.id}>
-                    <div className="flex flex-col py-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium">{model.name}</span>
-                        <Badge variant="secondary" className="text-xs">{model.type}</Badge>
-                      </div>
-                      <span className="text-xs text-muted-foreground">{model.description}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+            <div className="space-y-3">
+              {/* General/LLM Selection */}
+              <div>
+                <label className="text-sm font-medium mb-2 block flex items-center gap-2">
+                  <Badge variant="outline" className="text-xs">LLM</Badge>
+                  Large Language Model
+                </label>
+                <Select 
+                  value={selectedModels.llm || config.selectedModel} 
+                  onValueChange={(value) => {
+                    setSelectedModels(prev => ({ ...prev, llm: value }));
+                    updateConfig({ selectedModel: value });
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select General LLM" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-[200px]">
+                    {modelOptions.filter(m => m.category === 'General' && !m.type.includes('SLM')).map((model) => (
+                      <SelectItem key={model.id} value={model.id}>
+                        <div className="flex flex-col py-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium">{model.name}</span>
+                            <Badge variant="secondary" className="text-xs">{model.provider}</Badge>
+                          </div>
+                          <span className="text-xs text-muted-foreground">{model.description}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* SLM Selection */}
+              <div>
+                <label className="text-sm font-medium mb-2 block flex items-center gap-2">
+                  <Badge variant="outline" className="text-xs">SLM</Badge>
+                  Small Language Model (Optional)
+                </label>
+                <Select 
+                  value={selectedModels.slm || ''} 
+                  onValueChange={(value) => {
+                    setSelectedModels(prev => ({ ...prev, slm: value }));
+                    if (value !== 'none') {
+                      updateConfig({ selectedModel: value });
+                    }
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select SLM (optional)" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-[200px]">
+                    <SelectItem value="none">None</SelectItem>
+                    {modelOptions.filter(m => m.type === 'SLM').map((model) => (
+                      <SelectItem key={model.id} value={model.id}>
+                        <div className="flex flex-col py-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium">{model.name}</span>
+                            <Badge variant="secondary" className="text-xs">{model.provider}</Badge>
+                          </div>
+                          <span className="text-xs text-muted-foreground">{model.description}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Vision Model Selection */}
+              <div>
+                <label className="text-sm font-medium mb-2 block flex items-center gap-2">
+                  <Badge variant="outline" className="text-xs">VLM</Badge>
+                  Vision Language Model (Optional)
+                </label>
+                <Select 
+                  value={selectedModels.vision || ''} 
+                  onValueChange={(value) => {
+                    setSelectedModels(prev => ({ ...prev, vision: value }));
+                    if (value !== 'none') {
+                      updateConfig({ visionEnabled: true, selectedModel: value });
+                    }
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Vision model (optional)" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-[200px]">
+                    <SelectItem value="none">None</SelectItem>
+                    {modelOptions.filter(m => m.category === 'Vision' || (m.vision && m.type.includes('VLM'))).map((model) => (
+                      <SelectItem key={model.id} value={model.id}>
+                        <div className="flex flex-col py-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium">{model.name}</span>
+                            <Badge variant="secondary" className="text-xs">{model.provider}</Badge>
+                          </div>
+                          <span className="text-xs text-muted-foreground">{model.description}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Healthcare Model Selection */}
+              <div>
+                <label className="text-sm font-medium mb-2 block flex items-center gap-2">
+                  <Badge variant="outline" className="text-xs">Healthcare</Badge>
+                  Medical/Biotech Model (Optional)
+                </label>
+                <Select 
+                  value={selectedModels.healthcare || ''} 
+                  onValueChange={(value) => {
+                    setSelectedModels(prev => ({ ...prev, healthcare: value }));
+                    if (value !== 'none') {
+                      updateConfig({ selectedModel: value });
+                    }
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Healthcare model (optional)" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-[200px]">
+                    <SelectItem value="none">None</SelectItem>
+                    {modelOptions.filter(m => m.category === 'Healthcare').map((model) => (
+                      <SelectItem key={model.id} value={model.id}>
+                        <div className="flex flex-col py-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium">{model.name}</span>
+                            <Badge variant="secondary" className="text-xs">{model.provider}</Badge>
+                          </div>
+                          <span className="text-xs text-muted-foreground">{model.description}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </>
         )}
 
         {config.mode === 'multi' && (
@@ -560,7 +672,15 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                 {selectedModels.healthcare && selectedModels.healthcare !== 'none' && <Badge variant="secondary">{modelOptions.find(m => m.id === selectedModels.healthcare)?.name}</Badge>}
               </>
             )}
-            {config.mode !== 'multi' && (
+            {config.mode === 'single' && (
+              <>
+                {selectedModels.llm && <Badge variant="secondary">{modelOptions.find(m => m.id === selectedModels.llm)?.name}</Badge>}
+                {selectedModels.slm && selectedModels.slm !== 'none' && <Badge variant="secondary">{modelOptions.find(m => m.id === selectedModels.slm)?.name}</Badge>}
+                {selectedModels.vision && selectedModels.vision !== 'none' && <Badge variant="secondary">{modelOptions.find(m => m.id === selectedModels.vision)?.name}</Badge>}
+                {selectedModels.healthcare && selectedModels.healthcare !== 'none' && <Badge variant="secondary">{modelOptions.find(m => m.id === selectedModels.healthcare)?.name}</Badge>}
+              </>
+            )}
+            {config.mode === 'default' && (
               <Badge variant="secondary">{modelOptions.find(m => m.id === config.selectedModel)?.name}</Badge>
             )}
             {config.ragEnabled && <Badge variant="outline">RAG</Badge>}
