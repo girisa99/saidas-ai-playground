@@ -407,7 +407,7 @@ serve(async (req) => {
         domain: 'conversational',
         content_type: 'guideline',
         metadata: { tags: ['funding', 'financial-assistance', 'travel-support', 'logistics', 'patient-assistance', 'car-t', 'gene-therapy', 'transportation'], source_type: 'hardcoded_migration' }
-      }
+      },
       {
         finding_name: "Clinical and Translational Research in Cell and Gene Therapy",
         description: `REFERENCE ARTICLE: ScienceDirect - Clinical and Translational Research in Cell and Gene Therapy\n\nThis peer-reviewed article provides in-depth analysis of current clinical and translational research approaches in cell and gene therapy.\n\nSOURCE URL: https://www.sciencedirect.com/science/article/pii/S2666636723014689\n\nRESEARCH FOCUS:\n• Translational medicine approaches\n• Clinical trial design and methodology\n• Biomarker development and validation\n• Therapeutic efficacy assessment\n• Safety monitoring and adverse event management\n• Precision medicine applications\n• Novel delivery mechanisms\n• Emerging therapeutic targets\n\nTARGET AUDIENCE: Researchers, clinicians, and translational scientists in regenerative medicine and advanced therapeutics.\n\nNOTE: Full access may require institutional subscription to ScienceDirect.`,
