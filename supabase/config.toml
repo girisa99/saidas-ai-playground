@@ -54,3 +54,24 @@ verify_jwt = false
 
 [functions.populate-knowledge-from-re3data]
 verify_jwt = false
+
+[functions.crawl-knowledge-source]
+verify_jwt = true
+
+[functions.process-media-knowledge]
+verify_jwt = true
+
+[functions.conversation-rate-limiter]
+verify_jwt = false
+
+[functions.send-conversation-transcript]
+verify_jwt = false
+
+[functions.submit-access-request]
+verify_jwt = false
+
+[functions.manage-access-request]
+verify_jwt = true
+
+[functions.send-rag-approval-email]
+verify_jwt = true
