@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -22,7 +22,38 @@ export const KnowledgeBaseMigration = () => {
   const [syncing, setSyncing] = useState(false);
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [results, setResults] = useState<any>(null);
+  const [stats, setStats] = useState<any>(null);
+  const [loadingStats, setLoadingStats] = useState(true);
   const { toast } = useToast();
+
+  const loadStats = async () => {
+    setLoadingStats(true);
+    try {
+      const { data, error } = await supabase
+        .from('universal_knowledge_base')
+        .select('domain');
+      
+      if (error) throw error;
+      
+      const total = data?.length || 0;
+      const byDomain = data?.reduce((acc: any, item) => {
+        const domain = item.domain || 'unknown';
+        acc[domain] = (acc[domain] || 0) + 1;
+        return acc;
+      }, {});
+      
+      setStats({ total, byDomain });
+    } catch (error) {
+      console.error('Stats error:', error);
+    } finally {
+      setLoadingStats(false);
+    }
+  };
+
+  // Load stats on mount and after operations
+  React.useEffect(() => {
+    loadStats();
+  }, []);
 
   const handleClearHardcoded = async () => {
     setMigrating(true);
@@ -39,6 +70,8 @@ export const KnowledgeBaseMigration = () => {
         title: "Cleared Successfully",
         description: "Removed all previously migrated hardcoded knowledge",
       });
+      
+      await loadStats(); // Refresh stats
     } catch (error) {
       console.error('Clear error:', error);
       toast({
@@ -63,6 +96,8 @@ export const KnowledgeBaseMigration = () => {
         title: "Migration Successful",
         description: `Migrated ${data.summary?.total_migrated || 0} knowledge entries`,
       });
+      
+      await loadStats(); // Refresh stats
     } catch (error) {
       console.error('Migration error:', error);
       toast({
@@ -87,6 +122,8 @@ export const KnowledgeBaseMigration = () => {
         title: "Re3data Sync Successful",
         description: `Synced ${data.summary?.healthcare_repositories || 0} healthcare repositories`,
       });
+      
+      await loadStats(); // Refresh stats
     } catch (error) {
       console.error('Sync error:', error);
       toast({
@@ -111,6 +148,8 @@ export const KnowledgeBaseMigration = () => {
         title: "Population Successful",
         description: `Created ${data.summary?.knowledge_entries_created || 0} knowledge entries from repositories`,
       });
+      
+      await loadStats(); // Refresh stats
     } catch (error) {
       console.error('Population error:', error);
       toast({
@@ -131,6 +170,63 @@ export const KnowledgeBaseMigration = () => {
           Migrate hardcoded knowledge and populate from external sources
         </p>
       </div>
+
+      {/* Statistics Card */}
+      <Card className="border-2 border-primary/20">
+        <CardHeader>
+          <CardTitle className="text-base flex items-center gap-2">
+            <Database className="h-5 w-5 text-primary" />
+            Universal Knowledge Base Statistics
+          </CardTitle>
+          <CardDescription>
+            Current entries in the universal knowledge base
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {loadingStats ? (
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <RefreshCw className="h-4 w-4 animate-spin" />
+              Loading statistics...
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-bold text-primary">{stats?.total || 0}</span>
+                <span className="text-sm text-muted-foreground">Total Entries</span>
+              </div>
+              
+              {stats?.byDomain && Object.keys(stats.byDomain).length > 0 && (
+                <div className="space-y-2">
+                  <p className="text-sm font-medium">Breakdown by Domain:</p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {Object.entries(stats.byDomain).map(([domain, count]) => (
+                      <div key={domain} className="flex flex-col p-3 bg-muted rounded-md">
+                        <span className="text-xs text-muted-foreground capitalize">
+                          {domain === 'medical_imaging' ? 'Medical Imaging' : 
+                           domain === 'conversational' ? 'Healthcare & Clinical' :
+                           domain === 'patient_onboarding' ? 'Patient Onboarding' :
+                           domain === 'clinical_risk' ? 'Clinical Risk' : domain}
+                        </span>
+                        <span className="text-2xl font-bold">{count as number}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              <Button 
+                onClick={loadStats} 
+                variant="outline" 
+                size="sm"
+                className="w-full"
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Refresh Statistics
+              </Button>
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
