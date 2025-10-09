@@ -5,18 +5,28 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Database, RefreshCw, Download, CheckCircle, AlertCircle } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export const KnowledgeBaseMigration = () => {
   const [migrating, setMigrating] = useState(false);
   const [populating, setPopulating] = useState(false);
   const [syncing, setSyncing] = useState(false);
+  const [showClearDialog, setShowClearDialog] = useState(false);
   const [results, setResults] = useState<any>(null);
   const { toast } = useToast();
 
   const handleClearHardcoded = async () => {
-    if (!window.confirm('This will delete all hardcoded migration entries. Continue?')) return;
-    
     setMigrating(true);
+    setShowClearDialog(false);
     try {
       const { error } = await supabase
         .from('universal_knowledge_base')
@@ -153,7 +163,7 @@ export const KnowledgeBaseMigration = () => {
                 )}
               </Button>
               <Button 
-                onClick={handleClearHardcoded} 
+                onClick={() => setShowClearDialog(true)} 
                 disabled={migrating}
                 className="w-full"
                 variant="outline"
@@ -282,6 +292,24 @@ export const KnowledgeBaseMigration = () => {
           </CardContent>
         </Card>
       )}
+
+      <AlertDialog open={showClearDialog} onOpenChange={setShowClearDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Clear Old Migration Entries?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete all hardcoded migration entries from the universal knowledge base. 
+              This action cannot be undone. You can re-migrate them afterwards if needed.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleClearHardcoded} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete All Hardcoded Entries
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
