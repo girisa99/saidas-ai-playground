@@ -18,6 +18,7 @@ type Context = 'technology' | 'healthcare';
 
 interface PublicPrivacyBannerProps {
   onAccept: (userInfo: UserInfo) => void;
+  onClose: () => void;
   technologyTopics: string[];
   healthcareTopics: string[];
 }
