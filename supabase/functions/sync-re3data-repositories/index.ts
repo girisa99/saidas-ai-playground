@@ -106,14 +106,17 @@ serve(async (req) => {
     
     console.log('Starting re3data.org repository sync...');
 
-    // Step 1: Fetch list of all repository IDs
+    // Step 1: Fetch list of all repository IDs (XML response)
     const listResponse = await fetch(`${RE3DATA_API}/repositories`);
     if (!listResponse.ok) {
       throw new Error(`Failed to fetch repository list: ${listResponse.statusText}`);
     }
     
-    const repositoryList = await listResponse.json();
-    const repositoryIds = repositoryList.data || [];
+    const listXml = await listResponse.text();
+    
+    // Parse XML to extract repository IDs - simplified extraction
+    const repoIdMatches = listXml.matchAll(/<id>r3d(\d+)<\/id>/g);
+    const repositoryIds = Array.from(repoIdMatches).map(match => `r3d${match[1]}`).slice(0, 50); // Limit to 50 for now
     
     console.log(`Found ${repositoryIds.length} repositories in re3data.org`);
     
@@ -129,7 +132,7 @@ serve(async (req) => {
       
       await Promise.all(batch.map(async (repoId: string) => {
         try {
-          // Fetch detailed repository information
+          // Fetch detailed repository information (XML response)
           const detailsResponse = await fetch(`${RE3DATA_API}/repository/${repoId}`);
           if (!detailsResponse.ok) {
             console.warn(`Failed to fetch details for ${repoId}: ${detailsResponse.statusText}`);
@@ -137,7 +140,36 @@ serve(async (req) => {
             return;
           }
           
-          const repoDetails: Re3DataRepository = await detailsResponse.json();
+          const detailsXml = await detailsResponse.text();
+          
+          // Parse XML - extract key fields
+          const extractTag = (xml: string, tag: string): string => {
+            const match = xml.match(new RegExp(`<${tag}[^>]*>([^<]+)</${tag}>`, 'i'));
+            return match ? match[1].trim() : '';
+          };
+          
+          const extractAllTags = (xml: string, tag: string): string[] => {
+            const regex = new RegExp(`<${tag}[^>]*>([^<]+)</${tag}>`, 'gi');
+            const matches = Array.from(xml.matchAll(regex));
+            return matches.map(m => m[1].trim());
+          };
+          
+          const repoDetails: Re3DataRepository = {
+            id: repoId,
+            name: extractTag(detailsXml, 'repositoryName'),
+            repositoryURL: extractTag(detailsXml, 'repositoryURL'),
+            description: extractTag(detailsXml, 'description'),
+            subjects: extractAllTags(detailsXml, 'subject'),
+            contentTypes: extractAllTags(detailsXml, 'contentType'),
+            dataAccess: { type: extractTag(detailsXml, 'dataAccessType') || 'unknown' },
+            certificates: extractAllTags(detailsXml, 'certificate'),
+            dataUpload: extractAllTags(detailsXml, 'dataUpload'),
+            databaseAccess: extractAllTags(detailsXml, 'databaseAccess'),
+            software: extractAllTags(detailsXml, 'software'),
+            metadataStandards: extractAllTags(detailsXml, 'metadataStandard'),
+            pidSystems: extractAllTags(detailsXml, 'pidSystem'),
+            apiType: extractAllTags(detailsXml, 'api')
+          };
           
           // Step 3: Filter for healthcare-related repositories
           const isHealthcare = repoDetails.subjects?.some((subject: string) => 
