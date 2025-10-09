@@ -376,7 +376,7 @@ serve(async (req) => {
         domain: 'conversational',
         content_type: 'guideline',
         metadata: { tags: ['cardio-oncology', 'cardiotoxicity', 'cancer-treatment', 'risk-assessment', 'imaging', 'biomarkers', 'survivorship'], source_type: 'hardcoded_migration' }
-      }
+      },
       // External Document References
       {
         finding_name: "Regulatory Knowledge Guide for Cell and Gene Therapies",
