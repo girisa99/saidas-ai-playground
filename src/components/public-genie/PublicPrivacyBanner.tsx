@@ -23,9 +23,10 @@ interface PublicPrivacyBannerProps {
   healthcareTopics: string[];
 }
 
-export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({ 
-  onAccept, 
-  technologyTopics, 
+export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
+  onAccept,
+  onClose,
+  technologyTopics,
   healthcareTopics
 }) => {
   const [step, setStep] = useState<'privacy' | 'info'>('privacy');
@@ -139,7 +140,10 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
   };
 
   return (
-    <div className="p-4 h-full overflow-y-auto">
+    <div className="relative p-4 h-full overflow-y-auto">
+      <Button variant="ghost" size="icon" onClick={onClose} className="absolute right-2 top-2" aria-label="Close privacy window">
+        <X className="h-4 w-4" />
+      </Button>
       <div className="space-y-4">
         {/* Privacy & Terms */}
         {step === 'privacy' && (
@@ -151,19 +155,23 @@ export const PublicPrivacyBanner: React.FC<PublicPrivacyBannerProps> = ({
             
             <Alert className="max-h-[400px] overflow-y-auto">
               <Cookie className="h-4 w-4" />
-              <AlertDescription className="text-xs leading-relaxed">
-                <strong className="text-sm">Privacy & Terms Agreement:</strong>
-                <ul className="list-disc list-inside mt-2 space-y-1.5 text-xs">
-                  <li className="leading-tight">Experimental AI demonstration</li>
-                  <li className="leading-tight">Conversations monitored for quality</li>
-                  <li className="leading-tight">Verify AI responses with experts</li>
-                  <li className="leading-tight">Confirm medical advice with providers</li>
-                  <li className="leading-tight">Welcome emails sent (unsubscribe anytime)</li>
-                  <li className="leading-tight">Rate limits: 2/hour, 5/day</li>
-                  <li className="leading-tight">Request extended access for legitimate use</li>
-                  <li className="leading-tight">Requests reviewed at genieaiexperimentationhub@gmail.com</li>
-                  <li className="leading-tight">Minimal cookies for session management</li>
-                </ul>
+              <AlertDescription className="text-xs leading-relaxed space-y-2">
+                <p className="text-sm font-medium">This platform is for AI experimentation, learning, and knowledge sharing.</p>
+                <p>
+                  By continuing, you acknowledge rate limits (2/hour, 5/day) and agree to our{' '}
+                  <PrivacyDialog
+                    trigger={<button className="underline font-medium text-primary hover:opacity-80">Privacy Policy</button>}
+                  />{', '}
+                  <TermsDialog
+                    trigger={<button className="underline font-medium text-primary hover:opacity-80">Terms of Use</button>}
+                  />{' '}and{' '}
+                  <DisclaimerDialog
+                    trigger={<button className="underline font-medium text-primary hover:opacity-80">Disclaimer</button>}
+                  />.
+                </p>
+                <p>
+                  Need extended access for legitimate use? Contact: genieaiexperimentationhub@gmail.com
+                </p>
               </AlertDescription>
             </Alert>
 
