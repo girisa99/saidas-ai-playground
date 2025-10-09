@@ -171,21 +171,29 @@ serve(async (req) => {
             apiType: extractAllTags(detailsXml, 'api')
           };
           
-          // Step 3: Filter for healthcare-related repositories (very flexible)
+          // Step 3: VERY LENIENT healthcare filtering - include most research repositories
           const nameText = (repoDetails.name || '').toLowerCase();
           const descText = (repoDetails.description || '').toLowerCase();
           const subjectsText = (repoDetails.subjects || []).join(' ').toLowerCase();
           const allText = `${nameText} ${descText} ${subjectsText}`;
           
-          // Very broad healthcare keywords
-          const healthcareKeywords = [
+          // Extremely broad keywords - include ANY research/science repository
+          const keywords = [
             'health', 'medical', 'clinic', 'hospital', 'patient', 'disease',
-            'therapy', 'medicine', 'biomedical', 'pharmaceutical', 'drug',
-            'genomic', 'protein', 'biolog', 'cancer', 'imaging', 'radiology',
-            'nursing', 'care', 'treatment', 'diagnosis'
+            'therapy', 'medicine', 'biomedical', 'pharma', 'drug',
+            'genomic', 'genetic', 'protein', 'biolog', 'cancer', 'imaging',
+            'radiology', 'nursing', 'care', 'treatment', 'diagnosis',
+            'science', 'research', 'data', 'chemistry', 'life',
+            'clinical', 'trial', 'study', 'cohort', 'specimen',
+            'scan', 'test', 'lab', 'diagnostic', 'molecular',
+            'cell', 'dna', 'rna', 'gene', 'tissue', 'organ',
+            'biobank', 'database', 'registry', 'survey', 'population',
+            'environment', 'toxicology', 'safety', 'quality', 'sample'
           ];
           
-          const isHealthcare = healthcareKeywords.some(keyword => allText.includes(keyword));
+          // Include if ANY keyword matches OR if we have no data to check
+          const isHealthcare = keywords.some(keyword => allText.includes(keyword)) || 
+                              (!repoDetails.name && !repoDetails.description && repoDetails.subjects.length === 0);
           
           console.log(`Repo ${repoId}: ${repoDetails.name?.substring(0, 50) || 'Unknown'}`);
           if (repoDetails.subjects && repoDetails.subjects.length > 0) {
