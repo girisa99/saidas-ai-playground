@@ -48,3 +48,9 @@ verify_jwt = true
 
 [functions.sync-kaggle-datasets]
 verify_jwt = true
+
+[functions.migrate-knowledge-to-universal]
+verify_jwt = true
+
+[functions.populate-knowledge-from-re3data]
+verify_jwt = true

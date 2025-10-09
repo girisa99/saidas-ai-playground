@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationHeader } from '@/components/NavigationHeader';
 import { WebsiteAnalyticsSection } from '@/components/admin/WebsiteAnalyticsSection';
 import { GeniePopupAnalyticsSection } from '@/components/admin/GeniePopupAnalyticsSection';
+import { KnowledgeBaseMigration } from '@/components/admin/KnowledgeBaseMigration';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -202,9 +203,10 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="website" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="website">Website Analytics</TabsTrigger>
             <TabsTrigger value="genie">Genie AI Popup Analytics</TabsTrigger>
+            <TabsTrigger value="migration">Knowledge Base Migration</TabsTrigger>
           </TabsList>
 
           <TabsContent value="website">
@@ -224,6 +226,10 @@ const AdminDashboard = () => {
               popupEvents={popupEvents}
               knowledgeBaseCount={knowledgeBaseCount}
             />
+          </TabsContent>
+
+          <TabsContent value="migration">
+            <KnowledgeBaseMigration />
           </TabsContent>
         </Tabs>
       </div>
