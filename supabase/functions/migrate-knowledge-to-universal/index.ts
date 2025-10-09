@@ -344,6 +344,52 @@ serve(async (req) => {
         domain: 'conversational',
         content_type: 'educational_content',
         metadata: { tags: ['healthcare', 'treatment-centers', 'gene-therapy', 'car-t', 'rlt', 'cell-therapy'], source_type: 'hardcoded_migration' }
+      },
+      // Cardio-Oncology Knowledge
+      {
+        finding_name: "Cardio-Oncology Clinical Knowledge Base",
+        description: `OVERVIEW:\nCardio-oncology is an emerging field addressing cardiovascular needs of cancer patients and survivors. Cancer treatments can increase risk of heart disease, requiring specialized monitoring and care.\n\nCLINICAL GUIDELINES & RESEARCH:\n\n1. Journal of the American College of Cardiology: CardioOncology (JACC:CardioOncology): Dedicated journal advancing cardiovascular care of cancer patients through innovative research and evidence-based knowledge.\n\n2. European Society of Cardiology (ESC): Recommends assessing and monitoring cancer patients for potential heart complications during and after treatment.\n\n3. Global Cardio-Oncology Registry (G-COR): Multicenter registry collecting data on cardiovascular toxicity related to cancer therapy from diverse patient populations to inform practice.\n\nKEY KNOWLEDGE AREAS:\n\n• Cardiotoxicity: Broad spectrum of heart-related side effects including heart failure, arrhythmias, and hypertension occurring during or after cancer treatment.\n\n• Cardioprotective strategies: Methods to minimize cardiovascular damage and avoid interrupting cancer therapy.\n\n• Diagnostic imaging: Use of echocardiography, cardiac MRI, and other modalities to assess cardiovascular function in cancer patients.\n\n• Survivorship care: Long-term follow-up of cancer survivors, as heart problems can appear years after therapy, particularly after chest radiation.\n\nPROFESSIONAL RESOURCES:\n\n• American College of Cardiology (ACC) Cardio-Oncology Member Section: Offers networking, educational opportunities, and resources for professionals.\n\n• International Cardio-Oncology Society (IC-OS): Organization collaborating with major medical societies to advance the field.\n\nREFERENCE: https://www.acc.org/Membership/Sections-and-Councils/Fellows-in-Training-Section/Section-Updates/2019/12/15/24/42/Introduction-to-Cardio-Oncology`,
+        domain: 'conversational',
+        content_type: 'guideline',
+        metadata: { tags: ['cardio-oncology', 'cardiovascular', 'cancer', 'cardiotoxicity', 'survivorship'], source_type: 'hardcoded_migration' }
+      },
+      // Oncology and Cancer Survivorship
+      {
+        finding_name: "Oncology and Cancer Survivorship Care",
+        description: `OVERVIEW:\nOncology knowledge bases focus on cancer treatment, research, and long-term care for survivors.\n\nCLINICAL GUIDELINES & RESOURCES:\n\n1. American Society of Clinical Oncology (ASCO): Provides guidelines, patient education materials through Cancer.Net website, and Survivorship Compendium for healthcare professionals.\n\n2. American Cancer Society (ACS): Offers extensive resources for cancer survivors, including living well during and after treatment, managing side effects, and long-term health concerns.\n\n3. Cancer Survivorship Care Plans: Documents designed to help survivors and primary care physicians manage long-term care and potential side effects after treatment.\n\nKEY KNOWLEDGE AREAS:\n\n• Cancer prognosis: Understanding likely outcome of cancer, influencing treatment goals.\n\n• Side effects: Knowledge of treatment-related side effects, both acute and long-term, critical for coordinated care.\n\n• Clinical trials: Information on ongoing research available through professional organizations and cancer centers to stay informed on new therapies.\n\n• Long-term health monitoring: Tracking late effects of cancer treatment including secondary cancers, organ dysfunction, and psychosocial impacts.\n\n• Quality of life: Addressing physical, emotional, and social well-being of cancer survivors.\n\n• Care coordination: Facilitating transition from active treatment to survivorship care with primary care providers.`,
+        domain: 'conversational',
+        content_type: 'guideline',
+        metadata: { tags: ['oncology', 'cancer', 'survivorship', 'asco', 'care-plans'], source_type: 'hardcoded_migration' }
+      },
+      // Multiple Sclerosis Knowledge
+      {
+        finding_name: "Multiple Sclerosis (MS) Clinical Knowledge Base",
+        description: `OVERVIEW:\nMS knowledge bases provide information on diagnosis, treatment, and management of MS, a progressive neurological disease.\n\nCLINICAL & RESEARCH RESOURCES:\n\n1. National Multiple Sclerosis Society: Offers tools and resources for professionals including educational programs like ECHO MS Learning Network, research funding, and training.\n\n2. Multiple Sclerosis International Federation (MSIF): Global network linking national MS societies, coordinating research, and compiling Atlas of MS to track disease worldwide.\n\n3. Consortium of Multiple Sclerosis Centers (CMSC): Provides educational opportunities including Fundamentals of Multiple Sclerosis Care course offering multidisciplinary overview of MS.\n\nKEY KNOWLEDGE AREAS:\n\n• Diagnosis and monitoring: MS diagnosed through neurological exams, MRI scans of central nervous system, and cerebrospinal fluid analysis. Tools like Expanded Disability Status Scale (EDSS) monitor disability.\n\n• Pathophysiology: Understanding disease including role of myelin loss, genetics, and microbiome helps inform treatment strategies.\n\n• Disease-modifying therapies (DMTs): Essential knowledge for slowing disease progression and managing relapses.\n\n• Symptom management: Addressing common MS symptoms including fatigue, numbness, visual disturbances, cognitive changes, and mobility issues.\n\n• Patient-centered research: Initiatives like iConquerMS allow patients to participate in and influence research, helping address relevant questions.\n\n• Multidisciplinary care: Coordination between neurology, physical therapy, occupational therapy, and mental health services.\n\n• Rehabilitation: Evidence-based approaches to maintain function and independence.`,
+        domain: 'conversational',
+        content_type: 'guideline',
+        metadata: { tags: ['multiple-sclerosis', 'neurology', 'dmt', 'disability', 'autoimmune'], source_type: 'hardcoded_migration' }
+      },
+      // External Document References
+      {
+        finding_name: "Regulatory Knowledge Guide for Cell and Gene Therapies",
+        description: `REFERENCE DOCUMENT: NIH SEED Regulatory Knowledge Guide for Cell and Gene Therapies\n\nThis comprehensive regulatory guide from the NIH provides essential knowledge for navigating the regulatory landscape of cell and gene therapies.\n\nSOURCE URL: https://seed.nih.gov/sites/default/files/2024-04/Regulatory-Knowledge-Guide-for-Cell-and-Gene-Therapies.pdf\n\nKEY TOPICS COVERED:\n• FDA regulatory pathways for cell and gene therapies\n• Clinical trial requirements and phases\n• Manufacturing and quality control standards\n• Post-market surveillance and reporting\n• Compliance with 21 CFR regulations\n• IND (Investigational New Drug) application process\n• BLA (Biologics License Application) requirements\n\nTARGET AUDIENCE: Researchers, clinicians, regulatory professionals, and industry stakeholders involved in cell and gene therapy development.\n\nPUBLISHED: April 2024 by NIH SEED Program`,
+        domain: 'conversational',
+        content_type: 'guideline',
+        metadata: { tags: ['regulatory', 'cell-therapy', 'gene-therapy', 'fda', 'compliance', 'nih'], source_type: 'url', source_url: 'https://seed.nih.gov/sites/default/files/2024-04/Regulatory-Knowledge-Guide-for-Cell-and-Gene-Therapies.pdf' }
+      },
+      {
+        finding_name: "Cell and Gene Therapy Patient and Caregiver Journey",
+        description: `REFERENCE DOCUMENT: NPC White Paper - Cell and Gene Therapy Patient and Caregiver Odyssey\n\nThis white paper documents the patient and caregiver experience navigating cell and gene therapy treatments, highlighting access challenges, support needs, and care coordination.\n\nSOURCE URL: https://www.npcnow.org/sites/default/files/2025-01/Cell%20and%20Gene%20Therapy_Patient%20and%20Caregiver%20Odyssey_NPC%20White%20Paper.pdf\n\nKEY INSIGHTS:\n• Patient journey from diagnosis to treatment access\n• Caregiver burden and support needs\n• Financial and logistical barriers to treatment\n• Coordination of care across multiple specialists\n• Long-term monitoring and follow-up requirements\n• Quality of life considerations\n• Healthcare system navigation challenges\n• Patient advocacy and empowerment strategies\n\nTARGET AUDIENCE: Healthcare providers, patient advocates, policymakers, and payers involved in cell and gene therapy care delivery.\n\nPUBLISHED: January 2025 by National Pharmaceutical Council (NPC)`,
+        domain: 'conversational',
+        content_type: 'educational_content',
+        metadata: { tags: ['patient-journey', 'caregiver', 'cell-therapy', 'gene-therapy', 'access', 'npc'], source_type: 'url', source_url: 'https://www.npcnow.org/sites/default/files/2025-01/Cell%20and%20Gene%20Therapy_Patient%20and%20Caregiver%20Odyssey_NPC%20White%20Paper.pdf' }
+      },
+      {
+        finding_name: "Clinical and Translational Research in Cell and Gene Therapy",
+        description: `REFERENCE ARTICLE: ScienceDirect - Clinical and Translational Research in Cell and Gene Therapy\n\nThis peer-reviewed article provides in-depth analysis of current clinical and translational research approaches in cell and gene therapy.\n\nSOURCE URL: https://www.sciencedirect.com/science/article/pii/S2666636723014689\n\nRESEARCH FOCUS:\n• Translational medicine approaches\n• Clinical trial design and methodology\n• Biomarker development and validation\n• Therapeutic efficacy assessment\n• Safety monitoring and adverse event management\n• Precision medicine applications\n• Novel delivery mechanisms\n• Emerging therapeutic targets\n\nTARGET AUDIENCE: Researchers, clinicians, and translational scientists in regenerative medicine and advanced therapeutics.\n\nNOTE: Full access may require institutional subscription to ScienceDirect.`,
+        domain: 'conversational',
+        content_type: 'educational_content',
+        metadata: { tags: ['research', 'clinical-trials', 'translational-medicine', 'cell-therapy', 'gene-therapy', 'biomarkers'], source_type: 'url', source_url: 'https://www.sciencedirect.com/science/article/pii/S2666636723014689' }
       }
     ];
 
