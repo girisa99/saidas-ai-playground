@@ -13,6 +13,34 @@ export const KnowledgeBaseMigration = () => {
   const [results, setResults] = useState<any>(null);
   const { toast } = useToast();
 
+  const handleClearHardcoded = async () => {
+    if (!window.confirm('This will delete all hardcoded migration entries. Continue?')) return;
+    
+    setMigrating(true);
+    try {
+      const { error } = await supabase
+        .from('universal_knowledge_base')
+        .delete()
+        .match({ 'metadata->>source_type': 'hardcoded_migration' });
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Cleared Successfully",
+        description: "Removed all previously migrated hardcoded knowledge",
+      });
+    } catch (error) {
+      console.error('Clear error:', error);
+      toast({
+        title: "Clear Failed",
+        description: error instanceof Error ? error.message : "Unknown error",
+        variant: "destructive"
+      });
+    } finally {
+      setMigrating(false);
+    }
+  };
+
   const handleMigrateHardcoded = async () => {
     setMigrating(true);
     try {
@@ -106,25 +134,36 @@ export const KnowledgeBaseMigration = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button 
-              onClick={handleMigrateHardcoded} 
-              disabled={migrating}
-              className="w-full"
-            >
-              {migrating ? (
-                <>
-                  <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                  Migrating...
-                </>
-              ) : (
-                <>
-                  <Database className="h-4 w-4 mr-2" />
-                  Migrate Hardcoded Knowledge
-                </>
-              )}
-            </Button>
+            <div className="space-y-2">
+              <Button 
+                onClick={handleMigrateHardcoded} 
+                disabled={migrating}
+                className="w-full"
+              >
+                {migrating ? (
+                  <>
+                    <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                    Migrating...
+                  </>
+                ) : (
+                  <>
+                    <Database className="h-4 w-4 mr-2" />
+                    Migrate Hardcoded Knowledge
+                  </>
+                )}
+              </Button>
+              <Button 
+                onClick={handleClearHardcoded} 
+                disabled={migrating}
+                className="w-full"
+                variant="outline"
+                size="sm"
+              >
+                Clear Old Migration
+              </Button>
+            </div>
             <p className="text-xs text-muted-foreground mt-2">
-              This will migrate all framework, healthcare, and technology knowledge
+              Re-run to update with latest knowledge (16 entries). Clear first to avoid duplicates.
             </p>
           </CardContent>
         </Card>
