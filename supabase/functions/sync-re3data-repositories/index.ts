@@ -171,16 +171,27 @@ serve(async (req) => {
             apiType: extractAllTags(detailsXml, 'api')
           };
           
-          // Step 3: Filter for healthcare-related repositories (more flexible matching)
-          const subjectsText = repoDetails.subjects.join(' ').toLowerCase();
-          const isHealthcare = HEALTHCARE_SUBJECTS.some(hs => 
-            subjectsText.includes(hs.toLowerCase().substring(0, 5)) // Match first 5 chars
-          ) || subjectsText.includes('health') || subjectsText.includes('medic') || 
-             subjectsText.includes('clinic') || subjectsText.includes('biomed');
+          // Step 3: Filter for healthcare-related repositories (very flexible)
+          const nameText = (repoDetails.name || '').toLowerCase();
+          const descText = (repoDetails.description || '').toLowerCase();
+          const subjectsText = (repoDetails.subjects || []).join(' ').toLowerCase();
+          const allText = `${nameText} ${descText} ${subjectsText}`;
           
-          console.log(`Repository ${repoId}: ${repoDetails.name}`);
-          console.log(`  Subjects: ${repoDetails.subjects.slice(0, 3).join(', ')}`);
-          console.log(`  Healthcare match: ${isHealthcare}`);
+          // Very broad healthcare keywords
+          const healthcareKeywords = [
+            'health', 'medical', 'clinic', 'hospital', 'patient', 'disease',
+            'therapy', 'medicine', 'biomedical', 'pharmaceutical', 'drug',
+            'genomic', 'protein', 'biolog', 'cancer', 'imaging', 'radiology',
+            'nursing', 'care', 'treatment', 'diagnosis'
+          ];
+          
+          const isHealthcare = healthcareKeywords.some(keyword => allText.includes(keyword));
+          
+          console.log(`Repo ${repoId}: ${repoDetails.name?.substring(0, 50) || 'Unknown'}`);
+          if (repoDetails.subjects && repoDetails.subjects.length > 0) {
+            console.log(`  Subjects: ${repoDetails.subjects.slice(0, 2).join(', ')}`);
+          }
+          console.log(`  Healthcare: ${isHealthcare}`);
           
           if (!isHealthcare) {
             skippedCount++;
