@@ -39,14 +39,26 @@ interface AIRequest {
 
 async function searchKnowledgeBase(query: string, context?: string) {
   try {
-    console.log('Searching universal knowledge base for:', query);
+    // Extract only the user's main question and sanitize to avoid PostgREST OR parser issues
+    const base = (query || '')
+      .split(/\n\n|\nContext:|\nAI Config:|\nUser:/i)[0] // take first paragraph before metadata
+      .replace(/https?:\/\/\S+/g, '') // remove urls
+      .replace(/[^\p{L}\p{N}\s]/gu, ' ') // keep letters/numbers/spaces only
+      .replace(/\s+/g, ' ') // collapse whitespace
+      .trim()
+      .toLowerCase();
+
+    const sanitized = base.slice(0, 120); // keep it short for LIKE
+
+    if (!sanitized) return [];
+
+    console.log('Searching universal knowledge base for (sanitized):', sanitized);
     
-    // Search the consolidated universal_knowledge_base table
     const { data: results, error } = await supabase
       .from('universal_knowledge_base')
       .select('finding_name, description, clinical_context, clinical_significance, domain, content_type, metadata')
       .eq('is_approved', true)
-      .or(`finding_name.ilike.%${query}%, description.ilike.%${query}%`)
+      .or(`finding_name.ilike.%${sanitized}%,description.ilike.%${sanitized}%`)
       .limit(5);
 
     if (error) {
