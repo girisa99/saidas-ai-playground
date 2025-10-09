@@ -1244,9 +1244,9 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
             {/* Header with Add Button */}
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-semibold">Knowledge Base Management</h3>
+                <h3 className="text-lg font-semibold">Universal Knowledge Base</h3>
                 <p className="text-sm text-muted-foreground">
-                  View and manage existing technology and healthcare knowledge entries
+                  Consolidated knowledge across all domains: Conversational AI, Medical Imaging, Clinical & Patient Onboarding
                 </p>
               </div>
               <Button onClick={() => setShowAddKnowledge(true)} className="flex items-center gap-2">
@@ -1454,58 +1454,50 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
               </Card>
             </div>
 
-            {/* Knowledge Base Entries List */}
+            {/* Knowledge Base Entries List - By Domain */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Bot className="h-5 w-5 text-blue-600" />
-                    Technology Knowledge Base
+                    Conversational AI Knowledge
                   </CardTitle>
-                  <CardDescription>Technology and AI-related entries</CardDescription>
+                  <CardDescription>FAQs and educational content for Genie AI</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ScrollArea className="h-96">
                     <div className="space-y-3">
-                      {getStaticKnowledgeEntries().filter(e => e.category === 'technology').map((entry, index) => (
-                        <Card key={`static-tech-${index}`} className="p-3">
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <h4 className="font-medium text-sm">{entry.title}</h4>
-                              <div className="flex flex-wrap gap-1 mt-2">
-                                {entry.tags.map((tag, tagIndex) => (
-                                  <Badge key={tagIndex} variant="outline" className="text-xs">
-                                    <Tag className="h-3 w-3 mr-1" />
-                                    {tag}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                            <Badge variant="secondary" className="text-xs">Static</Badge>
-                          </div>
-                        </Card>
-                      ))}
-                      {knowledgeEntries.filter(e => e.category === 'technology').map((entry) => (
+                      {knowledgeEntries.filter(e => e.domain === 'conversational').slice(0, 20).map((entry) => (
                         <Card key={entry.id} className="p-3">
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
-                              <h4 className="font-medium text-sm">{entry.name}</h4>
+                              <h4 className="font-medium text-sm">{entry.finding_name}</h4>
                               <p className="text-xs text-muted-foreground mt-1">
                                 {entry.description?.substring(0, 100)}...
                               </p>
                               <div className="flex flex-wrap gap-1 mt-2">
-                                {entry.healthcare_tags?.map((tag: string, tagIndex: number) => (
-                                  <Badge key={tagIndex} variant="outline" className="text-xs">
+                                <Badge variant="outline" className="text-xs">
+                                  {entry.content_type}
+                                </Badge>
+                                {entry.metadata?.tags?.slice(0, 3).map((tag: string, tagIndex: number) => (
+                                  <Badge key={tagIndex} variant="secondary" className="text-xs">
                                     <Tag className="h-3 w-3 mr-1" />
                                     {tag}
                                   </Badge>
                                 ))}
                               </div>
                             </div>
-                            <Badge variant="default" className="text-xs">Dynamic</Badge>
+                            <Badge variant="default" className="text-xs">
+                              {entry.quality_score}
+                            </Badge>
                           </div>
                         </Card>
                       ))}
+                      {knowledgeEntries.filter(e => e.domain === 'conversational').length === 0 && (
+                        <p className="text-sm text-muted-foreground text-center py-8">
+                          No conversational AI knowledge entries yet
+                        </p>
+                      )}
                     </div>
                   </ScrollArea>
                 </CardContent>
@@ -1514,53 +1506,42 @@ export const GeniePopupAnalyticsSection: React.FC<GeniePopupAnalyticsSectionProp
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-green-600" />
-                    Healthcare Knowledge Base
+                    <Stethoscope className="h-5 w-5 text-green-600" />
+                    Medical Imaging Knowledge
                   </CardTitle>
-                  <CardDescription>Healthcare and medical-related entries</CardDescription>
+                  <CardDescription>Medical imaging findings and analysis</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ScrollArea className="h-96">
                     <div className="space-y-3">
-                      {getStaticKnowledgeEntries().filter(e => e.category === 'healthcare').map((entry, index) => (
-                        <Card key={`static-health-${index}`} className="p-3">
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <h4 className="font-medium text-sm">{entry.title}</h4>
-                              <div className="flex flex-wrap gap-1 mt-2">
-                                {entry.tags.map((tag, tagIndex) => (
-                                  <Badge key={tagIndex} variant="outline" className="text-xs">
-                                    <Tag className="h-3 w-3 mr-1" />
-                                    {tag}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                            <Badge variant="secondary" className="text-xs">Static</Badge>
-                          </div>
-                        </Card>
-                      ))}
-                      {knowledgeEntries.filter(e => e.category === 'healthcare').map((entry) => (
+                      {knowledgeEntries.filter(e => e.domain === 'medical_imaging').slice(0, 20).map((entry) => (
                         <Card key={entry.id} className="p-3">
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
-                              <h4 className="font-medium text-sm">{entry.name}</h4>
+                              <h4 className="font-medium text-sm">{entry.finding_name}</h4>
                               <p className="text-xs text-muted-foreground mt-1">
                                 {entry.description?.substring(0, 100)}...
                               </p>
                               <div className="flex flex-wrap gap-1 mt-2">
-                                {entry.healthcare_tags?.map((tag: string, tagIndex: number) => (
-                                  <Badge key={tagIndex} variant="outline" className="text-xs">
-                                    <Tag className="h-3 w-3 mr-1" />
-                                    {tag}
-                                  </Badge>
-                                ))}
+                                <Badge variant="outline" className="text-xs">
+                                  {entry.content_type}
+                                </Badge>
+                                <Badge variant="secondary" className="text-xs">
+                                  Uses: {entry.usage_count || 0}
+                                </Badge>
                               </div>
                             </div>
-                            <Badge variant="default" className="text-xs">Dynamic</Badge>
+                            <Badge variant="default" className="text-xs">
+                              {entry.quality_score}
+                            </Badge>
                           </div>
                         </Card>
                       ))}
+                      {knowledgeEntries.filter(e => e.domain === 'medical_imaging').length === 0 && (
+                        <p className="text-sm text-muted-foreground text-center py-8">
+                          No medical imaging knowledge entries yet
+                        </p>
+                      )}
                     </div>
                   </ScrollArea>
                 </CardContent>
