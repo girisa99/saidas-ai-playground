@@ -47,7 +47,7 @@ verify_jwt = false
 verify_jwt = true
 
 [functions.sync-kaggle-datasets]
-verify_jwt = true
+verify_jwt = false
 
 [functions.migrate-knowledge-to-universal]
 verify_jwt = false
