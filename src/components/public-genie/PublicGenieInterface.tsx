@@ -52,13 +52,9 @@ interface UserInfo {
 
 type Context = 'technology' | 'healthcare';
 
-// Derive provider from selected model id so LLM/SLM/VLM selections route correctly
-const providerFromModel = (model?: string): 'openai' | 'claude' | 'gemini' => {
-  const m = (model || '').toLowerCase();
-  if (m.startsWith('gpt') || m.includes('openai')) return 'openai';
-  if (m.startsWith('claude')) return 'claude';
-  if (m.startsWith('gemini') || m.startsWith('google/')) return 'gemini';
-  return 'gemini';
+// Route all AI calls through Lovable AI Gateway (always available)
+const providerFromModel = (model?: string): 'lovable' => {
+  return 'lovable'; // All models go through Lovable AI Gateway
 };
 
 interface PublicGenieInterfaceProps {

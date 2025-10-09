@@ -492,46 +492,62 @@ serve(async (req) => {
       throw error;
     }
     
-    // Normalize unsupported/custom model names and enforce safe fallbacks
-    const originalProvider = request.provider;
+    // CRITICAL: Route ALL requests through Lovable AI Gateway for reliability
+    // Map any model selection to appropriate Lovable AI model
     const originalModel = (request.model || '').toLowerCase();
-
-    const routeToLovable = (preferPro = false) => {
-      request.provider = 'lovable';
-      request.model = preferPro ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-flash';
+    
+    // Model mapping to Lovable AI Gateway format
+    const modelMapping: Record<string, string> = {
+      // Healthcare/Clinical models -> Gemini Pro for best medical reasoning
+      'clinical-bert': 'google/gemini-2.5-pro',
+      'bioclinicalbert': 'google/gemini-2.5-pro',
+      'biobert': 'google/gemini-2.5-pro',
+      'medicalbert': 'google/gemini-2.5-pro',
+      
+      // Claude models
+      'claude-3-haiku': 'openai/gpt-5-mini', // Fast, efficient
+      'claude-3-5-haiku': 'openai/gpt-5-mini',
+      'claude-3-opus': 'openai/gpt-5', // Most capable
+      'claude-3-5-opus': 'openai/gpt-5',
+      'claude-3-sonnet': 'google/gemini-2.5-flash', // Balanced
+      'claude-3-5-sonnet': 'google/gemini-2.5-flash',
+      
+      // OpenAI models (map to Lovable AI equivalents)
+      'gpt-4o': 'openai/gpt-5',
+      'gpt-4o-mini': 'openai/gpt-5-mini',
+      'gpt-4': 'openai/gpt-5',
+      'gpt-3.5-turbo': 'openai/gpt-5-nano',
+      
+      // Gemini models (ensure correct format)
+      'gemini-2.5-pro': 'google/gemini-2.5-pro',
+      'gemini-2.5-flash': 'google/gemini-2.5-flash',
+      'gemini-2.5-flash-lite': 'google/gemini-2.5-flash-lite',
+      'gemini-pro': 'google/gemini-2.5-pro',
+      'gemini-flash': 'google/gemini-2.5-flash',
+      
+      // Image generation
+      'dall-e-3': 'google/gemini-2.5-flash-image-preview',
+      'imagen': 'google/gemini-2.5-flash-image-preview',
+      'stable-diffusion': 'google/gemini-2.5-flash-image-preview',
     };
-
-    // Map known custom/unsupported model aliases
-    const unsupportedCustomModels = ['clinical-bert', 'bioclinicalbert', 'biobert'];
-    if (unsupportedCustomModels.includes(originalModel)) {
-      routeToLovable(true);
-      console.log(`Model "${originalModel}" not supported by direct providers; routing to ${request.model} via Lovable AI`);
-    }
-
-    // If user picked a Claude model but no Claude key, or provider mismatch -> fallback to Lovable
-    if (originalModel.includes('claude-3') && (!claudeApiKey || originalProvider !== 'claude')) {
-      routeToLovable(false);
-      console.log(`Claude model selected without Claude provider/key; routing to ${request.model} via Lovable AI`);
-    }
-
-    // If provider is gemini but model is not a recognized gemini gateway model, fallback
-    const isGeminiGatewayModel = request.model.startsWith('google/gemini');
-    if (request.provider === 'gemini' && !isGeminiGatewayModel) {
-      routeToLovable(false);
-      console.log(`Gemini provider with unsupported model "${originalModel}"; routing to ${request.model}`);
-    }
-
-    // If OpenAI/Claude selected but missing keys, fallback to Lovable
-    if (request.provider === 'openai' && !openaiApiKey) {
-      routeToLovable(false);
-      console.log('OpenAI API key missing; routing to Lovable AI');
-    }
-    if (request.provider === 'claude' && !claudeApiKey) {
-      routeToLovable(true);
-      console.log('Claude API key missing; routing to Lovable AI');
+    
+    // Apply model mapping
+    let mappedModel = modelMapping[originalModel] || request.model;
+    
+    // If model doesn't start with google/ or openai/, default to Gemini Flash
+    if (!mappedModel.startsWith('google/') && !mappedModel.startsWith('openai/')) {
+      mappedModel = 'google/gemini-2.5-flash';
+      console.log(`Unmapped model "${originalModel}" -> default to ${mappedModel}`);
     }
     
-    console.log('Processing AI request:', request.provider, request.model);
+    request.model = mappedModel;
+    request.provider = 'lovable'; // Force all through Lovable AI Gateway
+    
+    console.log('Processing AI request:', {
+      original: originalModel,
+      mapped: mappedModel,
+      provider: request.provider
+    });
 
     let ragContext = '';
     

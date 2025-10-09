@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface AIRequest {
-  provider: 'openai' | 'claude' | 'gemini';
+  provider: 'lovable'; // Always use Lovable AI Gateway
   model: string;
   prompt: string;
   systemPrompt?: string;
