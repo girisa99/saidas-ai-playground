@@ -492,6 +492,45 @@ serve(async (req) => {
       throw error;
     }
     
+    // Normalize unsupported/custom model names and enforce safe fallbacks
+    const originalProvider = request.provider;
+    const originalModel = (request.model || '').toLowerCase();
+
+    const routeToLovable = (preferPro = false) => {
+      request.provider = 'lovable';
+      request.model = preferPro ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-flash';
+    };
+
+    // Map known custom/unsupported model aliases
+    const unsupportedCustomModels = ['clinical-bert', 'bioclinicalbert', 'biobert'];
+    if (unsupportedCustomModels.includes(originalModel)) {
+      routeToLovable(true);
+      console.log(`Model "${originalModel}" not supported by direct providers; routing to ${request.model} via Lovable AI`);
+    }
+
+    // If user picked a Claude model but no Claude key, or provider mismatch -> fallback to Lovable
+    if (originalModel.includes('claude-3') && (!claudeApiKey || originalProvider !== 'claude')) {
+      routeToLovable(false);
+      console.log(`Claude model selected without Claude provider/key; routing to ${request.model} via Lovable AI`);
+    }
+
+    // If provider is gemini but model is not a recognized gemini gateway model, fallback
+    const isGeminiGatewayModel = request.model.startsWith('google/gemini');
+    if (request.provider === 'gemini' && !isGeminiGatewayModel) {
+      routeToLovable(false);
+      console.log(`Gemini provider with unsupported model "${originalModel}"; routing to ${request.model}`);
+    }
+
+    // If OpenAI/Claude selected but missing keys, fallback to Lovable
+    if (request.provider === 'openai' && !openaiApiKey) {
+      routeToLovable(false);
+      console.log('OpenAI API key missing; routing to Lovable AI');
+    }
+    if (request.provider === 'claude' && !claudeApiKey) {
+      routeToLovable(true);
+      console.log('Claude API key missing; routing to Lovable AI');
+    }
+    
     console.log('Processing AI request:', request.provider, request.model);
 
     let ragContext = '';
