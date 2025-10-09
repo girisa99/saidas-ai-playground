@@ -50,7 +50,7 @@ verify_jwt = true
 verify_jwt = true
 
 [functions.migrate-knowledge-to-universal]
-verify_jwt = true
+verify_jwt = false
 
 [functions.populate-knowledge-from-re3data]
 verify_jwt = true
