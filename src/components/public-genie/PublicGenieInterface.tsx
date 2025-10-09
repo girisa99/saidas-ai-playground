@@ -31,7 +31,6 @@ import { useUniversalKnowledgeTopics } from '@/hooks/useUniversalKnowledgeTopics
 import { useGeniePreferences } from '@/hooks/useGeniePreferences';
 import { useABTestMilestones } from '@/hooks/useABTestMilestones';
 import { ConversationLimitModal } from './ConversationLimitModal';
-import { ExperimentationBanner } from './ExperimentationBanner';
 
 import { TechnologyKnowledgeBase, getTechnologyKnowledge } from '../comprehensive-knowledge/TechnologyKnowledgeBase';
 import { HealthcareKnowledgeBase, getReimbursementInfo } from './HealthcareKnowledgeBase';
@@ -176,7 +175,6 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [showLimitModal, setShowLimitModal] = React.useState<boolean>(false);
   const [conversationLimits, setConversationLimits] = React.useState<ConversationLimits | null>(null);
   const [isConversationAllowed, setIsConversationAllowed] = React.useState<boolean>(true);
-  const [showExperimentationBanner, setShowExperimentationBanner] = React.useState<boolean>(true);
   const [loadingStates, setLoadingStates] = useState({
     primary: false,
     secondary: false
@@ -1455,13 +1453,7 @@ ${conversationSummary.transcript}`
         context={context || 'technology'}
       />
       
-      {/* Experimentation Banner */}
-      {showExperimentationBanner && context && (
-        <ExperimentationBanner
-          context={context}
-          onDismiss={() => setShowExperimentationBanner(false)}
-        />
-      )}
+      {/* Experimentation Banner removed - all info now in privacy popup with legal dialog links */}
       
       {/* Configuration Wizard */}
       <ConfigurationWizard
