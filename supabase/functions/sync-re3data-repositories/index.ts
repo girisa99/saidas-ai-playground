@@ -171,10 +171,16 @@ serve(async (req) => {
             apiType: extractAllTags(detailsXml, 'api')
           };
           
-          // Step 3: Filter for healthcare-related repositories
-          const isHealthcare = repoDetails.subjects?.some((subject: string) => 
-            HEALTHCARE_SUBJECTS.some(hs => subject.toLowerCase().includes(hs.toLowerCase()))
-          );
+          // Step 3: Filter for healthcare-related repositories (more flexible matching)
+          const subjectsText = repoDetails.subjects.join(' ').toLowerCase();
+          const isHealthcare = HEALTHCARE_SUBJECTS.some(hs => 
+            subjectsText.includes(hs.toLowerCase().substring(0, 5)) // Match first 5 chars
+          ) || subjectsText.includes('health') || subjectsText.includes('medic') || 
+             subjectsText.includes('clinic') || subjectsText.includes('biomed');
+          
+          console.log(`Repository ${repoId}: ${repoDetails.name}`);
+          console.log(`  Subjects: ${repoDetails.subjects.slice(0, 3).join(', ')}`);
+          console.log(`  Healthcare match: ${isHealthcare}`);
           
           if (!isHealthcare) {
             skippedCount++;

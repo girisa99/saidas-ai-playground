@@ -41,7 +41,7 @@ verify_jwt = true
 verify_jwt = true
 
 [functions.sync-re3data-repositories]
-verify_jwt = true
+verify_jwt = false
 
 [functions.generate-knowledge-embeddings]
 verify_jwt = true
@@ -53,4 +53,4 @@ verify_jwt = true
 verify_jwt = false
 
 [functions.populate-knowledge-from-re3data]
-verify_jwt = true
+verify_jwt = false
