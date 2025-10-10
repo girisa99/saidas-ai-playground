@@ -71,3 +71,10 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Consolidated Documentation
+
+- Unified AI Implementation & UX Flow: [docs/Unified_AI_Implementation_and_UX_Flow.md](docs/Unified_AI_Implementation_and_UX_Flow.md)
+- Operations Runbook (Current vs Future): [docs/Operations_Runbook_Current_vs_Future.md](docs/Operations_Runbook_Current_vs_Future.md)
+- Archived source documents are available under [docs/archived/](docs/archived/) for reference.
+
