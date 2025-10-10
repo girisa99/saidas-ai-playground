@@ -64,7 +64,7 @@ export const useUniversalAI = () => {
           prompt: request.prompt,
           systemPrompt: request.systemPrompt || '',
           temperature: request.temperature || 0.7,
-          maxTokens: request.maxTokens || 1500,
+          maxTokens: request.maxTokens || 4000,
           imageUrl: request.imageUrl,
           images: request.images,
           useRAG: request.useRAG,

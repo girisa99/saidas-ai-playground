@@ -7,11 +7,13 @@ interface RichResponseRendererProps {
 }
 
 export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ content }) => {
-  // Clean content - just enhance bullet points, no HTML injection
-  const enhancedContent = content.replace(/^• /gm, '🔹 ');
+  // Enhance content formatting for better readability
+  const enhancedContent = content
+    .replace(/^• /gm, '🔹 ')
+    .replace(/\*\*(.*?)\*\*/g, '**$1**'); // Ensure bold formatting is preserved
 
   return (
-    <div className="prose prose-sm max-w-none dark:prose-invert">
+    <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-primary prose-a:text-primary prose-strong:text-foreground">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{

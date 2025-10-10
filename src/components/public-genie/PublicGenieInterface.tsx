@@ -235,32 +235,11 @@ useEffect(() => {
   // Check if conversation context has shifted (intelligent auto-detection)
   const contextShift = conversationIntelligence.detectContextShift(messages, context);
   
-  if (contextShift.shifted && contextShift.newContext && contextShift.confidence > 0.2) {
-    // User's conversation has clearly shifted to a different domain
-    const newContextName = contextShift.newContext === 'technology' ? 'Technology' : 'Healthcare';
-    
-    addMessage({
-      role: 'assistant',
-      content: `I notice you're now discussing ${newContextName} topics. Would you like me to switch contexts to provide more specialized information? 🔄`,
-      timestamp: new Date().toISOString()
-    });
-    
-    // Show relevant topic suggestions for the new context
-    const suggestions = dynamicTopics.length > 0 
-      ? dynamicTopics.slice(0, 6)
-      : (contextShift.newContext === 'technology' ? technologyTopics : healthcareTopics)
-          .slice(0, 6)
-          .map(topic => ({
-            topic,
-            category: contextShift.newContext === 'healthcare' ? 'clinical' : 'technical',
-            icon: contextShift.newContext === 'healthcare' ? '🏥' : '💻'
-          }));
-    
-    setPopoverSuggestions(suggestions);
-    setPopoverMood('helpful');
-    setShowTopicPopover(true);
-    
-    return; // Don't check for regular suggestions if we detected a context shift
+  if (contextShift.shifted && contextShift.newContext && contextShift.confidence > 0.6) {
+    // Automatically switch context without notification to avoid repetition
+    setContext(contextShift.newContext);
+    conversationIntelligence.reset();
+    return; // Don't show suggestions during auto-switch
   }
   
   // Show proactive topic suggestions at strategic conversation milestones (3, 5, 7 messages)
@@ -700,7 +679,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             prompt: enhancedPrompt,
             systemPrompt,
             temperature: 0.7,
-            maxTokens: 1000,
+            maxTokens: 4000,
             ...(imageUrls.length > 0 && { images: imageUrls })
           })
         ]);
@@ -747,7 +726,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
           prompt: enhancedPrompt,
           systemPrompt,
           temperature: 0.7,
-          maxTokens: 1000,
+          maxTokens: 4000,
           useRAG: aiConfig.ragEnabled,
           knowledgeBase: aiConfig.knowledgeBase,
           useMCP: aiConfig.mcpEnabled,
@@ -1096,6 +1075,10 @@ ${conversationSummary.transcript}`
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 flex-wrap">
                           <Badge variant="secondary" className="text-xs">
+                            💻🏥 Tech & Healthcare AI
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">|</span>
+                          <Badge variant="outline" className="text-xs">
                             {aiConfig.mode === 'default' ? '🤖 Auto-Select' : 
                              aiConfig.mode === 'single' ? '🎯 Single Model' : 
                              '🔀 Multi-Agent'}

@@ -196,7 +196,7 @@ async function callClaude(request: AIRequest, ragContext?: string) {
     },
     body: JSON.stringify({
       model: request.model,
-      max_tokens: request.maxTokens || 1500,
+      max_tokens: request.maxTokens || 4000,
       temperature: request.temperature || 0.7,
       system: systemContent,
       messages,
@@ -259,7 +259,7 @@ async function callGemini(request: AIRequest, ragContext?: string) {
       }],
       generationConfig: {
         temperature: request.temperature || 0.7,
-        maxOutputTokens: request.maxTokens || 1500,
+        maxOutputTokens: request.maxTokens || 4000,
       },
     }),
   });
@@ -322,7 +322,7 @@ async function callLovableAI(request: AIRequest, ragContext?: string) {
       model: request.model, // e.g., google/gemini-2.5-flash, openai/gpt-5-mini
       messages,
       temperature: request.temperature || 0.7,
-      max_tokens: request.maxTokens || 1500,
+      max_tokens: request.maxTokens || 4000,
     }),
   });
 
