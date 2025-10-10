@@ -1,10 +1,26 @@
 # Genie AI - Model Selection UX Flow & User Experience
 
+**Document Version:** 2.0  
+**Created:** October 2025  
+**Last Updated:** October 2025  
+**Integrated With:** GENIE_AI_OPTIMIZATION_PLAN.md & GENIE_OPTIMIZATION_IMPLEMENTATION_STRATEGY.md
+
 ## Executive Summary
 
 **Core Principle:** User always has final control, but AI provides intelligent guidance.
 
 **Flow:** User Selection → AI Analysis → Smart Recommendation → User Approval → Execution
+
+### Current State vs Enhanced State
+
+| Aspect | Current (Oct 2025 - Before) | Enhanced (Oct 2025 - After) |
+|--------|----------------------------|----------------------------|
+| **Model Selection** | Manual only | AI-suggested with manual override |
+| **Reasoning** | None shown | Transparent explanation provided |
+| **Alternatives** | Not shown | Always shown with comparison option |
+| **Outcome Tracking** | Not available | Performance analytics displayed |
+| **User Learning** | Static | Adaptive based on preferences |
+| **Cost Visibility** | Hidden | Transparent cost estimation |
 
 ---
 

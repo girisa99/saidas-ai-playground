@@ -1,8 +1,24 @@
 # Genie AI Optimization Plan & Assessment
 
+**Document Version:** 2.0  
+**Created:** October 2025  
+**Last Updated:** October 2025  
+**Status:** Design Phase - Ready for Implementation
+
 ## Executive Summary
 
-This document outlines the current state analysis and proposed optimization plan for the Genie AI system's model selection, token optimization, RAG integration, and intelligent response formatting.
+This document outlines the current state analysis and proposed optimization plan for the Genie AI system's model selection, token optimization, RAG integration, and intelligent response formatting. This plan integrates user experience flows, model prioritization logic, and outcome transparency to create an intelligent, user-controlled AI system.
+
+### Key Enhancements Overview
+
+| Enhancement Area | Current State | Enhanced State | User Impact |
+|-----------------|---------------|----------------|-------------|
+| **Model Selection** | Manual selection only | AI-suggested + user control | Optimal model recommendations with reasoning |
+| **RAG Integration** | Keyword search | Semantic embeddings | 25% accuracy improvement |
+| **Token Optimization** | Fixed 4000 tokens | Dynamic 1500-6000 | 62% cost reduction for simple queries |
+| **Response Format** | Manual markdown | AI-detected format | Auto-optimized presentation |
+| **Multi-Model** | Not available | Side-by-side comparison | Transparent model performance |
+| **User Experience** | Limited guidance | Smart recommendations | Informed decision-making |
 
 ---
 
@@ -512,25 +528,60 @@ ADD COLUMN citation_sources jsonb;
 
 ---
 
+## Integration with Implementation Strategy & UX Flow
+
+This optimization plan is fully integrated with:
+- **GENIE_OPTIMIZATION_IMPLEMENTATION_STRATEGY.md** - Detailed phased implementation with zero breaking changes
+- **GENIE_UX_FLOW_MODEL_SELECTION.md** - User experience design with transparent model selection
+
+### Current State Summary (October 2025 - Before Implementation)
+- **Model Selection:** Manual only, no recommendations
+- **Token Management:** Fixed 4000 tokens for all queries
+- **RAG System:** Keyword-based ILIKE search
+- **Response Format:** Manual markdown only
+- **Outcome Tracking:** None
+- **User Guidance:** Limited to static suggestions
+- **Cost Visibility:** Hidden from users
+
+### Enhanced State Summary (October 2025 - After Implementation)
+- **Model Selection:** AI-suggested with user override + transparent reasoning
+- **Token Management:** Dynamic 1500-6000 based on complexity (62% cost reduction)
+- **RAG System:** Semantic embeddings + ranking (25% accuracy improvement)
+- **Response Format:** Auto-detected (text/table/visual/mixed)
+- **Outcome Tracking:** Complete analytics with best model analysis
+- **User Guidance:** Intelligent recommendations with learning
+- **Cost Visibility:** Transparent estimation and tracking
+
+---
+
 ## Next Steps
 
-### Immediate Actions (This Week):
+### Immediate Actions (Week 1)
 1. ✅ Review and approve this plan
-2. ✅ Create query analyzer prototype
-3. ✅ Set up model selection matrix
-4. ✅ Implement token budget system
+2. ✅ Create `queryAnalyzer` service
+3. ✅ Create `modelSelector` service
+4. ✅ Add type definitions in `src/types/queryTypes.ts`
+5. ✅ Set up feature flags system in `src/config/featureFlags.ts`
 
-### Short-term (2-4 Weeks):
-1. ✅ Deploy Phase 1-2 (Query Intelligence + Model Selection)
-2. ✅ Add embeddings to knowledge base
-3. ✅ Enhance RAG with semantic search
-4. ✅ Implement format detection
+### Short-term (Week 2-4)
+1. ✅ Enhance `ai-universal-processor` with intelligent routing
+2. ✅ Add embeddings column to `universal_knowledge_base`
+3. ✅ Implement semantic search function
+4. ✅ Create UX components for model recommendations
+5. ✅ Add token optimization logic
 
-### Long-term (1-2 Months):
-1. ✅ Full multi-model orchestration
-2. ✅ Advanced response formatting
+### Medium-term (Week 5-8)
+1. ✅ Response format intelligence (`formatDetector.ts`)
+2. ✅ Multi-model orchestration components
 3. ✅ Cost analytics dashboard
-4. ✅ A/B testing framework
+4. ✅ Split-screen comparison enhancements
+5. ✅ User preference learning system
+
+### Long-term (Week 9-10)
+1. ✅ Outcome showcase components
+2. ✅ A/B testing framework
+3. ✅ Performance monitoring
+4. ✅ Gradual rollout to production
 
 ---
 
