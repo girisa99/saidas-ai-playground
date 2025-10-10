@@ -154,9 +154,33 @@ flowchart TD
    - Start with defaults; progressively enable flags for internal, QA, then GA
 
 ## 10) Strategy & Roadmap
-- Near-term: keep Flash default, Pro for vision/complex; instrument routing rationale and latency
-- Mid-term: confidence-triggered upshift, token-aware caps, SLM pre-summarization
-- Long-term: provider redundancy, multi-region, adaptive memory
+
+### Near-term
+- Keep Flash default, Pro for vision/complex; instrument routing rationale and latency
+- Enable query intelligence with intent classification, domain detection, complexity scoring
+- Add basic token optimization: dynamic allocation based on query complexity
+
+### Mid-term
+- Confidence-triggered upshift, token-aware caps, SLM pre-summarization
+- RAG enhancement with semantic embeddings and confidence scoring
+- Response format intelligence with auto-detection and tool calling
+- Multi-model orchestration for side-by-side comparison
+
+### Long-term
+- Provider redundancy, multi-region endpoints for availability
+- Adaptive memory with summarized history and deduped context
+- Advanced cost optimization per tier
+- Interactive response components (charts, diagrams, tables)
+
+### Expected Performance Impact
+| Metric | Current | After Optimization | Improvement |
+|--------|---------|-------------------|-------------|
+| Avg Response Time | 3-5s | 1.5-3s | 40-50% faster |
+| Token Usage (Simple) | 4000 | 1500 | 62% reduction |
+| Token Usage (Complex) | 4000 | 6000 | Better quality |
+| RAG Accuracy | ~60% | ~85% | 25% improvement |
+| Cost per Query (Simple) | $0.02 | $0.006 | 70% reduction |
+| User Satisfaction | Baseline | +40% | Smarter responses |
 
 ## 11) Appendices
 
