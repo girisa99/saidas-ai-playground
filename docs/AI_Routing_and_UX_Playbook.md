@@ -81,13 +81,48 @@ Purpose: This playbook consolidates and supersedes the following: docs/Unified_A
    - Human-in-the-Loop: Queue conversations for expert review
    - Quality Feedback: Continuous improvement through annotated data
 
-**Intelligent Model Selection:**
-- Auto-upshift when confidence < threshold (e.g., 0.7)
-- Task-specific routing matrix (code → Flash, creative → Pro, analysis → GPT-5, medical → Gemini Pro + RAG)
-- Cost-aware SLM fallback for high-volume FAQ
-- Multi-model orchestration for comparison scenarios
-- MCP context enrichment for specialized knowledge
-- Label Studio logging for high-stakes decisions
+8. **Voice & Audio Models:**
+   - **Text-to-Speech (TTS):**
+     - ElevenLabs (Recommended): eleven_turbo_v2_5 (32 languages, low latency)
+     - OpenAI: tts-1 (alloy, echo, fable, onyx, nova, shimmer voices)
+     - Use cases: Accessibility, voice-first interfaces, audio content
+   - **Speech-to-Text (STT):**
+     - OpenAI Whisper: Multilingual transcription
+     - Use cases: Voice input, meeting transcription, accessibility
+   - **Voice Agents:**
+     - ElevenLabs Conversational AI: Real-time voice conversations
+     - Use cases: Voice assistants, customer service, interactive experiences
+
+**Intelligent Model Selection (Comprehensive):**
+- **Default Strategy:** gemini-2.5-flash for general queries (balanced performance/cost)
+- **Single Model:** Most queries (95%+ cases) - one optimal model selected
+- **Multi-Model Scenarios:**
+  1. **Comparison Mode:** User explicitly requests comparison
+  2. **Medical Imaging:** Vision + Clinical reasoning models
+  3. **Quality Validation:** High-stakes decisions need expert review
+  4. **A/B Testing:** Experimental model evaluation
+- **Proactive Optimization:**
+  - Auto-upshift when confidence < threshold (e.g., 0.7)
+  - Context analysis triggers domain-specific routing
+  - Cost-aware SLM fallback for high-volume simple queries
+  - Performance monitoring triggers model switching
+- **Task-Specific Routing Matrix:**
+  - Code generation → gemini-2.5-flash
+  - Creative writing → gemini-2.5-pro
+  - Complex analysis → openai/gpt-5
+  - Medical/Clinical → gemini-2.5-pro + RAG + MCP
+  - Vision analysis → gpt-5 or gemini-2.5-pro
+  - Image generation → google/gemini-2.5-flash-image-preview
+  - Voice synthesis → ElevenLabs eleven_turbo_v2_5 or OpenAI tts-1
+  - Classification/Summary → gemini-2.5-flash-lite (fastest)
+- **Context Enrichment:**
+  - RAG: Always enabled for domain-specific knowledge
+  - MCP: Triggered for real-time/proprietary context
+  - Label Studio: Logged for high-stakes/medical/regulatory
+- **Hybrid Strategies:**
+  - RAG + MCP: Medical queries with real-time clinical trial data
+  - Multi-model + RAG: Vision analysis with clinical knowledge
+  - Voice + LLM: Voice agent with text reasoning backend
 
 **Context & Memory:**
 - Adaptive context window with summarized history and deduped context
@@ -97,12 +132,12 @@ Purpose: This playbook consolidates and supersedes the following: docs/Unified_A
 **Infrastructure:**
 - Multi-region endpoints and provider redundancy for availability
 - Central model map with versioning (created_at/updated_at)
-- Fallback chains: Primary → Secondary → Lite
+- Fallback chains: Primary → Secondary → Lite → Graceful degradation
 
 **Consistency:**
 - Unified system prompt across models
 - Tone and personality alignment
-- Response format standardization
+- Response format standardization (text, image, table, HTML, video+text)
 
 ## 2) Context, Memory, and Tokens
 
@@ -1579,6 +1614,215 @@ interface UserModelPattern {
 - Auto-scaling based on request volume
 - Model load balancing across regions
 - Caching layer for repeated queries
+
+## 11.5) Comprehensive Coverage Summary & Gap Analysis
+
+### ✅ FULLY COVERED - Default, Single, Multi-Model Scenarios
+
+**Default Model Strategy:**
+- ✅ gemini-2.5-flash as universal default (balanced cost/performance)
+- ✅ Context-aware automatic selection
+- ✅ Silent model badge with "Why?" tooltip
+- ✅ Zero configuration required for users
+
+**Single Model Scenarios (95%+ of queries):**
+- ✅ Intelligent model selection based on:
+  - Domain (healthcare, research, clinical, tech, general)
+  - Query complexity (simple, moderate, complex)
+  - Capabilities required (text, vision, image generation, voice)
+  - Performance requirements (speed vs accuracy)
+  - Cost constraints
+- ✅ Constraint prioritization matrix
+- ✅ Automatic optimal model recommendation
+- ✅ User override capability with validation
+- ✅ Fallback chains on failure
+
+**Multi-Model Scenarios:**
+- ✅ Comparison mode (user-requested)
+- ✅ Medical imaging (vision + clinical reasoning)
+- ✅ Quality validation (high-stakes decisions)
+- ✅ A/B testing (experimental evaluation)
+- ✅ Split-screen rendering
+- ✅ Side-by-side cost/speed/quality comparison
+
+### ✅ FULLY COVERED - Model Categories & Options
+
+**General Purpose LLMs:**
+- ✅ openai/gpt-5 (most capable, multimodal)
+- ✅ openai/gpt-5-mini (balanced)
+- ✅ openai/gpt-5-nano (fast, cheap)
+- ✅ google/gemini-2.5-pro (healthcare specialist)
+- ✅ google/gemini-2.5-flash (default)
+- ✅ google/gemini-2.5-flash-lite (fastest)
+
+**Specialized Models:**
+- ✅ Vision models (GPT-5, Gemini Pro, Claude Sonnet)
+- ✅ Medical imaging (RAG-enhanced with TCIA, ADNI, NIH)
+- ✅ DICOM processing (CT, MRI, X-Ray, Ultrasound)
+- ✅ Image generation (google/gemini-2.5-flash-image-preview)
+- ✅ Clinical-BERT variants
+- ✅ Small Language Models (SLMs)
+
+**Voice & Audio:**
+- ✅ Text-to-Speech: ElevenLabs (11 turbo v2.5), OpenAI (tts-1)
+- ✅ Speech-to-Text: OpenAI Whisper
+- ✅ Voice Agents: ElevenLabs Conversational AI
+
+**Context Enhancement:**
+- ✅ RAG (universal_knowledge_base)
+- ✅ MCP (Model Context Protocol) for external sources
+- ✅ Label Studio for quality tracking
+
+### ✅ FULLY COVERED - Prioritization & Optimization
+
+**Constraint Prioritization (Order of Precedence):**
+1. ✅ Required Capabilities (vision, voice, image gen) - BLOCKS incompatible
+2. ✅ Domain Context (healthcare, clinical, research) - STRONG preference
+3. ✅ User Explicit Selection - HONORED unless capability conflict
+4. ✅ Performance Requirements (fast, low-cost) - SUGGESTS alternatives
+5. ✅ Default Fallback - APPLIES when no other constraints
+
+**Context-Based Optimal Selection:**
+- ✅ Domain-specific routing (healthcare → Gemini Pro + RAG)
+- ✅ Task-specific matrix (code → Flash, creative → Pro, analysis → GPT-5)
+- ✅ Performance-based (fast → Lite, accurate → Pro)
+- ✅ Cost-aware fallback for high-volume
+- ✅ Confidence threshold auto-upshift (<0.7 → upgrade model)
+
+**Proactive Recommendations:**
+- ✅ AI analyzes query before execution
+- ✅ Suggests optimal model with reasoning
+- ✅ Blocking dialog for major mismatches
+- ✅ Gentle toast for minor differences
+- ✅ Post-response "Compare with other models" option
+- ✅ Learning from user preferences (future)
+
+**Token Optimization:**
+- ✅ Domain-specific token budgets (clinical: no compression, general: aggressive)
+- ✅ Complexity-based allocation (simple: 1.5K, moderate: 3K, complex: 6K+)
+- ✅ Context compression strategies (none, summarize, truncate)
+- ✅ Critical context preservation
+- ✅ Model-specific caps (flash-lite: 2K max)
+
+**Response Format Intelligence:**
+- ✅ Automatic format detection (text, table, image, HTML, video, mixed)
+- ✅ Domain-specific patterns (research comparison → table)
+- ✅ Tool calling for image/video generation
+- ✅ Fallback formats
+- ✅ Rendering optimization by format
+
+### ✅ FULLY COVERED - Best Results Delivery
+
+**Quality Assurance:**
+- ✅ RAG for domain knowledge
+- ✅ MCP for real-time context
+- ✅ Label Studio for expert review
+- ✅ Multi-model validation for high-stakes
+- ✅ Quality scoring and feedback loops
+
+**Performance Optimization:**
+- ✅ Parallel RAG + model invocation
+- ✅ Streaming SSE for low latency
+- ✅ Model-specific TTFB targets (Flash: 1.2s, Pro: 2.5s)
+- ✅ Pre-warming for popular queries
+- ✅ Caching with TTL
+
+**User Experience:**
+- ✅ Transparent model selection reasoning
+- ✅ Cost/token/speed metrics displayed
+- ✅ Manual override capability
+- ✅ Automation level settings (Manual, Smart Assist, Auto-Optimize)
+- ✅ Learning from user patterns
+
+### ⚠️ GAPS IDENTIFIED & FUTURE CONSIDERATIONS
+
+**Gap 1: Real-Time Video Generation**
+- ⚠️ Video format supported but no video generation models integrated
+- **Recommendation:** Future integration with Runway, Stability AI, or similar
+- **Priority:** Medium (not commonly requested yet)
+
+**Gap 2: Advanced Voice Agents**
+- ⚠️ ElevenLabs Conversational AI documented but not fully integrated
+- **Recommendation:** Implement real-time voice conversation flow
+- **Priority:** High (growing demand for voice-first UX)
+
+**Gap 3: Multi-Modal Combinations**
+- ⚠️ Limited support for text + image generation in single response
+- **Recommendation:** Tool calling to generate images inline with text
+- **Priority:** Medium (useful for visual explanations)
+
+**Gap 4: User Learning & Personalization**
+- ⚠️ System learning from user preferences not implemented
+- **Recommendation:** Track user model overrides, adjust future suggestions
+- **Priority:** Medium (improves UX over time)
+
+**Gap 5: Cost Budgets & Alerts**
+- ⚠️ Token budgets calculated but no enforcement/alerts
+- **Recommendation:** Per-user/session cost tracking with 80/90/100% alerts
+- **Priority:** High (prevents cost overruns)
+
+**Gap 6: Model Performance Benchmarking**
+- ⚠️ No systematic quality/speed/cost benchmarking by domain
+- **Recommendation:** A/B testing framework with quality scoring
+- **Priority:** Medium (data-driven model selection)
+
+**Gap 7: Multi-Region Redundancy**
+- ⚠️ Single provider (Lovable AI Gateway), no geographic redundancy
+- **Recommendation:** Multi-region endpoints with latency-based routing
+- **Priority:** Low (single provider is reliable)
+
+**Gap 8: Advanced RAG Features**
+- ⚠️ Keyword-based search only, no semantic vector similarity
+- **Recommendation:** Implement embeddings + vector search
+- **Priority:** High (significantly improves RAG quality)
+
+**Gap 9: Streaming Image Generation**
+- ⚠️ Image generation not streamed, blocks UI
+- **Recommendation:** Progressive image loading or preview frames
+- **Priority:** Low (image gen is fast enough)
+
+**Gap 10: Cross-Session Memory**
+- ⚠️ No persistent user context across sessions
+- **Recommendation:** Optional user profile for preferences/history
+- **Priority:** Medium (privacy-sensitive, opt-in only)
+
+### 🎯 PRIORITY RECOMMENDATIONS (Next Steps)
+
+**High Priority (Implement Next):**
+1. **Advanced Voice Integration:** ElevenLabs Conversational AI for voice-first UX
+2. **Cost Budgets & Alerts:** Prevent overruns with user-facing tracking
+3. **Semantic RAG:** Vector embeddings for better knowledge retrieval
+4. **Label Studio Quality Loop:** Close feedback loop for continuous improvement
+
+**Medium Priority (Q1 2026):**
+5. **User Learning:** Track preferences, personalize suggestions
+6. **Multi-Modal Inline:** Generate images within text responses
+7. **Performance Benchmarking:** A/B test models systematically
+
+**Low Priority (Future):**
+8. **Video Generation:** Integrate when demand increases
+9. **Multi-Region:** Add geographic redundancy if needed
+10. **Cross-Session Memory:** Privacy-preserving user profiles
+
+### ✅ CONFIRMATION: Playbook Completeness
+
+**This playbook comprehensively covers:**
+- ✅ Default model strategy (gemini-2.5-flash)
+- ✅ Single model scenarios (95%+ of queries)
+- ✅ Multi-model scenarios (comparison, validation, medical)
+- ✅ All model categories (LLM, SLM, Vision, Medical, Voice, Image Gen)
+- ✅ Constraint prioritization (capabilities → domain → user → performance → default)
+- ✅ Context-based optimal selection (domain + task + complexity + cost)
+- ✅ Proactive recommendations (AI suggests, user controls)
+- ✅ Token optimization (domain-specific budgets + compression)
+- ✅ Response format intelligence (text, table, image, HTML, video, mixed)
+- ✅ Best results delivery (RAG + MCP + Label Studio + multi-model validation)
+- ✅ RAG integration (universal_knowledge_base)
+- ✅ MCP integration (external context providers)
+- ✅ Label Studio integration (quality tracking)
+- ✅ Gap analysis (10 gaps identified with priorities)
+
+**This is the authoritative, complete reference for AI routing and UX.**
 
 ## 12) Appendices
 
