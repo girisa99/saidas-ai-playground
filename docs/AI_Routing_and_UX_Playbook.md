@@ -45,11 +45,49 @@ Purpose: This playbook consolidates and supersedes the following: docs/Unified_A
 
 ### RECOMMENDED (Target)
 
+**Model Categories & Comprehensive Coverage:**
+
+1. **General Purpose LLMs:**
+   - openai/gpt-5: Most capable, multimodal (text + images), complex reasoning
+   - openai/gpt-5-mini: Balanced performance/cost, strong multimodal
+   - openai/gpt-5-nano: Fast, cost-effective for simple tasks
+
+2. **Healthcare Specialized:**
+   - google/gemini-2.5-pro: Superior medical reasoning, large clinical context
+   - Clinical-BERT variants: Domain-specific clinical text understanding
+
+3. **Small Language Models (SLMs):**
+   - google/gemini-2.5-flash-lite: Fastest, cheapest, classification/summarization
+   - openai/gpt-5-nano: Efficient for high-volume simple tasks
+
+4. **Vision & Image Models:**
+   - gpt-4o / gpt-5: Multimodal vision for general images
+   - claude-3-5-sonnet: Strong visual understanding
+   - gemini-2.5-pro: Medical imaging + general vision
+   - google/gemini-2.5-flash-image-preview (Nano banana): AI image generation/editing
+
+5. **Medical Imaging Specialized:**
+   - Medical Vision Models: RAG-enhanced using TCIA, ADNI, NIH datasets
+   - DICOM Processing: CT, MRI, X-Ray, Ultrasound, Mammography
+   - Clinical Context: Integrated with universal_knowledge_base
+
+6. **Model Context Protocol (MCP):**
+   - External MCP Servers: Connect to custom context providers
+   - Tool-Based Context: Dynamic context retrieval from specialized services
+   - Multi-Server Support: Aggregate context from multiple MCP endpoints
+
+7. **Data Annotation & Quality:**
+   - Label Studio Integration: Automatic logging for annotation/review
+   - Human-in-the-Loop: Queue conversations for expert review
+   - Quality Feedback: Continuous improvement through annotated data
+
 **Intelligent Model Selection:**
 - Auto-upshift when confidence < threshold (e.g., 0.7)
-- Task-specific routing matrix (code → Flash, creative → Pro, analysis → GPT-5)
+- Task-specific routing matrix (code → Flash, creative → Pro, analysis → GPT-5, medical → Gemini Pro + RAG)
 - Cost-aware SLM fallback for high-volume FAQ
 - Multi-model orchestration for comparison scenarios
+- MCP context enrichment for specialized knowledge
+- Label Studio logging for high-stakes decisions
 
 **Context & Memory:**
 - Adaptive context window with summarized history and deduped context
@@ -244,6 +282,226 @@ Purpose: This playbook consolidates and supersedes the following: docs/Unified_A
 - Confidence scoring and quality weighting
 - Per-domain ranking signals for healthcare/tech
 - RAG hit/miss tracking and analytics
+
+## 6.5) Model Context Protocol (MCP) Integration
+
+### CURRENT
+- MCP infrastructure exists in ai-universal-processor
+- Support for external MCP servers via `useMCP` flag
+- `mcpServers` array for multi-server aggregation
+- Basic MCP context concatenation
+- No active MCP server configurations deployed
+
+### RECOMMENDED
+
+**MCP Use Cases:**
+- External specialized knowledge sources (proprietary databases, APIs)
+- Real-time data from custom context providers
+- Domain-specific knowledge not in RAG (company internal docs, live systems)
+- Multi-source knowledge aggregation (combine multiple expert systems)
+
+**When to Use MCP:**
+```typescript
+function shouldUseMCP(query: string, domain: string): boolean {
+  // Triggers for MCP usage
+  const requiresExternalContext = [
+    'latest', 'current', 'real-time', 'live data',
+    'company-specific', 'proprietary', 'internal'
+  ].some(keyword => query.toLowerCase().includes(keyword));
+  
+  // Check if MCP servers configured for domain
+  const hasMCPServers = getMCPServersForDomain(domain).length > 0;
+  
+  return requiresExternalContext && hasMCPServers;
+}
+```
+
+**MCP Server Configuration (Example):**
+```typescript
+const MCP_SERVERS_BY_DOMAIN = {
+  healthcare: [
+    'https://clinical-trials.mcp.example.com',
+    'https://drug-database.mcp.example.com'
+  ],
+  research: [
+    'https://pubmed.mcp.example.com',
+    'https://arxiv.mcp.example.com'
+  ],
+  enterprise: [
+    'https://company-docs.mcp.example.com',
+    'https://slack-knowledge.mcp.example.com'
+  ]
+};
+```
+
+**MCP Context Retrieval:**
+```typescript
+async function getMCPContext(
+  servers: string[], 
+  query: string, 
+  context?: string
+): Promise<string> {
+  const mcpResults = await Promise.all(
+    servers.map(server => callMCPServer(server, query, context))
+  );
+  
+  // Filter null results, aggregate valid responses
+  const validResults = mcpResults.filter(r => r !== null);
+  
+  if (validResults.length === 0) return '';
+  
+  // Format MCP context for AI consumption
+  return validResults.map((result, idx) => 
+    `[MCP Source ${idx + 1}]: ${JSON.stringify(result)}`
+  ).join('\n\n');
+}
+```
+
+**MCP + RAG Combination Strategy:**
+1. RAG provides baseline knowledge (curated, high-quality)
+2. MCP augments with real-time/specialized context
+3. AI model synthesizes both sources
+4. Priority: MCP (real-time) > RAG (curated) for conflicting info
+
+**MCP Server Health Monitoring:**
+- Track MCP server response times
+- Fallback to RAG-only if MCP server fails
+- Log MCP server usage and quality scores
+- Auto-disable unreliable MCP servers
+
+## 6.6) Label Studio Integration for Quality & Annotation
+
+### CURRENT
+- Label Studio infrastructure exists in ai-universal-processor
+- `labelStudioProject` flag for logging conversations
+- Automatic task creation for annotation
+- No active Label Studio projects deployed
+- No quality feedback loop implemented
+
+### RECOMMENDED
+
+**Label Studio Use Cases:**
+- Medical imaging analysis → clinical expert review
+- High-stakes decisions → regulatory compliance review
+- New domains → build training datasets
+- User-reported issues → root cause analysis
+- Model A/B testing → quality comparison
+
+**When to Log to Label Studio:**
+```typescript
+function shouldLogToLabelStudio(
+  domain: string, 
+  hasImages: boolean,
+  userFeedback?: 'positive' | 'negative'
+): boolean {
+  // High-stake domains always logged
+  const highStakeDomains = [
+    'healthcare', 
+    'medical_imaging', 
+    'clinical', 
+    'regulatory',
+    'legal',
+    'financial'
+  ];
+  
+  const isHighStake = highStakeDomains.includes(domain);
+  
+  // Medical images always logged for expert review
+  const needsAnnotation = hasImages && domain === 'medical_imaging';
+  
+  // Negative feedback triggers review
+  const needsReview = userFeedback === 'negative';
+  
+  return isHighStake || needsAnnotation || needsReview;
+}
+```
+
+**Label Studio Project Configuration:**
+```typescript
+const LABEL_STUDIO_PROJECTS = {
+  medical_imaging_quality_review: {
+    id: 'medical-imaging-qa',
+    url: process.env.LABEL_STUDIO_URL,
+    schema: {
+      fields: ['text', 'model', 'provider', 'response', 'rag_context', 'has_images'],
+      annotations: ['clinical_accuracy', 'safety_concerns', 'improve_suggestions']
+    }
+  },
+  healthcare_quality_review: {
+    id: 'healthcare-qa',
+    schema: {
+      fields: ['query', 'response', 'domain', 'model'],
+      annotations: ['medical_accuracy', 'patient_safety', 'bias_check']
+    }
+  },
+  general_feedback_review: {
+    id: 'feedback-qa',
+    schema: {
+      fields: ['query', 'response', 'user_rating'],
+      annotations: ['quality_score', 'improvement_notes']
+    }
+  }
+};
+```
+
+**Logging to Label Studio:**
+```typescript
+async function logToLabelStudio(
+  request: AIRequest,
+  response: string,
+  ragContext?: string,
+  mcpContext?: string
+): Promise<void> {
+  if (!labelStudioApiKey || !labelStudioUrl) return;
+  
+  const project = LABEL_STUDIO_PROJECTS[request.labelStudioProject];
+  if (!project) return;
+  
+  try {
+    await fetch(`${labelStudioUrl}/api/projects/${project.id}/import`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${labelStudioApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify([{
+        data: {
+          text: request.prompt,
+          model: request.model,
+          provider: request.provider,
+          response: response,
+          rag_context: ragContext || '',
+          mcp_context: mcpContext || '',
+          has_images: !!(request.imageUrl || request.images),
+          domain: request.context || 'general',
+          timestamp: new Date().toISOString()
+        }
+      }])
+    });
+    
+    console.log(`✅ Logged to Label Studio project: ${project.id}`);
+  } catch (error) {
+    console.error('❌ Label Studio logging failed:', error);
+  }
+}
+```
+
+**Quality Feedback Loop:**
+1. Conversations logged to Label Studio
+2. Domain experts annotate quality, accuracy, safety
+3. Annotations used to:
+   - Fine-tune models (future)
+   - Improve RAG knowledge base (add missing entries)
+   - Refine system prompts
+   - Identify model weaknesses
+   - Update routing rules
+
+**Label Studio Analytics Dashboard:**
+- Track annotation completion rate
+- Monitor quality scores by model/domain
+- Identify common failure patterns
+- Surface high-priority review items
+- Export annotated data for model improvements
 
 ## 7) UX Flow & Multi-Model Intelligence (Single Source)
 
