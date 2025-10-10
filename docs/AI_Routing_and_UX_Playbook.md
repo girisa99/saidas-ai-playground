@@ -248,72 +248,371 @@ Purpose: This playbook consolidates and supersedes the following: docs/Unified_A
 ## 7) UX Flow (Single Source)
 
 ### CURRENT
-- Key Components: PublicGenieInterface (orchestration), SplitScreenRenderer (optional multi-model), RichResponseRenderer (formatting), TopicSuggestionPopover + context detection
-- Scenarios:
-  - No model selected → AI recommends silently; badge shows choice + "Why"
-  - Minor mismatch → gentle toast suggesting switch
-  - Major mismatch (e.g., image on non-vision model) → blocking dialog with recommended model
+
+**Key Components:**
+- PublicGenieInterface (orchestration)
+- SplitScreenRenderer (optional multi-model)
+- RichResponseRenderer (formatting)
+- TopicSuggestionPopover + context detection
+- Model badge showing which model was used
+
+**Model Selection Flow:**
+
+1. **User Selects Model + AI Analyzes Query:**
+   - ✅ **Match**: Proceed silently with model badge confirmation
+   - 💡 **Minor difference**: Gentle toast suggestion, auto-proceed with user choice
+   - ⚠️ **Major difference**: Blocking dialog requiring approval (e.g., image on non-vision model)
+   - 🤖 **No selection**: AI chooses automatically, badge shows choice + "Why?" tooltip
+
+2. **Current Scenarios:**
+   - No model selected → AI recommends silently; badge shows choice + "Why"
+   - Minor mismatch (e.g., using Flash for heavy reasoning) → gentle toast: "Pro recommended for complex analysis" + continue
+   - Major mismatch (e.g., image on Flash Lite) → blocking dialog: "Flash Lite doesn't support images. Switch to Gemini Pro?"
+   - Match → silent proceed with badge
+
+**User Control (Basic):**
+- Can manually select any model
+- Can override AI recommendations
+- No automation level settings yet
+- No learning from user choices yet
+
+**Transparency (Basic):**
+- Model badge shows which model was used
+- No cost/token metrics displayed yet
+- No "Why this model?" reasoning visible by default
+- No post-response comparison option
 
 ### RECOMMENDED
-- Outcome analytics surfaced (opt-in)
-- Confidence-aware recommendations; auto-upshift when very low confidence
 
-### UX Flow Diagram
+**Enhanced Model Selection Flow:**
+
+```
+User Input → [User Selected Model?]
+     ↓ YES                    ↓ NO
+AI Analyzes Query      AI Analyzes Query
+     ↓                        ↓
+Compare User vs AI      AI Selects Model
+     ↓                        ↓
+Match? Minor? Major?    Auto-Select + Show Badge
+     ↓                        ↓
+[Decision Tree]         User Sees Reasoning
+```
+
+**Decision Tree for User-Selected Models:**
+
+| Scenario | AI Recommendation | User Selection | Action | UI Feedback |
+|----------|-------------------|----------------|--------|-------------|
+| ✅ Match | Flash | Flash | Proceed silently | Green badge: "Gemini Flash (optimal)" |
+| 💡 Minor Diff | Pro | Flash | Toast + Auto-proceed | Orange toast: "Pro recommended for better results. Continuing with Flash..." |
+| ⚠️ Major Diff | Pro (vision) | Flash Lite | Block + Require approval | Dialog: "Flash Lite doesn't support images. Switch to Pro?" |
+| 🤖 No Selection | - | - | AI auto-selects | Badge: "Gemini Flash (auto-selected)" + "Why?" tooltip |
+
+**User Automation Control (Settings):**
+
+Three automation levels users can configure:
+
+1. **Manual Mode** (User always chooses):
+   - No AI suggestions
+   - User picks model every time
+   - AI shows post-response what it would have chosen
+
+2. **Smart Assist** (Default - AI suggests, user controls):
+   - AI analyzes and suggests
+   - Gentle toasts for minor differences
+   - Blocking dialogs for major mismatches
+   - User can override any suggestion
+   - System learns from overrides
+
+3. **Auto-Optimize** (AI chooses, user monitors):
+   - AI auto-selects optimal model
+   - Silent model switching
+   - Badge shows reasoning
+   - User can manually override on next query
+   - System learns from manual overrides
+
+**System Learning (Recommended):**
+- Track user model preferences per query type
+- Learn patterns: "User prefers Pro for medical queries despite Flash being suggested"
+- Adjust AI suggestions based on user history
+- Privacy: Learning stored per-user session only
+
+**Enhanced Transparency (Every Response):**
+
+Display in response footer or expandable card:
+```
+┌─────────────────────────────────────────────────┐
+│ 🤖 Model: Gemini 2.5 Flash                     │
+│ 💡 Why: Balanced speed + quality for general Q  │
+│ 💰 Cost: ~$0.006 (estimated)                    │
+│ 🎯 Tokens: 1,523 / 3,000 budget                │
+│ ⚡ Speed: 1.8s response time                    │
+│ 📊 [Compare with other models]                  │
+└─────────────────────────────────────────────────┘
+```
+
+**Post-Response Comparison (Recommended):**
+- "Compare with other models" button
+- Side-by-side: Flash vs Pro vs GPT-5
+- Shows quality difference, cost difference, speed difference
+- Helps user learn which model to prefer
+- Enable `enableMultiModelComparison` flag
+
+**Example Flow:**
+
+```
+User: [Uploads medical scan] "What does this show?"
+User Selection: Flash Lite (trying to save costs)
+     ↓
+AI Analysis: 
+- Detects image
+- Requires vision capability
+- Flash Lite doesn't support vision
+     ↓
+⚠️ Blocking Dialog:
+"Flash Lite doesn't support images. 
+Switch to Gemini Pro for image analysis?
+Estimated cost: $0.02 vs $0.005"
+     ↓
+User: [Approves switch]
+     ↓
+Response Badge:
+"🤖 Gemini Pro (switched from Flash Lite)
+💡 Why: Image analysis requires vision capability
+💰 Cost: $0.02 | ⚡ 2.3s"
+```
+
+### UX Flow Diagram (Enhanced)
+
 ```
 flowchart TD
-    A[User input] --> B{User selected model?}
-    B -- Yes --> C[Route to selected model]
-    B -- No --> D[Analyze domain/complexity/cost]
-    D --> E{Needs vision/healthcare?}
-    E -- Yes --> F[Route to gemini-2.5-pro]
-    E -- No --> G[Route to gemini-2.5-flash]
-    C --> H[Invoke RAG in parallel if enabled]
-    F --> H
-    G --> H
-    H --> I[Stream tokens + show model badge]
-    I --> J{Confidence low?}
-    J -- Yes --> K[Offer switch or auto-upshift]
-    J -- No --> L[Render Rich Response + citations]
+    A[User input + optional model selection] --> B{User selected model?}
+    B -- Yes --> C[AI analyzes query requirements]
+    B -- No --> D[AI analyzes + auto-selects]
+    
+    C --> E{Compare user vs AI choice}
+    E -- Match --> F[✅ Proceed silently + badge]
+    E -- Minor diff --> G[💡 Toast suggestion + auto-proceed]
+    E -- Major diff --> H[⚠️ Blocking dialog + require approval]
+    
+    D --> I[Show auto-selected model + reasoning badge]
+    
+    F --> J[Invoke RAG if enabled]
+    G --> J
+    H --> K{User approves?}
+    K -- Yes --> J
+    K -- No --> L[Use user's original choice]
+    I --> J
+    L --> J
+    
+    J --> M[Stream response + show metrics]
+    M --> N[Display: Model badge, cost, tokens, speed]
+    N --> O{Show outcome analytics?}
+    O -- Yes --> P[Compare with other models option]
+    O -- No --> Q[End]
+    P --> Q
+```
+
+**Settings UI (Recommended):**
+```typescript
+interface GeniePreferences {
+  automationLevel: 'manual' | 'smart-assist' | 'auto-optimize';
+  showCostMetrics: boolean;
+  showPerformanceMetrics: boolean;
+  enablePostResponseComparison: boolean;
+  defaultModel?: string; // User's preferred default
+  learnFromChoices: boolean; // Privacy toggle
+}
 ```
 
 ## 8) Feature Flags and Behavior
+
+**Current Flags:**
 - enableSmartRouting: false (default)
 - enableMultiModelComparison: false (default)
 - showOutcomeAnalytics: false (default)
 - Enforcement: All flags are additive; switching on any feature must not break base flow
 
+**Recommended New Flags:**
+- automationLevel: 'smart-assist' (default) | 'manual' | 'auto-optimize'
+- showCostMetrics: false (default, enable in Phase 4)
+- showPerformanceMetrics: false (default, enable in Phase 4)
+- enableSystemLearning: false (default, enable in Phase 6)
+- enablePostResponseComparison: false (default, enable with multi-model)
+
+
 ## 9) Implementation Guide (Step-by-Step)
 
-1. Preconditions
-   - All client calls go through Supabase Edge Function: ai-universal-processor (no secrets on client)
-   - Keep a single system prompt in the Edge Function; attach a short "routing rationale" to responses for UI badge
+### Phase 1: Query Intelligence (Week 1-2)
+**Goal:** Understand what users are asking
 
-2. Centralize Model Map
-   - Store model identifiers and priorities in one map within ai-universal-processor with created_at/updated_at metadata
-   - Priority: user_selection > domain_requirement > complexity/cost > availability > default
+**Files to Create:**
+- `supabase/functions/ai-query-analyzer/index.ts` - Analyzes complexity, domain, intent, required capabilities
+- `src/services/queryAnalysisService.ts` - Frontend query preprocessing
+- `src/types/aiQuery.ts` - Type definitions
 
-3. Smart Routing Switch (Incremental)
-   - Phase 1 (default off): keep manual selection and basic recommendation UI
-   - Phase 2 (flag on): enable domain + complexity analysis and auto-upshift fallback on errors
-   - Phase 3: add confidence thresholding and token-aware caps
+**Features:**
+1. Intent classification (research, clinical, general, technical)
+2. Domain detection (healthcare, tech, multi-domain)
+3. Complexity scoring (0-100)
+4. Required capabilities detection (vision, RAG, multi-model)
+5. Cost estimation
 
-4. Client Integration Points
-   - Hook: src/hooks/useUniversalAI.ts
-     - Request envelope properties already supported: provider, model, prompt, images, useRAG, knowledgeBase, context
-     - Show model badge and (optional) rationale in PublicGenieInterface
+**No user-facing changes** - collect data and log analysis results only.
 
-5. RAG Controls
-   - When useRAG=true, display citations; log hit/miss and source counts
-   - Add basic confidence display when available
+### Phase 2: Model Selection Enhancement (Week 2-3)
+**Goal:** Smart routing with user control and transparency
 
-6. UX Instrumentation
-   - Always show typing indicator while streaming
-   - Surface 429 → "Rate limit hit; retrying" toast with backoff
-   - Surface 402 → "Workspace credits required" toast
-   - On auto-fallback, show a subtle notice
+**Files to Modify:**
+- `supabase/functions/ai-universal-processor/index.ts` - Add intelligent routing with comparison logic
+- `src/components/public-genie/ModelSelectionDialog.tsx` - Create blocking dialog for major mismatches
+- `src/components/public-genie/ModelBadge.tsx` - Enhanced badge with reasoning tooltip
 
-7. Rollout (tie-in with Ops Runbook)
-   - Start with defaults; progressively enable flags for internal, QA, then GA
+**Decision Matrix Implementation:**
+```typescript
+interface ModelComparisonResult {
+  userChoice: string;
+  aiRecommendation: string;
+  matchLevel: 'perfect' | 'minor' | 'major';
+  reasoning: string;
+  action: 'proceed' | 'suggest' | 'block';
+}
+
+function compareUserVsAIChoice(
+  userModel: string | undefined,
+  aiAnalysis: QueryAnalysis
+): ModelComparisonResult {
+  // Implementation of match/minor/major logic
+}
+```
+
+**UX Components:**
+- ✅ Match: Silent proceed with green badge
+- 💡 Minor: Toast with suggestion, auto-proceed
+- ⚠️ Major: Blocking dialog requiring approval
+- 🤖 No selection: Auto-select with reasoning badge
+
+**Feature flag:** `enableSmartRouting=false` (test internally first)
+
+### Phase 3: User Preferences & Automation Levels (Week 3-4)
+**Goal:** Give users control over automation
+
+**Files to Create:**
+- `src/components/public-genie/GenieSettings.tsx` - Settings panel
+- `src/hooks/useGeniePreferences.ts` - Preference management hook
+- Database table: `genie_user_preferences`
+
+**Automation Levels:**
+1. **Manual Mode**: User always chooses, AI shows what it would have picked
+2. **Smart Assist** (default): AI suggests with toasts/dialogs, user controls
+3. **Auto-Optimize**: AI chooses automatically, user can monitor
+
+**Settings Schema:**
+```typescript
+interface GeniePreferences {
+  user_id: string;
+  automation_level: 'manual' | 'smart-assist' | 'auto-optimize';
+  show_cost_metrics: boolean;
+  show_performance_metrics: boolean;
+  enable_post_response_comparison: boolean;
+  default_model?: string;
+  learn_from_choices: boolean;
+}
+```
+
+### Phase 4: Transparency & Metrics Display (Week 4-5)
+**Goal:** Show users cost, tokens, performance for every response
+
+**Files to Create:**
+- `src/components/public-genie/ResponseMetrics.tsx` - Metrics card component
+- `src/utils/costCalculator.ts` - Calculate cost estimates
+
+**Metrics to Display:**
+```
+┌─────────────────────────────────────────────────┐
+│ 🤖 Model: Gemini 2.5 Flash                     │
+│ 💡 Why: Balanced speed + quality for general Q  │
+│ 💰 Cost: ~$0.006 (estimated)                    │
+│ 🎯 Tokens: 1,523 / 3,000 budget                │
+│ ⚡ Speed: 1.8s response time                    │
+│ 📊 [Compare with other models]                  │
+└─────────────────────────────────────────────────┘
+```
+
+**Feature flags:**
+- `showCostMetrics=true`
+- `showPerformanceMetrics=true`
+
+### Phase 5: Post-Response Comparison (Week 5-6)
+**Goal:** Let users compare how different models would have responded
+
+**Files to Create:**
+- `src/components/public-genie/ModelComparisonView.tsx` - Side-by-side comparison UI
+- `supabase/functions/ai-multi-model-comparison/index.ts` - Invoke multiple models in parallel
+
+**Features:**
+- "Compare with other models" button on each response
+- Side-by-side view: Flash vs Pro vs GPT-5
+- Show quality, cost, speed differences
+- Help users learn which model to prefer
+
+**Feature flag:** `enableMultiModelComparison=true`
+
+### Phase 6: System Learning (Week 6-7)
+**Goal:** Learn from user choices to improve recommendations
+
+**Files to Create:**
+- Database table: `genie_model_choices` - Log user selections vs AI recommendations
+- `src/utils/modelLearning.ts` - Pattern detection and preference learning
+
+**Learning Logic:**
+```typescript
+interface UserModelPattern {
+  user_id: string;
+  query_type: string;
+  ai_recommended: string;
+  user_chose: string;
+  frequency: number;
+  last_seen: timestamp;
+}
+
+// Example: User always picks Pro for medical queries despite AI suggesting Flash
+// → Future medical queries: AI auto-suggests Pro
+```
+
+**Privacy:**
+- Learning stored per-user session only
+- Can be disabled via `learn_from_choices` setting
+- No cross-user learning (privacy-preserving)
+
+**Feature flag:** `enableSystemLearning=false` (enable after testing)
+
+### Client Integration Points
+- Hook: `src/hooks/useUniversalAI.ts`
+  - Add model comparison logic
+  - Track user choices vs AI recommendations
+  - Show model badge with reasoning
+- Component: `PublicGenieInterface`
+  - Integrate settings panel
+  - Show metrics card
+  - Handle blocking dialogs
+
+### UX Instrumentation (Enhanced)
+- Always show typing indicator while streaming
+- Model badge with reasoning tooltip on every response
+- Toast notifications for suggestions (minor mismatches)
+- Blocking dialogs for major mismatches
+- Metrics card (expandable/collapsible)
+- Settings accessible from Genie UI
+- Surface 429 → "Rate limit hit; retrying" toast with backoff
+- Surface 402 → "Workspace credits required" toast
+- On auto-fallback, show subtle notice badge
+
+### Rollout Coordination
+- Phase 1-2: Internal testing (baseline + smart routing)
+- Phase 3-4: QA with user preferences + transparency
+- Phase 5: Limited beta for multi-model comparison
+- Phase 6: GA with all features, learning disabled by default
+- See Ops Runbook (docs/Ops_Runbook_Genie.md) for SLO targets and monitoring
 
 ## 10) Strategy & Roadmap
 
