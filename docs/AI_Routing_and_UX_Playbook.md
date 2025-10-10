@@ -245,16 +245,28 @@ Purpose: This playbook consolidates and supersedes the following: docs/Unified_A
 - Per-domain ranking signals for healthcare/tech
 - RAG hit/miss tracking and analytics
 
-## 7) UX Flow (Single Source)
+## 7) UX Flow & Multi-Model Intelligence (Single Source)
 
 ### CURRENT
 
 **Key Components:**
 - PublicGenieInterface (orchestration)
-- SplitScreenRenderer (optional multi-model)
+- SplitScreenRenderer (optional multi-model) - NOT YET OPTIMIZED
 - RichResponseRenderer (formatting)
 - TopicSuggestionPopover + context detection
 - Model badge showing which model was used
+
+**Split-Screen Behavior (Basic):**
+- `enableMultiModelComparison` flag → shows side-by-side responses
+- User can compare Flash vs Pro vs GPT-5 after initial response
+- No real-time constraint prioritization yet
+- No automatic response format selection
+
+**Constraint Prioritization (Current):**
+- Simple priority: User Selection > Domain > Complexity > Default
+- No intelligent conflict resolution
+- No multi-constraint decision tree
+- Example: User selects "Healthcare" + "Vision" + "Flash Lite" → No smart handling, just picks Flash Lite
 
 **Model Selection Flow:**
 
@@ -284,18 +296,86 @@ Purpose: This playbook consolidates and supersedes the following: docs/Unified_A
 
 ### RECOMMENDED
 
+**Enhanced Split-Screen with Intelligent Response Routing:**
+
+Split-screen becomes an intelligent comparison and validation tool:
+
+1. **Real-Time Split-Screen (Advanced):**
+   - Left pane: User-selected or AI-recommended primary model
+   - Right pane: Alternative model for comparison (optional)
+   - Show cost, speed, quality differences side-by-side
+   - User can promote either response to "final answer"
+
+2. **Auto-Trigger Split-Screen:**
+   - When user selects constraints that conflict (e.g., "Healthcare" + "Vision" + "Fast response")
+   - When AI confidence is low (<70%)
+   - When cost difference is significant (>50%)
+   - When user is in "learning mode"
+
+**Constraint Prioritization Matrix (RECOMMENDED):**
+
+When user selects multiple constraints (LLM type, domain, capabilities), prioritize as follows:
+
+| Priority | Constraint Type | Example | Override Logic |
+|----------|----------------|---------|----------------|
+| 1 | **Required Capabilities** | Vision, Image Analysis | BLOCKS incompatible models |
+| 2 | **Domain Context** | Healthcare, Clinical, Research | STRONG preference for domain-specific models |
+| 3 | **User Explicit Selection** | "Use GPT-5" | HONORED unless capability conflict (Priority 1) |
+| 4 | **Performance Requirements** | Fast, Low-Cost | SUGGESTS alternatives, doesn't block |
+| 5 | **Default/Fallback** | gemini-2.5-flash | APPLIES when no other constraints |
+
+**Constraint Resolution Decision Tree:**
+
+```
+User Input: "Analyze this medical scan" + Context: Healthcare + Selection: Flash Lite
+     ↓
+Step 1: Required Capabilities Check
+     ↓
+   Vision Required? → YES
+   Flash Lite supports vision? → NO
+     ↓
+❌ BLOCK: Flash Lite incompatible
+     ↓
+Step 2: Domain Context Check
+     ↓
+   Domain: Healthcare → Prefer Pro (better medical accuracy)
+     ↓
+Step 3: User Selection Check
+     ↓
+   User selected Flash Lite → Conflict with Step 1 & 2
+     ↓
+Step 4: Resolution
+     ↓
+⚠️ Blocking Dialog:
+"Flash Lite doesn't support vision and is suboptimal for healthcare.
+ RECOMMENDED: Gemini Pro
+ - Vision: ✅  Healthcare accuracy: ✅  Cost: $0.02
+ ALTERNATIVE: Gemini Flash (vision: ✅, cost: $0.01, accuracy: moderate)
+ 
+ Proceed with Pro? [Yes] [Use Flash] [Cancel]"
+```
+
 **Enhanced Model Selection Flow:**
 
 ```
-User Input → [User Selected Model?]
-     ↓ YES                    ↓ NO
-AI Analyzes Query      AI Analyzes Query
-     ↓                        ↓
-Compare User vs AI      AI Selects Model
-     ↓                        ↓
-Match? Minor? Major?    Auto-Select + Show Badge
-     ↓                        ↓
-[Decision Tree]         User Sees Reasoning
+User Input → [Parse All Constraints]
+     ↓
+Required Capabilities (Vision/RAG/Multi-model)?
+     ↓ YES                           ↓ NO
+Filter compatible models        All models available
+     ↓                           ↓
+Domain Context (Healthcare/Tech/Research)?
+     ↓ YES                           ↓ NO
+Prefer domain-optimized         General models OK
+     ↓                           ↓
+User Explicit Selection?
+     ↓ YES                           ↓ NO
+Check compatibility             AI Auto-Select
+     ↓                           ↓
+Compatible? → Proceed           Show reasoning badge
+Not compatible? → Block dialog
+     ↓
+[Decision Tree Outcome]
 ```
 
 **Decision Tree for User-Selected Models:**
@@ -493,6 +573,159 @@ function compareUserVsAIChoice(
 
 **Feature flag:** `enableSmartRouting=false` (test internally first)
 
+### Phase 2.5: Multi-Model & RAG Decision Logic (Week 3)
+**Goal:** Intelligent decision when to use single vs multi-model with RAG/Knowledge Base
+
+**Files to Create:**
+- `src/utils/multiModelDecisionEngine.ts` - Logic for single vs multi-model responses
+- `src/types/modelDecision.ts` - Decision types and interfaces
+
+**Decision Logic: Single vs Multi-Model Response**
+
+```typescript
+interface ResponseStrategy {
+  mode: 'single' | 'multi-model' | 'ensemble';
+  models: string[];
+  useRAG: boolean;
+  useKnowledgeBase: boolean;
+  reasoning: string;
+}
+
+function determineResponseStrategy(
+  query: string,
+  userConstraints: UserConstraints,
+  context: ConversationContext
+): ResponseStrategy {
+  // Priority 1: Required capabilities filter
+  const compatibleModels = filterByCapabilities(userConstraints);
+  
+  // Priority 2: Domain context influences choice
+  const domainOptimal = getDomainOptimalModels(userConstraints.domain);
+  
+  // Priority 3: Complexity determines single vs multi
+  const complexity = analyzeComplexity(query);
+  
+  if (complexity.requiresComparison || userConstraints.showComparison) {
+    return {
+      mode: 'multi-model',
+      models: [domainOptimal.primary, domainOptimal.alternative],
+      useRAG: shouldUseRAG(query, context),
+      useKnowledgeBase: shouldUseKnowledgeBase(userConstraints.domain),
+      reasoning: 'Comparison requested or high complexity detected'
+    };
+  }
+  
+  if (complexity.requiresEnsemble) {
+    return {
+      mode: 'ensemble',
+      models: [domainOptimal.primary, 'gemini-2.5-flash'], // Primary + Fast
+      useRAG: true,
+      useKnowledgeBase: true,
+      reasoning: 'Combining multiple models for validation'
+    };
+  }
+  
+  return {
+    mode: 'single',
+    models: [domainOptimal.primary],
+    useRAG: shouldUseRAG(query, context),
+    useKnowledgeBase: shouldUseKnowledgeBase(userConstraints.domain),
+    reasoning: 'Single model sufficient for query'
+  };
+}
+```
+
+**RAG & Knowledge Base Priority:**
+
+```typescript
+// Determine when to use RAG vs Knowledge Base vs Both
+function shouldUseRAG(query: string, context: ConversationContext): boolean {
+  // Use RAG when:
+  // - Query mentions specific facts, citations, research
+  // - Context indicates user wants sources
+  // - Domain is scientific/research
+  return (
+    query.includes('research') ||
+    query.includes('study') ||
+    query.includes('citation') ||
+    context.domain === 'research' ||
+    context.requiresSources
+  );
+}
+
+function shouldUseKnowledgeBase(domain: string): boolean {
+  // Use Knowledge Base when:
+  // - Domain is healthcare, clinical, or technology
+  // - User has selected domain context
+  return ['healthcare', 'clinical', 'technology', 'research'].includes(domain);
+}
+
+function getCombinedStrategy(
+  query: string,
+  domain: string,
+  context: ConversationContext
+): { useRAG: boolean; useKnowledgeBase: boolean; priority: string } {
+  const ragNeeded = shouldUseRAG(query, context);
+  const kbNeeded = shouldUseKnowledgeBase(domain);
+  
+  if (ragNeeded && kbNeeded) {
+    return {
+      useRAG: true,
+      useKnowledgeBase: true,
+      priority: 'RAG first, then KB supplement' // RAG has precedence for sources
+    };
+  }
+  
+  if (ragNeeded) {
+    return { useRAG: true, useKnowledgeBase: false, priority: 'RAG only' };
+  }
+  
+  if (kbNeeded) {
+    return { useRAG: false, useKnowledgeBase: true, priority: 'KB only' };
+  }
+  
+  return { useRAG: false, useKnowledgeBase: false, priority: 'Model only' };
+}
+```
+
+**Example Decision Trees:**
+
+**Scenario 1: User selects "Healthcare" + "Vision" + "Fast"**
+```
+Step 1: Filter by capabilities → Vision required → Filter: [Pro, GPT-5]
+Step 2: Domain priority → Healthcare → Prefer: Pro (domain-optimized)
+Step 3: Performance → Fast requested → Conflict!
+Step 4: Resolution → 
+  PRIMARY: Gemini Pro (domain + vision)
+  TOAST: "Pro recommended for healthcare image analysis. Flash doesn't support vision. Estimated: 2.3s"
+  MODE: Single model + Knowledge Base (healthcare context)
+```
+
+**Scenario 2: User asks "Compare research studies on X"**
+```
+Step 1: Capabilities → Text only → All models OK
+Step 2: Domain → Research → Use RAG + Knowledge Base
+Step 3: Intent → "Compare" keyword → Multi-model mode
+Step 4: Resolution →
+  PRIMARY: Gemini Pro (research analysis)
+  SECONDARY: GPT-5 (alternative perspective)
+  MODE: Multi-model + RAG (priority) + KB (supplement)
+  SPLIT-SCREEN: Show both responses side-by-side
+  REASONING: "Comparison mode: Pro for depth, GPT-5 for alternative analysis"
+```
+
+**Scenario 3: User selects "Clinical" + "Small Language Model"**
+```
+Step 1: Capabilities → Text only → SLM compatible
+Step 2: Domain → Clinical → Conflict! (Clinical requires accuracy, SLM may be insufficient)
+Step 3: Resolution →
+  ⚠️ WARNING DIALOG:
+  "Small Language Models may not provide clinical-grade accuracy.
+   RECOMMENDED: Gemini Pro for clinical queries
+   ALTERNATIVE: Gemini Flash (moderate accuracy, lower cost)
+   CONTINUE with SLM? (Not recommended) [Switch to Pro] [Use Flash] [Continue anyway]"
+```
+
 ### Phase 3: User Preferences & Automation Levels (Week 3-4)
 **Goal:** Give users control over automation
 
@@ -556,6 +789,424 @@ interface GeniePreferences {
 - Help users learn which model to prefer
 
 **Feature flag:** `enableMultiModelComparison=true`
+
+### Phase 5.5: Token Optimization & Context Management (Week 6)
+**Goal:** Optimize token usage based on query type, domain, and model selection while maintaining quality
+
+**Files to Create:**
+- `src/utils/tokenOptimizer.ts` - Dynamic token allocation logic
+- `src/utils/contextManager.ts` - Context compression and history management
+
+**Token Optimization by Domain & Context:**
+
+```typescript
+interface TokenAllocation {
+  maxTokens: number;
+  contextWindow: number;
+  compressionStrategy: 'none' | 'summarize' | 'truncate';
+  reasoning: string;
+}
+
+const TOKEN_OPTIMIZATION_BY_DOMAIN = {
+  healthcare: {
+    simple: { maxTokens: 2000, context: 8000, compression: 'none' },
+    moderate: { maxTokens: 4000, context: 16000, compression: 'summarize' },
+    complex: { maxTokens: 8000, context: 32000, compression: 'none' },
+    reasoning: 'Healthcare requires precision; avoid aggressive compression'
+  },
+  research: {
+    simple: { maxTokens: 3000, context: 12000, compression: 'none' },
+    moderate: { maxTokens: 6000, context: 24000, compression: 'summarize' },
+    complex: { maxTokens: 12000, context: 50000, compression: 'none' },
+    reasoning: 'Research needs extensive context for citations and analysis'
+  },
+  general: {
+    simple: { maxTokens: 1500, context: 4000, compression: 'truncate' },
+    moderate: { maxTokens: 3000, context: 8000, compression: 'summarize' },
+    complex: { maxTokens: 6000, context: 16000, compression: 'summarize' },
+    reasoning: 'General queries can use aggressive compression for cost savings'
+  },
+  clinical: {
+    simple: { maxTokens: 2500, context: 10000, compression: 'none' },
+    moderate: { maxTokens: 5000, context: 20000, compression: 'none' },
+    complex: { maxTokens: 10000, context: 40000, compression: 'none' },
+    reasoning: 'Clinical context cannot be compressed; patient safety critical'
+  },
+  technology: {
+    simple: { maxTokens: 2000, context: 6000, compression: 'truncate' },
+    moderate: { maxTokens: 4000, context: 12000, compression: 'summarize' },
+    complex: { maxTokens: 8000, context: 24000, compression: 'summarize' },
+    reasoning: 'Tech queries benefit from context but can handle summarization'
+  }
+};
+
+function optimizeTokenAllocation(
+  query: string,
+  domain: string,
+  model: string,
+  conversationHistory: Message[]
+): TokenAllocation {
+  const complexity = analyzeQueryComplexity(query);
+  const domainRules = TOKEN_OPTIMIZATION_BY_DOMAIN[domain] || TOKEN_OPTIMIZATION_BY_DOMAIN.general;
+  
+  let allocation = domainRules[complexity.level]; // simple/moderate/complex
+  
+  // Adjust for model capabilities
+  if (model.includes('flash-lite')) {
+    allocation.maxTokens = Math.min(allocation.maxTokens, 2000); // Cap for lite models
+    allocation.compression = 'truncate'; // Aggressive compression for lite
+  }
+  
+  if (model.includes('gpt-5')) {
+    allocation.contextWindow = Math.min(allocation.contextWindow, 100000); // GPT-5 limit
+  }
+  
+  // Adjust for conversation history length
+  const historyTokens = estimateHistoryTokens(conversationHistory);
+  if (historyTokens > allocation.contextWindow * 0.7) {
+    allocation.compression = domain === 'clinical' ? 'summarize' : 'truncate';
+  }
+  
+  return {
+    ...allocation,
+    reasoning: `${domainRules.reasoning}. Complexity: ${complexity.level}. Model: ${model}`
+  };
+}
+
+// Context compression strategies
+function compressContext(
+  history: Message[],
+  strategy: 'none' | 'summarize' | 'truncate',
+  targetTokens: number
+): Message[] {
+  if (strategy === 'none') return history;
+  
+  if (strategy === 'truncate') {
+    // Keep only recent messages that fit in target tokens
+    let tokens = 0;
+    const compressed = [];
+    for (let i = history.length - 1; i >= 0; i--) {
+      const msgTokens = estimateTokens(history[i].content);
+      if (tokens + msgTokens > targetTokens) break;
+      compressed.unshift(history[i]);
+      tokens += msgTokens;
+    }
+    return compressed;
+  }
+  
+  if (strategy === 'summarize') {
+    // Keep first message, summarize middle, keep last 5
+    const first = history[0];
+    const last5 = history.slice(-5);
+    const middle = history.slice(1, -5);
+    
+    if (middle.length === 0) return history;
+    
+    // Call AI to summarize middle (async, cache result)
+    const summary = {
+      role: 'system',
+      content: `[Previous conversation summarized: ${middle.length} messages about ${extractTopics(middle)}]`
+    };
+    
+    return [first, summary, ...last5];
+  }
+}
+```
+
+**Token Optimization Decision Matrix:**
+
+| Domain | Complexity | Model | Max Tokens | Context Window | Compression | Cost Est. |
+|--------|-----------|-------|------------|----------------|-------------|-----------|
+| Healthcare | Simple | Flash | 2000 | 8000 | None | $0.008 |
+| Healthcare | Complex | Pro | 8000 | 32000 | None | $0.04 |
+| Research | Moderate | Pro | 6000 | 24000 | Summarize | $0.03 |
+| General | Simple | Flash Lite | 1500 | 4000 | Truncate | $0.003 |
+| Clinical | Complex | Pro | 10000 | 40000 | None | $0.05 |
+| Technology | Moderate | Flash | 4000 | 12000 | Summarize | $0.012 |
+
+**Context Preservation Strategies:**
+
+```typescript
+// Maintain context quality while optimizing tokens
+function maintainContextQuality(
+  query: string,
+  domain: string,
+  history: Message[],
+  allocation: TokenAllocation
+): { messages: Message[], preserved: string[], dropped: string[] } {
+  
+  const critical = extractCriticalContext(query, history, domain);
+  const preserved = [];
+  const dropped = [];
+  
+  // Always preserve:
+  // 1. System prompt
+  // 2. Critical domain context (e.g., patient info for clinical)
+  // 3. Last 3 user messages
+  // 4. Any referenced prior responses
+  
+  let tokenBudget = allocation.contextWindow;
+  
+  // Reserve tokens for query and response
+  tokenBudget -= estimateTokens(query);
+  tokenBudget -= allocation.maxTokens; // Reserve for response
+  
+  // Add critical context first
+  for (const msg of critical) {
+    const tokens = estimateTokens(msg.content);
+    if (tokenBudget - tokens > 0) {
+      preserved.push(msg.id);
+      tokenBudget -= tokens;
+    } else {
+      dropped.push(msg.id);
+    }
+  }
+  
+  // Add recent history
+  for (let i = history.length - 1; i >= 0; i--) {
+    if (preserved.includes(history[i].id)) continue;
+    const tokens = estimateTokens(history[i].content);
+    if (tokenBudget - tokens > 0) {
+      preserved.push(history[i].id);
+      tokenBudget -= tokens;
+    } else {
+      dropped.push(history[i].id);
+    }
+  }
+  
+  return {
+    messages: history.filter(m => preserved.includes(m.id)),
+    preserved,
+    dropped
+  };
+}
+```
+
+### Phase 5.6: Response Format Intelligence (Week 6)
+**Goal:** Automatically determine optimal response format based on query type and context
+
+**Files to Create:**
+- `src/utils/responseFormatSelector.ts` - Logic to determine response format
+- `src/components/public-genie/AdaptiveResponseRenderer.tsx` - Dynamic format rendering
+
+**Response Format Selection Logic:**
+
+```typescript
+type ResponseFormat = 'text' | 'table' | 'image' | 'html' | 'video' | 'mixed';
+
+interface FormatDecision {
+  primary: ResponseFormat;
+  fallback: ResponseFormat;
+  reasoning: string;
+  toolsRequired?: string[];
+}
+
+function determineResponseFormat(
+  query: string,
+  domain: string,
+  context: ConversationContext
+): FormatDecision {
+  
+  // Priority 1: Explicit format requests
+  if (query.match(/show.*table|tabular|spreadsheet/i)) {
+    return {
+      primary: 'table',
+      fallback: 'text',
+      reasoning: 'User explicitly requested tabular format'
+    };
+  }
+  
+  if (query.match(/diagram|chart|visualiz|image|picture/i)) {
+    return {
+      primary: 'image',
+      fallback: 'text',
+      reasoning: 'User requested visual representation',
+      toolsRequired: ['image-generation']
+    };
+  }
+  
+  if (query.match(/video|animation|demo/i)) {
+    return {
+      primary: 'video',
+      fallback: 'image',
+      reasoning: 'User requested video/animation',
+      toolsRequired: ['video-generation'] // Future capability
+    };
+  }
+  
+  // Priority 2: Domain-specific patterns
+  if (domain === 'research' && query.match(/compar|vs|versus|between/i)) {
+    return {
+      primary: 'table',
+      fallback: 'text',
+      reasoning: 'Research comparison best shown in table format'
+    };
+  }
+  
+  if (domain === 'healthcare' && query.match(/scan|image|x-ray|mri|ct/i)) {
+    return {
+      primary: 'image',
+      fallback: 'mixed',
+      reasoning: 'Medical imaging query requires visual + text',
+      toolsRequired: ['vision-analysis']
+    };
+  }
+  
+  if (domain === 'clinical' && query.match(/timeline|progression|history/i)) {
+    return {
+      primary: 'html',
+      fallback: 'table',
+      reasoning: 'Clinical timeline best shown with interactive HTML'
+    };
+  }
+  
+  // Priority 3: Query intent analysis
+  const intent = analyzeIntent(query);
+  
+  if (intent.type === 'comparison' && intent.entities > 2) {
+    return {
+      primary: 'table',
+      fallback: 'text',
+      reasoning: 'Multiple entity comparison optimal in table'
+    };
+  }
+  
+  if (intent.type === 'procedural' || intent.type === 'tutorial') {
+    return {
+      primary: 'html',
+      fallback: 'text',
+      reasoning: 'Step-by-step content works best with formatted HTML'
+    };
+  }
+  
+  // Default: text
+  return {
+    primary: 'text',
+    fallback: 'text',
+    reasoning: 'Standard text response sufficient'
+  };
+}
+```
+
+**Response Format by Domain (Reference Table):**
+
+| Query Type | Domain | Optimal Format | Example Query | Why |
+|-----------|--------|----------------|---------------|-----|
+| Comparison | Research | Table | "Compare studies A vs B vs C" | Multi-column data |
+| Imaging | Healthcare | Image + Text | "What does this MRI show?" | Visual analysis required |
+| Timeline | Clinical | HTML/Interactive | "Patient progression over 6 months" | Temporal visualization |
+| Data Analysis | Technology | Table + Chart | "Analyze these metrics" | Structured data view |
+| Tutorial | General | HTML + Video | "How to configure X?" | Step-by-step with visuals |
+| Q&A | All | Text | "What is X?" | Simple text sufficient |
+| Statistical | Research | Table + Text | "Show statistical significance" | Numbers + interpretation |
+| Diagnostic | Clinical | Mixed (Image + Table + Text) | "Review lab results and scan" | Multi-modal analysis |
+
+**Format Rendering Strategy:**
+
+```typescript
+// Dynamic component selection based on format decision
+function renderResponse(
+  content: string,
+  format: ResponseFormat,
+  domain: string
+) {
+  switch (format) {
+    case 'text':
+      return <RichResponseRenderer content={content} />;
+    
+    case 'table':
+      return <TableRenderer data={parseTableData(content)} domain={domain} />;
+    
+    case 'image':
+      return (
+        <ImageResponseRenderer 
+          images={extractImages(content)} 
+          caption={extractCaption(content)}
+          domain={domain}
+        />
+      );
+    
+    case 'html':
+      return (
+        <InteractiveHTMLRenderer 
+          html={sanitizeHTML(content)} 
+          domain={domain}
+          allowedTags={getDomainAllowedTags(domain)}
+        />
+      );
+    
+    case 'mixed':
+      return (
+        <MixedFormatRenderer 
+          sections={parseMultiFormatContent(content)}
+          domain={domain}
+        />
+      );
+    
+    default:
+      return <RichResponseRenderer content={content} />;
+  }
+}
+```
+
+**Tool Calling for Format-Specific Responses:**
+
+```typescript
+// When response requires specific format, use tool calling
+const formatTools = {
+  'image-generation': {
+    type: 'function',
+    function: {
+      name: 'generate_image',
+      description: 'Generate an image based on description',
+      parameters: {
+        type: 'object',
+        properties: {
+          description: { type: 'string' },
+          style: { type: 'string', enum: ['medical', 'diagram', 'chart', 'realistic'] }
+        }
+      }
+    }
+  },
+  'table-generation': {
+    type: 'function',
+    function: {
+      name: 'generate_table',
+      description: 'Generate a structured table',
+      parameters: {
+        type: 'object',
+        properties: {
+          headers: { type: 'array', items: { type: 'string' } },
+          rows: { type: 'array', items: { type: 'array' } }
+        }
+      }
+    }
+  }
+};
+
+// Include tools in AI request based on format decision
+function buildAIRequest(
+  query: string,
+  formatDecision: FormatDecision,
+  model: string
+) {
+  const baseRequest = {
+    model,
+    messages: [{ role: 'user', content: query }]
+  };
+  
+  if (formatDecision.toolsRequired) {
+    baseRequest.tools = formatDecision.toolsRequired.map(
+      tool => formatTools[tool]
+    );
+    baseRequest.tool_choice = 'auto';
+  }
+  
+  return baseRequest;
+}
+```
+
+**Feature flag:** `enableMultiModelComparison=true`, `enableAdaptiveFormatting=false` (Phase 6)
 
 ### Phase 6: System Learning (Week 6-7)
 **Goal:** Learn from user choices to improve recommendations
