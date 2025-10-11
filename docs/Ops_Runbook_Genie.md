@@ -101,12 +101,24 @@ Scope: Operational guardrails and procedures for AI routing, RAG, streaming, cos
 
 ## 10) Deployment Configuration & Monitoring
 
-### CURRENT
-- Single internal deployment
-- Manual feature flags
-- Basic console logging
+### CURRENT STATE (As-Implemented)
+- Single internal application deployment (no multi-deployment support)
+- User-scoped data (via `agents.created_by`, `agent_sessions.user_id`)
+- Manual feature flags in code
+- Basic console logging via edge functions
+- No `genie_deployments` table (planned for Phase 3A)
+- No deployment-level usage tracking
 
-### RECOMMENDED
+### PLANNED (See Architecture & Roadmap Docs)
+
+**Phase 3A:** User-scoped deployment management (no workspace)
+**Phase 4:** Full multi-tenant workspace architecture
+
+For detailed schema and migration plan, see:
+- `docs/GENIE_UNIVERSAL_SERVICE_ARCHITECTURE.md`
+- `docs/TESTING_AND_IMPLEMENTATION_ROADMAP.md`
+
+### RECOMMENDED (Future State)
 
 #### 10.1 Multi-Deployment Management
 
@@ -116,35 +128,17 @@ Scope: Operational guardrails and procedures for AI routing, RAG, streaming, cos
 - `hybrid`: Mixed mode with role-based feature access
 
 **Configuration Storage**
+
+> **NOTE:** This schema is planned but NOT YET IMPLEMENTED.
+> See `docs/GENIE_UNIVERSAL_SERVICE_ARCHITECTURE.md` for phase-based implementation.
+
 ```sql
-CREATE TABLE genie_deployments (
-  deployment_id TEXT PRIMARY KEY,
-  deployment_name TEXT NOT NULL,
-  deployment_type TEXT CHECK (deployment_type IN ('public', 'internal', 'hybrid')),
-  environment TEXT CHECK (environment IN ('development', 'staging', 'production')),
-  features JSONB NOT NULL DEFAULT '{}',
-  rate_limits JSONB,
-  monitoring_config JSONB,
-  access_control JSONB,
-  is_active BOOLEAN DEFAULT true,
-  created_at TIMESTAMPTZ DEFAULT now(),
-  updated_at TIMESTAMPTZ DEFAULT now()
-);
-
-CREATE TABLE deployment_usage_metrics (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  deployment_id TEXT REFERENCES genie_deployments(deployment_id),
-  timestamp TIMESTAMPTZ DEFAULT now(),
-  requests_count INTEGER,
-  tokens_used INTEGER,
-  models_used JSONB,
-  avg_latency_ms INTEGER,
-  error_count INTEGER,
-  features_used JSONB
-);
-
-CREATE INDEX idx_usage_deployment_time ON deployment_usage_metrics(deployment_id, timestamp DESC);
+-- See GENIE_UNIVERSAL_SERVICE_ARCHITECTURE.md for:
+-- - Phase 3A: User-scoped schema (without workspace_id)
+-- - Phase 4: Multi-tenant schema (with workspace_id)
 ```
+
+For the canonical, detailed schema with migration strategy, refer to the Architecture document.
 
 #### 10.2 Feature Configuration Matrix
 

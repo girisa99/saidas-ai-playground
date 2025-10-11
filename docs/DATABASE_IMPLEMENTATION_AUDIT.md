@@ -6,7 +6,37 @@
 
 ---
 
+## Implementation Status Summary
+
+**Overall:** ~40% of documented features implemented
+- ✅ Multi-user system: 100% implemented
+- ✅ Basic RAG: 100% implemented (keyword search)
+- ❌ Multi-tenancy: 0% implemented (Phase 4)
+- ❌ AI routing intelligence: 0% implemented
+- ❌ Deployment management: 0% implemented (Phase 3A/4)
+
+---
+
 ## ✅ VERIFIED IMPLEMENTATION (Production Database)
+
+### ✅ Multi-User Features (100% Implemented)
+
+#### User Roles System - **LIVE**
+```sql
+roles                            | Enum-based roles (superAdmin, onboardingTeam, etc.)
+user_roles                       | User-role assignments with RLS
+-- Functions: has_role(), is_admin_user_safe()
+```
+
+#### Per-User Data Isolation - **LIVE**
+```sql
+agents.created_by                | User-scoped agents
+agent_conversations.user_id      | User-scoped conversations
+agent_sessions.user_id           | User-scoped sessions
+agents.organization_id           | Organization grouping
+agents.facility_id               | Facility grouping
+-- Full RLS enforcement on all user tables
+```
 
 ### Public Website (Genie Features)
 
@@ -94,6 +124,45 @@ is_admin_user(check_user_id)
 has_role(user_id, role_name)
 log_sensitive_data_access(table_name, operation_type, record_id)
 ```
+
+---
+
+## ❌ NOT IMPLEMENTED (Documented but Missing)
+
+### ❌ Multi-Tenancy Layer (0% - Phase 4)
+
+**Status:** Documented in `GENIE_UNIVERSAL_SERVICE_ARCHITECTURE.md` but NO database tables
+
+**Missing:**
+- `workspaces` table
+- `workspace_members` table
+- Workspace-scoped RLS policies
+- Workspace-level data isolation
+
+**Current Reality:** Application uses per-user isolation only (no workspace concept)
+
+---
+
+### ❌ AI Routing Intelligence (0% - Phase 1)
+
+**Status:** Documented in `AI_Routing_and_UX_Playbook.md` but NOT implemented
+
+**Missing Features:**
+- Context-based model selection (domain/task/complexity)
+- Proactive recommendations with reasoning
+- Multi-model comparison engine
+- Split-screen rendering UI
+- Response format auto-detection
+- Confidence tracking
+- Cost-aware fallback logic
+
+**Current Reality:** Hardcoded model mapping only (`if vision then Pro, else Flash`)
+
+---
+
+### ❌ Deployment Management (0% - Phase 3A/4)
+
+**Status:** Documented in both Runbook and Architecture docs
 
 #### User Roles - **IMPLEMENTED**
 - `superAdmin` - Full system access

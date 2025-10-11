@@ -10,7 +10,12 @@
 
 **Vision:** Transform Genie AI system into a standalone, reusable, plug-and-play service that can be deployed across ANY application (multi-tenant, multi-user, with/without authentication) as easily as embedding a JavaScript snippet.
 
-**Current State:** Application-specific implementation with tight coupling to website context  
+**Current State:** ✅ Multi-user application with per-user data isolation (implemented)
+- User roles system with RLS
+- Per-user agents, conversations, sessions
+- Organization/facility grouping
+- **NOT multi-tenant** - no workspace isolation
+
 **Target State:** Microservice architecture with:
 - Multi-tenant data isolation
 - Authentication-agnostic design
@@ -23,7 +28,39 @@
 
 ## 🏗️ Architecture Principles
 
-### 1. Multi-Tenancy First
+### 0. Current State: Multi-User (Implemented)
+
+**What EXISTS now:**
+```sql
+-- User roles with RLS
+CREATE TABLE roles (
+  id UUID PRIMARY KEY,
+  name user_role NOT NULL  -- superAdmin, onboardingTeam, patientCaregiver, demoUser
+);
+
+CREATE TABLE user_roles (
+  user_id UUID REFERENCES auth.users(id),
+  role_id UUID REFERENCES roles(id)
+);
+
+-- Per-user agents
+CREATE TABLE agents (
+  id UUID PRIMARY KEY,
+  created_by UUID,  -- User isolation
+  organization_id UUID,  -- Organization grouping
+  facility_id UUID  -- Facility grouping
+);
+
+-- RLS enforces per-user access
+CREATE POLICY "Users can view their own agents" ON agents
+  FOR SELECT USING (auth.uid() = created_by);
+```
+
+**Migration Path to Multi-Tenancy:**
+- Phase 3A: Add user-scoped `genie_deployments` (no workspace)
+- Phase 4: Add `workspace_id` to all tables, migrate to workspace-scoped RLS
+
+### 1. Multi-Tenancy First (Phase 4 - Future State)
 Every data table MUST support workspace/organization isolation:
 ```sql
 -- ALL tables follow this pattern
@@ -104,8 +141,34 @@ USING (workspace_id IN (SELECT workspace_id FROM workspace_members WHERE user_id
 ```
 
 ### 4. Deployment Configuration
+
+**PHASE 3A: User-Scoped Deployments (First Implementation)**
 ```sql
+-- No workspace required yet - user-scoped only
 CREATE TABLE genie_deployments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  deployment_type TEXT,
+  api_key_hash TEXT UNIQUE,
+  features JSONB DEFAULT '{}',
+  rate_limits JSONB DEFAULT '{}',
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE POLICY "Users manage own deployments" ON genie_deployments
+  FOR ALL USING (auth.uid() = user_id);
+```
+
+**PHASE 4: Multi-Tenant Deployments (Full Architecture)**
+```sql
+-- Add workspace support to existing table
+ALTER TABLE genie_deployments ADD COLUMN workspace_id UUID REFERENCES workspaces(id);
+
+-- Update RLS to workspace-scoped
+CREATE TABLE genie_deployments_v2 (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   workspace_id UUID NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
   name TEXT NOT NULL,

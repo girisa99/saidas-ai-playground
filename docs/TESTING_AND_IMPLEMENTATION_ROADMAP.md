@@ -1,35 +1,149 @@
 # Testing & Implementation Roadmap
 
 **Generated:** 2025-01-11  
-**Updated:** 2025-01-11 (After Codebase Audit)  
-**REVISED STATUS:** 35% Implemented | 65% To Build  
-**Timeline:** 6-8 weeks for full implementation
+**Updated:** 2025-01-11 (After Consolidation Audit)  
+**REVISED STATUS:** 40% Implemented | 60% To Build  
+**Timeline:** 8-9 weeks for full implementation  
+**See Also:** `CONSOLIDATED_DOCUMENTATION_AUDIT.md` for cross-doc alignment
 
 ---
 
 ## ⚠️ CRITICAL FINDINGS
 
-After auditing the actual codebase against playbook/runbook documentation:
+After auditing the actual codebase + database against playbook/runbook documentation:
 
+### ✅ What IS Implemented (40%)
+1. **Multi-User System (100%)** - User roles, per-user agents/conversations, RLS
+2. **Basic RAG (100%)** - Keyword search, knowledge base, embeddings
+3. **Public Genie (100%)** - Rate limiting, analytics, geolocation
+4. **Streaming (100%)** - SSE streaming via edge functions
+
+### ❌ What is NOT Implemented (60%)
 - **DOCUMENTED:** Comprehensive AI routing, multi-model, split-screen, proactive recommendations, deployment management
 - **ACTUALLY IMPLEMENTED:** Only basic AI calls with hardcoded model mapping
-- **GAP:** 65% of documented features are NOT implemented
+- **GAP:** 60% of documented features are NOT implemented
 
 **Major Missing Features:**
-1. ❌ Context-based AI routing (domain/task/complexity analysis)
-2. ❌ Proactive model recommendations with reasoning
-3. ❌ Multi-model comparison & split-screen rendering
-4. ❌ Deployment management (à la carte features, embed generation)
-5. ❌ MCP & Label Studio integration (skeleton code only)
-6. ❌ Semantic vector RAG (only keyword search exists)
-7. ❌ Cost budget enforcement with alerts
-8. ❌ A/B testing framework
+1. ❌ **Multi-Tenancy (Phase 4)** - Workspaces, workspace members, multi-tenant RLS
+2. ❌ **Context-based AI routing (Phase 1)** - Domain/task/complexity analysis
+3. ❌ **Proactive model recommendations (Phase 1)** - Reasoning and suggestions
+4. ❌ **Multi-model comparison (Phase 2)** - Split-screen rendering
+5. ❌ **Deployment management (Phase 3A)** - User-scoped deployments, API keys
+6. ❌ **MCP & Label Studio (Phase 3B)** - Integration tables (skeleton code only)
+7. ❌ **Semantic vector RAG** - Only keyword search exists
+8. ❌ **Cost budget enforcement** - Alerts and caps
 
 ---
 
+## Implementation Phases (Aligned with All Docs)
+
+**Reference Documents:**
+- Architecture: `GENIE_UNIVERSAL_SERVICE_ARCHITECTURE.md`
+- Database: `DATABASE_IMPLEMENTATION_AUDIT.md`
+- AI Features: `AI_Coverage_Summary.md`, `AI_Routing_and_UX_Playbook.md`
+- Operations: `Ops_Runbook_Genie.md`
+- Consolidation: `CONSOLIDATED_DOCUMENTATION_AUDIT.md`
+
 ---
 
-## 🧪 PHASE 1: Test Existing 80% (Week 1-2)
+### Phase 1: AI Routing Intelligence (Weeks 1-2)
+**Status:** Not started | **DB Changes:** None (logic only)
+
+**Files to Create:**
+- `src/services/aiRoutingService.ts` - Context analyzer & model selector
+- `src/hooks/useAIRouting.ts` - React hook for routing
+- `src/utils/contextAnalyzer.ts` - Domain/complexity detection
+- `src/utils/modelDecisionEngine.ts` - Routing logic
+
+**Implementation:** See `AI_Routing_and_UX_Playbook.md` for detailed logic
+
+---
+
+### Phase 2: Multi-Model & Split-Screen (Weeks 2-3)
+**Status:** Not started | **DB Changes:** None (UI + logic)
+
+**Files to Create:**
+- `src/services/multiModelService.ts` - Parallel model invocation
+- `src/components/ModelComparisonView.tsx` - Split-screen UI
+- `src/hooks/useMultiModel.ts` - Multi-model hook
+- `src/utils/consensusValidator.ts` - Response validation
+
+---
+
+### Phase 3A: User-Scoped Deployment Management (Weeks 3-4)
+**Status:** Not started | **DB Changes:** Required
+
+**Database Migration (via migration tool):**
+```sql
+CREATE TABLE genie_deployments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES auth.users(id),  -- User-scoped (Phase 3A)
+  name TEXT NOT NULL,
+  deployment_type TEXT,
+  api_key_hash TEXT UNIQUE,
+  features JSONB DEFAULT '{}',
+  rate_limits JSONB DEFAULT '{}',
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE POLICY "Users manage own deployments" ON genie_deployments
+  FOR ALL USING (auth.uid() = user_id);
+```
+
+**Files to Create:**
+- `src/services/deploymentService.ts`
+- `src/components/admin/DeploymentManager.tsx`
+
+---
+
+### Phase 3B: MCP & Label Studio (Weeks 4-5)
+**Status:** Not started | **DB Changes:** Required
+
+**Database Migration:**
+```sql
+CREATE TABLE mcp_servers (...);
+CREATE TABLE agent_mcp_assignments (...);
+CREATE TABLE label_studio_projects (...);
+CREATE TABLE conversation_annotations (...);
+```
+
+See `DATABASE_IMPLEMENTATION_AUDIT.md` for full SQL.
+
+---
+
+### Phase 4: Multi-Tenancy Migration (Weeks 6-8)
+**Status:** Not started | **DB Changes:** Major migration
+
+**Database Migration:**
+```sql
+-- Add workspace tables
+CREATE TABLE workspaces (...);
+CREATE TABLE workspace_members (...);
+
+-- Migrate existing tables
+ALTER TABLE agents ADD COLUMN workspace_id UUID;
+ALTER TABLE genie_deployments ADD COLUMN workspace_id UUID;
+
+-- Update all RLS policies to workspace-scoped
+```
+
+See `GENIE_UNIVERSAL_SERVICE_ARCHITECTURE.md` for full migration strategy.
+
+---
+
+### Phase 5: Production Hardening (Weeks 8-9)
+**Status:** Not started
+
+**Tasks:**
+- Load testing
+- Security audit
+- Performance optimization
+- Documentation completion
+
+---
+
+## 🧪 Testing: Existing 40% Implementation (Weeks 1-2)
 
 ### Public Website Testing Checklist
 
