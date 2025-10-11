@@ -1857,4 +1857,554 @@ user_selection > domain_requirement > complexity/cost > availability > default
 - Confidence low → optional model switch suggestion
 
 ---
-This playbook supersedes prior documents and is the canonical reference for AI routing, RAG, UX behavior, and phased rollout.
+
+## Phase 7: Deployment Configuration & Monitoring
+
+### 7.1 Deployment Modes
+
+**Public-Facing Deployment**
+- Embeddable JavaScript snippet
+- Public API endpoints
+- Anonymous/authenticated sessions
+- Rate limiting per IP/session
+- Usage tracking & analytics
+
+**Internal Application Deployment**
+- Direct React hook integration
+- Internal API with stricter auth
+- User-based quotas
+- Advanced monitoring
+- Full feature access
+
+### 7.2 Feature Configuration Matrix (À La Carte)
+
+**Core Features (Mandatory)**
+```typescript
+interface CoreConfig {
+  provider: 'lovable';  // Always Lovable AI Gateway
+  enabled: boolean;
+  endpoint: string;
+}
+```
+
+**Optional Features (Configurable)**
+```typescript
+interface OptionalFeatures {
+  // Model Selection
+  multiModelComparison?: boolean;      // Compare multiple models
+  smartRouting?: boolean;              // Auto-select optimal model
+  modelPreference?: ModelType[];       // User-preferred models
+  
+  // Context Enhancement
+  ragEnabled?: boolean;                // Retrieval Augmented Generation
+  knowledgeBaseEnabled?: boolean;      // Universal Knowledge Base
+  mcpEnabled?: boolean;                // Model Context Protocol
+  mcpServers?: string[];              // Which MCP servers to use
+  
+  // Vision & Multimodal
+  visionEnabled?: boolean;             // Image analysis
+  medicalImagingEnabled?: boolean;     // Medical image analysis
+  imageGenerationEnabled?: boolean;    // Image generation
+  
+  // Voice & Audio
+  ttsEnabled?: boolean;                // Text-to-Speech
+  sttEnabled?: boolean;                // Speech-to-Text
+  voiceAgentEnabled?: boolean;         // Voice conversation
+  
+  // Quality & Annotation
+  labelStudioEnabled?: boolean;        // Data annotation logging
+  labelStudioProject?: string;
+  
+  // UI Features
+  splitScreenEnabled?: boolean;        // Side-by-side comparison
+  streamingEnabled?: boolean;          // Streaming responses
+  feedbackEnabled?: boolean;           // User feedback collection
+  
+  // Monitoring & Limits
+  usageTrackingEnabled?: boolean;      // Token/cost tracking
+  rateLimitingEnabled?: boolean;       // Rate limiting
+  analyticsEnabled?: boolean;          // Traffic analytics
+}
+```
+
+### 7.3 Deployment Configuration
+
+**Configuration Schema**
+```typescript
+interface GenieDeploymentConfig {
+  // Deployment Info
+  deploymentId: string;
+  deploymentName: string;
+  deploymentType: 'public' | 'internal' | 'hybrid';
+  environment: 'development' | 'staging' | 'production';
+  
+  // Core Settings
+  core: CoreConfig;
+  
+  // Features (À La Carte)
+  features: OptionalFeatures;
+  
+  // Domain-Specific Defaults
+  domainDefaults?: {
+    healthcare?: Partial<OptionalFeatures>;
+    technology?: Partial<OptionalFeatures>;
+    research?: Partial<OptionalFeatures>;
+    general?: Partial<OptionalFeatures>;
+  };
+  
+  // Rate Limiting
+  rateLimits?: {
+    requestsPerMinute?: number;
+    requestsPerHour?: number;
+    requestsPerDay?: number;
+    tokensPerRequest?: number;
+    tokensPerDay?: number;
+  };
+  
+  // Monitoring
+  monitoring?: {
+    enabled: boolean;
+    trackTokenUsage: boolean;
+    trackModelSelection: boolean;
+    trackResponseFormat: boolean;
+    trackUserSatisfaction: boolean;
+    alertThresholds?: {
+      errorRate?: number;          // Alert if > X%
+      avgLatency?: number;         // Alert if > X ms
+      tokenBudget?: number;        // Alert if > X tokens/day
+    };
+  };
+  
+  // Access Control
+  accessControl?: {
+    publicAccess: boolean;
+    requireAuth: boolean;
+    allowedOrigins?: string[];   // CORS origins
+    ipWhitelist?: string[];
+    ipBlacklist?: string[];
+  };
+}
+```
+
+### 7.4 Deployment Methods
+
+#### Method 1: JavaScript Snippet (Public Embed)
+
+```html
+<!-- Minimal Embed -->
+<script src="https://genie-ai.app/embed.js"></script>
+<script>
+  GenieAI.init({
+    deploymentId: 'your-deployment-id',
+    apiKey: 'your-public-key',
+    features: {
+      ragEnabled: true,
+      visionEnabled: false,
+      splitScreenEnabled: true
+    }
+  });
+</script>
+<div id="genie-chat"></div>
+
+<!-- Advanced Embed with Full Config -->
+<script>
+  GenieAI.init({
+    deploymentId: 'healthcare-public-001',
+    apiKey: 'pk_live_xxx',
+    deploymentType: 'public',
+    
+    features: {
+      // Model features
+      smartRouting: true,
+      multiModelComparison: false,
+      
+      // Context features
+      ragEnabled: true,
+      knowledgeBaseEnabled: true,
+      mcpEnabled: false,
+      
+      // Multimodal
+      visionEnabled: true,
+      medicalImagingEnabled: true,
+      imageGenerationEnabled: false,
+      
+      // UI
+      splitScreenEnabled: false,
+      streamingEnabled: true,
+      feedbackEnabled: true
+    },
+    
+    domainDefaults: 'healthcare',
+    
+    monitoring: {
+      enabled: true,
+      trackTokenUsage: true
+    },
+    
+    onTokenUpdate: (usage) => {
+      console.log('Tokens used:', usage.total);
+    },
+    
+    onRateLimitExceeded: (info) => {
+      alert('Rate limit exceeded. Try again in ' + info.retryAfter + 's');
+    }
+  });
+</script>
+```
+
+#### Method 2: React Hook (Internal App)
+
+```typescript
+// Direct integration with full control
+import { useUniversalAI } from '@/hooks/useUniversalAI';
+
+function MyComponent() {
+  const { generateResponse, isLoading, tokenUsage, rateLimitStatus } = useUniversalAI({
+    deploymentConfig: {
+      deploymentId: 'internal-prod-001',
+      deploymentType: 'internal',
+      
+      features: {
+        smartRouting: true,
+        multiModelComparison: true,
+        ragEnabled: true,
+        knowledgeBaseEnabled: true,
+        mcpEnabled: true,
+        mcpServers: ['filesystem', 'database'],
+        visionEnabled: true,
+        medicalImagingEnabled: true,
+        labelStudioEnabled: true,
+        labelStudioProject: 'medical-qa-v2',
+        splitScreenEnabled: true,
+        streamingEnabled: true,
+        usageTrackingEnabled: true,
+        rateLimitingEnabled: true,
+        analyticsEnabled: true
+      },
+      
+      rateLimits: {
+        requestsPerMinute: 60,
+        tokensPerDay: 100000
+      },
+      
+      monitoring: {
+        enabled: true,
+        trackTokenUsage: true,
+        trackModelSelection: true,
+        trackResponseFormat: true,
+        trackUserSatisfaction: true,
+        alertThresholds: {
+          errorRate: 5,
+          avgLatency: 3000,
+          tokenBudget: 80000
+        }
+      }
+    }
+  });
+  
+  // Component implementation...
+}
+```
+
+#### Method 3: REST API (cURL/External Integration)
+
+```bash
+# Configuration Endpoint
+curl -X POST https://api.genie-ai.app/v1/configure \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "deploymentId": "api-integration-001",
+    "features": {
+      "smartRouting": true,
+      "ragEnabled": true,
+      "visionEnabled": true,
+      "usageTrackingEnabled": true
+    },
+    "rateLimits": {
+      "requestsPerMinute": 30,
+      "tokensPerDay": 50000
+    }
+  }'
+
+# Chat Request with Full Config
+curl -X POST https://api.genie-ai.app/v1/chat \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "X-Deployment-ID: api-integration-001" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [{"role": "user", "content": "Explain diabetes"}],
+    "config": {
+      "useRAG": true,
+      "useKnowledgeBase": true,
+      "domain": "healthcare",
+      "responseFormat": "structured",
+      "trackUsage": true
+    }
+  }'
+
+# Monitor Usage
+curl https://api.genie-ai.app/v1/usage/api-integration-001 \
+  -H "Authorization: Bearer YOUR_API_KEY"
+
+# Response:
+{
+  "deploymentId": "api-integration-001",
+  "period": "today",
+  "requests": 145,
+  "tokensUsed": 12450,
+  "tokenLimit": 50000,
+  "rateLimitStatus": {
+    "requestsThisMinute": 8,
+    "requestsThisHour": 145,
+    "remaining": 22
+  },
+  "topModels": [
+    {"model": "gemini-2.5-flash", "usage": 78},
+    {"model": "gemini-2.5-pro", "usage": 67}
+  ],
+  "averageLatency": 1234
+}
+```
+
+#### Method 4: SDK (Multi-Language)
+
+```typescript
+// TypeScript/JavaScript SDK
+import { GenieAIClient } from '@genie-ai/sdk';
+
+const client = new GenieAIClient({
+  apiKey: 'your-api-key',
+  deploymentId: 'sdk-app-001',
+  features: {
+    smartRouting: true,
+    ragEnabled: true,
+    usageTrackingEnabled: true
+  }
+});
+
+// Simple usage
+const response = await client.chat({
+  messages: [{ role: 'user', content: 'Hello' }]
+});
+
+// With full monitoring
+const { response, metrics } = await client.chat({
+  messages: [{ role: 'user', content: 'Analyze this image' }],
+  images: [imageBase64],
+  trackMetrics: true
+});
+
+console.log('Tokens used:', metrics.tokensUsed);
+console.log('Models used:', metrics.modelsUsed);
+console.log('Latency:', metrics.latency);
+```
+
+```python
+# Python SDK
+from genie_ai import GenieAIClient
+
+client = GenieAIClient(
+    api_key='your-api-key',
+    deployment_id='python-app-001',
+    features={
+        'smart_routing': True,
+        'rag_enabled': True,
+        'usage_tracking_enabled': True
+    }
+)
+
+response = client.chat(
+    messages=[{'role': 'user', 'content': 'Hello'}],
+    track_usage=True
+)
+
+print(f"Tokens: {response.metrics.tokens_used}")
+```
+
+### 7.5 Monitoring Dashboard & Analytics
+
+**Real-Time Monitoring**
+```typescript
+interface MonitoringDashboard {
+  // Live Metrics
+  current: {
+    activeRequests: number;
+    requestsPerMinute: number;
+    avgLatency: number;
+    errorRate: number;
+  };
+  
+  // Usage Tracking
+  usage: {
+    totalRequests: number;
+    totalTokens: number;
+    tokensByModel: Record<string, number>;
+    costEstimate: number;
+  };
+  
+  // Rate Limiting Status
+  rateLimits: {
+    status: 'ok' | 'warning' | 'exceeded';
+    current: number;
+    limit: number;
+    resetAt: Date;
+  };
+  
+  // Feature Usage
+  featureUsage: {
+    ragCalls: number;
+    knowledgeBaseCalls: number;
+    mcpCalls: number;
+    visionCalls: number;
+    imageGenCalls: number;
+    multiModelComparisons: number;
+  };
+  
+  // Model Performance
+  modelMetrics: {
+    model: string;
+    requests: number;
+    avgLatency: number;
+    successRate: number;
+    avgTokens: number;
+  }[];
+  
+  // Traffic Analytics
+  traffic: {
+    byDeploymentType: Record<'public' | 'internal', number>;
+    byDomain: Record<string, number>;
+    byResponseFormat: Record<string, number>;
+    topEndpoints: {endpoint: string; calls: number}[];
+  };
+}
+```
+
+**Monitoring Integration**
+```typescript
+// Auto-update monitoring
+const { monitoring } = useUniversalAI({
+  deploymentConfig: {
+    monitoring: {
+      enabled: true,
+      trackTokenUsage: true,
+      trackModelSelection: true,
+      alertThresholds: {
+        errorRate: 5,
+        avgLatency: 3000,
+        tokenBudget: 80000
+      }
+    }
+  },
+  
+  onMetricsUpdate: (metrics: MonitoringDashboard) => {
+    // Send to analytics service
+    analytics.track('genie_metrics', metrics);
+    
+    // Check alerts
+    if (metrics.usage.totalTokens > 80000) {
+      alert('Token budget threshold exceeded!');
+    }
+  }
+});
+```
+
+### 7.6 Feature Toggle Management
+
+**Runtime Feature Control**
+```typescript
+// Admin can toggle features without redeployment
+const updateDeploymentConfig = async (deploymentId: string, updates: Partial<OptionalFeatures>) => {
+  const { data, error } = await supabase
+    .from('genie_deployments')
+    .update({
+      features: updates,
+      updated_at: new Date()
+    })
+    .eq('deployment_id', deploymentId);
+    
+  // Broadcast to all active clients
+  supabase.channel('deployment-updates')
+    .send({
+      type: 'broadcast',
+      event: 'config_update',
+      payload: { deploymentId, features: updates }
+    });
+};
+
+// Client auto-updates
+supabase.channel('deployment-updates')
+  .on('broadcast', { event: 'config_update' }, (payload) => {
+    if (payload.deploymentId === currentDeploymentId) {
+      // Hot-reload configuration
+      updateFeatures(payload.features);
+    }
+  })
+  .subscribe();
+```
+
+**Feature Activation Matrix**
+```typescript
+const DEPLOYMENT_PRESETS = {
+  minimal: {
+    smartRouting: false,
+    multiModelComparison: false,
+    ragEnabled: false,
+    knowledgeBaseEnabled: false,
+    splitScreenEnabled: false,
+    usageTrackingEnabled: true // Always track
+  },
+  
+  standard: {
+    smartRouting: true,
+    multiModelComparison: false,
+    ragEnabled: true,
+    knowledgeBaseEnabled: true,
+    visionEnabled: true,
+    splitScreenEnabled: false,
+    streamingEnabled: true,
+    usageTrackingEnabled: true,
+    rateLimitingEnabled: true
+  },
+  
+  premium: {
+    smartRouting: true,
+    multiModelComparison: true,
+    ragEnabled: true,
+    knowledgeBaseEnabled: true,
+    mcpEnabled: true,
+    mcpServers: ['filesystem', 'database', 'web'],
+    visionEnabled: true,
+    medicalImagingEnabled: true,
+    imageGenerationEnabled: true,
+    ttsEnabled: true,
+    labelStudioEnabled: true,
+    splitScreenEnabled: true,
+    streamingEnabled: true,
+    feedbackEnabled: true,
+    usageTrackingEnabled: true,
+    rateLimitingEnabled: true,
+    analyticsEnabled: true
+  },
+  
+  healthcare: {
+    smartRouting: true,
+    multiModelComparison: true, // For clinical validation
+    ragEnabled: true,
+    knowledgeBaseEnabled: true,
+    mcpEnabled: true,
+    visionEnabled: true,
+    medicalImagingEnabled: true,
+    labelStudioEnabled: true, // For quality assurance
+    splitScreenEnabled: true,
+    streamingEnabled: true,
+    feedbackEnabled: true,
+    usageTrackingEnabled: true,
+    rateLimitingEnabled: true,
+    analyticsEnabled: true
+  }
+};
+```
+
+---
+This playbook supersedes prior documents and is the canonical reference for AI routing, RAG, UX behavior, phased rollout, and deployment configuration.

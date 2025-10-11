@@ -99,10 +99,363 @@ Scope: Operational guardrails and procedures for AI routing, RAG, streaming, cos
 - Secondary: Frontend UX & Streaming
 - Contact Methods: Internal incident channel; Supabase function logs
 
-## 10) References
+## 10) Deployment Configuration & Monitoring
+
+### CURRENT
+- Single internal deployment
+- Manual feature flags
+- Basic console logging
+
+### RECOMMENDED
+
+#### 10.1 Multi-Deployment Management
+
+**Deployment Types**
+- `public`: External embeds, rate-limited, anonymous/basic auth
+- `internal`: Full features, stricter auth, higher quotas
+- `hybrid`: Mixed mode with role-based feature access
+
+**Configuration Storage**
+```sql
+CREATE TABLE genie_deployments (
+  deployment_id TEXT PRIMARY KEY,
+  deployment_name TEXT NOT NULL,
+  deployment_type TEXT CHECK (deployment_type IN ('public', 'internal', 'hybrid')),
+  environment TEXT CHECK (environment IN ('development', 'staging', 'production')),
+  features JSONB NOT NULL DEFAULT '{}',
+  rate_limits JSONB,
+  monitoring_config JSONB,
+  access_control JSONB,
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE TABLE deployment_usage_metrics (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  deployment_id TEXT REFERENCES genie_deployments(deployment_id),
+  timestamp TIMESTAMPTZ DEFAULT now(),
+  requests_count INTEGER,
+  tokens_used INTEGER,
+  models_used JSONB,
+  avg_latency_ms INTEGER,
+  error_count INTEGER,
+  features_used JSONB
+);
+
+CREATE INDEX idx_usage_deployment_time ON deployment_usage_metrics(deployment_id, timestamp DESC);
+```
+
+#### 10.2 Feature Configuration Matrix
+
+**Mandatory Features** (Always enabled)
+- `provider: 'lovable'` - Lovable AI Gateway
+- `usageTrackingEnabled: true` - Always track usage
+- `rateLimitingEnabled: true` - Always enforce limits
+
+**Optional Features** (À la carte)
+```typescript
+{
+  // Model Selection
+  "smartRouting": boolean,
+  "multiModelComparison": boolean,
+  "modelPreference": string[],
+  
+  // Context Enhancement
+  "ragEnabled": boolean,
+  "knowledgeBaseEnabled": boolean,
+  "mcpEnabled": boolean,
+  "mcpServers": string[],
+  
+  // Multimodal
+  "visionEnabled": boolean,
+  "medicalImagingEnabled": boolean,
+  "imageGenerationEnabled": boolean,
+  "ttsEnabled": boolean,
+  "sttEnabled": boolean,
+  
+  // Quality
+  "labelStudioEnabled": boolean,
+  "labelStudioProject": string,
+  
+  // UI
+  "splitScreenEnabled": boolean,
+  "streamingEnabled": boolean,
+  "feedbackEnabled": boolean,
+  
+  // Analytics
+  "analyticsEnabled": boolean
+}
+```
+
+#### 10.3 Monitoring & Observability
+
+**Real-Time Dashboards**
+- Active deployments count
+- Requests/min per deployment
+- Token usage by deployment
+- Rate limit status (OK/Warning/Exceeded)
+- Feature usage heatmap
+- Model selection distribution
+- Error rates per deployment
+- Average latency per model/deployment
+
+**Edge Function: Monitor Deployment Usage**
+```typescript
+// supabase/functions/track-deployment-usage/index.ts
+serve(async (req) => {
+  const { deploymentId, metrics } = await req.json();
+  
+  // Record metrics
+  await supabase.from('deployment_usage_metrics').insert({
+    deployment_id: deploymentId,
+    requests_count: metrics.requests,
+    tokens_used: metrics.tokens,
+    models_used: metrics.models,
+    avg_latency_ms: metrics.latency,
+    error_count: metrics.errors,
+    features_used: metrics.features
+  });
+  
+  // Check rate limits
+  const usage = await getRateLimitStatus(deploymentId);
+  if (usage.exceeded) {
+    return new Response(JSON.stringify({
+      error: 'Rate limit exceeded',
+      retryAfter: usage.resetIn
+    }), { status: 429 });
+  }
+  
+  // Check alert thresholds
+  const config = await getDeploymentConfig(deploymentId);
+  if (config.monitoring.alertThresholds) {
+    checkAlerts(metrics, config.monitoring.alertThresholds);
+  }
+  
+  return new Response(JSON.stringify({ success: true }));
+});
+```
+
+#### 10.4 Rate Limiting Strategy
+
+**Per-Deployment Limits**
+```typescript
+interface RateLimits {
+  requestsPerMinute?: number;   // Rolling window
+  requestsPerHour?: number;     // Rolling window
+  requestsPerDay?: number;      // Daily reset at midnight UTC
+  tokensPerRequest?: number;    // Max per request
+  tokensPerDay?: number;        // Daily budget
+}
+
+// Default limits by deployment type
+const DEFAULT_LIMITS = {
+  public: {
+    requestsPerMinute: 10,
+    requestsPerHour: 100,
+    requestsPerDay: 1000,
+    tokensPerRequest: 4000,
+    tokensPerDay: 50000
+  },
+  internal: {
+    requestsPerMinute: 60,
+    requestsPerHour: 1000,
+    requestsPerDay: 10000,
+    tokensPerRequest: 16000,
+    tokensPerDay: 500000
+  },
+  hybrid: {
+    // Role-based: compute per request based on user tier
+  }
+};
+```
+
+**Edge Function: Rate Limit Check**
+```typescript
+// supabase/functions/check-rate-limit/index.ts
+serve(async (req) => {
+  const { deploymentId, userId, sessionId } = await req.json();
+  
+  const config = await getDeploymentConfig(deploymentId);
+  const limits = config.rateLimits || DEFAULT_LIMITS[config.deploymentType];
+  
+  // Check minute window
+  const minuteKey = `rate:${deploymentId}:minute:${currentMinute}`;
+  const minuteCount = await redis.incr(minuteKey);
+  await redis.expire(minuteKey, 60);
+  
+  if (minuteCount > limits.requestsPerMinute) {
+    return { allowed: false, reason: 'minute_limit', retryAfter: 60 };
+  }
+  
+  // Check daily token budget
+  const dailyKey = `tokens:${deploymentId}:${currentDay}`;
+  const tokensToday = await redis.get(dailyKey) || 0;
+  
+  if (tokensToday > limits.tokensPerDay) {
+    return { allowed: false, reason: 'daily_token_budget', retryAfter: secondsUntilMidnight };
+  }
+  
+  return { allowed: true };
+});
+```
+
+#### 10.5 Usage Analytics & Reporting
+
+**Daily Summary Report**
+```typescript
+interface DailySummary {
+  date: string;
+  deployments: {
+    deploymentId: string;
+    deploymentName: string;
+    requests: number;
+    tokensUsed: number;
+    costEstimate: number;
+    avgLatency: number;
+    errorRate: number;
+    topModels: { model: string; usage: number }[];
+    topFeatures: { feature: string; usage: number }[];
+  }[];
+  totals: {
+    totalRequests: number;
+    totalTokens: number;
+    totalCost: number;
+    avgErrorRate: number;
+  };
+}
+```
+
+**Edge Function: Generate Daily Report**
+```typescript
+// Scheduled via cron: 0 1 * * * (1 AM daily)
+serve(async () => {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  
+  const summary = await generateDailySummary(yesterday);
+  
+  // Store report
+  await supabase.from('daily_reports').insert({
+    report_date: yesterday,
+    summary
+  });
+  
+  // Send alerts if thresholds exceeded
+  if (summary.totals.totalCost > COST_ALERT_THRESHOLD) {
+    await sendAdminAlert({
+      type: 'cost_threshold',
+      message: `Daily cost exceeded $${COST_ALERT_THRESHOLD}`,
+      data: summary
+    });
+  }
+  
+  return new Response(JSON.stringify(summary));
+});
+```
+
+#### 10.6 Feature Toggle Management
+
+**Real-Time Feature Updates**
+```typescript
+// Admin dashboard: toggle features without redeployment
+const toggleFeature = async (deploymentId: string, feature: string, enabled: boolean) => {
+  // Update config
+  const { error } = await supabase
+    .from('genie_deployments')
+    .update({
+      features: {
+        ...existingFeatures,
+        [feature]: enabled
+      },
+      updated_at: new Date()
+    })
+    .eq('deployment_id', deploymentId);
+  
+  // Broadcast to all active clients via Realtime
+  await supabase.channel('deployment-updates').send({
+    type: 'broadcast',
+    event: 'feature_toggle',
+    payload: { deploymentId, feature, enabled }
+  });
+  
+  // Log the change
+  await supabase.from('audit_logs').insert({
+    action: 'feature_toggle',
+    deployment_id: deploymentId,
+    details: { feature, enabled, userId: auth.uid() }
+  });
+};
+```
+
+**Feature Presets**
+```typescript
+const PRESETS = {
+  minimal: { smartRouting: false, ragEnabled: false, splitScreenEnabled: false },
+  standard: { smartRouting: true, ragEnabled: true, visionEnabled: true },
+  premium: { /* all features enabled */ },
+  healthcare: { /* healthcare-optimized */ }
+};
+
+// Apply preset
+await applyPreset(deploymentId, 'healthcare');
+```
+
+#### 10.7 Deployment Embed Management
+
+**JavaScript Snippet Generation**
+```typescript
+// Admin generates embed code for public deployments
+const generateEmbedCode = (deploymentId: string, features: OptionalFeatures) => {
+  return `
+<script src="https://genie-ai.app/embed.js"></script>
+<script>
+  GenieAI.init({
+    deploymentId: '${deploymentId}',
+    apiKey: 'pk_live_${generatePublicKey(deploymentId)}',
+    features: ${JSON.stringify(features, null, 2)}
+  });
+</script>
+<div id="genie-chat"></div>
+  `.trim();
+};
+```
+
+**SDK Configuration**
+```typescript
+// Generate SDK config for internal apps
+const generateSDKConfig = (deploymentId: string) => {
+  return {
+    apiKey: generatePrivateKey(deploymentId),
+    deploymentId,
+    endpoint: 'https://api.genie-ai.app/v1',
+    features: getDeploymentFeatures(deploymentId)
+  };
+};
+```
+
+#### 10.8 Alert Policies
+
+**Alert Conditions**
+- Error rate > 5% (5min window) → Page on-call
+- Avg latency > 3s (5min window) → Slack alert
+- Token budget > 80% → Email alert to admin
+- Token budget > 100% → Rate limit triggered + escalation
+- Rate limit exceeded on >10 deployments → Investigate capacity
+- Any 429 (rate limit) on internal deployments → Urgent alert
+
+**Notification Channels**
+- Critical: PagerDuty
+- Warning: Slack #genie-alerts
+- Info: Email daily summary
+
+## 11) References
 
 - Supabase Edge Functions (deploy/logs): Project dashboard → Functions
 - Canonical UX & Routing Spec: docs/AI_Routing_and_UX_Playbook.md
+- AI Coverage Summary: docs/AI_Coverage_Summary.md
+- Deployment Configuration: Genie Deployments table
+- Real-Time Monitoring: Admin Dashboard → Deployments
 
 ---
-This runbook supersedes prior operational documents and is the canonical reference for rollout, SLOs, observability, and incident response.
+This runbook supersedes prior operational documents and is the canonical reference for rollout, SLOs, observability, incident response, and deployment management.
