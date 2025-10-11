@@ -493,8 +493,10 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   value={selectedModels.slm || ''} 
                   onValueChange={(value) => {
                     setSelectedModels(prev => ({ ...prev, slm: value }));
-                    if (!config.secondaryModel || config.secondaryModel === selectedModels.slm) {
+                    // Always set as secondary when user picks an SLM (unless 'none')
+                    if (value && value !== 'none') {
                       updateConfig({ secondaryModel: value });
+                      console.log('✅ Secondary model set (SLM):', value);
                     }
                   }}
                 >
@@ -529,6 +531,10 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   onValueChange={(value) => {
                     setSelectedModels(prev => ({ ...prev, vision: value }));
                     updateConfig({ visionEnabled: true });
+                    if (value && value !== 'none') {
+                      updateConfig({ secondaryModel: value });
+                      console.log('✅ Secondary model set (Vision):', value);
+                    }
                   }}
                 >
                   <SelectTrigger>
@@ -561,6 +567,10 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   value={selectedModels.healthcare || ''} 
                   onValueChange={(value) => {
                     setSelectedModels(prev => ({ ...prev, healthcare: value }));
+                    if (value && value !== 'none') {
+                      updateConfig({ secondaryModel: value });
+                      console.log('✅ Secondary model set (Healthcare):', value);
+                    }
                   }}
                 >
                   <SelectTrigger>

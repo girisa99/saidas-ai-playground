@@ -1241,7 +1241,7 @@ ${conversationSummary.transcript}`
                       <SplitScreenRenderer
                         messages={[...messages, ...splitResponses.primary, ...splitResponses.secondary]}
                         primaryModel={aiConfig.selectedModel}
-                        secondaryModel={aiConfig.secondaryModel || 'claude-3-haiku'}
+                        secondaryModel={aiConfig.secondaryModel || 'google/gemini-2.5-flash'}
                         isLoading={isLoading}
                         loadingStates={loadingStates}
                       />
