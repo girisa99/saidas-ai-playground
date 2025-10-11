@@ -222,6 +222,50 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
       medicalImageMode: false,
     };
   });
+  
+  // Handle config changes with persistence and mode switch notification
+  const handleConfigChange = (newConfig: AIConfig) => {
+    const previousMode = aiConfig.mode;
+    const previousSplitScreen = aiConfig.splitScreenEnabled || aiConfig.splitScreen;
+    
+    setAIConfig(newConfig);
+    
+    // Save to session storage
+    try {
+      sessionStorage.setItem('genie_ai_config', JSON.stringify(newConfig));
+      sessionStorage.setItem('genie_config_timestamp', Date.now().toString());
+    } catch (e) {
+      console.error('Failed to save config:', e);
+    }
+    
+    // Notify user of mode changes without losing conversation context
+    if (previousMode !== newConfig.mode) {
+      const modeNames = { default: 'Balanced', single: 'Focused', multi: 'Consensus' };
+      toast({
+        title: `Switched to ${modeNames[newConfig.mode]} Mode`,
+        description: 'Your conversation will continue with the new AI configuration.',
+      });
+      
+      // Clear split responses when switching out of multi mode to avoid confusion
+      if (newConfig.mode !== 'multi' && (previousSplitScreen !== (newConfig.splitScreenEnabled || newConfig.splitScreen))) {
+        setSplitResponses({ primary: [], secondary: [] });
+      }
+      
+      console.log('✅ Mode switched:', previousMode, '→', newConfig.mode, '| Conversation context preserved');
+    }
+    
+    // Handle split-screen toggle
+    const newSplitScreen = newConfig.splitScreenEnabled || newConfig.splitScreen;
+    if (newSplitScreen !== previousSplitScreen) {
+      if (!newSplitScreen) {
+        // Switching split-screen OFF - clear split responses
+        setSplitResponses({ primary: [], secondary: [] });
+        console.log('✅ Split-screen disabled - cleared separate model responses');
+      } else {
+        console.log('✅ Split-screen enabled - will show dual model responses');
+      }
+    }
+  };
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [showImageUploader, setShowImageUploader] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -630,14 +674,14 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
       setHasStartedConversation(true);
     }
 
-    // Context is automatically detected by intelligent conversation intelligence
-    // No need for manual context detection here
-    
-    addMessage({
-      role: 'user',
+    // Add user message ONCE to avoid duplicates
+    const userMessageObj = {
+      role: 'user' as const,
       content: userMessage,
       timestamp: new Date().toISOString()
-    });
+    };
+    
+    addMessage(userMessageObj);
 
     try {
       const systemPrompt = context ? 
@@ -1475,15 +1519,12 @@ ${conversationSummary.transcript}`
         isOpen={showConfigWizard}
         portalContainer={dragRef.current}
         onComplete={(config) => {
-          setAIConfig(config);
+          handleConfigChange(config);
           setShowConfigWizard(false);
           
-          // Save configuration to session storage with timestamp
-          sessionStorage.setItem('genie_ai_config', JSON.stringify(config));
-          sessionStorage.setItem('genie_config_timestamp', Date.now().toString());
-          
-          // Now add welcome message after configuration
-          const capabilitiesMessage = `Hello ${userInfo?.firstName}! 🧞‍♂️ Welcome to Genie AI! 
+          // Now add welcome message after configuration (only if no messages yet)
+          if (messages.length === 0) {
+            const capabilitiesMessage = `Hello ${userInfo?.firstName}! 🧞‍♂️ Welcome to Genie AI! 
 
 I am Genie and I can support and discuss with you on Experimentation Hub Technology and Healthcare concepts.
 
@@ -1503,15 +1544,16 @@ ${config.mode === 'default' ? '🤖 I\'ll automatically select the best AI model
 
 Ask me anything to get started!`;
 
-          addMessage({
-            role: 'assistant',
-            content: capabilitiesMessage,
-            timestamp: new Date().toISOString()
-          });
+            addMessage({
+              role: 'assistant',
+              content: capabilitiesMessage,
+              timestamp: new Date().toISOString()
+            });
+          }
           
           toast({
             title: "Configuration Saved",
-            description: "Your AI preferences have been saved for this session",
+            description: config.mode !== aiConfig.mode ? "Mode switched - conversation continues seamlessly" : "Your AI preferences have been updated",
           });
         }}
         onCancel={() => setShowConfigWizard(false)}
