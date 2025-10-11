@@ -728,8 +728,14 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
         setLoadingStates({ primary: true, secondary: true });
 
         const primaryProvider = providerFromModel(aiConfig.selectedModel);
-        const secondaryModel = aiConfig.secondaryModel || 'gemini-2.5-flash';
+        const secondaryModel = aiConfig.secondaryModel || 'google/gemini-2.5-flash';
         const secondaryProvider = providerFromModel(secondaryModel);
+        
+        console.log('🚀 Multi-mode request:', { 
+          primary: aiConfig.selectedModel, 
+          secondary: secondaryModel,
+          userSelected: aiConfig.secondaryModel ? 'Yes' : 'Using fallback'
+        });
 
         const results = await Promise.allSettled([
           generateResponse({

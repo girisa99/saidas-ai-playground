@@ -437,19 +437,23 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <Cpu className="h-4 w-4" />
-              Comparison Model
+              Secondary Model
             </CardTitle>
             <CardDescription className="text-xs">
-              Secondary model for side-by-side responses
+              Your choice for comparison / multi-agent mode
             </CardDescription>
           </CardHeader>
           <CardContent className="pt-0 space-y-2">
             <Select
-              value={config.secondaryModel || 'claude-3-haiku'}
-              onValueChange={(value) => updateConfig({ secondaryModel: value })}
+              value={config.secondaryModel || 'google/gemini-2.5-flash'}
+              onValueChange={(value) => {
+                updateConfig({ secondaryModel: value });
+                console.log('✅ User selected secondary model:', value);
+                console.log('✅ Config updated - Primary:', config.selectedModel, '| Secondary:', value);
+              }}
             >
               <SelectTrigger className="h-8 bg-background">
-                <SelectValue placeholder="Select comparison model" />
+                <SelectValue placeholder="Select secondary model" />
               </SelectTrigger>
               <SelectContent className="bg-background border-border z-[100000] max-h-[300px]">
                 {modelOptions
