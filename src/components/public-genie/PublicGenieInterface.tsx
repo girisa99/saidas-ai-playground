@@ -147,7 +147,21 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
       return true;
     }
   });
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(() => {
+    // Try to load user info from localStorage for returning users
+    try {
+      const savedUserInfo = localStorage.getItem('genie_user_info');
+      if (savedUserInfo) {
+        const parsed = JSON.parse(savedUserInfo);
+        // Auto-accept privacy if user info exists
+        sessionStorage.setItem('genie_privacy_accepted', 'true');
+        return parsed;
+      }
+    } catch (e) {
+      console.error('Failed to load saved user info:', e);
+    }
+    return null;
+  });
   const [context, setContext] = useState<Context>('technology'); // Default to technology
   const [selectedTopic, setSelectedTopic] = useState<string>('');
   const [inputMessage, setInputMessage] = useState('');
@@ -242,16 +256,19 @@ useEffect(() => {
     return; // Don't show suggestions during auto-switch
   }
   
-  // Show proactive topic suggestions at strategic conversation milestones (3, 5, 7 messages)
+  // Count only user messages for milestone tracking
+  const userMessageCount = messages.filter(m => m.role === 'user').length;
+  
+  // Show proactive topic suggestions at strategic conversation milestones (3, 5, 7 user messages)
   const milestones = [3, 5, 7];
-  if (milestones.includes(messages.length)) {
+  if (milestones.includes(userMessageCount)) {
     const suggestion = conversationIntelligence.shouldShowSuggestion(
       messages,
       context,
       selectedTopic
     );
     
-    if (suggestion && suggestion.type === 'topic' && suggestion.suggestions) {
+    if (suggestion && suggestion.shouldShow && suggestion.suggestions) {
       const topics = dynamicTopics.length > 0
         ? dynamicTopics.slice(0, 6)
         : suggestion.suggestions.map(sug => ({
@@ -263,9 +280,11 @@ useEffect(() => {
       setPopoverSuggestions(topics);
       setPopoverMood(suggestion.mood || 'helpful');
       setShowTopicPopover(true);
+      
+      console.log('✅ Showing proactive suggestions at milestone:', userMessageCount);
     }
-    }
-  }, [messages.length, context, selectedTopic, userInfo, dynamicTopics, abTestMilestones]);
+  }
+}, [messages.length, context, selectedTopic, userInfo, dynamicTopics]);
 
   // Check conversation limits only when user info changes and is available
 useEffect(() => {
@@ -361,8 +380,13 @@ useEffect(() => {
     try { localStorage.setItem('cookie-consent', 'accepted'); } catch {}
     
     // Save user info to localStorage for returning users (analytics) and session for current tab
-    localStorage.setItem('genie_user_info', JSON.stringify(info));
-    try { sessionStorage.setItem('genie_user_info_session', JSON.stringify(info)); } catch {}
+    try {
+      localStorage.setItem('genie_user_info', JSON.stringify(info));
+      sessionStorage.setItem('genie_user_info_session', JSON.stringify(info));
+      console.log('✅ User info persisted for future sessions');
+    } catch (e) {
+      console.error('Failed to persist user info:', e);
+    }
 
     // Start tracking Genie conversation in database FIRST to get conversation ID
     let conversationId: string | undefined;
@@ -691,14 +715,20 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
 
         if (primaryRes) {
           const personalizedPrimary = addPersonalityToResponse(primaryRes.content);
+          const primaryMessage = {
+            role: 'assistant' as const,
+            content: personalizedPrimary,
+            timestamp: new Date().toISOString(),
+            model: aiConfig.selectedModel,
+            provider: 'primary'
+          };
+          
+          // Add to main messages array for conversation tracking
+          addMessage(primaryMessage);
+          
           setSplitResponses(prev => ({
             ...prev,
-            primary: [...prev.primary, {
-              role: 'assistant',
-              content: personalizedPrimary,
-              timestamp: new Date().toISOString(),
-              model: aiConfig.selectedModel
-            }]
+            primary: [...prev.primary, primaryMessage]
           }));
         } else {
           toast({ title: 'Primary model unavailable', description: 'Falling back; please try again or reconfigure.', variant: 'destructive' });
@@ -706,14 +736,20 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
 
         if (secondaryRes) {
           const personalizedSecondary = addPersonalityToResponse(secondaryRes.content);
+          const secondaryMessage = {
+            role: 'assistant' as const,
+            content: personalizedSecondary,
+            timestamp: new Date().toISOString(),
+            model: secondaryModel,
+            provider: 'secondary'
+          };
+          
+          // Add to main messages array for conversation tracking
+          addMessage(secondaryMessage);
+          
           setSplitResponses(prev => ({
             ...prev,
-            secondary: [...prev.secondary, {
-              role: 'assistant',
-              content: personalizedSecondary,
-              timestamp: new Date().toISOString(),
-              model: secondaryModel
-            }]
+            secondary: [...prev.secondary, secondaryMessage]
           }));
         } else {
           toast({ title: 'Secondary model unavailable', description: 'We adjusted to improve reliability. You can change it in settings.', variant: 'default' });

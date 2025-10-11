@@ -41,16 +41,12 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
   isLoading,
   loadingStates
 }) => {
-  // Separate user messages from AI responses
-  const userMessages = messages.filter(m => m.role === 'user');
-  const aiResponses = messages.filter(m => m.role === 'assistant');
-
   // Group AI responses by their model/source
-  const primaryResponses = aiResponses.filter(m => 
-    m.model === primaryModel || m.provider === 'primary' || (!m.model && !m.provider && aiResponses.indexOf(m) % 2 === 0)
+  const primaryResponses = messages.filter(m => 
+    m.role === 'assistant' && (m.model === primaryModel || m.provider === 'primary')
   );
-  const secondaryResponses = aiResponses.filter(m => 
-    m.model === secondaryModel || m.provider === 'secondary' || (!m.model && !m.provider && aiResponses.indexOf(m) % 2 === 1)
+  const secondaryResponses = messages.filter(m => 
+    m.role === 'assistant' && (m.model === secondaryModel || m.provider === 'secondary')
   );
 
   const renderMessageList = (messages: SplitMessage[], modelId: string, isLoadingModel: boolean) => (
@@ -89,11 +85,11 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
         </div>
         
         <div className="flex-1 p-3 overflow-y-auto space-y-3 max-h-[350px]">
-          {/* Interleave user messages and AI responses chronologically */}
+          {/* Show user messages and primary model responses */}
           {messages
-            .filter(m => m.role === 'user' || m.model === primaryModel || m.provider === 'primary' || (!m.model && !m.provider && aiResponses.indexOf(m) % 2 === 0))
+            .filter(m => m.role === 'user' || (m.role === 'assistant' && (m.model === primaryModel || m.provider === 'primary')))
             .map((message, index) => (
-              <div key={`primary-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div key={`primary-${message.timestamp}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[85%] p-3 rounded-lg ${
                   message.role === 'user' 
                     ? 'bg-primary text-primary-foreground' 
@@ -132,11 +128,11 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
         </div>
         
         <div className="flex-1 p-3 overflow-y-auto space-y-3 max-h-[350px]">
-          {/* Interleave user messages and AI responses chronologically */}
+          {/* Show user messages and secondary model responses */}
           {messages
-            .filter(m => m.role === 'user' || m.model === secondaryModel || m.provider === 'secondary' || (!m.model && !m.provider && aiResponses.indexOf(m) % 2 === 1))
+            .filter(m => m.role === 'user' || (m.role === 'assistant' && (m.model === secondaryModel || m.provider === 'secondary')))
             .map((message, index) => (
-              <div key={`secondary-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div key={`secondary-${message.timestamp}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[85%] p-3 rounded-lg ${
                   message.role === 'user' 
                     ? 'bg-primary text-primary-foreground' 
