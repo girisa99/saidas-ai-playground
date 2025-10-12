@@ -940,6 +940,32 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
               }
             }
             
+            // ========== SMART ROUTING OPTIMIZATION DISPLAY ==========
+            if (response.triageData) {
+              const optimizationDetails: string[] = [];
+              optimizationDetails.push(`\n\n**🧠 Smart Routing Optimization:**`);
+              optimizationDetails.push(`• **Complexity**: ${response.triageData.complexity}`);
+              optimizationDetails.push(`• **Domain**: ${response.triageData.domain}`);
+              optimizationDetails.push(`• **Urgency**: ${response.triageData.urgency}`);
+              optimizationDetails.push(`• **Best Format**: ${response.triageData.best_format}`);
+              
+              if (response.triageData.emotional_tone) {
+                optimizationDetails.push(`• **Tone Applied**: ${response.triageData.emotional_tone}`);
+              }
+              
+              if (response.triageData.reasoning) {
+                optimizationDetails.push(`\n**Routing Reasoning**: ${response.triageData.reasoning}`);
+              }
+              
+              optimizationDetails.push(`\n_Confidence: ${Math.round(response.triageData.confidence * 100)}%_`);
+              
+              if (response.triageData.requires_vision) {
+                optimizationDetails.push(`_👁️ Vision Analysis Applied_`);
+              }
+              
+              messageContent += optimizationDetails.join('\n');
+            }
+            
             addMessage({
               role: 'assistant',
               content: messageContent,

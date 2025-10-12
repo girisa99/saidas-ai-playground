@@ -922,7 +922,37 @@ serve(async (req) => {
       throw error;
     }
     
-    // ========== INTEGRATION POINT 1: Triage Query ==========
+    // ========== STEP 1: Build RAG and MCP Context First ==========
+    let ragContext = '';
+    
+    // Use RAG if enabled (default to true)
+    if (request.useRAG !== false) {
+      const knowledgeResults = await searchKnowledgeBase(request.prompt, request.context);
+      ragContext = knowledgeResults.map(result => 
+        `${result.finding_name}: ${result.description}`
+      ).join('\n\n');
+      console.log('RAG context found:', ragContext.length > 0);
+    }
+
+    // Process MCP servers if enabled
+    let mcpContext = '';
+    if (request.useMCP && request.mcpServers && request.mcpServers.length > 0) {
+      console.log('Processing MCP servers:', request.mcpServers.length);
+      const mcpResults = await Promise.all(
+        request.mcpServers.map(server => callMCPServer(server, request.prompt, request.context))
+      );
+      
+      const validResults = mcpResults.filter(r => r !== null);
+      if (validResults.length > 0) {
+        mcpContext = validResults.map(r => JSON.stringify(r)).join('\n\n');
+        console.log('MCP context generated');
+      }
+    }
+
+    // Combine RAG and MCP context
+    const fullContext = [ragContext, mcpContext].filter(c => c).join('\n\n---\n\n');
+    
+    // ========== STEP 2: Triage Query ==========
     // Analyze query with SLM to determine optimal routing
     let triageData = null;
     if (request.enableSmartRouting) {
@@ -934,7 +964,7 @@ serve(async (req) => {
       console.log('Triage result:', triageData);
     }
     
-    // ========== NEW: Multi-Agent Collaboration ==========
+    // ========== STEP 3: Multi-Agent Collaboration ==========
     let collaborationResult = null;
     if (request.enableMultiAgent && triageData) {
       console.log('Multi-agent collaboration enabled - determining strategy...');
@@ -1040,35 +1070,6 @@ serve(async (req) => {
       mapped: mappedModel,
       provider: request.provider
     });
-
-    let ragContext = '';
-    
-    // Use RAG if enabled (default to true)
-    if (request.useRAG !== false) {
-      const knowledgeResults = await searchKnowledgeBase(request.prompt, request.context);
-      ragContext = knowledgeResults.map(result => 
-        `${result.finding_name}: ${result.description}`
-      ).join('\n\n');
-      console.log('RAG context found:', ragContext.length > 0);
-    }
-
-    // Process MCP servers if enabled
-    let mcpContext = '';
-    if (request.useMCP && request.mcpServers && request.mcpServers.length > 0) {
-      console.log('Processing MCP servers:', request.mcpServers.length);
-      const mcpResults = await Promise.all(
-        request.mcpServers.map(server => callMCPServer(server, request.prompt, request.context))
-      );
-      
-      const validResults = mcpResults.filter(r => r !== null);
-      if (validResults.length > 0) {
-        mcpContext = validResults.map(r => JSON.stringify(r)).join('\n\n');
-        console.log('MCP context generated');
-      }
-    }
-
-    // Combine RAG and MCP context
-    const fullContext = [ragContext, mcpContext].filter(c => c).join('\n\n---\n\n');
     
     // ========== ENHANCEMENT: Apply Triage to System Prompt ==========
     if (triageData && request.systemPrompt) {
