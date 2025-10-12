@@ -59,14 +59,21 @@ After auditing the actual codebase + database against playbook/runbook documenta
 
 ---
 
-### Phase 2: Multi-Model & Split-Screen (Weeks 2-3)
-**Status:** Not started | **DB Changes:** None (UI + logic)
+### Phase 2: Role-Based Specialization & Multi-Model (Weeks 2-3)
+**Status:** ⏳ IN PROGRESS (Started 2025-01-12) | **DB Changes:** None (logic only)
 
-**Files to Create:**
-- `src/services/multiModelService.ts` - Parallel model invocation
-- `src/components/ModelComparisonView.tsx` - Split-screen UI
-- `src/hooks/useMultiModel.ts` - Multi-model hook
-- `src/utils/consensusValidator.ts` - Response validation
+**Implementation Approach:** Role-Based Specialization (Option C from MULTI_MODEL_ARCHITECTURE_ASSESSMENT.md)
+
+**Files to Update:**
+- `src/hooks/useUniversalAI.ts` - Add chain mode support
+- `supabase/functions/ai-universal-processor/index.ts` - Add SLM triage logic
+- `src/components/public-genie/AdvancedAISettings.tsx` - Add smart routing toggle
+- `src/components/public-genie/PublicGenieInterface.tsx` - Enhanced prompts
+
+**New Files to Create:**
+- `src/services/aiTriageService.ts` - SLM-based query analysis
+- `src/utils/modelRouter.ts` - Intelligent model selection
+- `src/components/public-genie/TriageInsightsBadge.tsx` - Show routing decisions
 
 ---
 

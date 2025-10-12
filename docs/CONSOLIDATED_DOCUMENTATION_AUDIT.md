@@ -68,11 +68,12 @@ ROOT: IMPLEMENTATION_GOVERNANCE.md ← START HERE before ANY implementation
 | Model mapping | ✅ | N/A | ✅ | ✅ Hardcoded only |
 | Streaming SSE | ✅ | N/A | ✅ | ✅ COMPLETE |
 | **Intelligence** |
-| Context-based routing | ✅ | ❌ | ❌ | ❌ NOT IMPLEMENTED |
-| Proactive recommendations | ✅ | ❌ | ❌ | ❌ NOT IMPLEMENTED |
-| Multi-model comparison | ✅ | ❌ | ❌ | ❌ NOT IMPLEMENTED |
-| Split-screen UI | ✅ | ❌ | ❌ | ❌ NOT IMPLEMENTED |
-| Confidence tracking | ✅ | ❌ | ❌ | ❌ NOT IMPLEMENTED |
+| Context-based routing | ✅ | N/A | ⏳ | ⏳ IN PROGRESS (Phase 2) |
+| Proactive recommendations | ✅ | N/A | ⏳ | ⏳ IN PROGRESS (Phase 2) |
+| Multi-model comparison | ✅ | N/A | ⏳ | ⏳ IN PROGRESS (Phase 2) |
+| Role-based specialization | ✅ | N/A | ⏳ | ⏳ IMPLEMENTING NOW |
+| Split-screen UI | ✅ | ❌ | ✅ | ✅ EXISTS (needs enhancement) |
+| Confidence tracking | ✅ | ❌ | ⏳ | ⏳ IN PROGRESS (Phase 2) |
 | **Knowledge** |
 | Basic RAG (keyword) | ✅ | ✅ | ✅ | ✅ COMPLETE |
 | Semantic vector RAG | ✅ | ❌ | ❌ | ❌ NOT IMPLEMENTED |

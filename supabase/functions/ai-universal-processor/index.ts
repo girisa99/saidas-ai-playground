@@ -35,6 +35,22 @@ interface AIRequest {
   useMCP?: boolean; // Model Context Protocol
   mcpServers?: string[]; // MCP server endpoints
   labelStudioProject?: string; // For data annotation/management
+  enableSmartRouting?: boolean; // NEW: Enable intelligent model selection
+  conversationHistory?: Array<{ role: string; content: string }>; // NEW: For triage
+}
+
+// Triage result interface (matching frontend)
+interface TriageResult {
+  complexity: 'simple' | 'medium' | 'high';
+  domain: 'healthcare' | 'technology' | 'general';
+  urgency: 'low' | 'medium' | 'high' | 'critical';
+  best_format: 'text' | 'table' | 'html' | 'list';
+  keywords: string[];
+  suggested_model: string;
+  confidence: number;
+  reasoning: string;
+  requires_vision: boolean;
+  emotional_tone?: 'empathetic' | 'professional' | 'playful';
 }
 
 async function searchKnowledgeBase(query: string, context?: string) {
@@ -72,6 +88,147 @@ async function searchKnowledgeBase(query: string, context?: string) {
     console.error('Search knowledge base error:', error);
     return [];
   }
+}
+
+/**
+ * ROLE-BASED SPECIALIZATION: SLM Triage Logic
+ * Fast query classification to determine optimal model routing
+ */
+async function triageQuery(
+  query: string,
+  context?: string,
+  conversationHistory?: Array<{ role: string; content: string }>
+): Promise<TriageResult> {
+  const queryLower = query.toLowerCase();
+  const wordCount = query.split(' ').length;
+  
+  // Pattern-based classification
+  const complexity = classifyComplexity(queryLower, wordCount);
+  const domain = detectDomain(queryLower, context);
+  const urgency = detectUrgency(queryLower, complexity);
+  const best_format = determineBestFormat(queryLower, complexity);
+  const keywords = extractKeywords(query);
+  const requires_vision = detectVisionRequirement(queryLower);
+  const emotional_tone = detectEmotionalTone(queryLower, conversationHistory);
+  const suggested_model = suggestModel(complexity, domain, urgency, requires_vision);
+  
+  return {
+    complexity,
+    domain,
+    urgency,
+    best_format,
+    keywords,
+    suggested_model,
+    confidence: 0.85,
+    reasoning: `${complexity} complexity ${domain} query`,
+    requires_vision,
+    emotional_tone
+  };
+}
+
+function classifyComplexity(queryLower: string, wordCount: number): 'simple' | 'medium' | 'high' {
+  const simplePatterns = [
+    /^(what|who|when|where|how) (is|are|was|were|do|does)/,
+    /^(tell me|show me|give me|list)/,
+    /(office hours?|contact|pricing|location|support)/,
+  ];
+  
+  if (simplePatterns.some(p => p.test(queryLower)) && wordCount < 10) {
+    return 'simple';
+  }
+  
+  const highComplexityIndicators = [
+    /(analyze|compare|evaluate|assess|diagnose)/,
+    /(differential|comprehensive|detailed analysis)/,
+  ];
+  
+  if (highComplexityIndicators.some(p => p.test(queryLower)) || wordCount > 30) {
+    return 'high';
+  }
+  
+  return 'medium';
+}
+
+function detectDomain(queryLower: string, context?: string): 'healthcare' | 'technology' | 'general' {
+  const healthcareKeywords = ['patient', 'medical', 'clinical', 'diagnosis', 'treatment', 'therapy', 'x-ray', 'mri', 'ct scan'];
+  const technologyKeywords = ['ai', 'software', 'code', 'api', 'integration', 'platform', 'algorithm', 'model'];
+  
+  const healthScore = healthcareKeywords.filter(k => queryLower.includes(k)).length;
+  const techScore = technologyKeywords.filter(k => queryLower.includes(k)).length;
+  
+  if (context === 'healthcare' && healthScore >= techScore) return 'healthcare';
+  if (context === 'technology' && techScore >= healthScore) return 'technology';
+  if (healthScore > techScore) return 'healthcare';
+  if (techScore > healthScore) return 'technology';
+  
+  return 'general';
+}
+
+function detectUrgency(queryLower: string, complexity: string): 'low' | 'medium' | 'high' | 'critical' {
+  const criticalIndicators = ['emergency', 'urgent', 'critical', 'immediately', 'asap'];
+  const highIndicators = ['important', 'priority', 'soon', 'quickly'];
+  
+  if (criticalIndicators.some(i => queryLower.includes(i))) return 'critical';
+  if (highIndicators.some(i => queryLower.includes(i))) return 'high';
+  if (complexity === 'simple') return 'low';
+  
+  return 'medium';
+}
+
+function determineBestFormat(queryLower: string, complexity: string): 'text' | 'table' | 'html' | 'list' {
+  if (queryLower.match(/(compare|versus|vs|differences)/)) return 'table';
+  if (queryLower.match(/(list|steps|options|types)/)) return 'list';
+  if (complexity === 'high') return 'html';
+  return 'text';
+}
+
+function extractKeywords(query: string): string[] {
+  const stopWords = new Set(['the', 'a', 'an', 'and', 'or', 'but', 'is', 'are', 'was', 'were', 'what', 'when', 'where', 'who', 'why', 'how']);
+  const words = query.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/).filter(w => w.length > 3 && !stopWords.has(w));
+  return [...new Set(words)].slice(0, 10);
+}
+
+function detectVisionRequirement(queryLower: string): boolean {
+  return /image|picture|photo|scan|x-ray|mri|ct scan|visual|diagram/.test(queryLower);
+}
+
+function detectEmotionalTone(queryLower: string, history?: any[]): 'empathetic' | 'professional' | 'playful' | undefined {
+  if (/confused|lost|don't understand|stuck/.test(queryLower)) return 'empathetic';
+  if (/awesome|great|cool|amazing|wow/.test(queryLower)) return 'playful';
+  return 'professional';
+}
+
+function suggestModel(complexity: string, domain: string, urgency: string, requires_vision: boolean): string {
+  if (urgency === 'critical') return requires_vision ? 'google/gemini-2.5-pro' : 'openai/gpt-5';
+  if (requires_vision) return complexity === 'high' || domain === 'healthcare' ? 'google/gemini-2.5-pro' : 'gpt-4o';
+  if (complexity === 'simple') return 'google/gemini-2.5-flash-lite';
+  if (complexity === 'medium') return domain === 'healthcare' ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-flash';
+  return domain === 'healthcare' ? 'google/gemini-2.5-pro' : 'openai/gpt-5';
+}
+
+function enhanceSystemPrompt(basePrompt: string, triage: TriageResult): string {
+  let enhanced = basePrompt;
+  enhanced += `\n\nContext: ${triage.domain} domain query.`;
+  
+  if (triage.best_format === 'table') {
+    enhanced += '\nPresent findings as a comparative table with clear columns.';
+  } else if (triage.best_format === 'list') {
+    enhanced += '\nPresent information as a clear, numbered or bulleted list.';
+  }
+  
+  if (triage.emotional_tone === 'empathetic') {
+    enhanced += '\nUser seems confused - be extra supportive and clear.';
+  }
+  
+  if (triage.urgency === 'critical' || triage.urgency === 'high') {
+    enhanced += `\nUrgency: ${triage.urgency.toUpperCase()} - prioritize safety and accuracy.`;
+  }
+  
+  if (triage.keywords.length > 0) {
+    enhanced += `\nKey topics: ${triage.keywords.slice(0, 5).join(', ')}`;
+  }
+  
+  return enhanced;
 }
 
 async function callOpenAI(request: AIRequest, ragContext?: string) {

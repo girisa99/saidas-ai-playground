@@ -19,6 +19,10 @@ interface AIResponse {
   timestamp: string;
   ragContext?: any;
   knowledgeBaseResults?: any;
+  triageData?: any; // NEW: Triage classification data
+  routingReasoning?: string; // NEW: Explanation of model selection
+  estimatedCost?: number; // NEW: Estimated cost in dollars
+  estimatedLatency?: number; // NEW: Estimated latency in ms
 }
 
 interface UseUniversalAIOptions {
@@ -31,6 +35,8 @@ interface AIRequestExtended extends AIRequest {
   useMCP?: boolean;
   labelStudio?: boolean;
   context?: string;
+  enableSmartRouting?: boolean; // NEW: Enable intelligent model selection
+  conversationHistory?: Array<{ role: string; content: string }>; // NEW: For triage context
 }
 
 export const useUniversalAI = () => {
@@ -54,7 +60,8 @@ export const useUniversalAI = () => {
         knowledgeBase: request.knowledgeBase,
         useMCP: request.useMCP,
         hasImages: request.images?.length || 0,
-        context: request.context
+        context: request.context,
+        smartRouting: request.enableSmartRouting || false
       });
 
       const { data, error: functionError } = await supabase.functions.invoke('ai-universal-processor', {
@@ -71,7 +78,9 @@ export const useUniversalAI = () => {
           knowledgeBase: request.knowledgeBase,
           useMCP: request.useMCP,
           labelStudio: request.labelStudio,
-          context: request.context
+          context: request.context,
+          enableSmartRouting: request.enableSmartRouting,
+          conversationHistory: request.conversationHistory
         }
       });
 
@@ -87,19 +96,25 @@ export const useUniversalAI = () => {
 
       console.log('✅ Universal AI Response:', {
         provider: request.provider,
-        model: request.model,
+        model: data.modelUsed || request.model,
         contentLength: data.content?.length || 0,
         ragUsed: data.ragContext ? 'Yes' : 'No',
-        knowledgeBaseUsed: data.knowledgeBaseResults ? 'Yes' : 'No'
+        knowledgeBaseUsed: data.knowledgeBaseResults ? 'Yes' : 'No',
+        triageUsed: data.triageData ? 'Yes' : 'No',
+        routingReasoning: data.routingReasoning
       });
 
       return {
         content: data.content,
         provider: request.provider,
-        model: request.model,
+        model: data.modelUsed || request.model,
         timestamp: new Date().toISOString(),
         ragContext: data.ragContext,
-        knowledgeBaseResults: data.knowledgeBaseResults
+        knowledgeBaseResults: data.knowledgeBaseResults,
+        triageData: data.triageData,
+        routingReasoning: data.routingReasoning,
+        estimatedCost: data.estimatedCost,
+        estimatedLatency: data.estimatedLatency
       };
     } catch (err: any) {
       const errorMessage = err.message || 'Failed to generate AI response';
