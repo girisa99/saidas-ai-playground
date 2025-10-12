@@ -24,6 +24,7 @@ export interface AIConfig {
   knowledgeBase: boolean;  // Renamed from knowledgeBaseEnabled for consistency
   knowledgeBaseEnabled: boolean;  // Keep for backwards compatibility
   mcpEnabled: boolean;
+  multiAgentEnabled: boolean; // CRITICAL: Enable multi-agent collaboration
   selectedModel: string;
   secondaryModel?: string;
   splitScreen: boolean;  // Renamed from splitScreenEnabled for consistency

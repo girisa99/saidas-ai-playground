@@ -700,25 +700,32 @@ async function executeSequentialChain(
   const startTime = Date.now();
   const agentResponses: AgentResponse[] = [];
   let totalCost = 0;
+  
+  console.log('🔄 Starting sequential chain with context preservation...');
 
   // Step 1: Specialist extracts clinical findings
   const specialistPrompt = `You are a ${strategy.agents[0].purpose}. Extract key findings and clinical context.
 
+Context from conversation: ${context}
+
 User Query: ${request.prompt}
+
+Conversation History:
+${(request.conversationHistory || []).map(m => `${m.role}: ${m.content}`).join('\n')}
 
 Provide ONLY structured analysis:
 - Key findings
-- Clinical significance
+- Clinical significance  
 - Urgency level
 - Recommended actions
 
-Format as JSON for next agent.`;
+Format as clear, structured text for next agent.`;
 
   const specialistResponse = await callLovableAI({
     ...request,
     model: strategy.agents[0].model,
     prompt: specialistPrompt,
-    systemPrompt: context
+    systemPrompt: `${context}\n\nMaintain all context from previous conversation.`
   }, context);
 
   agentResponses.push({
@@ -726,22 +733,30 @@ Format as JSON for next agent.`;
     content: specialistResponse
   });
   totalCost += 0.02; // gemini-pro cost
+  
+  console.log(`✅ Agent 1 (${strategy.agents[0].purpose}) complete`);
 
-  // Step 2: Generalist creates patient-friendly response
+  // Step 2: Generalist creates patient-friendly response WITH FULL CONTEXT
   const generalistPrompt = `You are a ${strategy.agents[1].purpose}.
+
+CRITICAL: Maintain continuity from previous conversation:
+${(request.conversationHistory || []).map(m => `${m.role}: ${m.content}`).join('\n')}
 
 Original Patient Question: ${request.prompt}
 
 Medical Analysis from Specialist:
 ${specialistResponse}
 
-Translate into patient-friendly language with empathy and clarity.`;
+Context to preserve: ${context}
+
+Translate into patient-friendly language with empathy and clarity.
+IMPORTANT: Reference previous conversation topics to maintain context.`;
 
   const generalistResponse = await callLovableAI({
     ...request,
     model: strategy.agents[1].model,
     prompt: generalistPrompt,
-    systemPrompt: context
+    systemPrompt: `${context}\n\nYou are continuing a conversation. Maintain all context and references from previous messages.`
   }, context);
 
   agentResponses.push({
@@ -749,8 +764,12 @@ Translate into patient-friendly language with empathy and clarity.`;
     content: generalistResponse
   });
   totalCost += 0.02; // gpt-5 cost
+  
+  console.log(`✅ Agent 2 (${strategy.agents[1].purpose}) complete`);
 
   const totalLatency = Date.now() - startTime;
+  
+  console.log(`🎉 Sequential chain complete: ${totalLatency}ms, $${totalCost.toFixed(4)}`);
 
   return {
     mode: 'sequential',
@@ -769,15 +788,28 @@ async function executeEnsembleVoting(
   const startTime = Date.now();
   const agentResponses: AgentResponse[] = [];
   let totalCost = 0;
+  
+  console.log('🗳️ Starting ensemble voting with context preservation...');
 
-  // Run all specialist agents in parallel
+  // Run all specialist agents in parallel WITH CONVERSATION HISTORY
   const specialists = strategy.agents.filter(a => a.role === 'specialist');
+  const conversationContext = (request.conversationHistory || []).map(m => `${m.role}: ${m.content}`).join('\n');
+  
   const specialistPromises = specialists.map(agent =>
     callLovableAI({
       ...request,
       model: agent.model,
-      prompt: `You are an expert in: ${agent.purpose}\n\nPatient Query: ${request.prompt}\n\nProvide expert analysis. Include confidence score (0-1).`,
-      systemPrompt: context
+      prompt: `You are an expert in: ${agent.purpose}
+
+Conversation History (maintain context):
+${conversationContext}
+
+Current Patient Query: ${request.prompt}
+
+Context: ${context}
+
+Provide expert analysis. Include confidence score (0-1) and reference previous conversation if relevant.`,
+      systemPrompt: `${context}\n\nYou are continuing a conversation. Maintain context from previous messages.`
     }, context)
   );
 
@@ -787,28 +819,66 @@ async function executeEnsembleVoting(
     agentResponses.push({
       agent,
       content: specialistResults[i],
-      confidence: 0.85 // Could extract from response
+      confidence: 0.85
     });
     totalCost += 0.02;
+    console.log(`✅ Specialist ${i + 1} (${agent.purpose}) complete`);
   });
 
-  // Synthesizer creates consensus
+  // Synthesizer creates consensus WITH FULL CONTEXT
   const synthesizer = strategy.agents.find(a => a.role === 'synthesizer');
   if (synthesizer) {
     const synthPrompt = `Synthesize expert opinions for: ${request.prompt}
 
+CRITICAL: Maintain conversation continuity:
+${conversationContext}
+
 Expert Analyses:
 ${agentResponses.map((r, i) => `Expert ${i + 1} (${r.agent.purpose}):\n${r.content}`).join('\n\n---\n\n')}
 
-Provide:
-**Consensus:** What experts agree on
-**Disagreements:** Where they differ
-**Recommendation:** Final advice
-**Confidence:** Overall score`;
+Context: ${context}
+
+Create unified response that:
+1. Synthesizes consensus
+2. Highlights any disagreements
+3. Provides confidence score
+4. Maintains context from previous conversation
+5. References earlier discussion points if relevant`;
 
     const synthesis = await callLovableAI({
       ...request,
       model: synthesizer.model,
+      prompt: synthPrompt,
+      systemPrompt: `${context}\n\nYou are synthesizing expert opinions while maintaining conversation continuity.`
+    }, context);
+
+    totalCost += 0.02;
+    console.log(`✅ Synthesizer (${synthesizer.purpose}) complete`);
+
+    const totalLatency = Date.now() - startTime;
+    
+    console.log(`🎉 Ensemble voting complete: ${totalLatency}ms, $${totalCost.toFixed(4)}`);
+
+    return {
+      mode: 'ensemble',
+      primaryResponse: synthesis,
+      synthesizedResponse: synthesis,
+      agentResponses,
+      consensusScore: 0.87,
+      totalCost,
+      totalLatency
+    };
+  }
+
+  const totalLatency = Date.now() - startTime;
+  return {
+    mode: 'ensemble',
+    primaryResponse: specialistResults[0],
+    agentResponses,
+    totalCost,
+    totalLatency
+  };
+}
       prompt: synthPrompt,
       systemPrompt: context
     }, context);

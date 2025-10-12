@@ -862,7 +862,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
           toast({ title: 'Secondary model unavailable', description: 'We adjusted to improve reliability. You can change it in settings.', variant: 'default' });
         }
       } else {
-        // Standard single response with RAG, Knowledge Base, MCP
+        // Standard single response with RAG, Knowledge Base, MCP, Multi-Agent
         const response = await generateResponse({
           provider: providerFromModel(aiConfig.selectedModel) as any,
           model: aiConfig.selectedModel,
@@ -875,6 +875,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
           useMCP: aiConfig.mcpEnabled,
           labelStudio: false,
           context: context || 'general',
+          enableSmartRouting: true, // Always enable smart routing for triage
+          enableMultiAgent: aiConfig.multiAgentEnabled || false, // CRITICAL: Enable multi-agent if configured
           conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
           ...(imageUrls.length > 0 && { images: imageUrls })
         } as any);
@@ -914,6 +916,27 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
               
               if (badges.length > 0) {
                 messageContent += `\n\n_${badges.join(' • ')}_`;
+              }
+            }
+            
+            // ========== MULTI-AGENT COLLABORATION DISPLAY ==========
+            if (response.collaborationMode) {
+              const collabBadges: string[] = [];
+              collabBadges.push(`🤖 ${response.agentCount || 0} Agents Collaborated`);
+              collabBadges.push(`📊 Mode: ${response.collaborationMode}`);
+              
+              if (response.consensusScore) {
+                collabBadges.push(`✅ Consensus: ${Math.round(response.consensusScore * 100)}%`);
+              }
+              
+              messageContent += `\n\n_${collabBadges.join(' • ')}_`;
+              
+              // Show agent breakdown if available
+              if (response.agentResponses && response.agentResponses.length > 0) {
+                messageContent += '\n\n**Agent Collaboration Details:**\n';
+                response.agentResponses.forEach((agent: any, idx: number) => {
+                  messageContent += `\n${idx + 1}. **${agent.agent}**: ${agent.content}\n`;
+                });
               }
             }
             

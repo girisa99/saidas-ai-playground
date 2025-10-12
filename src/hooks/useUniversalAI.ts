@@ -86,6 +86,7 @@ export const useUniversalAI = () => {
           labelStudio: request.labelStudio,
           context: request.context,
           enableSmartRouting: request.enableSmartRouting,
+          enableMultiAgent: request.enableMultiAgent, // CRITICAL: Enable multi-agent collaboration
           conversationHistory: request.conversationHistory
         }
       });
@@ -107,7 +108,9 @@ export const useUniversalAI = () => {
         ragUsed: data.ragContext ? 'Yes' : 'No',
         knowledgeBaseUsed: data.knowledgeBaseResults ? 'Yes' : 'No',
         triageUsed: data.triageData ? 'Yes' : 'No',
-        routingReasoning: data.routingReasoning
+        routingReasoning: data.routingReasoning,
+        multiAgent: data.collaborationMode ? `Yes (${data.collaborationMode})` : 'No',
+        agentCount: data.agentCount || 0
       });
 
       return {
@@ -120,7 +123,12 @@ export const useUniversalAI = () => {
         triageData: data.triageData,
         routingReasoning: data.routingReasoning,
         estimatedCost: data.estimatedCost,
-        estimatedLatency: data.estimatedLatency
+        estimatedLatency: data.estimatedLatency,
+        // ========== MULTI-AGENT COLLABORATION DATA ==========
+        collaborationMode: data.collaborationMode,
+        agentCount: data.agentCount,
+        consensusScore: data.consensusScore,
+        agentResponses: data.agentResponses
       };
     } catch (err: any) {
       const errorMessage = err.message || 'Failed to generate AI response';
