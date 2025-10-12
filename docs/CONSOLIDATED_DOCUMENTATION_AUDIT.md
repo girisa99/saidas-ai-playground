@@ -68,10 +68,10 @@ ROOT: IMPLEMENTATION_GOVERNANCE.md ← START HERE before ANY implementation
 | Model mapping | ✅ | N/A | ✅ | ✅ Hardcoded only |
 | Streaming SSE | ✅ | N/A | ✅ | ✅ COMPLETE |
 | **Intelligence** |
-| Context-based routing | ✅ | N/A | ⏳ | ⏳ IN PROGRESS (Phase 2) |
+| Context-based routing | ✅ | N/A | ✅ | ✅ COMPLETE (SLM triage routing) |
 | Proactive recommendations | ✅ | N/A | ⏳ | ⏳ IN PROGRESS (Phase 2) |
-| Multi-model comparison | ✅ | N/A | ⏳ | ⏳ IN PROGRESS (Phase 2) |
-| Role-based specialization | ✅ | N/A | ⏳ | ⏳ IMPLEMENTING NOW |
+| Multi-model comparison | ✅ | N/A | ✅ | ✅ COMPLETE (Smart routing + metadata) |
+| Role-based specialization | ✅ | N/A | ✅ | ✅ COMPLETE (2025-01-12) |
 | Split-screen UI | ✅ | ❌ | ✅ | ✅ EXISTS (needs enhancement) |
 | Confidence tracking | ✅ | ❌ | ⏳ | ⏳ IN PROGRESS (Phase 2) |
 | **Knowledge** |
