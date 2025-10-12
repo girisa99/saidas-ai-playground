@@ -19,10 +19,15 @@ interface AIResponse {
   timestamp: string;
   ragContext?: any;
   knowledgeBaseResults?: any;
-  triageData?: any; // NEW: Triage classification data
-  routingReasoning?: string; // NEW: Explanation of model selection
-  estimatedCost?: number; // NEW: Estimated cost in dollars
-  estimatedLatency?: number; // NEW: Estimated latency in ms
+  triageData?: any;
+  routingReasoning?: string;
+  estimatedCost?: number;
+  estimatedLatency?: number;
+  // Multi-agent collaboration metadata
+  collaborationMode?: 'single' | 'sequential' | 'ensemble';
+  agentCount?: number;
+  consensusScore?: number;
+  agentResponses?: Array<{ agent: string; content: string }>;
 }
 
 interface UseUniversalAIOptions {
@@ -35,8 +40,9 @@ interface AIRequestExtended extends AIRequest {
   useMCP?: boolean;
   labelStudio?: boolean;
   context?: string;
-  enableSmartRouting?: boolean; // NEW: Enable intelligent model selection
-  conversationHistory?: Array<{ role: string; content: string }>; // NEW: For triage context
+  enableSmartRouting?: boolean;
+  enableMultiAgent?: boolean; // NEW: Enable multi-agent collaboration
+  conversationHistory?: Array<{ role: string; content: string }>;
 }
 
 export const useUniversalAI = () => {

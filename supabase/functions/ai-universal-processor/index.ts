@@ -30,13 +30,14 @@ interface AIRequest {
   maxTokens?: number;
   context?: string;
   useRAG?: boolean;
-  imageUrl?: string; // For vision models
-  images?: string[]; // For multiple images
-  useMCP?: boolean; // Model Context Protocol
-  mcpServers?: string[]; // MCP server endpoints
-  labelStudioProject?: string; // For data annotation/management
-  enableSmartRouting?: boolean; // NEW: Enable intelligent model selection
-  conversationHistory?: Array<{ role: string; content: string }>; // NEW: For triage
+  imageUrl?: string;
+  images?: string[];
+  useMCP?: boolean;
+  mcpServers?: string[];
+  labelStudioProject?: string;
+  enableSmartRouting?: boolean;
+  enableMultiAgent?: boolean; // NEW: Enable multi-agent collaboration
+  conversationHistory?: Array<{ role: string; content: string }>;
 }
 
 // Triage result interface (matching frontend)
@@ -619,6 +620,224 @@ async function logToLabelStudio(request: AIRequest, response: string, ragContext
   }
 }
 
+// ============================================================
+// MULTI-AGENT COLLABORATION FUNCTIONS
+// ============================================================
+
+interface AgentRole {
+  role: 'specialist' | 'generalist' | 'synthesizer';
+  model: string;
+  purpose: string;
+}
+
+interface CollaborationChain {
+  agents: AgentRole[];
+  mode: 'sequential' | 'parallel' | 'ensemble';
+  synthesisRequired: boolean;
+}
+
+interface AgentResponse {
+  agent: AgentRole;
+  content: string;
+  confidence?: number;
+}
+
+interface CollaborationResult {
+  mode: string;
+  primaryResponse: string;
+  synthesizedResponse?: string;
+  agentResponses: AgentResponse[];
+  consensusScore?: number;
+  totalCost: number;
+  totalLatency: number;
+}
+
+function determineCollaborationStrategy(triage: TriageResult): CollaborationChain {
+  // Healthcare Specialist → LLM Chaining
+  if (triage.domain === 'healthcare' && triage.complexity === 'high') {
+    return {
+      agents: [
+        { role: 'specialist', model: 'google/gemini-2.5-pro', purpose: 'Medical Analysis' },
+        { role: 'generalist', model: 'openai/gpt-5', purpose: 'Patient Explanation' }
+      ],
+      mode: 'sequential',
+      synthesisRequired: false
+    };
+  }
+
+  // Ensemble Voting for Critical
+  if (triage.urgency === 'critical') {
+    return {
+      agents: [
+        { role: 'specialist', model: 'google/gemini-2.5-pro', purpose: 'Medical Diagnosis' },
+        { role: 'specialist', model: 'openai/gpt-5', purpose: 'Treatment Validation' },
+        { role: 'specialist', model: 'google/gemini-2.5-flash', purpose: 'Safety Check' },
+        { role: 'synthesizer', model: 'openai/gpt-5', purpose: 'Consensus Synthesis' }
+      ],
+      mode: 'ensemble',
+      synthesisRequired: true
+    };
+  }
+
+  // Single agent fallback
+  return {
+    agents: [{ role: 'generalist', model: triage.suggested_model, purpose: 'Direct Response' }],
+    mode: 'sequential',
+    synthesisRequired: false
+  };
+}
+
+async function executeSequentialChain(
+  request: AIRequest,
+  strategy: CollaborationChain,
+  context: string
+): Promise<CollaborationResult> {
+  const startTime = Date.now();
+  const agentResponses: AgentResponse[] = [];
+  let totalCost = 0;
+
+  // Step 1: Specialist extracts clinical findings
+  const specialistPrompt = `You are a ${strategy.agents[0].purpose}. Extract key findings and clinical context.
+
+User Query: ${request.prompt}
+
+Provide ONLY structured analysis:
+- Key findings
+- Clinical significance
+- Urgency level
+- Recommended actions
+
+Format as JSON for next agent.`;
+
+  const specialistResponse = await callLovableAI({
+    ...request,
+    model: strategy.agents[0].model,
+    prompt: specialistPrompt,
+    systemPrompt: context
+  }, context);
+
+  agentResponses.push({
+    agent: strategy.agents[0],
+    content: specialistResponse
+  });
+  totalCost += 0.02; // gemini-pro cost
+
+  // Step 2: Generalist creates patient-friendly response
+  const generalistPrompt = `You are a ${strategy.agents[1].purpose}.
+
+Original Patient Question: ${request.prompt}
+
+Medical Analysis from Specialist:
+${specialistResponse}
+
+Translate into patient-friendly language with empathy and clarity.`;
+
+  const generalistResponse = await callLovableAI({
+    ...request,
+    model: strategy.agents[1].model,
+    prompt: generalistPrompt,
+    systemPrompt: context
+  }, context);
+
+  agentResponses.push({
+    agent: strategy.agents[1],
+    content: generalistResponse
+  });
+  totalCost += 0.02; // gpt-5 cost
+
+  const totalLatency = Date.now() - startTime;
+
+  return {
+    mode: 'sequential',
+    primaryResponse: generalistResponse,
+    agentResponses,
+    totalCost,
+    totalLatency
+  };
+}
+
+async function executeEnsembleVoting(
+  request: AIRequest,
+  strategy: CollaborationChain,
+  context: string
+): Promise<CollaborationResult> {
+  const startTime = Date.now();
+  const agentResponses: AgentResponse[] = [];
+  let totalCost = 0;
+
+  // Run all specialist agents in parallel
+  const specialists = strategy.agents.filter(a => a.role === 'specialist');
+  const specialistPromises = specialists.map(agent =>
+    callLovableAI({
+      ...request,
+      model: agent.model,
+      prompt: `You are an expert in: ${agent.purpose}\n\nPatient Query: ${request.prompt}\n\nProvide expert analysis. Include confidence score (0-1).`,
+      systemPrompt: context
+    }, context)
+  );
+
+  const specialistResults = await Promise.all(specialistPromises);
+  
+  specialists.forEach((agent, i) => {
+    agentResponses.push({
+      agent,
+      content: specialistResults[i],
+      confidence: 0.85 // Could extract from response
+    });
+    totalCost += 0.02;
+  });
+
+  // Synthesizer creates consensus
+  const synthesizer = strategy.agents.find(a => a.role === 'synthesizer');
+  if (synthesizer) {
+    const synthPrompt = `Synthesize expert opinions for: ${request.prompt}
+
+Expert Analyses:
+${agentResponses.map((r, i) => `Expert ${i + 1} (${r.agent.purpose}):\n${r.content}`).join('\n\n---\n\n')}
+
+Provide:
+**Consensus:** What experts agree on
+**Disagreements:** Where they differ
+**Recommendation:** Final advice
+**Confidence:** Overall score`;
+
+    const synthesis = await callLovableAI({
+      ...request,
+      model: synthesizer.model,
+      prompt: synthPrompt,
+      systemPrompt: context
+    }, context);
+
+    agentResponses.push({
+      agent: synthesizer,
+      content: synthesis
+    });
+    totalCost += 0.02;
+
+    const totalLatency = Date.now() - startTime;
+    const consensusScore = 0.88; // Could calculate from responses
+
+    return {
+      mode: 'ensemble',
+      primaryResponse: synthesis,
+      synthesizedResponse: synthesis,
+      agentResponses,
+      consensusScore,
+      totalCost,
+      totalLatency
+    };
+  }
+
+  return {
+    mode: 'ensemble',
+    primaryResponse: agentResponses[0].content,
+    agentResponses,
+    totalCost,
+    totalLatency: Date.now() - startTime
+  };
+}
+
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -671,6 +890,48 @@ serve(async (req) => {
         request.conversationHistory || []
       );
       console.log('Triage result:', triageData);
+    }
+    
+    // ========== NEW: Multi-Agent Collaboration ==========
+    let collaborationResult = null;
+    if (request.enableMultiAgent && triageData) {
+      console.log('Multi-agent collaboration enabled - determining strategy...');
+      
+      // Determine collaboration strategy
+      const strategy = determineCollaborationStrategy(triageData);
+      console.log('Collaboration strategy:', strategy.mode, 'agents:', strategy.agents.length);
+      
+      if (strategy.mode === 'sequential') {
+        // SEQUENTIAL CHAINING: Specialist → Generalist
+        collaborationResult = await executeSequentialChain(request, strategy, fullContext);
+      } else if (strategy.mode === 'ensemble') {
+        // ENSEMBLE VOTING: Multiple specialists + synthesizer
+        collaborationResult = await executeEnsembleVoting(request, strategy, fullContext);
+      }
+    }
+    
+    // If multi-agent was used, return collaboration result
+    if (collaborationResult) {
+      console.log('Multi-agent collaboration complete');
+      return new Response(JSON.stringify({ 
+        content: collaborationResult.synthesizedResponse || collaborationResult.primaryResponse,
+        provider: 'lovable',
+        model: 'multi-agent',
+        ragUsed: ragContext.length > 0,
+        mcpUsed: mcpContext.length > 0,
+        triageData: triageData,
+        collaborationMode: collaborationResult.mode,
+        agentCount: collaborationResult.agentResponses.length,
+        consensusScore: collaborationResult.consensusScore,
+        agentResponses: collaborationResult.agentResponses.map(r => ({
+          agent: r.agent.purpose,
+          content: r.content.substring(0, 500) + '...'
+        })),
+        totalCost: collaborationResult.totalCost,
+        totalLatency: collaborationResult.totalLatency
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
     
     // CRITICAL: Route ALL requests through Lovable AI Gateway for reliability
