@@ -661,6 +661,18 @@ serve(async (req) => {
       throw error;
     }
     
+    // ========== INTEGRATION POINT 1: Triage Query ==========
+    // Analyze query with SLM to determine optimal routing
+    let triageData = null;
+    if (request.enableSmartRouting) {
+      console.log('Smart routing enabled - analyzing query...');
+      triageData = await triageQuery(
+        request.prompt,
+        request.conversationHistory || []
+      );
+      console.log('Triage result:', triageData);
+    }
+    
     // CRITICAL: Route ALL requests through Lovable AI Gateway for reliability
     // Map any model selection to appropriate Lovable AI model
     const originalModel = (request.model || '').toLowerCase();
@@ -703,10 +715,18 @@ serve(async (req) => {
     // Apply model mapping
     let mappedModel = modelMapping[originalModel] || request.model;
     
-    // If model doesn't start with google/ or openai/, default to Gemini Flash
-    if (!mappedModel.startsWith('google/') && !mappedModel.startsWith('openai/')) {
-      mappedModel = 'google/gemini-2.5-flash';
-      console.log(`Unmapped model "${originalModel}" -> default to ${mappedModel}`);
+    // ========== INTEGRATION POINT 2: Use Triage-Selected Model ==========
+    // If smart routing is enabled and triage suggests a model, use it
+    if (triageData?.suggested_model) {
+      mappedModel = triageData.suggested_model;
+      console.log(`Smart routing selected: ${mappedModel} (was: ${originalModel})`);
+      console.log(`Routing reasoning: ${triageData.reasoning}`);
+    } else {
+      // If model doesn't start with google/ or openai/, default to Gemini Flash
+      if (!mappedModel.startsWith('google/') && !mappedModel.startsWith('openai/')) {
+        mappedModel = 'google/gemini-2.5-flash';
+        console.log(`Unmapped model "${originalModel}" -> default to ${mappedModel}`);
+      }
     }
     
     request.model = mappedModel;
@@ -778,6 +798,7 @@ serve(async (req) => {
       logToLabelStudio(request, content, fullContext)
     ]);
 
+    // ========== INTEGRATION POINT 3: Return Triage Data ==========
     return new Response(JSON.stringify({ 
       content,
       provider: request.provider,
@@ -785,7 +806,18 @@ serve(async (req) => {
       ragUsed: ragContext.length > 0,
       mcpUsed: mcpContext.length > 0,
       hasVision: !!(request.imageUrl || request.images),
-      labelStudioLogged: !!(request.labelStudioProject && labelStudioApiKey)
+      labelStudioLogged: !!(request.labelStudioProject && labelStudioApiKey),
+      // Smart routing metadata
+      triageData: triageData ? {
+        complexity: triageData.complexity,
+        domain: triageData.domain,
+        urgency: triageData.urgency,
+        confidence: triageData.confidence,
+        best_format: triageData.best_format,
+        emotional_tone: triageData.emotional_tone,
+        requires_vision: triageData.requires_vision,
+        reasoning: triageData.reasoning
+      } : null
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
