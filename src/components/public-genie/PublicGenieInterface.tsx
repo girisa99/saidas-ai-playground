@@ -815,27 +815,41 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             personalizedPrimary += `\n\n_🔍 Used ${primaryRes.knowledgeBaseResults.length || 0} knowledge entries_`;
           }
           
-          // ========== SMART ROUTING OPTIMIZATION DISPLAY ==========
+          // ========== SMART ROUTING OPTIMIZATION DISPLAY (PRIMARY) ==========
           if (primaryRes.triageData) {
+            console.log('📊 Primary Model - Displaying Smart Routing:', primaryRes.triageData);
             const optimizationDetails: string[] = [];
             optimizationDetails.push(`\n\n**🧠 Smart Routing Optimization:**`);
-            optimizationDetails.push(`• **Complexity**: ${primaryRes.triageData.complexity}`);
-            optimizationDetails.push(`• **Domain**: ${primaryRes.triageData.domain}`);
-            optimizationDetails.push(`• **Urgency**: ${primaryRes.triageData.urgency}`);
-            optimizationDetails.push(`• **Best Format**: ${primaryRes.triageData.best_format}`);
+            optimizationDetails.push(`• **Query Complexity**: ${primaryRes.triageData.complexity || 'N/A'}`);
+            optimizationDetails.push(`• **Domain Detected**: ${primaryRes.triageData.domain || 'general'}`);
+            optimizationDetails.push(`• **Urgency Level**: ${primaryRes.triageData.urgency || 'normal'}`);
+            
+            const formatDisplay = primaryRes.triageData.best_format || 'text';
+            const formatExplanations: Record<string, string> = {
+              'table': '📊 Table (Structured data)',
+              'html': '🌐 HTML (Rich content)',
+              'text': '📝 Text (Narrative)',
+              'list': '📋 List (Bullets/Numbers)'
+            };
+            optimizationDetails.push(`• **Recommended Format**: ${formatExplanations[formatDisplay] || formatDisplay}`);
             
             if (primaryRes.triageData.emotional_tone) {
-              optimizationDetails.push(`• **Tone Applied**: ${primaryRes.triageData.emotional_tone}`);
+              const toneEmojis: Record<string, string> = {
+                'empathetic': '💙 Empathetic',
+                'professional': '💼 Professional',
+                'playful': '✨ Playful'
+              };
+              optimizationDetails.push(`• **Tone Applied**: ${toneEmojis[primaryRes.triageData.emotional_tone] || primaryRes.triageData.emotional_tone}`);
             }
             
             if (primaryRes.triageData.reasoning) {
-              optimizationDetails.push(`\n**Routing Reasoning**: ${primaryRes.triageData.reasoning}`);
+              optimizationDetails.push(`\n**💡 Routing Reasoning**: _${primaryRes.triageData.reasoning}_`);
             }
             
-            optimizationDetails.push(`\n_Confidence: ${Math.round(primaryRes.triageData.confidence * 100)}%_`);
+            optimizationDetails.push(`\n_AI Confidence: ${Math.round((primaryRes.triageData.confidence || 0) * 100)}%_`);
             
             if (primaryRes.triageData.requires_vision) {
-              optimizationDetails.push(`_👁️ Vision Analysis Applied_`);
+              optimizationDetails.push(`_👁️ Vision Analysis Enabled_`);
             }
             
             personalizedPrimary += optimizationDetails.join('\n');
@@ -903,27 +917,41 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             personalizedSecondary += `\n\n_🔍 Used ${secondaryRes.knowledgeBaseResults.length || 0} knowledge entries_`;
           }
           
-          // ========== SMART ROUTING OPTIMIZATION DISPLAY ==========
+          // ========== SMART ROUTING OPTIMIZATION DISPLAY (SECONDARY) ==========
           if (secondaryRes.triageData) {
+            console.log('📊 Secondary Model - Displaying Smart Routing:', secondaryRes.triageData);
             const optimizationDetails: string[] = [];
             optimizationDetails.push(`\n\n**🧠 Smart Routing Optimization:**`);
-            optimizationDetails.push(`• **Complexity**: ${secondaryRes.triageData.complexity}`);
-            optimizationDetails.push(`• **Domain**: ${secondaryRes.triageData.domain}`);
-            optimizationDetails.push(`• **Urgency**: ${secondaryRes.triageData.urgency}`);
-            optimizationDetails.push(`• **Best Format**: ${secondaryRes.triageData.best_format}`);
+            optimizationDetails.push(`• **Query Complexity**: ${secondaryRes.triageData.complexity || 'N/A'}`);
+            optimizationDetails.push(`• **Domain Detected**: ${secondaryRes.triageData.domain || 'general'}`);
+            optimizationDetails.push(`• **Urgency Level**: ${secondaryRes.triageData.urgency || 'normal'}`);
+            
+            const formatDisplay = secondaryRes.triageData.best_format || 'text';
+            const formatExplanations: Record<string, string> = {
+              'table': '📊 Table (Structured data)',
+              'html': '🌐 HTML (Rich content)',
+              'text': '📝 Text (Narrative)',
+              'list': '📋 List (Bullets/Numbers)'
+            };
+            optimizationDetails.push(`• **Recommended Format**: ${formatExplanations[formatDisplay] || formatDisplay}`);
             
             if (secondaryRes.triageData.emotional_tone) {
-              optimizationDetails.push(`• **Tone Applied**: ${secondaryRes.triageData.emotional_tone}`);
+              const toneEmojis: Record<string, string> = {
+                'empathetic': '💙 Empathetic',
+                'professional': '💼 Professional',
+                'playful': '✨ Playful'
+              };
+              optimizationDetails.push(`• **Tone Applied**: ${toneEmojis[secondaryRes.triageData.emotional_tone] || secondaryRes.triageData.emotional_tone}`);
             }
             
             if (secondaryRes.triageData.reasoning) {
-              optimizationDetails.push(`\n**Routing Reasoning**: ${secondaryRes.triageData.reasoning}`);
+              optimizationDetails.push(`\n**💡 Routing Reasoning**: _${secondaryRes.triageData.reasoning}_`);
             }
             
-            optimizationDetails.push(`\n_Confidence: ${Math.round(secondaryRes.triageData.confidence * 100)}%_`);
+            optimizationDetails.push(`\n_AI Confidence: ${Math.round((secondaryRes.triageData.confidence || 0) * 100)}%_`);
             
             if (secondaryRes.triageData.requires_vision) {
-              optimizationDetails.push(`_👁️ Vision Analysis Applied_`);
+              optimizationDetails.push(`_👁️ Vision Analysis Enabled_`);
             }
             
             personalizedSecondary += optimizationDetails.join('\n');
@@ -1071,28 +1099,46 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             
             // ========== SMART ROUTING OPTIMIZATION DISPLAY ==========
             if (response.triageData) {
+              console.log('📊 Displaying Smart Routing Optimization:', response.triageData);
               const optimizationDetails: string[] = [];
               optimizationDetails.push(`\n\n**🧠 Smart Routing Optimization:**`);
-              optimizationDetails.push(`• **Complexity**: ${response.triageData.complexity}`);
-              optimizationDetails.push(`• **Domain**: ${response.triageData.domain}`);
-              optimizationDetails.push(`• **Urgency**: ${response.triageData.urgency}`);
-              optimizationDetails.push(`• **Best Format**: ${response.triageData.best_format}`);
+              optimizationDetails.push(`• **Query Complexity**: ${response.triageData.complexity || 'N/A'}`);
+              optimizationDetails.push(`• **Domain Detected**: ${response.triageData.domain || 'general'}`);
+              optimizationDetails.push(`• **Urgency Level**: ${response.triageData.urgency || 'normal'}`);
+              
+              // Format recommendation with explanation
+              const formatDisplay = response.triageData.best_format || 'text';
+              const formatExplanations: Record<string, string> = {
+                'table': '📊 Table (Structured data with rows/columns)',
+                'html': '🌐 HTML (Rich formatted content)',
+                'text': '📝 Text (Plain narrative)',
+                'list': '📋 List (Bullet points or numbered)'
+              };
+              optimizationDetails.push(`• **Recommended Format**: ${formatExplanations[formatDisplay] || formatDisplay}`);
               
               if (response.triageData.emotional_tone) {
-                optimizationDetails.push(`• **Tone Applied**: ${response.triageData.emotional_tone}`);
+                const toneEmojis: Record<string, string> = {
+                  'empathetic': '💙 Empathetic & Supportive',
+                  'professional': '💼 Professional & Formal',
+                  'playful': '✨ Playful & Engaging'
+                };
+                optimizationDetails.push(`• **Tone Applied**: ${toneEmojis[response.triageData.emotional_tone] || response.triageData.emotional_tone}`);
               }
               
               if (response.triageData.reasoning) {
-                optimizationDetails.push(`\n**Routing Reasoning**: ${response.triageData.reasoning}`);
+                optimizationDetails.push(`\n**💡 Routing Reasoning**: _${response.triageData.reasoning}_`);
               }
               
-              optimizationDetails.push(`\n_Confidence: ${Math.round(response.triageData.confidence * 100)}%_`);
+              optimizationDetails.push(`\n_AI Confidence: ${Math.round((response.triageData.confidence || 0) * 100)}%_`);
               
               if (response.triageData.requires_vision) {
-                optimizationDetails.push(`_👁️ Vision Analysis Applied_`);
+                optimizationDetails.push(`_👁️ Vision Analysis Enabled_`);
               }
               
               messageContent += optimizationDetails.join('\n');
+              console.log('✅ Optimization panel added to response');
+            } else {
+              console.warn('⚠️ No triage data available for optimization display');
             }
             
             addMessage({
