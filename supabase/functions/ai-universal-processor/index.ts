@@ -1028,6 +1028,12 @@ serve(async (req) => {
     // Combine RAG and MCP context
     const fullContext = [ragContext, mcpContext].filter(c => c).join('\n\n---\n\n');
     
+    // ========== ENHANCEMENT: Apply Triage to System Prompt ==========
+    if (triageData && request.systemPrompt) {
+      request.systemPrompt = enhanceSystemPrompt(request.systemPrompt, triageData);
+      console.log('Enhanced system prompt with triage insights');
+    }
+    
     let content = '';
 
     // Route to appropriate AI provider

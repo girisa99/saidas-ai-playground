@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minimize2, Maximize2, MessageCircle, Send, User, Bot, AlertTriangle, Move, Users, Settings, Brain, ImagePlus, RefreshCw } from 'lucide-react';
+import { enhanceResponseWithTriage, generateMilestoneSuggestions, addHumorIfAppropriate } from '@/services/richMediaEnhancer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -822,7 +823,20 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
         } as any);
 
           if (response) {
-            const personalizedResponse = addPersonalityToResponse(response.content);
+            // ========== RICH MEDIA ENHANCEMENT ==========
+            // Enhance response with triage data
+            const enhanced = enhanceResponseWithTriage(
+              response.content,
+              response.triageData || null
+            );
+            
+            // Add humor if appropriate
+            let enhancedContent = addHumorIfAppropriate(
+              enhanced.content,
+              response.triageData || null
+            );
+            
+            const personalizedResponse = addPersonalityToResponse(enhancedContent);
             
             // Add RAG context indicator if used
             let messageContent = personalizedResponse;
@@ -833,6 +847,19 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
               messageContent += `\n\n_🔍 Used ${response.knowledgeBaseResults.length || 0} knowledge entries_`;
             }
             
+            // Add triage metadata badges if available
+            if (response.triageData) {
+              const badges: string[] = [];
+              if (response.triageData.complexity === 'high') badges.push('🧠 Complex Analysis');
+              if (response.triageData.urgency === 'critical') badges.push('🚨 Urgent');
+              if (response.triageData.emotional_tone === 'empathetic') badges.push('💙 Supportive');
+              if (response.triageData.best_format === 'table') badges.push('📊 Structured');
+              
+              if (badges.length > 0) {
+                messageContent += `\n\n_${badges.join(' • ')}_`;
+              }
+            }
+            
             addMessage({
               role: 'assistant',
               content: messageContent,
@@ -840,6 +867,28 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
               provider: response.provider,
               model: response.model
             });
+            
+            // ========== MILESTONE SUGGESTIONS ==========
+            // Check if we've hit a milestone (3, 5, 7 messages)
+            const milestones = [3, 5, 7];
+            const currentCount = messages.length + 1;
+            if (milestones.includes(currentCount)) {
+              const suggestions = generateMilestoneSuggestions(
+                currentCount,
+                messages.map(m => ({ role: m.role, content: m.content })),
+                response.triageData || null
+              );
+              
+              if (suggestions.length > 0) {
+                setTimeout(() => {
+                  toast({
+                    title: `💡 Suggested Topics`,
+                    description: suggestions[0],
+                    duration: 8000
+                  });
+                }, 1500);
+              }
+            }
           }
       }
 
