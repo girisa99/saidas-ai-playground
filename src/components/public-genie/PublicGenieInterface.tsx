@@ -632,7 +632,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
       return;
     }
 
-    // Start conversation if this is the first message
+    // Start conversation tracking if this is the first message
     if (!conversationLimitService.isConversationActive()) {
       const startResult = await conversationLimitService.startConversation(
         context!,
@@ -640,7 +640,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
         userInfo?.firstName
       ).catch(err => {
         console.error('Error starting conversation:', err);
-        return { allowed: true, session_id: undefined, message: undefined, limits: undefined }; // Allow conversation on error
+        return { allowed: true, session_id: undefined, message: undefined, limits: undefined };
       });
 
       if (startResult && !startResult.allowed) {
@@ -648,6 +648,22 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
         setConversationLimits(startResult.limits || null);
         setIsConversationAllowed(false);
         return;
+      }
+    }
+
+    // Start conversation in genieConversationService for persistence
+    if (!genieConversationService.isConversationActive()) {
+      const result = await genieConversationService.startConversation({
+        userEmail: userInfo?.email,
+        userName: userInfo?.firstName,
+        context: context!
+      });
+      
+      if (!result.success) {
+        console.error('Failed to start conversation tracking:', result.error);
+        toast({ title: 'Warning', description: 'Conversation may not be saved', variant: 'destructive' });
+      } else {
+        console.log('✅ Conversation tracking started:', result.conversationId);
       }
     }
 
@@ -1901,17 +1917,15 @@ Ask me anything to get started!`;
       />
       
       {/* Human Escalation Form */}
-      <AnimatePresence key="human-escalation-presence">
-        {showHumanEscalation && userInfo && (
-          <HumanEscalationForm
-            isOpen={showHumanEscalation}
-            onClose={() => setShowHumanEscalation(false)}
-            onSubmit={handleHumanEscalation}
-            userInfo={userInfo}
-            context={context!}
-          />
-        )}
-      </AnimatePresence>
+      {showHumanEscalation && userInfo && (
+        <HumanEscalationForm
+          isOpen={showHumanEscalation}
+          onClose={() => setShowHumanEscalation(false)}
+          onSubmit={handleHumanEscalation}
+          userInfo={userInfo}
+          context={context!}
+        />
+      )}
       </AnimatePresence>
     </TooltipProvider>
   );
