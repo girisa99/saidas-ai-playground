@@ -163,7 +163,14 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
     }
     return null;
   });
-  const [context, setContext] = useState<Context>('technology'); // Default to technology
+  const [context, setContext] = useState<Context>(() => {
+    try {
+      const saved = sessionStorage.getItem('genie_context') as Context | null;
+      return (saved as Context) || 'technology';
+    } catch {
+      return 'technology';
+    }
+  }); // Persisted context
   const [selectedTopic, setSelectedTopic] = useState<string>('');
   const [inputMessage, setInputMessage] = useState('');
   const [showHumanEscalation, setShowHumanEscalation] = useState(false);
@@ -173,6 +180,11 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [showConfigWizard, setShowConfigWizard] = useState(false);
   const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
   const [ipAddress, setIpAddress] = useState<string | null>(null);
+
+  // Persist context across the session
+  useEffect(() => {
+    try { sessionStorage.setItem('genie_context', context); } catch {}
+  }, [context]);
   
   // Topic popover state
   const [showTopicPopover, setShowTopicPopover] = useState(false);
@@ -214,6 +226,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
       knowledgeBase: false,
       knowledgeBaseEnabled: false,
       mcpEnabled: false,
+      multiAgentEnabled: false,
       selectedModel: 'gpt-4o-mini',
       secondaryModel: 'claude-3-haiku',
       splitScreen: false,
@@ -747,9 +760,12 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             temperature: 0.7,
             maxTokens: 4000,
             useRAG: aiConfig.ragEnabled,
-            knowledgeBase: aiConfig.knowledgeBase,
+            knowledgeBase: aiConfig.knowledgeBase || aiConfig.knowledgeBaseEnabled,
             useMCP: aiConfig.mcpEnabled,
+            labelStudio: false,
             context: context || 'general',
+            enableSmartRouting: true,
+            enableMultiAgent: true,
             conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
             ...(imageUrls.length > 0 && { images: imageUrls })
           } as any),
@@ -761,9 +777,12 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             temperature: 0.7,
             maxTokens: 4000,
             useRAG: aiConfig.ragEnabled,
-            knowledgeBase: aiConfig.knowledgeBase,
+            knowledgeBase: aiConfig.knowledgeBase || aiConfig.knowledgeBaseEnabled,
             useMCP: aiConfig.mcpEnabled,
+            labelStudio: false,
             context: context || 'general',
+            enableSmartRouting: true,
+            enableMultiAgent: true,
             conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
             ...(imageUrls.length > 0 && { images: imageUrls })
           } as any)

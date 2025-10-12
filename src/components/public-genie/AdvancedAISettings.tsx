@@ -532,7 +532,7 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
             </div>
             <Switch
               checked={config.knowledgeBaseEnabled}
-              onCheckedChange={(checked) => updateConfig({ knowledgeBaseEnabled: checked })}
+              onCheckedChange={(checked) => updateConfig({ knowledgeBaseEnabled: checked, knowledgeBase: checked })}
             />
           </div>
           
@@ -578,7 +578,7 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
             </div>
             <Switch
               checked={config.splitScreenEnabled}
-              onCheckedChange={(checked) => updateConfig({ splitScreenEnabled: checked })}
+              onCheckedChange={(checked) => updateConfig({ splitScreenEnabled: checked, splitScreen: checked })}
             />
           </div>
           
