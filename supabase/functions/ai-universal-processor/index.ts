@@ -536,7 +536,12 @@ async function suggestKnowledgeUpdates(prompt: string, response: string, context
     });
 
     const analysisData = await gapAnalysis.json();
-    const analysis = JSON.parse(analysisData.choices[0].message.content);
+    let rawContent = analysisData.choices[0].message.content;
+    
+    // Strip markdown code blocks if present
+    rawContent = rawContent.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    
+    const analysis = JSON.parse(rawContent);
 
     if (analysis.hasGap) {
       // Store the suggestion for approval

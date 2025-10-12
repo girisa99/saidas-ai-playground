@@ -745,9 +745,14 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             prompt: enhancedPrompt,
             systemPrompt,
             temperature: 0.7,
-            maxTokens: 1000,
+            maxTokens: 4000,
+            useRAG: aiConfig.ragEnabled,
+            knowledgeBase: aiConfig.knowledgeBase,
+            useMCP: aiConfig.mcpEnabled,
+            context: context || 'general',
+            conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
             ...(imageUrls.length > 0 && { images: imageUrls })
-          }),
+          } as any),
           generateResponse({
             provider: secondaryProvider as any,
             model: secondaryModel,
@@ -755,8 +760,13 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             systemPrompt,
             temperature: 0.7,
             maxTokens: 4000,
+            useRAG: aiConfig.ragEnabled,
+            knowledgeBase: aiConfig.knowledgeBase,
+            useMCP: aiConfig.mcpEnabled,
+            context: context || 'general',
+            conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
             ...(imageUrls.length > 0 && { images: imageUrls })
-          })
+          } as any)
         ]);
 
         setLoadingStates({ primary: false, secondary: false });
@@ -765,7 +775,19 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
         const secondaryRes = results[1].status === 'fulfilled' ? results[1].value : null;
 
         if (primaryRes) {
-          const personalizedPrimary = addPersonalityToResponse(primaryRes.content);
+          // ========== RICH MEDIA ENHANCEMENT FOR PRIMARY ==========
+          const enhancedPrimary = enhanceResponseWithTriage(
+            primaryRes.content,
+            primaryRes.triageData || null
+          );
+          
+          let enhancedPrimaryContent = addHumorIfAppropriate(
+            enhancedPrimary.content,
+            primaryRes.triageData || null
+          );
+          
+          const personalizedPrimary = addPersonalityToResponse(enhancedPrimaryContent);
+          
           const primaryMessage = {
             role: 'assistant' as const,
             content: personalizedPrimary,
@@ -786,7 +808,19 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
         }
 
         if (secondaryRes) {
-          const personalizedSecondary = addPersonalityToResponse(secondaryRes.content);
+          // ========== RICH MEDIA ENHANCEMENT FOR SECONDARY ==========
+          const enhancedSecondary = enhanceResponseWithTriage(
+            secondaryRes.content,
+            secondaryRes.triageData || null
+          );
+          
+          let enhancedSecondaryContent = addHumorIfAppropriate(
+            enhancedSecondary.content,
+            secondaryRes.triageData || null
+          );
+          
+          const personalizedSecondary = addPersonalityToResponse(enhancedSecondaryContent);
+          
           const secondaryMessage = {
             role: 'assistant' as const,
             content: personalizedSecondary,
@@ -802,6 +836,28 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             ...prev,
             secondary: [...prev.secondary, secondaryMessage]
           }));
+          
+          // ========== MILESTONE SUGGESTIONS FOR MULTI-MODE ==========
+          const milestones = [3, 5, 7];
+          const userMessageCount = messages.filter(m => m.role === 'user').length + 1;
+          
+          if (milestones.includes(userMessageCount)) {
+            const suggestions = generateMilestoneSuggestions(
+              userMessageCount,
+              messages.map(m => ({ role: m.role, content: m.content })),
+              secondaryRes.triageData || null
+            );
+            
+            if (suggestions.length > 0) {
+              setTimeout(() => {
+                toast({
+                  title: `💡 Milestone ${userMessageCount} - Suggested Topics`,
+                  description: suggestions[0],
+                  duration: 10000
+                });
+              }, 2000);
+            }
+          }
         } else {
           toast({ title: 'Secondary model unavailable', description: 'We adjusted to improve reliability. You can change it in settings.', variant: 'default' });
         }
@@ -819,6 +875,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
           useMCP: aiConfig.mcpEnabled,
           labelStudio: false,
           context: context || 'general',
+          conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
           ...(imageUrls.length > 0 && { images: imageUrls })
         } as any);
 
@@ -871,22 +928,27 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             // ========== MILESTONE SUGGESTIONS ==========
             // Check if we've hit a milestone (3, 5, 7 messages)
             const milestones = [3, 5, 7];
-            const currentCount = messages.length + 1;
-            if (milestones.includes(currentCount)) {
+            const userMessageCount = messages.filter(m => m.role === 'user').length + 1;
+            
+            console.log(`📊 Message Milestone Check: ${userMessageCount} user messages`);
+            
+            if (milestones.includes(userMessageCount)) {
               const suggestions = generateMilestoneSuggestions(
-                currentCount,
+                userMessageCount,
                 messages.map(m => ({ role: m.role, content: m.content })),
                 response.triageData || null
               );
               
+              console.log(`💡 Milestone ${userMessageCount} suggestions:`, suggestions);
+              
               if (suggestions.length > 0) {
                 setTimeout(() => {
                   toast({
-                    title: `💡 Suggested Topics`,
+                    title: `💡 Milestone ${userMessageCount} - Suggested Topics`,
                     description: suggestions[0],
-                    duration: 8000
+                    duration: 10000
                   });
-                }, 1500);
+                }, 2000);
               }
             }
           }
