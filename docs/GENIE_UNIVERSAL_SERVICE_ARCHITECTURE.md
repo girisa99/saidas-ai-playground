@@ -56,6 +56,22 @@ CREATE POLICY "Users can view their own agents" ON agents
   FOR SELECT USING (auth.uid() = created_by);
 ```
 
+**Model Support (50+ Models via Lovable AI Gateway):**
+- ✅ **OpenAI:** GPT-5 family (standard, mini, nano), GPT-4o variants
+- ✅ **Google:** Gemini 2.5 (Pro, Flash, Lite), Gemini Pro Vision
+- ✅ **Anthropic:** Claude 4 (Sonnet, Opus), Claude 3 (all variants)
+- ✅ **Small LMs:** Phi-3, Llama 3.1, Mistral 7B, Gemma, Qwen
+- ✅ **Vision LMs:** LLaVA 1.6, CogVLM, PaliGemma
+- ✅ **Healthcare:** BioGPT, Med-PaLM 2, Clinical BERT, PubMedBERT, BioMistral
+
+**Contextual Intelligence (How Context + RAG + KB + MCP Work):**
+1. User sets context ('healthcare' | 'technology') → filters knowledge domain
+2. Triage analyzes query → determines complexity, domain, urgency, vision needs
+3. Model router selects optimal model based on triage + context + user preference
+4. RAG searches `universal_knowledge_base` filtered by domain + content_type
+5. MCP (future) augments with real-time external data
+6. System prompt enhanced with: context + triage insights + RAG results + MCP data
+
 **Migration Path to Multi-Tenancy:**
 - Phase 3A: Add user-scoped `genie_deployments` (no workspace)
 - Phase 4: Add `workspace_id` to all tables, migrate to workspace-scoped RLS

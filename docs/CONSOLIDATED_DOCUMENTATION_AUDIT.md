@@ -65,8 +65,12 @@ ROOT: IMPLEMENTATION_GOVERNANCE.md ← START HERE before ANY implementation
 |----------|-----------|-----------|-------------|--------|
 | **Core AI** |
 | Basic AI calls | ✅ | ✅ | ✅ | ✅ COMPLETE (35%) |
-| Model mapping | ✅ | N/A | ✅ | ✅ Hardcoded only |
+| Model mapping (50+ models) | ✅ | N/A | ✅ | ✅ COMPLETE (Google, OpenAI, Claude, SLM, VLM, Healthcare) |
 | Streaming SSE | ✅ | N/A | ✅ | ✅ COMPLETE |
+| Claude model support | ✅ | N/A | ✅ | ✅ COMPLETE (All Claude 3/4 variants mapped) |
+| SLM support | ✅ | N/A | ✅ | ✅ COMPLETE (Phi, Llama, Mistral, Gemma, Qwen) |
+| Vision model support | ✅ | N/A | ✅ | ✅ COMPLETE (GPT-4o, Gemini Pro Vision, LLaVA, CogVLM) |
+| Healthcare models | ✅ | N/A | ✅ | ✅ COMPLETE (BioGPT, Med-PaLM 2, Clinical BERT, etc.) |
 | **Intelligence** |
 | Context-based routing | ✅ | N/A | ✅ | ✅ COMPLETE (SLM triage routing) |
 | Proactive recommendations | ✅ | N/A | ✅ | ✅ COMPLETE (Milestone suggestions 3,5,7) |
@@ -101,8 +105,71 @@ ROOT: IMPLEMENTATION_GOVERNANCE.md ← START HERE before ANY implementation
 | Templates | ✅ | ✅ | ✅ | ✅ COMPLETE |
 | Performance metrics | ✅ | ✅ | ⚠️ | ⚠️ Tables exist, limited UI |
 
-**Overall Implementation:** **~40%**  
-**Gap:** **~60%** (AI routing intelligence, multi-model, multi-tenancy, advanced features)
+**Overall Implementation:** **~45%** (+5% from expanded model support)
+**Gap:** **~55%** (Multi-tenancy, deployment management, semantic RAG, advanced features)
+
+### Contextual Preference Integration (45% IMPLEMENTED)
+
+**How Context + RAG + KB + MCP Work Together:**
+
+1. **Contextual Reference Flow:**
+   - User sets context ('healthcare' or 'technology') via `AdvancedAISettings`
+   - Context → `aiTriageService.detectDomain()` → determines specialized knowledge domain
+   - Context → `useUniversalKnowledgeTopics` → fetches relevant topic suggestions
+   - Context → edge function `searchKnowledgeBase()` → filters results by domain
+
+2. **Universal Knowledge Base (RAG):**
+   - **Status:** ✅ Keyword search COMPLETE | ❌ Semantic vector search MISSING
+   - Edge function queries `universal_knowledge_base` table with `domain` filter
+   - Returns: `finding_name`, `description`, `clinical_context`, `clinical_significance`
+   - Injected into system prompt: "Relevant context from knowledge base: {ragContext}"
+
+3. **MCP (Model Context Protocol):**
+   - **Status:** ⚠️ Code skeleton exists, no database persistence
+   - Edge function accepts `useMCP: true` and `mcpServers: string[]`
+   - Placeholder for external data sources (APIs, databases, real-time data)
+   - NOT YET IMPLEMENTED in production
+
+4. **Preference Inheritance Chain:**
+   ```
+   User Preferences (AdvancedAISettings)
+     ↓
+   AI Triage (complexity, domain, urgency)
+     ↓
+   Model Selection (based on triage + context)
+     ↓
+   Knowledge Retrieval (RAG filtered by domain)
+     ↓
+   MCP Augmentation (future: real-time data)
+     ↓
+   Enhanced System Prompt → AI Model
+   ```
+
+5. **Example Flow (Healthcare Context):**
+   ```
+   User Query: "Analyze this chest X-ray"
+   Context: 'healthcare'
+     ↓
+   Triage: complexity='high', domain='healthcare', requires_vision=true
+     ↓
+   Model Router: selects 'google/gemini-2.5-pro' (best for medical imaging)
+     ↓
+   RAG: searches universal_knowledge_base WHERE domain='healthcare' AND content_type='medical_imaging'
+     ↓
+   Knowledge: returns radiology protocols, clinical guidelines
+     ↓
+   MCP: (future) fetches patient history, recent lab results
+     ↓
+   Enhanced Prompt: "You are a medical imaging specialist. Context: [radiology protocols]. Patient: [history]. Analyze: [image]"
+   ```
+
+**Implementation Status:**
+- ✅ Context → Domain detection (100%)
+- ✅ Context → Topic suggestions (100%)
+- ✅ Context → RAG filtering (keyword only, 50%)
+- ❌ Semantic RAG (vector embeddings, 0%)
+- ⚠️ MCP integration (skeleton only, 20%)
+- ✅ Contextual system prompt enhancement (100%)
 
 ---
 

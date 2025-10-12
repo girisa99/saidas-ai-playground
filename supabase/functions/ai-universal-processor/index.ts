@@ -1025,17 +1025,27 @@ serve(async (req) => {
     const modelMapping: Record<string, string> = {
       // Healthcare/Clinical models -> Gemini Pro for best medical reasoning
       'clinical-bert': 'google/gemini-2.5-pro',
+      'bioclinical-bert': 'google/gemini-2.5-pro',
       'bioclinicalbert': 'google/gemini-2.5-pro',
       'biobert': 'google/gemini-2.5-pro',
       'medicalbert': 'google/gemini-2.5-pro',
+      'biogpt': 'google/gemini-2.5-pro',
+      'med-palm-2': 'google/gemini-2.5-pro',
+      'pubmedbert': 'google/gemini-2.5-pro',
+      'galactica-6.7b': 'google/gemini-2.5-flash',
+      'biomistral-7b': 'google/gemini-2.5-flash',
       
-      // Claude models
+      // Claude models (ALL mapped to Lovable AI Gateway)
       'claude-3-haiku': 'openai/gpt-5-mini', // Fast, efficient
       'claude-3-5-haiku': 'openai/gpt-5-mini',
       'claude-3-opus': 'openai/gpt-5', // Most capable
       'claude-3-5-opus': 'openai/gpt-5',
+      'claude-sonnet-4-5': 'openai/gpt-5', // Latest Sonnet → GPT-5 equivalent
+      'claude-opus-4-1-20250805': 'openai/gpt-5',
       'claude-3-sonnet': 'google/gemini-2.5-flash', // Balanced
       'claude-3-5-sonnet': 'google/gemini-2.5-flash',
+      'claude-sonnet-4-20250514': 'google/gemini-2.5-flash',
+      'claude-3-7-sonnet-20250219': 'google/gemini-2.5-flash',
       
       // OpenAI models (map to Lovable AI equivalents)
       'gpt-4o': 'openai/gpt-5',
@@ -1048,7 +1058,21 @@ serve(async (req) => {
       'gemini-2.5-flash': 'google/gemini-2.5-flash',
       'gemini-2.5-flash-lite': 'google/gemini-2.5-flash-lite',
       'gemini-pro': 'google/gemini-2.5-pro',
+      'gemini-pro-vision': 'google/gemini-2.5-pro',
       'gemini-flash': 'google/gemini-2.5-flash',
+      
+      // Small Language Models (SLMs) → Lite models for cost/speed
+      'phi-3.5-mini': 'google/gemini-2.5-flash-lite',
+      'phi-3-mini': 'google/gemini-2.5-flash-lite',
+      'llama-3.1-8b': 'google/gemini-2.5-flash-lite',
+      'mistral-7b': 'google/gemini-2.5-flash-lite',
+      'gemma-7b': 'google/gemini-2.5-flash-lite',
+      'qwen-7b': 'google/gemini-2.5-flash-lite',
+      
+      // Vision Language Models (VLMs) → Gemini Pro for vision tasks
+      'llava-1.6': 'google/gemini-2.5-pro',
+      'cogvlm': 'google/gemini-2.5-pro',
+      'paligemma': 'google/gemini-2.5-flash',
       
       // Image generation
       'dall-e-3': 'google/gemini-2.5-flash-image-preview',
