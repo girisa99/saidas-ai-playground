@@ -470,18 +470,29 @@ async function callLovableAI(request: AIRequest, ragContext?: string) {
     messages.push({ role: 'user', content: request.prompt });
   }
 
+  // Build request body - handle parameter differences between providers
+  const requestBody: any = {
+    model: request.model, // e.g., google/gemini-2.5-flash, openai/gpt-5-mini
+    messages,
+  };
+
+  // OpenAI models (gpt-5, gpt-4.1+, o3, o4) require max_completion_tokens and don't support temperature
+  if (request.model?.startsWith('openai/')) {
+    requestBody.max_completion_tokens = request.maxTokens || 4000;
+    // Don't set temperature for newer OpenAI models - they don't support it
+  } else {
+    // Google/Gemini models use max_tokens and temperature
+    requestBody.temperature = request.temperature || 0.7;
+    requestBody.max_tokens = request.maxTokens || 4000;
+  }
+
   const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${lovableApiKey}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      model: request.model, // e.g., google/gemini-2.5-flash, openai/gpt-5-mini
-      messages,
-      temperature: request.temperature || 0.7,
-      max_tokens: request.maxTokens || 4000,
-    }),
+    body: JSON.stringify(requestBody),
   });
 
   const data = await response.json();

@@ -786,7 +786,62 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             primaryRes.triageData || null
           );
           
-          const personalizedPrimary = addPersonalityToResponse(enhancedPrimaryContent);
+          let personalizedPrimary = addPersonalityToResponse(enhancedPrimaryContent);
+          
+          // Add RAG/KB context indicators
+          if (primaryRes.ragContext) {
+            personalizedPrimary += `\n\n_📚 Response enhanced with knowledge base context_`;
+          }
+          if (primaryRes.knowledgeBaseResults) {
+            personalizedPrimary += `\n\n_🔍 Used ${primaryRes.knowledgeBaseResults.length || 0} knowledge entries_`;
+          }
+          
+          // ========== SMART ROUTING OPTIMIZATION DISPLAY ==========
+          if (primaryRes.triageData) {
+            const optimizationDetails: string[] = [];
+            optimizationDetails.push(`\n\n**🧠 Smart Routing Optimization:**`);
+            optimizationDetails.push(`• **Complexity**: ${primaryRes.triageData.complexity}`);
+            optimizationDetails.push(`• **Domain**: ${primaryRes.triageData.domain}`);
+            optimizationDetails.push(`• **Urgency**: ${primaryRes.triageData.urgency}`);
+            optimizationDetails.push(`• **Best Format**: ${primaryRes.triageData.best_format}`);
+            
+            if (primaryRes.triageData.emotional_tone) {
+              optimizationDetails.push(`• **Tone Applied**: ${primaryRes.triageData.emotional_tone}`);
+            }
+            
+            if (primaryRes.triageData.reasoning) {
+              optimizationDetails.push(`\n**Routing Reasoning**: ${primaryRes.triageData.reasoning}`);
+            }
+            
+            optimizationDetails.push(`\n_Confidence: ${Math.round(primaryRes.triageData.confidence * 100)}%_`);
+            
+            if (primaryRes.triageData.requires_vision) {
+              optimizationDetails.push(`_👁️ Vision Analysis Applied_`);
+            }
+            
+            personalizedPrimary += optimizationDetails.join('\n');
+          }
+          
+          // ========== MULTI-AGENT COLLABORATION DISPLAY ==========
+          if (primaryRes.collaborationMode) {
+            const collabBadges: string[] = [];
+            collabBadges.push(`🤖 ${primaryRes.agentCount || 0} Agents Collaborated`);
+            collabBadges.push(`📊 Mode: ${primaryRes.collaborationMode}`);
+            
+            if (primaryRes.consensusScore) {
+              collabBadges.push(`✅ Consensus: ${Math.round(primaryRes.consensusScore * 100)}%`);
+            }
+            
+            personalizedPrimary += `\n\n_${collabBadges.join(' • ')}_`;
+            
+            // Show agent breakdown if available
+            if (primaryRes.agentResponses && primaryRes.agentResponses.length > 0) {
+              personalizedPrimary += '\n\n**Agent Collaboration Details:**\n';
+              primaryRes.agentResponses.forEach((agent: any, idx: number) => {
+                personalizedPrimary += `\n${idx + 1}. **${agent.agent}**: ${agent.content}\n`;
+              });
+            }
+          }
           
           const primaryMessage = {
             role: 'assistant' as const,
@@ -819,7 +874,62 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             secondaryRes.triageData || null
           );
           
-          const personalizedSecondary = addPersonalityToResponse(enhancedSecondaryContent);
+          let personalizedSecondary = addPersonalityToResponse(enhancedSecondaryContent);
+          
+          // Add RAG/KB context indicators
+          if (secondaryRes.ragContext) {
+            personalizedSecondary += `\n\n_📚 Response enhanced with knowledge base context_`;
+          }
+          if (secondaryRes.knowledgeBaseResults) {
+            personalizedSecondary += `\n\n_🔍 Used ${secondaryRes.knowledgeBaseResults.length || 0} knowledge entries_`;
+          }
+          
+          // ========== SMART ROUTING OPTIMIZATION DISPLAY ==========
+          if (secondaryRes.triageData) {
+            const optimizationDetails: string[] = [];
+            optimizationDetails.push(`\n\n**🧠 Smart Routing Optimization:**`);
+            optimizationDetails.push(`• **Complexity**: ${secondaryRes.triageData.complexity}`);
+            optimizationDetails.push(`• **Domain**: ${secondaryRes.triageData.domain}`);
+            optimizationDetails.push(`• **Urgency**: ${secondaryRes.triageData.urgency}`);
+            optimizationDetails.push(`• **Best Format**: ${secondaryRes.triageData.best_format}`);
+            
+            if (secondaryRes.triageData.emotional_tone) {
+              optimizationDetails.push(`• **Tone Applied**: ${secondaryRes.triageData.emotional_tone}`);
+            }
+            
+            if (secondaryRes.triageData.reasoning) {
+              optimizationDetails.push(`\n**Routing Reasoning**: ${secondaryRes.triageData.reasoning}`);
+            }
+            
+            optimizationDetails.push(`\n_Confidence: ${Math.round(secondaryRes.triageData.confidence * 100)}%_`);
+            
+            if (secondaryRes.triageData.requires_vision) {
+              optimizationDetails.push(`_👁️ Vision Analysis Applied_`);
+            }
+            
+            personalizedSecondary += optimizationDetails.join('\n');
+          }
+          
+          // ========== MULTI-AGENT COLLABORATION DISPLAY ==========
+          if (secondaryRes.collaborationMode) {
+            const collabBadges: string[] = [];
+            collabBadges.push(`🤖 ${secondaryRes.agentCount || 0} Agents Collaborated`);
+            collabBadges.push(`📊 Mode: ${secondaryRes.collaborationMode}`);
+            
+            if (secondaryRes.consensusScore) {
+              collabBadges.push(`✅ Consensus: ${Math.round(secondaryRes.consensusScore * 100)}%`);
+            }
+            
+            personalizedSecondary += `\n\n_${collabBadges.join(' • ')}_`;
+            
+            // Show agent breakdown if available
+            if (secondaryRes.agentResponses && secondaryRes.agentResponses.length > 0) {
+              personalizedSecondary += '\n\n**Agent Collaboration Details:**\n';
+              secondaryRes.agentResponses.forEach((agent: any, idx: number) => {
+                personalizedSecondary += `\n${idx + 1}. **${agent.agent}**: ${agent.content}\n`;
+              });
+            }
+          }
           
           const secondaryMessage = {
             role: 'assistant' as const,
