@@ -879,39 +879,6 @@ Create unified response that:
     totalLatency
   };
 }
-      prompt: synthPrompt,
-      systemPrompt: context
-    }, context);
-
-    agentResponses.push({
-      agent: synthesizer,
-      content: synthesis
-    });
-    totalCost += 0.02;
-
-    const totalLatency = Date.now() - startTime;
-    const consensusScore = 0.88; // Could calculate from responses
-
-    return {
-      mode: 'ensemble',
-      primaryResponse: synthesis,
-      synthesizedResponse: synthesis,
-      agentResponses,
-      consensusScore,
-      totalCost,
-      totalLatency
-    };
-  }
-
-  return {
-    mode: 'ensemble',
-    primaryResponse: agentResponses[0].content,
-    agentResponses,
-    totalCost,
-    totalLatency: Date.now() - startTime
-  };
-}
-
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
