@@ -1149,24 +1149,37 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
               }
             }
             
-            // ========== SMART ROUTING OPTIMIZATION DISPLAY ==========
+            // ========== AI OPTIMIZATION TRANSPARENCY ==========
               if (response.triageData) {
-                console.log('📊 Displaying Smart Routing Optimization:', response.triageData);
+                console.log('📊 Displaying AI Optimization:', response.triageData);
+                messageContent += `\n\n---\n\n### 🤖 AI Optimization Details\n\n`;
+                
                 const optimizationDetails: string[] = [];
-                optimizationDetails.push(`\n\n**🧠 Smart Routing Optimization:**`);
-                optimizationDetails.push(`• **Model Used**: ${response.model}`);
-                if (response.triageData.suggested_model) {
-                  optimizationDetails.push(`• **Recommended Model**: ${response.triageData.suggested_model}`);
+                
+                // Show original vs optimized model
+                optimizationDetails.push(`**🎯 Model Selection**:`);
+                const originalModel = aiConfig.selectedModel || 'gpt-4o-mini';
+                const selectedModel = response.model || response.triageData.suggested_model;
+                
+                optimizationDetails.push(`• Requested: \`${originalModel}\``);
+                if (selectedModel && selectedModel !== originalModel) {
+                  optimizationDetails.push(`• **Optimized to**: \`${selectedModel}\` ✨`);
+                  optimizationDetails.push(`• _Reason: ${response.triageData.reasoning || 'Better suited for this query'}_`);
+                } else {
+                  optimizationDetails.push(`• **Used**: \`${selectedModel || originalModel}\` (No optimization needed)`);
                 }
-                optimizationDetails.push(`• **Query Complexity**: ${response.triageData.complexity || 'N/A'}`);
-                optimizationDetails.push(`• **Domain Detected**: ${response.triageData.domain || 'general'}`);
-                optimizationDetails.push(`• **Urgency Level**: ${response.triageData.urgency || 'normal'}`);
+                
+                // Show triage analysis
+                optimizationDetails.push(`\n**📊 Query Analysis**:`);
+                optimizationDetails.push(`• Complexity: ${(response.triageData.complexity || 'medium').toUpperCase()}`);
+                optimizationDetails.push(`• Domain: ${(response.triageData.domain || 'general').toUpperCase()}`);
+                optimizationDetails.push(`• Urgency: ${(response.triageData.urgency || 'medium').toUpperCase()}`);
                 
                 // Format recommendation with explanation
                 const formatDisplay = response.triageData.best_format || 'text';
                 const formatExplanations: Record<string, string> = {
                   'table': '📊 Table (Structured data with rows/columns)',
-                  'html': '🌐 HTML (Rich formatted content)',
+                  'html': '🌐 HTML (Rich formatted content with images/videos)',
                   'text': '📝 Text (Plain narrative)',
                   'list': '📋 List (Bullet points or numbered)'
                 };
@@ -1181,18 +1194,30 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
                   optimizationDetails.push(`• **Tone Applied**: ${toneEmojis[response.triageData.emotional_tone] || response.triageData.emotional_tone}`);
                 }
                 
-                if (response.triageData.reasoning) {
-                  optimizationDetails.push(`\n**💡 Routing Reasoning**: _${response.triageData.reasoning}_`);
-                }
-                
-                optimizationDetails.push(`\n_AI Confidence: ${Math.round((response.triageData.confidence || 0) * 100)}%_`);
-                
                 if (response.triageData.requires_vision) {
-                  optimizationDetails.push(`_👁️ Vision Analysis Enabled_`);
+                  optimizationDetails.push(`• **Vision Analysis**: 👁️ Enabled (Image/Video capable)`);
                 }
+                
+                // Show SLM optimization path
+                optimizationDetails.push(`\n**⚡ Optimization Path**:`);
+                optimizationDetails.push(`1. 🔍 Initial Query Analysis (SLM triage)`);
+                optimizationDetails.push(`2. 🎯 Model Selection (Based on complexity & domain)`);
+                if (response.triageData.requires_vision) {
+                  optimizationDetails.push(`3. 👁️ Vision Model Routing (VLM for image analysis)`);
+                }
+                if (aiConfig.knowledgeBaseEnabled) {
+                  optimizationDetails.push(`4. 📚 Knowledge Base Integration (RAG)`);
+                }
+                optimizationDetails.push(`5. 🤖 ${response.triageData.suggested_model || selectedModel || 'Selected LLM'} Processing`);
+                
+                if (response.triageData.reasoning) {
+                  optimizationDetails.push(`\n**💡 Routing Logic**: _${response.triageData.reasoning}_`);
+                }
+                
+                optimizationDetails.push(`\n_AI Routing Confidence: ${Math.round((response.triageData.confidence || 0) * 100)}%_`);
                 
                 messageContent += optimizationDetails.join('\n');
-                console.log('✅ Optimization panel added to response');
+                console.log('✅ AI Optimization transparency panel added');
               } else {
                 console.warn('⚠️ No triage data available for optimization display');
               }

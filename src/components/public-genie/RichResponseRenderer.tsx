@@ -19,10 +19,16 @@ interface RichResponseRendererProps {
 }
 
 export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ content, oncologyProducts }) => {
-  // Enhance content formatting for better readability
+  // Enhance content formatting for better readability and add citations support
   const enhancedContent = content
     .replace(/^• /gm, '🔹 ')
-    .replace(/\*\*(.*?)\*\*/g, '**$1**'); // Ensure bold formatting is preserved
+    .replace(/\*\*(.*?)\*\*/g, '**$1**') // Ensure bold formatting is preserved
+    // Support citation format: [1], [2], etc.
+    .replace(/\[(\d+)\]/g, '<sup class="citation">[$1]</sup>')
+    // Support reference links format: [Source: URL]
+    .replace(/\[Source:\s*(https?:\/\/[^\]]+)\]/g, '📎 [Reference Link]($1)')
+    // Support PDF references
+    .replace(/\[PDF:\s*([^\]]+)\]/g, '📄 [View PDF: $1]');
 
   return (
     <div className="space-y-4">
@@ -181,6 +187,9 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
           ),
           em: ({ node, ...props }) => (
             <em className="italic text-muted-foreground" {...props} />
+          ),
+          sup: ({ node, ...props }) => (
+            <sup className="text-primary font-medium ml-0.5" {...props} />
           )
         }}
       >
