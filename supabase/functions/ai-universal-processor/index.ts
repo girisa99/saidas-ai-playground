@@ -668,6 +668,100 @@ async function logToLabelStudio(request: AIRequest, response: string, ragContext
 }
 
 // ============================================================
+// ONCOLOGY EXTRACTION HELPERS
+// ============================================================
+
+function isOncologyQuery(text: string): boolean {
+  const t = (text || '').toLowerCase();
+  return /(oncology|cell|gene|radiol|chemo|immuno|ndc|dose|manufacturer|biosimilar|modalit)/.test(t);
+}
+
+async function extractOncologyProducts(prompt: string, content: string) {
+  try {
+    const body: any = {
+      model: 'google/gemini-2.5-flash',
+      messages: [
+        { role: 'system', content: 'Extract a clean, deduplicated list of oncology products with fields. Do not include prose.' },
+        { role: 'user', content: `From the following question and draft answer, extract products.\n\nQuestion:\n${prompt}\n\nDraft Answer:\n${content}` }
+      ],
+      tools: [
+        {
+          type: 'function',
+          function: {
+            name: 'extract_oncology_products',
+            description: 'Return oncology products mentioned with dose, NDC, modality, application and manufacturer when available',
+            parameters: {
+              type: 'object',
+              properties: {
+                products: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      product: { type: 'string' },
+                      dose: { type: 'string' },
+                      ndc: { type: 'string' },
+                      modality: { type: 'string' },
+                      application: { type: 'string' },
+                      manufacturer: { type: 'string' }
+                    },
+                    required: ['product'],
+                    additionalProperties: false
+                  }
+                }
+              },
+              required: ['products'],
+              additionalProperties: false
+            }
+          }
+        }
+      ],
+      tool_choice: { type: 'function', function: { name: 'extract_oncology_products' } }
+    };
+
+    const resp = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${lovableApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body)
+    });
+
+    const data = await resp.json();
+    if (!resp.ok) {
+      console.error('Oncology extractor error:', data);
+      return [];
+    }
+
+    // Try to read tool call arguments first
+    const choice = data?.choices?.[0];
+    const toolCall = choice?.message?.tool_calls?.[0] || choice?.tool_calls?.[0];
+    if (toolCall?.function?.arguments) {
+      try {
+        const args = JSON.parse(toolCall.function.arguments);
+        if (Array.isArray(args.products)) return args.products;
+      } catch (_) { /* fallthrough */ }
+    }
+
+    // Fallback: try to parse content as JSON
+    const text = choice?.message?.content || choice?.content || '';
+    if (typeof text === 'string') {
+      const cleaned = text.replace(/```json\n?|```/g, '').trim();
+      try {
+        const parsed = JSON.parse(cleaned);
+        if (Array.isArray(parsed?.products)) return parsed.products;
+      } catch (_) { /* ignore */ }
+    }
+
+    return [];
+  } catch (e) {
+    console.error('extractOncologyProducts failed:', e);
+    return [];
+  }
+}
+
+// ============================================================
 // MULTI-AGENT COLLABORATION FUNCTIONS
 // ============================================================
 
@@ -1175,6 +1269,15 @@ serve(async (req) => {
       logToLabelStudio(request, content, fullContext)
     ]);
 
+    // Optional oncology extraction
+    let oncologyProducts: any[] | undefined = undefined;
+    if (triageData?.domain === 'healthcare' && isOncologyQuery(request.prompt)) {
+      oncologyProducts = await extractOncologyProducts(request.prompt, content);
+      if (oncologyProducts && oncologyProducts.length === 0) {
+        oncologyProducts = undefined; // keep payload clean
+      }
+    }
+
     // ========== INTEGRATION POINT 3: Return Triage Data ==========
     return new Response(JSON.stringify({ 
       content,
@@ -1184,6 +1287,7 @@ serve(async (req) => {
       mcpUsed: mcpContext.length > 0,
       hasVision: !!(request.imageUrl || request.images),
       labelStudioLogged: !!(request.labelStudioProject && labelStudioApiKey),
+      oncologyProducts,
       // Smart routing metadata
       triageData: triageData ? {
         complexity: triageData.complexity,
@@ -1193,7 +1297,8 @@ serve(async (req) => {
         best_format: triageData.best_format,
         emotional_tone: triageData.emotional_tone,
         requires_vision: triageData.requires_vision,
-        reasoning: triageData.reasoning
+        reasoning: triageData.reasoning,
+        suggested_model: triageData.suggested_model
       } : null
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

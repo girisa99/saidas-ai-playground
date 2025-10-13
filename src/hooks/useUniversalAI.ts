@@ -28,6 +28,8 @@ interface AIResponse {
   agentCount?: number;
   consensusScore?: number;
   agentResponses?: Array<{ agent: string; content: string }>;
+  // Oncology extractor output
+  oncologyProducts?: Array<{ product: string; dose?: string; ndc?: string; modality?: string; application?: string; manufacturer?: string }>;
 }
 
 interface UseUniversalAIOptions {
@@ -113,7 +115,7 @@ export const useUniversalAI = () => {
 
       console.log('✅ Universal AI Response:', {
         provider: request.provider,
-        model: data.modelUsed || request.model,
+        model: data.model || data.modelUsed || request.model,
         contentLength: data.content?.length || 0,
         ragUsed: data.ragContext ? 'Yes' : 'No',
         knowledgeBaseUsed: data.knowledgeBaseResults ? 'Yes' : 'No',
