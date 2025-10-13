@@ -46,7 +46,7 @@ export function enhanceResponseWithTriage(
 
   // Format-specific enhancements
   if (triageData.best_format === 'table') {
-    enhancedContent = ensureTableFormat(enhancedContent);
+    enhancedContent = ensureTableFormat(enhancedContent, triageData);
     metadata.hasTables = true;
   } else if (triageData.best_format === 'html') {
     enhancedContent = enhanceWithHtmlStructure(enhancedContent);
@@ -78,25 +78,42 @@ export function enhanceResponseWithTriage(
 /**
  * Ensure response is formatted as a table if appropriate
  */
-function ensureTableFormat(content: string): string {
+function ensureTableFormat(content: string, triageData?: TriageResult | null): string {
   // If already has table markdown, return as-is
   if (content.includes('|') && content.includes('---')) {
     return content;
   }
 
-  // Check if content looks like it should be a table
-  const lines = content.split('\n').filter(l => l.trim());
-  if (lines.length < 3) return content;
+  // Try to convert key:value bullet sections into a simple two-column table
+  const lines = content.split('\n');
+  const kvRows: Array<[string, string]> = [];
+  const kvRegex = /^\s*(?:[-*•]\s*)?([A-Za-z][A-Za-z0-9 &()/+.-]{2,})\s*[:\-–]\s*(.+)\s*$/;
 
-  // Try to detect columnar data
-  const hasMultipleColons = lines.filter(l => (l.match(/:/g) || []).length >= 2).length > 2;
-  
-  if (hasMultipleColons) {
-    return `💡 **Here's the information in a structured table format:**
+  for (const line of lines) {
+    const m = line.match(kvRegex);
+    if (m) {
+      const key = m[1].trim();
+      const val = m[2].trim();
+      kvRows.push([key, val]);
+    }
+  }
 
-${content}
+  // Oncology-specific hinting: if we see NDC/Dose/Product, try to keep order
+  const lower = content.toLowerCase();
+  const oncologyLike = lower.includes('oncology') || lower.includes('ndc') || lower.includes('dose');
 
----`;
+  if (kvRows.length >= 3 || (oncologyLike && kvRows.length >= 2)) {
+    const header = oncologyLike
+      ? ['Product/Item', 'Details (Dose/NDC/Manufacturer if available)']
+      : ['Field', 'Value'];
+
+    const table = [
+      `| ${header[0]} | ${header[1]} |`,
+      `| ${'-'.repeat(header[0].length)} | ${'-'.repeat(header[1].length)} |`,
+      ...kvRows.map(([k, v]) => `| ${k} | ${v} |`)
+    ].join('\n');
+
+    return `${table}\n`;
   }
 
   return content;

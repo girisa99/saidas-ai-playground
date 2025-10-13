@@ -97,7 +97,7 @@ export const TopicSuggestionPopover: React.FC<TopicSuggestionPopoverProps> = ({
               <div className="flex flex-wrap gap-2">
                 {suggestions.map((suggestion, index) => (
                   <motion.button
-                    key={index}
+                    key={`${suggestion.topic}-${index}`}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.05 }}

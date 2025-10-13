@@ -897,7 +897,11 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             content: personalizedPrimary,
             timestamp: new Date().toISOString(),
             model: aiConfig.selectedModel,
-            provider: 'primary'
+            provider: 'primary',
+            metadata: {
+              triageSuggestedModel: primaryRes.triageData?.suggested_model,
+              best_format: primaryRes.triageData?.best_format
+            }
           };
           
           // Add to main messages array for conversation tracking
@@ -999,7 +1003,11 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             content: personalizedSecondary,
             timestamp: new Date().toISOString(),
             model: secondaryModel,
-            provider: 'secondary'
+            provider: 'secondary',
+            metadata: {
+              triageSuggestedModel: secondaryRes.triageData?.suggested_model,
+              best_format: secondaryRes.triageData?.best_format
+            }
           };
           
           // Add to main messages array for conversation tracking
@@ -1114,55 +1122,63 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             }
             
             // ========== SMART ROUTING OPTIMIZATION DISPLAY ==========
-            if (response.triageData) {
-              console.log('📊 Displaying Smart Routing Optimization:', response.triageData);
-              const optimizationDetails: string[] = [];
-              optimizationDetails.push(`\n\n**🧠 Smart Routing Optimization:**`);
-              optimizationDetails.push(`• **Query Complexity**: ${response.triageData.complexity || 'N/A'}`);
-              optimizationDetails.push(`• **Domain Detected**: ${response.triageData.domain || 'general'}`);
-              optimizationDetails.push(`• **Urgency Level**: ${response.triageData.urgency || 'normal'}`);
-              
-              // Format recommendation with explanation
-              const formatDisplay = response.triageData.best_format || 'text';
-              const formatExplanations: Record<string, string> = {
-                'table': '📊 Table (Structured data with rows/columns)',
-                'html': '🌐 HTML (Rich formatted content)',
-                'text': '📝 Text (Plain narrative)',
-                'list': '📋 List (Bullet points or numbered)'
-              };
-              optimizationDetails.push(`• **Recommended Format**: ${formatExplanations[formatDisplay] || formatDisplay}`);
-              
-              if (response.triageData.emotional_tone) {
-                const toneEmojis: Record<string, string> = {
-                  'empathetic': '💙 Empathetic & Supportive',
-                  'professional': '💼 Professional & Formal',
-                  'playful': '✨ Playful & Engaging'
+              if (response.triageData) {
+                console.log('📊 Displaying Smart Routing Optimization:', response.triageData);
+                const optimizationDetails: string[] = [];
+                optimizationDetails.push(`\n\n**🧠 Smart Routing Optimization:**`);
+                optimizationDetails.push(`• **Model Used**: ${response.model}`);
+                if (response.triageData.suggested_model) {
+                  optimizationDetails.push(`• **Recommended Model**: ${response.triageData.suggested_model}`);
+                }
+                optimizationDetails.push(`• **Query Complexity**: ${response.triageData.complexity || 'N/A'}`);
+                optimizationDetails.push(`• **Domain Detected**: ${response.triageData.domain || 'general'}`);
+                optimizationDetails.push(`• **Urgency Level**: ${response.triageData.urgency || 'normal'}`);
+                
+                // Format recommendation with explanation
+                const formatDisplay = response.triageData.best_format || 'text';
+                const formatExplanations: Record<string, string> = {
+                  'table': '📊 Table (Structured data with rows/columns)',
+                  'html': '🌐 HTML (Rich formatted content)',
+                  'text': '📝 Text (Plain narrative)',
+                  'list': '📋 List (Bullet points or numbered)'
                 };
-                optimizationDetails.push(`• **Tone Applied**: ${toneEmojis[response.triageData.emotional_tone] || response.triageData.emotional_tone}`);
+                optimizationDetails.push(`• **Recommended Format**: ${formatExplanations[formatDisplay] || formatDisplay}`);
+                
+                if (response.triageData.emotional_tone) {
+                  const toneEmojis: Record<string, string> = {
+                    'empathetic': '💙 Empathetic & Supportive',
+                    'professional': '💼 Professional & Formal',
+                    'playful': '✨ Playful & Engaging'
+                  };
+                  optimizationDetails.push(`• **Tone Applied**: ${toneEmojis[response.triageData.emotional_tone] || response.triageData.emotional_tone}`);
+                }
+                
+                if (response.triageData.reasoning) {
+                  optimizationDetails.push(`\n**💡 Routing Reasoning**: _${response.triageData.reasoning}_`);
+                }
+                
+                optimizationDetails.push(`\n_AI Confidence: ${Math.round((response.triageData.confidence || 0) * 100)}%_`);
+                
+                if (response.triageData.requires_vision) {
+                  optimizationDetails.push(`_👁️ Vision Analysis Enabled_`);
+                }
+                
+                messageContent += optimizationDetails.join('\n');
+                console.log('✅ Optimization panel added to response');
+              } else {
+                console.warn('⚠️ No triage data available for optimization display');
               }
-              
-              if (response.triageData.reasoning) {
-                optimizationDetails.push(`\n**💡 Routing Reasoning**: _${response.triageData.reasoning}_`);
-              }
-              
-              optimizationDetails.push(`\n_AI Confidence: ${Math.round((response.triageData.confidence || 0) * 100)}%_`);
-              
-              if (response.triageData.requires_vision) {
-                optimizationDetails.push(`_👁️ Vision Analysis Enabled_`);
-              }
-              
-              messageContent += optimizationDetails.join('\n');
-              console.log('✅ Optimization panel added to response');
-            } else {
-              console.warn('⚠️ No triage data available for optimization display');
-            }
             
             addMessage({
               role: 'assistant',
               content: messageContent,
               timestamp: new Date().toISOString(),
               provider: response.provider,
-              model: response.model
+              model: response.model,
+              metadata: {
+                triageSuggestedModel: response.triageData?.suggested_model,
+                best_format: response.triageData?.best_format
+              }
             });
             
             // ========== MILESTONE SUGGESTIONS ==========
@@ -1621,7 +1637,22 @@ ${conversationSummary.transcript}`
                               )}
                               <div className="prose prose-sm max-w-none">
                                 {message.role === 'assistant' ? (
-                                  <RichResponseRenderer content={message.content} />
+                                  <>
+                                    <RichResponseRenderer content={message.content} />
+                                    {(message.model || (message as any).metadata?.triageSuggestedModel) && (
+                                      <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                                        {message.model && (
+                                          <span className="inline-flex items-center rounded-md border px-2 py-0.5">Model used: {message.model}</span>
+                                        )}
+                                        {(message as any).metadata?.triageSuggestedModel && (
+                                          <span className="inline-flex items-center rounded-md border px-2 py-0.5">Recommended: {(message as any).metadata.triageSuggestedModel}</span>
+                                        )}
+                                        {(message as any).metadata?.best_format && (
+                                          <span className="inline-flex items-center rounded-md border px-2 py-0.5">Format: {(message as any).metadata.best_format}</span>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
                                 ) : (
                                   <p className="text-sm">{message.content}</p>
                                 )}
