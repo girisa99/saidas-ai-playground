@@ -116,14 +116,14 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
           ),
           table: ({ node, ...props }) => (
             <div className="overflow-x-auto my-4">
-              <table className="min-w-full border border-muted rounded-lg" {...props} />
+              <table className="w-full table-auto border border-muted rounded-lg" {...props} />
             </div>
           ),
           th: ({ node, ...props }) => (
-            <th className="bg-muted/50 px-3 py-2 text-left font-semibold border-b border-muted" {...props} />
+            <th className="bg-muted/50 px-3 py-2 text-left font-semibold border-b border-muted break-words align-top text-xs md:text-sm" {...props} />
           ),
           td: ({ node, ...props }) => (
-            <td className="px-3 py-2 border-b border-muted/30" {...props} />
+            <td className="px-3 py-2 border-b border-muted/30 break-words align-top text-xs md:text-sm" {...props} />
           ),
           p: ({ node, ...props }) => (
             <p className="my-2 leading-relaxed" {...props} />

@@ -1601,7 +1601,7 @@ ${conversationSummary.transcript}`
                   )}
 
                    {/* Messages */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
+                  <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 [--popup-vh:calc(100vh-8rem)]">
                     {/* Vision Model Indicator */}
                     {aiConfig.visionEnabled && (
                       <VisionModelIndicator
@@ -1626,7 +1626,7 @@ ${conversationSummary.transcript}`
 
                     {aiConfig.splitScreenEnabled && aiConfig.mode === 'multi' ? (
                       <SplitScreenRenderer
-                        messages={[...messages, ...splitResponses.primary, ...splitResponses.secondary]}
+                        messages={[...messages, ...splitResponses.primary, ...splitResponses.secondary].sort((a, b) => new Date((a as any).timestamp || 0).getTime() - new Date((b as any).timestamp || 0).getTime())}
                         primaryModel={aiConfig.selectedModel}
                         secondaryModel={aiConfig.secondaryModel || 'google/gemini-2.5-flash'}
                         isLoading={isLoading}

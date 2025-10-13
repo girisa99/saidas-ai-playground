@@ -26,11 +26,26 @@ interface SplitScreenRendererProps {
 }
 
 const modelDisplayNames: Record<string, string> = {
-  'gpt-4o-mini': 'GPT-4o Mini',
+  // OpenAI
+  'openai/gpt-5': 'GPT-5',
+  'openai/gpt-5-mini': 'GPT-5 Mini',
+  'openai/gpt-5-nano': 'GPT-5 Nano',
   'gpt-4o': 'GPT-4o',
+  'gpt-4o-mini': 'GPT-4o Mini',
+
+  // Google Gemini 2.5
+  'google/gemini-2.5-pro': 'Gemini 2.5 Pro',
+  'google/gemini-2.5-flash': 'Gemini 2.5 Flash',
+  'google/gemini-2.5-flash-lite': 'Gemini 2.5 Flash Lite',
+  'gemini-pro': 'Gemini Pro',
+
+  // Anthropic Claude
+  'anthropic/claude-3-haiku': 'Claude 3 Haiku',
+  'anthropic/claude-3-sonnet': 'Claude 3 Sonnet',
   'claude-3-haiku': 'Claude 3 Haiku',
   'claude-3-sonnet': 'Claude 3 Sonnet',
-  'gemini-pro': 'Gemini Pro',
+
+  // Others
   'phi-3-mini': 'Phi-3 Mini',
 };
 
@@ -53,7 +68,7 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
     <div className="space-y-3">
       {messages.map((message, index) => (
         <div key={`${modelId}-${index}`} className="flex justify-start">
-          <div className="max-w-[90%] p-3 rounded-lg bg-accent">
+          <div className="max-w-[90%] p-3 rounded-lg bg-accent overflow-hidden">
             <RichResponseRenderer content={message.content} oncologyProducts={(message as any).metadata?.oncologyProducts} />
             {message.timestamp && (
               <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
@@ -66,12 +81,12 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
           </div>
         </div>
       ))}
-      {isLoadingModel && <TypingIndicator />}
+      {isLoadingModel && <div className="px-1"><TypingIndicator /></div>}
     </div>
   );
 
   return (
-    <div className="grid grid-cols-2 gap-4 h-full min-h-[600px]">
+    <div className="grid grid-cols-2 gap-4 h-[55vh] md:h-[60vh] min-h-0">
       {/* Primary Model Column */}
       <Card className="flex flex-col h-full">
         <div className="p-3 border-b bg-muted/30">
@@ -90,7 +105,7 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
             .filter(m => m.role === 'user' || (m.role === 'assistant' && (m.model === primaryModel || m.provider === 'primary')))
             .map((message, index) => (
               <div key={`primary-${message.timestamp}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] p-3 rounded-lg ${
+                <div className={`max-w-[85%] p-3 rounded-lg overflow-hidden ${
                   message.role === 'user' 
                     ? 'bg-primary text-primary-foreground' 
                     : 'bg-accent'
@@ -133,7 +148,7 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
             .filter(m => m.role === 'user' || (m.role === 'assistant' && (m.model === secondaryModel || m.provider === 'secondary')))
             .map((message, index) => (
               <div key={`secondary-${message.timestamp}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] p-3 rounded-lg ${
+                <div className={`max-w-[85%] p-3 rounded-lg overflow-hidden ${
                   message.role === 'user' 
                     ? 'bg-primary text-primary-foreground' 
                     : 'bg-accent'
