@@ -4,17 +4,61 @@ import remarkGfm from 'remark-gfm';
 
 interface RichResponseRendererProps {
   content: string;
+  oncologyProducts?: Array<{
+    product: string;
+    therapy_category?: string;
+    dose?: string;
+    ndc?: string;
+    modality?: string;
+    application?: string;
+    manufacturer?: string;
+    storage?: string;
+    special_handling?: string;
+  }>;
 }
 
-export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ content }) => {
+export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ content, oncologyProducts }) => {
   // Enhance content formatting for better readability
   const enhancedContent = content
     .replace(/^• /gm, '🔹 ')
     .replace(/\*\*(.*?)\*\*/g, '**$1**'); // Ensure bold formatting is preserved
 
   return (
-    <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-primary prose-a:text-primary prose-strong:text-foreground">
-      <ReactMarkdown
+    <div className="space-y-4">
+      {/* Therapy Products Cards */}
+      {oncologyProducts && oncologyProducts.length > 0 && (
+        <div className="not-prose mb-6">
+          <h3 className="text-lg font-semibold text-primary mb-3 flex items-center gap-2">
+            <span className="text-xl">💊</span>
+            Therapy Products
+          </h3>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {oncologyProducts.map((product, idx) => (
+              <div key={idx} className="border border-border rounded-lg p-4 bg-card hover:shadow-md transition-shadow">
+                <div className="font-semibold text-base text-foreground mb-2">{product.product}</div>
+                {product.therapy_category && (
+                  <div className="inline-block px-2 py-1 mb-2 text-xs font-medium rounded-full bg-primary/10 text-primary">
+                    {product.therapy_category}
+                  </div>
+                )}
+                <div className="space-y-1 text-sm text-muted-foreground">
+                  {product.dose && <div><span className="font-medium text-foreground">Dose:</span> {product.dose}</div>}
+                  {product.ndc && <div><span className="font-medium text-foreground">NDC:</span> {product.ndc}</div>}
+                  {product.modality && <div><span className="font-medium text-foreground">Route:</span> {product.modality}</div>}
+                  {product.application && <div><span className="font-medium text-foreground">Indication:</span> {product.application}</div>}
+                  {product.manufacturer && <div><span className="font-medium text-foreground">Manufacturer:</span> {product.manufacturer}</div>}
+                  {product.storage && <div><span className="font-medium text-foreground">Storage:</span> {product.storage}</div>}
+                  {product.special_handling && <div className="mt-2 pt-2 border-t border-border"><span className="font-medium text-foreground">Special Handling:</span> {product.special_handling}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      
+      {/* Markdown Content */}
+      <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-primary prose-a:text-primary prose-strong:text-foreground">
+        <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
           img: ({ node, ...props }) => (
@@ -92,6 +136,7 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
       >
         {enhancedContent}
       </ReactMarkdown>
+      </div>
     </div>
   );
 };

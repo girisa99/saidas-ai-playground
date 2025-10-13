@@ -673,7 +673,7 @@ async function logToLabelStudio(request: AIRequest, response: string, ragContext
 
 function isOncologyQuery(text: string): boolean {
   const t = (text || '').toLowerCase();
-  return /(oncology|cell|gene|radiol|chemo|immuno|ndc|dose|manufacturer|biosimilar|modalit)/.test(t);
+  return /(oncology|cell|gene|car-t|radiol|chemo|immuno|ndc|dose|manufacturer|biosimilar|modalit|advanced therap|specialty drug|biologic)/.test(t);
 }
 
 async function extractOncologyProducts(prompt: string, content: string) {
@@ -681,15 +681,19 @@ async function extractOncologyProducts(prompt: string, content: string) {
     const body: any = {
       model: 'google/gemini-2.5-flash',
       messages: [
-        { role: 'system', content: 'Extract a clean, deduplicated list of oncology products with fields. Do not include prose.' },
-        { role: 'user', content: `From the following question and draft answer, extract products.\n\nQuestion:\n${prompt}\n\nDraft Answer:\n${content}` }
+        { role: 'system', content: `Extract a clean, deduplicated list of therapy products from the query and answer. Cover:
+- Oncology (chemotherapy, targeted therapy, immunotherapy)
+- Cell & Gene Therapies (CAR-T, gene therapy, cell-based treatments)
+- Advanced Therapies (biologics, biosimilars, specialty drugs)
+Include all available product details. Do not include prose.` },
+        { role: 'user', content: `From the following question and draft answer, extract therapy products.\n\nQuestion:\n${prompt}\n\nDraft Answer:\n${content}` }
       ],
       tools: [
         {
           type: 'function',
           function: {
-            name: 'extract_oncology_products',
-            description: 'Return oncology products mentioned with dose, NDC, modality, application and manufacturer when available',
+            name: 'extract_therapy_products',
+            description: 'Extract oncology, cell & gene, and advanced therapy products with complete pharmaceutical details',
             parameters: {
               type: 'object',
               properties: {
@@ -698,12 +702,15 @@ async function extractOncologyProducts(prompt: string, content: string) {
                   items: {
                     type: 'object',
                     properties: {
-                      product: { type: 'string' },
-                      dose: { type: 'string' },
-                      ndc: { type: 'string' },
-                      modality: { type: 'string' },
-                      application: { type: 'string' },
-                      manufacturer: { type: 'string' }
+                      product: { type: 'string', description: 'Product brand or generic name' },
+                      therapy_category: { type: 'string', description: 'Oncology, Cell & Gene, Advanced Therapy, Immunotherapy, etc.' },
+                      dose: { type: 'string', description: 'Dosage with units (mg, mcg, IU, etc.)' },
+                      ndc: { type: 'string', description: 'National Drug Code' },
+                      modality: { type: 'string', description: 'IV, subcutaneous, oral, etc.' },
+                      application: { type: 'string', description: 'Indication or disease target' },
+                      manufacturer: { type: 'string', description: 'Manufacturer or sponsor' },
+                      storage: { type: 'string', description: 'Storage requirements (frozen, refrigerated, etc.)' },
+                      special_handling: { type: 'string', description: 'Special precautions or handling notes' }
                     },
                     required: ['product'],
                     additionalProperties: false
@@ -716,7 +723,7 @@ async function extractOncologyProducts(prompt: string, content: string) {
           }
         }
       ],
-      tool_choice: { type: 'function', function: { name: 'extract_oncology_products' } }
+      tool_choice: { type: 'function', function: { name: 'extract_therapy_products' } }
     };
 
     const resp = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {

@@ -1638,7 +1638,10 @@ ${conversationSummary.transcript}`
                               <div className="prose prose-sm max-w-none">
                                 {message.role === 'assistant' ? (
                                   <>
-                                    <RichResponseRenderer content={message.content} />
+                                    <RichResponseRenderer 
+                                      content={message.content}
+                                      oncologyProducts={(message as any).metadata?.oncologyProducts}
+                                    />
                                     {(message.model || (message as any).metadata?.triageSuggestedModel) && (
                                       <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                                         {message.model && (
