@@ -67,9 +67,12 @@ export const useUniversalAI = () => {
         useMCP: request.useMCP,
         hasImages: request.images?.length || 0,
         context: request.context,
-        smartRouting: request.enableSmartRouting || false
+        smartRouting: request.enableSmartRouting || false,
+        multiAgent: request.enableMultiAgent || false
       });
 
+      console.log('📤 Calling ai-universal-processor edge function...');
+      
       const { data, error: functionError } = await supabase.functions.invoke('ai-universal-processor', {
         body: {
           provider: request.provider,
@@ -86,9 +89,16 @@ export const useUniversalAI = () => {
           labelStudio: request.labelStudio,
           context: request.context,
           enableSmartRouting: request.enableSmartRouting,
-          enableMultiAgent: request.enableMultiAgent, // CRITICAL: Enable multi-agent collaboration
+          enableMultiAgent: request.enableMultiAgent,
           conversationHistory: request.conversationHistory
         }
+      });
+
+      console.log('📥 Edge function response received:', { 
+        hasData: !!data, 
+        hasError: !!functionError,
+        dataKeys: data ? Object.keys(data) : [],
+        error: functionError 
       });
 
       if (functionError) {
