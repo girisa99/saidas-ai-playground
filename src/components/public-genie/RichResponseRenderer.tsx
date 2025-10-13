@@ -63,28 +63,76 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeRaw]}
           components={{
-          img: ({ node, ...props }) => (
-            <img
-              {...props}
-              className="max-w-full h-auto rounded-lg my-3 shadow-md hover:shadow-lg transition-shadow"
-              loading="lazy"
-            />
-          ),
+          img: ({ node, ...props }) => {
+            const isPDF = props.src?.toLowerCase().endsWith('.pdf');
+            if (isPDF) {
+              return (
+                <div className="my-3 p-4 border border-border rounded-lg bg-muted/30">
+                  <a 
+                    href={props.src} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-primary hover:text-primary-glow transition-colors"
+                  >
+                    <span className="text-2xl">📄</span>
+                    <div>
+                      <p className="font-medium">{props.alt || 'View PDF Document'}</p>
+                      <p className="text-xs text-muted-foreground">Click to open in new tab</p>
+                    </div>
+                  </a>
+                </div>
+              );
+            }
+            return (
+              <img
+                {...props}
+                className="max-w-full h-auto rounded-lg my-3 shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+                loading="lazy"
+                onClick={() => window.open(props.src, '_blank')}
+                title="Click to view full size"
+              />
+            );
+          },
           video: ({ node, ...props }) => (
             <video
               {...props}
               className="max-w-full h-auto rounded-lg my-3 shadow-md"
               controls
-            />
+              preload="metadata"
+            >
+              <p className="text-sm text-muted-foreground">Your browser doesn't support video playback.</p>
+            </video>
           ),
-          a: ({ node, ...props }) => (
-            <a
-              {...props}
-              className="text-primary hover:text-primary-glow transition-colors underline decoration-dotted hover:decoration-solid"
-              target="_blank"
-              rel="noopener noreferrer"
-            />
-          ),
+          a: ({ node, ...props }) => {
+            const isPDF = props.href?.toLowerCase().endsWith('.pdf');
+            const isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(props.href || '');
+            const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(props.href || '');
+            
+            if (isPDF || isImage || isVideo) {
+              return (
+                <a
+                  {...props}
+                  className="inline-flex items-center gap-1 text-primary hover:text-primary-glow transition-colors underline decoration-dotted hover:decoration-solid font-medium"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {isPDF && <span>📄</span>}
+                  {isImage && <span>🖼️</span>}
+                  {isVideo && <span>🎥</span>}
+                  {props.children}
+                </a>
+              );
+            }
+            
+            return (
+              <a
+                {...props}
+                className="text-primary hover:text-primary-glow transition-colors underline decoration-dotted hover:decoration-solid"
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            );
+          },
           code: ({ node, ...props }: any) => {
             const isInline = !props.className?.includes('language-');
             return isInline ? (

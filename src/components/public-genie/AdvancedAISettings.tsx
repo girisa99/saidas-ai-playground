@@ -552,7 +552,9 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
                   </TooltipContent>
                 </Tooltip>
               </Label>
-              <p className="text-xs text-muted-foreground">Enhanced model connectivity</p>
+              <p className="text-xs text-muted-foreground">
+                Enables AI models to access external tools, databases, and APIs for enhanced capabilities beyond chat
+              </p>
             </div>
             <Switch
               checked={config.mcpEnabled}

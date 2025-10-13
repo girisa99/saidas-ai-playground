@@ -1046,9 +1046,18 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             if (suggestions.length > 0) {
               setTimeout(() => {
                 toast({
-                  title: `💡 Milestone ${userMessageCount} - Suggested Topics`,
-                  description: suggestions[0],
-                  duration: 10000
+                  title: `💡 Multi-Agent Milestone ${userMessageCount}`,
+                  description: (
+                    <div className="space-y-2">
+                      <p className="text-sm font-medium">Suggested next steps:</p>
+                      <ul className="text-sm space-y-1">
+                        {suggestions.map((sug, i) => (
+                          <li key={i}>• {sug}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ),
+                  duration: 12000
                 });
               }, 2000);
             }
@@ -1220,9 +1229,18 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
               if (suggestions.length > 0) {
                 setTimeout(() => {
                   toast({
-                    title: `💡 Milestone ${userMessageCount} - Suggested Topics`,
-                    description: suggestions[0],
-                    duration: 10000
+                    title: `💡 Conversation Milestone ${userMessageCount}`,
+                    description: (
+                      <div className="space-y-2">
+                        <p className="text-sm font-medium">Suggested next steps:</p>
+                        <ul className="text-sm space-y-1">
+                          {suggestions.map((sug, i) => (
+                            <li key={i}>• {sug}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ),
+                    duration: 12000
                   });
                 }, 2000);
               }
@@ -1398,11 +1416,12 @@ ${conversationSummary.transcript}`
 
   return (
     <TooltipProvider>
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isOpen && (
           <>
-            <Draggable key="genie-window-container" handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
+            <Draggable handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
             <motion.div
+              key="genie-main-popup"
               ref={dragRef}
               initial={{ opacity: 0, scale: 0.9, x: 300 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -1624,18 +1643,19 @@ ${conversationSummary.transcript}`
                       </div>
                     )}
 
-                    {aiConfig.splitScreenEnabled && aiConfig.mode === 'multi' ? (
-                      <SplitScreenRenderer
-                        messages={[...messages, ...splitResponses.primary, ...splitResponses.secondary].sort((a, b) => new Date((a as any).timestamp || 0).getTime() - new Date((b as any).timestamp || 0).getTime())}
-                        primaryModel={aiConfig.selectedModel}
-                        secondaryModel={aiConfig.secondaryModel || 'google/gemini-2.5-flash'}
-                        isLoading={isLoading}
-                        loadingStates={loadingStates}
-                      />
-                    ) : (
-                      <div className="space-y-2">
-                        {messages.map((message, index) => (
-                          <div key={`msg-${index}-${message.role}-${message.timestamp || index}-${(message.content || '').length}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                     {aiConfig.splitScreenEnabled && aiConfig.mode === 'multi' ? (
+                       <SplitScreenRenderer
+                         key="split-screen-renderer"
+                         messages={[...messages, ...splitResponses.primary, ...splitResponses.secondary].sort((a, b) => new Date((a as any).timestamp || 0).getTime() - new Date((b as any).timestamp || 0).getTime())}
+                         primaryModel={aiConfig.selectedModel}
+                         secondaryModel={aiConfig.secondaryModel || 'google/gemini-2.5-flash'}
+                         isLoading={isLoading}
+                         loadingStates={loadingStates}
+                       />
+                     ) : (
+                       <div className="space-y-2">
+                         {messages.map((message, index) => (
+                           <div key={`unified-msg-${message.timestamp || Date.now()}-${index}-${message.role}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                             <div className={`max-w-[80%] p-3 rounded-lg ${
                               message.role === 'user' 
                                 ? 'bg-primary text-primary-foreground' 
@@ -1795,13 +1815,13 @@ ${conversationSummary.transcript}`
                                   </TooltipContent>
                                 </Tooltip>
                               )}
-                              {aiConfig.mcpEnabled && (
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <Badge variant="outline" className="text-xs cursor-help">MCP</Badge>
+                               {aiConfig.mcpEnabled && (
+                                 <Tooltip>
+                                   <TooltipTrigger asChild>
+                                     <Badge variant="outline" className="text-xs cursor-help">🔌 MCP</Badge>
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    <p>Model Context Protocol: connect tools and data sources</p>
+                                    <p className="text-xs max-w-xs">Model Context Protocol: AI can access external tools, databases & APIs for enhanced capabilities</p>
                                   </TooltipContent>
                                 </Tooltip>
                               )}
