@@ -804,12 +804,21 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
           } as any)
         ]);
 
-        setLoadingStates({ primary: false, secondary: false });
-
         const primaryRes = results[0].status === 'fulfilled' ? results[0].value : null;
         const secondaryRes = results[1].status === 'fulfilled' ? results[1].value : null;
 
-        if (primaryRes) {
+        // Clear loading states after both requests complete
+        setLoadingStates({ primary: false, secondary: false });
+
+        // Log any failures
+        if (results[0].status === 'rejected') {
+          console.error('❌ Primary model failed:', results[0].reason);
+        }
+        if (results[1].status === 'rejected') {
+          console.error('❌ Secondary model failed:', results[1].reason);
+        }
+
+        if (primaryRes && primaryRes.content) {
           // ========== RICH MEDIA ENHANCEMENT FOR PRIMARY ==========
           const enhancedPrimary = enhanceResponseWithTriage(
             primaryRes.content,
@@ -905,18 +914,22 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             }
           };
           
-          // Add to main messages array for conversation tracking
-          addMessage(primaryMessage);
-          
+          // DON'T add to main messages in split-screen mode to avoid duplication
+          // Only add to split responses
           setSplitResponses(prev => ({
             ...prev,
             primary: [...prev.primary, primaryMessage]
           }));
         } else {
-          toast({ title: 'Primary model unavailable', description: 'Falling back; please try again or reconfigure.', variant: 'destructive' });
+          console.warn('⚠️ Primary model returned no content');
+          toast({ 
+            title: `${aiConfig.selectedModel} - No Response`, 
+            description: 'The primary model did not return a response. Please try again.', 
+            variant: 'destructive' 
+          });
         }
 
-        if (secondaryRes) {
+        if (secondaryRes && secondaryRes.content) {
           // ========== RICH MEDIA ENHANCEMENT FOR SECONDARY ==========
           const enhancedSecondary = enhanceResponseWithTriage(
             secondaryRes.content,
@@ -1012,9 +1025,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             }
           };
           
-          // Add to main messages array for conversation tracking
-          addMessage(secondaryMessage);
-          
+          // DON'T add to main messages in split-screen mode to avoid duplication
+          // Only add to split responses
           setSplitResponses(prev => ({
             ...prev,
             secondary: [...prev.secondary, secondaryMessage]
@@ -1042,7 +1054,12 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             }
           }
         } else {
-          toast({ title: 'Secondary model unavailable', description: 'We adjusted to improve reliability. You can change it in settings.', variant: 'default' });
+          console.warn('⚠️ Secondary model returned no content');
+          toast({ 
+            title: `${secondaryModel} - No Response`, 
+            description: 'The secondary model did not return a response.', 
+            variant: 'default' 
+          });
         }
       } else {
         // Standard single response with RAG, Knowledge Base, MCP, Multi-Agent

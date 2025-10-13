@@ -71,7 +71,7 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
   );
 
   return (
-    <div className="grid grid-cols-2 gap-4 h-full min-h-[400px]">
+    <div className="grid grid-cols-2 gap-4 h-full min-h-[600px]">
       {/* Primary Model Column */}
       <Card className="flex flex-col h-full">
         <div className="p-3 border-b bg-muted/30">
@@ -84,7 +84,7 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
           </div>
         </div>
         
-        <div className="flex-1 p-3 overflow-y-auto space-y-3 max-h-[350px]">
+        <div className="flex-1 p-3 overflow-y-auto space-y-3 min-h-0">
           {/* Show user messages and primary model responses */}
           {messages
             .filter(m => m.role === 'user' || (m.role === 'assistant' && (m.model === primaryModel || m.provider === 'primary')))
@@ -127,7 +127,7 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
           </div>
         </div>
         
-        <div className="flex-1 p-3 overflow-y-auto space-y-3 max-h-[350px]">
+        <div className="flex-1 p-3 overflow-y-auto space-y-3 min-h-0">
           {/* Show user messages and secondary model responses */}
           {messages
             .filter(m => m.role === 'user' || (m.role === 'assistant' && (m.model === secondaryModel || m.provider === 'secondary')))
