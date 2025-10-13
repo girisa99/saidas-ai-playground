@@ -781,7 +781,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             labelStudio: false,
             context: context || 'general',
             enableSmartRouting: true,
-            enableMultiAgent: true,
+            enableMultiAgent: false,
             conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
             ...(imageUrls.length > 0 && { images: imageUrls })
           } as any),
@@ -798,7 +798,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             labelStudio: false,
             context: context || 'general',
             enableSmartRouting: true,
-            enableMultiAgent: true,
+            enableMultiAgent: false,
             conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
             ...(imageUrls.length > 0 && { images: imageUrls })
           } as any)
