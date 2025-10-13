@@ -92,40 +92,58 @@ export const MedicalImageAnalysisSchema = z.object({
 // AI processor validation schema
 export const AIRequestSchema = z.object({
   provider: z.enum(['openai', 'claude', 'gemini', 'lovable']),
-  
+
   model: z.string()
     .min(1, "Model is required")
     .max(100, "Model name too long"),
-  
+
   prompt: z.string()
     .min(1, "Prompt is required")
     .max(10000, "Prompt must be less than 10000 characters"),
-  
+
   systemPrompt: z.string()
     .max(5000, "System prompt must be less than 5000 characters")
     .optional(),
-  
+
   temperature: z.number()
     .min(0, "Temperature must be at least 0")
     .max(2, "Temperature must be at most 2")
     .optional(),
-  
+
   maxTokens: z.number()
     .int("Max tokens must be an integer")
     .min(1, "Max tokens must be at least 1")
     .max(32000, "Max tokens must be at most 32000")
     .optional(),
-  
-  imageUrl: z.string()
-    .url("Invalid image URL")
-    .optional(),
-  
+
+  // Context & multimodal
+  context: z.string().max(200).optional(),
+  imageUrl: z.string().url("Invalid image URL").optional(),
+  images: z.array(z.string()).optional(),
+
+  // Feature toggles
+  useRAG: z.boolean().optional(),
+  knowledgeBase: z.boolean().optional(),
+  useMCP: z.boolean().optional(),
+  mcpServers: z.array(z.string()).optional(),
+  enableSmartRouting: z.boolean().optional(),
+  enableMultiAgent: z.boolean().optional(),
+
+  // Conversation continuity
+  conversationHistory: z.array(z.object({
+    role: z.string(),
+    content: z.string()
+  })).optional(),
+
+  // Integrations
+  labelStudioProject: z.string().optional(),
+
+  // Backward compatibility fields (ignored by processor but allowed)
   useVision: z.boolean().optional(),
   enableRAG: z.boolean().optional(),
   ragContext: z.string().optional(),
-  knowledgeBase: z.boolean().optional(),
-  mcpContext: z.boolean().optional()
-});
+  mcpContext: z.boolean().optional(),
+}).passthrough();
 
 // HTML sanitization function
 export function sanitizeHtml(input: string): string {

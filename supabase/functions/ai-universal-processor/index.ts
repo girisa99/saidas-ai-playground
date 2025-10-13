@@ -445,17 +445,26 @@ async function callLovableAI(request: AIRequest, ragContext?: string) {
     });
   }
 
+  // Inject previous conversation to maintain context
+  if (request.conversationHistory && Array.isArray(request.conversationHistory)) {
+    for (const m of request.conversationHistory) {
+      if (m && typeof m.content === 'string' && (m.role === 'user' || m.role === 'assistant')) {
+        messages.push({ role: m.role, content: m.content });
+      }
+    }
+  }
+
   // Handle vision models
   if (request.imageUrl || request.images) {
     const content: any[] = [{ type: 'text', text: request.prompt }];
-    
+
     if (request.imageUrl) {
       content.push({
         type: 'image_url',
         image_url: { url: request.imageUrl }
       });
     }
-    
+
     if (request.images) {
       request.images.forEach(img => {
         content.push({
@@ -464,7 +473,7 @@ async function callLovableAI(request: AIRequest, ragContext?: string) {
         });
       });
     }
-    
+
     messages.push({ role: 'user', content });
   } else {
     messages.push({ role: 'user', content: request.prompt });
@@ -970,7 +979,8 @@ serve(async (req) => {
       console.log('Smart routing enabled - analyzing query...');
       triageData = await triageQuery(
         request.prompt,
-        request.conversationHistory || []
+        request.context,
+        request.conversationHistory
       );
       console.log('Triage result:', triageData);
     }
