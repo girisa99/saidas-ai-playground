@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 interface RichResponseRendererProps {
   content: string;
@@ -59,8 +60,9 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
       {/* Markdown Content */}
       <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-primary prose-a:text-primary prose-strong:text-foreground">
         <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        components={{
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw]}
+          components={{
           img: ({ node, ...props }) => (
             <img
               {...props}

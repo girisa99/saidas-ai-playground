@@ -54,7 +54,7 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
       {messages.map((message, index) => (
         <div key={`${modelId}-${index}`} className="flex justify-start">
           <div className="max-w-[90%] p-3 rounded-lg bg-accent">
-            <RichResponseRenderer content={message.content} />
+            <RichResponseRenderer content={message.content} oncologyProducts={(message as any).metadata?.oncologyProducts} />
             {message.timestamp && (
               <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
                 <Bot className="h-3 w-3" />
@@ -96,7 +96,7 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
                     : 'bg-accent'
                 }`}>
                   {message.role === 'assistant' ? (
-                    <RichResponseRenderer content={message.content} />
+                    <RichResponseRenderer content={message.content} oncologyProducts={(message as any).metadata?.oncologyProducts} />
                   ) : (
                     <p className="text-sm">{message.content}</p>
                   )}
@@ -139,7 +139,7 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
                     : 'bg-accent'
                 }`}>
                   {message.role === 'assistant' ? (
-                    <RichResponseRenderer content={message.content} />
+                    <RichResponseRenderer content={message.content} oncologyProducts={(message as any).metadata?.oncologyProducts} />
                   ) : (
                     <p className="text-sm">{message.content}</p>
                   )}

@@ -900,7 +900,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             provider: 'primary',
             metadata: {
               triageSuggestedModel: primaryRes.triageData?.suggested_model,
-              best_format: primaryRes.triageData?.best_format
+              best_format: primaryRes.triageData?.best_format,
+              oncologyProducts: primaryRes.oncologyProducts
             }
           };
           
@@ -1006,7 +1007,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             provider: 'secondary',
             metadata: {
               triageSuggestedModel: secondaryRes.triageData?.suggested_model,
-              best_format: secondaryRes.triageData?.best_format
+              best_format: secondaryRes.triageData?.best_format,
+              oncologyProducts: secondaryRes.oncologyProducts
             }
           };
           
@@ -1177,7 +1179,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
               model: response.model,
               metadata: {
                 triageSuggestedModel: response.triageData?.suggested_model,
-                best_format: response.triageData?.best_format
+                best_format: response.triageData?.best_format,
+                oncologyProducts: response.oncologyProducts
               }
             });
             

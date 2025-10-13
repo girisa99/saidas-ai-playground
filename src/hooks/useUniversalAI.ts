@@ -155,7 +155,9 @@ export const useUniversalAI = () => {
         collaborationMode: data.collaborationMode,
         agentCount: data.agentCount,
         consensusScore: data.consensusScore,
-        agentResponses: data.agentResponses
+        agentResponses: data.agentResponses,
+        // ========== ONCOLOGY PRODUCTS (for card rendering) ==========
+        oncologyProducts: data.oncologyProducts
       };
     } catch (err: any) {
       const errorMessage = err.message || 'Failed to generate AI response';
