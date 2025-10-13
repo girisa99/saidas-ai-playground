@@ -112,6 +112,21 @@ export const useUniversalAI = () => {
         multiAgent: data.collaborationMode ? `Yes (${data.collaborationMode})` : 'No',
         agentCount: data.agentCount || 0
       });
+      
+      // DETAILED TRIAGE DATA LOGGING FOR VERIFICATION
+      if (data.triageData) {
+        console.log('🔍 DETAILED TRIAGE DATA:', {
+          complexity: data.triageData.complexity,
+          domain: data.triageData.domain,
+          urgency: data.triageData.urgency,
+          best_format: data.triageData.best_format,
+          emotional_tone: data.triageData.emotional_tone,
+          reasoning: data.triageData.reasoning,
+          confidence: data.triageData.confidence
+        });
+      } else {
+        console.warn('⚠️ NO TRIAGE DATA RECEIVED - Smart routing may not be enabled');
+      }
 
       return {
         content: data.content,
