@@ -16784,7 +16784,7 @@ export type Database = {
       }
       l2_normalize: {
         Args: { "": string } | { "": unknown } | { "": unknown }
-        Returns: string
+        Returns: unknown
       }
       log_credit_application_audit: {
         Args: {
@@ -16849,7 +16849,7 @@ export type Database = {
               p_severity: string
               p_user_agent?: string
             }
-        Returns: string
+        Returns: undefined
       }
       log_sensitive_data_access: {
         Args: { operation_type: string; record_id?: string; table_name: string }
