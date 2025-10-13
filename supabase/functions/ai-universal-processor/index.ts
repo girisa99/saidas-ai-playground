@@ -200,11 +200,11 @@ function detectEmotionalTone(queryLower: string, history?: any[]): 'empathetic' 
 }
 
 function suggestModel(complexity: string, domain: string, urgency: string, requires_vision: boolean): string {
-  if (urgency === 'critical') return requires_vision ? 'google/gemini-2.5-pro' : 'openai/gpt-5';
-  if (requires_vision) return complexity === 'high' || domain === 'healthcare' ? 'google/gemini-2.5-pro' : 'gpt-4o';
+  if (urgency === 'critical') return requires_vision ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-pro';
+  if (requires_vision) return (complexity === 'high' || domain === 'healthcare') ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-flash';
   if (complexity === 'simple') return 'google/gemini-2.5-flash-lite';
   if (complexity === 'medium') return domain === 'healthcare' ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-flash';
-  return domain === 'healthcare' ? 'google/gemini-2.5-pro' : 'openai/gpt-5';
+  return domain === 'healthcare' ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-flash';
 }
 
 function enhanceSystemPrompt(basePrompt: string, triage: TriageResult): string {
