@@ -511,7 +511,29 @@ async function callLovableAI(request: AIRequest, ragContext?: string) {
     throw new Error(`Lovable AI error: ${data.error?.message || 'Unknown error'}`);
   }
 
-  return data.choices[0].message.content;
+  // Robust extraction across provider variants
+  let content = '';
+  try {
+    const choice = Array.isArray(data.choices) ? data.choices[0] : undefined;
+    content =
+      choice?.message?.content ??
+      choice?.delta?.content ??
+      choice?.content ??
+      data.output_text ??
+      data.text ??
+      data.message?.content ??
+      '';
+  } catch (_) {
+    // ignore
+  }
+
+  if (!content || typeof content !== 'string') {
+    console.warn('Lovable AI returned empty content. Raw response snippet:', JSON.stringify(data).slice(0, 400));
+    // Fallback: try to stringify whole payload to at least show something in UI
+    content = typeof data === 'string' ? data : (data?.content || '');
+  }
+
+  return content;
 }
 
 async function logConversation(request: AIRequest, response: string, ragUsed: boolean) {
