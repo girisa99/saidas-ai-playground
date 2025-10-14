@@ -136,21 +136,31 @@ function detectDomain(
     'patient', 'medical', 'clinical', 'diagnosis', 'treatment', 'therapy',
     'healthcare', 'hospital', 'doctor', 'nurse', 'pharmacy', 'drug',
     'x-ray', 'mri', 'ct scan', 'imaging', 'radiology', 'dicom',
-    'icd', 'cpt', 'billing', 'insurance', 'reimbursement', 'claim'
+    'icd', 'cpt', 'billing', 'insurance', 'reimbursement', 'claim',
+    // Cell and immunotherapy keywords
+    'car-t', 'car t', 'cell therapy', 'immunotherapy', 'tcr', 't-cell',
+    'lymphoma', 'leukemia', 'cancer', 'oncology', 'tumor', 'malignancy',
+    'trial', 'clinical trial', 'fda', 'approval', 'indication',
+    // Specific CAR-T manufacturers and modalities
+    'yescarta', 'kymriah', 'tecartus', 'breyanzi', 'abecma', 'carvykti',
+    'kite', 'novartis', 'gilead', 'bristol myers', 'bms', 'jnj', 'janssen',
+    'allogeneic', 'autologous', 'cd19', 'cd20', 'bcma', 'b-cell'
   ];
   
   const technologyKeywords = [
-    'ai', 'software', 'code', 'api', 'integration', 'platform',
-    'algorithm', 'model', 'llm', 'neural', 'machine learning',
-    'cloud', 'saas', 'automation', 'workflow', 'digital'
+    'software', 'code', 'api', 'integration', 'platform',
+    'cloud', 'saas', 'automation', 'workflow', 'digital',
+    'database', 'frontend', 'backend', 'deployment', 'server'
   ];
   
   const healthScore = healthcareKeywords.filter(k => queryLower.includes(k)).length;
   const techScore = technologyKeywords.filter(k => queryLower.includes(k)).length;
   
+  // Context bias: if context provided, weight it heavily
   if (context === 'healthcare' && healthScore >= techScore) return 'healthcare';
   if (context === 'technology' && techScore >= healthScore) return 'technology';
   
+  // Direct comparison with threshold
   if (healthScore > techScore) return 'healthcare';
   if (techScore > healthScore) return 'technology';
   

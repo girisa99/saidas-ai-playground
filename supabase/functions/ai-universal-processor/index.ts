@@ -151,8 +151,21 @@ function classifyComplexity(queryLower: string, wordCount: number): 'simple' | '
 }
 
 function detectDomain(queryLower: string, context?: string): 'healthcare' | 'technology' | 'general' {
-  const healthcareKeywords = ['patient', 'medical', 'clinical', 'diagnosis', 'treatment', 'therapy', 'x-ray', 'mri', 'ct scan'];
-  const technologyKeywords = ['ai', 'software', 'code', 'api', 'integration', 'platform', 'algorithm', 'model'];
+  const healthcareKeywords = [
+    'patient', 'medical', 'clinical', 'diagnosis', 'treatment', 'therapy', 
+    'x-ray', 'mri', 'ct scan', 'healthcare', 'hospital', 'doctor', 'nurse',
+    'car-t', 'car t', 'cell therapy', 'immunotherapy', 'tcr', 't-cell',
+    'lymphoma', 'leukemia', 'cancer', 'oncology', 'tumor', 'malignancy',
+    'trial', 'clinical trial', 'fda', 'approval', 'indication',
+    'yescarta', 'kymriah', 'tecartus', 'breyanzi', 'abecma', 'carvykti',
+    'kite', 'novartis', 'gilead', 'bristol myers', 'bms', 'jnj', 'janssen',
+    'allogeneic', 'autologous', 'cd19', 'cd20', 'bcma', 'b-cell'
+  ];
+  const technologyKeywords = [
+    'software', 'code', 'api', 'integration', 'platform',
+    'cloud', 'saas', 'automation', 'workflow', 'digital',
+    'database', 'frontend', 'backend', 'deployment', 'server'
+  ];
   
   const healthScore = healthcareKeywords.filter(k => queryLower.includes(k)).length;
   const techScore = technologyKeywords.filter(k => queryLower.includes(k)).length;
