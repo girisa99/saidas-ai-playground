@@ -150,10 +150,11 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
             const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(props.href || '');
             const isYouTube = props.href?.includes('youtube.com') || props.href?.includes('youtu.be');
             
-            // Handle YouTube links with embedded player
+            // Handle YouTube links with a safe thumbnail preview (avoids embed "Video unavailable")
             if (isYouTube) {
               const videoId = props.href?.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1];
               if (videoId) {
+                const thumb = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
                 return (
                   <div className="my-4">
                     <a
@@ -163,20 +164,28 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
                       rel="noopener noreferrer"
                     >
                       <span>🎥</span>
-                      {props.children || 'Watch Video'}
+                      {props.children || 'Watch on YouTube'}
                     </a>
-                    <div className="aspect-video w-full rounded-lg overflow-hidden shadow-lg">
-                      <iframe
-                        width="100%"
-                        height="100%"
-                        src={`https://www.youtube.com/embed/${videoId}`}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="w-full h-full"
+                    <a
+                      href={props.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block group aspect-video w-full rounded-lg overflow-hidden shadow-lg relative"
+                      aria-label="Open video on YouTube"
+                    >
+                      <img
+                        src={thumb}
+                        alt="YouTube video thumbnail"
+                        loading="lazy"
+                        className="w-full h-full object-cover"
                       />
-                    </div>
+                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors grid place-items-center">
+                        <div className="w-14 h-14 rounded-full bg-background/80 border border-border grid place-items-center shadow-md">
+                          <span className="text-primary text-xl">▶</span>
+                        </div>
+                      </div>
+                    </a>
+                    <p className="text-xs text-muted-foreground mt-2">If the embed is blocked by the publisher, use the link above to watch on YouTube.</p>
                   </div>
                 );
               }

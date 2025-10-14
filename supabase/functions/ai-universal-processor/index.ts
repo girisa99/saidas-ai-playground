@@ -308,7 +308,7 @@ IMPORTANT:
 - Use FOUR backticks (\`\`\`\`) to wrap journey-map, NOT three
 - Include this for ANY process/workflow query (prior authorization, enrollment, treatment, etc.)
 - Put the journey map FIRST in your response, then explain details below it
-- NEVER return raw JSON without the journey-map wrapper`;
+- NEVER return raw JSON without the journey-map wrapper\n\nMEDIA LINKS POLICY:\n- Only include publicly accessible resources with full https URLs.\n- Prefer official manufacturer, guideline, or trusted patient-advocacy sources.\n- For videos, provide the direct YouTube page URL (no embedded player required).\n- If uncertain a video is publicly available, omit it and provide an alternative reputable article.`;
   }
   
   if (triage.emotional_tone === 'empathetic') {
