@@ -78,3 +78,6 @@ verify_jwt = true
 
 [functions.populate-healthcare-knowledge]
 verify_jwt = false
+
+[functions.test-ai-providers]
+verify_jwt = true
