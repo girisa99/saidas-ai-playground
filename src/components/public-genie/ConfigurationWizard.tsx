@@ -177,6 +177,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
   // Track selected models for multi-agent mode
   const [selectedModels, setSelectedModels] = useState<{
     llm?: string;
+    secondary?: string;
     slm?: string;
     vision?: string;
     healthcare?: string;
@@ -480,10 +481,43 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                       </SelectItem>
                     ))}
                   </SelectContent>
-                </Select>
-              </div>
+                  </Select>
+                </div>
 
-              {/* SLM Selection */}
+                {/* Secondary LLM Selection (Optional) */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block flex items-center gap-2">
+                    <Badge variant="outline" className="text-xs">LLM</Badge>
+                    Secondary Model (Optional)
+                  </label>
+                  <Select 
+                    value={selectedModels.secondary || config.secondaryModel || 'none'} 
+                    onValueChange={(value) => {
+                      setSelectedModels(prev => ({ ...prev, secondary: value }));
+                      updateConfig({ secondaryModel: value === 'none' ? undefined : value });
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Secondary LLM (optional)" />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
+                      <SelectItem value="none">None</SelectItem>
+                      {modelOptions.filter(m => m.category === 'General' && !m.type.includes('SLM')).map((model) => (
+                        <SelectItem key={model.id} value={model.id}>
+                          <div className="flex flex-col py-1">
+                            <div className="flex items-center gap-2">
+                              <span className="font-medium">{model.name}</span>
+                              <Badge variant="secondary" className="text-xs">{model.provider}</Badge>
+                            </div>
+                            <span className="text-xs text-muted-foreground">{model.description}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* SLM Selection */}
               <div>
                 <label className="text-sm font-medium mb-2 block flex items-center gap-2">
                   <Badge variant="outline" className="text-xs">SLM</Badge>
