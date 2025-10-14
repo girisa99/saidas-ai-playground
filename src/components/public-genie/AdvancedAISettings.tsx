@@ -27,6 +27,10 @@ export interface AIConfig {
   multiAgentEnabled: boolean; // CRITICAL: Enable multi-agent collaboration
   selectedModel: string;
   secondaryModel?: string;
+  tertiaryModel?: string; // For 3-model ensemble
+  slmModel?: string; // Dedicated SLM selection
+  visionModel?: string; // Dedicated vision model
+  healthcareModel?: string; // Dedicated healthcare model
   splitScreen: boolean;  // Renamed from splitScreenEnabled for consistency
   splitScreenEnabled: boolean;  // Keep for backwards compatibility
   contextualSuggestions: boolean;
@@ -359,31 +363,91 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
               </TooltipContent>
             </Tooltip>
           </div>
-          {/* Model Dropdown - Cleaner */}
-          <Select value={config.selectedModel} onValueChange={(value) => updateConfig({ selectedModel: value })}>
-            <SelectTrigger className="h-9 bg-card border-border/50">
-              <SelectValue placeholder="Select model" />
-            </SelectTrigger>
-            <SelectContent className="bg-popover border-border z-[100000] max-h-[280px]">
-              {filteredModels.length === 0 ? (
-                <div className="px-3 py-6 text-xs text-center text-muted-foreground">
-                  No models in this category
-                </div>
-              ) : (
-                filteredModels.map((model) => (
-                  <SelectItem key={model.id} value={model.id} className="cursor-pointer">
-                    <div className="flex items-center justify-between gap-3 w-full">
-                      <span className="text-sm font-medium">{model.name}</span>
-                      <div className="flex gap-1">
-                        {model.vision && <Eye className="h-3 w-3 text-primary" />}
-                        {model.medicalCapable && <Stethoscope className="h-3 w-3 text-primary" />}
+          
+          {/* Primary Model */}
+          <div className="space-y-1.5">
+            <Label className="text-xs text-muted-foreground">Primary LLM</Label>
+            <Select value={config.selectedModel} onValueChange={(value) => updateConfig({ selectedModel: value })}>
+              <SelectTrigger className="h-9 bg-card border-border/50">
+                <SelectValue placeholder="Select primary model" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border-border z-[100000] max-h-[280px]">
+                {filteredModels.length === 0 ? (
+                  <div className="px-3 py-6 text-xs text-center text-muted-foreground">
+                    No models in this category
+                  </div>
+                ) : (
+                  filteredModels.map((model) => (
+                    <SelectItem key={model.id} value={model.id} className="cursor-pointer">
+                      <div className="flex items-center justify-between gap-3 w-full">
+                        <span className="text-sm font-medium">{model.name}</span>
+                        <div className="flex gap-1">
+                          {model.vision && <Eye className="h-3 w-3 text-primary" />}
+                          {model.medicalCapable && <Stethoscope className="h-3 w-3 text-primary" />}
+                        </div>
                       </div>
-                    </div>
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Secondary Model - Only in Multi Mode */}
+          {config.mode === 'multi' && (
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground">Secondary LLM (Optional)</Label>
+              <Select value={config.secondaryModel} onValueChange={(value) => updateConfig({ secondaryModel: value })}>
+                <SelectTrigger className="h-9 bg-card border-border/50">
+                  <SelectValue placeholder="Select secondary model" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border-border z-[100000] max-h-[280px]">
+                  <SelectItem value="none" className="cursor-pointer">
+                    <span className="text-sm text-muted-foreground">None</span>
                   </SelectItem>
-                ))
-              )}
-            </SelectContent>
-          </Select>
+                  {modelOptions.filter(m => m.category === 'General').map((model) => (
+                    <SelectItem key={model.id} value={model.id} className="cursor-pointer">
+                      <div className="flex items-center justify-between gap-3 w-full">
+                        <span className="text-sm font-medium">{model.name}</span>
+                        <div className="flex gap-1">
+                          {model.vision && <Eye className="h-3 w-3 text-primary" />}
+                          {model.medicalCapable && <Stethoscope className="h-3 w-3 text-primary" />}
+                        </div>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
+          {/* Tertiary Model - Only in Multi Mode for 3-model ensemble */}
+          {config.mode === 'multi' && config.secondaryModel && config.secondaryModel !== 'none' && (
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground">Tertiary LLM (Optional)</Label>
+              <Select value={config.tertiaryModel} onValueChange={(value) => updateConfig({ tertiaryModel: value })}>
+                <SelectTrigger className="h-9 bg-card border-border/50">
+                  <SelectValue placeholder="Select tertiary model" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border-border z-[100000] max-h-[280px]">
+                  <SelectItem value="none" className="cursor-pointer">
+                    <span className="text-sm text-muted-foreground">None</span>
+                  </SelectItem>
+                  {modelOptions.filter(m => m.category === 'General').map((model) => (
+                    <SelectItem key={model.id} value={model.id} className="cursor-pointer">
+                      <div className="flex items-center justify-between gap-3 w-full">
+                        <span className="text-sm font-medium">{model.name}</span>
+                        <div className="flex gap-1">
+                          {model.vision && <Eye className="h-3 w-3 text-primary" />}
+                          {model.medicalCapable && <Stethoscope className="h-3 w-3 text-primary" />}
+                        </div>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
 
           {/* Selected Model Info - Streamlined */}
           {selectedModel && (
@@ -428,6 +492,76 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
               )}
             </div>
           )}
+          {/* Specialized Model Slots */}
+          <div className="space-y-3 pt-3 mt-3 border-t border-border/30">
+            <div className="text-xs font-medium text-muted-foreground mb-2">Specialized Models (Optional)</div>
+            
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground flex items-center gap-1.5">
+                <Zap className="h-3 w-3" />
+                Small Language Model
+              </Label>
+              <Select value={config.slmModel || 'none'} onValueChange={(value) => updateConfig({ slmModel: value === 'none' ? undefined : value })}>
+                <SelectTrigger className="h-8 bg-card border-border/50">
+                  <SelectValue placeholder="Select SLM" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border-border z-[100000]">
+                  <SelectItem value="none" className="cursor-pointer">
+                    <span className="text-sm text-muted-foreground">None</span>
+                  </SelectItem>
+                  {modelOptions.filter(m => m.category === 'Efficient').map((model) => (
+                    <SelectItem key={model.id} value={model.id} className="cursor-pointer">
+                      <span className="text-sm font-medium">{model.name}</span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground flex items-center gap-1.5">
+                <Image className="h-3 w-3" />
+                Vision Model
+              </Label>
+              <Select value={config.visionModel || 'none'} onValueChange={(value) => updateConfig({ visionModel: value === 'none' ? undefined : value })}>
+                <SelectTrigger className="h-8 bg-card border-border/50">
+                  <SelectValue placeholder="Select vision model" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border-border z-[100000]">
+                  <SelectItem value="none" className="cursor-pointer">
+                    <span className="text-sm text-muted-foreground">None</span>
+                  </SelectItem>
+                  {modelOptions.filter(m => m.category === 'Vision').map((model) => (
+                    <SelectItem key={model.id} value={model.id} className="cursor-pointer">
+                      <span className="text-sm font-medium">{model.name}</span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground flex items-center gap-1.5">
+                <Stethoscope className="h-3 w-3" />
+                Healthcare Model
+              </Label>
+              <Select value={config.healthcareModel || 'none'} onValueChange={(value) => updateConfig({ healthcareModel: value === 'none' ? undefined : value })}>
+                <SelectTrigger className="h-8 bg-card border-border/50">
+                  <SelectValue placeholder="Select healthcare model" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border-border z-[100000]">
+                  <SelectItem value="none" className="cursor-pointer">
+                    <span className="text-sm text-muted-foreground">None</span>
+                  </SelectItem>
+                  {modelOptions.filter(m => m.category === 'Healthcare').map((model) => (
+                    <SelectItem key={model.id} value={model.id} className="cursor-pointer">
+                      <span className="text-sm font-medium">{model.name}</span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </div>
 
         <Separator />
