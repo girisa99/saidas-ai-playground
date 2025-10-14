@@ -826,7 +826,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
           console.error('❌ Secondary model failed:', results[1].reason);
         }
 
-        if (primaryRes && primaryRes.content) {
+      if (primaryRes && primaryRes.content) {
           // ========== RICH MEDIA ENHANCEMENT FOR PRIMARY ==========
           const enhancedPrimary = enhanceResponseWithTriage(
             primaryRes.content,
@@ -837,6 +837,18 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             enhancedPrimary.content,
             primaryRes.triageData || null
           );
+          
+          // Generate milestone suggestions (3, 5, 7 messages)
+          const userMessageCount = messages.filter(m => m.role === 'user').length;
+          const milestoneSuggestions = generateMilestoneSuggestions(
+            userMessageCount,
+            messages.map(m => ({ role: m.role, content: m.content })),
+            primaryRes.triageData || null
+          );
+          
+          if (milestoneSuggestions.length > 0) {
+            enhancedPrimaryContent += `\n\n**💡 You might also be interested in:**\n${milestoneSuggestions.map(s => `• ${s}`).join('\n')}`;
+          }
           
           let personalizedPrimary = addPersonalityToResponse(enhancedPrimaryContent);
           
@@ -1112,6 +1124,18 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
               response.triageData || null
             );
             
+            // Generate milestone suggestions (3, 5, 7 messages)
+            const userMessageCount = messages.filter(m => m.role === 'user').length + 1;
+            const milestoneSuggestions = generateMilestoneSuggestions(
+              userMessageCount,
+              messages.map(m => ({ role: m.role, content: m.content })),
+              response.triageData || null
+            );
+            
+            if (milestoneSuggestions.length > 0 && [3, 5, 7].includes(userMessageCount)) {
+              enhancedContent += `\n\n**💡 You might also be interested in:**\n${milestoneSuggestions.map(s => `• ${s}`).join('\n')}`;
+            }
+            
             const personalizedResponse = addPersonalityToResponse(enhancedContent);
             
             // Add RAG context indicator if used
@@ -1244,39 +1268,15 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             });
             
             // ========== MILESTONE SUGGESTIONS ==========
-            // Check if we've hit a milestone (3, 5, 7 messages)
+            // Note: Milestone suggestions already added to message content above
             const milestones = [3, 5, 7];
-            const userMessageCount = messages.filter(m => m.role === 'user').length + 1;
+            const currentUserMessageCount = messages.filter(m => m.role === 'user').length + 1;
             
-            console.log(`📊 Message Milestone Check: ${userMessageCount} user messages`);
+            console.log(`📊 Message Milestone Check: ${currentUserMessageCount} user messages`);
             
-            if (milestones.includes(userMessageCount)) {
-              const suggestions = generateMilestoneSuggestions(
-                userMessageCount,
-                messages.map(m => ({ role: m.role, content: m.content })),
-                response.triageData || null
-              );
-              
-              console.log(`💡 Milestone ${userMessageCount} suggestions:`, suggestions);
-              
-              if (suggestions.length > 0) {
-                setTimeout(() => {
-                  toast({
-                    title: `💡 Conversation Milestone ${userMessageCount}`,
-                    description: (
-                      <div className="space-y-2">
-                        <p className="text-sm font-medium">Suggested next steps:</p>
-                        <ul className="text-sm space-y-1">
-                          {suggestions.map((sug, i) => (
-                            <li key={i}>• {sug}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    ),
-                    duration: 12000
-                  });
-                }, 2000);
-              }
+            if (milestones.includes(currentUserMessageCount)) {
+              // Suggestions already shown in message content above
+              console.log(`✅ Milestone ${currentUserMessageCount} suggestions already included in response`);
             }
           }
       }
@@ -1724,7 +1724,7 @@ ${conversationSummary.transcript}`
                      ) : (
                        <div className="space-y-2">
                          {messages.map((message, index) => (
-                           <div key={`unified-msg-${message.timestamp || Date.now()}-${index}-${message.role}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                           <div key={`msg-${index}-${message.role}-${message.timestamp}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                             <div className={`max-w-[80%] p-3 rounded-lg ${
                               message.role === 'user' 
                                 ? 'bg-primary text-primary-foreground' 

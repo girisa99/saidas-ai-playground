@@ -276,6 +276,35 @@ function enhanceSystemPrompt(basePrompt: string, triage: TriageResult): string {
     enhanced += '\nPresent findings as a comparative table with clear columns.';
   } else if (triage.best_format === 'list') {
     enhanced += '\nPresent information as a clear, numbered or bulleted list.';
+  } else if (triage.best_format === 'html') {
+    enhanced += '\nUse rich formatting with proper structure. For processes or workflows, create a visual journey map.';
+  }
+  
+  // Add journey map capability for process-oriented queries
+  if (triage.keywords.some(k => ['process', 'workflow', 'steps', 'journey', 'path', 'procedure', 'enrollment', 'onboarding', 'treatment', 'authorization', 'claims'].includes(k))) {
+    enhanced += `\n\n**JOURNEY MAP CAPABILITY**: When explaining multi-step processes, you can create an interactive visual journey map using this format:
+
+\`\`\`journey-map
+{
+  "title": "Process Name",
+  "context": "${triage.domain}",
+  "steps": [
+    {
+      "id": "step-1",
+      "title": "Step Title",
+      "description": "Brief description",
+      "status": "completed|current|upcoming",
+      "icon": "FileText|Users|DollarSign|Stethoscope|Pill|Building|Phone|Shield|TrendingUp",
+      "details": ["Detail 1", "Detail 2"],
+      "resources": [
+        { "label": "Resource Name", "url": "https://...", "type": "pdf|video|link" }
+      ]
+    }
+  ]
+}
+\`\`\`
+
+Use journey maps for: enrollment processes, treatment workflows, authorization steps, claims procedures, onboarding flows, or any multi-step healthcare/technology process.`;
   }
   
   if (triage.emotional_tone === 'empathetic') {

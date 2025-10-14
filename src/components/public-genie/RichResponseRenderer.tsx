@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import { VisualJourneyMap, JourneyStep } from './VisualJourneyMap';
 
 interface RichResponseRendererProps {
   content: string;
@@ -19,8 +20,26 @@ interface RichResponseRendererProps {
 }
 
 export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ content, oncologyProducts }) => {
+  // Parse journey map data if present in content
+  const journeyMapData = useMemo(() => {
+    const journeyMatch = content.match(/```journey-map\n([\s\S]*?)\n```/);
+    if (journeyMatch) {
+      try {
+        const journeyData = JSON.parse(journeyMatch[1]);
+        return journeyData as { title?: string; steps: JourneyStep[]; context?: 'healthcare' | 'technology' };
+      } catch (e) {
+        console.error('Failed to parse journey map data:', e);
+        return null;
+      }
+    }
+    return null;
+  }, [content]);
+
+  // Remove journey map code block from content for rendering
+  const cleanContent = content.replace(/```journey-map\n[\s\S]*?\n```/g, '');
+
   // Enhance content formatting for better readability and add citations support
-  const enhancedContent = content
+  const enhancedContent = cleanContent
     .replace(/^• /gm, '🔹 ')
     .replace(/\*\*(.*?)\*\*/g, '**$1**') // Ensure bold formatting is preserved
     // Support citation format: [1], [2], etc.
@@ -32,6 +51,15 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
 
   return (
     <div className="space-y-4">
+      {/* Journey Map Visualization */}
+      {journeyMapData && (
+        <VisualJourneyMap 
+          steps={journeyMapData.steps}
+          title={journeyMapData.title}
+          context={journeyMapData.context}
+        />
+      )}
+
       {/* Therapy Products Cards */}
       {oncologyProducts && oncologyProducts.length > 0 && (
         <div className="not-prose mb-6">
@@ -113,6 +141,39 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
             const isPDF = props.href?.toLowerCase().endsWith('.pdf');
             const isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(props.href || '');
             const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(props.href || '');
+            const isYouTube = props.href?.includes('youtube.com') || props.href?.includes('youtu.be');
+            
+            // Handle YouTube links with embedded player
+            if (isYouTube) {
+              const videoId = props.href?.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1];
+              if (videoId) {
+                return (
+                  <div className="my-4">
+                    <a
+                      {...props}
+                      className="inline-flex items-center gap-1 text-primary hover:text-primary-glow transition-colors underline font-medium mb-2"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span>🎥</span>
+                      {props.children || 'Watch Video'}
+                    </a>
+                    <div className="aspect-video w-full rounded-lg overflow-hidden shadow-lg">
+                      <iframe
+                        width="100%"
+                        height="100%"
+                        src={`https://www.youtube.com/embed/${videoId}`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="w-full h-full"
+                      />
+                    </div>
+                  </div>
+                );
+              }
+            }
             
             if (isPDF || isImage || isVideo) {
               return (
