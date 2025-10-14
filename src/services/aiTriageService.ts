@@ -139,10 +139,36 @@ function detectDomain(
     'x-ray', 'mri', 'ct scan', 'imaging', 'radiology', 'dicom',
     'icd', 'cpt', 'billing', 'insurance', 'reimbursement', 'claim',
     
+    // ========== PAYER & REIMBURSEMENT ==========
+    'copay', 'coinsurance', 'deductible', 'prior authorization', 'pa', 'claims',
+    'coverage', 'formulary', 'benefit verification', 'insurance coverage',
+    'commercial insurance', 'medicare', 'medicaid', 'managed care',
+    'specialty pharmacy', 'buy and bill', 'medical benefit', 'pharmacy benefit',
+    
+    // ========== PATIENT ACCESS & ASSISTANCE ==========
+    'patient assistance', 'copay assistance', 'copay card', 'free drug program',
+    'alternative funding', 'charitable foundation', 'patient foundation',
+    'financial assistance', 'hub services', 'specialty hub', 'case management',
+    'patient navigation', 'reimbursement support', 'appeals', 'denials',
+    
+    // ========== CLINICAL TRIALS ==========
+    'clinical trial', 'clinical study', 'inclusion criteria', 'exclusion criteria',
+    'enrollment', 'screening', 'protocol', 'investigator', 'study site',
+    'informed consent', 'irb', 'adverse event', 'endpoints', 'phase 1', 'phase 2', 'phase 3',
+    
+    // ========== TREATMENT CENTERS & FACILITIES ==========
+    'treatment center', 'infusion center', 'cancer center', 'oncology center',
+    'comprehensive cancer center', 'academic medical center', 'community oncology',
+    'hospital outpatient', 'ambulatory infusion', 'clinic', 'practice',
+    
+    // ========== PATIENT EDUCATION & ADHERENCE ==========
+    'patient education', 'adherence', 'compliance', 'medication adherence',
+    'side effect management', 'monitoring', 'follow-up', 'awareness',
+    
     // ========== ONCOLOGY & IMMUNOTHERAPY ==========
     'car-t', 'car t', 'cell therapy', 'immunotherapy', 'tcr', 't-cell',
     'lymphoma', 'leukemia', 'cancer', 'oncology', 'tumor', 'malignancy',
-    'trial', 'clinical trial', 'fda', 'approval', 'indication',
+    'trial', 'fda', 'approval', 'indication',
     'yescarta', 'kymriah', 'tecartus', 'breyanzi', 'abecma', 'carvykti',
     'kite', 'novartis', 'gilead', 'bristol myers', 'bms', 'jnj', 'janssen',
     'allogeneic', 'autologous', 'cd19', 'cd20', 'bcma', 'b-cell',

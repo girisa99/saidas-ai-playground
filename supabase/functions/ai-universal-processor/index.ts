@@ -156,68 +156,50 @@ function detectDomain(queryLower: string, context?: string): 'healthcare' | 'tec
     'patient', 'medical', 'clinical', 'diagnosis', 'treatment', 'therapy', 
     'x-ray', 'mri', 'ct scan', 'healthcare', 'hospital', 'doctor', 'nurse', 'medication',
     
+    // ========== PAYER & REIMBURSEMENT ==========
+    'copay', 'coinsurance', 'deductible', 'prior authorization', 'pa', 'claims',
+    'coverage', 'formulary', 'benefit verification', 'insurance coverage',
+    'commercial insurance', 'medicare', 'medicaid', 'managed care',
+    'specialty pharmacy', 'buy and bill', 'medical benefit', 'pharmacy benefit',
+    
+    // ========== PATIENT ACCESS & ASSISTANCE ==========
+    'patient assistance', 'copay assistance', 'copay card', 'free drug program',
+    'alternative funding', 'charitable foundation', 'patient foundation',
+    'financial assistance', 'hub services', 'specialty hub', 'case management',
+    'patient navigation', 'reimbursement support', 'appeals', 'denials',
+    
+    // ========== CLINICAL TRIALS ==========
+    'clinical trial', 'clinical study', 'inclusion criteria', 'exclusion criteria',
+    'enrollment', 'screening', 'protocol', 'investigator', 'study site',
+    'informed consent', 'irb', 'adverse event', 'endpoints', 'phase 1', 'phase 2', 'phase 3',
+    
+    // ========== TREATMENT CENTERS & FACILITIES ==========
+    'treatment center', 'infusion center', 'cancer center', 'oncology center',
+    'comprehensive cancer center', 'academic medical center', 'community oncology',
+    'hospital outpatient', 'ambulatory infusion', 'clinic', 'practice',
+    
+    // ========== PATIENT EDUCATION & ADHERENCE ==========
+    'patient education', 'adherence', 'compliance', 'medication adherence',
+    'side effect management', 'monitoring', 'follow-up', 'awareness',
+    
     // ========== ONCOLOGY & IMMUNOTHERAPY ==========
     'car-t', 'car t', 'cell therapy', 'immunotherapy', 'tcr', 't-cell', 'checkpoint inhibitor',
     'lymphoma', 'leukemia', 'cancer', 'oncology', 'tumor', 'malignancy', 'pd-1', 'pd-l1', 'ctla-4',
-    'trial', 'clinical trial', 'fda', 'approval', 'indication',
+    'trial', 'fda', 'approval', 'indication',
     'yescarta', 'kymriah', 'tecartus', 'breyanzi', 'abecma', 'carvykti', 'keytruda', 'opdivo', 'yervoy',
     'kite', 'novartis', 'gilead', 'bristol myers', 'bms', 'jnj', 'janssen',
     'allogeneic', 'autologous', 'cd19', 'cd20', 'bcma', 'b-cell',
     'chemotherapy', 'radiation', 'metastatic', 'biopsy', 'staging',
     
-    // ========== BREAST CANCER ==========
-    'breast cancer', 'mammogram', 'mastectomy', 'lumpectomy', 'her2',
-    'estrogen receptor', 'progesterone receptor', 'brca', 'tamoxifen',
-    'herceptin', 'perjeta', 'kadcyla', 'enhertu', 'triple negative',
-    
-    // ========== NEUROLOGY & MS ==========
-    'multiple sclerosis', 'ms', 'relapsing remitting', 'progressive ms',
-    'lesion', 'demyelination', 'tysabri', 'ocrevus', 'gilenya', 'tecfidera',
-    'copaxone', 'rebif', 'avonex', 'betaseron', 'mavenclad', 'kesimpta',
-    'neurology', 'neurological', 'seizure', 'epilepsy', 'parkinson', 'alzheimer',
-    'dementia', 'migraine', 'neuropathy',
-    
-    // ========== MENTAL HEALTH & PSYCHIATRY ==========
-    'mental health', 'psychiatry', 'psychiatric', 'schizophrenia', 'psychosis',
-    'depression', 'anxiety', 'bipolar', 'ptsd', 'ocd', 'adhd',
-    'antidepressant', 'antipsychotic', 'ssri', 'snri', 'benzodiazepine',
-    'prozac', 'zoloft', 'lexapro', 'abilify', 'seroquel', 'risperdal',
-    'zyprexa', 'latuda', 'vraylar', 'rexulti', 'lithium', 'lamictal',
-    
-    // ========== DIABETES & ENDOCRINE ==========
-    'diabetes', 'diabetic', 'insulin', 'glucose', 'blood sugar', 'a1c',
-    'metformin', 'glipizide', 'lantus', 'humalog', 'novolog', 'ozempic',
-    'mounjaro', 'trulicity', 'jardiance', 'farxiga', 'continuous glucose',
-    'cgm', 'pump', 'type 1', 'type 2', 'hyperglycemia', 'hypoglycemia',
-    'thyroid', 'hypothyroid', 'synthroid', 'levothyroxine',
-    
-    // ========== CARDIOVASCULAR ==========
-    'heart', 'cardiac', 'cardiovascular', 'cardio', 'hypertension',
-    'blood pressure', 'cholesterol', 'statin', 'beta blocker', 'ace inhibitor',
-    'arb', 'lisinopril', 'metoprolol', 'atorvastatin', 'lipitor', 'crestor',
-    'plavix', 'eliquis', 'xarelto', 'warfarin', 'afib', 'arrhythmia',
-    'myocardial infarction', 'angioplasty', 'stent', 'cabg',
-    
-    // ========== RHEUMATOLOGY & AUTOIMMUNE ==========
-    'rheumatoid arthritis', 'ra', 'lupus', 'sle', 'autoimmune',
-    'psoriasis', 'psoriatic arthritis', 'crohn', 'ulcerative colitis',
-    'ibd', 'humira', 'enbrel', 'remicade', 'stelara', 'cosentyx',
-    'rinvoq', 'xeljanz', 'methotrexate', 'prednisone', 'biologics',
-    
-    // ========== INFECTIOUS DISEASE ==========
-    'hiv', 'aids', 'antiretroviral', 'prep', 'biktarvy',
-    'hepatitis', 'hep c', 'mavyret', 'epclusa', 'harvoni',
-    'antibiotic', 'antimicrobial', 'vaccine', 'vaccination', 'infection',
-    
-    // ========== RESPIRATORY ==========
-    'asthma', 'copd', 'inhaler', 'nebulizer', 'albuterol', 'advair',
-    'symbicort', 'spiriva', 'trelegy', 'dupixent', 'pulmonary', 'lung',
-    
-    // ========== GI, NEPHROLOGY, HEMATOLOGY, PAIN ==========
-    'gastroenterology', 'gi', 'gerd', 'reflux', 'ibs', 'nexium', 'prilosec',
-    'kidney', 'renal', 'dialysis', 'ckd', 'nephrology',
-    'anemia', 'hemoglobin', 'sickle cell', 'hemophilia',
-    'chronic pain', 'opioid', 'morphine', 'gabapentin', 'lyrica'
+    // ========== BREAST, MS, MENTAL HEALTH, DIABETES, CARDIO, ETC. ==========
+    'breast cancer', 'her2', 'brca', 'tamoxifen', 'herceptin', 'triple negative',
+    'multiple sclerosis', 'ms', 'tysabri', 'ocrevus', 'gilenya', 'copaxone',
+    'mental health', 'psychiatry', 'schizophrenia', 'depression', 'anxiety', 'bipolar',
+    'prozac', 'zoloft', 'abilify', 'seroquel', 'risperdal', 'zyprexa', 'latuda',
+    'diabetes', 'insulin', 'glucose', 'a1c', 'metformin', 'ozempic', 'mounjaro',
+    'heart', 'cardiac', 'hypertension', 'blood pressure', 'cholesterol', 'statin',
+    'rheumatoid arthritis', 'lupus', 'psoriasis', 'crohn', 'humira', 'enbrel',
+    'hiv', 'hepatitis', 'vaccine', 'asthma', 'copd', 'inhaler', 'albuterol'
   ];
   
   const technologyKeywords = [
@@ -230,14 +212,11 @@ function detectDomain(queryLower: string, context?: string): 'healthcare' | 'tec
   const techScore = technologyKeywords.filter(k => queryLower.includes(k)).length;
   
   if (context === 'healthcare' && healthScore >= techScore) return 'healthcare';
-  if (context === 'technology' && techScore >= healthHealth) return 'technology';
+  if (context === 'technology' && techScore >= healthScore) return 'technology';
   if (healthScore > techScore) return 'healthcare';
   if (techScore > healthScore) return 'technology';
   
   return 'general';
-  
-  const healthScore = healthcareKeywords.filter(k => queryLower.includes(k)).length;
-  const techScore = technologyKeywords.filter(k => queryLower.includes(k)).length;
   
   if (context === 'healthcare' && healthScore >= techScore) return 'healthcare';
   if (context === 'technology' && techScore >= healthScore) return 'technology';
