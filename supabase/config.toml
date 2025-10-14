@@ -75,3 +75,6 @@ verify_jwt = true
 
 [functions.send-rag-approval-email]
 verify_jwt = true
+
+[functions.populate-healthcare-knowledge]
+verify_jwt = false
