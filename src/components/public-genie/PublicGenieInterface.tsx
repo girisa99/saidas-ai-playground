@@ -265,26 +265,28 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
       const modeNames = { default: 'Balanced', single: 'Focused', multi: 'Consensus' };
       toast({
         title: `Switched to ${modeNames[newConfig.mode]} Mode`,
-        description: 'Your conversation will continue with the new AI configuration.',
+        description: 'Conversation context preserved. All features active in new mode.',
+        duration: 3000,
       });
       
-      // Clear split responses when switching out of multi mode to avoid confusion
-      if (newConfig.mode !== 'multi' && (previousSplitScreen !== (newConfig.splitScreenEnabled || newConfig.splitScreen))) {
+      // Clear split responses ONLY when switching OUT of multi mode to single/default
+      if (previousMode === 'multi' && newConfig.mode !== 'multi') {
         setSplitResponses({ primary: [], secondary: [] });
+        console.log('✅ Exiting multi-mode - cleared split responses');
       }
       
-      console.log('✅ Mode switched:', previousMode, '→', newConfig.mode, '| Conversation context preserved');
+      console.log('✅ Mode switched:', previousMode, '→', newConfig.mode, '| Context + Knowledge Base + Rich Features preserved');
     }
     
-    // Handle split-screen toggle
+    // Handle split-screen toggle (independent of mode)
     const newSplitScreen = newConfig.splitScreenEnabled || newConfig.splitScreen;
     if (newSplitScreen !== previousSplitScreen) {
       if (!newSplitScreen) {
         // Switching split-screen OFF - clear split responses
         setSplitResponses({ primary: [], secondary: [] });
-        console.log('✅ Split-screen disabled - cleared separate model responses');
+        console.log('✅ Split-screen disabled - cleared dual responses');
       } else {
-        console.log('✅ Split-screen enabled - will show dual model responses');
+        console.log('✅ Split-screen enabled - dual model comparison active');
       }
     }
   };
@@ -788,8 +790,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             useMCP: aiConfig.mcpEnabled,
             labelStudio: false,
             context: context || 'general',
-            enableSmartRouting: true,
-            enableMultiAgent: false,
+            enableSmartRouting: true, // ✅ Always enable for triage + rich features
+            enableMultiAgent: false, // Multi-mode uses split-screen, not multi-agent
             conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
             ...(imageUrls.length > 0 && { images: imageUrls })
           } as any),
@@ -805,7 +807,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             useMCP: aiConfig.mcpEnabled,
             labelStudio: false,
             context: context || 'general',
-            enableSmartRouting: true,
+            enableSmartRouting: true, // ✅ Always enable for triage + rich features
             enableMultiAgent: false,
             conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
             ...(imageUrls.length > 0 && { images: imageUrls })
@@ -961,6 +963,18 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             secondaryRes.triageData || null
           );
           
+          // Generate milestone suggestions for secondary model too (3, 5, 7 messages)
+          const secondaryUserMessageCount = messages.filter(m => m.role === 'user').length + 1;
+          const secondaryMilestoneSuggestions = generateMilestoneSuggestions(
+            secondaryUserMessageCount,
+            messages.map(m => ({ role: m.role, content: m.content })),
+            secondaryRes.triageData || null
+          );
+          
+          if (secondaryMilestoneSuggestions.length > 0 && [3, 5, 7].includes(secondaryUserMessageCount)) {
+            enhancedSecondaryContent += `\n\n**💡 You might also be interested in:**\n${secondaryMilestoneSuggestions.map(s => `• ${s}`).join('\n')}`;
+          }
+          
           let personalizedSecondary = addPersonalityToResponse(enhancedSecondaryContent);
           
           // Add RAG/KB context indicators
@@ -1053,35 +1067,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
           }));
           
           // ========== MILESTONE SUGGESTIONS FOR MULTI-MODE ==========
-          const milestones = [3, 5, 7];
-          const userMessageCount = messages.filter(m => m.role === 'user').length + 1;
-          
-          if (milestones.includes(userMessageCount)) {
-            const suggestions = generateMilestoneSuggestions(
-              userMessageCount,
-              messages.map(m => ({ role: m.role, content: m.content })),
-              secondaryRes.triageData || null
-            );
-            
-            if (suggestions.length > 0) {
-              setTimeout(() => {
-                toast({
-                  title: `💡 Multi-Agent Milestone ${userMessageCount}`,
-                  description: (
-                    <div className="space-y-2">
-                      <p className="text-sm font-medium">Suggested next steps:</p>
-                      <ul className="text-sm space-y-1">
-                        {suggestions.map((sug, i) => (
-                          <li key={i}>• {sug}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ),
-                  duration: 12000
-                });
-              }, 2000);
-            }
-          }
+          // Note: Milestone suggestions already added inline to both primary and secondary responses
+          console.log('✅ Multi-mode milestone suggestions included in both model responses');
         } else {
           console.warn('⚠️ Secondary model returned no content');
           toast({ 
@@ -1100,12 +1087,12 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
           temperature: 0.7,
           maxTokens: 4000,
           useRAG: aiConfig.ragEnabled,
-          knowledgeBase: aiConfig.knowledgeBase,
+          knowledgeBase: aiConfig.knowledgeBase || aiConfig.knowledgeBaseEnabled,
           useMCP: aiConfig.mcpEnabled,
           labelStudio: false,
           context: context || 'general',
-          enableSmartRouting: true, // Always enable smart routing for triage
-          enableMultiAgent: aiConfig.multiAgentEnabled || false, // CRITICAL: Enable multi-agent if configured
+          enableSmartRouting: true, // ✅ Always enable for triage + rich features
+          enableMultiAgent: aiConfig.multiAgentEnabled || false,
           conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
           ...(imageUrls.length > 0 && { images: imageUrls })
         } as any);
