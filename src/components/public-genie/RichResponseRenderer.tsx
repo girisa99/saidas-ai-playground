@@ -152,13 +152,17 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
             
             // Handle YouTube links with a safe thumbnail preview (avoids embed "Video unavailable")
             if (isYouTube) {
-              const videoId = props.href?.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1];
+              const rawHref = typeof props.href === 'string' ? props.href.trim() : '';
+              const normalizedHref = rawHref
+                ? (/^https?:\/\//i.test(rawHref) ? rawHref : `https://${rawHref.replace(/^\/\//, '')}`)
+                : '';
+              const videoId = normalizedHref.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1];
               if (videoId) {
                 const thumb = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
                 return (
                   <div className="my-4">
                     <a
-                      {...props}
+                      href={normalizedHref}
                       className="inline-flex items-center gap-1 text-primary hover:text-primary-glow transition-colors underline font-medium mb-2"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -207,13 +211,21 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
               );
             }
             
+            // Fallback: ensure link text is clickable and URL is normalized
+            const raw = typeof props.href === 'string' ? props.href.trim() : '';
+            const href = raw ? (/^https?:\/\//i.test(raw) ? raw : `https://${raw.replace(/^\/\//, '')}`) : '';
+            if (!href) {
+              return <span className="text-muted-foreground">{props.children} <em>(link unavailable)</em></span>;
+            }
             return (
               <a
-                {...props}
+                href={href}
                 className="text-primary hover:text-primary-glow transition-colors underline decoration-dotted hover:decoration-solid"
                 target="_blank"
                 rel="noopener noreferrer"
-              />
+              >
+                {props.children}
+              </a>
             );
           },
           code: ({ node, ...props }: any) => {
