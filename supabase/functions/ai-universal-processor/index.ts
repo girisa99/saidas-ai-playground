@@ -281,10 +281,10 @@ function enhanceSystemPrompt(basePrompt: string, triage: TriageResult): string {
   }
   
   // Add journey map capability for process-oriented queries
-  if (triage.keywords.some(k => ['process', 'workflow', 'steps', 'journey', 'path', 'procedure', 'enrollment', 'onboarding', 'treatment', 'authorization', 'claims'].includes(k))) {
-    enhanced += `\n\n**JOURNEY MAP CAPABILITY**: When explaining multi-step processes, you can create an interactive visual journey map using this format:
+  if (triage.keywords.some(k => ['process', 'workflow', 'steps', 'journey', 'path', 'procedure', 'enrollment', 'onboarding', 'treatment', 'authorization', 'claims', 'prior'].includes(k))) {
+    enhanced += `\n\n**CRITICAL - JOURNEY MAP FORMAT**: When explaining multi-step processes, workflows, or procedures, you MUST create an interactive visual journey map. DO NOT just list steps in JSON format. Use this EXACT markdown format:
 
-\`\`\`journey-map
+\`\`\`\`journey-map
 {
   "title": "Process Name",
   "context": "${triage.domain}",
@@ -302,9 +302,13 @@ function enhanceSystemPrompt(basePrompt: string, triage: TriageResult): string {
     }
   ]
 }
-\`\`\`
+\`\`\`\`
 
-Use journey maps for: enrollment processes, treatment workflows, authorization steps, claims procedures, onboarding flows, or any multi-step healthcare/technology process.`;
+IMPORTANT: 
+- Use FOUR backticks (\`\`\`\`) to wrap journey-map, NOT three
+- Include this for ANY process/workflow query (prior authorization, enrollment, treatment, etc.)
+- Put the journey map FIRST in your response, then explain details below it
+- NEVER return raw JSON without the journey-map wrapper`;
   }
   
   if (triage.emotional_tone === 'empathetic') {

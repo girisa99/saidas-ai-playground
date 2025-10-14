@@ -20,9 +20,16 @@ interface RichResponseRendererProps {
 }
 
 export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ content, oncologyProducts }) => {
-  // Parse journey map data if present in content
+  // Parse journey map data if present in content (support both 3 and 4 backticks)
   const journeyMapData = useMemo(() => {
-    const journeyMatch = content.match(/```journey-map\n([\s\S]*?)\n```/);
+    // Try 4 backticks first (correct format)
+    let journeyMatch = content.match(/````journey-map\n([\s\S]*?)\n````/);
+    
+    // Fallback to 3 backticks for backward compatibility
+    if (!journeyMatch) {
+      journeyMatch = content.match(/```journey-map\n([\s\S]*?)\n```/);
+    }
+    
     if (journeyMatch) {
       try {
         const journeyData = JSON.parse(journeyMatch[1]);
@@ -35,8 +42,8 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
     return null;
   }, [content]);
 
-  // Remove journey map code block from content for rendering
-  const cleanContent = content.replace(/```journey-map\n[\s\S]*?\n```/g, '');
+  // Remove journey map code block from content for rendering (support both formats)
+  const cleanContent = content.replace(/````journey-map\n[\s\S]*?\n````/g, '').replace(/```journey-map\n[\s\S]*?\n```/g, '');
 
   // Enhance content formatting for better readability and add citations support
   const enhancedContent = cleanContent
