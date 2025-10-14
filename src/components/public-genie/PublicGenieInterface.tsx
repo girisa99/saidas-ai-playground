@@ -141,8 +141,16 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [isMaximized, setIsMaximized] = useState(false);
   const [showPrivacyBanner, setShowPrivacyBanner] = useState(() => {
     try {
-      // Require privacy acceptance once per session
+      // Check if user info exists (returning user) OR session privacy already accepted
+      const savedUserInfo = localStorage.getItem('genie_user_info');
       const acceptedThisSession = sessionStorage.getItem('genie_privacy_accepted') === 'true';
+      
+      // If user info exists in localStorage, they're a returning user - don't show banner
+      if (savedUserInfo) {
+        sessionStorage.setItem('genie_privacy_accepted', 'true');
+        return false;
+      }
+      
       return !acceptedThisSession;
     } catch {
       return true;
@@ -1353,12 +1361,47 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
   };
 
   const handleResetSession = async () => {
+    // Send transcript before resetting if there are messages
+    if (messages.length > 0 && userInfo) {
+      try {
+        console.log('📧 Sending conversation transcript to user email...');
+        const { error } = await supabase.functions.invoke('send-conversation-transcript', {
+          body: {
+            userInfo,
+            context,
+            topic: messages[0]?.content?.substring(0, 50) || 'General conversation',
+            aiConfig,
+            messages,
+            sessionDuration: `${Math.round((Date.now() - new Date(messages[0]?.timestamp || Date.now()).getTime()) / 60000)} minutes`
+          }
+        });
+        
+        if (error) {
+          console.error('Failed to send transcript:', error);
+          toast({
+            title: "Transcript not sent",
+            description: "Could not email conversation history. Please save manually if needed.",
+            variant: "destructive"
+          });
+        } else {
+          console.log('✅ Transcript sent successfully');
+          toast({
+            title: "Conversation saved!",
+            description: `Transcript sent to ${userInfo.email}`,
+          });
+        }
+      } catch (error) {
+        console.error('Error sending transcript:', error);
+      }
+    }
+
     try {
       sessionStorage.removeItem('genie_ai_config');
       sessionStorage.removeItem('genie_config_timestamp');
       sessionStorage.removeItem('genie_privacy_accepted');
       sessionStorage.removeItem('genie_user_info_session');
-      localStorage.removeItem('genie_user_info');
+      // DON'T remove localStorage user info - keep for returning users
+      // localStorage.removeItem('genie_user_info');
     } catch {}
     resetConversation();
     if (conversationLimitService.isConversationActive()) {
@@ -1369,7 +1412,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
     }
     setShowConfigWizard(false);
     setShowTopicPopover(false);
-    setUserInfo(null);
+    // DON'T clear user info - keep for returning users
+    // setUserInfo(null);
     setShowPrivacyBanner(true);
   };
   const sendConversationTranscript = async () => {
@@ -1498,9 +1542,9 @@ ${conversationSummary.transcript}`
                        <RefreshCw className="h-4 w-4" />
                      </Button>
                    </TooltipTrigger>
-                   <TooltipContent>
-                     <p>New session</p>
-                   </TooltipContent>
+                    <TooltipContent>
+                      <p>End conversation & email transcript</p>
+                    </TooltipContent>
                  </Tooltip>
                  <Tooltip>
                    <TooltipTrigger asChild>
