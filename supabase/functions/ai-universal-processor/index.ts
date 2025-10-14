@@ -152,37 +152,74 @@ function classifyComplexity(queryLower: string, wordCount: number): 'simple' | '
 
 function detectDomain(queryLower: string, context?: string): 'healthcare' | 'technology' | 'general' {
   const healthcareKeywords = [
-    // General medical terms
+    // ========== GENERAL MEDICAL ==========
     'patient', 'medical', 'clinical', 'diagnosis', 'treatment', 'therapy', 
-    'x-ray', 'mri', 'ct scan', 'healthcare', 'hospital', 'doctor', 'nurse',
-    // Oncology & Cell Therapy
-    'car-t', 'car t', 'cell therapy', 'immunotherapy', 'tcr', 't-cell',
-    'lymphoma', 'leukemia', 'cancer', 'oncology', 'tumor', 'malignancy',
+    'x-ray', 'mri', 'ct scan', 'healthcare', 'hospital', 'doctor', 'nurse', 'medication',
+    
+    // ========== ONCOLOGY & IMMUNOTHERAPY ==========
+    'car-t', 'car t', 'cell therapy', 'immunotherapy', 'tcr', 't-cell', 'checkpoint inhibitor',
+    'lymphoma', 'leukemia', 'cancer', 'oncology', 'tumor', 'malignancy', 'pd-1', 'pd-l1', 'ctla-4',
     'trial', 'clinical trial', 'fda', 'approval', 'indication',
-    'yescarta', 'kymriah', 'tecartus', 'breyanzi', 'abecma', 'carvykti',
+    'yescarta', 'kymriah', 'tecartus', 'breyanzi', 'abecma', 'carvykti', 'keytruda', 'opdivo', 'yervoy',
     'kite', 'novartis', 'gilead', 'bristol myers', 'bms', 'jnj', 'janssen',
     'allogeneic', 'autologous', 'cd19', 'cd20', 'bcma', 'b-cell',
     'chemotherapy', 'radiation', 'metastatic', 'biopsy', 'staging',
-    // Breast Cancer
+    
+    // ========== BREAST CANCER ==========
     'breast cancer', 'mammogram', 'mastectomy', 'lumpectomy', 'her2',
     'estrogen receptor', 'progesterone receptor', 'brca', 'tamoxifen',
     'herceptin', 'perjeta', 'kadcyla', 'enhertu', 'triple negative',
-    // Multiple Sclerosis
+    
+    // ========== NEUROLOGY & MS ==========
     'multiple sclerosis', 'ms', 'relapsing remitting', 'progressive ms',
     'lesion', 'demyelination', 'tysabri', 'ocrevus', 'gilenya', 'tecfidera',
     'copaxone', 'rebif', 'avonex', 'betaseron', 'mavenclad', 'kesimpta',
-    // Diabetes
+    'neurology', 'neurological', 'seizure', 'epilepsy', 'parkinson', 'alzheimer',
+    'dementia', 'migraine', 'neuropathy',
+    
+    // ========== MENTAL HEALTH & PSYCHIATRY ==========
+    'mental health', 'psychiatry', 'psychiatric', 'schizophrenia', 'psychosis',
+    'depression', 'anxiety', 'bipolar', 'ptsd', 'ocd', 'adhd',
+    'antidepressant', 'antipsychotic', 'ssri', 'snri', 'benzodiazepine',
+    'prozac', 'zoloft', 'lexapro', 'abilify', 'seroquel', 'risperdal',
+    'zyprexa', 'latuda', 'vraylar', 'rexulti', 'lithium', 'lamictal',
+    
+    // ========== DIABETES & ENDOCRINE ==========
     'diabetes', 'diabetic', 'insulin', 'glucose', 'blood sugar', 'a1c',
     'metformin', 'glipizide', 'lantus', 'humalog', 'novolog', 'ozempic',
     'mounjaro', 'trulicity', 'jardiance', 'farxiga', 'continuous glucose',
     'cgm', 'pump', 'type 1', 'type 2', 'hyperglycemia', 'hypoglycemia',
-    // Cardiovascular
+    'thyroid', 'hypothyroid', 'synthroid', 'levothyroxine',
+    
+    // ========== CARDIOVASCULAR ==========
     'heart', 'cardiac', 'cardiovascular', 'cardio', 'hypertension',
     'blood pressure', 'cholesterol', 'statin', 'beta blocker', 'ace inhibitor',
     'arb', 'lisinopril', 'metoprolol', 'atorvastatin', 'lipitor', 'crestor',
     'plavix', 'eliquis', 'xarelto', 'warfarin', 'afib', 'arrhythmia',
-    'myocardial infarction', 'stroke', 'angioplasty', 'stent', 'cabg'
+    'myocardial infarction', 'angioplasty', 'stent', 'cabg',
+    
+    // ========== RHEUMATOLOGY & AUTOIMMUNE ==========
+    'rheumatoid arthritis', 'ra', 'lupus', 'sle', 'autoimmune',
+    'psoriasis', 'psoriatic arthritis', 'crohn', 'ulcerative colitis',
+    'ibd', 'humira', 'enbrel', 'remicade', 'stelara', 'cosentyx',
+    'rinvoq', 'xeljanz', 'methotrexate', 'prednisone', 'biologics',
+    
+    // ========== INFECTIOUS DISEASE ==========
+    'hiv', 'aids', 'antiretroviral', 'prep', 'biktarvy',
+    'hepatitis', 'hep c', 'mavyret', 'epclusa', 'harvoni',
+    'antibiotic', 'antimicrobial', 'vaccine', 'vaccination', 'infection',
+    
+    // ========== RESPIRATORY ==========
+    'asthma', 'copd', 'inhaler', 'nebulizer', 'albuterol', 'advair',
+    'symbicort', 'spiriva', 'trelegy', 'dupixent', 'pulmonary', 'lung',
+    
+    // ========== GI, NEPHROLOGY, HEMATOLOGY, PAIN ==========
+    'gastroenterology', 'gi', 'gerd', 'reflux', 'ibs', 'nexium', 'prilosec',
+    'kidney', 'renal', 'dialysis', 'ckd', 'nephrology',
+    'anemia', 'hemoglobin', 'sickle cell', 'hemophilia',
+    'chronic pain', 'opioid', 'morphine', 'gabapentin', 'lyrica'
   ];
+  
   const technologyKeywords = [
     'software', 'code', 'api', 'integration', 'platform',
     'cloud', 'saas', 'automation', 'workflow', 'digital',
