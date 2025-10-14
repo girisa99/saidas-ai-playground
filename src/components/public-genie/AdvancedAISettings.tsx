@@ -566,54 +566,6 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
 
         <Separator />
 
-      {/* Comparison Model (for Multi + Split) */}
-      {(config.mode === 'multi' || config.splitScreenEnabled) && (
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Cpu className="h-4 w-4" />
-              Secondary Model
-            </CardTitle>
-            <CardDescription className="text-xs">
-              Your choice for comparison / multi-agent mode
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-0 space-y-2">
-            <Select
-              value={config.secondaryModel || 'google/gemini-2.5-flash'}
-              onValueChange={(value) => {
-                updateConfig({ secondaryModel: value });
-                console.log('✅ User selected secondary model:', value);
-                console.log('✅ Config updated - Primary:', config.selectedModel, '| Secondary:', value);
-              }}
-            >
-              <SelectTrigger className="h-8 bg-background">
-                <SelectValue placeholder="Select secondary model" />
-              </SelectTrigger>
-              <SelectContent className="bg-background border-border z-[100000] max-h-[300px]">
-                {modelOptions
-                  .filter((m) => m.id !== config.selectedModel)
-                  .map((model) => (
-                    <SelectItem key={model.id} value={model.id} className="cursor-pointer">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="text-xs">{model.name}</span>
-                        <div className="flex gap-1">
-                          <Badge variant="secondary" className="text-[10px] px-1 py-0">
-                            {model.type}
-                          </Badge>
-                          <Badge variant="outline" className="text-[10px] px-1 py-0">
-                            {model.provider}
-                          </Badge>
-                        </div>
-                      </div>
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-          </CardContent>
-        </Card>
-      )}
-
       {/* Knowledge & Context Features */}
       <Card>
         <CardHeader className="pb-3">
