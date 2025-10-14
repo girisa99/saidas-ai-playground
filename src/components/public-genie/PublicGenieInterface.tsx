@@ -236,7 +236,6 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
       mcpEnabled: false,
       multiAgentEnabled: false,
       selectedModel: 'gpt-4o-mini',
-      secondaryModel: 'claude-3-haiku',
       splitScreen: false,
       splitScreenEnabled: false,
       contextualSuggestions: true,

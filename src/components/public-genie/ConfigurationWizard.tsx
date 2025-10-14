@@ -169,7 +169,6 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
     mcpEnabled: false,
     multiAgentEnabled: false, // ADDED
     selectedModel: 'gpt-4o-mini',
-    secondaryModel: 'claude-3-haiku',
     splitScreen: false,
     splitScreenEnabled: false,
     contextualSuggestions: true,
