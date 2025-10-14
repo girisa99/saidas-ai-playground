@@ -152,20 +152,52 @@ function classifyComplexity(queryLower: string, wordCount: number): 'simple' | '
 
 function detectDomain(queryLower: string, context?: string): 'healthcare' | 'technology' | 'general' {
   const healthcareKeywords = [
+    // General medical terms
     'patient', 'medical', 'clinical', 'diagnosis', 'treatment', 'therapy', 
     'x-ray', 'mri', 'ct scan', 'healthcare', 'hospital', 'doctor', 'nurse',
+    // Oncology & Cell Therapy
     'car-t', 'car t', 'cell therapy', 'immunotherapy', 'tcr', 't-cell',
     'lymphoma', 'leukemia', 'cancer', 'oncology', 'tumor', 'malignancy',
     'trial', 'clinical trial', 'fda', 'approval', 'indication',
     'yescarta', 'kymriah', 'tecartus', 'breyanzi', 'abecma', 'carvykti',
     'kite', 'novartis', 'gilead', 'bristol myers', 'bms', 'jnj', 'janssen',
-    'allogeneic', 'autologous', 'cd19', 'cd20', 'bcma', 'b-cell'
+    'allogeneic', 'autologous', 'cd19', 'cd20', 'bcma', 'b-cell',
+    'chemotherapy', 'radiation', 'metastatic', 'biopsy', 'staging',
+    // Breast Cancer
+    'breast cancer', 'mammogram', 'mastectomy', 'lumpectomy', 'her2',
+    'estrogen receptor', 'progesterone receptor', 'brca', 'tamoxifen',
+    'herceptin', 'perjeta', 'kadcyla', 'enhertu', 'triple negative',
+    // Multiple Sclerosis
+    'multiple sclerosis', 'ms', 'relapsing remitting', 'progressive ms',
+    'lesion', 'demyelination', 'tysabri', 'ocrevus', 'gilenya', 'tecfidera',
+    'copaxone', 'rebif', 'avonex', 'betaseron', 'mavenclad', 'kesimpta',
+    // Diabetes
+    'diabetes', 'diabetic', 'insulin', 'glucose', 'blood sugar', 'a1c',
+    'metformin', 'glipizide', 'lantus', 'humalog', 'novolog', 'ozempic',
+    'mounjaro', 'trulicity', 'jardiance', 'farxiga', 'continuous glucose',
+    'cgm', 'pump', 'type 1', 'type 2', 'hyperglycemia', 'hypoglycemia',
+    // Cardiovascular
+    'heart', 'cardiac', 'cardiovascular', 'cardio', 'hypertension',
+    'blood pressure', 'cholesterol', 'statin', 'beta blocker', 'ace inhibitor',
+    'arb', 'lisinopril', 'metoprolol', 'atorvastatin', 'lipitor', 'crestor',
+    'plavix', 'eliquis', 'xarelto', 'warfarin', 'afib', 'arrhythmia',
+    'myocardial infarction', 'stroke', 'angioplasty', 'stent', 'cabg'
   ];
   const technologyKeywords = [
     'software', 'code', 'api', 'integration', 'platform',
     'cloud', 'saas', 'automation', 'workflow', 'digital',
     'database', 'frontend', 'backend', 'deployment', 'server'
   ];
+  
+  const healthScore = healthcareKeywords.filter(k => queryLower.includes(k)).length;
+  const techScore = technologyKeywords.filter(k => queryLower.includes(k)).length;
+  
+  if (context === 'healthcare' && healthScore >= techScore) return 'healthcare';
+  if (context === 'technology' && techScore >= healthHealth) return 'technology';
+  if (healthScore > techScore) return 'healthcare';
+  if (techScore > healthScore) return 'technology';
+  
+  return 'general';
   
   const healthScore = healthcareKeywords.filter(k => queryLower.includes(k)).length;
   const techScore = technologyKeywords.filter(k => queryLower.includes(k)).length;

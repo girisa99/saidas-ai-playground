@@ -133,18 +133,38 @@ function detectDomain(
   context?: string
 ): 'healthcare' | 'technology' | 'general' {
   const healthcareKeywords = [
+    // General medical terms
     'patient', 'medical', 'clinical', 'diagnosis', 'treatment', 'therapy',
     'healthcare', 'hospital', 'doctor', 'nurse', 'pharmacy', 'drug',
     'x-ray', 'mri', 'ct scan', 'imaging', 'radiology', 'dicom',
     'icd', 'cpt', 'billing', 'insurance', 'reimbursement', 'claim',
-    // Cell and immunotherapy keywords
+    // Oncology & Cell Therapy
     'car-t', 'car t', 'cell therapy', 'immunotherapy', 'tcr', 't-cell',
     'lymphoma', 'leukemia', 'cancer', 'oncology', 'tumor', 'malignancy',
     'trial', 'clinical trial', 'fda', 'approval', 'indication',
-    // Specific CAR-T manufacturers and modalities
     'yescarta', 'kymriah', 'tecartus', 'breyanzi', 'abecma', 'carvykti',
     'kite', 'novartis', 'gilead', 'bristol myers', 'bms', 'jnj', 'janssen',
-    'allogeneic', 'autologous', 'cd19', 'cd20', 'bcma', 'b-cell'
+    'allogeneic', 'autologous', 'cd19', 'cd20', 'bcma', 'b-cell',
+    'chemotherapy', 'radiation', 'metastatic', 'biopsy', 'staging',
+    // Breast Cancer
+    'breast cancer', 'mammogram', 'mastectomy', 'lumpectomy', 'her2',
+    'estrogen receptor', 'progesterone receptor', 'brca', 'tamoxifen',
+    'herceptin', 'perjeta', 'kadcyla', 'enhertu', 'triple negative',
+    // Multiple Sclerosis
+    'multiple sclerosis', 'ms', 'relapsing remitting', 'progressive ms',
+    'lesion', 'demyelination', 'tysabri', 'ocrevus', 'gilenya', 'tecfidera',
+    'copaxone', 'rebif', 'avonex', 'betaseron', 'mavenclad', 'kesimpta',
+    // Diabetes
+    'diabetes', 'diabetic', 'insulin', 'glucose', 'blood sugar', 'a1c',
+    'metformin', 'glipizide', 'lantus', 'humalog', 'novolog', 'ozempic',
+    'mounjaro', 'trulicity', 'jardiance', 'farxiga', 'continuous glucose',
+    'cgm', 'pump', 'type 1', 'type 2', 'hyperglycemia', 'hypoglycemia',
+    // Cardiovascular
+    'heart', 'cardiac', 'cardiovascular', 'cardio', 'hypertension',
+    'blood pressure', 'cholesterol', 'statin', 'beta blocker', 'ace inhibitor',
+    'arb', 'lisinopril', 'metoprolol', 'atorvastatin', 'lipitor', 'crestor',
+    'plavix', 'eliquis', 'xarelto', 'warfarin', 'afib', 'arrhythmia',
+    'myocardial infarction', 'stroke', 'angioplasty', 'stent', 'cabg'
   ];
   
   const technologyKeywords = [
