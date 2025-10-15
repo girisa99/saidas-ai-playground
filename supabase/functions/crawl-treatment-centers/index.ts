@@ -64,7 +64,7 @@ serve(async (req) => {
 
     if (jobError) throw jobError;
 
-    // Call Firecrawl API with enhanced extraction
+    // Call Firecrawl API with enhanced metadata extraction
     const crawlResponse = await fetch('https://api.firecrawl.dev/v1/crawl', {
       method: 'POST',
       headers: {
@@ -75,10 +75,14 @@ serve(async (req) => {
         url: url,
         limit: maxPages,
         scrapeOptions: {
-          formats: ['markdown', 'html'],
-          includeTags: ['article', 'main', 'content', 'table', 'div', 'p', 'h1', 'h2', 'h3'],
-          excludeTags: ['nav', 'footer', 'header', 'aside', 'script'],
-          onlyMainContent: true
+          formats: ['markdown', 'html', 'rawHtml'],
+          includeTags: ['article', 'main', 'content', 'table', 'div', 'p', 'h1', 'h2', 'h3', 'meta', 'link'],
+          excludeTags: ['nav', 'footer', 'header', 'aside', 'script', 'style'],
+          onlyMainContent: false, // Get full page to extract metadata
+          waitFor: 2000, // Wait for dynamic content
+          headers: true, // Capture response headers
+          includeMetadata: true,
+          screenshot: false
         }
       })
     });
@@ -98,26 +102,102 @@ serve(async (req) => {
 
     for (const page of results) {
       try {
-        // Determine content type based on page content and URL
+        // Extract comprehensive metadata
         const pageUrl = page.url?.toLowerCase() || '';
         const pageContent = (page.markdown || page.content || '').toLowerCase();
+        const rawHtml = page.rawHtml || page.html || '';
         
+        // Extract Open Graph and meta tags
+        const extractMetaTags = (html: string) => {
+          const metaTags: any = {};
+          
+          // Open Graph tags
+          const ogMatches = html.matchAll(/<meta\s+property=["']og:([^"']+)["']\s+content=["']([^"']+)["']/gi);
+          for (const match of ogMatches) {
+            metaTags[`og_${match[1]}`] = match[2];
+          }
+          
+          // Standard meta tags
+          const metaMatches = html.matchAll(/<meta\s+name=["']([^"']+)["']\s+content=["']([^"']+)["']/gi);
+          for (const match of metaMatches) {
+            metaTags[match[1]] = match[2];
+          }
+          
+          // JSON-LD structured data
+          const jsonLdMatches = html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>(.*?)<\/script>/gis);
+          const structuredData = [];
+          for (const match of jsonLdMatches) {
+            try {
+              structuredData.push(JSON.parse(match[1]));
+            } catch (e) {
+              // Invalid JSON-LD, skip
+            }
+          }
+          if (structuredData.length > 0) {
+            metaTags.structured_data = structuredData;
+          }
+          
+          return metaTags;
+        };
+        
+        const extractedMeta = extractMetaTags(rawHtml);
+        
+        // Determine content type based on page content and URL
         let detectedContentTypes = [...contentTypes];
-        if (pageUrl.includes('trial') || pageContent.includes('clinical trial')) {
+        
+        // Clinical trials
+        if (pageUrl.includes('trial') || pageContent.includes('clinical trial') || 
+            pageContent.includes('nct') || extractedMeta.keywords?.includes('clinical trial')) {
           detectedContentTypes.push('clinical_trial_data');
         }
-        if (pageContent.includes('video') || pageContent.includes('watch')) {
+        
+        // Patient education
+        if (pageUrl.includes('education') || pageUrl.includes('patient') || 
+            pageContent.includes('patient education') || pageContent.includes('learn about')) {
+          detectedContentTypes.push('patient_education');
+        }
+        
+        // Gene therapy specific
+        if (pageContent.includes('gene therapy') || pageContent.includes('cell therapy') ||
+            extractedMeta.keywords?.includes('gene therapy')) {
+          detectedContentTypes.push('gene_therapy_education');
+        }
+        
+        // BMT/Transplant
+        if (pageContent.includes('transplant') || pageContent.includes('bmt') || 
+            pageContent.includes('gvhd') || pageContent.includes('bone marrow')) {
+          detectedContentTypes.push('transplant_education');
+        }
+        
+        // Videos/Multimedia
+        if (pageContent.includes('video') || pageContent.includes('watch') || 
+            rawHtml.includes('<video') || rawHtml.includes('youtube')) {
           detectedContentTypes.push('multimedia');
         }
-        if (pageContent.includes('support') || pageContent.includes('peer')) {
+        
+        // Support resources
+        if (pageContent.includes('support') || pageContent.includes('peer') || 
+            pageContent.includes('caregiver') || pageContent.includes('resources')) {
           detectedContentTypes.push('support_resources');
+        }
+        
+        // Research/Publications
+        if (pageContent.includes('research') || pageContent.includes('publication') || 
+            pageContent.includes('study')) {
+          detectedContentTypes.push('research_data');
+        }
+        
+        // Disease treatment
+        if (pageContent.includes('treatment') || pageContent.includes('therapy') || 
+            pageContent.includes('disease')) {
+          detectedContentTypes.push('disease_treatment');
         }
         
         // Insert knowledge base entry with comprehensive metadata
         const { data: knowledgeEntry, error: insertError } = await supabaseClient
           .from('universal_knowledge_base')
           .insert({
-            finding_name: page.metadata?.title || `${sourceName} - ${page.url}`,
+            finding_name: page.metadata?.title || extractedMeta.og_title || extractedMeta.title || `${sourceName} - ${page.url}`,
             description: page.markdown || page.content || '',
             domain: 'patient_onboarding',
             content_type: detectedContentTypes[0] || 'educational_content',
@@ -129,19 +209,53 @@ serve(async (req) => {
               content_types: [...new Set(detectedContentTypes)],
               tags: [centerType, ...detectedContentTypes, sourceName],
               center_type: centerType,
+              
+              // Page metadata
+              page_title: page.metadata?.title || extractedMeta.title,
+              page_description: extractedMeta.description || extractedMeta.og_description,
+              page_keywords: extractedMeta.keywords,
+              page_author: extractedMeta.author,
+              page_published: extractedMeta.published_time || extractedMeta.article_published_time,
+              page_modified: extractedMeta.modified_time || extractedMeta.article_modified_time,
+              
+              // Open Graph metadata
+              og_title: extractedMeta.og_title,
+              og_description: extractedMeta.og_description,
+              og_type: extractedMeta.og_type,
+              og_image: extractedMeta.og_image,
+              og_site_name: extractedMeta.og_site_name,
+              
+              // Healthcare-specific metadata
+              medical_specialty: extractedMeta.medical_specialty,
+              disease_condition: extractedMeta.disease_condition,
+              treatment_type: extractedMeta.treatment_type,
+              
+              // Structured data
+              structured_data: extractedMeta.structured_data,
+              
+              // Original metadata from Firecrawl
               html: page.html,
+              raw_html: page.rawHtml,
               firecrawl_metadata: page.metadata,
+              
+              // Citation information
               citation: {
                 url: page.url,
-                title: page.metadata?.title || sourceName,
+                title: page.metadata?.title || extractedMeta.og_title || sourceName,
                 source: sourceName,
-                accessed_date: new Date().toISOString()
+                accessed_date: new Date().toISOString(),
+                description: extractedMeta.description || extractedMeta.og_description,
+                author: extractedMeta.author,
+                published_date: extractedMeta.published_time
               }
             },
             clinical_context: {
               center_type: centerType,
               source: sourceName,
-              content_categories: detectedContentTypes
+              content_categories: [...new Set(detectedContentTypes)],
+              medical_domain: extractedMeta.medical_specialty || 'general_healthcare',
+              is_peer_reviewed: extractedMeta.article_peer_reviewed === 'true',
+              publication_type: extractedMeta.og_type || 'web_page'
             },
             quality_score: 85,
             source_credibility_score: 90,
