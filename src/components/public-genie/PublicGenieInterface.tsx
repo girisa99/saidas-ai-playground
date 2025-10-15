@@ -29,7 +29,11 @@ import { MedicalImageUploader, UploadedImage } from './MedicalImageUploader';
 import { VisionModelIndicator } from './VisionModelIndicator';
 import { InteractiveTreatmentCenterMap } from './InteractiveTreatmentCenterMap';
 import { AIRecommendationsPanel } from './AIRecommendationsPanel';
+import { HowToUseGuide } from './HowToUseGuide';
+import { PricingComparisonCard } from './PricingComparisonCard';
+import { PricingDisplay } from './PricingDisplay';
 import { RoutingOptimizationBadge } from './RoutingOptimizationBadge';
+import { parseProductPricingCSV, searchProductPricing } from '@/services/productPricingService';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { conversationIntelligence } from '@/utils/conversationIntelligence';
 import { useUniversalKnowledgeTopics } from '@/hooks/useUniversalKnowledgeTopics';
@@ -1777,7 +1781,13 @@ ${conversationSummary.transcript}`
                                     
                                     {/* Display Treatment Center Map if relevant */}
                                     {(message as any).metadata?.showTreatmentMap && (
-                                      <div className="mt-4">
+                                      <div className="mt-4 space-y-4">
+                                        {/* Show How To Use Guide - show only if user hasn't seen it before */}
+                                        {sessionStorage.getItem('genie_shown_guide') !== 'true' && (() => {
+                                          sessionStorage.setItem('genie_shown_guide', 'true');
+                                          return <HowToUseGuide />;
+                                        })()}
+                                        
                                         <InteractiveTreatmentCenterMap 
                                           filterByType={(message as any).metadata?.centerType}
                                           searchQuery={(message as any).metadata?.searchQuery}
@@ -1788,6 +1798,17 @@ ${conversationSummary.transcript}`
                                           state={(message as any).metadata?.state}
                                           city={(message as any).metadata?.city}
                                         />
+                                        
+                                        {/* Proactively show pricing if product mentioned and pricing query detected */}
+                                        {(message as any).metadata?.product && 
+                                         (message as any).metadata?.insuranceType && (
+                                          <div className="mt-4">
+                                            <PricingDisplay 
+                                              product={(message as any).metadata?.product}
+                                              insuranceType={(message as any).metadata?.insuranceType}
+                                            />
+                                          </div>
+                                        )}
                                       </div>
                                     )}
                                     

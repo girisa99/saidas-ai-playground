@@ -1,124 +1,84 @@
-import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
-import { Key, Save, Eye, EyeOff } from 'lucide-react';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { MapPin, ExternalLink, Save } from "lucide-react";
 
 export const MapboxTokenManager = () => {
-  const [token, setToken] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [showToken, setShowToken] = useState(false);
+  const [token, setToken] = useState("");
   const { toast } = useToast();
 
-  useEffect(() => {
-    loadToken();
-  }, []);
-
-  const loadToken = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('app_configuration')
-        .select('config_value')
-        .eq('config_key', 'mapbox_public_token')
-        .maybeSingle();
-
-      if (error) throw error;
-      if (data) setToken(data.config_value || '');
-    } catch (error) {
-      console.error('Error loading token:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to load Mapbox token',
-        variant: 'destructive'
-      });
-    }
-  };
-
-  const saveToken = async () => {
-    setLoading(true);
-    try {
-      const { error } = await supabase
-        .from('app_configuration')
-        .update({ config_value: token, updated_at: new Date().toISOString() })
-        .eq('config_key', 'mapbox_public_token');
-
-      if (error) throw error;
-
-      toast({
-        title: 'Success',
-        description: 'Mapbox token saved successfully',
-      });
-    } catch (error) {
-      console.error('Error saving token:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to save Mapbox token',
-        variant: 'destructive'
-      });
-    } finally {
-      setLoading(false);
-    }
+  const handleSave = () => {
+    // In a real implementation, this would save to Supabase Edge Function Secrets
+    toast({
+      title: "Token Configuration",
+      description: (
+        <div className="space-y-2">
+          <p>To add your Mapbox token:</p>
+          <ol className="list-decimal ml-4 space-y-1 text-sm">
+            <li>Go to Supabase Dashboard → Edge Functions → Secrets</li>
+            <li>Add secret: MAPBOX_PUBLIC_TOKEN</li>
+            <li>Value: {token || "your-mapbox-token"}</li>
+          </ol>
+        </div>
+      ),
+    });
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Key className="h-5 w-5" />
-          Mapbox Public Token
-        </CardTitle>
-        <CardDescription>
-          Manage the Mapbox public access token for treatment center maps. This token will be used
-          by all users when they view the interactive map. Get your token at{' '}
-          <a
-            href="https://account.mapbox.com/access-tokens/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary hover:underline"
-          >
-            mapbox.com
-          </a>
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <Card className="p-6">
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <MapPin className="h-5 w-5 text-primary" />
+          <h3 className="text-lg font-semibold">Mapbox Configuration</h3>
+        </div>
+
+        <p className="text-sm text-muted-foreground">
+          Configure your Mapbox public token for interactive treatment center maps.
+        </p>
+
         <div className="space-y-2">
-          <label className="text-sm font-medium">Public Token (pk.*)</label>
-          <div className="flex gap-2">
-            <Input
-              type={showToken ? 'text' : 'password'}
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
-              placeholder="pk.eyJ1Ijoi..."
-              className="flex-1"
-            />
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setShowToken(!showToken)}
-              type="button"
-            >
-              {showToken ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </Button>
-          </div>
+          <Label htmlFor="mapbox-token">Mapbox Public Token</Label>
+          <Input
+            id="mapbox-token"
+            type="text"
+            placeholder="pk.eyJ1Ijoi..."
+            value={token}
+            onChange={(e) => setToken(e.target.value)}
+          />
           <p className="text-xs text-muted-foreground">
-            Note: Mapbox public tokens (starting with pk.) are designed to be public and can be safely
-            used on the client side.
+            Get your token from{" "}
+            <a
+              href="https://account.mapbox.com/access-tokens/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline inline-flex items-center gap-1"
+            >
+              Mapbox Account
+              <ExternalLink className="h-3 w-3" />
+            </a>
           </p>
         </div>
 
-        <Button onClick={saveToken} disabled={loading || !token.startsWith('pk.')}>
-          <Save className="h-4 w-4 mr-2" />
-          {loading ? 'Saving...' : 'Save Token'}
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={handleSave} className="flex items-center gap-2">
+            <Save className="h-4 w-4" />
+            View Setup Instructions
+          </Button>
+        </div>
 
-        {token && !token.startsWith('pk.') && (
-          <p className="text-sm text-destructive">
-            ⚠️ Mapbox public tokens must start with "pk."
-          </p>
-        )}
-      </CardContent>
+        <div className="p-4 bg-muted rounded-lg text-sm space-y-2">
+          <p className="font-semibold">Setup Steps:</p>
+          <ol className="list-decimal ml-4 space-y-1">
+            <li>Sign up at mapbox.com (free tier available)</li>
+            <li>Create a new public token in your Mapbox account</li>
+            <li>Add the token as MAPBOX_PUBLIC_TOKEN in Supabase Edge Function Secrets</li>
+            <li>The map will automatically use the token from environment variables</li>
+          </ol>
+        </div>
+      </div>
     </Card>
   );
 };
