@@ -78,12 +78,10 @@ export class GenieAnalyticsService {
         const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
         if (response.ok) return parse(await response.json());
       }
-      // Fallback: auto-detect client IP geolocation
-      const fallback = await fetch('https://ipapi.co/json/');
-      if (!fallback.ok) return null;
-      return parse(await fallback.json());
+      // Skip auto-detect fallback to avoid CORS/429 noise
+      return null;
     } catch (error) {
-      console.error('Failed to fetch geolocation:', error);
+      console.debug('Geolocation lookup skipped');
       return null;
     }
   }

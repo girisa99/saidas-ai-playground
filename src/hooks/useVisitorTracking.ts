@@ -22,7 +22,7 @@ const getIPAddress = async (): Promise<string | null> => {
     const data = await response.json();
     return data.ip;
   } catch (error) {
-    console.error('Error getting IP:', error);
+    console.debug('IP fetch skipped:', error);
     return null;
   }
 };
@@ -42,7 +42,7 @@ const getLocationData = async () => {
       };
     }
   } catch (error) {
-    console.error('Error fetching location:', error);
+    console.debug('Geo fetch skipped');
   }
   return {};
 };
