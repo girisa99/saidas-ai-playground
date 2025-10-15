@@ -28,6 +28,7 @@ import { TopicSuggestionPopover } from './TopicSuggestionPopover';
 import { MedicalImageUploader, UploadedImage } from './MedicalImageUploader';
 import { VisionModelIndicator } from './VisionModelIndicator';
 import { InteractiveTreatmentCenterMap } from './InteractiveTreatmentCenterMap';
+import { RoutingOptimizationBadge } from './RoutingOptimizationBadge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { conversationIntelligence } from '@/utils/conversationIntelligence';
 import { useUniversalKnowledgeTopics } from '@/hooks/useUniversalKnowledgeTopics';
@@ -1255,7 +1256,15 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
                 knowledgeBaseResults: response.knowledgeBaseResults,
                 showTreatmentMap: response.showTreatmentMap,
                 centerType: response.centerType,
-                searchQuery: response.searchQuery
+                searchQuery: response.searchQuery,
+                // NEW: Add routing optimization metadata
+                triageData: response.triageData,
+                routingReasoning: response.routingReasoning,
+                estimatedCost: response.estimatedCost,
+                estimatedLatency: response.estimatedLatency,
+                collaborationMode: response.collaborationMode,
+                agentCount: response.agentCount,
+                consensusScore: response.consensusScore
               }
             });
             
@@ -1770,19 +1779,17 @@ ${conversationSummary.transcript}`
                                       />
                                     )}
                                     
-                                    {(message.model || (message as any).metadata?.triageSuggestedModel) && (
-                                      <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                                        {message.model && (
-                                          <span className="inline-flex items-center rounded-md border px-2 py-0.5">Model used: {message.model}</span>
-                                        )}
-                                        {(message as any).metadata?.triageSuggestedModel && (
-                                          <span className="inline-flex items-center rounded-md border px-2 py-0.5">Recommended: {(message as any).metadata.triageSuggestedModel}</span>
-                                        )}
-                                        {(message as any).metadata?.best_format && (
-                                          <span className="inline-flex items-center rounded-md border px-2 py-0.5">Format: {(message as any).metadata.best_format}</span>
-                                        )}
-                                      </div>
-                                    )}
+                                    {/* NEW: Routing Optimization Badge */}
+                                    <RoutingOptimizationBadge
+                                      triageData={(message as any).metadata?.triageData}
+                                      routingReasoning={(message as any).metadata?.routingReasoning}
+                                      estimatedCost={(message as any).metadata?.estimatedCost}
+                                      estimatedLatency={(message as any).metadata?.estimatedLatency}
+                                      modelUsed={message.model}
+                                      collaborationMode={(message as any).metadata?.collaborationMode}
+                                      agentCount={(message as any).metadata?.agentCount}
+                                      consensusScore={(message as any).metadata?.consensusScore}
+                                    />
                                   </>
                                 ) : (
                                   <p className="text-sm">{message.content}</p>
