@@ -61,6 +61,9 @@ verify_jwt = true
 [functions.process-media-knowledge]
 verify_jwt = true
 
+[functions.crawl-treatment-centers]
+verify_jwt = true
+
 [functions.conversation-rate-limiter]
 verify_jwt = false
 

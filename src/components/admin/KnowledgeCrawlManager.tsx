@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2, Link, FileText, Image, Video } from 'lucide-react';
+import { TreatmentCenterCrawler } from './TreatmentCenterCrawler';
 
 export const KnowledgeCrawlManager = () => {
   const { toast } = useToast();
@@ -108,6 +109,9 @@ export const KnowledgeCrawlManager = () => {
 
   return (
     <div className="space-y-6">
+      {/* Treatment Center Crawler */}
+      <TreatmentCenterCrawler />
+
       {/* Web Crawling */}
       <Card>
         <CardHeader>
