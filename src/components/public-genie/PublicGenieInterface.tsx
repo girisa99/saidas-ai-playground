@@ -1728,9 +1728,9 @@ ${conversationSummary.transcript}`
                          loadingStates={loadingStates}
                        />
                      ) : (
-                       <div className="space-y-2">
-                         {messages.map((message, index) => (
-                           <div key={`msg-${index}-${message.role}-${message.timestamp}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                        <div className="space-y-2">
+                          {messages.map((message, index) => (
+                            <div key={`${message.timestamp}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                             <div className={`max-w-[80%] p-3 rounded-lg ${
                               message.role === 'user' 
                                 ? 'bg-primary text-primary-foreground' 
