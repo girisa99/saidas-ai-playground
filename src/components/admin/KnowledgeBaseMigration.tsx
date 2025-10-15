@@ -269,7 +269,7 @@ export const KnowledgeBaseMigration = () => {
               </Button>
             </div>
             <p className="text-xs text-muted-foreground mt-2">
-              Re-run to update with latest knowledge (16 entries). Clear first to avoid duplicates.
+              Migrates hardcoded knowledge entries, product pricing data (50+ products), treatment center information, and pricing guides. Clear first to avoid duplicates.
             </p>
           </CardContent>
         </Card>

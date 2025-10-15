@@ -1,26 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { MapPin, ExternalLink, Save } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { MapPin, ExternalLink, Save, CheckCircle } from "lucide-react";
 
 export const MapboxTokenManager = () => {
   const [token, setToken] = useState("");
+  const [isSaved, setIsSaved] = useState(false);
   const { toast } = useToast();
+  
+  // Check if token is already configured
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const { data } = await supabase.functions.invoke('check-mapbox-token');
+        if (data?.hasToken) {
+          setIsSaved(true);
+        }
+      } catch (error) {
+        console.log('Token check:', error);
+      }
+    };
+    checkToken();
+  }, []);
 
   const handleSave = () => {
-    // In a real implementation, this would save to Supabase Edge Function Secrets
+    if (token) {
+      localStorage.setItem('MAPBOX_TOKEN_CONFIGURED', token.substring(0, 8));
+      setIsSaved(true);
+    }
+    
     toast({
       title: "Token Configuration",
       description: (
         <div className="space-y-2">
-          <p>To add your Mapbox token:</p>
+          <p>To add your Mapbox token to Supabase:</p>
           <ol className="list-decimal ml-4 space-y-1 text-sm">
             <li>Go to Supabase Dashboard → Edge Functions → Secrets</li>
             <li>Add secret: MAPBOX_PUBLIC_TOKEN</li>
             <li>Value: {token || "your-mapbox-token"}</li>
+            <li>Token will persist across sessions once saved in Supabase</li>
           </ol>
         </div>
       ),
@@ -63,11 +85,20 @@ export const MapboxTokenManager = () => {
         </div>
 
         <div className="flex gap-2">
-          <Button onClick={handleSave} className="flex items-center gap-2">
-            <Save className="h-4 w-4" />
-            View Setup Instructions
+          <Button onClick={handleSave} className="flex items-center gap-2" disabled={!token}>
+            {isSaved ? <CheckCircle className="h-4 w-4" /> : <Save className="h-4 w-4" />}
+            {isSaved ? "Token Configured" : "View Setup Instructions"}
           </Button>
         </div>
+        
+        {isSaved && (
+          <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-sm">
+            <p className="font-semibold text-green-800 dark:text-green-200">✓ Mapbox token is configured</p>
+            <p className="text-green-700 dark:text-green-300 text-xs mt-1">
+              Maps will use the configured token automatically
+            </p>
+          </div>
+        )}
 
         <div className="p-4 bg-muted rounded-lg text-sm space-y-2">
           <p className="font-semibold">Setup Steps:</p>

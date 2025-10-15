@@ -21,9 +21,10 @@ export const ProductPricingImporter = () => {
 
       if (result.success) {
         toast({
-          title: "Import successful",
-          description: `Synced ${result.count} products to knowledge base`,
+          title: "Import Successful",
+          description: `Synced ${result.products || result.count} products + ${result.guides || 1} guide = ${result.count} total entries`,
         });
+        console.log('Import details:', result);
       } else {
         throw new Error("Import failed");
       }
@@ -48,8 +49,8 @@ export const ProductPricingImporter = () => {
         </div>
 
         <p className="text-sm text-muted-foreground">
-          Import comprehensive product pricing (WAC, 340B, Commercial, PAP), treatment journey phases,
-          insurance coverage, and prior authorization requirements into the universal knowledge base.
+          Imports 50+ products with pricing (WAC, 340B, Commercial, PAP), insurance coverage, treatment journeys (4 phases), 
+          prior authorization, and comprehensive pricing guides into the universal knowledge base for AI-powered recommendations.
         </p>
 
         <div className="flex gap-2">
@@ -73,11 +74,12 @@ export const ProductPricingImporter = () => {
         </div>
 
         <div className="text-xs text-muted-foreground space-y-1">
-          <p>✓ 100+ products with comprehensive pricing</p>
-          <p>✓ All 4 pricing models (WAC, 340B, Commercial, PAP)</p>
+          <p>✓ 50+ products (CAR-T, Gene Therapy, MS, Cardiac, CRISPR)</p>
+          <p>✓ All 4 pricing models (WAC, 340B/VA, Commercial, PAP)</p>
           <p>✓ Treatment journey phases (Pre, Manufacturing, Infusion, Post)</p>
-          <p>✓ Insurance coverage and prior authorization</p>
-          <p>✓ Pricing guide with model explanations</p>
+          <p>✓ Insurance coverage (Medicare B/D, Medicaid, Commercial, VA)</p>
+          <p>✓ Prior authorization, REMS, specialty pharmacy requirements</p>
+          <p>✓ Comprehensive pricing & insurance guide</p>
         </div>
       </div>
     </Card>

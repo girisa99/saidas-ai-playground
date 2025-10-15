@@ -147,7 +147,14 @@ export const formatPriceComparison = (product: ProductPricing): string => {
 
 export const syncProductPricingToKnowledgeBase = async () => {
   try {
+    // Clear existing pricing entries first to avoid duplicates
+    await supabase
+      .from('universal_knowledge_base')
+      .delete()
+      .or('dataset_source.eq./data/product-pricing-journey.csv,dataset_source.eq./data/pricing-insurance-guide.md');
+    
     const products = await parseProductPricingCSV();
+    console.log(`Syncing ${products.length} products to knowledge base...`);
     
     for (const product of products) {
       const content = `
@@ -239,8 +246,13 @@ ${product.phase4_postinfusion}
       }
     });
     
-    console.log('✅ Product pricing data synced to knowledge base');
-    return { success: true, count: products.length + 1 };
+    console.log(`✅ Successfully synced ${products.length} products + 1 guide = ${products.length + 1} total entries`);
+    return { 
+      success: true, 
+      count: products.length + 1,
+      products: products.length,
+      guides: 1 
+    };
   } catch (error) {
     console.error('Error syncing product pricing:', error);
     return { success: false, error };
