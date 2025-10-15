@@ -9,7 +9,7 @@ interface TriageData {
   complexity?: 'simple' | 'medium' | 'high';
   domain?: 'healthcare' | 'technology' | 'general';
   urgency?: 'low' | 'medium' | 'high' | 'critical';
-  best_format?: 'text' | 'table' | 'html' | 'list';
+  best_format?: 'text' | 'table' | 'html' | 'list' | 'map';
   emotional_tone?: 'empathetic' | 'professional' | 'playful';
   reasoning?: string;
   confidence?: number;
@@ -59,7 +59,8 @@ export const RoutingOptimizationBadge: React.FC<RoutingOptimizationBadgeProps> =
     html: '🌐',
     text: '📝',
     list: '📋',
-    image: '🖼️'
+    image: '🖼️',
+    map: '🗺️'
   };
 
   const toneEmojis: Record<string, string> = {
@@ -172,7 +173,10 @@ export const RoutingOptimizationBadge: React.FC<RoutingOptimizationBadgeProps> =
                 {triageData.best_format && (
                   <div className="flex-1 p-2 bg-muted/50 rounded text-[10px]">
                     <span className="font-medium">Format:</span>
-                    <span className="ml-1">{formatEmojis[triageData.best_format]} {triageData.best_format}</span>
+                    <span className="ml-1">
+                      {formatEmojis[triageData.best_format]} {triageData.best_format}
+                      {triageData.best_format === 'map' && ' (Interactive Treatment Centers)'}
+                    </span>
                   </div>
                 )}
                 

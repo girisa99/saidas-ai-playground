@@ -45,7 +45,7 @@ interface TriageResult {
   complexity: 'simple' | 'medium' | 'high';
   domain: 'healthcare' | 'technology' | 'general';
   urgency: 'low' | 'medium' | 'high' | 'critical';
-  best_format: 'text' | 'table' | 'html' | 'list';
+  best_format: 'text' | 'table' | 'html' | 'list' | 'map';
   keywords: string[];
   suggested_model: string;
   confidence: number;
@@ -237,7 +237,18 @@ function detectUrgency(queryLower: string, complexity: string): 'low' | 'medium'
   return 'medium';
 }
 
-function determineBestFormat(queryLower: string, complexity: string): 'text' | 'table' | 'html' | 'list' {
+function determineBestFormat(queryLower: string, complexity: string): 'text' | 'table' | 'html' | 'list' | 'map' {
+  // Map format for location/treatment center queries
+  const mapKeywords = [
+    'where', 'location', 'near', 'find', 'treatment center', 'clinic', 'hospital',
+    'clinical trial', 'gene therapy', 'bmt', 'oncology', 'transplant',
+    'therapy center', 'cancer center', 'city', 'state', 'address', 'map'
+  ];
+  
+  if (mapKeywords.some(keyword => queryLower.includes(keyword))) {
+    return 'map';
+  }
+  
   if (queryLower.match(/(compare|versus|vs|differences)/)) return 'table';
   if (queryLower.match(/(list|steps|options|types)/)) return 'list';
   if (complexity === 'high') return 'html';
@@ -278,6 +289,8 @@ function enhanceSystemPrompt(basePrompt: string, triage: TriageResult): string {
     enhanced += '\nPresent information as a clear, numbered or bulleted list.';
   } else if (triage.best_format === 'html') {
     enhanced += '\nUse rich formatting with proper structure. For processes or workflows, create a visual journey map.';
+  } else if (triage.best_format === 'map') {
+    enhanced += '\nInclude location information. An interactive map will be displayed to show treatment centers.';
   }
   
   // Add journey map capability for process-oriented queries
@@ -1379,27 +1392,8 @@ serve(async (req) => {
       }
     }
 
-    // Detect if treatment center map should be shown with enhanced intelligence
-    const treatmentCenterKeywords = [
-      // General treatment facilities
-      'treatment center', 'hospital', 'clinic', 'medical center', 'healthcare facility',
-      // Specific therapy types
-      'gene therapy center', 'gene therapy', 'bmt center', 'bone marrow transplant',
-      'transplant center', 'oncology center', 'cancer center', 'infusion center',
-      // Clinical trials
-      'clinical trial', 'clinical study', 'trial site', 'research center', 'study location',
-      'trial enrollment', 'participating sites', 'trial centers',
-      // Location-based queries
-      'where can i get', 'find treatment', 'treatment location', 'near me', 'closest',
-      'in my area', 'nearby', 'location', 'address', 'find a center',
-      // Specialty queries
-      'CAR-T therapy', 'immunotherapy', 'cell therapy', 'advanced therapy',
-      'specialized treatment', 'certified center', 'accredited facility'
-    ];
-    
-    const showTreatmentMap = treatmentCenterKeywords.some(keyword => 
-      request.prompt.toLowerCase().includes(keyword.toLowerCase())
-    );
+    // Use triage format recommendation for map display (smart routing)
+    const showTreatmentMap = triageData?.best_format === 'map';
     
     // Intelligent center type detection with fallback to 'all' if unclear
     let centerType: string | undefined = undefined;

@@ -12,7 +12,7 @@ export interface TriageResult {
   complexity: 'simple' | 'medium' | 'high';
   domain: 'healthcare' | 'technology' | 'general';
   urgency: 'low' | 'medium' | 'high' | 'critical';
-  best_format: 'text' | 'table' | 'html' | 'list';
+  best_format: 'text' | 'table' | 'html' | 'list' | 'map';
   keywords: string[];
   suggested_model: string;
   confidence: number;
@@ -310,7 +310,18 @@ function detectUrgency(
 function determineBestFormat(
   queryLower: string,
   complexity: 'simple' | 'medium' | 'high'
-): 'text' | 'table' | 'html' | 'list' {
+): 'text' | 'table' | 'html' | 'list' | 'map' {
+  // Map format for location/treatment center queries
+  const mapKeywords = [
+    'where', 'location', 'near', 'find', 'treatment center', 'clinic', 'hospital',
+    'clinical trial', 'gene therapy', 'bmt', 'oncology', 'transplant',
+    'therapy center', 'cancer center', 'city', 'state', 'address', 'map'
+  ];
+  
+  if (mapKeywords.some(keyword => queryLower.includes(keyword))) {
+    return 'map';
+  }
+  
   if (queryLower.match(/(compare|versus|vs|differences|similarities)/)) {
     return 'table';
   }
@@ -455,6 +466,8 @@ export function enhanceSystemPrompt(
     enhanced += '\nPresent information as a clear, numbered or bulleted list.';
   } else if (triage.best_format === 'html') {
     enhanced += '\nUse rich formatting with headings, sections, and emphasis.';
+  } else if (triage.best_format === 'map') {
+    enhanced += '\nInclude location information. An interactive map will be displayed to show treatment centers.';
   }
   
   // Add emotional tone
