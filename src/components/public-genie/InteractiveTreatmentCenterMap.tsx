@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { getTreatmentCentersForMap, searchTreatmentCenters, TreatmentCenter } from '@/services/treatmentCenterService';
+import { getTreatmentCentersForMap, searchTreatmentCenters, TreatmentCenter, loadEnhancedCenters } from '@/services/treatmentCenterService';
 import { MapPin, Maximize2, Minimize2, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
@@ -82,12 +82,45 @@ export const InteractiveTreatmentCenterMap = ({
     };
     
     loadMapboxToken();
-  }, []);
+  // Simple localStorage-backed geocode cache
+  const getGeocodeCache = (): Record<string, { lat: number; lng: number }> => {
+    try {
+      return JSON.parse(localStorage.getItem('geocode_cache_v1') || '{}');
+    } catch {
+      return {};
+    }
+  };
+  const setGeocodeCache = (cache: Record<string, { lat: number; lng: number }>) => {
+    try {
+      localStorage.setItem('geocode_cache_v1', JSON.stringify(cache));
+    } catch {}
+  };
+  const geocodeAddress = async (fullAddress: string): Promise<{ lat: number; lng: number } | null> => {
+    if (!mapboxToken) return null;
+    const cache = getGeocodeCache();
+    if (cache[fullAddress]) return cache[fullAddress];
+    try {
+      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(fullAddress)}.json?access_token=${mapboxToken}&limit=1`;
+      const resp = await fetch(url);
+      const json = await resp.json();
+      const feature = json?.features?.[0];
+      if (feature?.center?.length === 2) {
+        const [lng, lat] = feature.center;
+        cache[fullAddress] = { lat, lng };
+        setGeocodeCache(cache);
+        return { lat, lng };
+      }
+    } catch (e) {
+      console.error('Geocoding failed for', fullAddress, e);
+    }
+    return null;
+  };
 
   const loadCenters = async () => {
-    // Use advanced search if filters are provided
+    // Prefer DB if available
+    let data: TreatmentCenter[] = [];
     if (therapeuticArea || product || manufacturer || clinicalTrial || state || city || searchQuery) {
-      const data = await searchTreatmentCenters({
+      data = await searchTreatmentCenters({
         centerType: centerType === 'all' ? undefined : centerType,
         therapeuticArea,
         product,
@@ -96,17 +129,60 @@ export const InteractiveTreatmentCenterMap = ({
         state,
         city,
         searchText: searchQuery,
-        limit: 500
+        limit: 500,
       });
-      setCenters(data);
     } else {
-      const data = await getTreatmentCentersForMap(
-        centerType === 'all' ? undefined : centerType
-      );
-      setCenters(data);
+      data = await getTreatmentCentersForMap(centerType === 'all' ? undefined : centerType);
     }
-  };
 
+    // If DB empty, fallback to local CSV and geocode
+    if (!data || data.length === 0) {
+      try {
+        const csvRows = await loadEnhancedCenters();
+        const limited = csvRows.slice(0, 200); // cap for performance
+        const enriched: TreatmentCenter[] = [];
+        for (const row of limited) {
+          const name = row.name?.trim();
+          const addr = [row.address, row.city, row.state, row.zip_code].filter(Boolean).join(', ');
+          const loc = await geocodeAddress(addr);
+          if (!loc) continue;
+          const typeGuess = /car-t|gene/i.test(String(row.therapeutic_areas)) ? 'gene_therapy' : 'oncology';
+          enriched.push({
+            id: `${name}-${row.state}-${row.zip_code}`,
+            name,
+            center_type: typeGuess,
+            address: row.address,
+            city: row.city,
+            state: row.state,
+            zip_code: row.zip_code,
+            phone: row.phone,
+            website: row.website,
+            email: row.email,
+            key_providers: Array.isArray(row.key_providers) ? row.key_providers : String(row.key_providers || '').split(';').map((s: string) => s.trim()).filter(Boolean),
+            therapeutic_areas: Array.isArray(row.therapeutic_areas) ? row.therapeutic_areas : String(row.therapeutic_areas || '').split(',').map((s: string) => s.trim()).filter(Boolean),
+            products_drugs: Array.isArray(row.products_drugs) ? row.products_drugs : String(row.products_drugs || '').split(',').map((s: string) => s.trim()).filter(Boolean),
+            manufacturers: Array.isArray(row.manufacturers) ? row.manufacturers : String(row.manufacturers || '').split(',').map((s: string) => s.trim()).filter(Boolean),
+            clinical_trials: row.clinical_trials,
+            trial_sponsors: Array.isArray(row.trial_sponsors) ? row.trial_sponsors : String(row.trial_sponsors || '').split(',').map((s: string) => s.trim()).filter(Boolean),
+            capacity_info: row.capacity,
+            nci_designated: row.nci_designated,
+            fact_accredited: String(row.fact_accredited).toLowerCase().startsWith('y'),
+            patient_services: Array.isArray(row.patient_services) ? row.patient_services : String(row.patient_services || '').split(',').map((s: string) => s.trim()).filter(Boolean),
+            latitude: loc.lat,
+            longitude: loc.lng,
+            country: 'USA',
+          } as TreatmentCenter);
+        }
+        data = enriched;
+      } catch (e) {
+        console.error('Fallback CSV load failed:', e);
+      }
+    }
+
+    // Apply local type filter if set
+    const filtered = centerType === 'all' ? data : data.filter(c => c.center_type === centerType);
+    setCenters(filtered);
+  };
   // Initialize map
   useEffect(() => {
     if (!mapContainer.current || !mapboxToken || isMapInitialized) return;
