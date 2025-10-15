@@ -292,6 +292,34 @@ function generateMapRecommendations(userQuery: string, triageData: any, filters:
   
   const queryLower = userQuery.toLowerCase();
   
+  // Pricing-specific suggestions
+  if (filters.insuranceType) {
+    recommendations.suggestions.push({
+      icon: 'dollar-sign',
+      title: `${filters.insuranceType.toUpperCase()} Pricing Information`,
+      description: `See ${filters.insuranceType} coverage and out-of-pocket costs`,
+      action: 'show_pricing',
+      priority: 'high'
+    });
+    
+    recommendations.relatedQueries.push(`Patient assistance programs for ${filters.insuranceType}`);
+    recommendations.relatedQueries.push(`Copay help with ${filters.insuranceType}`);
+  }
+  
+  if (filters.product && (queryLower.includes('cost') || queryLower.includes('price'))) {
+    recommendations.suggestions.push({
+      icon: 'info',
+      title: 'Compare Pricing Models',
+      description: 'WAC, Government (340B), Commercial, and PAP options',
+      action: 'show_price_comparison',
+      priority: 'high'
+    });
+    
+    recommendations.relatedQueries.push(`${filters.product} treatment timeline`);
+    recommendations.relatedQueries.push(`Insurance coverage for ${filters.product}`);
+    recommendations.relatedQueries.push(`${filters.product} patient assistance programs`);
+  }
+  
   if (queryLower.includes('trial') || filters.clinicalTrial) {
     recommendations.suggestions.push({
       icon: 'flask',
@@ -315,21 +343,36 @@ function generateMapRecommendations(userQuery: string, triageData: any, filters:
   return recommendations;
 }
 
-function generateContextualInsights(userQuery: string, triageData: any, ragContext: any[]): any {
+function generateContextualInsights(userQuery: string, domain: string, triageData: any, filters?: any): any {
   const insights: any = {
     type: 'contextual_insights',
-    summary: triageData?.domain === 'healthcare' ? 'Treatment centers based on your needs:' : 'Explore matching centers:',
+    summary: domain === 'healthcare' ? 'Treatment centers based on your needs:' : 'Explore matching centers:',
     keyPoints: [],
     warnings: [],
     opportunities: []
   };
   
-  if (triageData?.urgency === 'high') {
-    insights.warnings.push('Urgent care needed - contact centers immediately');
+  const queryLower = userQuery.toLowerCase();
+  
+  // Pricing-specific insights
+  if (queryLower.includes('cost') || queryLower.includes('price') || queryLower.includes('afford')) {
+    insights.summary = 'Multiple pricing models and financial assistance programs are available';
+    insights.keyPoints.push('WAC (list price) is typically 20-50% higher than actual costs');
+    insights.keyPoints.push('Patient Assistance Programs (PAPs) can provide free/reduced-cost medication');
+    insights.keyPoints.push('Government pricing (340B/Medicaid) offers 40-60% discounts');
+    
+    if (filters?.insuranceType === 'medicare') {
+      insights.warnings.push('Medicare patients cannot use manufacturer copay cards (federal law)');
+      insights.opportunities.push('Independent charitable foundations can help with Medicare copays');
+    }
+    
+    if (filters?.product) {
+      insights.opportunities.push(`Check ${filters.product} manufacturer's patient support program for financial assistance`);
+    }
   }
   
-  if (ragContext.length > 0) {
-    insights.opportunities.push('Knowledge base contains relevant information');
+  if (triageData?.urgency === 'high') {
+    insights.warnings.push('Urgent care needed - contact centers immediately');
   }
   
   return insights;
@@ -1461,6 +1504,28 @@ serve(async (req) => {
     const state = triageData?.state;
     const city = triageData?.city;
     
+    // Detect insurance and pricing parameters
+    let insuranceType: string | undefined;
+    let priceRange: string | undefined;
+    const lowerPrompt = request.prompt.toLowerCase();
+    
+    const pricingKeywords = ['cost', 'price', 'pricing', 'how much', 'expensive', 'afford',
+      'insurance', 'coverage', 'pay', 'wac', '340b', 'government', 'commercial',
+      'patient assistance', 'pap', 'copay', 'medicare', 'medicaid'];
+    
+    const isPricingQuery = pricingKeywords.some(k => lowerPrompt.includes(k));
+    
+    if (lowerPrompt.includes('medicare')) insuranceType = 'medicare';
+    else if (lowerPrompt.includes('medicaid')) insuranceType = 'medicaid';
+    else if (lowerPrompt.includes('commercial')) insuranceType = 'commercial';
+    else if (lowerPrompt.includes('340b') || lowerPrompt.includes('va')) insuranceType = '340b';
+    
+    if (lowerPrompt.includes('under') || lowerPrompt.includes('less than') || lowerPrompt.includes('cheaper')) {
+      priceRange = 'low';
+    } else if (lowerPrompt.includes('over') || lowerPrompt.includes('more than') || lowerPrompt.includes('expensive')) {
+      priceRange = 'high';
+    }
+    
     // If still undefined, set to 'all' to show everything
     if (!centerType) centerType = 'all';
     
@@ -1476,7 +1541,9 @@ serve(async (req) => {
         clinicalTrial,
         state,
         city,
-        centerType
+        centerType,
+        insuranceType,
+        priceRange
       }
     );
     
@@ -1509,9 +1576,16 @@ serve(async (req) => {
       clinicalTrial,
       state,
       city,
+      insuranceType,
+      priceRange,
       // AI-powered recommendations and insights
       aiRecommendations,
-      contextualInsights,
+      contextualInsights: generateContextualInsights(
+        request.prompt,
+        triageData?.domain || 'healthcare',
+        triageData,
+        { insuranceType, priceRange, product }
+      ),
       // Smart routing metadata
       triageData: triageData ? {
         complexity: triageData.complexity,
