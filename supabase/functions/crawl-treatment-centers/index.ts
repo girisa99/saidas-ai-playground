@@ -61,7 +61,7 @@ serve(async (req) => {
 
     if (jobError) throw jobError;
 
-    // Call Firecrawl API with enhanced metadata extraction
+    // Call Firecrawl API with minimal, compatible options
     const crawlResponse = await fetch('https://api.firecrawl.dev/v1/crawl', {
       method: 'POST',
       headers: {
@@ -69,17 +69,10 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        url: url,
+        url,
         limit: maxPages,
         scrapeOptions: {
-          formats: ['markdown', 'html', 'rawHtml'],
-          includeTags: ['article', 'main', 'content', 'table', 'div', 'p', 'h1', 'h2', 'h3', 'meta', 'link'],
-          excludeTags: ['nav', 'footer', 'header', 'aside', 'script', 'style'],
-          onlyMainContent: false, // Get full page to extract metadata
-          waitFor: 2000, // Wait for dynamic content
-          headers: true, // Capture response headers
-          includeMetadata: true,
-          screenshot: false
+          formats: ['markdown', 'html']
         }
       })
     });
@@ -87,7 +80,20 @@ serve(async (req) => {
     if (!crawlResponse.ok) {
       const errorText = await crawlResponse.text();
       console.error('Firecrawl API error:', errorText);
-      throw new Error(`Firecrawl API error: ${crawlResponse.status}`);
+      // Mark job as failed and return a 200 with error to avoid non-2xx in client
+      await supabaseClient
+        .from('knowledge_crawl_jobs')
+        .update({
+          status: 'failed',
+          error_message: `Firecrawl ${crawlResponse.status}: ${errorText}`,
+          completed_at: new Date().toISOString()
+        })
+        .eq('id', jobData.id);
+
+      return new Response(
+        JSON.stringify({ success: false, error: `Firecrawl error ${crawlResponse.status}` }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     const crawlData = await crawlResponse.json();
