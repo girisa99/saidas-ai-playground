@@ -30,6 +30,10 @@ interface AIResponse {
   agentResponses?: Array<{ agent: string; content: string }>;
   // Oncology extractor output
   oncologyProducts?: Array<{ product: string; dose?: string; ndc?: string; modality?: string; application?: string; manufacturer?: string }>;
+  // Treatment center map metadata
+  showTreatmentMap?: boolean;
+  centerType?: string;
+  searchQuery?: string;
 }
 
 interface UseUniversalAIOptions {
@@ -157,7 +161,11 @@ export const useUniversalAI = () => {
         consensusScore: data.consensusScore,
         agentResponses: data.agentResponses,
         // ========== ONCOLOGY PRODUCTS (for card rendering) ==========
-        oncologyProducts: data.oncologyProducts
+        oncologyProducts: data.oncologyProducts,
+        // ========== TREATMENT CENTER MAP METADATA ==========
+        showTreatmentMap: data.showTreatmentMap,
+        centerType: data.centerType,
+        searchQuery: data.searchQuery
       };
     } catch (err: any) {
       const errorMessage = err.message || 'Failed to generate AI response';

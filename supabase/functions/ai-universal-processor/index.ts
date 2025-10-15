@@ -1379,6 +1379,18 @@ serve(async (req) => {
       }
     }
 
+    // Detect if treatment center map should be shown
+    const treatmentCenterKeywords = ['treatment center', 'gene therapy center', 'bmt center', 'transplant center', 'oncology center', 'hospital', 'clinic', 'where can i get', 'find treatment', 'treatment location', 'near me'];
+    const showTreatmentMap = treatmentCenterKeywords.some(keyword => request.prompt.toLowerCase().includes(keyword));
+    
+    // Detect center type from query
+    let centerType: string | undefined = undefined;
+    if (showTreatmentMap) {
+      if (request.prompt.toLowerCase().includes('gene therapy')) centerType = 'gene_therapy';
+      else if (request.prompt.toLowerCase().includes('bmt') || request.prompt.toLowerCase().includes('transplant')) centerType = 'bmt';
+      else if (request.prompt.toLowerCase().includes('oncology') || request.prompt.toLowerCase().includes('cancer')) centerType = 'oncology';
+    }
+
     // ========== INTEGRATION POINT 3: Return Triage Data with Knowledge Base Citations ==========
     return new Response(JSON.stringify({ 
       content,
@@ -1391,6 +1403,10 @@ serve(async (req) => {
       oncologyProducts,
       // Knowledge base citations for source references
       knowledgeBaseResults: ragContext.length > 0 ? ragContext : undefined,
+      // Treatment center map metadata
+      showTreatmentMap,
+      centerType,
+      searchQuery: showTreatmentMap ? request.prompt : undefined,
       // Smart routing metadata
       triageData: triageData ? {
         complexity: triageData.complexity,

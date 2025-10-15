@@ -27,9 +27,8 @@ import { ContextSwitcher } from './ContextSwitcher';
 import { TopicSuggestionPopover } from './TopicSuggestionPopover';
 import { MedicalImageUploader, UploadedImage } from './MedicalImageUploader';
 import { VisionModelIndicator } from './VisionModelIndicator';
-import { TreatmentCenterMap } from './TreatmentCenterMap';
+import { InteractiveTreatmentCenterMap } from './InteractiveTreatmentCenterMap';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { conversationIntelligence } from '@/utils/conversationIntelligence';
 import { useUniversalKnowledgeTopics } from '@/hooks/useUniversalKnowledgeTopics';
 import { useGeniePreferences } from '@/hooks/useGeniePreferences';
@@ -191,7 +190,6 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [showConfigWizard, setShowConfigWizard] = useState(false);
   const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
   const [ipAddress, setIpAddress] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'chat' | 'map'>('chat');
 
   // Persist context across the session
   useEffect(() => {
@@ -1254,7 +1252,10 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
                 triageSuggestedModel: response.triageData?.suggested_model,
                 best_format: response.triageData?.best_format,
                 oncologyProducts: response.oncologyProducts,
-                knowledgeBaseResults: response.knowledgeBaseResults
+                knowledgeBaseResults: response.knowledgeBaseResults,
+                showTreatmentMap: response.showTreatmentMap,
+                centerType: response.centerType,
+                searchQuery: response.searchQuery
               }
             });
             
@@ -1679,19 +1680,8 @@ ${conversationSummary.transcript}`
                     </div>
                   )}
 
-                   {/* Tab Navigation */}
-                   <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'chat' | 'map')} className="flex-1 flex flex-col min-h-0">
-                     <TabsList className="w-full grid grid-cols-2 mx-4 mt-2">
-                       <TabsTrigger value="chat" className="text-xs">
-                         💬 Chat
-                       </TabsTrigger>
-                       <TabsTrigger value="map" className="text-xs">
-                         🗺️ Treatment Centers
-                       </TabsTrigger>
-                     </TabsList>
-
-                     {/* Chat Tab */}
-                     <TabsContent value="chat" className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 mt-0">
+                   {/* Messages */}
+                  <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 [--popup-vh:calc(100vh-8rem)]">
                     {/* Vision Model Indicator */}
                     {aiConfig.visionEnabled && (
                       <VisionModelIndicator
@@ -1754,6 +1744,16 @@ ${conversationSummary.transcript}`
                                       oncologyProducts={(message as any).metadata?.oncologyProducts}
                                     />
                                     
+                                    {/* Display Treatment Center Map if relevant */}
+                                    {(message as any).metadata?.showTreatmentMap && (
+                                      <div className="mt-4">
+                                        <InteractiveTreatmentCenterMap 
+                                          filterByType={(message as any).metadata?.centerType}
+                                          searchQuery={(message as any).metadata?.searchQuery}
+                                        />
+                                      </div>
+                                    )}
+                                    
                                     {/* Display Knowledge Base Citations */}
                                     {(message as any).metadata?.knowledgeBaseResults && 
                                      (message as any).metadata.knowledgeBaseResults.length > 0 && (
@@ -1809,14 +1809,7 @@ ${conversationSummary.transcript}`
 
                     {/* Session Manager */}
 
-                    </TabsContent>
-
-                    {/* Treatment Centers Map Tab */}
-                    <TabsContent value="map" className="flex-1 overflow-y-auto p-4 min-h-0 mt-0">
-                      <TreatmentCenterMap />
-                    </TabsContent>
-
-                   </Tabs>
+                    </div>
 
                       {/* Input Area */}
                       <div className="p-4 border-t bg-background/50 flex-shrink-0">

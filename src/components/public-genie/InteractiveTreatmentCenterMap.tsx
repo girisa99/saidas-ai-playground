@@ -9,21 +9,38 @@ import { getTreatmentCentersForMap, TreatmentCenter } from '@/services/treatment
 import { MapPin, Phone, Globe, Mail, ExternalLink, Maximize2, Minimize2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
-export const InteractiveTreatmentCenterMap = () => {
+interface InteractiveTreatmentCenterMapProps {
+  filterByType?: string;
+  searchQuery?: string;
+}
+
+export const InteractiveTreatmentCenterMap = ({ filterByType, searchQuery }: InteractiveTreatmentCenterMapProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const markers = useRef<mapboxgl.Marker[]>([]);
   const [centers, setCenters] = useState<TreatmentCenter[]>([]);
   const [selectedCenter, setSelectedCenter] = useState<TreatmentCenter | null>(null);
-  const [centerType, setCenterType] = useState<string>('all');
+  const [centerType, setCenterType] = useState<string>(filterByType || 'all');
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [mapboxToken, setMapboxToken] = useState('');
+  const [mapboxToken, setMapboxToken] = useState<string>(() => {
+    try {
+      return localStorage.getItem('mapbox_token') || '';
+    } catch {
+      return '';
+    }
+  });
   const [isMapInitialized, setIsMapInitialized] = useState(false);
 
-  // Load treatment centers
+  // Load treatment centers based on props or state
   useEffect(() => {
     loadCenters();
-  }, [centerType]);
+  }, [centerType, filterByType]);
+
+  useEffect(() => {
+    if (filterByType) {
+      setCenterType(filterByType);
+    }
+  }, [filterByType]);
 
   const loadCenters = async () => {
     const data = await getTreatmentCentersForMap(
@@ -191,7 +208,15 @@ export const InteractiveTreatmentCenterMap = () => {
                 type="password"
                 placeholder="pk.eyJ1Ijoi..."
                 value={mapboxToken}
-                onChange={(e) => setMapboxToken(e.target.value)}
+                onChange={(e) => {
+                  const token = e.target.value;
+                  setMapboxToken(token);
+                  try {
+                    localStorage.setItem('mapbox_token', token);
+                  } catch (e) {
+                    console.error('Failed to save mapbox token', e);
+                  }
+                }}
               />
             </div>
           )}
