@@ -48,40 +48,6 @@ export const InteractiveTreatmentCenterMap = ({
   });
   const [isMapInitialized, setIsMapInitialized] = useState(false);
 
-  // Load treatment centers based on props or state
-  useEffect(() => {
-    loadCenters();
-  }, [centerType, filterByType, therapeuticArea, product, manufacturer, clinicalTrial, state, city, searchQuery]);
-
-  useEffect(() => {
-    if (filterByType) {
-      setCenterType(filterByType);
-    }
-  }, [filterByType]);
-
-  // Try to load Mapbox token from database on mount
-  useEffect(() => {
-    const loadMapboxToken = async () => {
-      if (mapboxToken) return; // Already have token from localStorage
-      
-      try {
-        const { data, error } = await supabase
-          .from('app_configuration')
-          .select('config_value')
-          .eq('config_key', 'mapbox_public_token')
-          .maybeSingle();
-        
-        if (data && data.config_value && !error) {
-          setMapboxToken(data.config_value);
-          // Also save to localStorage for future use
-          localStorage.setItem('mapbox_token', data.config_value);
-        }
-      } catch (err) {
-        console.error('Failed to load Mapbox token from database:', err);
-      }
-    };
-    
-    loadMapboxToken();
   // Simple localStorage-backed geocode cache
   const getGeocodeCache = (): Record<string, { lat: number; lng: number }> => {
     try {
@@ -90,11 +56,13 @@ export const InteractiveTreatmentCenterMap = ({
       return {};
     }
   };
+  
   const setGeocodeCache = (cache: Record<string, { lat: number; lng: number }>) => {
     try {
       localStorage.setItem('geocode_cache_v1', JSON.stringify(cache));
     } catch {}
   };
+  
   const geocodeAddress = async (fullAddress: string): Promise<{ lat: number; lng: number } | null> => {
     if (!mapboxToken) return null;
     const cache = getGeocodeCache();
@@ -183,6 +151,42 @@ export const InteractiveTreatmentCenterMap = ({
     const filtered = centerType === 'all' ? data : data.filter(c => c.center_type === centerType);
     setCenters(filtered);
   };
+
+  // Load treatment centers based on props or state
+  useEffect(() => {
+    loadCenters();
+  }, [centerType, filterByType, therapeuticArea, product, manufacturer, clinicalTrial, state, city, searchQuery]);
+
+  useEffect(() => {
+    if (filterByType) {
+      setCenterType(filterByType);
+    }
+  }, [filterByType]);
+
+  // Try to load Mapbox token from database on mount
+  useEffect(() => {
+    const loadMapboxToken = async () => {
+      if (mapboxToken) return; // Already have token from localStorage
+      
+      try {
+        const { data, error } = await supabase
+          .from('app_configuration')
+          .select('config_value')
+          .eq('config_key', 'mapbox_public_token')
+          .maybeSingle();
+        
+        if (data && data.config_value && !error) {
+          setMapboxToken(data.config_value);
+          // Also save to localStorage for future use
+          localStorage.setItem('mapbox_token', data.config_value);
+        }
+      } catch (err) {
+        console.error('Failed to load Mapbox token from database:', err);
+      }
+    };
+    
+    loadMapboxToken();
+  }, []);
   // Initialize map
   useEffect(() => {
     if (!mapContainer.current || !mapboxToken || isMapInitialized) return;
