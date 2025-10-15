@@ -134,6 +134,14 @@ export const TreatmentCenterCrawler = () => {
           });
           return;
         }
+        if (errMsg.includes('402')) {
+          toast({
+            title: 'Firecrawl Credits Needed (402)',
+            description: 'Your Firecrawl account has insufficient credits. Add credits or try a smaller crawl (e.g., 5 pages) and retry.',
+            variant: 'destructive',
+          });
+          return;
+        }
         throw new Error(errMsg);
       }
     } catch (error) {
