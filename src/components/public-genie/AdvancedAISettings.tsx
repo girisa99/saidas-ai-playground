@@ -9,7 +9,9 @@ import { Brain, Database, Network, Settings2, Cpu, Users, Eye, AlertTriangle, Ex
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { genieAnalyticsService } from '@/services/genieAnalyticsService';
+import { MultiModelGuide } from './MultiModelGuide';
 
 interface AdvancedAISettingsProps {
   onConfigChange: (config: AIConfig) => void;
@@ -181,6 +183,7 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
 }) => {
   const [config, setConfig] = useState<AIConfig>(currentConfig);
   const [modelFilter, setModelFilter] = useState<'all' | 'general' | 'slm' | 'vision' | 'healthcare'>('all');
+  const [showGuide, setShowGuide] = useState(false);
 
   const updateConfig = (updates: Partial<AIConfig>) => {
     const newConfig = { ...config, ...updates };
@@ -238,6 +241,24 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
   return (
     <TooltipProvider>
       <div className="space-y-6 p-4 max-h-96 overflow-y-auto">
+        {/* Guide Button */}
+        <div className="flex justify-end">
+          <Dialog open={showGuide} onOpenChange={setShowGuide}>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="sm" className="h-7 text-xs gap-1.5">
+                <Brain className="h-3 w-3" />
+                How Multi-Model Works
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>Multi-Model Intelligence Guide</DialogTitle>
+              </DialogHeader>
+              <MultiModelGuide />
+            </DialogContent>
+          </Dialog>
+        </div>
+
         {/* Mode Selection - Cleaner */}
         <div className="space-y-3">
           <div className="flex items-center gap-2">
@@ -270,6 +291,43 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
               </SelectItem>
             </SelectContent>
           </Select>
+        </div>
+
+        <Separator />
+
+        {/* Multi-Agent Collaboration - NEW SECTION */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Users className="h-4 w-4 text-primary" />
+            <h3 className="font-medium text-sm">Multi-Agent Intelligence</h3>
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label className="text-xs font-medium">Enable Multi-Agent</Label>
+              <p className="text-[10px] text-muted-foreground">
+                {config.multiAgentEnabled 
+                  ? "✅ Sequential chaining + ensemble voting active"
+                  : "Disabled - using single model"}
+              </p>
+            </div>
+            <Switch 
+              checked={config.multiAgentEnabled} 
+              onCheckedChange={(value) => updateConfig({ multiAgentEnabled: value })}
+            />
+          </div>
+
+          {config.multiAgentEnabled && (
+            <Alert className="bg-primary/5 border-primary/20">
+              <Brain className="h-4 w-4 text-primary" />
+              <AlertTitle className="text-xs font-medium">How Multi-Agent Works</AlertTitle>
+              <AlertDescription className="text-[10px] space-y-1 mt-1">
+                <p><strong>Healthcare queries:</strong> Specialist analyzes → Generalist explains</p>
+                <p><strong>Critical decisions:</strong> 3 experts analyze → Synthesizer combines</p>
+                <p><strong>Simple queries:</strong> Single best model (auto-optimized)</p>
+              </AlertDescription>
+            </Alert>
+          )}
         </div>
 
         <Separator />
@@ -393,10 +451,29 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
             </Select>
           </div>
 
-          {/* Secondary Model - Only in Multi Mode */}
+          {/* Split-Screen Toggle - Only in Multi Mode */}
           {config.mode === 'multi' && (
+            <div className="flex items-center justify-between mt-2">
+              <div className="space-y-0.5">
+                <Label className="text-xs font-medium">Split-Screen Comparison</Label>
+                <p className="text-[10px] text-muted-foreground">
+                  View 2 models side-by-side
+                </p>
+              </div>
+              <Switch 
+                checked={config.splitScreen} 
+                onCheckedChange={(value) => updateConfig({ 
+                  splitScreen: value,
+                  splitScreenEnabled: value 
+                })}
+              />
+            </div>
+          )}
+
+          {/* Secondary Model - Only in Multi Mode with Split-Screen */}
+          {config.mode === 'multi' && config.splitScreen && (
             <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground">Secondary LLM (Optional)</Label>
+              <Label className="text-xs text-muted-foreground">Secondary LLM (Split-Screen)</Label>
               <Select value={config.secondaryModel} onValueChange={(value) => updateConfig({ secondaryModel: value })}>
                 <SelectTrigger className="h-9 bg-card border-border/50">
                   <SelectValue placeholder="Select secondary model" />
