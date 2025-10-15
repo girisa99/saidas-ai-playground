@@ -292,18 +292,26 @@ function generateMapRecommendations(userQuery: string, triageData: any, filters:
   };
   
   const queryLower = userQuery.toLowerCase();
-  const hasProduct = filters.product || queryLower.match(/(kymriah|yescarta|tecartus|breyanzi|abecma|carvykti|zolgensma|luxturna|tysabri|ocrevus|opdivo|keytruda)/i);
-  const hasTherapeutic = filters.therapeuticArea || queryLower.match(/(car-t|gene therapy|bmt|oncology|ms|cardio)/i);
-  const hasLocation = filters.state || filters.city || queryLower.match(/\b(near|in|at|around)\b.*\b([A-Z]{2}|[a-z]+\s+[a-z]+)/);
-  const hasManufacturer = filters.manufacturer || queryLower.match(/(kite|novartis|gilead|bristol|bms|janssen|jnj)/i);
-  
+  // Normalize detected entities to safe string values (never index into null)
+  const productMatch: string | null = (typeof filters.product === 'string' && filters.product.trim().length > 0)
+    ? filters.product.trim()
+    : (queryLower.match(/(kymriah|yescarta|tecartus|breyanzi|abecma|carvykti|zolgensma|luxturna|tysabri|ocrevus|opdivo|keytruda)/i)?.[0] || null);
+  const therapeuticMatch: string | null = (typeof filters.therapeuticArea === 'string' && filters.therapeuticArea.trim().length > 0)
+    ? filters.therapeuticArea.trim()
+    : (queryLower.match(/(car-t|gene therapy|bmt|oncology|ms|cardio)/i)?.[0] || null);
+  const hasLocation: boolean = Boolean(filters.state || filters.city || queryLower.match(/\b(near|in|at|around)\b.*\b([A-Z]{2}|[a-z]+\s+[a-z]+)/));
+  const manufacturerMatch: string | null = (typeof filters.manufacturer === 'string' && filters.manufacturer.trim().length > 0)
+    ? filters.manufacturer.trim()
+    : (queryLower.match(/(kite|novartis|gilead|bristol|bms|janssen|jnj)/i)?.[0] || null);
+
   // DYNAMIC VARIATIONS - Messages change based on context
+  const productKey = (productMatch || 'therapy').toUpperCase();
   const messageSets = {
     productSpecific: [
-      `💊 Found ${hasProduct[0]?.toUpperCase()} authorized treatment centers`,
-      `🏥 Exploring ${hasProduct[0]?.toUpperCase()} administration sites near you`,
-      `📍 Mapping specialized ${hasProduct[0]?.toUpperCase()} centers with verified protocols`,
-      `🔬 Identifying ${hasProduct[0]?.toUpperCase()}-certified facilities with expert teams`
+      `💊 Found ${productKey} authorized treatment centers`,
+      `🏥 Exploring ${productKey} administration sites near you`,
+      `📍 Mapping specialized ${productKey} centers with verified protocols`,
+      `🔬 Identifying ${productKey}-certified facilities with expert teams`
     ],
     locationBased: [
       `📍 Searching treatment centers in your specified area`,
@@ -314,7 +322,7 @@ function generateMapRecommendations(userQuery: string, triageData: any, filters:
     trialFocus: [
       `🧪 Clinical trial centers currently enrolling patients`,
       `📋 Active research sites with open study protocols`,
-      `🔬 Investigator sites recruiting for ${hasProduct?.[0] || 'advanced'} therapy trials`,
+      `🔬 Investigator sites recruiting for ${productMatch || 'advanced'} therapy trials`,
       `⚗️ Research facilities with FDA-authorized trial programs`
     ],
     urgentCare: [
@@ -329,7 +337,7 @@ function generateMapRecommendations(userQuery: string, triageData: any, filters:
       `🔍 Exploring facilities with complete patient support services`,
       `💼 Full-spectrum care centers including financial counseling`
     ]
-  };
+  } as const;
   
   // SELECT CONTEXTUAL MESSAGE (varies each time)
   let primaryMessage = '';
@@ -337,7 +345,7 @@ function generateMapRecommendations(userQuery: string, triageData: any, filters:
     primaryMessage = messageSets.urgentCare[Math.floor(Math.random() * messageSets.urgentCare.length)];
   } else if (queryLower.includes('trial') || filters.clinicalTrial) {
     primaryMessage = messageSets.trialFocus[Math.floor(Math.random() * messageSets.trialFocus.length)];
-  } else if (hasProduct) {
+  } else if (productMatch) {
     primaryMessage = messageSets.productSpecific[Math.floor(Math.random() * messageSets.productSpecific.length)];
   } else if (hasLocation) {
     primaryMessage = messageSets.locationBased[Math.floor(Math.random() * messageSets.locationBased.length)];
@@ -350,9 +358,9 @@ function generateMapRecommendations(userQuery: string, triageData: any, filters:
   // Pricing-specific suggestions (ENHANCED WITH MORE VARIATION)
   if (filters.insuranceType || queryLower.includes('insurance') || queryLower.includes('cost')) {
     const pricingMessages = [
-      `💰 ${filters.insuranceType?.toUpperCase() || 'Insurance'} pricing breakdown available`,
+      `💰 ${(filters.insuranceType?.toUpperCase() || 'Insurance')} pricing breakdown available`,
       `💵 Understanding your ${filters.insuranceType || 'coverage'} options and out-of-pocket costs`,
-      `💳 ${filters.insuranceType?.toUpperCase() || 'Insurance'} coverage analysis for selected centers`,
+      `💳 ${(filters.insuranceType?.toUpperCase() || 'Insurance')} coverage analysis for selected centers`,
       `💲 Financial impact assessment for ${filters.insuranceType || 'your insurance'} plan`
     ];
     
@@ -365,15 +373,15 @@ function generateMapRecommendations(userQuery: string, triageData: any, filters:
     });
     
     recommendations.relatedQueries.push(
-      `Patient assistance programs for ${filters.product || hasProduct?.[0] || 'therapy'}`,
+      `Patient assistance programs for ${productMatch || 'therapy'}`,
       `Copay support options with ${filters.insuranceType || 'insurance'}`,
       `Financial counseling services at treatment centers`
     );
   }
   
   // Product/Manufacturer context (ENHANCED)
-  if (filters.product || hasProduct) {
-    const product = filters.product || hasProduct[0];
+  if (productMatch) {
+    const product = productMatch;
     const productMessages = [
       `📊 Comparing ${product} pricing across all models`,
       `💊 ${product} cost analysis: WAC vs Government vs Commercial`,
@@ -398,8 +406,8 @@ function generateMapRecommendations(userQuery: string, triageData: any, filters:
   }
   
   // Manufacturer-specific insights
-  if (filters.manufacturer || hasManufacturer) {
-    const mfg = filters.manufacturer || hasManufacturer[0];
+  if (manufacturerMatch) {
+    const mfg = manufacturerMatch;
     recommendations.nextSteps.push(
       `Explore ${mfg} patient assistance programs`,
       `Contact ${mfg} reimbursement specialists`,
@@ -408,8 +416,8 @@ function generateMapRecommendations(userQuery: string, triageData: any, filters:
   }
   
   // Therapeutic area guidance
-  if (filters.therapeuticArea || hasTherapeutic) {
-    const area = filters.therapeuticArea || hasTherapeutic[0];
+  if (therapeuticMatch) {
+    const area = therapeuticMatch;
     const areaMessages = [
       `🔬 ${area} specialized centers with proven outcomes`,
       `🏆 Leading ${area} treatment facilities`,
