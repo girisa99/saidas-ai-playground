@@ -109,7 +109,7 @@ serve(async (req) => {
       const statusUrl: string = crawlStart.url;
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
       let attempt = 0;
-      const maxAttempts = Math.max(10, Math.ceil((maxPages || 50) / 5)); // adaptive polling based on requested pages
+      const maxAttempts = Math.max(45, Math.ceil((maxPages || 50) / 2)); // poll ~90s or based on pages
       let status = 'running';
 
       while (attempt < maxAttempts) {
@@ -419,17 +419,20 @@ Return ONLY valid JSON array, no markdown formatting.`;
       }
     }
 
+    // Determine final status based on results
+    const finalStatus = (processedCount > 0 || (Array.isArray(results) && results.length > 0)) ? 'completed' : 'running';
+
     // Update crawl job
     await supabaseClient
       .from('knowledge_crawl_jobs')
       .update({
-        status: 'completed',
+        status: finalStatus,
         pages_crawled: processedCount,
-        completed_at: new Date().toISOString()
+        completed_at: finalStatus === 'completed' ? new Date().toISOString() : null
       })
       .eq('id', jobData.id);
 
-    console.log(`Crawl completed: ${processedCount} pages processed, ${centersExtracted} centers extracted`);
+    console.log(`Crawl ${finalStatus}: ${processedCount} pages processed, ${centersExtracted} centers extracted`);
 
     return new Response(
       JSON.stringify({
@@ -437,8 +440,8 @@ Return ONLY valid JSON array, no markdown formatting.`;
         jobId: jobData.id,
         pagesProcessed: processedCount,
         centersExtracted,
-        totalPages: results.length,
-        status: 'completed'
+        totalPages: Array.isArray(results) ? results.length : 0,
+        status: finalStatus
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

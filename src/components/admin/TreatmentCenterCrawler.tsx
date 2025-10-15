@@ -113,10 +113,17 @@ export const TreatmentCenterCrawler = () => {
       if (invokeError) throw invokeError;
 
       if (result?.success) {
-        toast({
-          title: 'Crawl Completed',
-          description: `Processed ${result.pagesProcessed || 0} pages and extracted ${result.centersExtracted || 0} centers. Job: ${result.jobId || 'n/a'}`,
-        });
+        if (result.status === 'running') {
+          toast({
+            title: 'Crawl Started',
+            description: `Job ${result.jobId || 'n/a'} queued at provider. We will continue processing in the background.`,
+          });
+        } else {
+          toast({
+            title: 'Crawl Completed',
+            description: `Processed ${result.pagesProcessed || 0} pages and extracted ${result.centersExtracted || 0} centers. Job: ${result.jobId || 'n/a'}`,
+          });
+        }
       } else {
         const errMsg = typeof result?.error === 'string' ? result.error : 'Failed to crawl treatment centers';
         if (errMsg.includes('429')) {
