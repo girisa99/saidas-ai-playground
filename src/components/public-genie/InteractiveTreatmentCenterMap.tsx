@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { getTreatmentCentersForMap, TreatmentCenter } from '@/services/treatmentCenterService';
 import { MapPin, Phone, Globe, Mail, ExternalLink, Maximize2, Minimize2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { supabase } from '@/integrations/supabase/client';
 
 interface InteractiveTreatmentCenterMapProps {
   filterByType?: string;
@@ -41,6 +42,31 @@ export const InteractiveTreatmentCenterMap = ({ filterByType, searchQuery }: Int
       setCenterType(filterByType);
     }
   }, [filterByType]);
+
+  // Try to load Mapbox token from database on mount
+  useEffect(() => {
+    const loadMapboxToken = async () => {
+      if (mapboxToken) return; // Already have token from localStorage
+      
+      try {
+        const { data, error } = await supabase
+          .from('app_configuration')
+          .select('config_value')
+          .eq('config_key', 'mapbox_public_token')
+          .maybeSingle();
+        
+        if (data && data.config_value && !error) {
+          setMapboxToken(data.config_value);
+          // Also save to localStorage for future use
+          localStorage.setItem('mapbox_token', data.config_value);
+        }
+      } catch (err) {
+        console.error('Failed to load Mapbox token from database:', err);
+      }
+    };
+    
+    loadMapboxToken();
+  }, []);
 
   const loadCenters = async () => {
     const data = await getTreatmentCentersForMap(

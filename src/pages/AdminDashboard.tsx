@@ -4,6 +4,7 @@ import { WebsiteAnalyticsSection } from '@/components/admin/WebsiteAnalyticsSect
 import { GeniePopupAnalyticsSection } from '@/components/admin/GeniePopupAnalyticsSection';
 import { KnowledgeBaseMigration } from '@/components/admin/KnowledgeBaseMigration';
 import { KnowledgeCrawlManager } from '@/components/admin/KnowledgeCrawlManager';
+import { MapboxTokenManager } from '@/components/admin/MapboxTokenManager';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -204,11 +205,12 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="website" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="website">Website Analytics</TabsTrigger>
             <TabsTrigger value="genie">Genie AI Popup Analytics</TabsTrigger>
             <TabsTrigger value="migration">Knowledge Base Migration</TabsTrigger>
             <TabsTrigger value="crawler">Knowledge Crawler</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
 
           <TabsContent value="website">
@@ -236,6 +238,12 @@ const AdminDashboard = () => {
 
           <TabsContent value="crawler">
             <KnowledgeCrawlManager />
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <div className="space-y-6">
+              <MapboxTokenManager />
+            </div>
           </TabsContent>
         </Tabs>
       </div>

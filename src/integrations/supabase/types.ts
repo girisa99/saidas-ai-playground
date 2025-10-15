@@ -2686,6 +2686,39 @@ export type Database = {
           },
         ]
       }
+      app_configuration: {
+        Row: {
+          config_key: string
+          config_type: string
+          config_value: string
+          created_at: string
+          description: string | null
+          id: string
+          is_public: boolean
+          updated_at: string
+        }
+        Insert: {
+          config_key: string
+          config_type?: string
+          config_value: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_public?: boolean
+          updated_at?: string
+        }
+        Update: {
+          config_key?: string
+          config_type?: string
+          config_value?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_public?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       application_pdfs: {
         Row: {
           application_id: string | null
