@@ -96,10 +96,61 @@ serve(async (req) => {
       );
     }
 
-    const crawlData = await crawlResponse.json();
-    console.log('Firecrawl response received', JSON.stringify(crawlData).substring(0, 500));
+    const crawlStart = await crawlResponse.json();
+    console.log('Firecrawl response received', JSON.stringify(crawlStart).substring(0, 500));
 
-    const results = crawlData.data || [];
+    let results: any[] = [];
+
+    // Handle both immediate data and job-based responses from Firecrawl
+    if (Array.isArray(crawlStart.data)) {
+      results = crawlStart.data;
+    } else if (crawlStart.id && crawlStart.url) {
+      // Poll job status until completed, then fetch data
+      const statusUrl: string = crawlStart.url;
+      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      let attempt = 0;
+      const maxAttempts = Math.max(10, Math.ceil((maxPages || 50) / 5)); // adaptive polling based on requested pages
+      let status = 'running';
+
+      while (attempt < maxAttempts) {
+        const statusRes = await fetch(statusUrl, {
+          method: 'GET',
+          headers: { 'Authorization': `Bearer ${FIRECRAWL_API_KEY}` }
+        });
+        if (!statusRes.ok) {
+          console.error('Firecrawl status check failed:', statusRes.status);
+          break;
+        }
+        const statusJson = await statusRes.json();
+        status = statusJson.status || statusJson.state || status;
+
+        if (status === 'completed' || status === 'finished' || (statusJson.completed && statusJson.total && statusJson.completed >= statusJson.total)) {
+          // Fetch results
+          const dataUrl = `${statusUrl}/data`;
+          const dataRes = await fetch(dataUrl, {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${FIRECRAWL_API_KEY}` }
+          });
+          if (dataRes.ok) {
+            const dataJson = await dataRes.json();
+            results = Array.isArray(dataJson?.data) ? dataJson.data : (Array.isArray(dataJson) ? dataJson : []);
+          } else {
+            console.error('Firecrawl data fetch failed:', dataRes.status);
+          }
+          break;
+        }
+
+        if (status === 'failed' || status === 'error') {
+          console.error('Firecrawl job reported failure:', JSON.stringify(statusJson).substring(0, 300));
+          break;
+        }
+
+        // Wait and poll again
+        await sleep(2000);
+        attempt++;
+      }
+    }
+
     console.log(`Processing ${results.length} pages from Firecrawl`);
     let processedCount = 0;
     let centersExtracted = 0;

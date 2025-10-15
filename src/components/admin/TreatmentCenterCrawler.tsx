@@ -114,11 +114,20 @@ export const TreatmentCenterCrawler = () => {
 
       if (result?.success) {
         toast({
-          title: 'Crawl Started Successfully',
-          description: `Processing ${urlToCrawl}. Extracted ${result.data?.centersExtracted || 0} treatment centers from ${result.data?.pagesProcessed || 0} pages.`,
+          title: 'Crawl Completed',
+          description: `Processed ${result.pagesProcessed || 0} pages and extracted ${result.centersExtracted || 0} centers. Job: ${result.jobId || 'n/a'}`,
         });
       } else {
-        throw new Error(result.error);
+        const errMsg = typeof result?.error === 'string' ? result.error : 'Failed to crawl treatment centers';
+        if (errMsg.includes('429')) {
+          toast({
+            title: 'Rate Limited by Firecrawl',
+            description: 'Please wait ~25 seconds and try again. We hit the provider rate limit.',
+            variant: 'destructive',
+          });
+          return;
+        }
+        throw new Error(errMsg);
       }
     } catch (error) {
       console.error('Crawl error:', error);
