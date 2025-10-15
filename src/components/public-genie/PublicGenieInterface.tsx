@@ -18,6 +18,7 @@ import { TypingIndicator } from '../enrollment-genie/TypingIndicator';
 import { PublicPrivacyBanner } from './PublicPrivacyBanner';
 import { HumanEscalationForm } from './HumanEscalationForm';
 import { RichResponseRenderer } from './RichResponseRenderer';
+import { SourceCitations } from './SourceCitations';
 import { AdvancedAISettings, AIConfig } from './AdvancedAISettings';
 import { ConfigurationWizard } from './ConfigurationWizard';
 import { SplitScreenRenderer } from './SplitScreenRenderer';
@@ -1249,7 +1250,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
               metadata: {
                 triageSuggestedModel: response.triageData?.suggested_model,
                 best_format: response.triageData?.best_format,
-                oncologyProducts: response.oncologyProducts
+                oncologyProducts: response.oncologyProducts,
+                knowledgeBaseResults: response.knowledgeBaseResults
               }
             });
             
@@ -1737,6 +1739,23 @@ ${conversationSummary.transcript}`
                                       content={message.content}
                                       oncologyProducts={(message as any).metadata?.oncologyProducts}
                                     />
+                                    
+                                    {/* Display Knowledge Base Citations */}
+                                    {(message as any).metadata?.knowledgeBaseResults && 
+                                     (message as any).metadata.knowledgeBaseResults.length > 0 && (
+                                      <SourceCitations 
+                                        sources={(message as any).metadata.knowledgeBaseResults.map((kb: any) => ({
+                                          id: kb.id || Math.random().toString(),
+                                          title: kb.finding_name || kb.title || 'Knowledge Source',
+                                          url: kb.metadata?.source_url || kb.metadata?.citation?.url,
+                                          sourceName: kb.metadata?.source_name || kb.metadata?.citation?.source,
+                                          domain: kb.domain,
+                                          credibilityScore: kb.source_credibility_score || kb.metadata?.citation?.credibility,
+                                          citationCount: kb.citation_count
+                                        }))}
+                                      />
+                                    )}
+                                    
                                     {(message.model || (message as any).metadata?.triageSuggestedModel) && (
                                       <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                                         {message.model && (

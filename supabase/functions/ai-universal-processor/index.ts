@@ -1379,7 +1379,7 @@ serve(async (req) => {
       }
     }
 
-    // ========== INTEGRATION POINT 3: Return Triage Data ==========
+    // ========== INTEGRATION POINT 3: Return Triage Data with Knowledge Base Citations ==========
     return new Response(JSON.stringify({ 
       content,
       provider: request.provider,
@@ -1389,6 +1389,8 @@ serve(async (req) => {
       hasVision: !!(request.imageUrl || request.images),
       labelStudioLogged: !!(request.labelStudioProject && labelStudioApiKey),
       oncologyProducts,
+      // Knowledge base citations for source references
+      knowledgeBaseResults: ragContext.length > 0 ? ragContext : undefined,
       // Smart routing metadata
       triageData: triageData ? {
         complexity: triageData.complexity,
