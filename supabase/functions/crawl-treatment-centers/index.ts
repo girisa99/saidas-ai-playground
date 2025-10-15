@@ -43,6 +43,7 @@ serve(async (req) => {
       .insert({
         job_name: `Treatment Centers: ${sourceName}`,
         start_url: url,
+        source_url: url,
         status: 'running',
         pages_total: maxPages,
         configuration: {
