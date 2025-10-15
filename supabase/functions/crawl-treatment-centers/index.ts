@@ -121,16 +121,30 @@ serve(async (req) => {
           console.error('Firecrawl status check failed:', statusRes.status);
           break;
         }
-        const statusJson = await statusRes.json();
-        status = statusJson.status || statusJson.state || status;
+          const statusJson = await statusRes.json();
+          console.log('Firecrawl job status snapshot:', JSON.stringify(statusJson).substring(0, 300));
+          status = statusJson.status || statusJson.state || status;
 
-        if (status === 'completed' || status === 'finished' || (statusJson.completed && statusJson.total && statusJson.completed >= statusJson.total)) {
+          if (status === 'completed' || status === 'finished' || (statusJson.completed && statusJson.total && statusJson.completed >= statusJson.total)) {
           // Fetch results
           const dataUrl = `${statusUrl}/data`;
-          const dataRes = await fetch(dataUrl, {
+          // Try fetching results with small retries to avoid transient 404s right after completion
+          let dataRes = await fetch(dataUrl, {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${FIRECRAWL_API_KEY}` }
           });
+
+          if (!dataRes.ok && dataRes.status === 404) {
+            console.warn('Firecrawl /data 404, retrying...');
+            for (let i = 0; i < 5 && (!dataRes.ok || dataRes.status === 404); i++) {
+              await sleep(2000);
+              dataRes = await fetch(dataUrl, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${FIRECRAWL_API_KEY}` }
+              });
+            }
+          }
+
           if (dataRes.ok) {
             const dataJson = await dataRes.json();
             results = Array.isArray(dataJson?.data) ? dataJson.data : (Array.isArray(dataJson) ? dataJson : []);
