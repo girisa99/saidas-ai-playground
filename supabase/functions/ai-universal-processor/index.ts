@@ -1379,16 +1379,53 @@ serve(async (req) => {
       }
     }
 
-    // Detect if treatment center map should be shown
-    const treatmentCenterKeywords = ['treatment center', 'gene therapy center', 'bmt center', 'transplant center', 'oncology center', 'hospital', 'clinic', 'where can i get', 'find treatment', 'treatment location', 'near me'];
-    const showTreatmentMap = treatmentCenterKeywords.some(keyword => request.prompt.toLowerCase().includes(keyword));
+    // Detect if treatment center map should be shown with enhanced intelligence
+    const treatmentCenterKeywords = [
+      // General treatment facilities
+      'treatment center', 'hospital', 'clinic', 'medical center', 'healthcare facility',
+      // Specific therapy types
+      'gene therapy center', 'gene therapy', 'bmt center', 'bone marrow transplant',
+      'transplant center', 'oncology center', 'cancer center', 'infusion center',
+      // Clinical trials
+      'clinical trial', 'clinical study', 'trial site', 'research center', 'study location',
+      'trial enrollment', 'participating sites', 'trial centers',
+      // Location-based queries
+      'where can i get', 'find treatment', 'treatment location', 'near me', 'closest',
+      'in my area', 'nearby', 'location', 'address', 'find a center',
+      // Specialty queries
+      'CAR-T therapy', 'immunotherapy', 'cell therapy', 'advanced therapy',
+      'specialized treatment', 'certified center', 'accredited facility'
+    ];
     
-    // Detect center type from query
+    const showTreatmentMap = treatmentCenterKeywords.some(keyword => 
+      request.prompt.toLowerCase().includes(keyword.toLowerCase())
+    );
+    
+    // Intelligent center type detection with fallback to 'all' if unclear
     let centerType: string | undefined = undefined;
     if (showTreatmentMap) {
-      if (request.prompt.toLowerCase().includes('gene therapy')) centerType = 'gene_therapy';
-      else if (request.prompt.toLowerCase().includes('bmt') || request.prompt.toLowerCase().includes('transplant')) centerType = 'bmt';
-      else if (request.prompt.toLowerCase().includes('oncology') || request.prompt.toLowerCase().includes('cancer')) centerType = 'oncology';
+      const prompt = request.prompt.toLowerCase();
+      
+      // Specific therapy detection
+      if (prompt.includes('gene therapy') || prompt.includes('car-t') || prompt.includes('cell therapy')) {
+        centerType = 'gene_therapy';
+      } else if (prompt.includes('bmt') || prompt.includes('transplant') || prompt.includes('bone marrow')) {
+        centerType = 'bmt';
+      } else if (prompt.includes('oncology') || prompt.includes('cancer') || prompt.includes('infusion')) {
+        centerType = 'oncology';
+      } else if (prompt.includes('clinical trial') || prompt.includes('trial site') || prompt.includes('research')) {
+        // Clinical trials might be any type, so we could either:
+        // 1. Show all types
+        // 2. Try to infer from context (e.g., "gene therapy clinical trial" -> gene_therapy)
+        centerType = 'all'; // Show all types for clinical trials unless more specific
+        
+        // Try to refine based on therapy mentioned in trial context
+        if (prompt.includes('gene therapy') || prompt.includes('car-t')) centerType = 'gene_therapy';
+        else if (prompt.includes('transplant') || prompt.includes('bmt')) centerType = 'bmt';
+        else if (prompt.includes('cancer') || prompt.includes('oncology')) centerType = 'oncology';
+      }
+      // If still undefined, set to 'all' to show everything
+      if (!centerType) centerType = 'all';
     }
 
     // ========== INTEGRATION POINT 3: Return Triage Data with Knowledge Base Citations ==========
