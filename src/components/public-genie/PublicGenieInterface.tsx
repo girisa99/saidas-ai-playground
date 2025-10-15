@@ -27,7 +27,9 @@ import { ContextSwitcher } from './ContextSwitcher';
 import { TopicSuggestionPopover } from './TopicSuggestionPopover';
 import { MedicalImageUploader, UploadedImage } from './MedicalImageUploader';
 import { VisionModelIndicator } from './VisionModelIndicator';
+import { TreatmentCenterMap } from './TreatmentCenterMap';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { conversationIntelligence } from '@/utils/conversationIntelligence';
 import { useUniversalKnowledgeTopics } from '@/hooks/useUniversalKnowledgeTopics';
 import { useGeniePreferences } from '@/hooks/useGeniePreferences';
@@ -189,6 +191,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [showConfigWizard, setShowConfigWizard] = useState(false);
   const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
   const [ipAddress, setIpAddress] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'chat' | 'map'>('chat');
 
   // Persist context across the session
   useEffect(() => {
@@ -1676,8 +1679,19 @@ ${conversationSummary.transcript}`
                     </div>
                   )}
 
-                   {/* Messages */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 [--popup-vh:calc(100vh-8rem)]">
+                   {/* Tab Navigation */}
+                   <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'chat' | 'map')} className="flex-1 flex flex-col min-h-0">
+                     <TabsList className="w-full grid grid-cols-2 mx-4 mt-2">
+                       <TabsTrigger value="chat" className="text-xs">
+                         💬 Chat
+                       </TabsTrigger>
+                       <TabsTrigger value="map" className="text-xs">
+                         🗺️ Treatment Centers
+                       </TabsTrigger>
+                     </TabsList>
+
+                     {/* Chat Tab */}
+                     <TabsContent value="chat" className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 mt-0">
                     {/* Vision Model Indicator */}
                     {aiConfig.visionEnabled && (
                       <VisionModelIndicator
@@ -1793,9 +1807,16 @@ ${conversationSummary.transcript}`
                     )}
 
 
-                   {/* Session Manager */}
+                    {/* Session Manager */}
 
-                    </div>
+                    </TabsContent>
+
+                    {/* Treatment Centers Map Tab */}
+                    <TabsContent value="map" className="flex-1 overflow-y-auto p-4 min-h-0 mt-0">
+                      <TreatmentCenterMap />
+                    </TabsContent>
+
+                   </Tabs>
 
                       {/* Input Area */}
                       <div className="p-4 border-t bg-background/50 flex-shrink-0">
