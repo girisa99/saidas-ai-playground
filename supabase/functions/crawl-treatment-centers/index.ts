@@ -29,11 +29,11 @@ serve(async (req) => {
     const { url, centerType, sourceName, maxPages = 50, contentTypes = ['treatment_center'] }: TreatmentCenterCrawlRequest = await req.json();
 
     const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
-    const CRAWL4AI_URL = Deno.env.get('CRAWL4AI_URL');
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+    // const CRAWL4AI_URL = Deno.env.get('CRAWL4AI_URL'); // Disabled - using Firecrawl only
     
-    if (!FIRECRAWL_API_KEY && !CRAWL4AI_URL) {
-      throw new Error('Either FIRECRAWL_API_KEY or CRAWL4AI_URL must be configured');
+    if (!FIRECRAWL_API_KEY) {
+      throw new Error('FIRECRAWL_API_KEY must be configured');
     }
 
     console.log(`Starting treatment center crawl for ${url} (${centerType})`);
@@ -61,9 +61,8 @@ serve(async (req) => {
 
     let results: any[] = [];
     let usedService = 'firecrawl';
-    let shouldFallback = false;
 
-    // Try Firecrawl first if API key exists
+    // Use Firecrawl (Crawl4AI fallback disabled)
     if (FIRECRAWL_API_KEY) {
       console.log('Attempting crawl with Firecrawl...');
       
@@ -82,33 +81,23 @@ serve(async (req) => {
         })
       });
 
-      // Check for 402 (insufficient credits) - trigger fallback
-      if (crawlResponse.status === 402) {
-        console.log('Firecrawl returned 402 (insufficient credits)');
-        shouldFallback = true;
-      } else if (!crawlResponse.ok) {
+      if (!crawlResponse.ok) {
         const errorText = await crawlResponse.text();
         console.error('Firecrawl API error:', errorText);
         
-        if (CRAWL4AI_URL) {
-          console.log('Firecrawl failed, falling back to Crawl4AI...');
-          shouldFallback = true;
-        } else {
-          // No fallback available, mark as failed
-          await supabaseClient
-            .from('knowledge_crawl_jobs')
-            .update({
-              status: 'failed',
-              error_message: `Firecrawl ${crawlResponse.status}: ${errorText}`,
-              completed_at: new Date().toISOString()
-            })
-            .eq('id', jobData.id);
+        await supabaseClient
+          .from('knowledge_crawl_jobs')
+          .update({
+            status: 'failed',
+            error_message: `Firecrawl ${crawlResponse.status}: ${errorText}`,
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', jobData.id);
 
-          return new Response(
-            JSON.stringify({ success: false, error: `Firecrawl error ${crawlResponse.status}` }),
-            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          );
-        }
+        return new Response(
+          JSON.stringify({ success: false, error: `Firecrawl error ${crawlResponse.status}` }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
       } else {
         // Firecrawl succeeded
         const crawlStart = await crawlResponse.json();
@@ -180,55 +169,6 @@ serve(async (req) => {
           }
         }
       }
-    } else {
-      // No Firecrawl key, use Crawl4AI if available
-      shouldFallback = true;
-    }
-
-    // Fallback to Crawl4AI if needed
-    if (shouldFallback && CRAWL4AI_URL) {
-      console.log('Using Crawl4AI for crawling...');
-      usedService = 'crawl4ai';
-
-      const crawl4aiResponse = await fetch(`${CRAWL4AI_URL}/crawl`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          urls: url,
-          max_depth: 2,
-          max_pages: maxPages,
-          extraction_config: {
-            type: 'basic',
-          },
-        }),
-      });
-
-      if (!crawl4aiResponse.ok) {
-        const errorText = await crawl4aiResponse.text();
-        console.error('Crawl4AI API error:', errorText);
-        
-        await supabaseClient
-          .from('knowledge_crawl_jobs')
-          .update({
-            status: 'failed',
-            error_message: `Crawl4AI ${crawl4aiResponse.status}: ${errorText}`,
-            completed_at: new Date().toISOString()
-          })
-          .eq('id', jobData.id);
-
-        return new Response(
-          JSON.stringify({ success: false, error: `Crawl4AI error ${crawl4aiResponse.status}` }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-
-      const crawl4aiData = await crawl4aiResponse.json();
-      console.log('Crawl4AI response:', JSON.stringify(crawl4aiData).substring(0, 500));
-      
-      // Crawl4AI returns results in a different format
-      results = crawl4aiData.results || [];
     }
 
     if (!results || results.length === 0) {
