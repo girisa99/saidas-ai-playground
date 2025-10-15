@@ -44,6 +44,7 @@ serve(async (req) => {
         job_name: `Treatment Centers: ${sourceName}`,
         start_url: url,
         source_url: url,
+        crawl_type: 'treatment_centers',
         status: 'running',
         pages_total: maxPages,
         configuration: {
