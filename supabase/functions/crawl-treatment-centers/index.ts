@@ -97,9 +97,10 @@ serve(async (req) => {
     }
 
     const crawlData = await crawlResponse.json();
-    console.log('Firecrawl response received');
+    console.log('Firecrawl response received', JSON.stringify(crawlData).substring(0, 500));
 
     const results = crawlData.data || [];
+    console.log(`Processing ${results.length} pages from Firecrawl`);
     let processedCount = 0;
     let centersExtracted = 0;
 
