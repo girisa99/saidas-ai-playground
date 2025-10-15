@@ -28,6 +28,7 @@ import { TopicSuggestionPopover } from './TopicSuggestionPopover';
 import { MedicalImageUploader, UploadedImage } from './MedicalImageUploader';
 import { VisionModelIndicator } from './VisionModelIndicator';
 import { InteractiveTreatmentCenterMap } from './InteractiveTreatmentCenterMap';
+import { AIRecommendationsPanel } from './AIRecommendationsPanel';
 import { RoutingOptimizationBadge } from './RoutingOptimizationBadge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { conversationIntelligence } from '@/utils/conversationIntelligence';
@@ -1752,6 +1753,27 @@ ${conversationSummary.transcript}`
                                       content={message.content}
                                       oncologyProducts={(message as any).metadata?.oncologyProducts}
                                     />
+                                    
+                                    {/* Display AI Recommendations & Insights */}
+                                    {((message as any).metadata?.aiRecommendations || (message as any).metadata?.contextualInsights) && (
+                                      <div className="mt-4">
+                                        <AIRecommendationsPanel
+                                          recommendations={(message as any).metadata?.aiRecommendations || { suggestions: [], nextSteps: [], relatedQueries: [], displayHints: {} }}
+                                          insights={(message as any).metadata?.contextualInsights || { summary: '', keyPoints: [], warnings: [], opportunities: [] }}
+                                          onActionClick={(action) => {
+                                            console.log('Action clicked:', action);
+                                            // Handle action clicks - could trigger filters, navigation, etc.
+                                          }}
+                                          onRelatedQueryClick={(query) => {
+                                            // Set input and trigger send
+                                            const syntheticEvent = new Event('submit') as any;
+                                            const tempInput = inputMessage;
+                                            setInputMessage(query);
+                                            setTimeout(() => handleSendMessage(), 100);
+                                          }}
+                                        />
+                                      </div>
+                                    )}
                                     
                                     {/* Display Treatment Center Map if relevant */}
                                     {(message as any).metadata?.showTreatmentMap && (

@@ -279,6 +279,62 @@ function suggestModel(complexity: string, domain: string, urgency: string, requi
   return domain === 'healthcare' ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-flash';
 }
 
+
+// ========== AI RECOMMENDATION ENGINE ==========
+function generateMapRecommendations(userQuery: string, triageData: any, filters: any): any {
+  const recommendations: any = {
+    type: 'map_recommendations',
+    suggestions: [],
+    nextSteps: [],
+    relatedQueries: [],
+    displayHints: {}
+  };
+  
+  const queryLower = userQuery.toLowerCase();
+  
+  if (queryLower.includes('trial') || filters.clinicalTrial) {
+    recommendations.suggestions.push({
+      icon: 'flask',
+      title: 'Clinical Trial Centers',
+      description: 'Focus on centers actively running clinical trials',
+      action: 'filter_clinical_trials',
+      priority: 'high'
+    });
+  }
+  
+  if (triageData?.urgency === 'high') {
+    recommendations.suggestions.unshift({
+      icon: 'zap',
+      title: 'Immediate Availability',
+      description: 'Centers with immediate appointment availability',
+      action: 'filter_immediate',
+      priority: 'urgent'
+    });
+  }
+  
+  return recommendations;
+}
+
+function generateContextualInsights(userQuery: string, triageData: any, ragContext: any[]): any {
+  const insights: any = {
+    type: 'contextual_insights',
+    summary: triageData?.domain === 'healthcare' ? 'Treatment centers based on your needs:' : 'Explore matching centers:',
+    keyPoints: [],
+    warnings: [],
+    opportunities: []
+  };
+  
+  if (triageData?.urgency === 'high') {
+    insights.warnings.push('Urgent care needed - contact centers immediately');
+  }
+  
+  if (ragContext.length > 0) {
+    insights.opportunities.push('Knowledge base contains relevant information');
+  }
+  
+  return insights;
+}
+
 function enhanceSystemPrompt(basePrompt: string, triage: TriageResult): string {
   let enhanced = basePrompt;
   enhanced += `\n\nContext: ${triage.domain} domain query.`;
@@ -1407,6 +1463,29 @@ serve(async (req) => {
     
     // If still undefined, set to 'all' to show everything
     if (!centerType) centerType = 'all';
+    
+    // ========== AI-POWERED RECOMMENDATIONS ==========
+    // Generate proactive suggestions based on context and query intent
+    const aiRecommendations = generateMapRecommendations(
+      request.prompt,
+      triageData,
+      {
+        therapeuticArea,
+        product,
+        manufacturer,
+        clinicalTrial,
+        state,
+        city,
+        centerType
+      }
+    );
+    
+    // Generate contextual insights for better user experience
+    const contextualInsights = generateContextualInsights(
+      request.prompt,
+      triageData,
+      ragContext
+    );
 
     // ========== INTEGRATION POINT 3: Return Triage Data with Knowledge Base Citations ==========
     return new Response(JSON.stringify({ 
@@ -1430,6 +1509,9 @@ serve(async (req) => {
       clinicalTrial,
       state,
       city,
+      // AI-powered recommendations and insights
+      aiRecommendations,
+      contextualInsights,
       // Smart routing metadata
       triageData: triageData ? {
         complexity: triageData.complexity,
