@@ -8106,6 +8106,44 @@ export type Database = {
           },
         ]
       }
+      knowledge_citations: {
+        Row: {
+          citation_context: Json | null
+          cited_in_response: string | null
+          conversation_id: string | null
+          created_at: string | null
+          id: string
+          knowledge_base_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          citation_context?: Json | null
+          cited_in_response?: string | null
+          conversation_id?: string | null
+          created_at?: string | null
+          id?: string
+          knowledge_base_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          citation_context?: Json | null
+          cited_in_response?: string | null
+          conversation_id?: string | null
+          created_at?: string | null
+          id?: string
+          knowledge_base_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "knowledge_citations_knowledge_base_id_fkey"
+            columns: ["knowledge_base_id"]
+            isOneToOne: false
+            referencedRelation: "universal_knowledge_base"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       knowledge_usage_analytics: {
         Row: {
           created_at: string | null
@@ -13640,9 +13678,93 @@ export type Database = {
         }
         Relationships: []
       }
+      treatment_centers: {
+        Row: {
+          accreditations: string[] | null
+          address: string | null
+          center_type: string
+          city: string | null
+          country: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          is_verified: boolean | null
+          knowledge_base_id: string | null
+          latitude: number | null
+          longitude: number | null
+          metadata: Json | null
+          name: string
+          phone: string | null
+          source_name: string | null
+          source_url: string | null
+          specialties: string[] | null
+          state: string | null
+          updated_at: string | null
+          website: string | null
+          zip_code: string | null
+        }
+        Insert: {
+          accreditations?: string[] | null
+          address?: string | null
+          center_type: string
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          is_verified?: boolean | null
+          knowledge_base_id?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          metadata?: Json | null
+          name: string
+          phone?: string | null
+          source_name?: string | null
+          source_url?: string | null
+          specialties?: string[] | null
+          state?: string | null
+          updated_at?: string | null
+          website?: string | null
+          zip_code?: string | null
+        }
+        Update: {
+          accreditations?: string[] | null
+          address?: string | null
+          center_type?: string
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          is_verified?: boolean | null
+          knowledge_base_id?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          metadata?: Json | null
+          name?: string
+          phone?: string | null
+          source_name?: string | null
+          source_url?: string | null
+          specialties?: string[] | null
+          state?: string | null
+          updated_at?: string | null
+          website?: string | null
+          zip_code?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "treatment_centers_knowledge_base_id_fkey"
+            columns: ["knowledge_base_id"]
+            isOneToOne: false
+            referencedRelation: "universal_knowledge_base"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       universal_knowledge_base: {
         Row: {
           body_part: string | null
+          citation_count: number | null
           clinical_context: Json | null
           clinical_significance: string | null
           content_type: string
@@ -13657,17 +13779,20 @@ export type Database = {
           id: string
           is_approved: boolean | null
           key_features: Json | null
+          last_cited_at: string | null
           metadata: Json | null
           modality: string | null
           negative_feedback_count: number | null
           positive_feedback_count: number | null
           quality_score: number | null
+          source_credibility_score: number | null
           source_repository_id: string | null
           updated_at: string | null
           usage_count: number | null
         }
         Insert: {
           body_part?: string | null
+          citation_count?: number | null
           clinical_context?: Json | null
           clinical_significance?: string | null
           content_type: string
@@ -13682,17 +13807,20 @@ export type Database = {
           id?: string
           is_approved?: boolean | null
           key_features?: Json | null
+          last_cited_at?: string | null
           metadata?: Json | null
           modality?: string | null
           negative_feedback_count?: number | null
           positive_feedback_count?: number | null
           quality_score?: number | null
+          source_credibility_score?: number | null
           source_repository_id?: string | null
           updated_at?: string | null
           usage_count?: number | null
         }
         Update: {
           body_part?: string | null
+          citation_count?: number | null
           clinical_context?: Json | null
           clinical_significance?: string | null
           content_type?: string
@@ -13707,11 +13835,13 @@ export type Database = {
           id?: string
           is_approved?: boolean | null
           key_features?: Json | null
+          last_cited_at?: string | null
           metadata?: Json | null
           modality?: string | null
           negative_feedback_count?: number | null
           positive_feedback_count?: number | null
           quality_score?: number | null
+          source_credibility_score?: number | null
           source_repository_id?: string | null
           updated_at?: string | null
           usage_count?: number | null
