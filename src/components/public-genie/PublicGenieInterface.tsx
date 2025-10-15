@@ -1759,6 +1759,12 @@ ${conversationSummary.transcript}`
                                         <InteractiveTreatmentCenterMap 
                                           filterByType={(message as any).metadata?.centerType}
                                           searchQuery={(message as any).metadata?.searchQuery}
+                                          therapeuticArea={(message as any).metadata?.therapeuticArea}
+                                          product={(message as any).metadata?.product}
+                                          manufacturer={(message as any).metadata?.manufacturer}
+                                          clinicalTrial={(message as any).metadata?.clinicalTrial}
+                                          state={(message as any).metadata?.state}
+                                          city={(message as any).metadata?.city}
                                         />
                                       </div>
                                     )}

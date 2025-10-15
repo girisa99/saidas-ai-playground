@@ -15,6 +15,16 @@ export interface TreatmentCenter {
   website?: string;
   email?: string;
   specialties?: string[];
+  therapeutic_areas?: string[];
+  products_drugs?: string[];
+  manufacturers?: string[];
+  key_providers?: string[];
+  clinical_trials?: string;
+  trial_sponsors?: string[];
+  capacity_info?: string;
+  nci_designated?: string;
+  fact_accredited?: boolean;
+  patient_services?: string[];
   accreditations?: string[];
   metadata?: Record<string, any>;
   source_url?: string;
@@ -62,6 +72,14 @@ export const searchTreatmentCenters = async (filters: {
   state?: string;
   city?: string;
   specialty?: string;
+  therapeuticArea?: string;
+  product?: string;
+  manufacturer?: string;
+  provider?: string;
+  clinicalTrial?: string;
+  nciDesignated?: boolean;
+  factAccredited?: boolean;
+  country?: string;
   searchText?: string;
   limit?: number;
 }): Promise<TreatmentCenter[]> => {
@@ -83,12 +101,44 @@ export const searchTreatmentCenters = async (filters: {
       query = query.ilike('city', `%${filters.city}%`);
     }
 
+    if (filters.country) {
+      query = query.eq('country', filters.country);
+    }
+
     if (filters.specialty) {
       query = query.contains('specialties', [filters.specialty]);
     }
 
+    if (filters.therapeuticArea) {
+      query = query.contains('therapeutic_areas', [filters.therapeuticArea]);
+    }
+
+    if (filters.product) {
+      query = query.contains('products_drugs', [filters.product]);
+    }
+
+    if (filters.manufacturer) {
+      query = query.contains('manufacturers', [filters.manufacturer]);
+    }
+
+    if (filters.provider) {
+      query = query.or(`key_providers.cs.{${filters.provider}}`);
+    }
+
+    if (filters.clinicalTrial) {
+      query = query.ilike('clinical_trials', `%${filters.clinicalTrial}%`);
+    }
+
+    if (filters.nciDesignated !== undefined) {
+      query = query.not('nci_designated', 'is', null);
+    }
+
+    if (filters.factAccredited !== undefined) {
+      query = query.eq('fact_accredited', filters.factAccredited);
+    }
+
     if (filters.searchText) {
-      query = query.or(`name.ilike.%${filters.searchText}%,city.ilike.%${filters.searchText}%`);
+      query = query.or(`name.ilike.%${filters.searchText}%,city.ilike.%${filters.searchText}%,state.ilike.%${filters.searchText}%,therapeutic_areas.cs.{${filters.searchText}}`);
     }
 
     if (filters.limit) {

@@ -1393,31 +1393,17 @@ serve(async (req) => {
     }
 
     // Use triage format recommendation for map display (smart routing)
-    const showTreatmentMap = triageData?.best_format === 'map';
+    const showTreatmentMap = triageData?.show_treatment_map || triageData?.best_format === 'map';
     
-    // Intelligent center type detection with fallback to 'all' if unclear
-    let centerType: string | undefined = undefined;
-    if (showTreatmentMap) {
-      const prompt = request.prompt.toLowerCase();
-      
-      // Specific therapy detection
-      if (prompt.includes('gene therapy') || prompt.includes('car-t') || prompt.includes('cell therapy')) {
-        centerType = 'gene_therapy';
-      } else if (prompt.includes('bmt') || prompt.includes('transplant') || prompt.includes('bone marrow')) {
-        centerType = 'bmt';
-      } else if (prompt.includes('oncology') || prompt.includes('cancer') || prompt.includes('infusion')) {
-        centerType = 'oncology';
-      } else if (prompt.includes('clinical trial') || prompt.includes('trial site') || prompt.includes('research')) {
-        // Clinical trials might be any type, so we could either:
-        // 1. Show all types
-        // 2. Try to infer from context (e.g., "gene therapy clinical trial" -> gene_therapy)
-        centerType = 'all'; // Show all types for clinical trials unless more specific
-        
-        // Try to refine based on therapy mentioned in trial context
-        if (prompt.includes('gene therapy') || prompt.includes('car-t')) centerType = 'gene_therapy';
-        else if (prompt.includes('transplant') || prompt.includes('bmt')) centerType = 'bmt';
-        else if (prompt.includes('cancer') || prompt.includes('oncology')) centerType = 'oncology';
-      }
+    // Extract filter parameters from triage
+    const centerType = triageData?.center_type;
+    const searchQuery = triageData?.search_query;
+    const therapeuticArea = triageData?.therapeutic_area;
+    const product = triageData?.product;
+    const manufacturer = triageData?.manufacturer;
+    const clinicalTrial = triageData?.clinical_trial;
+    const state = triageData?.state;
+    const city = triageData?.city;
       // If still undefined, set to 'all' to show everything
       if (!centerType) centerType = 'all';
     }
@@ -1434,10 +1420,16 @@ serve(async (req) => {
       oncologyProducts,
       // Knowledge base citations for source references
       knowledgeBaseResults: ragContext.length > 0 ? ragContext : undefined,
-      // Treatment center map metadata
+      // Treatment center map metadata with advanced filters
       showTreatmentMap,
       centerType,
-      searchQuery: showTreatmentMap ? request.prompt : undefined,
+      searchQuery,
+      therapeuticArea,
+      product,
+      manufacturer,
+      clinicalTrial,
+      state,
+      city,
       // Smart routing metadata
       triageData: triageData ? {
         complexity: triageData.complexity,

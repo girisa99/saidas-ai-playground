@@ -5,17 +5,33 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { getTreatmentCentersForMap, TreatmentCenter } from '@/services/treatmentCenterService';
-import { MapPin, Phone, Globe, Mail, ExternalLink, Maximize2, Minimize2 } from 'lucide-react';
+import { getTreatmentCentersForMap, searchTreatmentCenters, TreatmentCenter } from '@/services/treatmentCenterService';
+import { MapPin, Maximize2, Minimize2, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
+import { TreatmentCenterDetails } from './TreatmentCenterDetails';
 
 interface InteractiveTreatmentCenterMapProps {
   filterByType?: string;
   searchQuery?: string;
+  therapeuticArea?: string;
+  product?: string;
+  manufacturer?: string;
+  clinicalTrial?: string;
+  state?: string;
+  city?: string;
 }
 
-export const InteractiveTreatmentCenterMap = ({ filterByType, searchQuery }: InteractiveTreatmentCenterMapProps) => {
+export const InteractiveTreatmentCenterMap = ({ 
+  filterByType, 
+  searchQuery, 
+  therapeuticArea,
+  product,
+  manufacturer,
+  clinicalTrial,
+  state,
+  city
+}: InteractiveTreatmentCenterMapProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const markers = useRef<mapboxgl.Marker[]>([]);
@@ -35,7 +51,7 @@ export const InteractiveTreatmentCenterMap = ({ filterByType, searchQuery }: Int
   // Load treatment centers based on props or state
   useEffect(() => {
     loadCenters();
-  }, [centerType, filterByType]);
+  }, [centerType, filterByType, therapeuticArea, product, manufacturer, clinicalTrial, state, city, searchQuery]);
 
   useEffect(() => {
     if (filterByType) {
@@ -69,10 +85,26 @@ export const InteractiveTreatmentCenterMap = ({ filterByType, searchQuery }: Int
   }, []);
 
   const loadCenters = async () => {
-    const data = await getTreatmentCentersForMap(
-      centerType === 'all' ? undefined : centerType
-    );
-    setCenters(data);
+    // Use advanced search if filters are provided
+    if (therapeuticArea || product || manufacturer || clinicalTrial || state || city || searchQuery) {
+      const data = await searchTreatmentCenters({
+        centerType: centerType === 'all' ? undefined : centerType,
+        therapeuticArea,
+        product,
+        manufacturer,
+        clinicalTrial,
+        state,
+        city,
+        searchText: searchQuery,
+        limit: 500
+      });
+      setCenters(data);
+    } else {
+      const data = await getTreatmentCentersForMap(
+        centerType === 'all' ? undefined : centerType
+      );
+      setCenters(data);
+    }
   };
 
   // Initialize map
@@ -247,6 +279,36 @@ export const InteractiveTreatmentCenterMap = ({ filterByType, searchQuery }: Int
             </div>
           )}
 
+          {/* Active Filters Display */}
+          {(therapeuticArea || product || manufacturer || clinicalTrial || state || city) && (
+            <div className="p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
+              <div className="flex items-center gap-2 text-sm font-medium mb-2">
+                <Filter className="h-4 w-4" />
+                Active Filters:
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {therapeuticArea && (
+                  <Badge variant="secondary">Therapeutic: {therapeuticArea}</Badge>
+                )}
+                {product && (
+                  <Badge variant="secondary">Product: {product}</Badge>
+                )}
+                {manufacturer && (
+                  <Badge variant="secondary">Manufacturer: {manufacturer}</Badge>
+                )}
+                {clinicalTrial && (
+                  <Badge variant="secondary">Trial: {clinicalTrial}</Badge>
+                )}
+                {state && (
+                  <Badge variant="secondary">State: {state}</Badge>
+                )}
+                {city && (
+                  <Badge variant="secondary">City: {city}</Badge>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Filters */}
           <div className="flex items-center gap-4">
             <Select value={centerType} onValueChange={setCenterType}>
@@ -303,106 +365,10 @@ export const InteractiveTreatmentCenterMap = ({ filterByType, searchQuery }: Int
 
           {/* Selected Center Details */}
           {selectedCenter && (
-            <Card className="border-l-4 border-l-primary">
-              <CardContent className="p-4 space-y-3">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h4 className="font-semibold text-lg">{selectedCenter.name}</h4>
-                    <div className="flex items-center gap-2 mt-1">
-                      <Badge variant="secondary">
-                        {selectedCenter.center_type.replace('_', ' ')}
-                      </Badge>
-                      {selectedCenter.is_verified && (
-                        <Badge variant="default">Verified</Badge>
-                      )}
-                    </div>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSelectedCenter(null)}
-                  >
-                    ✕
-                  </Button>
-                </div>
-
-                {selectedCenter.address && (
-                  <div className="flex items-start gap-2 text-sm">
-                    <MapPin className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
-                    <span>
-                      {selectedCenter.address}
-                      {selectedCenter.city && `, ${selectedCenter.city}`}
-                      {selectedCenter.state && `, ${selectedCenter.state}`}
-                      {selectedCenter.zip_code && ` ${selectedCenter.zip_code}`}
-                    </span>
-                  </div>
-                )}
-
-                {selectedCenter.phone && (
-                  <div className="flex items-center gap-2 text-sm">
-                    <Phone className="h-4 w-4 text-muted-foreground" />
-                    <a href={`tel:${selectedCenter.phone}`} className="hover:underline">
-                      {selectedCenter.phone}
-                    </a>
-                  </div>
-                )}
-
-                {selectedCenter.website && (
-                  <div className="flex items-center gap-2 text-sm">
-                    <Globe className="h-4 w-4 text-muted-foreground" />
-                    <a 
-                      href={selectedCenter.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:underline flex items-center gap-1"
-                    >
-                      Visit Website
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
-                  </div>
-                )}
-
-                {selectedCenter.email && (
-                  <div className="flex items-center gap-2 text-sm">
-                    <Mail className="h-4 w-4 text-muted-foreground" />
-                    <a href={`mailto:${selectedCenter.email}`} className="hover:underline">
-                      {selectedCenter.email}
-                    </a>
-                  </div>
-                )}
-
-                {selectedCenter.specialties && selectedCenter.specialties.length > 0 && (
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium">Specialties:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {selectedCenter.specialties.map((specialty, idx) => (
-                        <Badge key={idx} variant="outline" className="text-xs">
-                          {specialty}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {selectedCenter.source_name && (
-                  <div className="pt-2 mt-2 border-t">
-                    <p className="text-xs text-muted-foreground">
-                      Source: {selectedCenter.source_name}
-                      {selectedCenter.source_url && (
-                        <a 
-                          href={selectedCenter.source_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="ml-1 hover:underline inline-flex items-center gap-1"
-                        >
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      )}
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            <TreatmentCenterDetails 
+              center={selectedCenter} 
+              onClose={() => setSelectedCenter(null)} 
+            />
           )}
         </CardContent>
       </Card>
