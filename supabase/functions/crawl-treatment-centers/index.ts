@@ -12,6 +12,7 @@ interface TreatmentCenterCrawlRequest {
   centerType: 'gene_therapy' | 'bmt' | 'oncology' | 'general';
   sourceName: string;
   maxPages?: number;
+  contentTypes?: string[];
 }
 
 serve(async (req) => {
@@ -30,7 +31,7 @@ serve(async (req) => {
       }
     );
 
-    const { url, centerType, sourceName, maxPages = 50 }: TreatmentCenterCrawlRequest = await req.json();
+    const { url, centerType, sourceName, maxPages = 50, contentTypes = ['treatment_center'] }: TreatmentCenterCrawlRequest = await req.json();
 
     const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
@@ -51,7 +52,8 @@ serve(async (req) => {
         pages_total: maxPages,
         configuration: {
           domain: 'patient_onboarding',
-          contentType: 'treatment_center',
+          contentType: contentTypes[0] || 'treatment_center',
+          contentTypes,
           centerType,
           sourceName,
           maxPages
@@ -96,30 +98,55 @@ serve(async (req) => {
 
     for (const page of results) {
       try {
-        // Insert knowledge base entry
+        // Determine content type based on page content and URL
+        const pageUrl = page.url?.toLowerCase() || '';
+        const pageContent = (page.markdown || page.content || '').toLowerCase();
+        
+        let detectedContentTypes = [...contentTypes];
+        if (pageUrl.includes('trial') || pageContent.includes('clinical trial')) {
+          detectedContentTypes.push('clinical_trial_data');
+        }
+        if (pageContent.includes('video') || pageContent.includes('watch')) {
+          detectedContentTypes.push('multimedia');
+        }
+        if (pageContent.includes('support') || pageContent.includes('peer')) {
+          detectedContentTypes.push('support_resources');
+        }
+        
+        // Insert knowledge base entry with comprehensive metadata
         const { data: knowledgeEntry, error: insertError } = await supabaseClient
           .from('universal_knowledge_base')
           .insert({
-            finding_name: page.metadata?.title || `${sourceName} - Treatment Centers`,
+            finding_name: page.metadata?.title || `${sourceName} - ${page.url}`,
             description: page.markdown || page.content || '',
             domain: 'patient_onboarding',
-            content_type: 'educational_content',
+            content_type: detectedContentTypes[0] || 'educational_content',
             metadata: {
-              source_type: 'treatment_center_crawl',
+              source_type: 'healthcare_crawl',
               source_url: page.url,
               source_name: sourceName,
               crawled_at: new Date().toISOString(),
-              tags: [centerType, 'treatment_center', sourceName],
+              content_types: [...new Set(detectedContentTypes)],
+              tags: [centerType, ...detectedContentTypes, sourceName],
+              center_type: centerType,
               html: page.html,
-              firecrawl_metadata: page.metadata
+              firecrawl_metadata: page.metadata,
+              citation: {
+                url: page.url,
+                title: page.metadata?.title || sourceName,
+                source: sourceName,
+                accessed_date: new Date().toISOString()
+              }
             },
             clinical_context: {
               center_type: centerType,
-              source: sourceName
+              source: sourceName,
+              content_categories: detectedContentTypes
             },
-            quality_score: 80,
-            source_credibility_score: 85,
-            is_approved: true
+            quality_score: 85,
+            source_credibility_score: 90,
+            is_approved: true,
+            is_public: true
           })
           .select()
           .single();

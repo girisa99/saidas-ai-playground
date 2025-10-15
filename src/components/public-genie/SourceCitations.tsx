@@ -106,16 +106,21 @@ export const SourceCitations = ({ sources, conversationId, onCitationClick }: So
                       )}
 
                       {source.url && (
-                        <a
-                          href={source.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs text-primary hover:underline flex items-center gap-1"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          View Source
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
+                        <>
+                          <a
+                            href={source.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-primary hover:underline flex items-center gap-1"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            View Source
+                            <ExternalLink className="h-3 w-3" />
+                          </a>
+                          <p className="text-xs text-muted-foreground truncate max-w-xs">
+                            {source.url}
+                          </p>
+                        </>
                       )}
                     </div>
                   </div>
@@ -126,10 +131,17 @@ export const SourceCitations = ({ sources, conversationId, onCitationClick }: So
         ))}
       </div>
 
-      <p className="text-xs text-muted-foreground mt-3 italic">
-        Information sourced from verified healthcare databases and treatment center directories. 
-        Always verify critical medical information with healthcare professionals.
-      </p>
+      <div className="mt-3 pt-2 border-t text-xs text-muted-foreground space-y-1">
+        <p className="italic">
+          Information sourced from verified healthcare databases and treatment center directories.
+        </p>
+        <p className="font-medium">
+          📚 All sources are publicly available. Citations include URLs and references for verification.
+        </p>
+        <p className="text-xs">
+          Always verify critical medical information with healthcare professionals.
+        </p>
+      </div>
     </div>
   );
 };

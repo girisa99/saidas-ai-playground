@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { crawlTreatmentCenters } from '@/services/treatmentCenterService';
+import { supabase } from '@/integrations/supabase/client';
 import { Loader2, MapPin, Database, ExternalLink } from 'lucide-react';
 
 export const TreatmentCenterCrawler = () => {
@@ -19,25 +19,60 @@ export const TreatmentCenterCrawler = () => {
 
   const predefinedSites = [
     {
-      id: 'asgct',
-      name: 'ASGCT Gene Therapy Centers',
+      id: 'asgct_centers',
+      name: 'ASGCT Gene Therapy Centers Directory',
       url: 'https://patienteducation.asgct.org/patient-journey/gene-therapy-centers',
       type: 'gene_therapy' as const,
-      description: 'American Society of Gene & Cell Therapy treatment centers'
+      description: 'Gene therapy treatment centers from ASGCT',
+      contentTypes: ['treatment_center', 'patient_education']
     },
     {
-      id: 'carebox',
+      id: 'asgct_main',
+      name: 'ASGCT - Gene Therapy 101 & Resources',
+      url: 'https://www.asgct.org/',
+      type: 'gene_therapy' as const,
+      description: 'Gene therapy education, research, and patient resources',
+      contentTypes: ['educational_content', 'research_data', 'patient_education']
+    },
+    {
+      id: 'bmtinfonet_centers',
+      name: 'BMT InfoNet - Transplant Centers Directory',
+      url: 'https://bmtinfonet.org/transplantcenters',
+      type: 'bmt' as const,
+      description: 'Directory of BMT centers and transplant programs',
+      contentTypes: ['treatment_center', 'clinical_data']
+    },
+    {
+      id: 'bmtinfonet_main',
+      name: 'BMT InfoNet - Resources & Support',
+      url: 'https://bmtinfonet.org/',
+      type: 'bmt' as const,
+      description: 'BMT resources: videos, books, brochures, GVHD, peer support, patient journey',
+      contentTypes: ['educational_content', 'patient_education', 'support_resources', 'multimedia']
+    },
+    {
+      id: 'carebox_trials',
+      name: 'CareBox Health - Clinical Trials',
+      url: 'https://connect.careboxhealth.com/en-US/trials',
+      type: 'general' as const,
+      description: 'Clinical trials and treatment options database',
+      contentTypes: ['clinical_trial_data', 'treatment_center']
+    },
+    {
+      id: 'carebox_main',
       name: 'CareBox Health Connect',
       url: 'https://connect.careboxhealth.com/en-US',
       type: 'general' as const,
-      description: 'CareBox healthcare provider network'
+      description: 'Healthcare provider network and patient resources',
+      contentTypes: ['treatment_center', 'educational_content']
     },
     {
-      id: 'bmtinfonet',
-      name: 'BMT InfoNet Centers',
-      url: 'https://bmtinfonet.org/transplantcenters',
-      type: 'bmt' as const,
-      description: 'Blood & Marrow Transplant Information Network'
+      id: 'ctsearchsupport',
+      name: 'CT Search Support - Clinical Trials',
+      url: 'https://www.ctsearchsupport.org/',
+      type: 'oncology' as const,
+      description: 'Clinical trial search and patient education for cancer treatments',
+      contentTypes: ['clinical_trial_data', 'patient_education', 'disease_treatment']
     }
   ];
 
@@ -62,14 +97,22 @@ export const TreatmentCenterCrawler = () => {
         ? predefinedSites.find(s => s.id === selectedSite)?.name || 'Custom Source'
         : new URL(urlToCrawl).hostname;
 
-      const result = await crawlTreatmentCenters(
-        urlToCrawl,
-        centerType,
-        sourceName,
-        maxPages
-      );
+      const site = selectedSite ? predefinedSites.find(s => s.id === selectedSite) : null;
+      
+      // Call crawl with content types
+      const { data: result, error: invokeError } = await supabase.functions.invoke('crawl-treatment-centers', {
+        body: {
+          url: urlToCrawl,
+          centerType,
+          sourceName,
+          maxPages,
+          contentTypes: site?.contentTypes || ['treatment_center']
+        }
+      });
 
-      if (result.success) {
+      if (invokeError) throw invokeError;
+
+      if (result?.success) {
         toast({
           title: 'Crawl Started Successfully',
           description: `Processing ${urlToCrawl}. Extracted ${result.data?.centersExtracted || 0} treatment centers from ${result.data?.pagesProcessed || 0} pages.`,
