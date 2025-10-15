@@ -1396,7 +1396,7 @@ serve(async (req) => {
     const showTreatmentMap = triageData?.show_treatment_map || triageData?.best_format === 'map';
     
     // Extract filter parameters from triage
-    const centerType = triageData?.center_type;
+    let centerType = triageData?.center_type;
     const searchQuery = triageData?.search_query;
     const therapeuticArea = triageData?.therapeutic_area;
     const product = triageData?.product;
@@ -1404,9 +1404,9 @@ serve(async (req) => {
     const clinicalTrial = triageData?.clinical_trial;
     const state = triageData?.state;
     const city = triageData?.city;
-      // If still undefined, set to 'all' to show everything
-      if (!centerType) centerType = 'all';
-    }
+    
+    // If still undefined, set to 'all' to show everything
+    if (!centerType) centerType = 'all';
 
     // ========== INTEGRATION POINT 3: Return Triage Data with Knowledge Base Citations ==========
     return new Response(JSON.stringify({ 
