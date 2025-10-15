@@ -8177,6 +8177,54 @@ export type Database = {
           },
         ]
       }
+      knowledge_crawl_jobs: {
+        Row: {
+          completed_at: string | null
+          crawl_type: string
+          created_at: string | null
+          created_by: string | null
+          error_message: string | null
+          id: string
+          items_extracted: number | null
+          metadata: Json | null
+          pages_crawled: number | null
+          source_url: string
+          started_at: string | null
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          crawl_type: string
+          created_at?: string | null
+          created_by?: string | null
+          error_message?: string | null
+          id?: string
+          items_extracted?: number | null
+          metadata?: Json | null
+          pages_crawled?: number | null
+          source_url: string
+          started_at?: string | null
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          crawl_type?: string
+          created_at?: string | null
+          created_by?: string | null
+          error_message?: string | null
+          id?: string
+          items_extracted?: number | null
+          metadata?: Json | null
+          pages_crawled?: number | null
+          source_url?: string
+          started_at?: string | null
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       knowledge_usage_analytics: {
         Row: {
           created_at: string | null
