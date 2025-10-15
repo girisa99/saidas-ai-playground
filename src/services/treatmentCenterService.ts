@@ -288,3 +288,44 @@ export const getMostCitedSources = async (
     return [];
   }
 };
+
+/**
+ * Load enhanced treatment centers from CSV file
+ */
+export const loadEnhancedCenters = async (): Promise<any[]> => {
+  try {
+    const response = await fetch('/data/treatment-centers-enhanced.csv');
+    const text = await response.text();
+    const lines = text.trim().split('\n');
+    
+    // Skip header
+    const dataLines = lines.slice(1);
+    
+    return dataLines.map(line => {
+      const fields = parseCSVLine(line);
+      return {
+        name: fields[0],
+        address: fields[1],
+        city: fields[2],
+        state: fields[3],
+        zip_code: fields[4],
+        phone: fields[5],
+        website: fields[6],
+        email: fields[7],
+        key_providers: fields[8],
+        therapeutic_areas: fields[9],
+        products_drugs: fields[10],
+        manufacturers: fields[11],
+        clinical_trials: fields[12],
+        trial_sponsors: fields[13],
+        capacity: fields[14],
+        nci_designated: fields[15],
+        fact_accredited: fields[16],
+        patient_services: fields[17]
+      };
+    });
+  } catch (error) {
+    console.error('Error loading enhanced centers:', error);
+    return [];
+  }
+};

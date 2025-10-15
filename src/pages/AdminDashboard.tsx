@@ -7,6 +7,7 @@ import { KnowledgeCrawlManager } from '@/components/admin/KnowledgeCrawlManager'
 import { MapboxTokenManager } from '@/components/admin/MapboxTokenManager';
 import { TreatmentCenterImporter } from '@/components/admin/TreatmentCenterImporter';
 import { ProductPricingImporter } from '@/components/admin/ProductPricingImporter';
+import { DataVerificationPanel } from '@/components/admin/DataVerificationPanel';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -244,6 +245,7 @@ const AdminDashboard = () => {
 
           <TabsContent value="settings">
             <div className="space-y-6">
+              <DataVerificationPanel />
               <ProductPricingImporter />
               <TreatmentCenterImporter />
               <MapboxTokenManager />
