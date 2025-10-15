@@ -5,6 +5,7 @@ import { GeniePopupAnalyticsSection } from '@/components/admin/GeniePopupAnalyti
 import { KnowledgeBaseMigration } from '@/components/admin/KnowledgeBaseMigration';
 import { KnowledgeCrawlManager } from '@/components/admin/KnowledgeCrawlManager';
 import { MapboxTokenManager } from '@/components/admin/MapboxTokenManager';
+import { TreatmentCenterImporter } from '@/components/admin/TreatmentCenterImporter';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -242,6 +243,7 @@ const AdminDashboard = () => {
 
           <TabsContent value="settings">
             <div className="space-y-6">
+              <TreatmentCenterImporter />
               <MapboxTokenManager />
             </div>
           </TabsContent>

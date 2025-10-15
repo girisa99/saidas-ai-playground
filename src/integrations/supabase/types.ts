@@ -13775,23 +13775,33 @@ export type Database = {
         Row: {
           accreditations: string[] | null
           address: string | null
+          capacity_info: string | null
           center_type: string
           city: string | null
+          clinical_trials: string | null
           country: string | null
           created_at: string | null
           email: string | null
+          fact_accredited: boolean | null
           id: string
           is_verified: boolean | null
+          key_providers: string[] | null
           knowledge_base_id: string | null
           latitude: number | null
           longitude: number | null
+          manufacturers: string[] | null
           metadata: Json | null
           name: string
+          nci_designated: string | null
+          patient_services: string[] | null
           phone: string | null
+          products_drugs: string[] | null
           source_name: string | null
           source_url: string | null
           specialties: string[] | null
           state: string | null
+          therapeutic_areas: string[] | null
+          trial_sponsors: string[] | null
           updated_at: string | null
           website: string | null
           zip_code: string | null
@@ -13799,23 +13809,33 @@ export type Database = {
         Insert: {
           accreditations?: string[] | null
           address?: string | null
+          capacity_info?: string | null
           center_type: string
           city?: string | null
+          clinical_trials?: string | null
           country?: string | null
           created_at?: string | null
           email?: string | null
+          fact_accredited?: boolean | null
           id?: string
           is_verified?: boolean | null
+          key_providers?: string[] | null
           knowledge_base_id?: string | null
           latitude?: number | null
           longitude?: number | null
+          manufacturers?: string[] | null
           metadata?: Json | null
           name: string
+          nci_designated?: string | null
+          patient_services?: string[] | null
           phone?: string | null
+          products_drugs?: string[] | null
           source_name?: string | null
           source_url?: string | null
           specialties?: string[] | null
           state?: string | null
+          therapeutic_areas?: string[] | null
+          trial_sponsors?: string[] | null
           updated_at?: string | null
           website?: string | null
           zip_code?: string | null
@@ -13823,23 +13843,33 @@ export type Database = {
         Update: {
           accreditations?: string[] | null
           address?: string | null
+          capacity_info?: string | null
           center_type?: string
           city?: string | null
+          clinical_trials?: string | null
           country?: string | null
           created_at?: string | null
           email?: string | null
+          fact_accredited?: boolean | null
           id?: string
           is_verified?: boolean | null
+          key_providers?: string[] | null
           knowledge_base_id?: string | null
           latitude?: number | null
           longitude?: number | null
+          manufacturers?: string[] | null
           metadata?: Json | null
           name?: string
+          nci_designated?: string | null
+          patient_services?: string[] | null
           phone?: string | null
+          products_drugs?: string[] | null
           source_name?: string | null
           source_url?: string | null
           specialties?: string[] | null
           state?: string | null
+          therapeutic_areas?: string[] | null
+          trial_sponsors?: string[] | null
           updated_at?: string | null
           website?: string | null
           zip_code?: string | null
