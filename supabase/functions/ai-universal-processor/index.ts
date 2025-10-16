@@ -751,24 +751,54 @@ function enhanceSystemPrompt(basePrompt: string, triage: TriageResult): string {
   "steps": [
     {
       "id": "step-1",
-      "title": "Step Title",
+      "title": "First Step",
       "description": "Brief description",
-      "status": "completed|current|upcoming",
-      "icon": "FileText|Users|DollarSign|Stethoscope|Pill|Building|Phone|Shield|TrendingUp",
+      "status": "completed",
+      "icon": "FileText",
       "details": ["Detail 1", "Detail 2"],
-      "resources": [
-        { "label": "Resource Name", "url": "https://...", "type": "pdf|video|link" }
-      ]
+      "resources": []
+    },
+    {
+      "id": "step-2",
+      "title": "Current Step",
+      "description": "Brief description",
+      "status": "current",
+      "icon": "Users",
+      "details": ["Detail 1"],
+      "resources": []
+    },
+    {
+      "id": "step-3",
+      "title": "Next Step",
+      "description": "Brief description",
+      "status": "upcoming",
+      "icon": "Pill",
+      "details": [],
+      "resources": []
     }
   ]
 }
 \`\`\`\`
 
+**STATUS ASSIGNMENT RULES - FOLLOW EXACTLY:**
+- First 1-2 steps: "completed" (shows green checkmark, represents preparatory/initial phases)
+- Middle step (typically step 3): "current" (shows pulsing blue dot, represents active/happening now phase)  
+- Remaining steps: "upcoming" (shows gray circle, represents future phases)
+- For treatment journeys: Diagnosis/Referral = completed, Eligibility/Collection = current, Manufacturing/Infusion/Recovery = upcoming
+- For enrollment: Information Gathering = completed, Application = current, Approval/Enrollment = upcoming
+
 IMPORTANT: 
 - Use FOUR backticks (\`\`\`\`) to wrap journey-map, NOT three
+- ALWAYS vary the status across steps - NEVER set all to "upcoming"
 - Include this for ANY process/workflow query (prior authorization, enrollment, treatment, etc.)
 - Put the journey map FIRST in your response, then explain details below it
-- NEVER return raw JSON without the journey-map wrapper\n\nMEDIA LINKS POLICY:\n- Only include publicly accessible resources with full https URLs.\n- Prefer official manufacturer, guideline, or trusted patient-advocacy sources.\n- For videos, provide the direct YouTube page URL (no embedded player required).\n- If uncertain a video is publicly available, omit it and provide an alternative reputable article.`;
+- NEVER return raw JSON without the journey-map wrapper
+
+MEDIA LINKS POLICY:
+- Only include publicly accessible resources with full https URLs
+- Prefer official manufacturer, guideline, or trusted patient-advocacy sources
+- For videos, provide the direct YouTube page URL (e.g., https://www.youtube.com/watch?v=VIDEO_ID)
+- If uncertain a video is publicly available, omit it and provide an alternative reputable article`;
   }
   
   if (triage.emotional_tone === 'empathetic') {
