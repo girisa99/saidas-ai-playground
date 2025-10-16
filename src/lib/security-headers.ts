@@ -28,7 +28,7 @@ export const SECURITY_HEADERS = {
   // Referrer Policy
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   
-  // Permissions Policy
+  // Permissions Policy (removed deprecated features: vr, ambient-light-sensor, battery)
   'Permissions-Policy': [
     'camera=()',
     'microphone=()',
