@@ -191,28 +191,11 @@ serve(async (req) => {
       const centerType = determineCenterType(therapeuticAreas);
       const country = determineCountry(record.state);
 
-      // Geocode address (with rate limiting)
-      const { lat, lon } = await geocodeAddress(
-        record.address || '',
-        record.city || '',
-        record.state || '',
-        record.zip_code || ''
-      );
+      // Skip blocking geocoding during initial import (geocode in background)
+      const lat = null as number | null;
+      const lon = null as number | null;
 
-      if (lat && lon) {
-        geocodedCount++;
-      }
-
-      const centerData = {
-        name: record.name,
-        center_type: centerType,
-        address: record.address || null,
-        city: record.city || null,
-        state: record.state || null,
-        zip_code: record.zip_code || null,
-        country: country,
-        latitude: lat,
-        longitude: lon,
+      // if lat/lon were computed here, we'd increment geocodedCount; background task will handle it
         phone: record.phone || null,
         website: record.website || null,
         email: record.email || null,
@@ -242,7 +225,7 @@ serve(async (req) => {
       centersToInsert.push(centerData);
     }
 
-    console.log(`Prepared ${centersToInsert.length} centers for insertion (${geocodedCount} geocoded)`);
+    console.log(`Prepared ${centersToInsert.length} centers for insertion (geocoding scheduled in background)`);
 
     // Insert in batches of 50 to avoid timeout
     const batchSize = 50;
@@ -255,25 +238,59 @@ serve(async (req) => {
 
       const { data, error } = await supabaseClient
         .from('treatment_centers')
-        .insert(batch);
+        .insert(batch)
+        .select('id,name,address,city,state,zip_code');
 
       if (error) {
         console.error(`Batch insert error:`, error);
         errorCount += batch.length;
       } else {
-        insertedCount += batch.length;
+        insertedCount += data?.length ?? batch.length;
       }
     }
 
-    console.log(`Import completed: ${insertedCount} inserted, ${errorCount} errors, ${geocodedCount} geocoded`);
+    // Background geocoding (non-blocking)
+    const backgroundGeocode = async () => {
+      try {
+        console.log('Background geocoding started...');
+        let count = 0;
+        for (const c of centersToInsert) {
+          const { lat, lon } = await geocodeAddress(
+            c.address || '',
+            c.city || '',
+            c.state || '',
+            c.zip_code || ''
+          );
+          if (lat && lon) count++;
+          await supabaseClient
+            .from('treatment_centers')
+            .update({ latitude: lat, longitude: lon })
+            .eq('name', c.name)
+            .eq('address', c.address)
+            .eq('city', c.city)
+            .eq('state', c.state)
+            .eq('zip_code', c.zip_code);
+          await new Promise(res => setTimeout(res, 1100));
+        }
+        console.log(`Background geocoding finished for ${count} centers`);
+      } catch (e) {
+        console.error('Background geocoding error:', e);
+      }
+    };
+
+    // @ts-ignore
+    EdgeRuntime.waitUntil(backgroundGeocode());
+
+    console.log(`Import completed: ${insertedCount} inserted, ${errorCount} errors, geocoded scheduled`);
 
     return new Response(
       JSON.stringify({
         success: true,
         inserted: insertedCount,
         errors: errorCount,
-        geocoded: geocodedCount,
-        total: records.length
+        geocoded: 0,
+        total: records.length,
+        geocodingScheduled: true
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
