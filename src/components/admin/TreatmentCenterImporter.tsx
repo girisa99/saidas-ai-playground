@@ -22,8 +22,8 @@ export const TreatmentCenterImporter = () => {
     setImportStats(null);
 
     try {
-      // Fetch the CSV file from public folder
-      const response = await fetch('/data/treatment-centers.csv');
+      // Fetch the CSV file from public folder (using enhanced version with all data)
+      const response = await fetch('/data/treatment-centers-enhanced.csv');
       if (!response.ok) {
         throw new Error('Failed to fetch treatment centers CSV file');
       }
