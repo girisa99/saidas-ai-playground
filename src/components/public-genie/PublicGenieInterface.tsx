@@ -703,16 +703,26 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
       .map(img => img.preview)
       .filter(Boolean) as string[];
 
-    // Intelligent vision model auto-switching
+    // Intelligent vision model auto-switching - ONLY when images are uploaded
     const messagesForAnalysis = [...messages, { role: 'user' as const, content: userMessage, timestamp: new Date().toISOString() }];
-    const requiresVision = conversationIntelligence.detectVisionRequirement(messagesForAnalysis) || imageUrls.length > 0;
+    const hasExplicitImageRequest = conversationIntelligence.detectVisionRequirement(messagesForAnalysis);
+    const hasUploadedImages = imageUrls.length > 0;
     
-    if (requiresVision && !aiConfig.visionEnabled) {
-      // Auto-enable vision if discussing images or has uploaded images
+    // Only auto-enable vision if: 
+    // 1. User has uploaded images, OR
+    // 2. User explicitly requests image analysis AND vision is not already disabled by user choice
+    if (hasUploadedImages && !aiConfig.visionEnabled) {
       setAIConfig(prev => ({ ...prev, visionEnabled: true }));
       toast({
         title: "Vision Analysis Enabled",
-        description: "I've detected you're discussing images. Vision capabilities are now active! 👁️",
+        description: "I've detected uploaded images. Vision capabilities are now active! 👁️",
+      });
+    } else if (hasExplicitImageRequest && !aiConfig.visionEnabled && !hasUploadedImages) {
+      // Don't auto-enable for text-only queries, just suggest it
+      toast({
+        title: "Tip: Vision Mode",
+        description: "It looks like you want to analyze an image. Upload an image or enable Vision mode manually.",
+        variant: "default",
       });
     }
     

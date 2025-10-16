@@ -1946,15 +1946,7 @@ serve(async (req) => {
       }
     }
 
-    // Detect treatment center query
-    const isTreatmentQuery = triageData?.show_treatment_map || triageData?.best_format === 'map';
-    
-    // Check if we have enough filters to show map (therapeutic/product + location)
-    const hasTherapeuticOrProduct = therapeuticArea || product || manufacturer;
-    const hasLocation = state || city;
-    let showTreatmentMap = false;
-    
-    // Extract filter parameters from triage
+    // Extract filter parameters from triage FIRST (before using them)
     let centerType = triageData?.center_type;
     const searchQuery = triageData?.search_query;
     const therapeuticArea = triageData?.therapeutic_area;
@@ -1963,6 +1955,14 @@ serve(async (req) => {
     const clinicalTrial = triageData?.clinical_trial;
     const state = triageData?.state;
     const city = triageData?.city;
+    
+    // Detect treatment center query
+    const isTreatmentQuery = triageData?.show_treatment_map || triageData?.best_format === 'map';
+    
+    // Check if we have enough filters to show map (therapeutic/product + location)
+    const hasTherapeuticOrProduct = therapeuticArea || product || manufacturer;
+    const hasLocation = state || city;
+    let showTreatmentMap = false;
     
     // Detect insurance and pricing parameters
     let insuranceType: string | undefined;

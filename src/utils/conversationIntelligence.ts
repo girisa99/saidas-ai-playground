@@ -79,16 +79,20 @@ export class ConversationIntelligence {
       .map(m => m.content.toLowerCase())
       .join(' ');
 
-    // Image and visual keywords
-    const visionKeywords = [
-      'image', 'picture', 'photo', 'visual', 'scan', 'x-ray', 'xray',
-      'mri', 'ct scan', 'ultrasound', 'dicom', 'radiology', 'imaging',
-      'medical image', 'radiograph', 'mammogram', 'echocardiogram',
-      'look at', 'show me', 'analyze this', 'what do you see',
-      'screenshot', 'diagram', 'chart', 'graph', 'visualization'
+    // Only trigger vision for explicit image analysis requests
+    // NOT for general queries that happen to contain words like "list"
+    const explicitVisionKeywords = [
+      'analyze image', 'analyze this image', 'analyze the image',
+      'what\'s in this image', 'what do you see in',
+      'describe image', 'describe this image', 'describe the image',
+      'medical image', 'scan analysis', 'x-ray analysis', 'mri analysis',
+      'ct scan analysis', 'ultrasound analysis', 'dicom analysis',
+      'radiograph analysis', 'mammogram analysis',
+      'uploaded image', 'image i uploaded', 'picture i shared',
+      'look at this image', 'analyze this scan', 'what does this show'
     ];
 
-    return visionKeywords.some(keyword => recentContent.includes(keyword));
+    return explicitVisionKeywords.some(keyword => recentContent.includes(keyword));
   }
 
   /**
