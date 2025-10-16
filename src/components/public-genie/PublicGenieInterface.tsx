@@ -1980,7 +1980,9 @@ ${conversationSummary.transcript}`
                               {aiConfig.ragEnabled && (
                                 <Tooltip>
                                   <TooltipTrigger asChild>
-                                    <Badge variant="outline" className="text-xs cursor-help">RAG</Badge>
+                                    <div className="inline-flex">
+                                      <Badge variant="outline" className="text-xs cursor-help">RAG</Badge>
+                                    </div>
                                   </TooltipTrigger>
                                   <TooltipContent>
                                     <p>Retrieval Augmented Generation: pulls relevant docs to ground answers</p>
@@ -1990,7 +1992,9 @@ ${conversationSummary.transcript}`
                               {aiConfig.knowledgeBaseEnabled && (
                                 <Tooltip>
                                   <TooltipTrigger asChild>
-                                    <Badge variant="outline" className="text-xs cursor-help">KB</Badge>
+                                    <div className="inline-flex">
+                                      <Badge variant="outline" className="text-xs cursor-help">KB</Badge>
+                                    </div>
                                   </TooltipTrigger>
                                   <TooltipContent>
                                     <p>Knowledge Base: uses curated universal topics for context</p>
@@ -2000,7 +2004,9 @@ ${conversationSummary.transcript}`
                                {aiConfig.mcpEnabled && (
                                  <Tooltip>
                                    <TooltipTrigger asChild>
-                                     <Badge variant="outline" className="text-xs cursor-help">🔌 MCP</Badge>
+                                     <div className="inline-flex">
+                                       <Badge variant="outline" className="text-xs cursor-help">🔌 MCP</Badge>
+                                     </div>
                                   </TooltipTrigger>
                                   <TooltipContent>
                                     <p className="text-xs max-w-xs">Model Context Protocol: AI can access external tools, databases & APIs for enhanced capabilities</p>
