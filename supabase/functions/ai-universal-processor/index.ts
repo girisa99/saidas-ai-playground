@@ -1716,25 +1716,92 @@ serve(async (req) => {
       }
     }
     
-    // If multi-agent was used, return collaboration result
+    // If multi-agent was used, return collaboration result WITH FULL METADATA
     if (collaborationResult) {
       console.log('Multi-agent collaboration complete');
+      
+      // Extract filter parameters from triage (SAME AS SINGLE-AGENT)
+      let centerType = triageData?.center_type;
+      const searchQuery = triageData?.search_query;
+      const therapeuticArea = triageData?.therapeutic_area;
+      const product = triageData?.product;
+      const manufacturer = triageData?.manufacturer;
+      const clinicalTrial = triageData?.clinical_trial;
+      const state = triageData?.state;
+      const city = triageData?.city;
+      const lowerPrompt = request.prompt.toLowerCase();
+      
+      const pricingKeywords = ['cost', 'price', 'pricing', 'how much', 'expensive', 'afford',
+        'insurance', 'coverage', 'pay', 'wac', '340b', 'government', 'commercial',
+        'patient assistance', 'pap', 'copay', 'medicare', 'medicaid'];
+      
+      const isPricingQuery = pricingKeywords.some(k => lowerPrompt.includes(k));
+      
+      let insuranceType: string | undefined;
+      if (lowerPrompt.includes('medicare')) insuranceType = 'medicare';
+      else if (lowerPrompt.includes('medicaid')) insuranceType = 'medicaid';
+      else if (lowerPrompt.includes('commercial')) insuranceType = 'commercial';
+      else if (lowerPrompt.includes('340b') || lowerPrompt.includes('va')) insuranceType = '340b';
+      
+      let priceRange: string | undefined;
+      if (lowerPrompt.includes('under') || lowerPrompt.includes('less than') || lowerPrompt.includes('cheaper')) {
+        priceRange = 'low';
+      } else if (lowerPrompt.includes('over') || lowerPrompt.includes('more than') || lowerPrompt.includes('expensive')) {
+        priceRange = 'high';
+      }
+      
+      if (!centerType) centerType = 'all';
+      
+      const showTreatmentMap = triageData?.show_treatment_map || triageData?.best_format === 'map';
+      
+      // Generate AI recommendations and insights for multi-agent too
+      const aiRecommendations = generateMapRecommendations(
+        request.prompt,
+        triageData,
+        { therapeuticArea, product, manufacturer, clinicalTrial, state, city, centerType, insuranceType, priceRange }
+      );
+      
+      const contextualInsights = generateContextualInsights(
+        request.prompt,
+        triageData?.domain || 'healthcare',
+        triageData,
+        { insuranceType, priceRange, product }
+      );
+      
       return new Response(JSON.stringify({ 
         content: collaborationResult.synthesizedResponse || collaborationResult.primaryResponse,
         provider: 'lovable',
         model: 'multi-agent',
         ragUsed: ragContext.length > 0,
         mcpUsed: mcpContext.length > 0,
-        triageData: triageData,
-        collaborationMode: collaborationResult.mode,
-        agentCount: collaborationResult.agentResponses.length,
-        consensusScore: collaborationResult.consensusScore,
-        agentResponses: collaborationResult.agentResponses.map(r => ({
-          agent: r.agent.purpose,
-          content: r.content.substring(0, 500) + '...'
-        })),
-        totalCost: collaborationResult.totalCost,
-        totalLatency: collaborationResult.totalLatency
+        // Nest metadata consistently with single-agent mode
+        metadata: {
+          triageData: triageData,
+          collaborationMode: collaborationResult.mode,
+          agentCount: collaborationResult.agentResponses.length,
+          consensusScore: collaborationResult.consensusScore,
+          agentResponses: collaborationResult.agentResponses.map(r => ({
+            agent: r.agent.purpose,
+            content: r.content.substring(0, 500) + '...'
+          })),
+          totalCost: collaborationResult.totalCost,
+          totalLatency: collaborationResult.totalLatency,
+          // Treatment center map metadata
+          showTreatmentMap,
+          centerType,
+          searchQuery,
+          therapeuticArea,
+          product,
+          manufacturer,
+          clinicalTrial,
+          state,
+          city,
+          insuranceType,
+          priceRange,
+          // AI recommendations and insights
+          aiRecommendations,
+          contextualInsights
+        }
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
