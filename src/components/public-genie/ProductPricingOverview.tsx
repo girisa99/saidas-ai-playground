@@ -144,114 +144,104 @@ export const ProductPricingOverview = () => {
                           {categoryProducts.map((product, idx) => (
                             <Card key={idx} className="border-l-4 border-l-primary">
                               <CardContent className="p-4">
+                                {/* Essential Info - Always Visible */}
                                 <div className="flex justify-between items-start mb-3">
-                                  <div>
+                                  <div className="flex-1">
                                     <h4 className="font-semibold text-lg">{product.product_name}</h4>
-                                    <p className="text-sm text-muted-foreground">
-                                      {product.generic_name}
-                                    </p>
+                                    <p className="text-sm text-muted-foreground">{product.generic_name}</p>
                                   </div>
-                                  <Badge>{product.manufacturer.split('/')[0]}</Badge>
-                                </div>
-
-                                <p className="text-sm mb-3">{product.indication}</p>
-
-                                <Separator className="my-3" />
-
-                                {/* Pricing Section */}
-                                <div className="space-y-2">
-                                  <div className="flex items-center gap-2 text-sm">
-                                    <DollarSign className="h-4 w-4 text-primary" />
-                                    <span className="font-medium">Pricing:</span>
-                                  </div>
-                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
-                                    <div className="bg-muted/50 p-2 rounded">
-                                      <p className="text-xs text-muted-foreground">WAC Price</p>
-                                      <p className="font-semibold">{product.wac_price}</p>
-                                    </div>
-                                    <div className="bg-muted/50 p-2 rounded">
-                                      <p className="text-xs text-muted-foreground">Government (340B)</p>
-                                      <p className="font-semibold">{product.government_price}</p>
-                                    </div>
-                                    <div className="bg-muted/50 p-2 rounded">
-                                      <p className="text-xs text-muted-foreground">Commercial</p>
-                                      <p className="font-semibold">{product.commercial_price}</p>
-                                    </div>
+                                  <div className="text-right">
+                                    <p className="text-lg font-bold text-primary">{product.wac_price}</p>
+                                    <p className="text-xs text-muted-foreground">WAC Price</p>
                                   </div>
                                 </div>
 
-                                <Separator className="my-3" />
-
-                                {/* Support Programs */}
-                                <div className="grid grid-cols-2 gap-4 text-sm">
-                                  <div>
-                                    <p className="text-xs text-muted-foreground">Patient Assistance</p>
-                                    <p className="font-medium">{product.pap_available}</p>
-                                  </div>
-                                  <div>
-                                    <p className="text-xs text-muted-foreground">Copay Assistance</p>
-                                    <p className="font-medium">{product.copay_assistance}</p>
-                                  </div>
-                                  <div>
-                                    <p className="text-xs text-muted-foreground">Insurance Types</p>
-                                    <p className="font-medium text-xs">{product.insurance_types.split(',')[0]}...</p>
-                                  </div>
-                                  <div>
-                                    <p className="text-xs text-muted-foreground">Timeline</p>
-                                    <p className="font-medium">{product.days_to_infusion}</p>
-                                  </div>
+                                <p className="text-sm mb-2">{product.indication}</p>
+                                <div className="flex gap-2 mb-3">
+                                  <Badge variant="secondary">{product.manufacturer.split('/')[0]}</Badge>
+                                  <Badge variant="outline">{product.days_to_infusion}</Badge>
                                 </div>
 
-                                {/* Treatment Journey Phases */}
-                                <Accordion type="single" collapsible className="mt-4">
+                                {/* Expandable Detailed Information */}
+                                <Accordion type="single" collapsible className="space-y-2">
+                                  {/* Pricing Details */}
+                                  <AccordionItem value="pricing">
+                                    <AccordionTrigger className="text-sm py-2 hover:no-underline">
+                                      <div className="flex items-center gap-2">
+                                        <DollarSign className="h-4 w-4" />
+                                        <span>Detailed Pricing & Coverage</span>
+                                      </div>
+                                    </AccordionTrigger>
+                                    <AccordionContent>
+                                      <div className="space-y-3 pt-2">
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
+                                          <div className="bg-muted/50 p-2 rounded">
+                                            <p className="text-xs text-muted-foreground">WAC Price</p>
+                                            <p className="font-semibold">{product.wac_price}</p>
+                                          </div>
+                                          <div className="bg-muted/50 p-2 rounded">
+                                            <p className="text-xs text-muted-foreground">Government (340B)</p>
+                                            <p className="font-semibold">{product.government_price}</p>
+                                          </div>
+                                          <div className="bg-muted/50 p-2 rounded">
+                                            <p className="text-xs text-muted-foreground">Commercial</p>
+                                            <p className="font-semibold">{product.commercial_price}</p>
+                                          </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3 text-sm">
+                                          <div>
+                                            <p className="text-xs text-muted-foreground mb-1">Insurance Coverage</p>
+                                            <p className="text-xs">{product.insurance_types}</p>
+                                          </div>
+                                          <div>
+                                            <p className="text-xs text-muted-foreground mb-1">Patient Assistance</p>
+                                            <p className="text-xs">{product.pap_available}</p>
+                                          </div>
+                                          <div>
+                                            <p className="text-xs text-muted-foreground mb-1">Copay Support</p>
+                                            <p className="text-xs">{product.copay_assistance}</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </AccordionContent>
+                                  </AccordionItem>
+
+                                  {/* Treatment Journey */}
                                   <AccordionItem value="journey">
-                                    <AccordionTrigger className="text-sm py-2">
-                                      View Treatment Journey Timeline
+                                    <AccordionTrigger className="text-sm py-2 hover:no-underline">
+                                      <div className="flex items-center gap-2">
+                                        <Activity className="h-4 w-4" />
+                                        <span>Treatment Journey Timeline</span>
+                                      </div>
                                     </AccordionTrigger>
                                     <AccordionContent>
                                       <div className="space-y-3 pt-2">
                                         <div className="flex items-start gap-3">
-                                          <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-xs font-bold">
-                                            1
-                                          </div>
+                                          <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-xs font-bold">1</div>
                                           <div className="flex-1">
                                             <p className="font-medium text-sm">Pre-Infusion</p>
-                                            <p className="text-xs text-muted-foreground line-clamp-2">
-                                              {product.phase1_preinfusion.substring(0, 150)}...
-                                            </p>
+                                            <p className="text-xs text-muted-foreground">{product.phase1_preinfusion}</p>
                                           </div>
                                         </div>
                                         <div className="flex items-start gap-3">
-                                          <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-xs font-bold">
-                                            2
-                                          </div>
+                                          <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-xs font-bold">2</div>
                                           <div className="flex-1">
                                             <p className="font-medium text-sm">Manufacturing</p>
-                                            <p className="text-xs text-muted-foreground line-clamp-2">
-                                              {product.phase2_manufacturing.substring(0, 150)}...
-                                            </p>
+                                            <p className="text-xs text-muted-foreground">{product.phase2_manufacturing}</p>
                                           </div>
                                         </div>
                                         <div className="flex items-start gap-3">
-                                          <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-xs font-bold">
-                                            3
-                                          </div>
+                                          <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-xs font-bold">3</div>
                                           <div className="flex-1">
                                             <p className="font-medium text-sm">Infusion</p>
-                                            <p className="text-xs text-muted-foreground line-clamp-2">
-                                              {product.phase3_infusion.substring(0, 150)}...
-                                            </p>
+                                            <p className="text-xs text-muted-foreground">{product.phase3_infusion}</p>
                                           </div>
                                         </div>
                                         <div className="flex items-start gap-3">
-                                          <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-xs font-bold">
-                                            4
-                                          </div>
+                                          <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-xs font-bold">4</div>
                                           <div className="flex-1">
                                             <p className="font-medium text-sm">Post-Infusion Monitoring</p>
-                                            <p className="text-xs text-muted-foreground line-clamp-2">
-                                              {product.phase4_postinfusion.substring(0, 150)}...
-                                            </p>
+                                            <p className="text-xs text-muted-foreground">{product.phase4_postinfusion}</p>
                                           </div>
                                         </div>
                                       </div>
