@@ -133,23 +133,20 @@ export const searchTreatmentCenters = async (filters: {
       query = query.contains('specialties', [filters.specialty]);
     }
 
-    // Use fuzzy text search for therapeutic area
     if (filters.therapeuticArea) {
-      query = query.or(`therapeutic_areas.cs.{${filters.therapeuticArea}},name.ilike.%${filters.therapeuticArea}%,specialties.cs.{${filters.therapeuticArea}}`);
+      query = query.contains('therapeutic_areas', [filters.therapeuticArea]);
     }
 
-    // Use fuzzy text search for product instead of exact array match
     if (filters.product) {
-      // Convert to case-insensitive pattern match
-      query = query.or(`products_drugs.cs.{${filters.product}},name.ilike.%${filters.product}%,specialties.cs.{${filters.product}}`);
+      query = query.contains('products_drugs', [filters.product]);
     }
 
     if (filters.manufacturer) {
-      query = query.or(`manufacturers.cs.{${filters.manufacturer}},name.ilike.%${filters.manufacturer}%`);
+      query = query.contains('manufacturers', [filters.manufacturer]);
     }
 
     if (filters.provider) {
-      query = query.or(`key_providers.cs.{${filters.provider}}`);
+      query = query.contains('key_providers', [filters.provider]);
     }
 
     if (filters.clinicalTrial) {
