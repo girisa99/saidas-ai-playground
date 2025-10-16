@@ -1973,7 +1973,7 @@ ${conversationSummary.transcript}`
                       </div>
                       
                       <div className="flex items-center gap-2">
-                        <p className="text-xs text-muted-foreground flex items-center gap-1">
+                        <div className="text-xs text-muted-foreground flex items-center gap-1">
                           <span>Genie AI</span>
                           {(aiConfig.ragEnabled || aiConfig.knowledgeBaseEnabled || aiConfig.mcpEnabled) && (
                             <div className="flex gap-1">
@@ -1985,7 +1985,7 @@ ${conversationSummary.transcript}`
                                     </div>
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    <p>Retrieval Augmented Generation: pulls relevant docs to ground answers</p>
+                                    <div className="text-xs">Retrieval Augmented Generation: pulls relevant docs to ground answers</div>
                                   </TooltipContent>
                                 </Tooltip>
                               )}
@@ -1997,7 +1997,7 @@ ${conversationSummary.transcript}`
                                     </div>
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    <p>Knowledge Base: uses curated universal topics for context</p>
+                                    <div className="text-xs">Knowledge Base: uses curated universal topics for context</div>
                                   </TooltipContent>
                                 </Tooltip>
                               )}
@@ -2009,13 +2009,13 @@ ${conversationSummary.transcript}`
                                      </div>
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    <p className="text-xs max-w-xs">Model Context Protocol: AI can access external tools, databases & APIs for enhanced capabilities</p>
+                                    <div className="text-xs max-w-xs">Model Context Protocol: AI can access external tools, databases & APIs for enhanced capabilities</div>
                                   </TooltipContent>
                                 </Tooltip>
                               )}
                             </div>
                           )}
-                        </p>
+                        </div>
                         <Button
                           variant="link"
                           size="sm"
