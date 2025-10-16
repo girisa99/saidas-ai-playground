@@ -262,7 +262,7 @@ export const InteractiveTreatmentCenterMap = ({
     markers.current.forEach(marker => marker.remove());
     markers.current = [];
 
-    const zoom = clusterZoomLevel;
+    const zoom = map.current.getZoom() || 3.5;
     const clusters = createClusters(filteredCenters, zoom);
 
     clusters.forEach((cluster) => {
@@ -330,7 +330,8 @@ export const InteractiveTreatmentCenterMap = ({
         e.stopPropagation();
         if (isCluster) {
           // Zoom in to show individual centers in the cluster
-          const newZoom = Math.min(zoom + 3, 15);
+          const currentZoom = map.current?.getZoom() || 3.5;
+          const newZoom = Math.min(currentZoom + 3, 15);
           map.current?.flyTo({
             center: [cluster.lng, cluster.lat],
             zoom: newZoom,
@@ -359,40 +360,145 @@ export const InteractiveTreatmentCenterMap = ({
 
       markers.current.push(marker as any);
     });
+  }, [filteredCenters, isMapInitialized]);
 
-    // Fit bounds when filters change
-    if (filteredCenters.length > 0 && map.current) {
-      const bounds = new mapboxgl.LngLatBounds();
-      filteredCenters.forEach(center => {
-        if (center.latitude && center.longitude) {
-          bounds.extend([center.longitude, center.latitude]);
-        }
-      });
-      
-      if (!bounds.isEmpty()) {
-        map.current.fitBounds(bounds, {
-          padding: 80,
-          maxZoom: 10,
-          duration: 1000
-        });
+  // Fit bounds only when filtered centers change (not on zoom)
+  useEffect(() => {
+    if (!map.current || !isMapInitialized || filteredCenters.length === 0) return;
+
+    const bounds = new mapboxgl.LngLatBounds();
+    filteredCenters.forEach(center => {
+      if (center.latitude && center.longitude) {
+        bounds.extend([center.longitude, center.latitude]);
       }
+    });
+    
+    if (!bounds.isEmpty()) {
+      map.current.fitBounds(bounds, {
+        padding: 80,
+        maxZoom: 10,
+        duration: 1000
+      });
     }
-  }, [filteredCenters, isMapInitialized, clusterZoomLevel]);
+  }, [filteredCenters, isMapInitialized]);
 
-  // Update clusters on zoom
+  // Update clusters on zoom - use callback ref to avoid infinite loop
   useEffect(() => {
     if (!map.current || !isMapInitialized) return;
     
     const handleZoom = () => {
-      const zoom = map.current?.getZoom() || 3.5;
-      setClusterZoomLevel(zoom);
+      // Re-render markers at new zoom level without changing state
+      if (!map.current) return;
+      
+      const zoom = map.current.getZoom() || 3.5;
+      
+      // Clear and recreate markers based on zoom
+      markers.current.forEach(marker => marker.remove());
+      markers.current = [];
+      
+      const clusters = createClusters(filteredCenters, zoom);
+      
+      clusters.forEach((cluster) => {
+        const isCluster = cluster.centers.length > 1;
+        const markerElement = document.createElement('div');
+        markerElement.className = 'treatment-center-marker';
+        markerElement.style.cursor = 'pointer';
+        markerElement.style.transition = 'all 0.3s';
+        
+        if (isCluster) {
+          const size = Math.min(50, 30 + cluster.centers.length * 2);
+          markerElement.style.width = `${size}px`;
+          markerElement.style.height = `${size}px`;
+          markerElement.style.borderRadius = '50%';
+          markerElement.style.backgroundColor = '#3b82f6';
+          markerElement.style.border = '3px solid white';
+          markerElement.style.boxShadow = '0 2px 8px rgba(0,0,0,0.4)';
+          markerElement.style.display = 'flex';
+          markerElement.style.alignItems = 'center';
+          markerElement.style.justifyContent = 'center';
+          markerElement.style.fontWeight = 'bold';
+          markerElement.style.color = 'white';
+          markerElement.style.fontSize = '14px';
+          markerElement.textContent = cluster.centers.length.toString();
+        } else {
+          markerElement.style.width = '32px';
+          markerElement.style.height = '32px';
+          markerElement.style.borderRadius = '50%';
+          
+          const center = cluster.centers[0];
+          const primaryArea = center.therapeutic_areas?.[0] || '';
+          const colorMap: Record<string, string> = {
+            'CAR-T': '#8b5cf6',
+            'Gene Therapy': '#a855f7',
+            'Cell Therapy': '#c026d3',
+            'Oncology': '#f59e0b',
+            'Hematology': '#ef4444',
+            'BMT': '#ec4899',
+          };
+          const color = Object.keys(colorMap).find(key => primaryArea.includes(key)) 
+            ? colorMap[Object.keys(colorMap).find(key => primaryArea.includes(key))!]
+            : '#6b7280';
+          
+          markerElement.style.backgroundColor = color;
+          markerElement.style.border = '3px solid white';
+          markerElement.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+          markerElement.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin: 6px;">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+          `;
+        }
+
+        const marker = new mapboxgl.Marker(markerElement)
+          .setLngLat([cluster.lng, cluster.lat]);
+        
+        if (map.current) {
+          marker.addTo(map.current);
+        }
+
+        markerElement.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (isCluster) {
+            const currentZoom = map.current?.getZoom() || 3.5;
+            const newZoom = Math.min(currentZoom + 3, 15);
+            map.current?.flyTo({
+              center: [cluster.lng, cluster.lat],
+              zoom: newZoom,
+              duration: 1200,
+              essential: true
+            });
+          } else {
+            setSelectedCenter(cluster.centers[0]);
+            map.current?.flyTo({
+              center: [cluster.lng, cluster.lat],
+              zoom: 12,
+              duration: 1500,
+              essential: true
+            });
+          }
+        });
+
+        markerElement.addEventListener('mouseenter', () => {
+          markerElement.style.transform = 'scale(1.15)';
+          markerElement.style.zIndex = '1000';
+        });
+        markerElement.addEventListener('mouseleave', () => {
+          markerElement.style.transform = 'scale(1)';
+          markerElement.style.zIndex = 'auto';
+        });
+
+        markers.current.push(marker as any);
+      });
     };
     
     map.current.on('zoom', handleZoom);
+    map.current.on('zoomend', handleZoom);
+    
     return () => {
       map.current?.off('zoom', handleZoom);
+      map.current?.off('zoomend', handleZoom);
     };
-  }, [isMapInitialized]);
+  }, [isMapInitialized, filteredCenters]);
 
   return (
     <div className={`space-y-4 ${isFullscreen ? 'fixed inset-0 z-50 bg-background p-4' : ''}`}>
