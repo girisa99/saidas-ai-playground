@@ -190,6 +190,8 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   }); // Persisted context
   const [selectedTopic, setSelectedTopic] = useState<string>('');
   const [inputMessage, setInputMessage] = useState('');
+  const [inputHistory, setInputHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const [showHumanEscalation, setShowHumanEscalation] = useState(false);
   const [isLiveAgentAvailable, setIsLiveAgentAvailable] = useState(false);
   const [conversationPersonality, setConversationPersonality] = useState<'formal' | 'casual' | 'empathetic'>('casual');
@@ -691,6 +693,15 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
     });
 
     const userMessage = inputMessage.trim();
+    
+    // Add to input history (keep last 10 prompts)
+    if (userMessage) {
+      setInputHistory(prev => {
+        const newHistory = [userMessage, ...prev.filter(item => item !== userMessage)];
+        return newHistory.slice(0, 10); // Keep only last 10 unique prompts
+      });
+      setHistoryIndex(-1); // Reset history navigation
+    }
     
     // Note: Intelligent context switching is now handled by the useEffect hook
     // which uses conversationIntelligence.detectContextShift() for more accurate detection
@@ -1873,7 +1884,11 @@ ${conversationSummary.transcript}`
                       <div className="flex gap-2">
                         <Input
                           value={inputMessage}
-                          onChange={(e) => setInputMessage(e.target.value)}
+                          onChange={(e) => {
+                            setInputMessage(e.target.value);
+                            // Reset history navigation when user types
+                            setHistoryIndex(-1);
+                          }}
                           placeholder={
                             aiConfig.medicalImageMode && aiConfig.visionEnabled
                               ? "Upload medical images or ask a question..."
@@ -1882,7 +1897,27 @@ ${conversationSummary.transcript}`
                                 : "Ask me anything..."
                           }
                           onKeyDown={(e) => {
-                            if (e.key === 'Enter' && !e.shiftKey) {
+                            // Handle arrow key navigation for history
+                            if (e.key === 'ArrowUp') {
+                              e.preventDefault();
+                              if (inputHistory.length > 0) {
+                                const newIndex = historyIndex < inputHistory.length - 1 
+                                  ? historyIndex + 1 
+                                  : historyIndex;
+                                setHistoryIndex(newIndex);
+                                setInputMessage(inputHistory[newIndex]);
+                              }
+                            } else if (e.key === 'ArrowDown') {
+                              e.preventDefault();
+                              if (historyIndex > 0) {
+                                const newIndex = historyIndex - 1;
+                                setHistoryIndex(newIndex);
+                                setInputMessage(inputHistory[newIndex]);
+                              } else if (historyIndex === 0) {
+                                setHistoryIndex(-1);
+                                setInputMessage('');
+                              }
+                            } else if (e.key === 'Enter' && !e.shiftKey) {
                               e.preventDefault();
                               handleSendMessage();
                             }
