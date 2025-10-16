@@ -1816,16 +1816,28 @@ ${conversationSummary.transcript}`
                                         {/* ALWAYS show How To Use Guide for treatment center queries */}
                                         <HowToUseGuide />
                                         
-                                        <InteractiveTreatmentCenterMap 
-                                          filterByType={(message as any).metadata?.centerType}
-                                          searchQuery={(message as any).metadata?.searchQuery}
-                                          therapeuticArea={(message as any).metadata?.therapeuticArea}
-                                          product={(message as any).metadata?.product || (((messages.slice().reverse().find(m => m.role === 'user')?.content || '').match(/kymriah/i)) ? 'Kymriah' : undefined)}
-                                          manufacturer={(message as any).metadata?.manufacturer}
-                                          clinicalTrial={(message as any).metadata?.clinicalTrial}
-                                          state={(message as any).metadata?.state || (((messages.slice().reverse().find(m => m.role === 'user')?.content || '').match(/\b(california|CA)\b/i)) ? 'CA' : undefined)}
-                                          city={(message as any).metadata?.city}
-                                        />
+{(() => {
+  const lastUser = messages.slice().reverse().find(m => m.role === 'user')?.content || '';
+  const productGuess = (message as any).metadata?.product || (/kymriah/i.test(lastUser) ? 'Kymriah' : undefined);
+  const cityGuess = (message as any).metadata?.city || ((lastUser.match(/\b(Boston|Atlanta|New York|San Francisco|Los Angeles|Chicago|Houston|Seattle|Miami)\b/i)?.[0]) as string | undefined);
+  const stateMap: Record<string, string> = {
+    'georgia':'GA','ga':'GA','massachusetts':'MA','ma':'MA','california':'CA','ca':'CA','new york':'NY','ny':'NY','texas':'TX','tx':'TX','florida':'FL','fl':'FL'
+  };
+  const foundKey = Object.keys(stateMap).find(k => new RegExp(`\\b${k}\\b`, 'i').test(lastUser));
+  const stateGuess = (message as any).metadata?.state || (foundKey ? stateMap[foundKey] : undefined);
+  return (
+    <InteractiveTreatmentCenterMap 
+      filterByType={(message as any).metadata?.centerType}
+      searchQuery={(message as any).metadata?.searchQuery}
+      therapeuticArea={(message as any).metadata?.therapeuticArea}
+      product={productGuess}
+      manufacturer={(message as any).metadata?.manufacturer}
+      clinicalTrial={(message as any).metadata?.clinicalTrial}
+      state={stateGuess}
+      city={cityGuess}
+    />
+  );
+})()}
                                         
                                         {/* Proactively show pricing if product mentioned and pricing query detected */}
                                         {(message as any).metadata?.product && 

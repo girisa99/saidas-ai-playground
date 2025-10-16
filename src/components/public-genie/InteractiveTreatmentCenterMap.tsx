@@ -132,33 +132,64 @@ export const InteractiveTreatmentCenterMap = ({
     };
   }, [allCenters]);
 
-  // Filter centers based on selections
+  // Filter centers based on selections (including props + UI selections)
   const filteredCenters = useMemo(() => {
-    return allCenters.filter(center => {
-      if (selectedTherapeuticAreas.length > 0) {
-        const hasMatch = center.therapeutic_areas?.some(area => 
-          selectedTherapeuticAreas.includes(area)
-        );
+    // Merge explicit props with user-selected filters so props act as defaults
+    const requiredAreas = selectedTherapeuticAreas.length > 0 
+      ? selectedTherapeuticAreas 
+      : (therapeuticArea ? [therapeuticArea] : []);
+    const requiredMfgs = selectedManufacturers.length > 0 
+      ? selectedManufacturers 
+      : (manufacturer ? [manufacturer] : []);
+    const requiredProds = selectedProducts.length > 0 
+      ? selectedProducts 
+      : (product ? [product] : []);
+
+    // First filter by product/therapy/manufacturer
+    const base = allCenters.filter(center => {
+      if (requiredAreas.length > 0) {
+        const hasMatch = center.therapeutic_areas?.some(area => requiredAreas.includes(area));
         if (!hasMatch) return false;
       }
-      
-      if (selectedManufacturers.length > 0) {
-        const hasMatch = center.manufacturers?.some(mfg => 
-          selectedManufacturers.includes(mfg)
-        );
+      if (requiredMfgs.length > 0) {
+        const hasMatch = center.manufacturers?.some(mfg => requiredMfgs.includes(mfg));
         if (!hasMatch) return false;
       }
-      
-      if (selectedProducts.length > 0) {
-        const hasMatch = center.products_drugs?.some(prod => 
-          selectedProducts.includes(prod)
-        );
+      if (requiredProds.length > 0) {
+        const hasMatch = center.products_drugs?.some(prod => requiredProds.includes(prod));
         if (!hasMatch) return false;
       }
-      
       return true;
     });
-  }, [allCenters, selectedTherapeuticAreas, selectedManufacturers, selectedProducts]);
+
+    // Then apply location filter if provided, with graceful fallback
+    const matchState = (centerState?: string) => {
+      if (!state) return true;
+      const MAP: Record<string, string> = {
+        'GEORGIA': 'GA', 'MASSACHUSETTS': 'MA', 'CALIFORNIA': 'CA', 'NEW YORK': 'NY', 'FLORIDA': 'FL', 'TEXAS': 'TX',
+        'ARIZONA': 'AZ','ALABAMA': 'AL','ALASKA': 'AK','ARKANSAS': 'AR','COLORADO': 'CO','CONNECTICUT': 'CT','DELAWARE': 'DE','HAWAII': 'HI','IDAHO': 'ID','ILLINOIS': 'IL','INDIANA': 'IN','IOWA': 'IA','KANSAS': 'KS','KENTUCKY': 'KY','LOUISIANA': 'LA','MAINE': 'ME','MARYLAND': 'MD','MICHIGAN': 'MI','MINNESOTA': 'MN','MISSISSIPPI': 'MS','MISSOURI': 'MO','MONTANA': 'MT','NEBRASKA': 'NE','NEVADA': 'NV','NEW HAMPSHIRE': 'NH','NEW JERSEY': 'NJ','NEW MEXICO': 'NM','NORTH CAROLINA': 'NC','NORTH DAKOTA': 'ND','OHIO': 'OH','OKLAHOMA': 'OK','OREGON': 'OR','PENNSYLVANIA': 'PA','RHODE ISLAND': 'RI','SOUTH CAROLINA': 'SC','SOUTH DAKOTA': 'SD','TENNESSEE': 'TN','UTAH': 'UT','VERMONT': 'VT','VIRGINIA': 'VA','WASHINGTON': 'WA','WEST VIRGINIA': 'WV','WISCONSIN': 'WI','WYOMING': 'WY','DISTRICT OF COLUMBIA': 'DC','WASHINGTON DC': 'DC','WASHINGTON D.C.': 'DC','DC': 'DC','D.C.': 'DC'
+      };
+      const desired = (state || '').trim().toUpperCase();
+      const desiredAbbr = desired.length === 2 ? desired : (MAP[desired] || desired);
+      const cs = (centerState || '').trim().toUpperCase();
+      return cs === desiredAbbr || cs === desired;
+    };
+
+    const matchCity = (centerCity?: string) => {
+      if (!city) return true;
+      return (centerCity || '').toLowerCase().includes(city.trim().toLowerCase());
+    };
+
+    let byLocation = base.filter(c => matchState(c.state) && matchCity(c.city));
+
+    // Fallback: if city-level yields none but state provided, show state-level
+    if (byLocation.length === 0 && city && state) {
+      byLocation = base.filter(c => matchState(c.state));
+    }
+
+    // Final fallback: if nothing after location filters, return product/therapy-only set
+    return byLocation.length > 0 ? byLocation : base;
+  }, [allCenters, selectedTherapeuticAreas, selectedManufacturers, selectedProducts, therapeuticArea, product, manufacturer, state, city]);
 
   // Load treatment centers on mount
   useEffect(() => {
@@ -349,14 +380,8 @@ export const InteractiveTreatmentCenterMap = ({
         }
       });
 
-      markerElement.addEventListener('mouseenter', () => {
-        markerElement.style.transform = 'scale(1.15)';
-        markerElement.style.zIndex = '1000';
-      });
-      markerElement.addEventListener('mouseleave', () => {
-        markerElement.style.transform = 'scale(1)';
-        markerElement.style.zIndex = 'auto';
-      });
+      // Hover effects removed to prevent marker drift on some browsers
+
 
       markers.current.push(marker as any);
     });
@@ -478,14 +503,8 @@ export const InteractiveTreatmentCenterMap = ({
           }
         });
 
-        markerElement.addEventListener('mouseenter', () => {
-          markerElement.style.transform = 'scale(1.15)';
-          markerElement.style.zIndex = '1000';
-        });
-        markerElement.addEventListener('mouseleave', () => {
-          markerElement.style.transform = 'scale(1)';
-          markerElement.style.zIndex = 'auto';
-        });
+        // Hover effects removed to prevent marker drift on some browsers
+
 
         markers.current.push(marker as any);
       });
