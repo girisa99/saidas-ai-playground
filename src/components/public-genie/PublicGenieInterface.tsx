@@ -1524,7 +1524,7 @@ ${conversationSummary.transcript}`
       >
           <Card className="h-full bg-gradient-to-br from-background to-muted border shadow-2xl">
             {/* Header */}
-          <div className="drag-handle flex items-center justify-between p-3 border-b bg-gradient-to-r from-slate-900 to-slate-800 cursor-move">
+          <div className="drag-handle flex items-center justify-between p-3 border-b bg-gradient-to-r from-slate-900 to-slate-800 cursor-move touch-none">
              <div className="flex items-center gap-2">
               <img src={genieLogoPopup} alt="Genie AI logo" className="h-8 w-auto object-contain drop-shadow" />
                <div className="flex-1">

@@ -646,10 +646,10 @@
     @apply min-h-[44px] min-w-[44px];
   }
 
-  /* Lock scroll when Genie popup is open */
+  /* Lock scroll when Genie popup is open but allow interactions */
   body.genie-open {
     overflow: hidden;
     overscroll-behavior: contain;
-    touch-action: none;
+    /* Removed touch-action: none to allow dragging and tooltips */
   }
 }
