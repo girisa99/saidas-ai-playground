@@ -16,6 +16,18 @@ interface TriageData {
   requires_vision?: boolean;
 }
 
+interface SmartRoutingOptimization {
+  override: boolean;
+  userSelectedModel: string;
+  optimizedModel: string;
+  reason: string;
+  costSavingsPercent: number;
+  latencySavingsPercent: number;
+  complexity?: string;
+  domain?: string;
+  urgency?: string;
+}
+
 interface RoutingOptimizationBadgeProps {
   triageData?: TriageData;
   routingReasoning?: string;
@@ -25,6 +37,7 @@ interface RoutingOptimizationBadgeProps {
   collaborationMode?: 'single' | 'sequential' | 'ensemble';
   agentCount?: number;
   consensusScore?: number;
+  smartRoutingOptimization?: SmartRoutingOptimization;
 }
 
 export const RoutingOptimizationBadge: React.FC<RoutingOptimizationBadgeProps> = ({
@@ -35,11 +48,12 @@ export const RoutingOptimizationBadge: React.FC<RoutingOptimizationBadgeProps> =
   modelUsed,
   collaborationMode,
   agentCount,
-  consensusScore
+  consensusScore,
+  smartRoutingOptimization
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(smartRoutingOptimization?.override ? true : false);
 
-  if (!triageData && !collaborationMode) return null;
+  if (!triageData && !collaborationMode && !smartRoutingOptimization) return null;
 
   const complexityColors = {
     simple: 'bg-green-500/10 text-green-600 border-green-500/20',
@@ -105,6 +119,49 @@ export const RoutingOptimizationBadge: React.FC<RoutingOptimizationBadgeProps> =
         
         <CollapsibleContent>
           <CardContent className="pt-0 pb-3 px-3 space-y-3">
+            {/* Smart Routing Override Alert */}
+            {smartRoutingOptimization?.override && (
+              <div className="p-3 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-lg border border-green-500/30">
+                <div className="flex items-start gap-2 mb-2">
+                  <Zap className="h-4 w-4 text-green-600 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-xs font-bold text-green-700">Smart Routing Optimized Your Query</p>
+                    <p className="text-[10px] text-muted-foreground mt-1">
+                      Your selection: <span className="font-mono text-orange-600">{smartRoutingOptimization.userSelectedModel}</span>
+                      {' → '}
+                      AI recommendation: <span className="font-mono text-green-600">{smartRoutingOptimization.optimizedModel}</span>
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-2 mb-2">
+                  {smartRoutingOptimization.costSavingsPercent !== 0 && (
+                    <div className="flex items-center gap-1 text-[10px]">
+                      <DollarSign className="h-3 w-3 text-green-600" />
+                      <span className="font-semibold">
+                        {smartRoutingOptimization.costSavingsPercent > 0 ? '↓' : '↑'}
+                        {Math.abs(smartRoutingOptimization.costSavingsPercent)}% cost
+                      </span>
+                    </div>
+                  )}
+                  
+                  {smartRoutingOptimization.latencySavingsPercent !== 0 && (
+                    <div className="flex items-center gap-1 text-[10px]">
+                      <Clock className="h-3 w-3 text-blue-600" />
+                      <span className="font-semibold">
+                        {smartRoutingOptimization.latencySavingsPercent > 0 ? '↓' : '↑'}
+                        {Math.abs(smartRoutingOptimization.latencySavingsPercent)}% faster
+                      </span>
+                    </div>
+                  )}
+                </div>
+                
+                <p className="text-[10px] text-muted-foreground italic mt-2">
+                  💡 <span className="font-medium">Why:</span> {smartRoutingOptimization.reason}
+                </p>
+              </div>
+            )}
+            
             {/* Quick Stats Row */}
             <div className="flex flex-wrap gap-2">
               {triageData?.complexity && (

@@ -280,6 +280,34 @@ function suggestModel(complexity: string, domain: string, urgency: string, requi
   return domain === 'healthcare' ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-flash';
 }
 
+// Cost estimation (relative cost per 1K tokens, normalized)
+function getModelCost(model: string): number {
+  const costs: Record<string, number> = {
+    'google/gemini-2.5-pro': 10,
+    'google/gemini-2.5-flash': 3,
+    'google/gemini-2.5-flash-lite': 1,
+    'openai/gpt-5': 12,
+    'openai/gpt-5-mini': 4,
+    'openai/gpt-5-nano': 1.5,
+    'phi-3.5-mini': 1, // SLM, very cheap
+  };
+  return costs[model] || 5;
+}
+
+// Latency estimation (relative response time in ms, normalized)
+function getModelLatency(model: string): number {
+  const latencies: Record<string, number> = {
+    'google/gemini-2.5-pro': 2000,
+    'google/gemini-2.5-flash': 800,
+    'google/gemini-2.5-flash-lite': 400,
+    'openai/gpt-5': 2500,
+    'openai/gpt-5-mini': 1000,
+    'openai/gpt-5-nano': 500,
+    'phi-3.5-mini': 300, // SLM, very fast
+  };
+  return latencies[model] || 1000;
+}
+
 
 // ========== AI RECOMMENDATION ENGINE ==========
 // Generate dynamic, context-aware recommendations that vary based on query context
@@ -1873,24 +1901,41 @@ serve(async (req) => {
     
     // Apply model mapping
     let mappedModel = modelMapping[originalModel] || request.model;
+    const userSelectedModel = originalModel;
     
-    // FIXED: Only use triage model if enableSmartRouting is true AND no user-selected model
-    // This prevents overriding when user explicitly chooses a model like phi-3.5-mini
-    const userSelectedModel = request.model && request.model !== 'google/gemini-2.5-flash';
+    // Track optimization metadata
+    let smartRoutingOverride = false;
+    let optimizationReason = '';
+    let costSavings = 0;
+    let latencySavings = 0;
     
-    if (request.enableSmartRouting && triageData?.suggested_model && !userSelectedModel) {
-      mappedModel = triageData.suggested_model;
-      console.log(`Smart routing selected: ${mappedModel} (was: ${originalModel})`);
-      console.log(`Routing reasoning: ${triageData.reasoning}`);
-    } else if (userSelectedModel) {
-      // User explicitly selected a model - respect it
-      console.log(`Respecting user-selected model: ${mappedModel}`);
-    } else {
-      // If model doesn't start with google/ or openai/, default to Gemini Flash
-      if (!mappedModel.startsWith('google/') && !mappedModel.startsWith('openai/')) {
-        mappedModel = 'google/gemini-2.5-flash';
-        console.log(`Unmapped model "${originalModel}" -> default to ${mappedModel}`);
+    // SMART ROUTING: Always use triage suggestion if enabled (override user selection for optimization)
+    if (request.enableSmartRouting && triageData?.suggested_model) {
+      const suggestedModel = triageData.suggested_model;
+      
+      // Calculate cost/latency savings
+      const userModelCost = getModelCost(mappedModel);
+      const suggestedModelCost = getModelCost(suggestedModel);
+      const userModelLatency = getModelLatency(mappedModel);
+      const suggestedModelLatency = getModelLatency(suggestedModel);
+      
+      costSavings = ((userModelCost - suggestedModelCost) / userModelCost) * 100;
+      latencySavings = ((userModelLatency - suggestedModelLatency) / userModelLatency) * 100;
+      
+      // Override to optimized model
+      if (mappedModel !== suggestedModel) {
+        smartRoutingOverride = true;
+        optimizationReason = triageData.reasoning;
+        console.log(`Smart routing OVERRIDE: ${userSelectedModel} → ${suggestedModel}`);
+        console.log(`Reason: ${optimizationReason}`);
+        console.log(`Cost savings: ${costSavings.toFixed(1)}%, Latency savings: ${latencySavings.toFixed(1)}%`);
       }
+      
+      mappedModel = suggestedModel;
+    } else if (!mappedModel.startsWith('google/') && !mappedModel.startsWith('openai/')) {
+      // If model doesn't start with google/ or openai/, default to Gemini Flash
+      mappedModel = 'google/gemini-2.5-flash';
+      console.log(`Unmapped model "${originalModel}" -> default to ${mappedModel}`);
     }
     
     request.model = mappedModel;
@@ -2072,6 +2117,18 @@ serve(async (req) => {
           triageData,
           { insuranceType, priceRange, product }
         ),
+        // Smart routing optimization details
+        smartRoutingOptimization: request.enableSmartRouting ? {
+          override: smartRoutingOverride,
+          userSelectedModel,
+          optimizedModel: request.model,
+          reason: optimizationReason,
+          costSavingsPercent: Math.round(costSavings * 10) / 10,
+          latencySavingsPercent: Math.round(latencySavings * 10) / 10,
+          complexity: triageData?.complexity,
+          domain: triageData?.domain,
+          urgency: triageData?.urgency
+        } : undefined,
         // Smart routing metadata
         triageData: triageData ? {
           complexity: triageData.complexity,

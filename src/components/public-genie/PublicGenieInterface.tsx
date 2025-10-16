@@ -1275,7 +1275,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
                 estimatedLatency: response.estimatedLatency,
                 collaborationMode: response.collaborationMode,
                 agentCount: response.agentCount,
-                consensusScore: response.consensusScore
+                consensusScore: response.consensusScore,
+                smartRoutingOptimization: (response as any).metadata?.smartRoutingOptimization
               }
             });
             
@@ -1872,6 +1873,7 @@ ${conversationSummary.transcript}`
                                       collaborationMode={(message as any).metadata?.collaborationMode}
                                       agentCount={(message as any).metadata?.agentCount}
                                       consensusScore={(message as any).metadata?.consensusScore}
+                                      smartRoutingOptimization={(message as any).metadata?.smartRoutingOptimization}
                                     />
                                   </>
                                 ) : (
