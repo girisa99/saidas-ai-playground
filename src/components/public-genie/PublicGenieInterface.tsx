@@ -385,7 +385,6 @@ useEffect(() => {
       
       // Skip wizard if config exists and is less than 1 hour old
       if (savedConfig && configTimestamp && (currentTime - parseInt(configTimestamp)) < oneHour) {
-        console.log('Using existing configuration from this session');
         setShowConfigWizard(false);
       }
       
