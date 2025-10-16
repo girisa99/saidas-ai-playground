@@ -262,7 +262,7 @@ export const InteractiveTreatmentCenterMap = ({
     markers.current.forEach(marker => marker.remove());
     markers.current = [];
 
-    const zoom = map.current.getZoom();
+    const zoom = clusterZoomLevel;
     const clusters = createClusters(filteredCenters, zoom);
 
     clusters.forEach((cluster) => {
@@ -373,7 +373,7 @@ export const InteractiveTreatmentCenterMap = ({
         });
       }
     }
-  }, [filteredCenters, isMapInitialized]);
+  }, [filteredCenters, isMapInitialized, clusterZoomLevel]);
 
   // Update clusters on zoom
   useEffect(() => {
