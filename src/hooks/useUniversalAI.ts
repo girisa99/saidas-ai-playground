@@ -30,10 +30,20 @@ interface AIResponse {
   agentResponses?: Array<{ agent: string; content: string }>;
   // Oncology extractor output
   oncologyProducts?: Array<{ product: string; dose?: string; ndc?: string; modality?: string; application?: string; manufacturer?: string }>;
-  // Treatment center map metadata
+  // Treatment center map metadata (full filter support)
   showTreatmentMap?: boolean;
   centerType?: string;
   searchQuery?: string;
+  therapeuticArea?: string;
+  product?: string;
+  manufacturer?: string;
+  clinicalTrial?: string;
+  state?: string;
+  city?: string;
+  insuranceType?: string;
+  priceRange?: string;
+  aiRecommendations?: any;
+  contextualInsights?: any;
 }
 
 interface UseUniversalAIOptions {
@@ -144,28 +154,41 @@ export const useUniversalAI = () => {
         console.warn('⚠️ NO TRIAGE DATA RECEIVED - Smart routing may not be enabled');
       }
 
+      // Extract metadata from nested structure or fallback to top-level
+      const metadata = data.metadata || data;
+      
       return {
         content: data.content,
         provider: request.provider,
         model: data.modelUsed || request.model,
         timestamp: new Date().toISOString(),
-        ragContext: data.ragContext,
-        knowledgeBaseResults: data.knowledgeBaseResults,
-        triageData: data.triageData,
-        routingReasoning: data.routingReasoning,
-        estimatedCost: data.estimatedCost,
-        estimatedLatency: data.estimatedLatency,
+        ragContext: data.ragContext || metadata.ragContext,
+        knowledgeBaseResults: metadata.knowledgeBaseResults,
+        triageData: metadata.triageData,
+        routingReasoning: data.routingReasoning || metadata.routingReasoning,
+        estimatedCost: data.estimatedCost || metadata.estimatedCost,
+        estimatedLatency: data.estimatedLatency || metadata.estimatedLatency,
         // ========== MULTI-AGENT COLLABORATION DATA ==========
-        collaborationMode: data.collaborationMode,
-        agentCount: data.agentCount,
-        consensusScore: data.consensusScore,
-        agentResponses: data.agentResponses,
+        collaborationMode: data.collaborationMode || metadata.collaborationMode,
+        agentCount: data.agentCount || metadata.agentCount,
+        consensusScore: data.consensusScore || metadata.consensusScore,
+        agentResponses: data.agentResponses || metadata.agentResponses,
         // ========== ONCOLOGY PRODUCTS (for card rendering) ==========
-        oncologyProducts: data.oncologyProducts,
+        oncologyProducts: metadata.oncologyProducts,
         // ========== TREATMENT CENTER MAP METADATA ==========
-        showTreatmentMap: data.showTreatmentMap,
-        centerType: data.centerType,
-        searchQuery: data.searchQuery
+        showTreatmentMap: metadata.showTreatmentMap,
+        centerType: metadata.centerType,
+        searchQuery: metadata.searchQuery,
+        therapeuticArea: metadata.therapeuticArea,
+        product: metadata.product,
+        manufacturer: metadata.manufacturer,
+        clinicalTrial: metadata.clinicalTrial,
+        state: metadata.state,
+        city: metadata.city,
+        insuranceType: metadata.insuranceType,
+        priceRange: metadata.priceRange,
+        aiRecommendations: metadata.aiRecommendations,
+        contextualInsights: metadata.contextualInsights
       };
     } catch (err: any) {
       const errorMessage = err.message || 'Failed to generate AI response';

@@ -1783,14 +1783,11 @@ ${conversationSummary.transcript}`
                                       </div>
                                     )}
                                     
-                                    {/* Display Treatment Center Map if relevant */}
+                                     {/* Display Treatment Center Map if relevant */}
                                     {(message as any).metadata?.showTreatmentMap && (
                                       <div className="mt-4 space-y-4">
-                                        {/* Show How To Use Guide - show only if user hasn't seen it before */}
-                                        {sessionStorage.getItem('genie_shown_guide') !== 'true' && (() => {
-                                          sessionStorage.setItem('genie_shown_guide', 'true');
-                                          return <HowToUseGuide />;
-                                        })()}
+                                        {/* ALWAYS show How To Use Guide for treatment center queries */}
+                                        <HowToUseGuide />
                                         
                                         <InteractiveTreatmentCenterMap 
                                           filterByType={(message as any).metadata?.centerType}

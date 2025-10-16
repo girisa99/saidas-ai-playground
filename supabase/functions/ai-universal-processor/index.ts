@@ -1951,41 +1951,44 @@ serve(async (req) => {
       mcpUsed: mcpContext.length > 0,
       hasVision: !!(request.imageUrl || request.images),
       labelStudioLogged: !!(request.labelStudioProject && labelStudioApiKey),
-      oncologyProducts,
-      // Knowledge base citations for source references
-      knowledgeBaseResults: ragContext.length > 0 ? ragContext : undefined,
-      // Treatment center map metadata with advanced filters
-      showTreatmentMap,
-      centerType,
-      searchQuery,
-      therapeuticArea,
-      product,
-      manufacturer,
-      clinicalTrial,
-      state,
-      city,
-      insuranceType,
-      priceRange,
-      // AI-powered recommendations and insights
-      aiRecommendations,
-      contextualInsights: generateContextualInsights(
-        request.prompt,
-        triageData?.domain || 'healthcare',
-        triageData,
-        { insuranceType, priceRange, product }
-      ),
-      // Smart routing metadata
-      triageData: triageData ? {
-        complexity: triageData.complexity,
-        domain: triageData.domain,
-        urgency: triageData.urgency,
-        confidence: triageData.confidence,
-        best_format: triageData.best_format,
-        emotional_tone: triageData.emotional_tone,
-        requires_vision: triageData.requires_vision,
-        reasoning: triageData.reasoning,
-        suggested_model: triageData.suggested_model
-      } : null
+      // Nest all metadata in a metadata object for frontend consumption
+      metadata: {
+        oncologyProducts,
+        // Knowledge base citations for source references
+        knowledgeBaseResults: ragContext.length > 0 ? ragContext : undefined,
+        // Treatment center map metadata with advanced filters
+        showTreatmentMap,
+        centerType,
+        searchQuery,
+        therapeuticArea,
+        product,
+        manufacturer,
+        clinicalTrial,
+        state,
+        city,
+        insuranceType,
+        priceRange,
+        // AI-powered recommendations and insights
+        aiRecommendations,
+        contextualInsights: generateContextualInsights(
+          request.prompt,
+          triageData?.domain || 'healthcare',
+          triageData,
+          { insuranceType, priceRange, product }
+        ),
+        // Smart routing metadata
+        triageData: triageData ? {
+          complexity: triageData.complexity,
+          domain: triageData.domain,
+          urgency: triageData.urgency,
+          confidence: triageData.confidence,
+          best_format: triageData.best_format,
+          emotional_tone: triageData.emotional_tone,
+          requires_vision: triageData.requires_vision,
+          reasoning: triageData.reasoning,
+          suggested_model: triageData.suggested_model
+        } : null
+      }
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
