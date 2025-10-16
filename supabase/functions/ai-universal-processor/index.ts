@@ -1064,7 +1064,7 @@ async function callLovableAI(request: AIRequest, ragContext?: string) {
 // ========== JOURNEY TRACKING ==========
 interface JourneyProgress {
   currentStage: string;
-  nextSuggested Stage: string;
+  nextSuggestedStage: string;
   confidence: number;
   indicators: string[];
 }
