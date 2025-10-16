@@ -1820,10 +1820,10 @@ ${conversationSummary.transcript}`
                                           filterByType={(message as any).metadata?.centerType}
                                           searchQuery={(message as any).metadata?.searchQuery}
                                           therapeuticArea={(message as any).metadata?.therapeuticArea}
-                                          product={(message as any).metadata?.product}
+                                          product={(message as any).metadata?.product || (((messages.slice().reverse().find(m => m.role === 'user')?.content || '').match(/kymriah/i)) ? 'Kymriah' : undefined)}
                                           manufacturer={(message as any).metadata?.manufacturer}
                                           clinicalTrial={(message as any).metadata?.clinicalTrial}
-                                          state={(message as any).metadata?.state}
+                                          state={(message as any).metadata?.state || (((messages.slice().reverse().find(m => m.role === 'user')?.content || '').match(/\b(california|CA)\b/i)) ? 'CA' : undefined)}
                                           city={(message as any).metadata?.city}
                                         />
                                         
