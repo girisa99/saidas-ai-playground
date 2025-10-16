@@ -59,7 +59,8 @@ class ConversationLimitService {
         ip_address,
         user_email: userEmail,
         user_name: userName,
-        action: 'check'
+        action: 'check',
+        user_agent: navigator.userAgent // Browser fingerprint for multi-factor detection
       }
     });
 
@@ -94,7 +95,8 @@ class ConversationLimitService {
         user_name: userName,
         context,
         action: 'start',
-        session_id
+        session_id,
+        user_agent: navigator.userAgent // Browser fingerprint
       }
     });
 

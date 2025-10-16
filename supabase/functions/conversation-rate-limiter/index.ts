@@ -14,6 +14,7 @@ interface ConversationLimitRequest {
   action: 'check' | 'start' | 'end' | 'message';
   session_id?: string;
   message_count?: number;
+  user_agent?: string; // Browser fingerprint
 }
 
 serve(async (req) => {
@@ -27,7 +28,13 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
     )
 
-    const { ip_address, user_email, user_name, context, action, session_id, message_count } = await req.json() as ConversationLimitRequest
+    const { ip_address, user_email, user_name, context, action, session_id, message_count, user_agent } = await req.json() as ConversationLimitRequest
+
+    // Generate browser fingerprint hash for multi-factor detection
+    const browserFingerprint = user_agent ? 
+      await crypto.subtle.digest('SHA-256', new TextEncoder().encode(user_agent))
+        .then(hash => Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16))
+      : null
 
     // Use direct table queries instead of RPC to avoid type mismatch issues
     const now = new Date()
@@ -48,10 +55,13 @@ serve(async (req) => {
       .eq('ip_address', ip_address)
       .gte('started_at', oneHourAgo.toISOString())
 
-    // Count email-based conversations if email provided
+    // Multi-factor abuse detection
     let emailDailyCount = 0
     let emailHourlyCount = 0
     let existingEmailUsers: any[] = []
+    let ipEmailComboCount = 0
+    let suspiciousActivity = false
+    let abuseFlags: string[] = []
     
     if (user_email) {
       // Check daily email usage
@@ -72,6 +82,16 @@ serve(async (req) => {
       
       emailHourlyCount = emailHourly || 0
 
+      // Check IP + Email combo (stricter limit for specific combinations)
+      const { count: comboCount } = await supabase
+        .from('conversation_tracking')
+        .select('*', { count: 'exact', head: true })
+        .eq('ip_address', ip_address)
+        .eq('user_email', user_email)
+        .gte('started_at', oneDayAgo.toISOString())
+      
+      ipEmailComboCount = comboCount || 0
+
       // Check if this email is used from multiple IP addresses (potential abuse)
       const { data: emailIPs } = await supabase
         .from('conversation_tracking')
@@ -83,29 +103,54 @@ serve(async (req) => {
       
       // Detect if same email is being used from multiple IPs
       const uniqueIPs = new Set(existingEmailUsers.map(record => record.ip_address))
-      if (uniqueIPs.size > 3 && !uniqueIPs.has(ip_address)) {
-        console.warn(`Potential abuse: Email ${user_email} used from ${uniqueIPs.size} different IP addresses`)
+      if (uniqueIPs.size > 5) {
+        suspiciousActivity = true
+        abuseFlags.push(`Email used from ${uniqueIPs.size} IPs in 24h`)
+        console.warn(`⚠️ ABUSE DETECTED: Email ${user_email} used from ${uniqueIPs.size} different IP addresses`)
+      }
+
+      // Check for rapid-fire requests (same IP+email combo in <5 min)
+      const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000)
+      const { count: rapidCount } = await supabase
+        .from('conversation_tracking')
+        .select('*', { count: 'exact', head: true })
+        .eq('ip_address', ip_address)
+        .eq('user_email', user_email)
+        .gte('started_at', fiveMinutesAgo.toISOString())
+      
+      if ((rapidCount || 0) > 3) {
+        suspiciousActivity = true
+        abuseFlags.push('Rapid-fire requests detected')
+        console.warn(`⚠️ RATE ABUSE: ${rapidCount} requests in 5 minutes from IP ${ip_address}`)
       }
     }
 
-    // Define limits
-    const DAILY_IP_LIMIT = 10
-    const HOURLY_IP_LIMIT = 5
-    const DAILY_EMAIL_LIMIT = 20
-    const HOURLY_EMAIL_LIMIT = 10
+    // Define limits (stricter for suspicious activity)
+    const DAILY_IP_LIMIT = suspiciousActivity ? 3 : 10
+    const HOURLY_IP_LIMIT = suspiciousActivity ? 2 : 5
+    const DAILY_EMAIL_LIMIT = suspiciousActivity ? 5 : 20
+    const HOURLY_EMAIL_LIMIT = suspiciousActivity ? 3 : 10
+    const IP_EMAIL_COMBO_LIMIT = 8 // Stricter limit for specific IP+email combos
 
-    // Comprehensive limit check: both IP and email must be within limits
+    // Multi-factor limit check: IP, email, AND combo must be within limits
     const ipAllowed = (ipDailyCount || 0) < DAILY_IP_LIMIT && 
                      (ipHourlyCount || 0) < HOURLY_IP_LIMIT
     
     const emailAllowed = !user_email || 
                         (emailDailyCount < DAILY_EMAIL_LIMIT && 
                          emailHourlyCount < HOURLY_EMAIL_LIMIT)
+    
+    const comboAllowed = !user_email || ipEmailComboCount < IP_EMAIL_COMBO_LIMIT
 
-    const allowed = ipAllowed && emailAllowed
+    // Block if ANY limit exceeded OR suspicious activity detected
+    const allowed = ipAllowed && emailAllowed && comboAllowed && !suspiciousActivity
 
     let restrictionReason = null
-    if (!ipAllowed) {
+    if (suspiciousActivity) {
+      restrictionReason = `Suspicious activity detected: ${abuseFlags.join(', ')}. Access temporarily restricted.`
+    } else if (!comboAllowed) {
+      restrictionReason = `Too many requests from this IP+email combination (${ipEmailComboCount}/${IP_EMAIL_COMBO_LIMIT} daily).`
+    } else if (!ipAllowed) {
       restrictionReason = `IP address limit exceeded. You've made ${ipHourlyCount} requests in the last hour (limit: ${HOURLY_IP_LIMIT}) and ${ipDailyCount} requests today (limit: ${DAILY_IP_LIMIT}).`
     } else if (!emailAllowed) {
       restrictionReason = `Email limit exceeded. ${user_email} has made ${emailHourlyCount} requests in the last hour (limit: ${HOURLY_EMAIL_LIMIT}) and ${emailDailyCount} requests today (limit: ${DAILY_EMAIL_LIMIT}).`
@@ -121,9 +166,14 @@ serve(async (req) => {
       email_daily_limit: DAILY_EMAIL_LIMIT,
       email_hourly_count: emailHourlyCount,
       email_hourly_limit: HOURLY_EMAIL_LIMIT,
+      ip_email_combo_count: ipEmailComboCount,
+      ip_email_combo_limit: IP_EMAIL_COMBO_LIMIT,
       reset_time: new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString(),
       restriction_reason: restrictionReason,
-      duplicate_email_ips: existingEmailUsers.length > 0 ? existingEmailUsers.length : 0
+      duplicate_email_ips: existingEmailUsers.length > 0 ? existingEmailUsers.length : 0,
+      suspicious_activity: suspiciousActivity,
+      abuse_flags: abuseFlags,
+      browser_fingerprint: browserFingerprint
     }
 
     // If action is just checking limits, return the status
@@ -140,7 +190,11 @@ serve(async (req) => {
             email_daily_limit: limitCheck.email_daily_limit,
             email_hourly_count: limitCheck.email_hourly_count,
             email_hourly_limit: limitCheck.email_hourly_limit,
-            duplicate_email_ips: limitCheck.duplicate_email_ips
+            duplicate_email_ips: limitCheck.duplicate_email_ips,
+            ip_email_combo_count: limitCheck.ip_email_combo_count,
+            ip_email_combo_limit: limitCheck.ip_email_combo_limit,
+            suspicious_activity: limitCheck.suspicious_activity,
+            abuse_flags: limitCheck.abuse_flags
           },
           reset_time: limitCheck.reset_time,
           restriction_reason: limitCheck.restriction_reason,

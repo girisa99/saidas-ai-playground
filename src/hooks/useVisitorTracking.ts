@@ -27,44 +27,10 @@ const getIPAddress = async (): Promise<string | null> => {
   }
 };
 
-// Get location data from IP with caching
+// Geo data removed - no longer needed (was causing CORS/429 errors)
+// Server-side edge functions handle geo lookup if needed for analytics
 const getLocationData = async () => {
-  // Check if we have cached location data (expires after 24 hours)
-  const cachedData = sessionStorage.getItem('visitor_geo_cache');
-  const cacheTimestamp = sessionStorage.getItem('visitor_geo_timestamp');
-  
-  if (cachedData && cacheTimestamp) {
-    const age = Date.now() - parseInt(cacheTimestamp);
-    // Cache for 24 hours
-    if (age < 24 * 60 * 60 * 1000) {
-      return JSON.parse(cachedData);
-    }
-  }
-  
-  try {
-    const response = await fetch('https://ipapi.co/json/');
-    if (response.ok) {
-      const data = await response.json();
-      const locationData = {
-        country: data.country_name || null,
-        region: data.region || null,
-        city: data.city || null,
-        latitude: data.latitude || null,
-        longitude: data.longitude || null,
-      };
-      
-      // Cache the result
-      sessionStorage.setItem('visitor_geo_cache', JSON.stringify(locationData));
-      sessionStorage.setItem('visitor_geo_timestamp', Date.now().toString());
-      
-      return locationData;
-    }
-  } catch (error) {
-    console.debug('Geo fetch skipped - using cached or empty data');
-  }
-  
-  // Return cached data even if expired, or empty object
-  return cachedData ? JSON.parse(cachedData) : {};
+  return {}; // Return empty - geo is optional
 };
 
 export const useVisitorTracking = () => {

@@ -63,27 +63,9 @@ export class GenieAnalyticsService {
     return GenieAnalyticsService.instance;
   }
 
-  // Fetch geolocation data. If ipAddress is not provided, fall back to auto-detect.
+  // Geo lookup removed - edge functions handle this server-side if needed
   async getGeoLocation(ipAddress?: string): Promise<GeoLocation | null> {
-    const parse = (data: any): GeoLocation => ({
-      country: data.country_name,
-      region: data.region,
-      city: data.city,
-      latitude: data.latitude,
-      longitude: data.longitude
-    });
-
-    try {
-      if (ipAddress) {
-        const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
-        if (response.ok) return parse(await response.json());
-      }
-      // Skip auto-detect fallback to avoid CORS/429 noise
-      return null;
-    } catch (error) {
-      console.debug('Geolocation lookup skipped');
-      return null;
-    }
+    return null; // Geo is optional, prevents CORS/429 errors
   }
 
   async trackPopupClick(data: PopupClickEvent): Promise<void> {
