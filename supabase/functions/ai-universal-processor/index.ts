@@ -2009,9 +2009,17 @@ serve(async (req) => {
       ragContext
     );
 
+    // Add disclaimer to content if showing treatment centers
+    let finalContent = content;
+    if (showTreatmentMap && (state || city || product || therapeuticArea)) {
+      const locationStr = state || city ? ` in ${city || state}` : '';
+      const therapyStr = product || therapeuticArea || '';
+      finalContent += `\n\n**Important Disclaimer:** The treatment center information shown${locationStr} is for educational and experimental purposes only. This data may not be fully up-to-date. Please contact ${therapyStr ? `the ${therapyStr} manufacturer or ` : ''}your healthcare provider directly to verify current treatment locations, availability, and enrollment criteria.`;
+    }
+
     // ========== INTEGRATION POINT 3: Return Triage Data with Knowledge Base Citations ==========
     return new Response(JSON.stringify({ 
-      content,
+      content: finalContent,
       provider: request.provider,
       model: request.model,
       ragUsed: ragContext.length > 0,
@@ -2035,6 +2043,7 @@ serve(async (req) => {
         city,
         insuranceType,
         priceRange,
+        disclaimerShown: showTreatmentMap && (state || city || product || therapeuticArea),
         // AI-powered recommendations and insights
         aiRecommendations,
         contextualInsights: generateContextualInsights(

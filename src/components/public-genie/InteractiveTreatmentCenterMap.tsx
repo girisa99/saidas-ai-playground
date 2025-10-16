@@ -507,7 +507,7 @@ export const InteractiveTreatmentCenterMap = ({
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
               <MapPin className="h-5 w-5" />
-              Interactive Treatment Center Map
+              Treatment Centers {state && `in ${state}`}{city && ` - ${city}`}
             </CardTitle>
             <Button
               variant="ghost"
@@ -517,6 +517,24 @@ export const InteractiveTreatmentCenterMap = ({
               {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
             </Button>
           </div>
+          
+          {/* Disclaimer Banner */}
+          {filteredCenters.length > 0 && (
+            <div className="mt-3 p-4 bg-amber-50 dark:bg-amber-950/20 border-l-4 border-amber-500 rounded-md">
+              <p className="text-sm text-amber-900 dark:text-amber-200 font-medium mb-1">
+                ⚠️ Experimental Data - Verification Required
+              </p>
+              <p className="text-xs text-amber-800 dark:text-amber-300">
+                This information is for educational purposes. Treatment center data may not be current. 
+                {product && ` Contact the ${product} manufacturer or`} your healthcare provider to verify 
+                locations, availability, and enrollment criteria for {product || therapeuticArea || 'treatment'}.
+              </p>
+              <p className="text-xs text-amber-700 dark:text-amber-400 mt-2">
+                Found {filteredCenters.length} location{filteredCenters.length !== 1 ? 's' : ''} 
+                {state && ` in ${state}`}{city && ` near ${city}`}
+              </p>
+            </div>
+          )}
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Mapbox Token Input (if not set) */}
