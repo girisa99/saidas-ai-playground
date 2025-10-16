@@ -17,7 +17,7 @@ export const ProductsAndCentersHub = () => {
             Products, Pricing & Treatment Centers
           </CardTitle>
           <CardDescription>
-            Explore 14 products across 4 therapeutic areas with 22 comprehensive data categories and 157 treatment centers nationwide
+            Explore 14 products with 22 data fields and 157+ treatment centers with 18 data fields - 40+ comprehensive categories total
           </CardDescription>
         </CardHeader>
       </Card>

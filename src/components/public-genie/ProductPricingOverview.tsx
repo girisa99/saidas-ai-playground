@@ -86,13 +86,13 @@ export const ProductPricingOverview = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Info className="h-4 w-4" />
-              Data Categories
+              Product Data Fields
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">22</div>
             <p className="text-xs text-muted-foreground mt-1">
-              Comprehensive fields
+              Per product record
             </p>
           </CardContent>
         </Card>
