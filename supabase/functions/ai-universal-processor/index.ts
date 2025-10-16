@@ -1061,6 +1061,71 @@ async function callLovableAI(request: AIRequest, ragContext?: string) {
   return content;
 }
 
+// ========== JOURNEY TRACKING ==========
+interface JourneyProgress {
+  currentStage: string;
+  nextSuggested Stage: string;
+  confidence: number;
+  indicators: string[];
+}
+
+async function trackJourneyProgress(
+  prompt: string,
+  triageData: any,
+  history?: Array<{ role: string; content: string }>
+): Promise<JourneyProgress> {
+  const lowerPrompt = prompt.toLowerCase();
+  
+  // Define journey stages based on patient treatment journey
+  const stages = {
+    awareness: ['learn', 'information', 'what is', 'tell me about', 'explain'],
+    evaluation: ['compare', 'options', 'which', 'best', 'versus', 'difference'],
+    center_selection: ['where', 'location', 'find', 'near', 'treatment center', 'hospital'],
+    pricing: ['cost', 'price', 'insurance', 'afford', 'pay', 'coverage', 'financial'],
+    enrollment: ['enroll', 'start', 'begin', 'apply', 'qualify', 'eligible'],
+    preparation: ['prepare', 'before', 'ready', 'requirements', 'need to know'],
+    treatment: ['during', 'procedure', 'process', 'what happens', 'timeline'],
+    monitoring: ['after', 'follow-up', 'side effects', 'recovery', 'monitor']
+  };
+  
+  // Detect current stage
+  let currentStage = 'awareness';
+  let maxScore = 0;
+  
+  for (const [stage, keywords] of Object.entries(stages)) {
+    const score = keywords.filter(k => lowerPrompt.includes(k)).length;
+    if (score > maxScore) {
+      maxScore = score;
+      currentStage = stage;
+    }
+  }
+  
+  // Determine next suggested stage
+  const stageOrder = [
+    'awareness', 'evaluation', 'center_selection', 'pricing',
+    'enrollment', 'preparation', 'treatment', 'monitoring'
+  ];
+  const currentIndex = stageOrder.indexOf(currentStage);
+  const nextSuggestedStage = stageOrder[Math.min(currentIndex + 1, stageOrder.length - 1)];
+  
+  return {
+    currentStage,
+    nextSuggestedStage,
+    confidence: maxScore > 0 ? 0.8 : 0.5,
+    indicators: stages[currentStage as keyof typeof stages] || []
+  };
+}
+
+async function updateJourneyStage(progress: JourneyProgress) {
+  try {
+    // This would update conversation journey context in DB
+    // For now, just log it
+    console.log('Journey Progress:', progress);
+  } catch (error) {
+    console.error('Failed to update journey stage:', error);
+  }
+}
+
 async function logConversation(request: AIRequest, response: string, ragUsed: boolean) {
   try {
     // Log the conversation for potential knowledge base improvements
@@ -1794,11 +1859,15 @@ serve(async (req) => {
         throw new Error(`Unsupported provider: ${request.provider}`);
     }
 
+    // Track journey progression based on conversation context
+    const journeyProgress = await trackJourneyProgress(request.prompt, triageData, request.conversationHistory);
+    
     // Log conversation, suggest knowledge updates, and log to Label Studio
     await Promise.all([
       logConversation(request, content, ragContext.length > 0),
       suggestKnowledgeUpdates(request.prompt, content, request.context),
-      logToLabelStudio(request, content, fullContext)
+      logToLabelStudio(request, content, fullContext),
+      updateJourneyStage(journeyProgress)
     ]);
 
     // Optional oncology extraction
