@@ -29,13 +29,22 @@ class ConversationLimitService {
   private currentSession: ConversationSession | null = null;
 
   async getUserIP(): Promise<string> {
+    // Check session cache first
+    const cachedIP = sessionStorage.getItem('user_ip_cache');
+    if (cachedIP) return cachedIP;
+    
     try {
-      const response = await fetch('https://api.ipify.org?format=json');
+      const response = await fetch('https://api.ipify.org?format=json', {
+        // Add timeout
+        signal: AbortSignal.timeout(5000)
+      });
       const data = await response.json();
+      // Cache IP for session
+      sessionStorage.setItem('user_ip_cache', data.ip);
       return data.ip;
     } catch (error) {
-      console.error('Failed to get IP address:', error);
-      return '127.0.0.1'; // Fallback
+      console.debug('Failed to get IP, using fallback');
+      return '0.0.0.0'; // Fallback
     }
   }
 
