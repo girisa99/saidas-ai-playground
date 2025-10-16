@@ -121,43 +121,67 @@ export const RoutingOptimizationBadge: React.FC<RoutingOptimizationBadgeProps> =
           <CardContent className="pt-0 pb-3 px-3 space-y-3">
             {/* Smart Routing Override Alert */}
             {smartRoutingOptimization?.override && (
-              <div className="p-3 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-lg border border-green-500/30">
-                <div className="flex items-start gap-2 mb-2">
-                  <Zap className="h-4 w-4 text-green-600 mt-0.5" />
+              <div className="p-3 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-lg border border-amber-500/30">
+                <div className="flex items-start gap-2 mb-3">
+                  <Zap className="h-4 w-4 text-amber-600 mt-0.5 flex-shrink-0" />
                   <div className="flex-1">
-                    <p className="text-xs font-bold text-green-700">Smart Routing Optimized Your Query</p>
+                    <p className="text-xs font-bold text-amber-900 dark:text-amber-100">🎯 Smart Routing Override</p>
                     <p className="text-[10px] text-muted-foreground mt-1">
-                      Your selection: <span className="font-mono text-orange-600">{smartRoutingOptimization.userSelectedModel}</span>
-                      {' → '}
-                      AI recommendation: <span className="font-mono text-green-600">{smartRoutingOptimization.optimizedModel}</span>
+                      AI optimized your query based on complexity and domain analysis
                     </p>
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-2 mb-2">
-                  {smartRoutingOptimization.costSavingsPercent !== 0 && (
-                    <div className="flex items-center gap-1 text-[10px]">
-                      <DollarSign className="h-3 w-3 text-green-600" />
-                      <span className="font-semibold">
-                        {smartRoutingOptimization.costSavingsPercent > 0 ? '↓' : '↑'}
-                        {Math.abs(smartRoutingOptimization.costSavingsPercent)}% cost
-                      </span>
-                    </div>
-                  )}
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-700">
+                    <p className="text-[9px] text-muted-foreground uppercase tracking-wide mb-1">You Selected</p>
+                    <p className="font-mono text-xs font-semibold text-orange-600 dark:text-orange-400">
+                      {smartRoutingOptimization.userSelectedModel}
+                    </p>
+                  </div>
+                  <div className="bg-green-50 dark:bg-green-950 p-2 rounded border border-green-300 dark:border-green-700">
+                    <p className="text-[9px] text-muted-foreground uppercase tracking-wide mb-1">AI Used</p>
+                    <p className="font-mono text-xs font-semibold text-green-700 dark:text-green-400">
+                      {smartRoutingOptimization.optimizedModel}
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="flex items-start gap-1.5 text-[10px]">
+                    <span className="font-semibold text-foreground mt-0.5">Reason:</span>
+                    <span className="text-muted-foreground">{smartRoutingOptimization.reason}</span>
+                  </div>
                   
-                  {smartRoutingOptimization.latencySavingsPercent !== 0 && (
-                    <div className="flex items-center gap-1 text-[10px]">
-                      <Clock className="h-3 w-3 text-blue-600" />
-                      <span className="font-semibold">
-                        {smartRoutingOptimization.latencySavingsPercent > 0 ? '↓' : '↑'}
-                        {Math.abs(smartRoutingOptimization.latencySavingsPercent)}% faster
-                      </span>
+                  {(smartRoutingOptimization.costSavingsPercent !== 0 || smartRoutingOptimization.latencySavingsPercent !== 0) && (
+                    <div className="flex flex-wrap gap-2 pt-1 border-t border-amber-200 dark:border-amber-800">
+                      {smartRoutingOptimization.costSavingsPercent !== 0 && (
+                        <div className="flex items-center gap-1 text-[10px]">
+                          <DollarSign className={`h-3 w-3 ${smartRoutingOptimization.costSavingsPercent > 0 ? 'text-green-600' : 'text-orange-600'}`} />
+                          <span className="font-semibold">
+                            {smartRoutingOptimization.costSavingsPercent > 0 
+                              ? `${smartRoutingOptimization.costSavingsPercent}% saved` 
+                              : `${Math.abs(smartRoutingOptimization.costSavingsPercent)}% premium`}
+                          </span>
+                        </div>
+                      )}
+                      
+                      {smartRoutingOptimization.latencySavingsPercent !== 0 && (
+                        <div className="flex items-center gap-1 text-[10px]">
+                          <Clock className={`h-3 w-3 ${smartRoutingOptimization.latencySavingsPercent > 0 ? 'text-blue-600' : 'text-orange-600'}`} />
+                          <span className="font-semibold">
+                            {smartRoutingOptimization.latencySavingsPercent > 0 
+                              ? `${smartRoutingOptimization.latencySavingsPercent}% faster` 
+                              : `${Math.abs(smartRoutingOptimization.latencySavingsPercent)}% slower`}
+                          </span>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
                 
-                <p className="text-[10px] text-muted-foreground italic mt-2">
-                  💡 <span className="font-medium">Why:</span> {smartRoutingOptimization.reason}
+                <p className="text-[9px] text-muted-foreground italic mt-2 pt-2 border-t border-amber-200 dark:border-amber-800">
+                  💡 Smart routing is active for all modes (Default, Single, Multi-Agent, Chaining)
                 </p>
               </div>
             )}

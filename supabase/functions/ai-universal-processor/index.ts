@@ -2007,13 +2007,14 @@ serve(async (req) => {
     const state = triageData?.state;
     const city = triageData?.city;
     
-    // FIXED: Detect treatment center query based on best_format ONLY
-    const isTreatmentQuery = triageData?.best_format === 'map';
+    // FIXED: Detect treatment center query based on best_format AND keywords
+    const isTreatmentQuery = triageData?.best_format === 'map' || 
+      /treatment center|hospital|clinic|facility|kymriah|yescarta|car-t|gene therapy|bmt/i.test(request.prompt);
     
     // Check if we have enough filters to show map (therapeutic/product + location)
     const hasTherapeuticOrProduct = therapeuticArea || product || manufacturer;
     const hasLocation = state || city;
-    let showTreatmentMap = false;
+    let showTreatmentMap = isTreatmentQuery && (hasTherapeuticOrProduct || hasLocation);
     
     // Detect insurance and pricing parameters
     let insuranceType: string | undefined;
@@ -2065,13 +2066,13 @@ serve(async (req) => {
       ragContext
     );
 
-    // Guided filter flow: ask for missing filters before showing map
-    if (isTreatmentQuery && !hasTherapeuticOrProduct) {
-      content += `\n\n**To show relevant treatment centers, I need:**\n- Therapeutic area or product (e.g., CAR-T, Gene Therapy, Kymriah, Yescarta)\n- State or city (e.g., California, Boston, Georgia)\n- Zip code (optional, for nearest centers)\n\nPlease provide these details.`;
-    } else if (isTreatmentQuery && !hasLocation) {
-      content += `\n\n**I see you're looking for ${product || therapeuticArea} centers. To show locations:**\n- Which state or city? (e.g., MA, California, Boston)\n- Zip code? (optional, for nearest)\n\nProvide your location.`;
-    } else if (isTreatmentQuery && hasTherapeuticOrProduct && hasLocation) {
-      showTreatmentMap = true;
+    // Simplified: if we detected a treatment query with any filter, show the map
+    // The frontend will handle the filtering and empty state
+    if (!isTreatmentQuery) {
+      showTreatmentMap = false;
+    } else if (!hasTherapeuticOrProduct && !hasLocation) {
+      content += `\n\n**To show relevant treatment centers, I need:**\n- Therapeutic area or product (e.g., CAR-T, Gene Therapy, Kymriah, Yescarta)\n- State or city (e.g., California, Boston, Georgia)\n\nPlease provide these details.`;
+      showTreatmentMap = false;
     }
 
     // Add disclaimer to content if showing treatment centers
