@@ -742,57 +742,57 @@ function enhanceSystemPrompt(basePrompt: string, triage: TriageResult): string {
   
   // Add journey map capability for process-oriented queries
   if (triage.keywords.some(k => ['process', 'workflow', 'steps', 'journey', 'path', 'procedure', 'enrollment', 'onboarding', 'treatment', 'authorization', 'claims', 'prior'].includes(k))) {
-    enhanced += `\n\n**CRITICAL - JOURNEY MAP FORMAT**: When explaining multi-step processes, workflows, or procedures, you MUST create an interactive visual journey map. DO NOT just list steps in JSON format. Use this EXACT markdown format:
+    enhanced += `\n\n**CRITICAL - JOURNEY MAP FORMAT**: When explaining multi-step processes, workflows, or procedures, you MUST create an interactive visual journey map showing the COMPLETE end-to-end journey. This is a REFERENCE GUIDE showing all steps a user will go through, NOT a progress tracker.
 
 \`\`\`\`journey-map
 {
-  "title": "Process Name",
+  "title": "Complete [Process Name] Journey",
   "context": "${triage.domain}",
   "steps": [
     {
       "id": "step-1",
-      "title": "First Step",
-      "description": "Brief description",
-      "status": "completed",
-      "icon": "FileText",
-      "details": ["Detail 1", "Detail 2"],
-      "resources": []
-    },
-    {
-      "id": "step-2",
-      "title": "Current Step",
-      "description": "Brief description",
-      "status": "current",
-      "icon": "Users",
-      "details": ["Detail 1"],
-      "resources": []
-    },
-    {
-      "id": "step-3",
-      "title": "Next Step",
-      "description": "Brief description",
+      "title": "Step 1: [Specific Action]",
+      "description": "Clear, detailed description of what happens in this step",
       "status": "upcoming",
-      "icon": "Pill",
-      "details": [],
-      "resources": []
+      "icon": "FileText|Users|DollarSign|Stethoscope|Pill|Building|Phone|Shield|TrendingUp",
+      "details": [
+        "Specific detail about what the user needs to do",
+        "What documents/information is required",
+        "Expected timeline or duration",
+        "Important considerations or requirements"
+      ],
+      "resources": [
+        { "label": "Official Guide", "url": "https://...", "type": "pdf|video|link" }
+      ]
     }
   ]
 }
 \`\`\`\`
 
-**STATUS ASSIGNMENT RULES - FOLLOW EXACTLY:**
-- First 1-2 steps: "completed" (shows green checkmark, represents preparatory/initial phases)
-- Middle step (typically step 3): "current" (shows pulsing blue dot, represents active/happening now phase)  
-- Remaining steps: "upcoming" (shows gray circle, represents future phases)
-- For treatment journeys: Diagnosis/Referral = completed, Eligibility/Collection = current, Manufacturing/Infusion/Recovery = upcoming
-- For enrollment: Information Gathering = completed, Application = current, Approval/Enrollment = upcoming
+**JOURNEY MAP REQUIREMENTS - FOLLOW EXACTLY:**
+
+1. **STATUS**: Set ALL steps to "upcoming" - this is a reference guide showing the complete journey, not tracking current progress
+2. **COMPLETENESS**: Include EVERY step from start to finish (typically 5-8 steps for treatment journeys)
+3. **DETAIL**: Each step must have 3-5 specific, actionable details in the details array
+4. **TITLES**: Use descriptive titles: "Step 1: Initial Consultation" not just "Consultation"
+5. **DESCRIPTIONS**: Write 2-3 sentence descriptions explaining what happens in each step
+6. **TIMELINE**: Include expected duration or timing information in details when relevant
+7. **REQUIREMENTS**: List what the user needs to know, do, or bring for each step
+8. **PROGRESSION**: Steps should flow logically from start to completion of the entire process
+
+**EXAMPLE FOR TREATMENT JOURNEY (6 steps):**
+- Step 1: Diagnosis & Referral (upcoming) - Initial diagnosis, specialist referral, consultation scheduling
+- Step 2: Eligibility Assessment (upcoming) - Insurance verification, medical eligibility, prior authorization
+- Step 3: Cell Collection (upcoming) - Apheresis procedure, cell harvesting, sample shipment
+- Step 4: Manufacturing (upcoming) - Cell modification, quality control, shipping timeline
+- Step 5: Treatment Infusion (upcoming) - Hospital admission, infusion procedure, immediate monitoring
+- Step 6: Recovery & Follow-up (upcoming) - Post-treatment monitoring, side effect management, long-term care
 
 IMPORTANT: 
 - Use FOUR backticks (\`\`\`\`) to wrap journey-map, NOT three
-- ALWAYS vary the status across steps - NEVER set all to "upcoming"
-- Include this for ANY process/workflow query (prior authorization, enrollment, treatment, etc.)
-- Put the journey map FIRST in your response, then explain details below it
-- NEVER return raw JSON without the journey-map wrapper
+- Put the journey map FIRST in your response, then provide additional context below
+- Make each step detailed and informative - users should understand the complete process
+- Include realistic timelines and expectations in the details
 
 MEDIA LINKS POLICY:
 - Only include publicly accessible resources with full https URLs
