@@ -196,6 +196,16 @@ serve(async (req) => {
       const lon = null as number | null;
 
       // if lat/lon were computed here, we'd increment geocodedCount; background task will handle it
+      const centerData = {
+        name: record.name,
+        center_type: centerType,
+        address: record.address || null,
+        city: record.city || null,
+        state: record.state || null,
+        zip_code: record.zip_code || null,
+        country: country,
+        latitude: lat,
+        longitude: lon,
         phone: record.phone || null,
         website: record.website || null,
         email: record.email || null,
