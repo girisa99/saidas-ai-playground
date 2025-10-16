@@ -322,19 +322,24 @@ export const InteractiveTreatmentCenterMap = ({
         .setLngLat([cluster.lng, cluster.lat])
         .addTo(map.current!);
 
-      markerElement.addEventListener('click', () => {
+      markerElement.addEventListener('click', (e) => {
+        e.stopPropagation();
         if (isCluster) {
+          // Zoom in to show individual centers in the cluster
+          const newZoom = Math.min(zoom + 3, 15);
           map.current?.flyTo({
             center: [cluster.lng, cluster.lat],
-            zoom: Math.min(zoom + 2, 15),
-            duration: 1000
+            zoom: newZoom,
+            duration: 1200,
+            essential: true
           });
         } else {
           setSelectedCenter(cluster.centers[0]);
           map.current?.flyTo({
             center: [cluster.lng, cluster.lat],
             zoom: 12,
-            duration: 1500
+            duration: 1500,
+            essential: true
           });
         }
       });
@@ -496,7 +501,7 @@ export const InteractiveTreatmentCenterMap = ({
                     )}
                   </div>
                   <div className="max-h-60 overflow-y-auto space-y-2">
-                    {therapeuticAreas.slice(0, 15).map(area => (
+                    {therapeuticAreas.map(area => (
                       <div key={area} className="flex items-center space-x-2">
                         <Checkbox
                           id={`area-${area}`}
@@ -514,6 +519,9 @@ export const InteractiveTreatmentCenterMap = ({
                         </label>
                       </div>
                     ))}
+                    {therapeuticAreas.length === 0 && (
+                      <p className="text-sm text-muted-foreground">No therapeutic areas available</p>
+                    )}
                   </div>
                 </div>
               </PopoverContent>
@@ -547,7 +555,7 @@ export const InteractiveTreatmentCenterMap = ({
                     )}
                   </div>
                   <div className="max-h-60 overflow-y-auto space-y-2">
-                    {manufacturers.slice(0, 15).map(mfg => (
+                    {manufacturers.map(mfg => (
                       <div key={mfg} className="flex items-center space-x-2">
                         <Checkbox
                           id={`mfg-${mfg}`}
@@ -565,6 +573,9 @@ export const InteractiveTreatmentCenterMap = ({
                         </label>
                       </div>
                     ))}
+                    {manufacturers.length === 0 && (
+                      <p className="text-sm text-muted-foreground">No manufacturers available</p>
+                    )}
                   </div>
                 </div>
               </PopoverContent>
@@ -598,7 +609,7 @@ export const InteractiveTreatmentCenterMap = ({
                     )}
                   </div>
                   <div className="max-h-60 overflow-y-auto space-y-2">
-                    {products.slice(0, 15).map(prod => (
+                    {products.map(prod => (
                       <div key={prod} className="flex items-center space-x-2">
                         <Checkbox
                           id={`prod-${prod}`}
@@ -616,6 +627,9 @@ export const InteractiveTreatmentCenterMap = ({
                         </label>
                       </div>
                     ))}
+                    {products.length === 0 && (
+                      <p className="text-sm text-muted-foreground">No products available</p>
+                    )}
                   </div>
                 </div>
               </PopoverContent>
