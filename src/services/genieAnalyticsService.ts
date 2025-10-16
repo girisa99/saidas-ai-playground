@@ -145,9 +145,7 @@ export class GenieAnalyticsService {
       // Fetch geolocation if we have IP and don't have geo data
       let geoLocation = data.geo_location;
       if (!geoLocation && ipAddress) {
-        console.log('[Privacy Accept] Fetching geolocation for IP:', ipAddress);
         geoLocation = await this.getGeoLocation(ipAddress);
-        console.log('[Privacy Accept] Geolocation result:', geoLocation);
       }
 
       const enrichedData = { 
@@ -166,8 +164,6 @@ export class GenieAnalyticsService {
 
       if (error) {
         console.error('Failed to track privacy acceptance:', error);
-      } else {
-        console.log('✅ Privacy acceptance tracked with geo:', geoLocation ? `${geoLocation.city}, ${geoLocation.country}` : 'no location');
       }
     } catch (error) {
       console.error('Error tracking privacy acceptance:', error);
@@ -192,9 +188,7 @@ export class GenieAnalyticsService {
       // Fetch geolocation if we have IP and don't have geo data
       let geoLocation = data.geo_location;
       if (!geoLocation && ipAddress) {
-        console.log('[User Registration] Fetching geolocation for IP:', ipAddress);
         geoLocation = await this.getGeoLocation(ipAddress);
-        console.log('[User Registration] Geolocation result:', geoLocation);
       }
 
       const enrichedData = { 
@@ -213,8 +207,6 @@ export class GenieAnalyticsService {
 
       if (error) {
         console.error('Failed to track user registration:', error);
-      } else {
-        console.log('✅ User registration tracked with geo:', geoLocation ? `${geoLocation.city}, ${geoLocation.country}` : 'no location');
       }
     } catch (error) {
       console.error('Error tracking user registration:', error);
@@ -237,9 +229,7 @@ export class GenieAnalyticsService {
 
       let geoLocation = data.geo_location;
       if (!geoLocation && ipAddress) {
-        console.log('[Vision Feature] Fetching geolocation for IP:', ipAddress);
         geoLocation = await this.getGeoLocation(ipAddress);
-        console.log('[Vision Feature] Geolocation result:', geoLocation);
       }
 
       const enrichedData = { 
@@ -258,8 +248,6 @@ export class GenieAnalyticsService {
 
       if (error) {
         console.error('Failed to track vision feature:', error);
-      } else {
-        console.log(`✅ Vision feature tracked (${data.feature_type}):`, data.metadata);
       }
     } catch (error) {
       console.error('Error tracking vision feature:', error);

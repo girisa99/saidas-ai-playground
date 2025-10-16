@@ -282,10 +282,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
       // Clear split responses ONLY when switching OUT of multi mode to single/default
       if (previousMode === 'multi' && newConfig.mode !== 'multi') {
         setSplitResponses({ primary: [], secondary: [] });
-        console.log('✅ Exiting multi-mode - cleared split responses');
       }
-      
-      console.log('✅ Mode switched:', previousMode, '→', newConfig.mode, '| Context + Knowledge Base + Rich Features preserved');
     }
     
     // Handle split-screen toggle (independent of mode)
@@ -294,9 +291,6 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
       if (!newSplitScreen) {
         // Switching split-screen OFF - clear split responses
         setSplitResponses({ primary: [], secondary: [] });
-        console.log('✅ Split-screen disabled - cleared dual responses');
-      } else {
-        console.log('✅ Split-screen enabled - dual model comparison active');
       }
     }
   };
@@ -358,8 +352,6 @@ useEffect(() => {
       setPopoverSuggestions(topics);
       setPopoverMood(suggestion.mood || 'helpful');
       setShowTopicPopover(true);
-      
-      console.log('✅ Showing proactive suggestions at milestone:', userMessageCount);
     }
   }
 }, [messages.length, context, selectedTopic, userInfo, dynamicTopics]);
@@ -460,7 +452,6 @@ useEffect(() => {
     try {
       localStorage.setItem('genie_user_info', JSON.stringify(info));
       sessionStorage.setItem('genie_user_info_session', JSON.stringify(info));
-      console.log('✅ User info persisted for future sessions');
     } catch (e) {
       console.error('Failed to persist user info:', e);
     }
@@ -681,8 +672,6 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
       if (!result.success) {
         console.error('Failed to start conversation tracking:', result.error);
         toast({ title: 'Warning', description: 'Conversation may not be saved', variant: 'destructive' });
-      } else {
-        console.log('✅ Conversation tracking started:', result.conversationId);
       }
     }
 
@@ -1086,7 +1075,6 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
           
           // ========== MILESTONE SUGGESTIONS FOR MULTI-MODE ==========
           // Note: Milestone suggestions already added inline to both primary and secondary responses
-          console.log('✅ Multi-mode milestone suggestions included in both model responses');
         } else {
           console.warn('⚠️ Secondary model returned no content');
           toast({ 
@@ -1254,9 +1242,6 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
                 optimizationDetails.push(`\n_AI Routing Confidence: ${Math.round((response.triageData.confidence || 0) * 100)}%_`);
                 
                 messageContent += optimizationDetails.join('\n');
-                console.log('✅ AI Optimization transparency panel added');
-              } else {
-                console.warn('⚠️ No triage data available for optimization display');
               }
             
             addMessage({
@@ -1289,11 +1274,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             const milestones = [3, 5, 7];
             const currentUserMessageCount = messages.filter(m => m.role === 'user').length + 1;
             
-            console.log(`📊 Message Milestone Check: ${currentUserMessageCount} user messages`);
-            
             if (milestones.includes(currentUserMessageCount)) {
               // Suggestions already shown in message content above
-              console.log(`✅ Milestone ${currentUserMessageCount} suggestions already included in response`);
             }
           }
       }
@@ -1401,7 +1383,6 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             variant: "destructive"
           });
         } else {
-          console.log('✅ Transcript sent successfully');
           toast({
             title: "Conversation saved!",
             description: `Transcript sent to ${userInfo.email}`,
