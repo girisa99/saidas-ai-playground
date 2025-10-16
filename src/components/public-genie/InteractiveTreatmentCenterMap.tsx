@@ -89,10 +89,11 @@ export const InteractiveTreatmentCenterMap = ({
     return null;
   };
 
-  // Load all centers once on mount
+  // Load centers - only from database to avoid duplicates
   const loadCenters = async () => {
     let data: TreatmentCenter[] = [];
     
+    // Only fetch from database to prevent duplicate counting
     if (therapeuticArea || product || manufacturer || clinicalTrial || state || city || searchQuery) {
       data = await searchTreatmentCenters({
         therapeuticArea,
@@ -105,11 +106,14 @@ export const InteractiveTreatmentCenterMap = ({
         limit: 500,
       });
     } else {
-      data = await getTreatmentCentersForMap();
+      // Get from database only to avoid duplicates
+      data = await getTreatmentCentersForMap(filterByType);
     }
 
-    // If DB empty, fallback to local CSV
+    // ONLY use CSV as emergency fallback if DB completely empty
+    // This prevents the 313 duplicate count (157 DB + 156 CSV)
     if (!data || data.length === 0) {
+      console.log('Database empty, loading from CSV fallback');
       try {
         const csvRows = await loadEnhancedCenters();
         const limited = csvRows.slice(0, 500);
