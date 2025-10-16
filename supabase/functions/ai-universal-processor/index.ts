@@ -2118,11 +2118,11 @@ serve(async (req) => {
           triageData,
           { insuranceType, priceRange, product }
         ),
-        // Smart routing optimization details
+        // Smart routing optimization details (use original user model, not normalized)
         smartRoutingOptimization: request.enableSmartRouting ? {
           override: smartRoutingOverride,
-          userSelectedModel,
-          optimizedModel: request.model,
+          userSelectedModel: originalUserModel, // Show what user ORIGINALLY selected in UI
+          optimizedModel: request.model, // Show what AI actually used
           reason: optimizationReason,
           costSavingsPercent: Math.round(costSavings * 10) / 10,
           latencySavingsPercent: Math.round(latencySavings * 10) / 10,
