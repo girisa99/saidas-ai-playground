@@ -2151,7 +2151,7 @@ serve(async (req) => {
         // Smart routing optimization details (use original user model, not normalized)
         smartRoutingOptimization: request.enableSmartRouting ? {
           override: smartRoutingOverride,
-          userSelectedModel: originalUserModel, // Show what user ORIGINALLY selected in UI
+          userSelectedModel: originalModel, // Show what user ORIGINALLY selected in UI
           optimizedModel: request.model, // Show what AI actually used
           reason: optimizationReason,
           costSavingsPercent: Math.round(costSavings * 10) / 10,
