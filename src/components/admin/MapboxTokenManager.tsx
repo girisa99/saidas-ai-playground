@@ -27,26 +27,39 @@ export const MapboxTokenManager = () => {
     checkToken();
   }, []);
 
-  const handleSave = () => {
-    if (token) {
-      localStorage.setItem('MAPBOX_TOKEN_CONFIGURED', token.substring(0, 8));
+  const handleSave = async () => {
+    if (!token) return;
+
+    try {
+      // Save to database
+      const { error } = await supabase
+        .from('app_configuration')
+        .upsert({
+          config_key: 'mapbox_public_token',
+          config_value: token,
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: 'config_key'
+        });
+
+      if (error) throw error;
+
+      // Also save to localStorage as backup
+      localStorage.setItem('mapbox_token', token);
       setIsSaved(true);
+
+      toast({
+        title: "✓ Token Saved Successfully",
+        description: "Your Mapbox token has been saved and will be used automatically for all maps.",
+      });
+    } catch (error) {
+      console.error('Failed to save token:', error);
+      toast({
+        title: "Error Saving Token",
+        description: "Failed to save token to database. Please try again.",
+        variant: "destructive"
+      });
     }
-    
-    toast({
-      title: "Token Configuration",
-      description: (
-        <div className="space-y-2">
-          <p>To add your Mapbox token to Supabase:</p>
-          <ol className="list-decimal ml-4 space-y-1 text-sm">
-            <li>Go to Supabase Dashboard → Edge Functions → Secrets</li>
-            <li>Add secret: MAPBOX_PUBLIC_TOKEN</li>
-            <li>Value: {token || "your-mapbox-token"}</li>
-            <li>Token will persist across sessions once saved in Supabase</li>
-          </ol>
-        </div>
-      ),
-    });
   };
 
   return (
