@@ -43,16 +43,76 @@ serve(async (req) => {
       }
     }
 
-    // Parse CSV
-    const records = await parse(csvData, {
-      skipFirstRow: true,
-      columns: [
-        'name', 'address', 'city', 'state', 'zip_code', 'phone', 'website', 
-        'email', 'key_providers', 'therapeutic_areas', 'products_drugs', 
-        'manufacturers', 'clinical_trials', 'trial_sponsors', 'capacity_info',
-        'nci_designated', 'fact_accredited', 'patient_services'
-      ]
-    });
+    // Parse CSV (tolerant to column count variations)
+    const expectedColumns = [
+      'name', 'address', 'city', 'state', 'zip_code', 'phone', 'website',
+      'email', 'key_providers', 'therapeutic_areas', 'products_drugs',
+      'manufacturers', 'clinical_trials', 'trial_sponsors', 'capacity_info',
+      'nci_designated', 'fact_accredited', 'patient_services'
+    ];
+
+    // Simple CSV line parser handling quotes and escaped quotes
+    const parseCSVLine = (line: string): string[] => {
+      const result: string[] = [];
+      let current = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        if (char === '"') {
+          if (inQuotes && i + 1 < line.length && line[i + 1] === '"') {
+            current += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === ',' && !inQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      result.push(current.trim());
+      return result;
+    };
+
+    // Build records tolerant to extra/missing fields per line
+    const lines = csvData.split(/\r?\n/);
+    const records: any[] = [];
+    let buffer = '';
+    for (let i = 1; i < lines.length; i++) { // skip header line
+      let line = lines[i];
+      if (!line) continue;
+      if (buffer) {
+        line = buffer + '\n' + line;
+        buffer = '';
+      }
+      let fields = parseCSVLine(line);
+      const quoteCount = (line.match(/"/g) || []).length;
+      if (quoteCount % 2 !== 0) {
+        buffer = line;
+        continue;
+      }
+      if (fields.length < expectedColumns.length) {
+        while (fields.length < expectedColumns.length && i + 1 < lines.length) {
+          i++;
+          line += '\n' + lines[i];
+          fields = parseCSVLine(line);
+          const qc = (line.match(/"/g) || []).length;
+          if (qc % 2 !== 0) continue;
+        }
+      }
+      if (fields.length > expectedColumns.length) {
+        const head = fields.slice(0, expectedColumns.length - 1);
+        const tail = fields.slice(expectedColumns.length - 1).join(',').trim();
+        fields = [...head, tail];
+      }
+      const obj: Record<string, string> = {};
+      expectedColumns.forEach((key, idx) => {
+        obj[key] = fields[idx] ?? '';
+      });
+      records.push(obj);
+    }
 
     console.log(`Parsed ${records.length} centers from CSV`);
 
