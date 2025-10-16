@@ -262,7 +262,8 @@ function extractKeywords(query: string): string[] {
 }
 
 function detectVisionRequirement(queryLower: string): boolean {
-  return /image|picture|photo|scan|x-ray|mri|ct scan|visual|diagram/.test(queryLower);
+  // FIXED: Only detect vision when explicitly asking about images/scans, NOT for "list"
+  return /\b(image|picture|photo|scan|x-ray|mri|ct\s*scan|visual|diagram)\b/.test(queryLower);
 }
 
 function detectEmotionalTone(queryLower: string, history?: any[]): 'empathetic' | 'professional' | 'playful' | undefined {
@@ -1873,12 +1874,17 @@ serve(async (req) => {
     // Apply model mapping
     let mappedModel = modelMapping[originalModel] || request.model;
     
-    // ========== INTEGRATION POINT 2: Use Triage-Selected Model ==========
-    // If smart routing is enabled and triage suggests a model, use it
-    if (triageData?.suggested_model) {
+    // FIXED: Only use triage model if enableSmartRouting is true AND no user-selected model
+    // This prevents overriding when user explicitly chooses a model like phi-3.5-mini
+    const userSelectedModel = request.model && request.model !== 'google/gemini-2.5-flash';
+    
+    if (request.enableSmartRouting && triageData?.suggested_model && !userSelectedModel) {
       mappedModel = triageData.suggested_model;
       console.log(`Smart routing selected: ${mappedModel} (was: ${originalModel})`);
       console.log(`Routing reasoning: ${triageData.reasoning}`);
+    } else if (userSelectedModel) {
+      // User explicitly selected a model - respect it
+      console.log(`Respecting user-selected model: ${mappedModel}`);
     } else {
       // If model doesn't start with google/ or openai/, default to Gemini Flash
       if (!mappedModel.startsWith('google/') && !mappedModel.startsWith('openai/')) {
@@ -1956,8 +1962,8 @@ serve(async (req) => {
     const state = triageData?.state;
     const city = triageData?.city;
     
-    // Detect treatment center query
-    const isTreatmentQuery = triageData?.show_treatment_map || triageData?.best_format === 'map';
+    // FIXED: Detect treatment center query based on best_format ONLY
+    const isTreatmentQuery = triageData?.best_format === 'map';
     
     // Check if we have enough filters to show map (therapeutic/product + location)
     const hasTherapeuticOrProduct = therapeuticArea || product || manufacturer;
