@@ -1505,7 +1505,7 @@ ${conversationSummary.transcript}`
     <TooltipProvider>
       <AnimatePresence>
         {isOpen && (
-          <Draggable handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized} cancel="button, [role='button'], a, input, textarea, select, [data-radix-collection-item]">
+          <Draggable handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized} cancel=".no-drag">
             <motion.div
               key="genie-main-popup"
               ref={dragRef}
@@ -1539,7 +1539,7 @@ ${conversationSummary.transcript}`
                        variant="ghost"
                        size="sm"
                        onClick={() => setShowConfigWizard(true)}
-                       className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                        className="no-drag h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
                      >
                        <Settings className="h-4 w-4" />
                      </Button>
@@ -1556,7 +1556,7 @@ ${conversationSummary.transcript}`
                         variant="ghost"
                         size="sm"
                         onClick={() => document.getElementById('pricing-sheet-trigger')?.click()}
-                        className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                        className="no-drag h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
                       >
                         <Bot className="h-4 w-4" />
                       </Button>
@@ -1566,13 +1566,31 @@ ${conversationSummary.transcript}`
                     </TooltipContent>
                   </Tooltip>
                   
+                  {/* Session Refresh Button */}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleResetSession}
+                        className="no-drag h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                        aria-label="Reset session"
+                      >
+                        <RefreshCw className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Reset session</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
                        variant="ghost"
                        size="sm"
                        onClick={handleConnectLiveAgent}
-                       className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                       className="no-drag h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
                      >
                        <Users className="h-4 w-4" />
                      </Button>
@@ -1587,7 +1605,7 @@ ${conversationSummary.transcript}`
                        variant="ghost"
                        size="sm"
                        onClick={() => setIsMinimized(!isMinimized)}
-                       className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                       className="no-drag h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
                      >
                        <Minimize2 className="h-4 w-4" />
                      </Button>
@@ -1602,7 +1620,7 @@ ${conversationSummary.transcript}`
                        variant="ghost"
                        size="sm"
                        onClick={() => setIsMaximized(!isMaximized)}
-                       className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                       className="no-drag h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
                      >
                        <Maximize2 className="h-4 w-4" />
                      </Button>
@@ -1617,7 +1635,7 @@ ${conversationSummary.transcript}`
                        variant="ghost"
                        size="sm"
                        onClick={handleClose}
-                       className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                       className="no-drag h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
                      >
                        <X className="h-4 w-4" />
                      </Button>
@@ -2071,7 +2089,7 @@ ${conversationSummary.transcript}`
               }
             }}
           >
-            <DialogContent container={dragRef.current} className="max-w-sm sm:max-w-md w-full p-0 z-[100001]">
+            <DialogContent aria-describedby={undefined} className="max-w-sm sm:max-w-md w-full p-0 z-[100001]">
               {/* Accessible title for screen readers + enables built-in close button semantics */}
               <DialogHeader className="sr-only">
                 <DialogTitle>Welcome to Genie AI</DialogTitle>
