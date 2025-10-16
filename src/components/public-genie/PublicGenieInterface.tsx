@@ -1503,10 +1503,9 @@ ${conversationSummary.transcript}`
 
   return (
     <TooltipProvider>
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {isOpen && (
-          <>
-            <Draggable handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
+          <Draggable handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
             <motion.div
               key="genie-main-popup"
               ref={dragRef}
@@ -2052,9 +2051,12 @@ ${conversationSummary.transcript}`
           </Card>
             </motion.div>
           </Draggable>
+        )}
 
-          {/* Privacy Modal inside Genie container */}
+        {/* Privacy Modal inside Genie container */}
+        {isOpen && showPrivacyBanner && (
           <Dialog 
+            key="privacy-dialog"
             open={showPrivacyBanner}
             onOpenChange={(open) => {
               if (!open) {
@@ -2076,8 +2078,8 @@ ${conversationSummary.transcript}`
               />
             </DialogContent>
           </Dialog>
-          </>
         )}
+      </AnimatePresence>
 
       {/* Image Uploader Drawer */}
       <Sheet open={showImageUploader && aiConfig.visionEnabled} onOpenChange={setShowImageUploader}>
@@ -2129,16 +2131,18 @@ ${conversationSummary.transcript}`
       {/* Experimentation Banner removed - all info now in privacy popup with legal dialog links */}
       
       {/* Configuration Wizard */}
-      <ConfigurationWizard
-        isOpen={showConfigWizard}
-        portalContainer={dragRef.current}
-        onComplete={(config) => {
-          handleConfigChange(config);
-          setShowConfigWizard(false);
-          
-          // Now add welcome message after configuration (only if no messages yet)
-          if (messages.length === 0) {
-            const capabilitiesMessage = `Hello ${userInfo?.firstName}! 🧞‍♂️ Welcome to Genie AI! 
+      {showConfigWizard && (
+        <ConfigurationWizard
+          key="config-wizard"
+          isOpen={showConfigWizard}
+          portalContainer={dragRef.current}
+          onComplete={(config) => {
+            handleConfigChange(config);
+            setShowConfigWizard(false);
+            
+            // Now add welcome message after configuration (only if no messages yet)
+            if (messages.length === 0) {
+              const capabilitiesMessage = `Hello ${userInfo?.firstName}! 🧞‍♂️ Welcome to Genie AI! 
 
 I am Genie and I can support and discuss with you on Experimentation Hub Technology and Healthcare concepts.
 
@@ -2158,24 +2162,26 @@ ${config.mode === 'default' ? '🤖 I\'ll automatically select the best AI model
 
 Ask me anything to get started!`;
 
-            addMessage({
-              role: 'assistant',
-              content: capabilitiesMessage,
-              timestamp: new Date().toISOString()
+              addMessage({
+                role: 'assistant',
+                content: capabilitiesMessage,
+                timestamp: new Date().toISOString()
+              });
+            }
+            
+            toast({
+              title: "Configuration Saved",
+              description: config.mode !== aiConfig.mode ? "Mode switched - conversation continues seamlessly" : "Your AI preferences have been updated",
             });
-          }
-          
-          toast({
-            title: "Configuration Saved",
-            description: config.mode !== aiConfig.mode ? "Mode switched - conversation continues seamlessly" : "Your AI preferences have been updated",
-          });
-        }}
-        onCancel={() => setShowConfigWizard(false)}
-      />
+          }}
+          onCancel={() => setShowConfigWizard(false)}
+        />
+      )}
       
       {/* Human Escalation Form */}
       {showHumanEscalation && userInfo && (
         <HumanEscalationForm
+          key="human-escalation"
           isOpen={showHumanEscalation}
           onClose={() => setShowHumanEscalation(false)}
           onSubmit={handleHumanEscalation}
@@ -2183,7 +2189,6 @@ Ask me anything to get started!`;
           context={context!}
         />
       )}
-      </AnimatePresence>
     </TooltipProvider>
   );
 };
