@@ -110,41 +110,53 @@ export const VisualJourneyMap: React.FC<VisualJourneyMapProps> = ({
                 <div className="absolute left-6 top-12 w-0.5 h-full bg-gradient-to-b from-primary/50 to-muted" />
               )}
 
-              <div className="flex gap-3">
-                {/* Icon Circle */}
-                <div className={`
-                  flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center
-                  ${step.status === 'completed' ? 'bg-green-500/20 border-2 border-green-500' : 
-                    step.status === 'current' ? 'bg-primary/20 border-2 border-primary animate-pulse' : 
-                    'bg-muted border-2 border-muted-foreground/30'}
-                `}>
-                  <div className={
-                    step.status === 'completed' ? 'text-green-500' :
-                    step.status === 'current' ? 'text-primary' :
-                    'text-muted-foreground'
-                  }>
-                    {getIconComponent(step.icon, context)}
-                  </div>
-                </div>
+              {/** Normalize status: never show first 3 steps as "upcoming" */}
+              {(() => {
+                const asNumber = parseInt(step.id as string, 10);
+                const normalizedStatus = (step.status === 'upcoming' && !isNaN(asNumber) && asNumber <= 3)
+                  ? (asNumber <= 2 ? 'completed' : 'current')
+                  : step.status;
+                
+                return (
+                  <div className="flex gap-3">
+                    {/* Icon Circle */}
+                    <div className={`
+                      flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center
+                      ${normalizedStatus === 'completed' ? 'bg-green-500/20 border-2 border-green-500' : 
+                        normalizedStatus === 'current' ? 'bg-primary/20 border-2 border-primary animate-pulse' : 
+                        'bg-muted border-2 border-muted-foreground/30'}
+                    `}>
+                      <div className={
+                        normalizedStatus === 'completed' ? 'text-green-500' :
+                        normalizedStatus === 'current' ? 'text-primary' :
+                        'text-muted-foreground'
+                      }>
+                        {getIconComponent(step.icon, context)}
+                      </div>
+                    </div>
 
-                {/* Content */}
-                <div className="flex-1 pb-6">
-                  <div className="flex items-start gap-2 mb-2">
-                    {getStatusIcon(step.status)}
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground">
-                        {step.title}
-                      </h4>
-                      {step.status && (
-                        <Badge 
-                          variant={step.status === 'completed' ? 'default' : 'outline'}
-                          className="mt-1 text-xs"
-                        >
-                          {step.status.charAt(0).toUpperCase() + step.status.slice(1)}
-                        </Badge>
-                      )}
+                    {/* Content */}
+                    <div className="flex-1 pb-6">
+                      <div className="flex items-start gap-2 mb-2">
+                        {getStatusIcon(normalizedStatus)}
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-foreground">
+                            {step.title}
+                          </h4>
+                          {normalizedStatus && (
+                            <Badge 
+                              variant={normalizedStatus === 'completed' ? 'default' : 'outline'}
+                              className="mt-1 text-xs"
+                            >
+                              {String(normalizedStatus).charAt(0).toUpperCase() + String(normalizedStatus).slice(1)}
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
+                );
+              })()}
 
                   <p className="text-sm text-muted-foreground mb-3">
                     {step.description}

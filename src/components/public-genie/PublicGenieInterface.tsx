@@ -953,7 +953,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             metadata: {
               triageSuggestedModel: primaryRes.triageData?.suggested_model,
               best_format: primaryRes.triageData?.best_format,
-              oncologyProducts: primaryRes.oncologyProducts
+              oncologyProducts: primaryRes.oncologyProducts,
+              smartRoutingOptimization: (primaryRes as any).smartRoutingOptimization
             }
           };
           
@@ -1269,7 +1270,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
                 best_format: response.triageData?.best_format,
                 oncologyProducts: response.oncologyProducts,
                 knowledgeBaseResults: response.knowledgeBaseResults,
-                showTreatmentMap: response.showTreatmentMap,
+                showTreatmentMap: response.showTreatmentMap || (response.triageData?.best_format === 'map'),
                 centerType: response.centerType,
                 searchQuery: response.searchQuery,
                 // NEW: Add routing optimization metadata
@@ -1280,7 +1281,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
                 collaborationMode: response.collaborationMode,
                 agentCount: response.agentCount,
                 consensusScore: response.consensusScore,
-                smartRoutingOptimization: (response as any).metadata?.smartRoutingOptimization
+                smartRoutingOptimization: (response as any).smartRoutingOptimization || (response as any).metadata?.smartRoutingOptimization
               }
             });
             

@@ -44,6 +44,8 @@ interface AIResponse {
   priceRange?: string;
   aiRecommendations?: any;
   contextualInsights?: any;
+  // Smart routing optimization metadata
+  smartRoutingOptimization?: any;
 }
 
 interface UseUniversalAIOptions {
@@ -132,11 +134,11 @@ export const useUniversalAI = () => {
         model: data.model || data.modelUsed || request.model,
         contentLength: data.content?.length || 0,
         ragUsed: data.ragContext ? 'Yes' : 'No',
-        knowledgeBaseUsed: data.knowledgeBaseResults ? 'Yes' : 'No',
-        triageUsed: data.triageData ? 'Yes' : 'No',
-        routingReasoning: data.routingReasoning,
-        multiAgent: data.collaborationMode ? `Yes (${data.collaborationMode})` : 'No',
-        agentCount: data.agentCount || 0
+        knowledgeBaseUsed: (data.metadata?.knowledgeBaseResults || data.knowledgeBaseResults) ? 'Yes' : 'No',
+        triageUsed: (data.metadata?.triageData || data.triageData) ? 'Yes' : 'No',
+        routingReasoning: data.routingReasoning || data.metadata?.routingReasoning,
+        multiAgent: (data.metadata?.collaborationMode || data.collaborationMode) ? `Yes (${data.metadata?.collaborationMode || data.collaborationMode})` : 'No',
+        agentCount: data.metadata?.agentCount || data.agentCount || 0
       });
       
       // DETAILED TRIAGE DATA LOGGING FOR VERIFICATION
@@ -188,7 +190,9 @@ export const useUniversalAI = () => {
         insuranceType: metadata.insuranceType,
         priceRange: metadata.priceRange,
         aiRecommendations: metadata.aiRecommendations,
-        contextualInsights: metadata.contextualInsights
+        contextualInsights: metadata.contextualInsights,
+        // ========== SMART ROUTING OPTIMIZATION ==========
+        smartRoutingOptimization: metadata.smartRoutingOptimization
       };
     } catch (err: any) {
       const errorMessage = err.message || 'Failed to generate AI response';
