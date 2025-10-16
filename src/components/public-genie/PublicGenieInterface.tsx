@@ -298,6 +298,7 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [showImageUploader, setShowImageUploader] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
+  const sendingRef = useRef(false);
   const { toast } = useToast();
 
   const { generateResponse, isLoading } = useUniversalAI();
@@ -635,12 +636,16 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
 
   const handleSendMessage = async () => {
     if ((!inputMessage.trim() && uploadedImages.length === 0) || isLoading) return;
+    if (sendingRef.current) return; // Prevent double-trigger
+    sendingRef.current = true;
 
-    // Check if conversation is allowed
-    if (!isConversationAllowed) {
-      setShowLimitModal(true);
-      return;
-    }
+      // Check if conversation is allowed
+      // Check if conversation is allowed
+      if (!isConversationAllowed) {
+        setShowLimitModal(true);
+        sendingRef.current = false;
+        return;
+      }
 
     // Start conversation tracking if this is the first message
     if (!conversationLimitService.isConversationActive()) {
