@@ -319,8 +319,12 @@ export const InteractiveTreatmentCenterMap = ({
       }
 
       const marker = new mapboxgl.Marker(markerElement)
-        .setLngLat([cluster.lng, cluster.lat])
-        .addTo(map.current!);
+        .setLngLat([cluster.lng, cluster.lat]);
+      
+      // Only add to map if it exists
+      if (map.current) {
+        marker.addTo(map.current);
+      }
 
       markerElement.addEventListener('click', (e) => {
         e.stopPropagation();
