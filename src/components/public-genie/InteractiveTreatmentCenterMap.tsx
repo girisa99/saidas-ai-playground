@@ -1,15 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { getTreatmentCentersForMap, searchTreatmentCenters, TreatmentCenter, loadEnhancedCenters } from '@/services/treatmentCenterService';
-import { MapPin, Maximize2, Minimize2, Filter } from 'lucide-react';
+import { MapPin, Maximize2, Minimize2, Filter, X, DollarSign } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { TreatmentCenterDetails } from './TreatmentCenterDetails';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 
 interface InteractiveTreatmentCenterMapProps {
   filterByType?: string;
@@ -34,10 +36,12 @@ export const InteractiveTreatmentCenterMap = ({
 }: InteractiveTreatmentCenterMapProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
-  const markers = useRef<mapboxgl.Marker[]>([]);
-  const [centers, setCenters] = useState<TreatmentCenter[]>([]);
+  const markers = useRef<(mapboxgl.Marker & { clusterId?: number })[]>([]);
+  const [allCenters, setAllCenters] = useState<TreatmentCenter[]>([]);
   const [selectedCenter, setSelectedCenter] = useState<TreatmentCenter | null>(null);
-  const [centerType, setCenterType] = useState<string>(filterByType || 'all');
+  const [selectedTherapeuticAreas, setSelectedTherapeuticAreas] = useState<string[]>([]);
+  const [selectedManufacturers, setSelectedManufacturers] = useState<string[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [mapboxToken, setMapboxToken] = useState<string>(() => {
     try {
@@ -47,6 +51,7 @@ export const InteractiveTreatmentCenterMap = ({
     }
   });
   const [isMapInitialized, setIsMapInitialized] = useState(false);
+  const [clusterZoomLevel, setClusterZoomLevel] = useState(3.5);
 
   // Simple localStorage-backed geocode cache
   const getGeocodeCache = (): Record<string, { lat: number; lng: number }> => {
@@ -84,12 +89,12 @@ export const InteractiveTreatmentCenterMap = ({
     return null;
   };
 
+  // Load all centers once on mount
   const loadCenters = async () => {
-    // Prefer DB if available
     let data: TreatmentCenter[] = [];
+    
     if (therapeuticArea || product || manufacturer || clinicalTrial || state || city || searchQuery) {
       data = await searchTreatmentCenters({
-        centerType: centerType === 'all' ? undefined : centerType,
         therapeuticArea,
         product,
         manufacturer,
@@ -100,14 +105,14 @@ export const InteractiveTreatmentCenterMap = ({
         limit: 500,
       });
     } else {
-      data = await getTreatmentCentersForMap(centerType === 'all' ? undefined : centerType);
+      data = await getTreatmentCentersForMap();
     }
 
-    // If DB empty, fallback to local CSV and geocode
+    // If DB empty, fallback to local CSV
     if (!data || data.length === 0) {
       try {
         const csvRows = await loadEnhancedCenters();
-        const limited = csvRows.slice(0, 200); // cap for performance
+        const limited = csvRows.slice(0, 500);
         const enriched: TreatmentCenter[] = [];
         for (const row of limited) {
           const name = row.name?.trim();
@@ -147,21 +152,60 @@ export const InteractiveTreatmentCenterMap = ({
       }
     }
 
-    // Apply local type filter if set
-    const filtered = centerType === 'all' ? data : data.filter(c => c.center_type === centerType);
-    setCenters(filtered);
+    setAllCenters(data);
   };
 
-  // Load treatment centers based on props or state
+  // Extract unique values for filters
+  const { therapeuticAreas, manufacturers, products } = useMemo(() => {
+    const areas = new Set<string>();
+    const mfgs = new Set<string>();
+    const prods = new Set<string>();
+    
+    allCenters.forEach(center => {
+      center.therapeutic_areas?.forEach(area => areas.add(area));
+      center.manufacturers?.forEach(mfg => mfgs.add(mfg));
+      center.products_drugs?.forEach(prod => prods.add(prod));
+    });
+    
+    return {
+      therapeuticAreas: Array.from(areas).sort(),
+      manufacturers: Array.from(mfgs).sort(),
+      products: Array.from(prods).sort(),
+    };
+  }, [allCenters]);
+
+  // Filter centers based on selections
+  const filteredCenters = useMemo(() => {
+    return allCenters.filter(center => {
+      if (selectedTherapeuticAreas.length > 0) {
+        const hasMatch = center.therapeutic_areas?.some(area => 
+          selectedTherapeuticAreas.includes(area)
+        );
+        if (!hasMatch) return false;
+      }
+      
+      if (selectedManufacturers.length > 0) {
+        const hasMatch = center.manufacturers?.some(mfg => 
+          selectedManufacturers.includes(mfg)
+        );
+        if (!hasMatch) return false;
+      }
+      
+      if (selectedProducts.length > 0) {
+        const hasMatch = center.products_drugs?.some(prod => 
+          selectedProducts.includes(prod)
+        );
+        if (!hasMatch) return false;
+      }
+      
+      return true;
+    });
+  }, [allCenters, selectedTherapeuticAreas, selectedManufacturers, selectedProducts]);
+
+  // Load treatment centers on mount
   useEffect(() => {
     loadCenters();
-  }, [centerType, filterByType, therapeuticArea, product, manufacturer, clinicalTrial, state, city, searchQuery]);
-
-  useEffect(() => {
-    if (filterByType) {
-      setCenterType(filterByType);
-    }
-  }, [filterByType]);
+  }, [therapeuticArea, product, manufacturer, clinicalTrial, state, city, searchQuery]);
 
   // Try to load Mapbox token from database on mount
   useEffect(() => {
@@ -225,7 +269,34 @@ export const InteractiveTreatmentCenterMap = ({
     };
   }, [mapboxToken]);
 
-  // Add markers when centers change
+  // Create marker clusters based on zoom level
+  const createClusters = (centers: TreatmentCenter[], zoom: number) => {
+    if (zoom >= 8) return centers.map(c => ({ centers: [c], lat: c.latitude!, lng: c.longitude! }));
+    
+    const clusters: Array<{ centers: TreatmentCenter[]; lat: number; lng: number }> = [];
+    const gridSize = zoom < 5 ? 5 : 2; // degrees
+    const grid = new Map<string, TreatmentCenter[]>();
+    
+    centers.forEach(center => {
+      if (!center.latitude || !center.longitude) return;
+      const latKey = Math.floor(center.latitude / gridSize);
+      const lngKey = Math.floor(center.longitude / gridSize);
+      const key = `${latKey},${lngKey}`;
+      
+      if (!grid.has(key)) grid.set(key, []);
+      grid.get(key)!.push(center);
+    });
+    
+    grid.forEach(clusterCenters => {
+      const avgLat = clusterCenters.reduce((sum, c) => sum + (c.latitude || 0), 0) / clusterCenters.length;
+      const avgLng = clusterCenters.reduce((sum, c) => sum + (c.longitude || 0), 0) / clusterCenters.length;
+      clusters.push({ centers: clusterCenters, lat: avgLat, lng: avgLng });
+    });
+    
+    return clusters;
+  };
+
+  // Add markers with clustering
   useEffect(() => {
     if (!map.current || !isMapInitialized) return;
 
@@ -233,67 +304,99 @@ export const InteractiveTreatmentCenterMap = ({
     markers.current.forEach(marker => marker.remove());
     markers.current = [];
 
-    // Add new markers
-    centers.forEach((center) => {
-      if (center.latitude && center.longitude) {
-        const markerElement = document.createElement('div');
-        markerElement.className = 'treatment-center-marker';
-        markerElement.style.width = '30px';
-        markerElement.style.height = '30px';
+    const zoom = map.current.getZoom();
+    const clusters = createClusters(filteredCenters, zoom);
+
+    clusters.forEach((cluster) => {
+      const isCluster = cluster.centers.length > 1;
+      const markerElement = document.createElement('div');
+      markerElement.className = 'treatment-center-marker';
+      markerElement.style.cursor = 'pointer';
+      markerElement.style.transition = 'all 0.3s';
+      
+      if (isCluster) {
+        // Cluster marker
+        const size = Math.min(50, 30 + cluster.centers.length * 2);
+        markerElement.style.width = `${size}px`;
+        markerElement.style.height = `${size}px`;
         markerElement.style.borderRadius = '50%';
-        markerElement.style.cursor = 'pointer';
-        markerElement.style.transition = 'all 0.3s';
+        markerElement.style.backgroundColor = '#3b82f6';
+        markerElement.style.border = '3px solid white';
+        markerElement.style.boxShadow = '0 2px 8px rgba(0,0,0,0.4)';
+        markerElement.style.display = 'flex';
+        markerElement.style.alignItems = 'center';
+        markerElement.style.justifyContent = 'center';
+        markerElement.style.fontWeight = 'bold';
+        markerElement.style.color = 'white';
+        markerElement.style.fontSize = '14px';
+        markerElement.textContent = cluster.centers.length.toString();
+      } else {
+        // Single marker - color by therapeutic area
+        markerElement.style.width = '32px';
+        markerElement.style.height = '32px';
+        markerElement.style.borderRadius = '50%';
         
-        // Color code by center type
-        const colors: Record<string, string> = {
-          gene_therapy: '#8b5cf6',
-          bmt: '#ec4899',
-          oncology: '#f59e0b',
-          general: '#3b82f6'
+        const center = cluster.centers[0];
+        const primaryArea = center.therapeutic_areas?.[0] || '';
+        const colorMap: Record<string, string> = {
+          'CAR-T': '#8b5cf6',
+          'Gene Therapy': '#a855f7',
+          'Cell Therapy': '#c026d3',
+          'Oncology': '#f59e0b',
+          'Hematology': '#ef4444',
+          'BMT': '#ec4899',
         };
-        markerElement.style.backgroundColor = colors[center.center_type] || '#6b7280';
+        const color = Object.keys(colorMap).find(key => primaryArea.includes(key)) 
+          ? colorMap[Object.keys(colorMap).find(key => primaryArea.includes(key))!]
+          : '#6b7280';
+        
+        markerElement.style.backgroundColor = color;
         markerElement.style.border = '3px solid white';
         markerElement.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
-
-        // Add icon
         markerElement.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" style="width: 18px; height: 18px; margin: 6px;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin: 6px;">
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
           </svg>
         `;
+      }
 
-        const marker = new mapboxgl.Marker(markerElement)
-          .setLngLat([center.longitude, center.latitude])
-          .addTo(map.current!);
+      const marker = new mapboxgl.Marker(markerElement)
+        .setLngLat([cluster.lng, cluster.lat])
+        .addTo(map.current!);
 
-        // Add click handler
-        markerElement.addEventListener('click', () => {
-          setSelectedCenter(center);
+      markerElement.addEventListener('click', () => {
+        if (isCluster) {
           map.current?.flyTo({
-            center: [center.longitude!, center.latitude!],
+            center: [cluster.lng, cluster.lat],
+            zoom: Math.min(zoom + 2, 15),
+            duration: 1000
+          });
+        } else {
+          setSelectedCenter(cluster.centers[0]);
+          map.current?.flyTo({
+            center: [cluster.lng, cluster.lat],
             zoom: 12,
             duration: 1500
           });
-        });
+        }
+      });
 
-        // Hover effect
-        markerElement.addEventListener('mouseenter', () => {
-          markerElement.style.transform = 'scale(1.2)';
-          markerElement.style.zIndex = '1000';
-        });
-        markerElement.addEventListener('mouseleave', () => {
-          markerElement.style.transform = 'scale(1)';
-          markerElement.style.zIndex = 'auto';
-        });
+      markerElement.addEventListener('mouseenter', () => {
+        markerElement.style.transform = 'scale(1.15)';
+        markerElement.style.zIndex = '1000';
+      });
+      markerElement.addEventListener('mouseleave', () => {
+        markerElement.style.transform = 'scale(1)';
+        markerElement.style.zIndex = 'auto';
+      });
 
-        markers.current.push(marker);
-      }
+      markers.current.push(marker as any);
     });
 
-    // Fit bounds to show all markers
-    if (centers.length > 0 && map.current) {
+    // Fit bounds when filters change
+    if (filteredCenters.length > 0 && map.current) {
       const bounds = new mapboxgl.LngLatBounds();
-      centers.forEach(center => {
+      filteredCenters.forEach(center => {
         if (center.latitude && center.longitude) {
           bounds.extend([center.longitude, center.latitude]);
         }
@@ -301,12 +404,28 @@ export const InteractiveTreatmentCenterMap = ({
       
       if (!bounds.isEmpty()) {
         map.current.fitBounds(bounds, {
-          padding: 50,
-          maxZoom: 10
+          padding: 80,
+          maxZoom: 10,
+          duration: 1000
         });
       }
     }
-  }, [centers, isMapInitialized]);
+  }, [filteredCenters, isMapInitialized]);
+
+  // Update clusters on zoom
+  useEffect(() => {
+    if (!map.current || !isMapInitialized) return;
+    
+    const handleZoom = () => {
+      const zoom = map.current?.getZoom() || 3.5;
+      setClusterZoomLevel(zoom);
+    };
+    
+    map.current.on('zoom', handleZoom);
+    return () => {
+      map.current?.off('zoom', handleZoom);
+    };
+  }, [isMapInitialized]);
 
   return (
     <div className={`space-y-4 ${isFullscreen ? 'fixed inset-0 z-50 bg-background p-4' : ''}`}>
@@ -389,44 +508,230 @@ export const InteractiveTreatmentCenterMap = ({
             </div>
           )}
 
-          {/* Filters */}
-          <div className="flex items-center gap-4">
-            <Select value={centerType} onValueChange={setCenterType}>
-              <SelectTrigger className="w-48">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Types</SelectItem>
-                <SelectItem value="gene_therapy">Gene Therapy</SelectItem>
-                <SelectItem value="bmt">BMT / Transplant</SelectItem>
-                <SelectItem value="oncology">Oncology</SelectItem>
-                <SelectItem value="general">General Healthcare</SelectItem>
-              </SelectContent>
-            </Select>
+          {/* Advanced Filters */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {/* Therapeutic Areas Filter */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" className="w-full justify-between">
+                  <span className="truncate">
+                    {selectedTherapeuticAreas.length > 0 
+                      ? `${selectedTherapeuticAreas.length} Therapeutic Area${selectedTherapeuticAreas.length > 1 ? 's' : ''}`
+                      : 'Therapeutic Areas'}
+                  </span>
+                  <Filter className="ml-2 h-4 w-4 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-4" align="start">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between mb-3">
+                    <Label className="font-semibold">Therapeutic Areas</Label>
+                    {selectedTherapeuticAreas.length > 0 && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => setSelectedTherapeuticAreas([])}
+                        className="h-6 px-2 text-xs"
+                      >
+                        Clear
+                      </Button>
+                    )}
+                  </div>
+                  <div className="max-h-60 overflow-y-auto space-y-2">
+                    {therapeuticAreas.slice(0, 15).map(area => (
+                      <div key={area} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`area-${area}`}
+                          checked={selectedTherapeuticAreas.includes(area)}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              setSelectedTherapeuticAreas([...selectedTherapeuticAreas, area]);
+                            } else {
+                              setSelectedTherapeuticAreas(selectedTherapeuticAreas.filter(a => a !== area));
+                            }
+                          }}
+                        />
+                        <label htmlFor={`area-${area}`} className="text-sm cursor-pointer flex-1">
+                          {area}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
 
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span>{centers.length} centers</span>
-            </div>
+            {/* Manufacturers Filter */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" className="w-full justify-between">
+                  <span className="truncate">
+                    {selectedManufacturers.length > 0 
+                      ? `${selectedManufacturers.length} Manufacturer${selectedManufacturers.length > 1 ? 's' : ''}`
+                      : 'Manufacturers'}
+                  </span>
+                  <Filter className="ml-2 h-4 w-4 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-4" align="start">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between mb-3">
+                    <Label className="font-semibold">Manufacturers</Label>
+                    {selectedManufacturers.length > 0 && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => setSelectedManufacturers([])}
+                        className="h-6 px-2 text-xs"
+                      >
+                        Clear
+                      </Button>
+                    )}
+                  </div>
+                  <div className="max-h-60 overflow-y-auto space-y-2">
+                    {manufacturers.slice(0, 15).map(mfg => (
+                      <div key={mfg} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`mfg-${mfg}`}
+                          checked={selectedManufacturers.includes(mfg)}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              setSelectedManufacturers([...selectedManufacturers, mfg]);
+                            } else {
+                              setSelectedManufacturers(selectedManufacturers.filter(m => m !== mfg));
+                            }
+                          }}
+                        />
+                        <label htmlFor={`mfg-${mfg}`} className="text-sm cursor-pointer flex-1">
+                          {mfg}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
 
-            {/* Legend */}
-            <div className="flex items-center gap-3 ml-auto">
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-purple-500" />
-                <span className="text-xs">Gene Therapy</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-pink-500" />
-                <span className="text-xs">BMT</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-amber-500" />
-                <span className="text-xs">Oncology</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-blue-500" />
-                <span className="text-xs">General</span>
-              </div>
+            {/* Products Filter */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" className="w-full justify-between">
+                  <span className="truncate">
+                    {selectedProducts.length > 0 
+                      ? `${selectedProducts.length} Product${selectedProducts.length > 1 ? 's' : ''}`
+                      : 'Products/Treatments'}
+                  </span>
+                  <Filter className="ml-2 h-4 w-4 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-4" align="start">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between mb-3">
+                    <Label className="font-semibold">Products/Treatments</Label>
+                    {selectedProducts.length > 0 && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => setSelectedProducts([])}
+                        className="h-6 px-2 text-xs"
+                      >
+                        Clear
+                      </Button>
+                    )}
+                  </div>
+                  <div className="max-h-60 overflow-y-auto space-y-2">
+                    {products.slice(0, 15).map(prod => (
+                      <div key={prod} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`prod-${prod}`}
+                          checked={selectedProducts.includes(prod)}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              setSelectedProducts([...selectedProducts, prod]);
+                            } else {
+                              setSelectedProducts(selectedProducts.filter(p => p !== prod));
+                            }
+                          }}
+                        />
+                        <label htmlFor={`prod-${prod}`} className="text-sm cursor-pointer flex-1">
+                          {prod}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
+
+          {/* Active Filter Tags */}
+          {(selectedTherapeuticAreas.length > 0 || selectedManufacturers.length > 0 || selectedProducts.length > 0) && (
+            <div className="flex flex-wrap items-center gap-2">
+              <Filter className="h-4 w-4 text-muted-foreground" />
+              {selectedTherapeuticAreas.map(area => (
+                <Badge key={area} variant="secondary" className="gap-1">
+                  {area}
+                  <X 
+                    className="h-3 w-3 cursor-pointer" 
+                    onClick={() => setSelectedTherapeuticAreas(selectedTherapeuticAreas.filter(a => a !== area))}
+                  />
+                </Badge>
+              ))}
+              {selectedManufacturers.map(mfg => (
+                <Badge key={mfg} variant="secondary" className="gap-1">
+                  {mfg}
+                  <X 
+                    className="h-3 w-3 cursor-pointer" 
+                    onClick={() => setSelectedManufacturers(selectedManufacturers.filter(m => m !== mfg))}
+                  />
+                </Badge>
+              ))}
+              {selectedProducts.map(prod => (
+                <Badge key={prod} variant="secondary" className="gap-1">
+                  {prod}
+                  <X 
+                    className="h-3 w-3 cursor-pointer" 
+                    onClick={() => setSelectedProducts(selectedProducts.filter(p => p !== prod))}
+                  />
+                </Badge>
+              ))}
+              {(selectedTherapeuticAreas.length > 0 || selectedManufacturers.length > 0 || selectedProducts.length > 0) && (
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => {
+                    setSelectedTherapeuticAreas([]);
+                    setSelectedManufacturers([]);
+                    setSelectedProducts([]);
+                  }}
+                  className="h-7 text-xs"
+                >
+                  Clear All
+                </Button>
+              )}
             </div>
+          )}
+
+          {/* Stats Bar */}
+          <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+            <div className="flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-primary" />
+                <span className="font-semibold">{filteredCenters.length}</span>
+                <span className="text-muted-foreground">Treatment Centers</span>
+              </div>
+              {filteredCenters.length !== allCenters.length && (
+                <span className="text-xs text-muted-foreground">
+                  (filtered from {allCenters.length} total)
+                </span>
+              )}
+            </div>
+            {filteredCenters.some(c => c.products_drugs?.length) && (
+              <Button variant="ghost" size="sm" className="gap-2">
+                <DollarSign className="h-4 w-4" />
+                View Pricing
+              </Button>
+            )}
           </div>
 
           {/* Map Container */}
