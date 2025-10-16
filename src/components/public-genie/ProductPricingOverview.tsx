@@ -49,7 +49,7 @@ export const ProductPricingOverview = () => {
   return (
     <div className="space-y-6">
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
@@ -60,7 +60,7 @@ export const ProductPricingOverview = () => {
           <CardContent>
             <div className="text-2xl font-bold">{products.length}</div>
             <p className="text-xs text-muted-foreground mt-1">
-              Available treatments
+              FDA-approved therapies
             </p>
           </CardContent>
         </Card>
@@ -77,7 +77,22 @@ export const ProductPricingOverview = () => {
               {Object.keys(productsByCategory).length}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Treatment categories
+              CAR-T, Gene, CRISPR, MS
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              <Info className="h-4 w-4" />
+              Data Categories
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">22</div>
+            <p className="text-xs text-muted-foreground mt-1">
+              Comprehensive fields
             </p>
           </CardContent>
         </Card>
@@ -92,7 +107,7 @@ export const ProductPricingOverview = () => {
           <CardContent>
             <div className="text-2xl font-bold">$65K - $3.1M</div>
             <p className="text-xs text-muted-foreground mt-1">
-              WAC pricing spectrum
+              WAC pricing
             </p>
           </CardContent>
         </Card>
