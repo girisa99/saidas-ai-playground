@@ -28,6 +28,7 @@ import { TopicSuggestionPopover } from './TopicSuggestionPopover';
 import { MedicalImageUploader, UploadedImage } from './MedicalImageUploader';
 import { VisionModelIndicator } from './VisionModelIndicator';
 import { InteractiveTreatmentCenterMap } from './InteractiveTreatmentCenterMap';
+import { ProductPricingOverview } from './ProductPricingOverview';
 import { AIRecommendationsPanel } from './AIRecommendationsPanel';
 import { HowToUseGuide } from './HowToUseGuide';
 import { PricingComparisonCard } from './PricingComparisonCard';
@@ -1536,25 +1537,28 @@ ${conversationSummary.transcript}`
                    <TooltipContent>
                      <p>Configure AI Settings</p>
                    </TooltipContent>
-                 </Tooltip>
-                 <Tooltip>
-                   <TooltipTrigger asChild>
-                     <Button
-                       variant="ghost"
-                       size="sm"
-                       onClick={handleResetSession}
-                       className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
-                     >
-                       <RefreshCw className="h-4 w-4" />
-                     </Button>
-                   </TooltipTrigger>
+                  </Tooltip>
+                  
+                  {/* NEW: Pricing Catalog Button */}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => document.getElementById('pricing-sheet-trigger')?.click()}
+                        className="h-7 w-7 p-0 text-white hover:bg-white/20 rounded"
+                      >
+                        <Bot className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
                     <TooltipContent>
-                      <p>End conversation & email transcript</p>
+                      <p>View Product Pricing Catalog</p>
                     </TooltipContent>
-                 </Tooltip>
-                 <Tooltip>
-                   <TooltipTrigger asChild>
-                     <Button
+                  </Tooltip>
+                  
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
                        variant="ghost"
                        size="sm"
                        onClick={handleConnectLiveAgent}
