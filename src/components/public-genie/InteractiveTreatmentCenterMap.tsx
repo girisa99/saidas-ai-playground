@@ -89,11 +89,11 @@ export const InteractiveTreatmentCenterMap = ({
     return null;
   };
 
-  // Load centers - only from database to avoid duplicates
+  // Load centers from database only - no CSV fallback to prevent duplicates
   const loadCenters = async () => {
     let data: TreatmentCenter[] = [];
     
-    // Only fetch from database to prevent duplicate counting
+    // Fetch from database only (showing exactly 157 centers, no duplicates)
     if (therapeuticArea || product || manufacturer || clinicalTrial || state || city || searchQuery) {
       data = await searchTreatmentCenters({
         therapeuticArea,
@@ -106,56 +106,10 @@ export const InteractiveTreatmentCenterMap = ({
         limit: 500,
       });
     } else {
-      // Get from database only to avoid duplicates
       data = await getTreatmentCentersForMap(filterByType);
     }
-
-    // ONLY use CSV as emergency fallback if DB completely empty
-    // This prevents the 313 duplicate count (157 DB + 156 CSV)
-    if (!data || data.length === 0) {
-      console.log('Database empty, loading from CSV fallback');
-      try {
-        const csvRows = await loadEnhancedCenters();
-        const limited = csvRows.slice(0, 500);
-        const enriched: TreatmentCenter[] = [];
-        for (const row of limited) {
-          const name = row.name?.trim();
-          const addr = [row.address, row.city, row.state, row.zip_code].filter(Boolean).join(', ');
-          const loc = await geocodeAddress(addr);
-          if (!loc) continue;
-          const typeGuess = /car-t|gene/i.test(String(row.therapeutic_areas)) ? 'gene_therapy' : 'oncology';
-          enriched.push({
-            id: `${name}-${row.state}-${row.zip_code}`,
-            name,
-            center_type: typeGuess,
-            address: row.address,
-            city: row.city,
-            state: row.state,
-            zip_code: row.zip_code,
-            phone: row.phone,
-            website: row.website,
-            email: row.email,
-            key_providers: Array.isArray(row.key_providers) ? row.key_providers : String(row.key_providers || '').split(';').map((s: string) => s.trim()).filter(Boolean),
-            therapeutic_areas: Array.isArray(row.therapeutic_areas) ? row.therapeutic_areas : String(row.therapeutic_areas || '').split(',').map((s: string) => s.trim()).filter(Boolean),
-            products_drugs: Array.isArray(row.products_drugs) ? row.products_drugs : String(row.products_drugs || '').split(',').map((s: string) => s.trim()).filter(Boolean),
-            manufacturers: Array.isArray(row.manufacturers) ? row.manufacturers : String(row.manufacturers || '').split(',').map((s: string) => s.trim()).filter(Boolean),
-            clinical_trials: row.clinical_trials,
-            trial_sponsors: Array.isArray(row.trial_sponsors) ? row.trial_sponsors : String(row.trial_sponsors || '').split(',').map((s: string) => s.trim()).filter(Boolean),
-            capacity_info: row.capacity,
-            nci_designated: row.nci_designated,
-            fact_accredited: String(row.fact_accredited).toLowerCase().startsWith('y'),
-            patient_services: Array.isArray(row.patient_services) ? row.patient_services : String(row.patient_services || '').split(',').map((s: string) => s.trim()).filter(Boolean),
-            latitude: loc.lat,
-            longitude: loc.lng,
-            country: 'USA',
-          } as TreatmentCenter);
-        }
-        data = enriched;
-      } catch (e) {
-        console.error('Fallback CSV load failed:', e);
-      }
-    }
-
+    
+    console.log(`Loaded ${data.length} treatment centers from database`);
     setAllCenters(data);
   };
 
