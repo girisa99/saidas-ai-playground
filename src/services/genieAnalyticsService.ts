@@ -103,9 +103,7 @@ export class GenieAnalyticsService {
       // Fetch geolocation if we have IP and don't have geo data
       let geoLocation = data.geo_location;
       if (!geoLocation && ipAddress) {
-        console.log('[Popup Click] Fetching geolocation for IP:', ipAddress);
         geoLocation = await this.getGeoLocation(ipAddress);
-        console.log('[Popup Click] Geolocation result:', geoLocation);
       }
 
       const enrichedData = { 
@@ -124,8 +122,6 @@ export class GenieAnalyticsService {
 
       if (error) {
         console.error('Failed to track popup click:', error);
-      } else {
-        console.log('✅ Popup click tracked with geo:', geoLocation ? `${geoLocation.city}, ${geoLocation.country}` : 'no location');
       }
     } catch (error) {
       console.error('Error tracking popup click:', error);
