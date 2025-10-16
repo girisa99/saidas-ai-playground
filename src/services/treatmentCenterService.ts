@@ -112,7 +112,8 @@ export const searchTreatmentCenters = async (filters: {
       .select('*')
       .order('name');
 
-    if (filters.centerType) {
+    // Only filter by centerType if it's not "all" or empty
+    if (filters.centerType && filters.centerType !== 'all') {
       query = query.eq('center_type', filters.centerType);
     }
 
@@ -192,7 +193,8 @@ export const getTreatmentCentersForMap = async (
       .not('latitude', 'is', null)
       .not('longitude', 'is', null);
 
-    if (centerType) {
+    // Only filter by centerType if it's not "all" or empty
+    if (centerType && centerType !== 'all') {
       query = query.eq('center_type', centerType);
     }
 
