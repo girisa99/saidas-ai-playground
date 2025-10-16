@@ -1508,10 +1508,10 @@ ${conversationSummary.transcript}`
             <motion.div
               key="genie-main-popup"
               ref={dragRef}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               className={`
           fixed z-[99997] flex flex-col bg-gradient-to-br from-background via-background to-primary/5
           ${isMaximized
