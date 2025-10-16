@@ -22,6 +22,7 @@ interface InteractiveTreatmentCenterMapProps {
   clinicalTrial?: string;
   state?: string;
   city?: string;
+  zipCode?: string;
 }
 
 export const InteractiveTreatmentCenterMap = ({ 
@@ -32,7 +33,8 @@ export const InteractiveTreatmentCenterMap = ({
   manufacturer,
   clinicalTrial,
   state,
-  city
+  city,
+  zipCode
 }: InteractiveTreatmentCenterMapProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -52,6 +54,7 @@ export const InteractiveTreatmentCenterMap = ({
   });
   const [isMapInitialized, setIsMapInitialized] = useState(false);
   const [clusterZoomLevel, setClusterZoomLevel] = useState(3.5);
+  const [userZipCoords, setUserZipCoords] = useState<{lat: number; lng: number} | null>(null);
 
   // Simple localStorage-backed geocode cache
   const getGeocodeCache = (): Record<string, { lat: number; lng: number }> => {
@@ -87,6 +90,31 @@ export const InteractiveTreatmentCenterMap = ({
       console.error('Geocoding failed for', fullAddress, e);
     }
     return null;
+  };
+
+  // Geocode user's zip code if provided
+  useEffect(() => {
+    if (!zipCode || !mapboxToken) return;
+    const geocodeZip = async () => {
+      const coords = await geocodeAddress(zipCode);
+      if (coords) {
+        setUserZipCoords(coords);
+        console.log(`📍 User zip ${zipCode} geocoded to:`, coords);
+      }
+    };
+    geocodeZip();
+  }, [zipCode, mapboxToken]);
+
+  // Helper: calculate distance in miles between two lat/lng points
+  const calculateDistance = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
+    const R = 3959; // Earth radius in miles
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLng/2) * Math.sin(dLng/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
   };
 
   // Load centers from database only - no CSV fallback to prevent duplicates
@@ -132,7 +160,7 @@ export const InteractiveTreatmentCenterMap = ({
     };
   }, [allCenters]);
 
-  // Filter centers based on selections (including props + UI selections)
+  // Filter centers based on selections (including props + UI selections) with distance sorting
   const filteredCenters = useMemo(() => {
     // Merge explicit props with user-selected filters so props act as defaults
     const requiredAreas = selectedTherapeuticAreas.length > 0 
@@ -188,13 +216,28 @@ export const InteractiveTreatmentCenterMap = ({
     }
 
     // Final fallback: if nothing after location filters, return product/therapy-only set
-    return byLocation.length > 0 ? byLocation : base;
-  }, [allCenters, selectedTherapeuticAreas, selectedManufacturers, selectedProducts, therapeuticArea, product, manufacturer, state, city]);
+    const finalSet = byLocation.length > 0 ? byLocation : base;
+
+    // Sort by distance if zip code provided
+    if (userZipCoords && finalSet.length > 0) {
+      return finalSet
+        .map(c => ({
+          ...c,
+          distance: (c.latitude && c.longitude) 
+            ? calculateDistance(userZipCoords.lat, userZipCoords.lng, c.latitude, c.longitude)
+            : 999999
+        }))
+        .sort((a, b) => a.distance - b.distance)
+        .slice(0, 50); // Show top 50 nearest centers to reduce overcrowding
+    }
+
+    return finalSet;
+  }, [allCenters, selectedTherapeuticAreas, selectedManufacturers, selectedProducts, therapeuticArea, product, manufacturer, state, city, userZipCoords]);
 
   // Load treatment centers on mount
   useEffect(() => {
     loadCenters();
-  }, [therapeuticArea, product, manufacturer, clinicalTrial, state, city, searchQuery]);
+  }, [therapeuticArea, product, manufacturer, clinicalTrial, state, city, searchQuery, zipCode]);
 
   // Try to load Mapbox token from database on mount
   useEffect(() => {
@@ -551,6 +594,7 @@ export const InteractiveTreatmentCenterMap = ({
               <p className="text-xs text-amber-700 dark:text-amber-400 mt-2">
                 Found {filteredCenters.length} location{filteredCenters.length !== 1 ? 's' : ''} 
                 {state && ` in ${state}`}{city && ` near ${city}`}
+                {zipCode && userZipCoords && ` (sorted by distance from ${zipCode})`}
               </p>
             </div>
           )}

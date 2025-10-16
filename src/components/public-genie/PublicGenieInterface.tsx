@@ -1825,6 +1825,8 @@ ${conversationSummary.transcript}`
   };
   const foundKey = Object.keys(stateMap).find(k => new RegExp(`\\b${k}\\b`, 'i').test(lastUser));
   const stateGuess = (message as any).metadata?.state || (foundKey ? stateMap[foundKey] : undefined);
+  const zipMatch = lastUser.match(/\b(\d{5})\b/);
+  const zipGuess = (message as any).metadata?.zipCode || (zipMatch ? zipMatch[1] : undefined);
   return (
     <InteractiveTreatmentCenterMap 
       filterByType={(message as any).metadata?.centerType}
@@ -1835,6 +1837,7 @@ ${conversationSummary.transcript}`
       clinicalTrial={(message as any).metadata?.clinicalTrial}
       state={stateGuess}
       city={cityGuess}
+      zipCode={zipGuess}
     />
   );
 })()}
