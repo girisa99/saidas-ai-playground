@@ -289,21 +289,21 @@ export const JourneyStepsFlow = ({
                    </div>
                    <div className="flex items-center gap-1">
                      <EmotionIcon className={`h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 ${getEmotionColor(step.emotion)}`} />
-                     {step.implementationStatus && (
-                       <Badge 
-                         variant="outline" 
-                         className={`text-xs ml-1 ${
-                           step.implementationStatus === 'live' ? 'border-green-500 text-green-600 bg-green-50' :
-                           step.implementationStatus === 'testing' ? 'border-blue-500 text-blue-600 bg-blue-50' :
-                           step.implementationStatus === 'development' ? 'border-orange-500 text-orange-600 bg-orange-50' :
-                           'border-border text-muted-foreground bg-muted/50'
-                         }`}
-                       >
-                         {step.implementationStatus === 'live' ? '✅' :
-                          step.implementationStatus === 'testing' ? '🔬' :
-                          step.implementationStatus === 'development' ? '🚧' : '📋'}
-                       </Badge>
-                     )}
+                      {step.implementationStatus && (
+                        <Badge 
+                          variant="outline" 
+                          className={`text-xs ml-1 ${
+                            step.implementationStatus === 'live' ? 'border-green-500 text-green-600 bg-green-50 dark:bg-green-950 dark:text-green-400' :
+                            step.implementationStatus === 'testing' ? 'border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-950 dark:text-blue-400' :
+                            step.implementationStatus === 'development' ? 'border-orange-500 text-orange-600 bg-orange-50 dark:bg-orange-950 dark:text-orange-400' :
+                            'border-gray-500 text-gray-600 bg-gray-50 dark:bg-gray-950 dark:text-gray-400'
+                          }`}
+                        >
+                          {step.implementationStatus === 'live' ? '✅ Live' :
+                           step.implementationStatus === 'testing' ? '🔬 Testing' :
+                           step.implementationStatus === 'development' ? '🚧 Dev' : '📋 Planned'}
+                        </Badge>
+                      )}
                    </div>
                  </div>
                  

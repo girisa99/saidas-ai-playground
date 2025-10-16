@@ -639,13 +639,12 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
     if (sendingRef.current) return; // Prevent double-trigger
     sendingRef.current = true;
 
-      // Check if conversation is allowed
-      // Check if conversation is allowed
-      if (!isConversationAllowed) {
-        setShowLimitModal(true);
-        sendingRef.current = false;
-        return;
-      }
+    // Check if conversation is allowed
+    if (!isConversationAllowed) {
+      setShowLimitModal(true);
+      sendingRef.current = false;
+      return;
+    }
 
     // Start conversation tracking if this is the first message
     if (!conversationLimitService.isConversationActive()) {
@@ -1326,6 +1325,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
         });
         setShowHumanEscalation(true);
       }
+    } finally {
+      sendingRef.current = false; // Always reset sending ref
     }
   };
 

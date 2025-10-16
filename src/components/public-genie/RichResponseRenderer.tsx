@@ -19,15 +19,32 @@ interface RichResponseRendererProps {
   }>;
 }
 
+// Remove Google Maps links and embeds from content
+const removeGoogleMapsContent = (text: string): string => {
+  // Remove Google Maps embed iframes
+  text = text.replace(/<iframe[^>]*src=["']https?:\/\/(www\.)?google\.com\/maps[^>]*>.*?<\/iframe>/gi, '');
+  
+  // Remove Google Maps markdown links
+  text = text.replace(/\[([^\]]*)\]\(https?:\/\/(www\.)?google\.com\/maps[^\)]*\)/gi, '');
+  
+  // Remove Google Maps raw URLs
+  text = text.replace(/https?:\/\/(www\.)?google\.com\/maps[^\s<)]*/gi, '');
+  
+  return text;
+};
+
 export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ content, oncologyProducts }) => {
+  // Remove Google Maps content first
+  const cleanedContent = removeGoogleMapsContent(content);
+  
   // Parse journey map data if present in content (support both 3 and 4 backticks)
   const journeyMapData = useMemo(() => {
     // Try 4 backticks first (correct format)
-    let journeyMatch = content.match(/````journey-map\n([\s\S]*?)\n````/);
+    let journeyMatch = cleanedContent.match(/````journey-map\n([\s\S]*?)\n````/);
     
     // Fallback to 3 backticks for backward compatibility
     if (!journeyMatch) {
-      journeyMatch = content.match(/```journey-map\n([\s\S]*?)\n```/);
+      journeyMatch = cleanedContent.match(/```journey-map\n([\s\S]*?)\n```/);
     }
     
     if (journeyMatch) {
@@ -40,10 +57,10 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
       }
     }
     return null;
-  }, [content]);
+  }, [cleanedContent]);
 
-  // Remove journey map code block from content for rendering (support both formats)
-  const cleanContent = content.replace(/````journey-map\n[\s\S]*?\n````/g, '').replace(/```journey-map\n[\s\S]*?\n```/g, '');
+  // Remove journey map code block from cleaned content for rendering (support both formats)
+  const cleanContent = cleanedContent.replace(/````journey-map\n[\s\S]*?\n````/g, '').replace(/```journey-map\n[\s\S]*?\n```/g, '');
 
   // Enhance content formatting for better readability and add citations support
   const enhancedContent = cleanContent
