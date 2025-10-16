@@ -1505,13 +1505,13 @@ ${conversationSummary.transcript}`
     <TooltipProvider>
       <AnimatePresence>
         {isOpen && (
-          <Draggable handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized}>
+          <Draggable handle=".drag-handle" nodeRef={dragRef} disabled={isMaximized} cancel="button, [role='button'], a, input, textarea, select, [data-radix-collection-item]">
             <motion.div
               key="genie-main-popup"
               ref={dragRef}
-              initial={{ opacity: 0, scale: 0.9, x: 300 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              exit={{ opacity: 0, scale: 0.9, x: 300 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className={`
           fixed z-[99997] flex flex-col bg-gradient-to-br from-background via-background to-primary/5
@@ -1524,7 +1524,7 @@ ${conversationSummary.transcript}`
       >
           <Card className="h-full bg-gradient-to-br from-background to-muted border shadow-2xl">
             {/* Header */}
-          <div className="drag-handle flex items-center justify-between p-3 border-b bg-gradient-to-r from-slate-900 to-slate-800 cursor-move touch-none">
+          <div className="drag-handle flex items-center justify-between p-3 border-b bg-gradient-to-r from-slate-900 to-slate-800 cursor-move select-none">
              <div className="flex items-center gap-2">
               <img src={genieLogoPopup} alt="Genie AI logo" className="h-8 w-auto object-contain drop-shadow" />
                <div className="flex-1">
