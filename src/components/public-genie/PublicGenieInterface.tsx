@@ -1886,8 +1886,6 @@ ${conversationSummary.transcript}`
                           value={inputMessage}
                           onChange={(e) => {
                             setInputMessage(e.target.value);
-                            // Reset history navigation when user types
-                            setHistoryIndex(-1);
                           }}
                           placeholder={
                             aiConfig.medicalImageMode && aiConfig.visionEnabled
@@ -1920,6 +1918,11 @@ ${conversationSummary.transcript}`
                             } else if (e.key === 'Enter' && !e.shiftKey) {
                               e.preventDefault();
                               handleSendMessage();
+                            } else {
+                              // Reset history navigation when user types any other key
+                              if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete') {
+                                setHistoryIndex(-1);
+                              }
                             }
                           }}
                           disabled={isLoading}
