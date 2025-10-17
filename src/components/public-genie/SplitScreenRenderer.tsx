@@ -7,6 +7,7 @@ import { RichResponseRenderer } from './RichResponseRenderer';
 import { TypingIndicator } from '../enrollment-genie/TypingIndicator';
 import { InteractiveTreatmentCenterMap } from './InteractiveTreatmentCenterMap';
 import { HowToUseGuide } from './HowToUseGuide';
+import { RoutingOptimizationBadge } from './RoutingOptimizationBadge';
 
 interface SplitMessage {
   role: 'user' | 'assistant';
@@ -79,18 +80,30 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
   const renderMessageList = (messages: SplitMessage[], modelId: string, isLoadingModel: boolean) => (
     <div className="space-y-3">
       {messages.map((message, index) => (
-        <div key={`${modelId}-${index}`} className="flex justify-start">
-          <div className="max-w-[90%] p-3 rounded-lg bg-accent overflow-hidden">
-            <RichResponseRenderer content={message.content} oncologyProducts={(message as any).metadata?.oncologyProducts} />
-            {message.timestamp && (
-              <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
-                <Bot className="h-3 w-3" />
-                {modelDisplayNames[modelId] || modelId}
-                <span>•</span>
-                {new Date(message.timestamp).toLocaleTimeString()}
-              </div>
-            )}
+        <div key={`${modelId}-${index}`} className="flex flex-col gap-2">
+          <div className="flex justify-start">
+            <div className="max-w-[90%] p-3 rounded-lg bg-accent overflow-hidden">
+              <RichResponseRenderer content={message.content} oncologyProducts={(message as any).metadata?.oncologyProducts} />
+              {message.timestamp && (
+                <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                  <Bot className="h-3 w-3" />
+                  {modelDisplayNames[modelId] || modelId}
+                  <span>•</span>
+                  {new Date(message.timestamp).toLocaleTimeString()}
+                </div>
+              )}
+            </div>
           </div>
+          
+          {/* Smart Routing Optimization Badge for Split-Screen */}
+          <RoutingOptimizationBadge
+            triageData={(message as any).metadata?.triageData}
+            routingReasoning={(message as any).metadata?.routingReasoning}
+            estimatedCost={(message as any).metadata?.estimatedCost}
+            estimatedLatency={(message as any).metadata?.estimatedLatency}
+            modelUsed={message.model}
+            smartRoutingOptimization={(message as any).metadata?.smartRoutingOptimization}
+          />
         </div>
       ))}
       {isLoadingModel && <div className="px-1"><TypingIndicator /></div>}
