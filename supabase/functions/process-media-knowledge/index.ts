@@ -137,6 +137,8 @@ serve(async (req) => {
             platform: detectVideoPlatform(url)
           };
         }
+        break;
+      }
 
       case 'pdf': {
         // For PDFs, we'd need to download and parse
