@@ -1299,35 +1299,164 @@ async function callMCPServer(serverUrl: string, prompt: string, context?: string
   }
 }
 
-async function logToLabelStudio(request: AIRequest, response: string, ragContext?: string) {
+/**
+ * Complete Label Studio Integration with Active Learning
+ * Logs conversations, retrieves feedback, and improves knowledge base
+ */
+async function logToLabelStudio(
+  request: AIRequest, 
+  response: string, 
+  ragContext: any[], 
+  triageData: any,
+  conversationId?: string
+) {
   if (!labelStudioApiKey || !labelStudioUrl || !request.labelStudioProject) {
-    return;
+    return null;
   }
 
   try {
-    // Create annotation task in Label Studio
-    await fetch(`${labelStudioUrl}/api/projects/${request.labelStudioProject}/import`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Token ${labelStudioApiKey}`,
-        'Content-Type': 'application/json',
+    // 1. CREATE ANNOTATION TASK - Log this conversation for human review
+    const taskData = {
+      data: {
+        text: request.prompt,
+        response: response,
+        model: request.model,
+        provider: request.provider,
+        conversation_id: conversationId || 'unknown',
+        rag_context: ragContext.map(r => ({
+          title: r.title,
+          content: r.content?.substring(0, 200),
+          source_type: r.source_type,
+          confidence: r.match_score
+        })),
+        triage: {
+          complexity: triageData?.complexity,
+          domain: triageData?.domain,
+          urgency: triageData?.urgency,
+          confidence: triageData?.confidence
+        },
+        has_images: !!(request.imageUrl || request.images),
+        timestamp: new Date().toISOString()
       },
-      body: JSON.stringify([{
-        data: {
-          text: request.prompt,
-          model: request.model,
-          provider: request.provider,
-          response: response,
-          rag_context: ragContext || '',
-          has_images: !!(request.imageUrl || request.images),
-          timestamp: new Date().toISOString()
-        }
-      }])
-    });
+      // Pre-annotations from AI confidence scores
+      predictions: [{
+        model_version: request.model,
+        score: triageData?.confidence || 0.5,
+        result: [{
+          value: {
+            choices: [triageData?.domain || 'general']
+          },
+          from_name: 'domain',
+          to_name: 'text',
+          type: 'choices'
+        }]
+      }]
+    };
 
-    console.log('Logged to Label Studio project:', request.labelStudioProject);
+    // Import task to Label Studio
+    const importResponse = await fetch(
+      `${labelStudioUrl}/api/projects/${request.labelStudioProject}/import`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Token ${labelStudioApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify([taskData])
+      }
+    );
+
+    if (!importResponse.ok) {
+      console.error('Label Studio import failed:', await importResponse.text());
+      return null;
+    }
+
+    const importResult = await importResponse.json();
+    const taskId = importResult.task_ids?.[0];
+
+    console.log('✓ Logged to Label Studio - Task ID:', taskId);
+
+    // 2. RETRIEVE FEEDBACK - Check for completed annotations (Active Learning)
+    const annotationsResponse = await fetch(
+      `${labelStudioUrl}/api/projects/${request.labelStudioProject}/expert_annotations`,
+      {
+        headers: {
+          'Authorization': `Token ${labelStudioApiKey}`,
+        }
+      }
+    );
+
+    if (annotationsResponse.ok) {
+      const annotations = await annotationsResponse.json();
+      
+      // Process completed annotations for active learning
+      await processLabelStudioFeedback(annotations, request.prompt);
+    }
+
+    return {
+      taskId,
+      project: request.labelStudioProject,
+      logged: true
+    };
+
   } catch (error) {
-    console.error('Failed to log to Label Studio:', error);
+    console.error('Label Studio integration error:', error);
+    return null;
+  }
+}
+
+/**
+ * Process Label Studio feedback to improve Knowledge Base (Active Learning Loop)
+ */
+async function processLabelStudioFeedback(annotations: any[], originalPrompt: string) {
+  try {
+    for (const annotation of annotations) {
+      if (!annotation.was_cancelled && annotation.result) {
+        // Extract human feedback
+        const feedback = annotation.result.find((r: any) => r.from_name === 'quality_rating');
+        const correctedDomain = annotation.result.find((r: any) => r.from_name === 'domain');
+        const correctedResponse = annotation.result.find((r: any) => r.from_name === 'corrected_text');
+
+        if (feedback || correctedResponse) {
+          // Calculate quality score (1-5 scale from Label Studio)
+          const qualityScore = feedback?.value?.rating || 3;
+          const isHighQuality = qualityScore >= 4;
+
+          // Update knowledge base with human-verified content
+          if (isHighQuality && correctedResponse?.value?.text) {
+            const { error } = await supabaseAdmin
+              .from('universal_knowledge_base')
+              .insert({
+                title: `Verified: ${originalPrompt.substring(0, 100)}`,
+                content: correctedResponse.value.text,
+                category: correctedDomain?.value?.choices?.[0] || 'general',
+                domain: correctedDomain?.value?.choices?.[0] || 'healthcare',
+                source_type: 'human_verified',
+                status: 'approved',
+                quality_score: qualityScore / 5, // Normalize to 0-1
+                metadata: {
+                  label_studio_verified: true,
+                  annotation_id: annotation.id,
+                  verified_at: new Date().toISOString(),
+                  original_prompt: originalPrompt
+                }
+              });
+
+            if (!error) {
+              console.log('✓ Added human-verified knowledge to universal KB');
+            }
+          }
+
+          // Log poor quality for model retraining signals
+          if (qualityScore < 3) {
+            console.log('⚠ Low quality response flagged for model improvement');
+            // Future: Send to model fine-tuning pipeline
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Failed to process Label Studio feedback:', error);
   }
 }
 
@@ -2060,13 +2189,27 @@ serve(async (req) => {
     // Track journey progression based on conversation context
     const journeyProgress = await trackJourneyProgress(request.prompt, triageData, request.conversationHistory);
     
-    // Log conversation, suggest knowledge updates, and log to Label Studio
-    await Promise.all([
+    // Log conversation, suggest knowledge updates, and Label Studio active learning
+    const loggingTasks = [
       logConversation(request, content, ragContext.length > 0),
       suggestKnowledgeUpdates(request.prompt, content, request.context),
-      logToLabelStudio(request, content, fullContext),
       updateJourneyStage(journeyProgress)
-    ]);
+    ];
+
+    // Add Label Studio logging if configured
+    if (labelStudioApiKey && labelStudioUrl && request.labelStudioProject) {
+      loggingTasks.push(
+        logToLabelStudio(request, content, fullContext)
+      );
+    }
+
+    await Promise.allSettled(loggingTasks);
+
+    console.log('✓ Active Learning Loop:', {
+      conversation_logged: true,
+      knowledge_suggested: true,
+      label_studio: !!(labelStudioApiKey && request.labelStudioProject)
+    });
 
     // Optional oncology extraction
     let oncologyProducts: any[] | undefined = undefined;

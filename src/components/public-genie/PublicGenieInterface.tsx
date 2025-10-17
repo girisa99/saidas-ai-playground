@@ -834,7 +834,7 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             useRAG: aiConfig.ragEnabled,
             knowledgeBase: aiConfig.knowledgeBase || aiConfig.knowledgeBaseEnabled,
             useMCP: aiConfig.mcpEnabled,
-            labelStudio: false,
+            labelStudio: false, // Label Studio integration ready (needs project ID)
             context: context || 'general',
             enableSmartRouting: true, // ✅ Always enable for triage + rich features
             enableMultiAgent: false, // Multi-mode uses split-screen, not multi-agent

@@ -47,18 +47,18 @@ export interface CollaborationResult {
 export function determineCollaborationStrategy(
   triage: TriageResult
 ): CollaborationChain {
-  // STRATEGY 1: Healthcare Specialist → LLM Chaining
+  // STRATEGY 1: Healthcare Specialist → LLM Chaining (Direct API)
   if (triage.domain === 'healthcare' && triage.complexity === 'high') {
     return {
       agents: [
         {
           role: 'specialist',
-          model: 'google/gemini-2.5-pro', // Medical reasoning specialist
+          model: 'gemini-2.0-flash-exp', // Medical reasoning via Gemini API
           purpose: 'Extract clinical findings and medical context'
         },
         {
           role: 'generalist',
-          model: 'openai/gpt-5', // Patient-friendly explanation
+          model: 'gpt-5-mini-2025-08-07', // Patient-friendly via OpenAI API
           purpose: 'Generate clear, empathetic patient explanation'
         }
       ],
@@ -67,28 +67,28 @@ export function determineCollaborationStrategy(
     };
   }
 
-  // STRATEGY 2: Ensemble Voting for Critical Decisions
+  // STRATEGY 2: Ensemble Voting for Critical Decisions (Direct API)
   if (triage.urgency === 'critical') {
     return {
       agents: [
         {
           role: 'specialist',
-          model: 'google/gemini-2.5-pro',
+          model: 'gemini-2.0-flash-exp', // Gemini for medical analysis
           purpose: 'Medical analysis and diagnosis'
         },
         {
           role: 'specialist',
-          model: 'openai/gpt-5',
+          model: 'gpt-5-2025-08-07', // GPT-5 for validation
           purpose: 'Treatment recommendation validation'
         },
         {
           role: 'specialist',
-          model: 'google/gemini-2.5-flash', // Fast check
+          model: 'claude-sonnet-4-5', // Claude for safety
           purpose: 'Safety check and red flags'
         },
         {
           role: 'synthesizer',
-          model: 'openai/gpt-5',
+          model: 'gpt-5-2025-08-07', // GPT-5 for synthesis
           purpose: 'Synthesize consensus and highlight disagreements'
         }
       ],
@@ -97,18 +97,18 @@ export function determineCollaborationStrategy(
     };
   }
 
-  // STRATEGY 3: Technical Specialist → Code Expert
+  // STRATEGY 3: Technical Specialist → Code Expert (Direct API)
   if (triage.domain === 'technology' && triage.complexity === 'high') {
     return {
       agents: [
         {
           role: 'specialist',
-          model: 'openai/gpt-5-mini', // Fast technical analysis
+          model: 'gpt-5-mini-2025-08-07', // Fast OpenAI analysis
           purpose: 'Identify tech stack and requirements'
         },
         {
           role: 'generalist',
-          model: 'openai/gpt-5', // Best for code generation
+          model: 'gpt-5-2025-08-07', // Best for code generation
           purpose: 'Generate detailed code solution'
         }
       ],
