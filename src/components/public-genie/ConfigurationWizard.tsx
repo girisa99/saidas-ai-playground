@@ -185,10 +185,18 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
 
   const getFilteredModels = () => {
     if (modelFilter === 'all') return modelOptions;
-    if (modelFilter === 'general') return modelOptions.filter(m => m.category === 'General');
-    if (modelFilter === 'slm') return modelOptions.filter(m => m.type === 'SLM');
-    if (modelFilter === 'vision') return modelOptions.filter(m => m.category === 'Vision' || m.vision);
-    if (modelFilter === 'healthcare') return modelOptions.filter(m => m.category === 'Healthcare');
+    if (modelFilter === 'general') return modelOptions.filter(m => 
+      m.category === 'General' && (m.type === 'LLM' || m.type === 'LLM+Vision')
+    );
+    if (modelFilter === 'slm') return modelOptions.filter(m => 
+      m.type === 'SLM' || m.type === 'SLM+Vision' || m.category === 'Efficient'
+    );
+    if (modelFilter === 'vision') return modelOptions.filter(m => 
+      m.vision === true || m.category === 'Vision' || m.type.includes('Vision') || m.type === 'VLM'
+    );
+    if (modelFilter === 'healthcare') return modelOptions.filter(m => 
+      m.category === 'Healthcare' || m.medicalCapable === true
+    );
     return modelOptions;
   };
 

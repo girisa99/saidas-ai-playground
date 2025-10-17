@@ -289,13 +289,28 @@ export const AdvancedAISettings: React.FC<AdvancedAISettingsProps> = ({
   const getFilteredModels = () => {
     switch (modelFilter) {
       case 'general':
-        return modelOptions.filter(m => m.category === 'General');
+        return modelOptions.filter(m => 
+          m.category === 'General' && 
+          (m.type === 'LLM' || m.type === 'LLM+Vision')
+        );
       case 'slm':
-        return modelOptions.filter(m => m.category === 'Efficient');
+        return modelOptions.filter(m => 
+          m.type === 'SLM' || 
+          m.type === 'SLM+Vision' || 
+          m.category === 'Efficient'
+        );
       case 'vision':
-        return modelOptions.filter(m => m.category === 'Vision');
+        return modelOptions.filter(m => 
+          m.vision === true || 
+          m.category === 'Vision' || 
+          m.type.includes('Vision') || 
+          m.type === 'VLM'
+        );
       case 'healthcare':
-        return modelOptions.filter(m => m.category === 'Healthcare');
+        return modelOptions.filter(m => 
+          m.category === 'Healthcare' || 
+          m.medicalCapable === true
+        );
       default:
         return modelOptions;
     }

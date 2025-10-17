@@ -53,7 +53,7 @@ interface TriageResult {
   emotional_tone?: 'empathetic' | 'professional' | 'playful';
 }
 
-async function searchKnowledgeBase(query: string, context?: string) {
+async function searchKnowledgeBase(query: string, context?: string, useSemanticSearch: boolean = true) {
   try {
     // Extract only the user's main question and sanitize to avoid PostgREST OR parser issues
     const base = (query || '')
@@ -70,6 +70,48 @@ async function searchKnowledgeBase(query: string, context?: string) {
 
     console.log('Searching universal knowledge base for (sanitized):', sanitized);
     
+    // Try semantic search first if enabled
+    if (useSemanticSearch) {
+      try {
+        // Generate embedding for the query using Lovable AI
+        const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+        if (LOVABLE_API_KEY) {
+          const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'text-embedding-3-small',
+              input: sanitized,
+            }),
+          });
+
+          if (embeddingResponse.ok) {
+            const embeddingData = await embeddingResponse.json();
+            const queryEmbedding = embeddingData.data[0].embedding;
+
+            // Use hybrid search (combines semantic + keyword)
+            const { data: semanticResults, error: semanticError } = await supabase
+              .rpc('search_knowledge_hybrid', {
+                search_query: sanitized,
+                query_embedding: queryEmbedding,
+                match_count: 5
+              });
+
+            if (!semanticError && semanticResults && semanticResults.length > 0) {
+              console.log(`Found ${semanticResults.length} results via semantic search (avg similarity: ${(semanticResults.reduce((sum: number, r: any) => sum + r.similarity, 0) / semanticResults.length).toFixed(2)})`);
+              return semanticResults;
+            }
+          }
+        }
+      } catch (semanticError) {
+        console.log('Semantic search failed, falling back to keyword search:', semanticError);
+      }
+    }
+    
+    // Fallback to keyword search
     const { data: results, error } = await supabase
       .from('universal_knowledge_base')
       .select('finding_name, description, clinical_context, clinical_significance, domain, content_type, metadata')
@@ -82,7 +124,7 @@ async function searchKnowledgeBase(query: string, context?: string) {
       return [];
     }
 
-    console.log(`Found ${results?.length || 0} relevant knowledge entries`);
+    console.log(`Found ${results?.length || 0} relevant knowledge entries via keyword search`);
     return results || [];
   } catch (error) {
     console.error('Search knowledge base error:', error);
@@ -317,10 +359,41 @@ function detectEmotionalTone(queryLower: string, history?: any[]): 'empathetic' 
 }
 
 function suggestModel(complexity: string, domain: string, urgency: string, requires_vision: boolean): string {
-  if (urgency === 'critical') return requires_vision ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-pro';
-  if (requires_vision) return (complexity === 'high' || domain === 'healthcare') ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-flash';
-  if (complexity === 'simple') return 'google/gemini-2.5-flash-lite';
-  if (complexity === 'medium') return domain === 'healthcare' ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-flash';
+  // CRITICAL urgency → Use best reasoning models (cross-provider)
+  if (urgency === 'critical') {
+    if (domain === 'healthcare') return 'claude-sonnet-4-5'; // Best medical reasoning
+    if (requires_vision) return 'google/gemini-2.5-pro'; // Best vision
+    return 'openai/gpt-5'; // Best general reasoning
+  }
+  
+  // Vision required → Use vision-capable models (cross-provider)
+  if (requires_vision) {
+    if (complexity === 'high' || domain === 'healthcare') return 'google/gemini-2.5-pro';
+    if (domain === 'technology') return 'openai/gpt-5'; // GPT-5 has vision too
+    return 'google/gemini-2.5-flash';
+  }
+  
+  // HIGH complexity → Use best reasoning models (cross-provider)
+  if (complexity === 'high') {
+    if (domain === 'healthcare') return 'claude-sonnet-4-5'; // Claude excels at medical reasoning
+    if (domain === 'technology') return 'openai/gpt-5'; // GPT-5 excels at code/tech
+    return 'claude-sonnet-4-5'; // Claude best for complex general reasoning
+  }
+  
+  // MEDIUM complexity → Balanced models (cross-provider)
+  if (complexity === 'medium') {
+    if (domain === 'healthcare') return 'google/gemini-2.5-pro'; // Medical accuracy
+    if (domain === 'technology') return 'openai/gpt-5-mini'; // Good for tech queries
+    return 'google/gemini-2.5-flash'; // Cost-effective general
+  }
+  
+  // SIMPLE queries → Fastest/cheapest models
+  if (complexity === 'simple') {
+    if (domain === 'healthcare') return 'google/gemini-2.5-flash'; // Still want quality for medical
+    return 'google/gemini-2.5-flash-lite'; // Fastest for simple tasks
+  }
+  
+  // Default fallback → Balanced choice
   return domain === 'healthcare' ? 'google/gemini-2.5-pro' : 'google/gemini-2.5-flash';
 }
 

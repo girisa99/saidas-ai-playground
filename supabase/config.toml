@@ -87,3 +87,6 @@ verify_jwt = false
 
 [functions.test-ai-providers]
 verify_jwt = true
+
+[functions.generate-embeddings]
+verify_jwt = false

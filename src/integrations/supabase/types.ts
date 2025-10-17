@@ -17186,6 +17186,41 @@ export type Database = {
           modality: string
         }[]
       }
+      search_knowledge_hybrid: {
+        Args: {
+          match_count?: number
+          query_embedding?: string
+          search_query: string
+        }
+        Returns: {
+          clinical_context: string
+          content_type: string
+          description: string
+          domain: string
+          finding_name: string
+          id: string
+          metadata: Json
+          search_type: string
+          similarity: number
+        }[]
+      }
+      search_knowledge_semantic: {
+        Args: {
+          match_count?: number
+          match_threshold?: number
+          query_embedding: string
+        }
+        Returns: {
+          clinical_context: string
+          content_type: string
+          description: string
+          domain: string
+          finding_name: string
+          id: string
+          metadata: Json
+          similarity: number
+        }[]
+      }
       search_medical_imaging_knowledge: {
         Args: {
           filter_modality?: string
