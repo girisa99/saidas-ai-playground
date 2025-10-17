@@ -437,6 +437,28 @@ function calculateDollarCost(model: string, estimatedTokens: number = 1500): num
   return costPerToken * estimatedTokens;
 }
 
+// Estimate token usage based on query complexity and domain
+function estimateTokenUsage(triageData?: TriageResult, hasRAG: boolean = false, hasMCP: boolean = false): number {
+  let baseTokens = 800; // Minimum for simple queries
+  
+  // Complexity multiplier
+  if (triageData?.complexity === 'high') baseTokens = 2500;
+  else if (triageData?.complexity === 'medium') baseTokens = 1500;
+  
+  // Domain adjustment
+  if (triageData?.domain === 'healthcare') baseTokens *= 1.3; // Medical queries need more detail
+  
+  // Context additions
+  if (hasRAG) baseTokens += 500; // RAG adds context
+  if (hasMCP) baseTokens += 300; // MCP tool usage
+  
+  // Format adjustment
+  if (triageData?.best_format === 'table') baseTokens *= 1.4; // Tables need structured data
+  else if (triageData?.best_format === 'html') baseTokens *= 1.3; // HTML formatting
+  
+  return Math.round(baseTokens);
+}
+
 // Get model accuracy/quality tier
 function getModelAccuracy(model: string): { tier: 'enterprise' | 'professional' | 'standard' | 'fast'; confidence: number; description: string } {
   const modelLower = (model || '').toLowerCase();
@@ -2572,7 +2594,10 @@ serve(async (req) => {
           domain: triageData?.domain,
           urgency: triageData?.urgency,
           // Enhanced metrics for UX (for the OPTIMIZED model)
-          estimatedCostDollars: calculateDollarCost(request.model, 1500),
+          estimatedCostDollars: calculateDollarCost(
+            request.model, 
+            estimateTokenUsage(triageData, ragContext.length > 0, request.useMCP)
+          ),
           estimatedTimeSec: getModelLatency(request.model) / 1000,
           accuracyConfidence: getModelAccuracy(request.model).confidence,
           qualityTier: getModelAccuracy(request.model).tier,
