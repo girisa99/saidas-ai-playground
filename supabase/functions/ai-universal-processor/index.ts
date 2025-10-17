@@ -13,9 +13,8 @@ const corsHeaders = {
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
-const claudeApiKey = Deno.env.get('CLAUDE_API_KEY');
+const claudeApiKey = Deno.env.get('ANTHROPIC_API_KEY'); // Anthropic API key for Claude
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
-const lovableApiKey = Deno.env.get('LOVABLE_API_KEY'); // For small language models
 const labelStudioApiKey = Deno.env.get('LABEL_STUDIO_API_KEY');
 const labelStudioUrl = Deno.env.get('LABEL_STUDIO_URL');
 
@@ -1547,12 +1546,31 @@ Context to preserve: ${context}
 Translate into patient-friendly language with empathy and clarity.
 IMPORTANT: Reference previous conversation topics to maintain context.`;
 
-  const generalistResponse = await callLovableAI({
-    ...request,
-    model: strategy.agents[1].model,
-    prompt: generalistPrompt,
-    systemPrompt: `${context}\n\nYou are continuing a conversation. Maintain all context and references from previous messages.`
-  }, context);
+  // Route generalist to appropriate provider
+  const generalistModel = strategy.agents[1].model;
+  let generalistResponse = '';
+  if (generalistModel.includes('gpt') || generalistModel.includes('openai')) {
+    generalistResponse = await callOpenAI({
+      ...request,
+      model: 'gpt-5-mini-2025-08-07',
+      prompt: generalistPrompt,
+      systemPrompt: `${context}\n\nYou are continuing a conversation. Maintain all context and references from previous messages.`
+    }, context);
+  } else if (generalistModel.includes('claude')) {
+    generalistResponse = await callClaude({
+      ...request,
+      model: 'claude-sonnet-4-5',
+      prompt: generalistPrompt,
+      systemPrompt: `${context}\n\nYou are continuing a conversation. Maintain all context and references from previous messages.`
+    }, context);
+  } else {
+    generalistResponse = await callGemini({
+      ...request,
+      model: 'gemini-2.5-flash-latest',
+      prompt: generalistPrompt,
+      systemPrompt: `${context}\n\nYou are continuing a conversation. Maintain all context and references from previous messages.`
+    }, context);
+  }
 
   agentResponses.push({
     agent: strategy.agents[1],
@@ -1590,10 +1608,10 @@ async function executeEnsembleVoting(
   const specialists = strategy.agents.filter(a => a.role === 'specialist');
   const conversationContext = (request.conversationHistory || []).map(m => `${m.role}: ${m.content}`).join('\n');
   
-  const specialistPromises = specialists.map(agent =>
-    callLovableAI({
+  const specialistPromises = specialists.map(agent => {
+    const agentModel = agent.model;
+    const promptData = {
       ...request,
-      model: agent.model,
       prompt: `You are an expert in: ${agent.purpose}
 
 Conversation History (maintain context):
@@ -1605,8 +1623,17 @@ Context: ${context}
 
 Provide expert analysis. Include confidence score (0-1) and reference previous conversation if relevant.`,
       systemPrompt: `${context}\n\nYou are continuing a conversation. Maintain context from previous messages.`
-    }, context)
-  );
+    };
+    
+    // Route to appropriate provider
+    if (agentModel.includes('gpt') || agentModel.includes('openai')) {
+      return callOpenAI({ ...promptData, model: 'gpt-5-2025-08-07' }, context);
+    } else if (agentModel.includes('claude')) {
+      return callClaude({ ...promptData, model: 'claude-sonnet-4-5' }, context);
+    } else {
+      return callGemini({ ...promptData, model: 'gemini-2.5-pro-latest' }, context);
+    }
+  });
 
   const specialistResults = await Promise.all(specialistPromises);
   
@@ -1869,71 +1896,73 @@ serve(async (req) => {
       });
     }
     
-    // CRITICAL: Route ALL requests through Lovable AI Gateway for reliability
-    // Map any model selection to appropriate Lovable AI model
+    // CRITICAL: Route to direct API providers (OpenAI, Claude, Gemini)
     const originalModel = (request.model || '').toLowerCase();
     
-    // Model mapping to Lovable AI Gateway format
-    const modelMapping: Record<string, string> = {
+    // Model mapping to direct provider models
+    const modelMapping: Record<string, { model: string; provider: 'openai' | 'claude' | 'gemini' }> = {
       // Healthcare/Clinical models -> Gemini Pro for best medical reasoning
-      'clinical-bert': 'google/gemini-2.5-pro',
-      'bioclinical-bert': 'google/gemini-2.5-pro',
-      'bioclinicalbert': 'google/gemini-2.5-pro',
-      'biobert': 'google/gemini-2.5-pro',
-      'medicalbert': 'google/gemini-2.5-pro',
-      'biogpt': 'google/gemini-2.5-pro',
-      'med-palm-2': 'google/gemini-2.5-pro',
-      'pubmedbert': 'google/gemini-2.5-pro',
-      'galactica-6.7b': 'google/gemini-2.5-flash',
-      'biomistral-7b': 'google/gemini-2.5-flash',
+      'clinical-bert': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'bioclinical-bert': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'bioclinicalbert': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'biobert': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'medicalbert': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'biogpt': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'med-palm-2': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'pubmedbert': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'galactica-6.7b': { model: 'gemini-2.5-flash-latest', provider: 'gemini' },
+      'biomistral-7b': { model: 'gemini-2.5-flash-latest', provider: 'gemini' },
       
-      // Claude models (ALL mapped to Lovable AI Gateway)
-      'claude-3-haiku': 'openai/gpt-5-mini', // Fast, efficient
-      'claude-3-5-haiku': 'openai/gpt-5-mini',
-      'claude-3-opus': 'openai/gpt-5', // Most capable
-      'claude-3-5-opus': 'openai/gpt-5',
-      'claude-sonnet-4-5': 'openai/gpt-5', // Latest Sonnet → GPT-5 equivalent
-      'claude-opus-4-1-20250805': 'openai/gpt-5',
-      'claude-3-sonnet': 'google/gemini-2.5-flash', // Balanced
-      'claude-3-5-sonnet': 'google/gemini-2.5-flash',
-      'claude-sonnet-4-20250514': 'google/gemini-2.5-flash',
-      'claude-3-7-sonnet-20250219': 'google/gemini-2.5-flash',
+      // Claude models -> Direct Claude API
+      'claude-3-haiku': { model: 'claude-3-5-haiku-20241022', provider: 'claude' },
+      'claude-3-5-haiku': { model: 'claude-3-5-haiku-20241022', provider: 'claude' },
+      'claude-3-opus': { model: 'claude-opus-4-1-20250805', provider: 'claude' },
+      'claude-3-5-opus': { model: 'claude-opus-4-1-20250805', provider: 'claude' },
+      'claude-sonnet-4-5': { model: 'claude-sonnet-4-5', provider: 'claude' },
+      'claude-opus-4-1-20250805': { model: 'claude-opus-4-1-20250805', provider: 'claude' },
+      'claude-3-sonnet': { model: 'claude-sonnet-4-5', provider: 'claude' },
+      'claude-3-5-sonnet': { model: 'claude-sonnet-4-5', provider: 'claude' },
+      'claude-sonnet-4-20250514': { model: 'claude-sonnet-4-5', provider: 'claude' },
+      'claude-3-7-sonnet-20250219': { model: 'claude-sonnet-4-5', provider: 'claude' },
       
-      // OpenAI models (map to Lovable AI equivalents)
-      'gpt-4o': 'openai/gpt-5',
-      'gpt-4o-mini': 'openai/gpt-5-mini',
-      'gpt-4': 'openai/gpt-5',
-      'gpt-3.5-turbo': 'openai/gpt-5-nano',
+      // OpenAI models -> Direct OpenAI API
+      'gpt-4o': { model: 'gpt-4o', provider: 'openai' },
+      'gpt-4o-mini': { model: 'gpt-4o-mini', provider: 'openai' },
+      'gpt-4': { model: 'gpt-5-2025-08-07', provider: 'openai' },
+      'gpt-3.5-turbo': { model: 'gpt-5-nano-2025-08-07', provider: 'openai' },
+      'openai/gpt-5': { model: 'gpt-5-2025-08-07', provider: 'openai' },
+      'openai/gpt-5-mini': { model: 'gpt-5-mini-2025-08-07', provider: 'openai' },
+      'openai/gpt-5-nano': { model: 'gpt-5-nano-2025-08-07', provider: 'openai' },
       
-      // Gemini models (ensure correct format)
-      'gemini-2.5-pro': 'google/gemini-2.5-pro',
-      'gemini-2.5-flash': 'google/gemini-2.5-flash',
-      'gemini-2.5-flash-lite': 'google/gemini-2.5-flash-lite',
-      'gemini-pro': 'google/gemini-2.5-pro',
-      'gemini-pro-vision': 'google/gemini-2.5-pro',
-      'gemini-flash': 'google/gemini-2.5-flash',
+      // Gemini models -> Direct Gemini API
+      'gemini-2.5-pro': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'gemini-2.5-flash': { model: 'gemini-2.5-flash-latest', provider: 'gemini' },
+      'gemini-2.5-flash-lite': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
+      'google/gemini-2.5-pro': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'google/gemini-2.5-flash': { model: 'gemini-2.5-flash-latest', provider: 'gemini' },
+      'google/gemini-2.5-flash-lite': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
+      'gemini-pro': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'gemini-pro-vision': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'gemini-flash': { model: 'gemini-2.5-flash-latest', provider: 'gemini' },
       
-      // Small Language Models (SLMs) → Lite models for cost/speed
-      'phi-3.5-mini': 'google/gemini-2.5-flash-lite',
-      'phi-3-mini': 'google/gemini-2.5-flash-lite',
-      'llama-3.1-8b': 'google/gemini-2.5-flash-lite',
-      'mistral-7b': 'google/gemini-2.5-flash-lite',
-      'gemma-7b': 'google/gemini-2.5-flash-lite',
-      'qwen-7b': 'google/gemini-2.5-flash-lite',
+      // Small Language Models (SLMs) -> Gemini Flash 8B
+      'phi-3.5-mini': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
+      'phi-3-mini': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
+      'llama-3.1-8b': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
+      'mistral-7b': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
+      'gemma-7b': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
+      'qwen-7b': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
       
-      // Vision Language Models (VLMs) → Gemini Pro for vision tasks
-      'llava-1.6': 'google/gemini-2.5-pro',
-      'cogvlm': 'google/gemini-2.5-pro',
-      'paligemma': 'google/gemini-2.5-flash',
-      
-      // Image generation
-      'dall-e-3': 'google/gemini-2.5-flash-image-preview',
-      'imagen': 'google/gemini-2.5-flash-image-preview',
-      'stable-diffusion': 'google/gemini-2.5-flash-image-preview',
+      // Vision Language Models (VLMs) -> Gemini Pro
+      'llava-1.6': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'cogvlm': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
+      'paligemma': { model: 'gemini-2.5-flash-latest', provider: 'gemini' },
     };
     
     // Apply model mapping
-    let mappedModel = modelMapping[originalModel] || request.model;
+    const mapped = modelMapping[originalModel];
+    let mappedModel = mapped?.model || request.model || 'gemini-2.5-flash-latest';
+    let mappedProvider: 'openai' | 'claude' | 'gemini' = mapped?.provider || 'gemini';
     const userSelectedModel = originalModel;
     
     // Track optimization metadata
@@ -1942,42 +1971,44 @@ serve(async (req) => {
     let costSavings = 0;
     let latencySavings = 0;
     
-    // SMART ROUTING: Always use triage suggestion if enabled (override user selection for optimization)
+    // SMART ROUTING: Use triage suggestion if enabled (override user selection for optimization)
     if (request.enableSmartRouting && triageData?.suggested_model) {
       const suggestedModel = triageData.suggested_model;
       
-      // Calculate cost/latency savings
-      const userModelCost = getModelCost(mappedModel);
-      const suggestedModelCost = getModelCost(suggestedModel);
-      const userModelLatency = getModelLatency(mappedModel);
-      const suggestedModelLatency = getModelLatency(suggestedModel);
-      
-      costSavings = ((userModelCost - suggestedModelCost) / userModelCost) * 100;
-      latencySavings = ((userModelLatency - suggestedModelLatency) / userModelLatency) * 100;
-      
-      // Override to optimized model
-      if (mappedModel !== suggestedModel) {
-        smartRoutingOverride = true;
-        optimizationReason = triageData.reasoning;
-        console.log(`Smart routing OVERRIDE: ${userSelectedModel} → ${suggestedModel}`);
-        console.log(`Reason: ${optimizationReason}`);
-        console.log(`Cost savings: ${costSavings.toFixed(1)}%, Latency savings: ${latencySavings.toFixed(1)}%`);
+      // Map suggested model to provider
+      const suggestedMapped = modelMapping[suggestedModel.toLowerCase()];
+      if (suggestedMapped) {
+        // Calculate cost/latency savings
+        const userModelCost = getModelCost(request.model || '');
+        const suggestedModelCost = getModelCost(suggestedModel);
+        const userModelLatency = getModelLatency(request.model || '');
+        const suggestedModelLatency = getModelLatency(suggestedModel);
+        
+        costSavings = ((userModelCost - suggestedModelCost) / userModelCost) * 100;
+        latencySavings = ((userModelLatency - suggestedModelLatency) / userModelLatency) * 100;
+        
+        // Override to optimized model
+        if (mappedModel !== suggestedMapped.model) {
+          smartRoutingOverride = true;
+          optimizationReason = triageData.reasoning;
+          console.log(`Smart routing OVERRIDE: ${userSelectedModel} → ${suggestedModel}`);
+          console.log(`Reason: ${optimizationReason}`);
+          console.log(`Cost savings: ${costSavings.toFixed(1)}%, Latency savings: ${latencySavings.toFixed(1)}%`);
+          
+          mappedModel = suggestedMapped.model;
+          mappedProvider = suggestedMapped.provider;
+        }
       }
-      
-      mappedModel = suggestedModel;
-    } else if (!mappedModel.startsWith('google/') && !mappedModel.startsWith('openai/')) {
-      // If model doesn't start with google/ or openai/, default to Gemini Flash
-      mappedModel = 'google/gemini-2.5-flash';
-      console.log(`Unmapped model "${originalModel}" -> default to ${mappedModel}`);
     }
     
     request.model = mappedModel;
-    request.provider = 'lovable'; // Force all through Lovable AI Gateway
+    request.provider = mappedProvider; // Route to direct provider
     
     console.log('Processing AI request:', {
       original: originalModel,
       mapped: mappedModel,
-      provider: request.provider
+      provider: mappedProvider,
+      direct_api: true
     });
     
     // ========== ENHANCEMENT: Apply Triage to System Prompt ==========
@@ -1988,26 +2019,22 @@ serve(async (req) => {
     
     let content = '';
 
-    // Route to appropriate AI provider
-    switch (request.provider) {
+    // Route to direct API providers only
+    switch (mappedProvider) {
       case 'openai':
-        if (!openaiApiKey) throw new Error('OpenAI API key not configured');
+        if (!openaiApiKey) throw new Error('OpenAI API key not configured. Please add OPENAI_API_KEY to Supabase secrets.');
         content = await callOpenAI(request, fullContext);
         break;
       case 'claude':
-        if (!claudeApiKey) throw new Error('Claude API key not configured');
+        if (!claudeApiKey) throw new Error('Claude API key not configured. Please add ANTHROPIC_API_KEY to Supabase secrets.');
         content = await callClaude(request, fullContext);
         break;
       case 'gemini':
-        if (!geminiApiKey) throw new Error('Gemini API key not configured');
+        if (!geminiApiKey) throw new Error('Gemini API key not configured. Please add GEMINI_API_KEY to Supabase secrets.');
         content = await callGemini(request, fullContext);
         break;
-      case 'lovable':
-        if (!lovableApiKey) throw new Error('Lovable AI API key not configured');
-        content = await callLovableAI(request, fullContext);
-        break;
       default:
-        throw new Error(`Unsupported provider: ${request.provider}`);
+        throw new Error(`Unsupported provider: ${mappedProvider}. Only OpenAI, Claude, and Gemini are supported.`);
     }
 
     // Track journey progression based on conversation context

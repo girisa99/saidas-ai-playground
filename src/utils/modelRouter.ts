@@ -13,7 +13,7 @@ import type { AIConfig } from '@/components/public-genie/AdvancedAISettings';
 
 export interface ModelSelection {
   model: string;
-  provider: 'lovable'; // Always use Lovable AI Gateway
+  provider: 'openai' | 'claude' | 'gemini'; // Direct API providers
   reasoning: string;
   estimatedCost: number; // in dollars
   estimatedLatency: number; // in milliseconds
@@ -30,9 +30,10 @@ export function selectBestModel(
 ): ModelSelection {
   // RULE 1: ALWAYS respect explicit user model selection in SINGLE mode
   if (userConfig.mode === 'single' && userConfig.selectedModel !== 'auto') {
+    const provider = getProviderForModel(userConfig.selectedModel);
     return {
       model: userConfig.selectedModel,
-      provider: 'lovable',
+      provider,
       reasoning: 'User explicitly selected this model in Single mode',
       estimatedCost: getModelCost(userConfig.selectedModel),
       estimatedLatency: getModelLatency(userConfig.selectedModel),
@@ -42,12 +43,14 @@ export function selectBestModel(
   
   // RULE 2: If smart routing disabled, use user's selected model
   if (!enableSmartRouting || userConfig.selectedModel === 'user-choice-only') {
+    const model = userConfig.selectedModel || 'google/gemini-2.5-flash';
+    const provider = getProviderForModel(model);
     return {
-      model: userConfig.selectedModel || 'google/gemini-2.5-flash',
-      provider: 'lovable',
+      model,
+      provider,
       reasoning: 'Smart routing disabled - using user preference',
-      estimatedCost: getModelCost(userConfig.selectedModel),
-      estimatedLatency: getModelLatency(userConfig.selectedModel),
+      estimatedCost: getModelCost(model),
+      estimatedLatency: getModelLatency(model),
       usedTriage: false
     };
   }
@@ -57,10 +60,11 @@ export function selectBestModel(
     const model = triage.requires_vision 
       ? 'google/gemini-2.5-pro' 
       : 'openai/gpt-5';
+    const provider = getProviderForModel(model);
     
     return {
       model,
-      provider: 'lovable',
+      provider,
       reasoning: 'CRITICAL urgency detected - using most capable model',
       estimatedCost: getModelCost(model),
       estimatedLatency: getModelLatency(model),
@@ -74,7 +78,7 @@ export function selectBestModel(
     if (triage.complexity === 'simple' && triage.confidence > 0.8) {
       return {
         model: 'google/gemini-2.5-flash-lite',
-        provider: 'lovable',
+        provider: 'gemini',
         reasoning: `Simple query detected (confidence: ${(triage.confidence * 100).toFixed(0)}%) - using fast SLM for cost/speed`,
         estimatedCost: 0.0001,
         estimatedLatency: 200,
@@ -83,9 +87,10 @@ export function selectBestModel(
     }
     
     // For medium/high complexity, use triage suggestion
+    const provider = getProviderForModel(triage.suggested_model);
     return {
       model: triage.suggested_model,
-      provider: 'lovable',
+      provider,
       reasoning: `Triage recommended ${triage.suggested_model} for ${triage.complexity} complexity ${triage.domain} query`,
       estimatedCost: getModelCost(triage.suggested_model),
       estimatedLatency: getModelLatency(triage.suggested_model),
@@ -94,14 +99,26 @@ export function selectBestModel(
   }
   
   // FALLBACK: Use user's selected model with triage enhancement
+  const model = userConfig.selectedModel || 'google/gemini-2.5-flash';
+  const provider = getProviderForModel(model);
   return {
-    model: userConfig.selectedModel || 'google/gemini-2.5-flash',
-    provider: 'lovable',
+    model,
+    provider,
     reasoning: 'Using user-selected model with triage-enhanced prompt',
-    estimatedCost: getModelCost(userConfig.selectedModel),
-    estimatedLatency: getModelLatency(userConfig.selectedModel),
+    estimatedCost: getModelCost(model),
+    estimatedLatency: getModelLatency(model),
     usedTriage: true
   };
+}
+
+/**
+ * Determine provider for a given model
+ */
+function getProviderForModel(model: string): 'openai' | 'claude' | 'gemini' {
+  const lower = model.toLowerCase();
+  if (lower.includes('gpt') || lower.includes('openai')) return 'openai';
+  if (lower.includes('claude')) return 'claude';
+  return 'gemini'; // default to Gemini
 }
 
 /**
