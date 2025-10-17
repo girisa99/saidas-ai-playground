@@ -25,11 +25,12 @@ serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
+    const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
+    const claudeApiKey = Deno.env.get('ANTHROPIC_API_KEY');
 
-    if (!lovableApiKey && !openaiApiKey) {
-      throw new Error('No AI API key configured');
+    if (!geminiApiKey && !openaiApiKey && !claudeApiKey) {
+      throw new Error('No AI API key configured (GEMINI_API_KEY, OPENAI_API_KEY, or ANTHROPIC_API_KEY required)');
     }
 
     const supabase = createClient(supabaseUrl, supabaseKey);
@@ -156,32 +157,34 @@ Provide a structured educational analysis including:
 
     let analysisResult = '';
 
-    // Use Lovable AI (Gemini) by default, fallback to OpenAI
-    if (lovableApiKey) {
-      const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${lovableApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: request.aiModel || 'google/gemini-2.5-flash',
-          messages,
-          max_tokens: 2000,
-          temperature: 0.3
-        })
-      });
+    // Priority: Gemini (best for vision), then OpenAI, then Claude
+    if (geminiApiKey) {
+      const aiResponse = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${geminiApiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              role: 'user',
+              parts: [
+                { text: messages[0].content },
+                { inlineData: { mimeType: 'image/jpeg', data: request.imageData.split(',')[1] } }
+              ]
+            }]
+          })
+        }
+      );
 
       if (!aiResponse.ok) {
         const errorText = await aiResponse.text();
-        console.error('Lovable AI error:', aiResponse.status, errorText);
+        console.error('Gemini API error:', aiResponse.status, errorText);
         throw new Error(`AI analysis failed: ${aiResponse.status}`);
       }
 
       const aiData = await aiResponse.json();
-      analysisResult = aiData.choices[0].message.content;
+      analysisResult = aiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
     } else if (openaiApiKey) {
-      // Fallback to OpenAI GPT-4o vision
       const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -189,34 +192,66 @@ Provide a structured educational analysis including:
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'gpt-4o',
+          model: 'gpt-5-2025-08-07',
           messages,
-          max_tokens: 2000,
-          temperature: 0.3
+          max_completion_tokens: 2000
         })
       });
 
       if (!aiResponse.ok) {
         const errorText = await aiResponse.text();
-        console.error('OpenAI error:', aiResponse.status, errorText);
+        console.error('OpenAI API error:', aiResponse.status, errorText);
         throw new Error(`AI analysis failed: ${aiResponse.status}`);
       }
 
       const aiData = await aiResponse.json();
-      analysisResult = aiData.choices[0].message.content;
+      analysisResult = aiData.choices?.[0]?.message?.content || '';
+    } else if (claudeApiKey) {
+      const aiResponse = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'x-api-key': claudeApiKey,
+          'anthropic-version': '2023-06-01',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-5',
+          max_tokens: 2000,
+          messages
+        })
+      });
+
+      if (!aiResponse.ok) {
+        const errorText = await aiResponse.text();
+        console.error('Claude API error:', aiResponse.status, errorText);
+        throw new Error(`AI analysis failed: ${aiResponse.status}`);
+      }
+
+      const aiData = await aiResponse.json();
+      analysisResult = aiData.content?.[0]?.text || '';
     }
 
-    // Step 5: Log the analysis for quality improvement
+    if (!analysisResult) {
+      throw new Error('No analysis result from AI');
+    }
+
+    // Retrieve relevant knowledge
+    const retrievedKnowledge = await retrieveRelevantKnowledge(
+      supabase,
+      analysisResult,
+      request.modality,
+      request.clinicalContext
+    );
+
+    // Store analysis log
     const { error: logError } = await supabase
-      .from('vision_analysis_logs')
+      .from('medical_image_analysis_log')
       .insert({
-        user_email: request.userEmail,
         session_id: request.sessionId,
+        user_email: request.userEmail,
         modality: request.modality,
-        image_metadata: {
-          body_part: request.bodyPart,
-          clinical_context: request.clinicalContext
-        },
+        body_part: request.bodyPart,
+        clinical_context: request.clinicalContext,
         rag_context_used: {
           num_retrieved: retrievedKnowledge.length,
           top_findings: retrievedKnowledge.slice(0, 3).map(k => ({
@@ -225,7 +260,7 @@ Provide a structured educational analysis including:
             similarity: k.similarity
           }))
         },
-        ai_model: request.aiModel || (lovableApiKey ? 'google/gemini-2.5-flash' : 'gpt-4o'),
+        ai_model: request.aiModel || (geminiApiKey ? 'gemini-2.0-flash-exp' : (openaiApiKey ? 'gpt-5' : 'claude-sonnet-4-5')),
         analysis_result: analysisResult
       });
 

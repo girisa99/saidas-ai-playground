@@ -32,7 +32,8 @@ serve(async (req) => {
     );
 
     const { url, mediaType, domain, contentType, tags = [] }: MediaProcessRequest = await req.json();
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+    const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
+    const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 
     console.log(`Processing ${mediaType} from ${url}`);
 
@@ -41,42 +42,45 @@ serve(async (req) => {
     // Process based on media type
     switch (mediaType) {
       case 'image': {
-        // Use GPT-4 Vision for image analysis
-        const visionResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'openai/gpt-5',
-            messages: [{
-              role: 'user',
-              content: [
-                {
-                  type: 'text',
-                  text: `Analyze this image comprehensively:
+        // Use GPT-5 Vision for image analysis (best for vision)
+        if (OPENAI_API_KEY) {
+          const visionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${OPENAI_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'gpt-5-2025-08-07',
+              messages: [{
+                role: 'user',
+                content: [
+                  {
+                    type: 'text',
+                    text: `Analyze this image comprehensively:
 1. Describe what you see in detail
 2. Extract any text visible in the image
 3. Identify key concepts, objects, or information
 4. Suggest relevant tags and categories
 5. Provide a summary suitable for knowledge base indexing`
-                },
-                {
-                  type: 'image_url',
-                  image_url: { url: url }
-                }
-              ]
-            }]
-          })
-        });
+                  },
+                  {
+                    type: 'image_url',
+                    image_url: { url: url }
+                  }
+                ]
+              }],
+              max_completion_tokens: 1000
+            })
+          });
 
-        const visionData = await visionResponse.json();
-        processedContent = {
-          aiDescription: visionData.choices?.[0]?.message?.content || '',
-          imageUrl: url,
-          analysisModel: 'gpt-5-vision'
-        };
+          const visionData = await visionResponse.json();
+          processedContent = {
+            aiDescription: visionData.choices?.[0]?.message?.content || '',
+            imageUrl: url,
+            analysisModel: 'gpt-5-vision'
+          };
+        }
         break;
       }
 
@@ -96,34 +100,35 @@ serve(async (req) => {
           console.log('Could not fetch transcript, will use AI summarization');
         }
 
-        // Summarize with AI
-        const summaryResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'google/gemini-2.5-flash',
-            messages: [{
-              role: 'user',
-              content: transcript 
-                ? `Summarize this video transcript and extract key insights:\n\n${transcript.substring(0, 10000)}`
-                : `Analyze this video URL and provide context: ${url}`
-            }]
-          })
-        });
+        // Summarize with Gemini AI
+        if (GEMINI_API_KEY) {
+          const summaryResponse = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{
+                  role: 'user',
+                  parts: [{
+                    text: transcript 
+                      ? `Summarize this video transcript and extract key insights:\n\n${transcript.substring(0, 10000)}`
+                      : `Analyze this video URL and provide context: ${url}`
+                  }]
+                }]
+              })
+            }
+          );
 
-        const summaryData = await summaryResponse.json();
-        processedContent = {
-          videoUrl: url,
-          videoId: videoId,
-          transcript: transcript,
-          summary: summaryData.choices?.[0]?.message?.content || '',
-          platform: detectVideoPlatform(url)
-        };
-        break;
-      }
+          const summaryData = await summaryResponse.json();
+          processedContent = {
+            videoUrl: url,
+            videoId: videoId,
+            transcript: transcript,
+            summary: summaryData.candidates?.[0]?.content?.parts?.[0]?.text || '',
+            platform: detectVideoPlatform(url)
+          };
+        }
 
       case 'pdf': {
         // For PDFs, we'd need to download and parse

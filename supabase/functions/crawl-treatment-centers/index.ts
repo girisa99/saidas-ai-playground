@@ -29,7 +29,7 @@ serve(async (req) => {
     const { url, centerType, sourceName, maxPages = 50, contentTypes = ['treatment_center'] }: TreatmentCenterCrawlRequest = await req.json();
 
     const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+    const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
     // const CRAWL4AI_URL = Deno.env.get('CRAWL4AI_URL'); // Disabled - using Firecrawl only
     
     if (!FIRECRAWL_API_KEY) {
@@ -280,33 +280,32 @@ serve(async (req) => {
         console.error('Error inserting knowledge:', knowledgeError);
       }
 
-      // Extract treatment center data using AI if available
-      if (LOVABLE_API_KEY && (determinedContentType === 'treatment_center' || lowerContent.includes('gene therapy'))) {
+      // Extract treatment center data using Gemini AI if available
+      if (GEMINI_API_KEY && (determinedContentType === 'treatment_center' || lowerContent.includes('gene therapy'))) {
         try {
-          const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              model: 'google/gemini-2.5-flash',
-              messages: [
-                {
-                  role: 'system',
-                  content: 'You are a medical data extraction assistant. Extract treatment center information from the provided text. Return only valid JSON.'
-                },
-                {
+          const aiResponse = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{
                   role: 'user',
-                  content: `Extract treatment center information from this text. Return a JSON object with: name, address, phone, email, website, specialties (array), diseases_treated (array). If any field is not found, use null.\n\nText: ${markdown.substring(0, 4000)}`
+                  parts: [{
+                    text: `You are a medical data extraction assistant. Extract treatment center information from the provided text. Return only valid JSON.\n\nExtract treatment center information from this text. Return a JSON object with: name, address, phone, email, website, specialties (array), diseases_treated (array). If any field is not found, use null.\n\nText: ${markdown.substring(0, 4000)}`
+                  }]
+                }],
+                generationConfig: {
+                  temperature: 0.1,
+                  responseMimeType: 'application/json'
                 }
-              ],
-            }),
-          });
+              })
+            }
+          );
 
           if (aiResponse.ok) {
             const aiData = await aiResponse.json();
-            const extractedText = aiData.choices?.[0]?.message?.content || '';
+            const extractedText = aiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
             
             // Try to parse JSON from response
             try {
