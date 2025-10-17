@@ -29,8 +29,7 @@ serve(async (req) => {
     const { url, centerType, sourceName, maxPages = 50, contentTypes = ['treatment_center'] }: TreatmentCenterCrawlRequest = await req.json();
 
     const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
-    const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
-    // const CRAWL4AI_URL = Deno.env.get('CRAWL4AI_URL'); // Disabled - using Firecrawl only
+    const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
     
     if (!FIRECRAWL_API_KEY) {
       throw new Error('FIRECRAWL_API_KEY must be configured');
@@ -280,32 +279,32 @@ serve(async (req) => {
         console.error('Error inserting knowledge:', knowledgeError);
       }
 
-      // Extract treatment center data using Gemini AI if available
-      if (GEMINI_API_KEY && (determinedContentType === 'treatment_center' || lowerContent.includes('gene therapy'))) {
+      // Extract treatment center data using Claude AI if available
+      if (ANTHROPIC_API_KEY && (determinedContentType === 'treatment_center' || lowerContent.includes('gene therapy'))) {
         try {
           const aiResponse = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`,
+            'https://api.anthropic.com/v1/messages',
             {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              headers: { 
+                'Content-Type': 'application/json',
+                'x-api-key': ANTHROPIC_API_KEY,
+                'anthropic-version': '2023-06-01'
+              },
               body: JSON.stringify({
-                contents: [{
+                model: 'claude-sonnet-4-5',
+                max_tokens: 1024,
+                messages: [{
                   role: 'user',
-                  parts: [{
-                    text: `You are a medical data extraction assistant. Extract treatment center information from the provided text. Return only valid JSON.\n\nExtract treatment center information from this text. Return a JSON object with: name, address, phone, email, website, specialties (array), diseases_treated (array). If any field is not found, use null.\n\nText: ${markdown.substring(0, 4000)}`
-                  }]
-                }],
-                generationConfig: {
-                  temperature: 0.1,
-                  responseMimeType: 'application/json'
-                }
+                  content: `You are a medical data extraction assistant. Extract treatment center information from the provided text. Return only valid JSON.\n\nExtract treatment center information from this text. Return a JSON object with: name, address, phone, email, website, specialties (array), diseases_treated (array). If any field is not found, use null.\n\nText: ${markdown.substring(0, 4000)}`
+                }]
               })
             }
           );
 
           if (aiResponse.ok) {
             const aiData = await aiResponse.json();
-            const extractedText = aiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            const extractedText = aiData.content?.[0]?.text || '';
             
             // Try to parse JSON from response
             try {

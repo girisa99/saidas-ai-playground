@@ -42,6 +42,10 @@ serve(async (req) => {
     // Process based on media type
     switch (mediaType) {
       case 'image': {
+        if (!OPENAI_API_KEY) {
+          throw new Error('OPENAI_API_KEY not configured for image analysis');
+        }
+        
         // Use GPT-5 Vision for image analysis (best for vision)
         if (OPENAI_API_KEY) {
           const visionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -101,6 +105,10 @@ serve(async (req) => {
         }
 
         // Summarize with Gemini AI
+        if (!GEMINI_API_KEY) {
+          throw new Error('GEMINI_API_KEY not configured for video summarization');
+        }
+        
         if (GEMINI_API_KEY) {
           const summaryResponse = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`,
