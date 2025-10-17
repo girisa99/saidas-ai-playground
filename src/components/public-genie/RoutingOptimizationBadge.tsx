@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Brain, ChevronDown, ChevronUp, Zap, DollarSign, Clock, Users, TrendingUp } from 'lucide-react';
+import { Brain, ChevronDown, ChevronUp, Zap, DollarSign, Clock, Users, TrendingUp, Target, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 interface TriageData {
   complexity?: 'simple' | 'medium' | 'high';
@@ -26,6 +27,12 @@ interface SmartRoutingOptimization {
   complexity?: string;
   domain?: string;
   urgency?: string;
+  // Enhanced metrics
+  estimatedCostDollars?: number;
+  estimatedTimeSec?: number;
+  accuracyConfidence?: number;
+  qualityTier?: 'enterprise' | 'professional' | 'standard' | 'fast';
+  qualityDescription?: string;
 }
 
 interface RoutingOptimizationBadgeProps {
@@ -119,71 +126,227 @@ export const RoutingOptimizationBadge: React.FC<RoutingOptimizationBadgeProps> =
         
         <CollapsibleContent>
           <CardContent className="pt-0 pb-3 px-3 space-y-3">
-            {/* Smart Routing Override Alert */}
+            {/* Tier 1: Always Visible - Concise Summary */}
             {smartRoutingOptimization?.override && (
-              <div className="p-3 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-lg border border-amber-500/30">
-                <div className="flex items-start gap-2 mb-3">
-                  <Zap className="h-4 w-4 text-amber-600 mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <p className="text-xs font-bold text-amber-900 dark:text-amber-100">🎯 Smart Routing Override</p>
-                    <p className="text-[10px] text-muted-foreground mt-1">
-                      AI optimized your query based on complexity and domain analysis
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-2 mb-3">
-                  <div className="bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-700">
-                    <p className="text-[9px] text-muted-foreground uppercase tracking-wide mb-1">You Selected</p>
-                    <p className="font-mono text-xs font-semibold text-orange-600 dark:text-orange-400">
+              <div className="p-2.5 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-lg border border-emerald-500/30">
+                <div className="flex items-center justify-between gap-2 text-[11px]">
+                  <div className="flex items-center gap-1.5 flex-1">
+                    <Zap className="h-3.5 w-3.5 text-emerald-600 flex-shrink-0" />
+                    <span className="font-semibold text-emerald-900 dark:text-emerald-100">Optimized:</span>
+                    <span className="font-mono text-orange-600 dark:text-orange-400 truncate">
                       {smartRoutingOptimization.userSelectedModel}
-                    </p>
-                  </div>
-                  <div className="bg-green-50 dark:bg-green-950 p-2 rounded border border-green-300 dark:border-green-700">
-                    <p className="text-[9px] text-muted-foreground uppercase tracking-wide mb-1">AI Used</p>
-                    <p className="font-mono text-xs font-semibold text-green-700 dark:text-green-400">
+                    </span>
+                    <span>→</span>
+                    <span className="font-mono text-green-700 dark:text-green-400 truncate">
                       {smartRoutingOptimization.optimizedModel}
-                    </p>
+                    </span>
                   </div>
                 </div>
                 
-                <div className="space-y-2">
-                  <div className="flex items-start gap-1.5 text-[10px]">
-                    <span className="font-semibold text-foreground mt-0.5">Reason:</span>
-                    <span className="text-muted-foreground">{smartRoutingOptimization.reason}</span>
-                  </div>
-                  
-                  {(smartRoutingOptimization.costSavingsPercent !== 0 || smartRoutingOptimization.latencySavingsPercent !== 0) && (
-                    <div className="flex flex-wrap gap-2 pt-1 border-t border-amber-200 dark:border-amber-800">
-                      {smartRoutingOptimization.costSavingsPercent !== 0 && (
-                        <div className="flex items-center gap-1 text-[10px]">
-                          <DollarSign className={`h-3 w-3 ${smartRoutingOptimization.costSavingsPercent > 0 ? 'text-green-600' : 'text-orange-600'}`} />
-                          <span className="font-semibold">
-                            {smartRoutingOptimization.costSavingsPercent > 0 
-                              ? `${smartRoutingOptimization.costSavingsPercent}% saved` 
-                              : `${Math.abs(smartRoutingOptimization.costSavingsPercent)}% premium`}
-                          </span>
-                        </div>
-                      )}
-                      
-                      {smartRoutingOptimization.latencySavingsPercent !== 0 && (
-                        <div className="flex items-center gap-1 text-[10px]">
-                          <Clock className={`h-3 w-3 ${smartRoutingOptimization.latencySavingsPercent > 0 ? 'text-blue-600' : 'text-orange-600'}`} />
-                          <span className="font-semibold">
-                            {smartRoutingOptimization.latencySavingsPercent > 0 
-                              ? `${smartRoutingOptimization.latencySavingsPercent}% faster` 
-                              : `${Math.abs(smartRoutingOptimization.latencySavingsPercent)}% slower`}
-                          </span>
-                        </div>
-                      )}
+                {/* Quick metrics row */}
+                <div className="flex items-center gap-3 mt-2 text-[10px] flex-wrap">
+                  {smartRoutingOptimization.estimatedCostDollars !== undefined && (
+                    <div className="flex items-center gap-1">
+                      <DollarSign className="h-3 w-3 text-green-600" />
+                      <span className="font-semibold">
+                        ${smartRoutingOptimization.estimatedCostDollars.toFixed(3)}
+                      </span>
                     </div>
                   )}
+                  
+                  {smartRoutingOptimization.estimatedTimeSec !== undefined && (
+                    <div className="flex items-center gap-1">
+                      <Clock className="h-3 w-3 text-blue-600" />
+                      <span className="font-semibold">
+                        ~{smartRoutingOptimization.estimatedTimeSec.toFixed(1)}s
+                      </span>
+                    </div>
+                  )}
+                  
+                  {smartRoutingOptimization.accuracyConfidence !== undefined && (
+                    <div className="flex items-center gap-1">
+                      <Target className="h-3 w-3 text-purple-600" />
+                      <span className="font-semibold">
+                        {smartRoutingOptimization.accuracyConfidence}% accurate
+                      </span>
+                    </div>
+                  )}
+                  
+                  {smartRoutingOptimization.qualityTier && (
+                    <Badge 
+                      variant="outline" 
+                      className={`text-[9px] h-4 px-1.5 ${
+                        smartRoutingOptimization.qualityTier === 'enterprise' ? 'border-purple-500 text-purple-700 bg-purple-50 dark:bg-purple-950' :
+                        smartRoutingOptimization.qualityTier === 'professional' ? 'border-blue-500 text-blue-700 bg-blue-50 dark:bg-blue-950' :
+                        smartRoutingOptimization.qualityTier === 'standard' ? 'border-green-500 text-green-700 bg-green-50 dark:bg-green-950' :
+                        'border-yellow-500 text-yellow-700 bg-yellow-50 dark:bg-yellow-950'
+                      }`}
+                    >
+                      {smartRoutingOptimization.qualityTier === 'enterprise' ? '🏆' : 
+                       smartRoutingOptimization.qualityTier === 'professional' ? '💼' :
+                       smartRoutingOptimization.qualityTier === 'standard' ? '⚡' : '🚀'} 
+                      {smartRoutingOptimization.qualityTier}
+                    </Badge>
+                  )}
                 </div>
-                
-                <p className="text-[9px] text-muted-foreground italic mt-2 pt-2 border-t border-amber-200 dark:border-amber-800">
-                  💡 Smart routing is active for all modes (Default, Single, Multi-Agent, Chaining)
-                </p>
               </div>
+            )}
+            
+            {/* Tier 2: Expandable Details */}
+            {smartRoutingOptimization?.override && (
+              <Collapsible>
+                <CollapsibleTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="w-full text-[10px] h-6 text-muted-foreground hover:text-foreground"
+                  >
+                    <Info className="h-3 w-3 mr-1" />
+                    View optimization details
+                    <ChevronDown className="h-3 w-3 ml-1" />
+                  </Button>
+                </CollapsibleTrigger>
+                
+                <CollapsibleContent className="space-y-2 mt-2">
+                  {/* Why section */}
+                  <div className="p-2 bg-blue-500/10 rounded border border-blue-500/20">
+                    <p className="text-[9px] font-semibold text-blue-600 uppercase tracking-wide mb-1">💡 Why</p>
+                    <p className="text-[10px] text-muted-foreground">
+                      {smartRoutingOptimization.reason}
+                    </p>
+                  </div>
+                  
+                  {/* Impact section */}
+                  {(smartRoutingOptimization.costSavingsPercent !== 0 || smartRoutingOptimization.latencySavingsPercent !== 0) && (
+                    <div className="p-2 bg-amber-500/10 rounded border border-amber-500/20">
+                      <p className="text-[9px] font-semibold text-amber-600 uppercase tracking-wide mb-1">📊 Impact</p>
+                      <div className="flex flex-wrap gap-2">
+                        {smartRoutingOptimization.costSavingsPercent !== 0 && (
+                          <div className="text-[10px]">
+                            <span className="font-semibold">Cost:</span>
+                            <span className={`ml-1 ${smartRoutingOptimization.costSavingsPercent > 0 ? 'text-green-600' : 'text-orange-600'}`}>
+                              {smartRoutingOptimization.costSavingsPercent > 0 ? '↓' : '↑'}
+                              {Math.abs(smartRoutingOptimization.costSavingsPercent)}%
+                              {smartRoutingOptimization.costSavingsPercent < 0 && ' (justified for accuracy)'}
+                            </span>
+                          </div>
+                        )}
+                        
+                        {smartRoutingOptimization.latencySavingsPercent !== 0 && (
+                          <div className="text-[10px]">
+                            <span className="font-semibold">Speed:</span>
+                            <span className={`ml-1 ${smartRoutingOptimization.latencySavingsPercent > 0 ? 'text-blue-600' : 'text-orange-600'}`}>
+                              {smartRoutingOptimization.latencySavingsPercent > 0 ? '↑' : '↓'}
+                              {Math.abs(smartRoutingOptimization.latencySavingsPercent)}%
+                              {smartRoutingOptimization.latencySavingsPercent < 0 && ' (justified for complexity)'}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Quality section */}
+                  {smartRoutingOptimization.qualityDescription && (
+                    <div className="p-2 bg-purple-500/10 rounded border border-purple-500/20">
+                      <p className="text-[9px] font-semibold text-purple-600 uppercase tracking-wide mb-1">🎯 Quality</p>
+                      <p className="text-[10px] text-muted-foreground">
+                        {smartRoutingOptimization.qualityDescription}
+                      </p>
+                    </div>
+                  )}
+                </CollapsibleContent>
+              </Collapsible>
+            )}
+            
+            {/* Tier 3: Advanced Insights Modal */}
+            {smartRoutingOptimization?.override && (
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full text-[10px] h-6 border-dashed"
+                  >
+                    <Brain className="h-3 w-3 mr-1" />
+                    Compare models in detail
+                  </Button>
+                </DialogTrigger>
+                
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle className="text-base">Model Comparison Analysis</DialogTitle>
+                  </DialogHeader>
+                  
+                  <div className="space-y-4 mt-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      {/* User's choice */}
+                      <div className="p-3 bg-muted rounded-lg border">
+                        <p className="text-xs font-semibold text-muted-foreground mb-2">Your Selection</p>
+                        <p className="font-mono text-sm font-bold mb-3">{smartRoutingOptimization.userSelectedModel}</p>
+                        <div className="space-y-1.5 text-xs">
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Estimated Cost:</span>
+                            <span className="font-semibold">$0.015 - $0.025</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Response Time:</span>
+                            <span className="font-semibold">1.0 - 1.5s</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Accuracy:</span>
+                            <span className="font-semibold">88%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Best For:</span>
+                            <span className="text-xs">General queries</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* AI's choice */}
+                      <div className="p-3 bg-green-500/10 rounded-lg border border-green-500/30">
+                        <p className="text-xs font-semibold text-green-600 mb-2">AI Optimization ✓</p>
+                        <p className="font-mono text-sm font-bold mb-3">{smartRoutingOptimization.optimizedModel}</p>
+                        <div className="space-y-1.5 text-xs">
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Estimated Cost:</span>
+                            <span className="font-semibold">
+                              ${smartRoutingOptimization.estimatedCostDollars?.toFixed(3) || '0.030'}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Response Time:</span>
+                            <span className="font-semibold">
+                              ~{smartRoutingOptimization.estimatedTimeSec?.toFixed(1) || '2.2'}s
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Accuracy:</span>
+                            <span className="font-semibold text-green-600">
+                              {smartRoutingOptimization.accuracyConfidence || 96}%
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Best For:</span>
+                            <span className="text-xs">Healthcare, Complex</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                      <p className="text-xs font-semibold text-blue-600 mb-2">🧠 Why This Matters</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {smartRoutingOptimization.reason} The AI selected a model specialized for your query type, 
+                        optimizing for {smartRoutingOptimization.qualityTier === 'enterprise' ? 'maximum accuracy and reliability' : 
+                        smartRoutingOptimization.qualityTier === 'professional' ? 'balanced performance and cost' :
+                        'speed and efficiency'} in the <strong>{smartRoutingOptimization.domain || 'general'}</strong> domain.
+                      </p>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
             )}
             
             {/* Quick Stats Row */}

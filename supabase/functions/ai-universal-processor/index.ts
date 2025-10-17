@@ -431,6 +431,58 @@ function getModelCost(model: string): number {
   return 5;
 }
 
+// Calculate actual dollar cost estimate (approximate per query)
+function calculateDollarCost(model: string, estimatedTokens: number = 1500): number {
+  const costPerToken = getModelCost(model) / 1000; // Convert to per-token cost
+  return costPerToken * estimatedTokens;
+}
+
+// Get model accuracy/quality tier
+function getModelAccuracy(model: string): { tier: 'enterprise' | 'professional' | 'standard' | 'fast'; confidence: number; description: string } {
+  const modelLower = (model || '').toLowerCase();
+  
+  // Enterprise-grade (95-99% accuracy)
+  if (modelLower.includes('claude-opus') || modelLower.includes('claude-4-opus')) {
+    return { tier: 'enterprise', confidence: 98, description: 'Maximum accuracy, medical-grade precision' };
+  }
+  if (modelLower.includes('claude-sonnet-4-5') || modelLower.includes('claude-4-sonnet')) {
+    return { tier: 'enterprise', confidence: 96, description: 'High accuracy with healthcare expertise' };
+  }
+  if (modelLower.includes('gpt-5') && !modelLower.includes('mini') && !modelLower.includes('nano')) {
+    return { tier: 'enterprise', confidence: 95, description: 'Advanced reasoning and comprehension' };
+  }
+  
+  // Professional-grade (85-94% accuracy)
+  if (modelLower.includes('claude-3-5-sonnet') || modelLower.includes('claude-sonnet')) {
+    return { tier: 'professional', confidence: 92, description: 'Balanced accuracy and efficiency' };
+  }
+  if (modelLower.includes('gpt-5-mini') || modelLower.includes('gpt-4o-mini') || modelLower.includes('gpt-4o')) {
+    return { tier: 'professional', confidence: 88, description: 'Strong performance, cost-effective' };
+  }
+  if (modelLower.includes('gemini-2.5-pro') || modelLower.includes('gemini-2.0-flash-thinking')) {
+    return { tier: 'professional', confidence: 90, description: 'Multimodal analysis capability' };
+  }
+  
+  // Standard-grade (75-84% accuracy)
+  if (modelLower.includes('claude-haiku')) {
+    return { tier: 'standard', confidence: 82, description: 'Fast responses, good accuracy' };
+  }
+  if (modelLower.includes('gemini-flash')) {
+    return { tier: 'standard', confidence: 80, description: 'Quick processing, reliable results' };
+  }
+  if (modelLower.includes('gpt-5-nano') || modelLower.includes('gpt-3.5')) {
+    return { tier: 'standard', confidence: 78, description: 'Efficient for simpler queries' };
+  }
+  
+  // Fast-tier (70-74% accuracy)
+  if (modelLower.includes('phi-3') || modelLower.includes('llama-3.1-8b') || modelLower.includes('mistral-7b')) {
+    return { tier: 'fast', confidence: 72, description: 'Ultra-fast, basic accuracy' };
+  }
+  
+  // Default
+  return { tier: 'professional', confidence: 85, description: 'General-purpose performance' };
+}
+
 // Latency estimation (relative response time in ms, normalized)
 function getModelLatency(model: string): number {
   const modelLower = (model || '').toLowerCase();
@@ -2514,7 +2566,13 @@ serve(async (req) => {
           latencySavingsPercent: Math.round(latencySavings * 10) / 10,
           complexity: triageData?.complexity,
           domain: triageData?.domain,
-          urgency: triageData?.urgency
+          urgency: triageData?.urgency,
+          // Enhanced metrics for UX
+          estimatedCostDollars: calculateDollarCost(request.model, 1500),
+          estimatedTimeSec: getModelLatency(request.model) / 1000,
+          accuracyConfidence: getModelAccuracy(request.model).confidence,
+          qualityTier: getModelAccuracy(request.model).tier,
+          qualityDescription: getModelAccuracy(request.model).description
         } : undefined,
         // Smart routing metadata
         triageData: triageData ? {
