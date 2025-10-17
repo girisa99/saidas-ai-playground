@@ -297,6 +297,17 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
       console.error('Failed to save config:', e);
     }
     
+    // CRITICAL: Determine if split-screen is changing
+    const newSplitScreen = newConfig.splitScreenEnabled || newConfig.splitScreen;
+    const isSwitchingOffSplitScreen = previousSplitScreen && !newSplitScreen;
+    const isSwitchingModeFromMulti = previousMode === 'multi' && newConfig.mode !== 'multi';
+    
+    // Clear split responses when exiting multi-mode OR disabling split-screen
+    if (isSwitchingOffSplitScreen || isSwitchingModeFromMulti) {
+      console.log('🧹 Clearing split-screen responses (mode/split-screen change)');
+      setSplitResponses({ primary: [], secondary: [] });
+    }
+    
     // Notify user of mode changes without losing conversation context
     if (previousMode !== newConfig.mode) {
       const modeNames = { default: 'Balanced', single: 'Focused', multi: 'Consensus' };
@@ -305,20 +316,6 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
         description: 'Conversation context preserved. All features active in new mode.',
         duration: 3000,
       });
-      
-      // Clear split responses ONLY when switching OUT of multi mode to single/default
-      if (previousMode === 'multi' && newConfig.mode !== 'multi') {
-        setSplitResponses({ primary: [], secondary: [] });
-      }
-    }
-    
-    // Handle split-screen toggle (independent of mode)
-    const newSplitScreen = newConfig.splitScreenEnabled || newConfig.splitScreen;
-    if (newSplitScreen !== previousSplitScreen) {
-      if (!newSplitScreen) {
-        // Switching split-screen OFF - clear split responses
-        setSplitResponses({ primary: [], secondary: [] });
-      }
     }
   };
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);

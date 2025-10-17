@@ -59,7 +59,8 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
   isLoading,
   loadingStates
 }) => {
-  // Group AI responses by their model/source
+  // Separate user messages from model responses to avoid duplication
+  const userMessages = messages.filter(m => m.role === 'user');
   const primaryResponses = messages.filter(m => 
     m.role === 'assistant' && (m.model === primaryModel || m.provider === 'primary')
   );
@@ -127,9 +128,9 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
         </div>
         
         <div className="flex-1 p-3 overflow-y-auto space-y-3 min-h-0">
-          {/* Show user messages and primary model responses */}
-          {messages
-            .filter(m => m.role === 'user' || (m.role === 'assistant' && (m.model === primaryModel || m.provider === 'primary')))
+          {/* Render messages in order, showing user messages once and only primary responses */}
+          {[...userMessages, ...primaryResponses]
+            .sort((a, b) => new Date(a.timestamp || 0).getTime() - new Date(b.timestamp || 0).getTime())
             .map((message, index) => (
               <div key={`primary-${message.timestamp}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[85%] p-3 rounded-lg overflow-hidden ${
@@ -170,9 +171,9 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
         </div>
         
         <div className="flex-1 p-3 overflow-y-auto space-y-3 min-h-0">
-          {/* Show user messages and secondary model responses */}
-          {messages
-            .filter(m => m.role === 'user' || (m.role === 'assistant' && (m.model === secondaryModel || m.provider === 'secondary')))
+          {/* Render messages in order, showing user messages once and only secondary responses */}
+          {[...userMessages, ...secondaryResponses]
+            .sort((a, b) => new Date(a.timestamp || 0).getTime() - new Date(b.timestamp || 0).getTime())
             .map((message, index) => (
               <div key={`secondary-${message.timestamp}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[85%] p-3 rounded-lg overflow-hidden ${
