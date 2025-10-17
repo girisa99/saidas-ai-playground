@@ -225,7 +225,52 @@ function detectDomain(queryLower: string, context?: string): 'healthcare' | 'tec
   return 'general';
 }
 
-function detectUrgency(queryLower: string, complexity: string): 'low' | 'medium' | 'high' | 'critical' {
+/**
+ * Generate domain-specific system prompts to guide AI responses appropriately
+ */
+function getDomainSystemPrompt(domain: 'healthcare' | 'technology' | 'general', emotionalTone?: string): string {
+  const basePrompt = "You are a knowledgeable AI assistant. ";
+  
+  if (domain === 'healthcare') {
+    return basePrompt + `You specialize in healthcare, medical information, and patient support. 
+
+**Healthcare Guidelines:**
+- Use clear, accessible language while maintaining medical accuracy
+- When discussing treatments, always emphasize consulting healthcare providers
+- Include disclaimers for treatment centers, drug information, and medical advice
+- Be empathetic and patient-focused in your responses
+- Reference clinical evidence and FDA-approved indications when relevant
+- For drug pricing and insurance, explain options without making financial recommendations
+- When discussing clinical trials, explain eligibility criteria clearly
+- Always prioritize patient safety and informed decision-making
+
+${emotionalTone === 'empathetic' ? 'Use a warm, supportive tone as the user seems confused or concerned.' : ''}
+${emotionalTone === 'professional' ? 'Maintain a professional, clinical tone.' : ''}`;
+  }
+  
+  if (domain === 'technology') {
+    return basePrompt + `You specialize in technology, software development, and IT solutions.
+
+**Technology Guidelines:**
+- Provide technical explanations with code examples when appropriate
+- Focus on best practices, security, and scalability
+- Reference official documentation and industry standards
+- Explain technical concepts progressively (simple to complex)
+- Include practical implementation steps
+- Consider different tech stacks and deployment environments
+- Highlight potential pitfalls and common mistakes
+
+${emotionalTone === 'playful' ? 'Use an enthusiastic, developer-friendly tone.' : ''}
+${emotionalTone === 'professional' ? 'Maintain a technical, precise tone.' : ''}`;
+  }
+  
+  // General domain
+  return basePrompt + `Provide helpful, accurate information tailored to the user's needs. 
+- Ask clarifying questions if the domain or intent is unclear
+- Adapt your tone and detail level to the user's expertise
+- Offer to dive deeper into specific areas as needed`;
+}
+
   const criticalIndicators = ['emergency', 'urgent', 'critical', 'immediately', 'asap'];
   const highIndicators = ['important', 'priority', 'soon', 'quickly'];
   
@@ -828,9 +873,14 @@ MEDIA LINKS POLICY:
   return enhanced;
 }
 
-async function callOpenAI(request: AIRequest, ragContext?: string) {
+async function callOpenAI(request: AIRequest, ragContext?: string, triageData?: TriageResult) {
+  // Use domain-specific system prompt if triage is available
+  const domainPrompt = triageData 
+    ? getDomainSystemPrompt(triageData.domain, triageData.emotional_tone)
+    : request.systemPrompt || 'You are a helpful AI assistant.';
+    
   const messages: any[] = [
-    { role: 'system', content: request.systemPrompt || 'You are a helpful AI assistant.' }
+    { role: 'system', content: domainPrompt }
   ];
 
   if (ragContext) {
@@ -906,8 +956,11 @@ async function callOpenAI(request: AIRequest, ragContext?: string) {
   return data.choices[0].message.content;
 }
 
-async function callClaude(request: AIRequest, ragContext?: string) {
-  let systemContent = request.systemPrompt || 'You are a helpful AI assistant.';
+async function callClaude(request: AIRequest, ragContext?: string, triageData?: TriageResult) {
+  // Use domain-specific system prompt if triage is available
+  let systemContent = triageData 
+    ? getDomainSystemPrompt(triageData.domain, triageData.emotional_tone)
+    : request.systemPrompt || 'You are a helpful AI assistant.';
   
   if (ragContext) {
     systemContent += `\n\nRelevant context from knowledge base: ${ragContext}`;
@@ -967,11 +1020,16 @@ async function callClaude(request: AIRequest, ragContext?: string) {
   return data.content[0].text;
 }
 
-async function callGemini(request: AIRequest, ragContext?: string) {
+async function callGemini(request: AIRequest, ragContext?: string, triageData?: TriageResult) {
   let prompt = request.prompt;
   
-  if (request.systemPrompt) {
-    prompt = `${request.systemPrompt}\n\n${prompt}`;
+  // Use domain-specific system prompt if triage is available
+  const domainPrompt = triageData 
+    ? getDomainSystemPrompt(triageData.domain, triageData.emotional_tone)
+    : request.systemPrompt;
+    
+  if (domainPrompt) {
+    prompt = `${domainPrompt}\n\n${prompt}`;
   }
   
   if (ragContext) {
@@ -2159,15 +2217,15 @@ serve(async (req) => {
     switch (mappedProvider) {
       case 'openai':
         if (!openaiApiKey) throw new Error('OpenAI API key not configured. Please add OPENAI_API_KEY to Supabase secrets.');
-        content = await callOpenAI(request, fullContext);
+        content = await callOpenAI(request, fullContext, triageData);
         break;
       case 'claude':
         if (!claudeApiKey) throw new Error('Claude API key not configured. Please add ANTHROPIC_API_KEY to Supabase secrets.');
-        content = await callClaude(request, fullContext);
+        content = await callClaude(request, fullContext, triageData);
         break;
       case 'gemini':
         if (!geminiApiKey) throw new Error('Gemini API key not configured. Please add GEMINI_API_KEY to Supabase secrets.');
-        content = await callGemini(request, fullContext);
+        content = await callGemini(request, fullContext, triageData);
         break;
       default:
         throw new Error(`Unsupported provider: ${mappedProvider}. Only OpenAI, Claude, and Gemini are supported.`);
