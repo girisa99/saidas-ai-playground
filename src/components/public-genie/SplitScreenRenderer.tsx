@@ -112,40 +112,7 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Treatment Center Map - shown above split screen when detected */}
-      {shouldShowMap && mapMessage && (
-        <div className="space-y-4">
-          <HowToUseGuide />
-          {(() => {
-            const lastUser = messages.slice().reverse().find(m => m.role === 'user')?.content || '';
-            const metadata = (mapMessage as any).metadata || {};
-            const productGuess = metadata.product || (/kymriah/i.test(lastUser) ? 'Kymriah' : undefined);
-            const cityGuess = metadata.city || ((lastUser.match(/\b(Boston|Atlanta|New York|San Francisco|Los Angeles|Chicago|Houston|Seattle|Miami)\b/i)?.[0]) as string | undefined);
-            const stateMap: Record<string, string> = {
-              'georgia':'GA','ga':'GA','massachusetts':'MA','ma':'MA','california':'CA','ca':'CA','new york':'NY','ny':'NY','texas':'TX','tx':'TX','florida':'FL','fl':'FL'
-            };
-            const foundKey = Object.keys(stateMap).find(k => new RegExp(`\\b${k}\\b`, 'i').test(lastUser));
-            const stateGuess = metadata.state || (foundKey ? stateMap[foundKey] : undefined);
-            const zipMatch = lastUser.match(/\b(\d{5})\b/);
-            const zipGuess = metadata.zipCode || (zipMatch ? zipMatch[1] : undefined);
-            return (
-              <InteractiveTreatmentCenterMap 
-                filterByType={metadata.centerType}
-                searchQuery={metadata.searchQuery}
-                therapeuticArea={metadata.therapeuticArea}
-                product={productGuess}
-                manufacturer={metadata.manufacturer}
-                clinicalTrial={metadata.clinicalTrial}
-                state={stateGuess}
-                city={cityGuess}
-                zipCode={zipGuess}
-              />
-            );
-          })()}
-        </div>
-      )}
-      
-      {/* Split Screen Comparison */}
+      {/* Split Screen Comparison - Show FIRST */}
       <div className="grid grid-cols-2 gap-4 h-[55vh] md:h-[60vh] min-h-0">
         {/* Primary Model Column */}
         <Card className="flex flex-col h-full">
@@ -233,6 +200,48 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
         </div>
       </Card>
       </div>
+
+      {/* Treatment Center Map - shown BELOW split screen when detected */}
+      {shouldShowMap && mapMessage && (
+        <div className="space-y-4 mt-6">
+          <Separator />
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="text-xs">
+              🗺️ Supporting Data
+            </Badge>
+            <span className="text-sm text-muted-foreground">
+              Referenced by both models above
+            </span>
+          </div>
+          <HowToUseGuide />
+          {(() => {
+            const lastUser = messages.slice().reverse().find(m => m.role === 'user')?.content || '';
+            const metadata = (mapMessage as any).metadata || {};
+            const productGuess = metadata.product || (/kymriah/i.test(lastUser) ? 'Kymriah' : undefined);
+            const cityGuess = metadata.city || ((lastUser.match(/\b(Boston|Atlanta|New York|San Francisco|Los Angeles|Chicago|Houston|Seattle|Miami)\b/i)?.[0]) as string | undefined);
+            const stateMap: Record<string, string> = {
+              'georgia':'GA','ga':'GA','massachusetts':'MA','ma':'MA','california':'CA','ca':'CA','new york':'NY','ny':'NY','texas':'TX','tx':'TX','florida':'FL','fl':'FL'
+            };
+            const foundKey = Object.keys(stateMap).find(k => new RegExp(`\\b${k}\\b`, 'i').test(lastUser));
+            const stateGuess = metadata.state || (foundKey ? stateMap[foundKey] : undefined);
+            const zipMatch = lastUser.match(/\b(\d{5})\b/);
+            const zipGuess = metadata.zipCode || (zipMatch ? zipMatch[1] : undefined);
+            return (
+              <InteractiveTreatmentCenterMap 
+                filterByType={metadata.centerType}
+                searchQuery={metadata.searchQuery}
+                therapeuticArea={metadata.therapeuticArea}
+                product={productGuess}
+                manufacturer={metadata.manufacturer}
+                clinicalTrial={metadata.clinicalTrial}
+                state={stateGuess}
+                city={cityGuess}
+                zipCode={zipGuess}
+              />
+            );
+          })()}
+        </div>
+      )}
     </div>
   );
 };
