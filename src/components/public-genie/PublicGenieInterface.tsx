@@ -1887,6 +1887,7 @@ ${conversationSummary.transcript}`
                                     <RichResponseRenderer 
                                       content={message.content}
                                       oncologyProducts={(message as any).metadata?.oncologyProducts}
+                                      triageData={(message as any).metadata?.triageData}
                                     />
                                     
                                     {/* Display AI Recommendations & Insights */}

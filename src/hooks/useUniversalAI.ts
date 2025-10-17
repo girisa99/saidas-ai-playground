@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { logger } from '@/lib/logger';
 
 interface AIRequest {
   provider: 'openai' | 'claude' | 'gemini'; // Direct API calls (OpenAI, Anthropic, Google)
@@ -79,7 +80,7 @@ export const useUniversalAI = () => {
     setError(null);
 
     try {
-      console.log('🚀 Universal AI Request:', {
+      logger.log('🚀 Universal AI Request:', {
         provider: request.provider,
         model: request.model,
         useRAG: request.useRAG,
@@ -91,7 +92,7 @@ export const useUniversalAI = () => {
         multiAgent: request.enableMultiAgent || false
       });
 
-      console.log('📤 Calling ai-universal-processor edge function...');
+      logger.log('📤 Calling ai-universal-processor edge function...');
       
       const { data, error: functionError } = await supabase.functions.invoke('ai-universal-processor', {
         body: {
@@ -114,7 +115,7 @@ export const useUniversalAI = () => {
         }
       });
 
-      console.log('📥 Edge function response received:', { 
+      logger.log('📥 Edge function response received:', { 
         hasData: !!data, 
         hasError: !!functionError,
         dataKeys: data ? Object.keys(data) : [],
@@ -122,16 +123,16 @@ export const useUniversalAI = () => {
       });
 
       if (functionError) {
-        console.error('❌ Universal AI Error:', functionError);
+        logger.error('❌ Universal AI Error:', functionError);
         throw new Error(functionError.message);
       }
 
       if (!data || !data.content) {
-        console.error('❌ No content in response:', data);
+        logger.error('❌ No content in response:', data);
         throw new Error('No response content received');
       }
 
-      console.log('✅ Universal AI Response:', {
+      logger.log('✅ Universal AI Response:', {
         provider: request.provider,
         model: data.model || data.modelUsed || request.model,
         contentLength: data.content?.length || 0,
@@ -143,21 +144,6 @@ export const useUniversalAI = () => {
         agentCount: data.metadata?.agentCount || data.agentCount || 0
       });
       
-      // DETAILED TRIAGE DATA LOGGING FOR VERIFICATION
-      if (data.triageData) {
-        console.log('🔍 DETAILED TRIAGE DATA:', {
-          complexity: data.triageData.complexity,
-          domain: data.triageData.domain,
-          urgency: data.triageData.urgency,
-          best_format: data.triageData.best_format,
-          emotional_tone: data.triageData.emotional_tone,
-          reasoning: data.triageData.reasoning,
-          confidence: data.triageData.confidence
-        });
-      } else {
-        console.warn('⚠️ NO TRIAGE DATA RECEIVED - Smart routing may not be enabled');
-      }
-
       // Extract metadata from nested structure or fallback to top-level
       const metadata = data.metadata || data;
       
@@ -205,7 +191,7 @@ export const useUniversalAI = () => {
         errorMessage = 'Rate limit exceeded: please wait and try again.';
       }
       setError(errorMessage);
-      console.error('AI generation error:', err);
+      logger.error('AI generation error:', err);
       return null;
     } finally {
       if (!options.silent) {

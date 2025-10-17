@@ -3,6 +3,9 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { VisualJourneyMap, JourneyStep } from './VisualJourneyMap';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { logger } from '@/lib/logger';
 
 interface RichResponseRendererProps {
   content: string;
@@ -17,6 +20,11 @@ interface RichResponseRendererProps {
     storage?: string;
     special_handling?: string;
   }>;
+  triageData?: {
+    best_format?: 'text' | 'list' | 'table' | 'card' | 'html' | 'map';
+    complexity?: string;
+    domain?: string;
+  } | null;
 }
 
 // Remove Google Maps links and embeds from content
@@ -33,9 +41,27 @@ const removeGoogleMapsContent = (text: string): string => {
   return text;
 };
 
-export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ content, oncologyProducts }) => {
+export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ content, oncologyProducts, triageData }) => {
   // Remove Google Maps content first
   const cleanedContent = removeGoogleMapsContent(content);
+  
+  logger.log('🎨 Rendering response with format:', triageData?.best_format);
+  
+  // Detect if content should be rendered as table
+  const shouldRenderAsTable = useMemo(() => {
+    if (triageData?.best_format === 'table') return true;
+    
+    // Auto-detect table structure (multiple rows with | separators)
+    const lines = cleanedContent.split('\n');
+    const tableLines = lines.filter(line => line.includes('|'));
+    return tableLines.length >= 3; // Header + divider + at least one row
+  }, [cleanedContent, triageData]);
+  
+  // Detect if content should be rendered as cards
+  const shouldRenderAsCards = useMemo(() => {
+    return triageData?.best_format === 'card' || 
+           (oncologyProducts && oncologyProducts.length > 0);
+  }, [triageData, oncologyProducts]);
   
   // Parse journey map data if present in content (support both 3 and 4 backticks)
   const journeyMapData = useMemo(() => {
@@ -52,7 +78,7 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
         const journeyData = JSON.parse(journeyMatch[1]);
         return journeyData as { title?: string; steps: JourneyStep[]; context?: 'healthcare' | 'technology' };
       } catch (e) {
-        console.error('Failed to parse journey map data:', e);
+        logger.error('Failed to parse journey map data:', e);
         return null;
       }
     }
@@ -73,6 +99,23 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
     // Support PDF references
     .replace(/\[PDF:\s*([^\]]+)\]/g, '📄 [View PDF: $1]');
 
+  // Parse table if format is table
+  const tableData = useMemo(() => {
+    if (!shouldRenderAsTable) return null;
+    
+    const lines = cleanContent.split('\n').filter(line => line.trim());
+    const tableLines = lines.filter(line => line.includes('|'));
+    
+    if (tableLines.length < 2) return null;
+    
+    const headers = tableLines[0].split('|').map(h => h.trim()).filter(Boolean);
+    const rows = tableLines.slice(2).map(row => 
+      row.split('|').map(cell => cell.trim()).filter(Boolean)
+    );
+    
+    return { headers, rows };
+  }, [cleanContent, shouldRenderAsTable]);
+
   return (
     <div className="space-y-4">
       {/* Journey Map Visualization */}
@@ -82,6 +125,30 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
           title={journeyMapData.title}
           context={journeyMapData.context}
         />
+      )}
+
+      {/* Render as Table if detected */}
+      {shouldRenderAsTable && tableData && (
+        <div className="not-prose mb-6 overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                {tableData.headers.map((header, idx) => (
+                  <TableHead key={idx}>{header}</TableHead>
+                ))}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {tableData.rows.map((row, rowIdx) => (
+                <TableRow key={rowIdx}>
+                  {row.map((cell, cellIdx) => (
+                    <TableCell key={cellIdx}>{cell}</TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       )}
 
       {/* Therapy Products Cards */}
