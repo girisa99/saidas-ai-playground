@@ -307,6 +307,19 @@ function getModelLatency(model: string): number {
   return latencies[model] || 1000;
 }
 
+// Detect provider from model name
+function detectProviderFromModel(model: string): 'openai' | 'claude' | 'gemini' {
+  const lower = model.toLowerCase();
+  if (lower.includes('gpt') || lower.includes('openai') || lower.includes('o3') || lower.includes('o4')) {
+    return 'openai';
+  }
+  if (lower.includes('claude') || lower.includes('anthropic')) {
+    return 'claude';
+  }
+  return 'gemini'; // default
+}
+
+
 
 // ========== AI RECOMMENDATION ENGINE ==========
 // Generate dynamic, context-aware recommendations that vary based on query context
@@ -1566,7 +1579,7 @@ IMPORTANT: Reference previous conversation topics to maintain context.`;
   } else {
     generalistResponse = await callGemini({
       ...request,
-      model: 'gemini-2.5-flash-latest',
+      model: 'gemini-2.0-flash-exp',
       prompt: generalistPrompt,
       systemPrompt: `${context}\n\nYou are continuing a conversation. Maintain all context and references from previous messages.`
     }, context);
@@ -1631,7 +1644,7 @@ Provide expert analysis. Include confidence score (0-1) and reference previous c
     } else if (agentModel.includes('claude')) {
       return callClaude({ ...promptData, model: 'claude-sonnet-4-5' }, context);
     } else {
-      return callGemini({ ...promptData, model: 'gemini-2.5-pro-latest' }, context);
+      return callGemini({ ...promptData, model: 'gemini-2.0-flash-exp' }, context);
     }
   });
 
@@ -1901,17 +1914,17 @@ serve(async (req) => {
     
     // Model mapping to direct provider models
     const modelMapping: Record<string, { model: string; provider: 'openai' | 'claude' | 'gemini' }> = {
-      // Healthcare/Clinical models -> Gemini Pro for best medical reasoning
-      'clinical-bert': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'bioclinical-bert': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'bioclinicalbert': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'biobert': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'medicalbert': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'biogpt': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'med-palm-2': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'pubmedbert': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'galactica-6.7b': { model: 'gemini-2.5-flash-latest', provider: 'gemini' },
-      'biomistral-7b': { model: 'gemini-2.5-flash-latest', provider: 'gemini' },
+      // Healthcare/Clinical models -> Gemini 2.0 Flash for best medical reasoning
+      'clinical-bert': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'bioclinical-bert': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'bioclinicalbert': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'biobert': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'medicalbert': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'biogpt': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'med-palm-2': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'pubmedbert': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'galactica-6.7b': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'biomistral-7b': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
       
       // Claude models -> Direct Claude API
       'claude-3-haiku': { model: 'claude-3-5-haiku-20241022', provider: 'claude' },
@@ -1933,36 +1946,43 @@ serve(async (req) => {
       'openai/gpt-5': { model: 'gpt-5-2025-08-07', provider: 'openai' },
       'openai/gpt-5-mini': { model: 'gpt-5-mini-2025-08-07', provider: 'openai' },
       'openai/gpt-5-nano': { model: 'gpt-5-nano-2025-08-07', provider: 'openai' },
+      'gpt-5': { model: 'gpt-5-2025-08-07', provider: 'openai' },
+      'gpt-5-mini': { model: 'gpt-5-mini-2025-08-07', provider: 'openai' },
+      'gpt-5-nano': { model: 'gpt-5-nano-2025-08-07', provider: 'openai' },
+      'gpt-5-2025-08-07': { model: 'gpt-5-2025-08-07', provider: 'openai' },
+      'gpt-5-mini-2025-08-07': { model: 'gpt-5-mini-2025-08-07', provider: 'openai' },
+      'gpt-5-nano-2025-08-07': { model: 'gpt-5-nano-2025-08-07', provider: 'openai' },
       
       // Gemini models -> Direct Gemini API
-      'gemini-2.5-pro': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'gemini-2.5-flash': { model: 'gemini-2.5-flash-latest', provider: 'gemini' },
-      'gemini-2.5-flash-lite': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
-      'google/gemini-2.5-pro': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'google/gemini-2.5-flash': { model: 'gemini-2.5-flash-latest', provider: 'gemini' },
-      'google/gemini-2.5-flash-lite': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
-      'gemini-pro': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'gemini-pro-vision': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'gemini-flash': { model: 'gemini-2.5-flash-latest', provider: 'gemini' },
+      'gemini-2.5-pro': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'gemini-2.5-flash': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'gemini-2.5-flash-lite': { model: 'gemini-1.5-flash-8b', provider: 'gemini' },
+      'google/gemini-2.5-pro': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'google/gemini-2.5-flash': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'google/gemini-2.5-flash-lite': { model: 'gemini-1.5-flash-8b', provider: 'gemini' },
+      'gemini-pro': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'gemini-pro-vision': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'gemini-flash': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
       
       // Small Language Models (SLMs) -> Gemini Flash 8B
-      'phi-3.5-mini': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
-      'phi-3-mini': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
-      'llama-3.1-8b': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
-      'mistral-7b': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
-      'gemma-7b': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
-      'qwen-7b': { model: 'gemini-2.5-flash-8b-latest', provider: 'gemini' },
+      'phi-3.5-mini': { model: 'gemini-1.5-flash-8b', provider: 'gemini' },
+      'phi-3-mini': { model: 'gemini-1.5-flash-8b', provider: 'gemini' },
+      'llama-3.1-8b': { model: 'gemini-1.5-flash-8b', provider: 'gemini' },
+      'mistral-7b': { model: 'gemini-1.5-flash-8b', provider: 'gemini' },
+      'gemma-7b': { model: 'gemini-1.5-flash-8b', provider: 'gemini' },
+      'qwen-7b': { model: 'gemini-1.5-flash-8b', provider: 'gemini' },
       
-      // Vision Language Models (VLMs) -> Gemini Pro
-      'llava-1.6': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'cogvlm': { model: 'gemini-2.5-pro-latest', provider: 'gemini' },
-      'paligemma': { model: 'gemini-2.5-flash-latest', provider: 'gemini' },
+      // Vision Language Models (VLMs) -> Gemini 2.0 Flash
+      'llava-1.6': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'cogvlm': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
+      'paligemma': { model: 'gemini-2.0-flash-exp', provider: 'gemini' },
     };
     
     // Apply model mapping
     const mapped = modelMapping[originalModel];
-    let mappedModel = mapped?.model || request.model || 'gemini-2.5-flash-latest';
-    let mappedProvider: 'openai' | 'claude' | 'gemini' = mapped?.provider || 'gemini';
+    let mappedModel = mapped?.model || request.model || 'gemini-2.0-flash-exp';
+    // Use request.provider if specified, otherwise use mapped provider or detect from model name
+    let mappedProvider: 'openai' | 'claude' | 'gemini' = request.provider || mapped?.provider || detectProviderFromModel(request.model || 'gemini-2.0-flash-exp');
     const userSelectedModel = originalModel;
     
     // Track optimization metadata
