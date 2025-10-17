@@ -2037,14 +2037,13 @@ serve(async (req) => {
     const state = triageData?.state;
     const city = triageData?.city;
     
-    // FIXED: Detect treatment center query based on best_format AND keywords
     const isTreatmentQuery = triageData?.best_format === 'map' || 
       /treatment center|hospital|clinic|facility|kymriah|yescarta|car-t|gene therapy|bmt/i.test(request.prompt);
     
-    // Check if we have enough filters to show map (therapeutic/product + location)
+    // Show the map whenever we detect a treatment-center style query
     const hasTherapeuticOrProduct = therapeuticArea || product || manufacturer;
     const hasLocation = state || city;
-    let showTreatmentMap = isTreatmentQuery && (hasTherapeuticOrProduct || hasLocation);
+    let showTreatmentMap = isTreatmentQuery; // no longer require filters; frontend filters will refine
     
     // Detect insurance and pricing parameters
     let insuranceType: string | undefined;
@@ -2096,13 +2095,13 @@ serve(async (req) => {
       ragContext
     );
 
-    // Simplified: if we detected a treatment query with any filter, show the map
-    // The frontend will handle the filtering and empty state
+    // Simplified: if we detected a treatment query, always show the map
+    // The frontend will handle filtering, and users can refine using controls
     if (!isTreatmentQuery) {
       showTreatmentMap = false;
     } else if (!hasTherapeuticOrProduct && !hasLocation) {
-      content += `\n\n**To show relevant treatment centers, I need:**\n- Therapeutic area or product (e.g., CAR-T, Gene Therapy, Kymriah, Yescarta)\n- State or city (e.g., California, Boston, Georgia)\n\nPlease provide these details.`;
-      showTreatmentMap = false;
+      content += `\n\nTip: Use the map below to filter by therapy, product, manufacturer, or location. For example: "Kymriah centers in MA" or "CAR-T in Boston".`;
+      // keep showTreatmentMap = true (centerType defaults to 'all')
     }
 
     // Add disclaimer to content if showing treatment centers
