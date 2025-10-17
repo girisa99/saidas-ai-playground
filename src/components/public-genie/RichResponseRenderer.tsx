@@ -93,7 +93,7 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
           </h3>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {oncologyProducts.map((product, idx) => (
-              <div key={idx} className="border border-border rounded-lg p-4 bg-card hover:shadow-md transition-shadow">
+              <div key={idx} className="border border-border rounded-lg p-4 bg-background hover:shadow-md transition-shadow">
                 <div className="font-semibold text-base text-foreground mb-2">{product.product}</div>
                 {product.therapy_category && (
                   <div className="inline-block px-2 py-1 mb-2 text-xs font-medium rounded-full bg-primary/10 text-primary">
