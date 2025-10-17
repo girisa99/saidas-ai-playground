@@ -62,9 +62,12 @@ interface UserInfo {
 
 type Context = 'technology' | 'healthcare';
 
-// Route all AI calls through Lovable AI Gateway (always available)
-const providerFromModel = (model?: string): 'lovable' => {
-  return 'lovable'; // All models go through Lovable AI Gateway
+// Determine provider from model name for direct API calls
+const providerFromModel = (model?: string): 'openai' | 'claude' | 'gemini' => {
+  const lower = (model || '').toLowerCase();
+  if (lower.includes('gpt') || lower.includes('openai')) return 'openai';
+  if (lower.includes('claude') || lower.includes('anthropic')) return 'claude';
+  return 'gemini'; // Default to Gemini
 };
 
 // Get complementary model for split-screen comparisons

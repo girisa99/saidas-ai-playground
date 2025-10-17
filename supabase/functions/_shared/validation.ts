@@ -85,13 +85,13 @@ export const MedicalImageAnalysisSchema = z.object({
     .optional(),
   
   aiModel: z.enum(['lovable', 'openai', 'claude', 'gemini'])
-    .optional()
-    .default('lovable')
+  .optional()
+  .default('gemini')
 });
 
-// AI processor validation schema
+// AI processor validation schema (Direct API calls only)
 export const AIRequestSchema = z.object({
-  provider: z.enum(['openai', 'claude', 'gemini', 'lovable']),
+  provider: z.enum(['openai', 'claude', 'gemini']),
 
   model: z.string()
     .min(1, "Model is required")

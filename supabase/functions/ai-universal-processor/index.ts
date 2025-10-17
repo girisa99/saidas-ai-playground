@@ -21,7 +21,7 @@ const labelStudioUrl = Deno.env.get('LABEL_STUDIO_URL');
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 interface AIRequest {
-  provider: 'openai' | 'claude' | 'gemini' | 'lovable';
+  provider: 'openai' | 'claude' | 'gemini'; // Direct API calls only
   model: string;
   prompt: string;
   systemPrompt?: string;
@@ -2073,8 +2073,8 @@ serve(async (req) => {
       
       return new Response(JSON.stringify({ 
         content: collaborationResult.synthesizedResponse || collaborationResult.primaryResponse,
-        provider: 'lovable',
-        model: 'multi-agent',
+        provider: mappedProvider,
+        model: strategy.collaborationStrategy === 'ensemble' ? 'multi-agent-ensemble' : 'multi-agent-sequential',
         ragUsed: ragContext.length > 0,
         mcpUsed: mcpContext.length > 0,
         // Nest metadata consistently with single-agent mode

@@ -50,8 +50,8 @@ export const TEST_CASES = {
   'ai-universal-processor': {
     method: 'POST',
     body: {
-      provider: 'lovable',
-      model: 'google/gemini-2.0-flash-exp',
+      provider: 'gemini',
+      model: 'gemini-2.0-flash-exp',
       prompt: 'Test query',
       systemPrompt: 'You are a helpful assistant'
     }
