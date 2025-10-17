@@ -67,6 +67,29 @@ const providerFromModel = (model?: string): 'lovable' => {
   return 'lovable'; // All models go through Lovable AI Gateway
 };
 
+// Get complementary model for split-screen comparisons
+const getComplementaryModel = (primaryModel: string): string => {
+  const lower = primaryModel.toLowerCase();
+  
+  // If primary is OpenAI, use Claude or Gemini as secondary
+  if (lower.includes('gpt') || lower.includes('openai')) {
+    return 'claude-sonnet-4-5';
+  }
+  
+  // If primary is Claude, use GPT as secondary
+  if (lower.includes('claude')) {
+    return 'gpt-5-2025-08-07';
+  }
+  
+  // If primary is Gemini, use GPT as secondary
+  if (lower.includes('gemini') || lower.includes('google')) {
+    return 'gpt-5-mini-2025-08-07';
+  }
+  
+  // Default fallback: use GPT-5 as complementary
+  return 'gpt-5-2025-08-07';
+};
+
 interface PublicGenieInterfaceProps {
   isOpen: boolean;
   onClose: () => void;
@@ -814,7 +837,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
         setLoadingStates({ primary: true, secondary: true });
 
         const primaryProvider = providerFromModel(aiConfig.selectedModel);
-        const secondaryModel = aiConfig.secondaryModel || 'google/gemini-2.5-flash';
+        // Use intelligent secondary model selection based on primary
+        const secondaryModel = aiConfig.secondaryModel || getComplementaryModel(aiConfig.selectedModel);
         const secondaryProvider = providerFromModel(secondaryModel);
         
         console.log('🚀 Multi-mode request:', { 
@@ -1816,13 +1840,13 @@ ${conversationSummary.transcript}`
 
                      {aiConfig.splitScreenEnabled && aiConfig.mode === 'multi' ? (
                        <SplitScreenRenderer
-                         key="split-screen-renderer"
-                         messages={[...messages, ...splitResponses.primary, ...splitResponses.secondary].sort((a, b) => new Date((a as any).timestamp || 0).getTime() - new Date((b as any).timestamp || 0).getTime())}
-                         primaryModel={aiConfig.selectedModel}
-                         secondaryModel={aiConfig.secondaryModel || 'google/gemini-2.5-flash'}
-                         isLoading={isLoading}
-                         loadingStates={loadingStates}
-                       />
+                          key="split-screen-renderer"
+                          messages={[...messages, ...splitResponses.primary, ...splitResponses.secondary].sort((a, b) => new Date((a as any).timestamp || 0).getTime() - new Date((b as any).timestamp || 0).getTime())}
+                          primaryModel={aiConfig.selectedModel}
+                          secondaryModel={aiConfig.secondaryModel || getComplementaryModel(aiConfig.selectedModel)}
+                          isLoading={isLoading}
+                          loadingStates={loadingStates}
+                        />
                      ) : (
                         <div className="space-y-2">
                           {messages.map((message, index) => (

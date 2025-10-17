@@ -41,17 +41,20 @@ export function selectBestModel(
     };
   }
   
-  // RULE 2: If smart routing disabled, use user's selected model
+  // RULE 2: If smart routing disabled, use user's selected model OR best available
   if (!enableSmartRouting || userConfig.selectedModel === 'user-choice-only') {
-    const model = userConfig.selectedModel || 'google/gemini-2.5-flash';
+    // If no model selected, use triage to pick best instead of defaulting
+    const model = userConfig.selectedModel || triage.suggested_model;
     const provider = getProviderForModel(model);
     return {
       model,
       provider,
-      reasoning: 'Smart routing disabled - using user preference',
+      reasoning: userConfig.selectedModel 
+        ? 'Smart routing disabled - using user preference'
+        : 'No model selected - using triage-recommended model',
       estimatedCost: getModelCost(model),
       estimatedLatency: getModelLatency(model),
-      usedTriage: false
+      usedTriage: !userConfig.selectedModel
     };
   }
   
@@ -74,19 +77,7 @@ export function selectBestModel(
   
   // RULE 4: Use suggested model from triage for DEFAULT/MULTI modes
   if (userConfig.mode === 'default' || userConfig.mode === 'multi') {
-    // For simple queries, use fast SLM
-    if (triage.complexity === 'simple' && triage.confidence > 0.8) {
-      return {
-        model: 'google/gemini-2.5-flash-lite',
-        provider: 'gemini',
-        reasoning: `Simple query detected (confidence: ${(triage.confidence * 100).toFixed(0)}%) - using fast SLM for cost/speed`,
-        estimatedCost: 0.0001,
-        estimatedLatency: 200,
-        usedTriage: true
-      };
-    }
-    
-    // For medium/high complexity, use triage suggestion
+    // Always use triage suggested model for optimal routing
     const provider = getProviderForModel(triage.suggested_model);
     return {
       model: triage.suggested_model,
@@ -98,13 +89,15 @@ export function selectBestModel(
     };
   }
   
-  // FALLBACK: Use user's selected model with triage enhancement
-  const model = userConfig.selectedModel || 'google/gemini-2.5-flash';
+  // FALLBACK: Use triage-suggested model as intelligent default
+  const model = userConfig.selectedModel || triage.suggested_model;
   const provider = getProviderForModel(model);
   return {
     model,
     provider,
-    reasoning: 'Using user-selected model with triage-enhanced prompt',
+    reasoning: userConfig.selectedModel 
+      ? 'Using user-selected model with triage-enhanced prompt'
+      : 'Using triage-recommended model as intelligent fallback',
     estimatedCost: getModelCost(model),
     estimatedLatency: getModelLatency(model),
     usedTriage: true
@@ -117,8 +110,11 @@ export function selectBestModel(
 function getProviderForModel(model: string): 'openai' | 'claude' | 'gemini' {
   const lower = model.toLowerCase();
   if (lower.includes('gpt') || lower.includes('openai')) return 'openai';
-  if (lower.includes('claude')) return 'claude';
-  return 'gemini'; // default to Gemini
+  if (lower.includes('claude') || lower.includes('anthropic')) return 'claude';
+  if (lower.includes('gemini') || lower.includes('google')) return 'gemini';
+  
+  // No hardcoded default - throw error if provider unknown
+  throw new Error(`Unable to determine provider for model: ${model}`);
 }
 
 /**
@@ -127,20 +123,29 @@ function getProviderForModel(model: string): 'openai' | 'claude' | 'gemini' {
  */
 function getModelCost(model?: string): number {
   const costs: Record<string, number> = {
+    // Gemini models
     'google/gemini-2.5-pro': 0.02,
     'google/gemini-2.5-flash': 0.01,
     'google/gemini-2.5-flash-lite': 0.0001,
+    'gemini-2.0-flash-exp': 0.01,
+    'gemini-1.5-flash-8b': 0.0001,
+    // OpenAI models
     'openai/gpt-5': 0.02,
     'openai/gpt-5-mini': 0.01,
     'openai/gpt-5-nano': 0.001,
+    'gpt-5-2025-08-07': 0.02,
+    'gpt-5-mini-2025-08-07': 0.01,
     'gpt-4o': 0.015,
     'gpt-4o-mini': 0.005,
+    // Claude models
+    'claude-sonnet-4-5': 0.025,
     'claude-3-opus': 0.025,
     'claude-3-sonnet': 0.015,
     'claude-3-haiku': 0.005,
   };
   
-  return costs[model || 'google/gemini-2.5-flash'] || 0.01;
+  // No hardcoded default - return average if unknown
+  return costs[model || ''] || 0.01;
 }
 
 /**
@@ -148,20 +153,29 @@ function getModelCost(model?: string): number {
  */
 function getModelLatency(model?: string): number {
   const latencies: Record<string, number> = {
+    // Gemini models
     'google/gemini-2.5-pro': 2500,
     'google/gemini-2.5-flash': 1200,
     'google/gemini-2.5-flash-lite': 200,
+    'gemini-2.0-flash-exp': 1200,
+    'gemini-1.5-flash-8b': 400,
+    // OpenAI models
     'openai/gpt-5': 2000,
     'openai/gpt-5-mini': 1000,
     'openai/gpt-5-nano': 400,
+    'gpt-5-2025-08-07': 2000,
+    'gpt-5-mini-2025-08-07': 1000,
     'gpt-4o': 1800,
     'gpt-4o-mini': 800,
+    // Claude models
+    'claude-sonnet-4-5': 1800,
     'claude-3-opus': 2500,
     'claude-3-sonnet': 1500,
     'claude-3-haiku': 500,
   };
   
-  return latencies[model || 'google/gemini-2.5-flash'] || 1500;
+  // No hardcoded default - return average if unknown
+  return latencies[model || ''] || 1500;
 }
 
 /**

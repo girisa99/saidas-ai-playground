@@ -427,16 +427,19 @@ function suggestModel(
     return 'gpt-4o'; // Good general vision
   }
   
-  // Route based on complexity
+  // Intelligent routing based on complexity, domain, and capabilities
   if (complexity === 'simple') {
-    return 'google/gemini-2.5-flash-lite'; // Fastest, cheapest
+    // Simple queries: use fastest small model
+    return 'gemini-1.5-flash-8b';
   }
   
   if (complexity === 'medium') {
-    if (domain === 'healthcare') {
-      return 'google/gemini-2.5-pro'; // Healthcare needs accuracy
+    // Healthcare with vision needs Gemini
+    if (domain === 'healthcare' && requires_vision) {
+      return 'gemini-2.0-flash-exp';
     }
-    return 'google/gemini-2.5-flash'; // Balanced
+    // Medium complexity: balanced models
+    return domain === 'healthcare' ? 'gemini-2.0-flash-exp' : 'gpt-5-mini-2025-08-07';
   }
   
   // High complexity
