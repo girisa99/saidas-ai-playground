@@ -4,7 +4,9 @@ import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { VisualJourneyMap, JourneyStep } from './VisualJourneyMap';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { FileText, Video, Image as ImageIcon, Download, CheckCircle2 } from 'lucide-react';
 import { logger } from '@/lib/logger';
 
 interface RichResponseRendererProps {
@@ -21,7 +23,7 @@ interface RichResponseRendererProps {
     special_handling?: string;
   }>;
   triageData?: {
-    best_format?: 'text' | 'list' | 'table' | 'card' | 'html' | 'map';
+    best_format?: 'text' | 'list' | 'table' | 'card' | 'html' | 'map' | 'infographic' | 'steps' | 'video' | 'pdf';
     complexity?: string;
     domain?: string;
   } | null;
@@ -47,63 +49,52 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
   
   logger.log('🎨 Rendering response with format:', triageData?.best_format);
   
-  // Detect if content should be rendered as table
-  const shouldRenderAsTable = useMemo(() => {
-    if (triageData?.best_format === 'table') return true;
+  // Detect content type based on triage or auto-detection
+  const contentType = useMemo(() => {
+    if (triageData?.best_format) return triageData.best_format;
     
-    // Auto-detect table structure (multiple rows with | separators)
-    const lines = cleanedContent.split('\n');
-    const tableLines = lines.filter(line => line.includes('|'));
-    return tableLines.length >= 3; // Header + divider + at least one row
+    // Auto-detect based on content patterns
+    if (cleanedContent.match(/````?journey-map/)) return 'map';
+    if (cleanedContent.match(/````?process-steps/)) return 'steps';
+    if (cleanedContent.match(/\|[^\n]+\|/gm)?.length >= 3) return 'table';
+    if (cleanedContent.match(/https?:\/\/.*\.(pdf|PDF)/)) return 'pdf';
+    if (cleanedContent.match(/https?:\/\/(www\.)?(youtube\.com|youtu\.be|vimeo\.com)/)) return 'video';
+    if (cleanedContent.match(/!\[.*?\]\(.*?\)/)) return 'infographic';
+    
+    return 'text';
   }, [cleanedContent, triageData]);
   
-  // Detect if content should be rendered as cards
-  const shouldRenderAsCards = useMemo(() => {
-    return triageData?.best_format === 'card' || 
-           (oncologyProducts && oncologyProducts.length > 0);
-  }, [triageData, oncologyProducts]);
-  
-  // Parse journey map data if present in content (support both 3 and 4 backticks)
+  // Parse journey map data
   const journeyMapData = useMemo(() => {
-    // Try 4 backticks first (correct format)
-    let journeyMatch = cleanedContent.match(/````journey-map\n([\s\S]*?)\n````/);
-    
-    // Fallback to 3 backticks for backward compatibility
-    if (!journeyMatch) {
-      journeyMatch = cleanedContent.match(/```journey-map\n([\s\S]*?)\n```/);
-    }
-    
+    const journeyMatch = cleanedContent.match(/````?journey-map\n([\s\S]*?)\n````?/);
     if (journeyMatch) {
       try {
-        const journeyData = JSON.parse(journeyMatch[1]);
-        return journeyData as { title?: string; steps: JourneyStep[]; context?: 'healthcare' | 'technology' };
+        return JSON.parse(journeyMatch[1]) as { title?: string; steps: JourneyStep[]; context?: 'healthcare' | 'technology' };
       } catch (e) {
         logger.error('Failed to parse journey map data:', e);
-        return null;
       }
     }
     return null;
   }, [cleanedContent]);
-
-  // Remove journey map code block from cleaned content for rendering (support both formats)
-  const cleanContent = cleanedContent.replace(/````journey-map\n[\s\S]*?\n````/g, '').replace(/```journey-map\n[\s\S]*?\n```/g, '');
-
-  // Enhance content formatting for better readability and add citations support
-  const enhancedContent = cleanContent
-    .replace(/^• /gm, '🔹 ')
-    .replace(/\*\*(.*?)\*\*/g, '**$1**') // Ensure bold formatting is preserved
-    // Support citation format: [1], [2], etc.
-    .replace(/\[(\d+)\]/g, '<sup class="citation">[$1]</sup>')
-    // Support reference links format: [Source: URL]
-    .replace(/\[Source:\s*(https?:\/\/[^\]]+)\]/g, '📎 [Reference Link]($1)')
-    // Support PDF references
-    .replace(/\[PDF:\s*([^\]]+)\]/g, '📄 [View PDF: $1]');
-
-  // Parse table if format is table
+  
+  // Parse process steps data
+  const processStepsData = useMemo(() => {
+    const stepsMatch = cleanedContent.match(/````?process-steps\n([\s\S]*?)\n````?/);
+    if (stepsMatch) {
+      try {
+        return JSON.parse(stepsMatch[1]) as { title?: string; steps: Array<{ number: number; title: string; description: string; status?: 'completed' | 'current' | 'upcoming' }> };
+      } catch (e) {
+        logger.error('Failed to parse process steps:', e);
+      }
+    }
+    return null;
+  }, [cleanedContent]);
+  
+  // Parse table data
   const tableData = useMemo(() => {
-    if (!shouldRenderAsTable) return null;
+    if (contentType !== 'table') return null;
     
-    const lines = cleanContent.split('\n').filter(line => line.trim());
+    const lines = cleanedContent.split('\n').filter(line => line.trim());
     const tableLines = lines.filter(line => line.includes('|'));
     
     if (tableLines.length < 2) return null;
@@ -114,7 +105,44 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
     );
     
     return { headers, rows };
-  }, [cleanContent, shouldRenderAsTable]);
+  }, [cleanedContent, contentType]);
+  
+  // Extract videos
+  const videos = useMemo(() => {
+    const videoMatches = cleanedContent.matchAll(/https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/|vimeo\.com\/)([^\s)]+)/g);
+    return Array.from(videoMatches).map(match => {
+      const url = match[0];
+      const videoId = match[3].split('&')[0];
+      return {
+        url,
+        embedUrl: match[2].includes('youtube') || match[2].includes('youtu.be') 
+          ? `https://www.youtube.com/embed/${videoId}`
+          : `https://player.vimeo.com/video/${videoId}`
+      };
+    });
+  }, [cleanedContent]);
+  
+  // Extract PDFs
+  const pdfs = useMemo(() => {
+    const pdfMatches = cleanedContent.matchAll(/\[(.*?)\]\((https?:\/\/.*?\.pdf)\)/gi);
+    return Array.from(pdfMatches).map(match => ({
+      title: match[1] || 'Download PDF',
+      url: match[2]
+    }));
+  }, [cleanedContent]);
+
+  // Remove special code blocks and clean content
+  let cleanContent = cleanedContent
+    .replace(/````?journey-map\n[\s\S]*?\n````?/g, '')
+    .replace(/````?process-steps\n[\s\S]*?\n````?/g, '');
+
+  // Enhance content formatting
+  const enhancedContent = cleanContent
+    .replace(/^• /gm, '🔹 ')
+    .replace(/\*\*(.*?)\*\*/g, '**$1**')
+    .replace(/\[(\d+)\]/g, '<sup class="citation">[$1]</sup>')
+    .replace(/\[Source:\s*(https?:\/\/[^\]]+)\]/g, '📎 [Reference Link]($1)')
+    .replace(/\[PDF:\s*([^\]]+)\]/g, '📄 [View PDF: $1]');
 
   return (
     <div className="space-y-4">
@@ -127,14 +155,85 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
         />
       )}
 
-      {/* Render as Table if detected */}
-      {shouldRenderAsTable && tableData && (
+      {/* Process Steps Visualization */}
+      {processStepsData && (
+        <div className="not-prose mb-6">
+          <h3 className="text-lg font-semibold text-primary mb-4">{processStepsData.title || 'Process Steps'}</h3>
+          <div className="space-y-3">
+            {processStepsData.steps.map((step, idx) => (
+              <Card key={idx} className={step.status === 'completed' ? 'border-green-500/50' : step.status === 'current' ? 'border-primary' : ''}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-start gap-3">
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                      step.status === 'completed' ? 'bg-green-500 text-white' : 
+                      step.status === 'current' ? 'bg-primary text-primary-foreground' : 
+                      'bg-muted text-muted-foreground'
+                    }`}>
+                      {step.status === 'completed' ? <CheckCircle2 className="h-4 w-4" /> : step.number}
+                    </div>
+                    <div className="flex-1">
+                      <CardTitle className="text-base">{step.title}</CardTitle>
+                      <CardDescription className="mt-1 text-sm">{step.description}</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Video Embeds */}
+      {videos.length > 0 && (
+        <div className="not-prose mb-6 space-y-4">
+          {videos.map((video, idx) => (
+            <div key={idx} className="rounded-lg overflow-hidden border border-border">
+              <div className="bg-muted px-3 py-2 flex items-center gap-2">
+                <Video className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium">Video Resource</span>
+              </div>
+              <div className="aspect-video">
+                <iframe
+                  src={video.embedUrl}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* PDF Downloads */}
+      {pdfs.length > 0 && (
+        <div className="not-prose mb-6">
+          <div className="space-y-2">
+            {pdfs.map((pdf, idx) => (
+              <a
+                key={idx}
+                href={pdf.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 p-3 border border-border rounded-lg hover:bg-muted transition-colors"
+              >
+                <FileText className="h-5 w-5 text-red-500" />
+                <span className="flex-1 font-medium">{pdf.title}</span>
+                <Download className="h-4 w-4 text-muted-foreground" />
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Render as Table */}
+      {contentType === 'table' && tableData && (
         <div className="not-prose mb-6 overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
                 {tableData.headers.map((header, idx) => (
-                  <TableHead key={idx}>{header}</TableHead>
+                  <TableHead key={idx} className="font-semibold">{header}</TableHead>
                 ))}
               </TableRow>
             </TableHeader>
