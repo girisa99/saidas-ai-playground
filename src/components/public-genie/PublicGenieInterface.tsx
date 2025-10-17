@@ -687,6 +687,7 @@ useEffect(() => {
   };
 
   const handleSendMessage = async () => {
+    console.log('[Genie] handleSendMessage invoked', { hasText: !!inputMessage.trim(), hasImages: uploadedImages.length > 0, isLoading });
     if ((!inputMessage.trim() && uploadedImages.length === 0) || isLoading) return;
     if (sendingRef.current) return; // Prevent double-trigger
     sendingRef.current = true;
@@ -852,6 +853,7 @@ useEffect(() => {
           userSelected: aiConfig.secondaryModel ? 'Yes' : 'Using fallback'
         });
 
+        console.log('[Genie] Multi-mode about to invoke AI', { primaryProvider, primaryModel: aiConfig.selectedModel, secondaryProvider, secondaryModel, images: imageUrls.length });
         const results = await Promise.allSettled([
           generateResponse({
             provider: primaryProvider as any,
@@ -1193,6 +1195,7 @@ useEffect(() => {
         }
       } else {
         // Standard single response with RAG, Knowledge Base, MCP, Multi-Agent
+        console.log('[Genie] Single-mode about to invoke AI', { provider: providerFromModel(aiConfig.selectedModel), model: aiConfig.selectedModel });
         const response = await generateResponse({
           provider: providerFromModel(aiConfig.selectedModel) as any,
           model: aiConfig.selectedModel,
