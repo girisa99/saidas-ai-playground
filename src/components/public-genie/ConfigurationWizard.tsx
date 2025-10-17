@@ -174,14 +174,27 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
     contextualSuggestions: true,
   });
   
-  // Track selected models for multi-agent mode
+  // Track selected models for multi-agent mode with smart defaults
   const [selectedModels, setSelectedModels] = useState<{
     llm?: string;
     secondary?: string;
     slm?: string;
     vision?: string;
     healthcare?: string;
-  }>({});
+  }>({
+    llm: 'gpt-4o-mini', // Smart default for LLM
+    slm: 'phi-3.5-mini', // Smart default for SLM
+    vision: 'gpt-4o', // Smart default for vision
+    healthcare: undefined, // Keep healthcare optional
+  });
+
+  // Calculate model counts for each category
+  const modelCounts = {
+    llm: modelOptions.filter(m => m.category === 'General' && !m.type.includes('SLM')).length,
+    slm: modelOptions.filter(m => m.type === 'SLM').length,
+    vlm: modelOptions.filter(m => m.category === 'Vision' || (m.vision && m.type.includes('VLM'))).length,
+    healthcare: modelOptions.filter(m => m.category === 'Healthcare').length,
+  };
 
   const getFilteredModels = () => {
     if (modelFilter === 'all') return modelOptions;
@@ -327,7 +340,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select General LLM" />
+                    <SelectValue placeholder={`Select LLM (${modelCounts.llm} available)`} />
                   </SelectTrigger>
                   <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     {modelOptions.filter(m => m.category === 'General' && !m.type.includes('SLM')).map((model) => (
@@ -361,7 +374,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select SLM (optional)" />
+                    <SelectValue placeholder={`Select SLM (${modelCounts.slm} available)`} />
                   </SelectTrigger>
                   <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     <SelectItem value="none">None</SelectItem>
@@ -396,7 +409,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Vision model (optional)" />
+                    <SelectValue placeholder={`Select Vision model (${modelCounts.vlm} available)`} />
                   </SelectTrigger>
                   <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     <SelectItem value="none">None</SelectItem>
@@ -431,7 +444,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Healthcare model (optional)" />
+                    <SelectValue placeholder={`None selected (${modelCounts.healthcare} available)`} />
                   </SelectTrigger>
                   <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     <SelectItem value="none">None</SelectItem>
@@ -474,7 +487,7 @@ export const ConfigurationWizard: React.FC<ConfigurationWizardProps> = ({
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select LLM" />
+                    <SelectValue placeholder={`Select LLM (${modelCounts.llm} available)`} />
                   </SelectTrigger>
                   <SelectContent className="max-h-[200px] z-[100005] bg-background shadow-lg border">
                     {modelOptions.filter(m => m.category === 'General' && !m.type.includes('SLM')).map((model) => (
