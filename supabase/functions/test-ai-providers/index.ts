@@ -13,14 +13,17 @@ serve(async (req) => {
 
   try {
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
-    const claudeApiKey = Deno.env.get('CLAUDE_API_KEY');
+    const claudeApiKey = Deno.env.get('ANTHROPIC_API_KEY');
     const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
+    const labelStudioKey = Deno.env.get('LABEL_STUDIO_API_KEY');
+    const labelStudioUrl = Deno.env.get('LABEL_STUDIO_URL');
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
 
     const results = {
       openai: { configured: !!openaiApiKey, working: false, error: null as string | null },
       claude: { configured: !!claudeApiKey, working: false, error: null as string | null },
       gemini: { configured: !!geminiApiKey, working: false, error: null as string | null },
+      labelStudio: { configured: !!(labelStudioKey && labelStudioUrl), working: false, error: null as string | null },
       lovable: { configured: !!lovableApiKey, working: false, error: null as string | null },
     };
 
@@ -87,11 +90,11 @@ serve(async (req) => {
       }
     }
 
-    // Test Gemini (Google)
+    // Test Gemini (Google AI Studio)
     if (geminiApiKey) {
       try {
         const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${geminiApiKey}`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -113,6 +116,32 @@ serve(async (req) => {
       } catch (error) {
         results.gemini.error = error instanceof Error ? error.message : 'Unknown error';
         console.error('❌ Gemini API exception:', error);
+      }
+    }
+
+    // Test Label Studio
+    if (labelStudioKey && labelStudioUrl) {
+      try {
+        const response = await fetch(`${labelStudioUrl}/api/projects`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Token ${labelStudioKey}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const data = await response.json();
+        
+        if (response.ok && Array.isArray(data)) {
+          results.labelStudio.working = true;
+          console.log('✅ Label Studio API: Working - Projects accessible');
+        } else {
+          results.labelStudio.error = 'Invalid response or unauthorized';
+          console.error('❌ Label Studio API error:', data);
+        }
+      } catch (error) {
+        results.labelStudio.error = error instanceof Error ? error.message : 'Unknown error';
+        console.error('❌ Label Studio API exception:', error);
       }
     }
 
@@ -149,7 +178,7 @@ serve(async (req) => {
 
     // Generate summary
     const summary = {
-      total_providers: 4,
+      total_providers: 5,
       configured: Object.values(results).filter(r => r.configured).length,
       working: Object.values(results).filter(r => r.working).length,
       results,
@@ -173,6 +202,12 @@ serve(async (req) => {
       summary.recommendations.push('Add GEMINI_API_KEY for Gemini models');
     } else if (!results.gemini.working) {
       summary.recommendations.push(`Gemini error: ${results.gemini.error}`);
+    }
+
+    if (!results.labelStudio.configured) {
+      summary.recommendations.push('Add LABEL_STUDIO_API_KEY and LABEL_STUDIO_URL for active learning');
+    } else if (!results.labelStudio.working) {
+      summary.recommendations.push(`Label Studio error: ${results.labelStudio.error}`);
     }
 
     if (!results.lovable.configured) {
