@@ -886,18 +886,38 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
           // ========== SMART ROUTING OPTIMIZATION DISPLAY (PRIMARY) ==========
           if (primaryRes.triageData) {
             console.log('📊 Primary Model - Displaying Smart Routing:', primaryRes.triageData);
+            personalizedPrimary += `\n\n---\n\n### 🤖 AI Optimization (Primary Model)\n\n`;
             const optimizationDetails: string[] = [];
-            optimizationDetails.push(`\n\n**🧠 Smart Routing Optimization:**`);
-            optimizationDetails.push(`• **Query Complexity**: ${primaryRes.triageData.complexity || 'N/A'}`);
-            optimizationDetails.push(`• **Domain Detected**: ${primaryRes.triageData.domain || 'general'}`);
-            optimizationDetails.push(`• **Urgency Level**: ${primaryRes.triageData.urgency || 'normal'}`);
+            
+            // Model selection and optimization
+            const userModel = aiConfig.selectedModel || 'gpt-4o-mini';
+            const actualModel = primaryRes.model || primaryRes.triageData.suggested_model;
+            optimizationDetails.push(`**🎯 Model Selection**:`);
+            optimizationDetails.push(`• Requested: \`${userModel}\``);
+            
+            // Check if there was an optimization override
+            const smartOpt = (primaryRes as any).smartRoutingOptimization || (primaryRes as any).metadata?.smartRoutingOptimization;
+            if (smartOpt?.override && actualModel !== userModel) {
+              optimizationDetails.push(`• **Optimized to**: \`${actualModel}\` ✨`);
+              optimizationDetails.push(`• **💰 Cost Savings**: ${smartOpt.costSavingsPercent || 0}%`);
+              optimizationDetails.push(`• **⚡ Latency Savings**: ${smartOpt.latencySavingsPercent || 0}%`);
+              optimizationDetails.push(`• _Reason: ${smartOpt.reason || primaryRes.triageData.reasoning || 'Better performance'}_`);
+            } else {
+              optimizationDetails.push(`• **Used**: \`${actualModel}\` (Already optimal)`);
+            }
+            
+            optimizationDetails.push(`\n**📊 Query Analysis**:`);
+            optimizationDetails.push(`• Complexity: ${(primaryRes.triageData.complexity || 'medium').toUpperCase()}`);
+            optimizationDetails.push(`• Domain: ${(primaryRes.triageData.domain || 'general').toUpperCase()}`);
+            optimizationDetails.push(`• Urgency: ${(primaryRes.triageData.urgency || 'medium').toUpperCase()}`);
             
             const formatDisplay = primaryRes.triageData.best_format || 'text';
             const formatExplanations: Record<string, string> = {
               'table': '📊 Table (Structured data)',
               'html': '🌐 HTML (Rich content)',
               'text': '📝 Text (Narrative)',
-              'list': '📋 List (Bullets/Numbers)'
+              'list': '📋 List (Bullets/Numbers)',
+              'map': '🗺️ Interactive Map (Geographic data)'
             };
             optimizationDetails.push(`• **Recommended Format**: ${formatExplanations[formatDisplay] || formatDisplay}`);
             
@@ -910,15 +930,11 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
               optimizationDetails.push(`• **Tone Applied**: ${toneEmojis[primaryRes.triageData.emotional_tone] || primaryRes.triageData.emotional_tone}`);
             }
             
-            if (primaryRes.triageData.reasoning) {
-              optimizationDetails.push(`\n**💡 Routing Reasoning**: _${primaryRes.triageData.reasoning}_`);
-            }
-            
-            optimizationDetails.push(`\n_AI Confidence: ${Math.round((primaryRes.triageData.confidence || 0) * 100)}%_`);
-            
             if (primaryRes.triageData.requires_vision) {
-              optimizationDetails.push(`_👁️ Vision Analysis Enabled_`);
+              optimizationDetails.push(`• **Vision Analysis**: 👁️ Enabled`);
             }
+            
+            optimizationDetails.push(`\n_AI Routing Confidence: ${Math.round((primaryRes.triageData.confidence || 0) * 100)}%_`);
             
             personalizedPrimary += optimizationDetails.join('\n');
           }
@@ -1013,18 +1029,38 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
           // ========== SMART ROUTING OPTIMIZATION DISPLAY (SECONDARY) ==========
           if (secondaryRes.triageData) {
             console.log('📊 Secondary Model - Displaying Smart Routing:', secondaryRes.triageData);
+            personalizedSecondary += `\n\n---\n\n### 🤖 AI Optimization (Secondary Model)\n\n`;
             const optimizationDetails: string[] = [];
-            optimizationDetails.push(`\n\n**🧠 Smart Routing Optimization:**`);
-            optimizationDetails.push(`• **Query Complexity**: ${secondaryRes.triageData.complexity || 'N/A'}`);
-            optimizationDetails.push(`• **Domain Detected**: ${secondaryRes.triageData.domain || 'general'}`);
-            optimizationDetails.push(`• **Urgency Level**: ${secondaryRes.triageData.urgency || 'normal'}`);
+            
+            // Model selection and optimization
+            const userModel = aiConfig.secondaryModel || 'gemini-pro';
+            const actualModel = secondaryRes.model || secondaryRes.triageData.suggested_model;
+            optimizationDetails.push(`**🎯 Model Selection**:`);
+            optimizationDetails.push(`• Requested: \`${userModel}\``);
+            
+            // Check if there was an optimization override
+            const smartOpt = (secondaryRes as any).smartRoutingOptimization || (secondaryRes as any).metadata?.smartRoutingOptimization;
+            if (smartOpt?.override && actualModel !== userModel) {
+              optimizationDetails.push(`• **Optimized to**: \`${actualModel}\` ✨`);
+              optimizationDetails.push(`• **💰 Cost Savings**: ${smartOpt.costSavingsPercent || 0}%`);
+              optimizationDetails.push(`• **⚡ Latency Savings**: ${smartOpt.latencySavingsPercent || 0}%`);
+              optimizationDetails.push(`• _Reason: ${smartOpt.reason || secondaryRes.triageData.reasoning || 'Better performance'}_`);
+            } else {
+              optimizationDetails.push(`• **Used**: \`${actualModel}\` (Already optimal)`);
+            }
+            
+            optimizationDetails.push(`\n**📊 Query Analysis**:`);
+            optimizationDetails.push(`• Complexity: ${(secondaryRes.triageData.complexity || 'medium').toUpperCase()}`);
+            optimizationDetails.push(`• Domain: ${(secondaryRes.triageData.domain || 'general').toUpperCase()}`);
+            optimizationDetails.push(`• Urgency: ${(secondaryRes.triageData.urgency || 'medium').toUpperCase()}`);
             
             const formatDisplay = secondaryRes.triageData.best_format || 'text';
             const formatExplanations: Record<string, string> = {
               'table': '📊 Table (Structured data)',
               'html': '🌐 HTML (Rich content)',
               'text': '📝 Text (Narrative)',
-              'list': '📋 List (Bullets/Numbers)'
+              'list': '📋 List (Bullets/Numbers)',
+              'map': '🗺️ Interactive Map (Geographic data)'
             };
             optimizationDetails.push(`• **Recommended Format**: ${formatExplanations[formatDisplay] || formatDisplay}`);
             
@@ -1037,15 +1073,11 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
               optimizationDetails.push(`• **Tone Applied**: ${toneEmojis[secondaryRes.triageData.emotional_tone] || secondaryRes.triageData.emotional_tone}`);
             }
             
-            if (secondaryRes.triageData.reasoning) {
-              optimizationDetails.push(`\n**💡 Routing Reasoning**: _${secondaryRes.triageData.reasoning}_`);
-            }
-            
-            optimizationDetails.push(`\n_AI Confidence: ${Math.round((secondaryRes.triageData.confidence || 0) * 100)}%_`);
-            
             if (secondaryRes.triageData.requires_vision) {
-              optimizationDetails.push(`_👁️ Vision Analysis Enabled_`);
+              optimizationDetails.push(`• **Vision Analysis**: 👁️ Enabled`);
             }
+            
+            optimizationDetails.push(`\n_AI Routing Confidence: ${Math.round((secondaryRes.triageData.confidence || 0) * 100)}%_`);
             
             personalizedSecondary += optimizationDetails.join('\n');
           }
@@ -1203,17 +1235,22 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
                 
                 const optimizationDetails: string[] = [];
                 
-                // Show original vs optimized model
+                // Show original vs optimized model with cost/latency savings
                 optimizationDetails.push(`**🎯 Model Selection**:`);
                 const originalModel = aiConfig.selectedModel || 'gpt-4o-mini';
                 const selectedModel = response.model || response.triageData.suggested_model;
                 
                 optimizationDetails.push(`• Requested: \`${originalModel}\``);
-                if (selectedModel && selectedModel !== originalModel) {
+                
+                // Check for smart routing optimization
+                const smartOpt = (response as any).smartRoutingOptimization || (response as any).metadata?.smartRoutingOptimization;
+                if (smartOpt?.override && selectedModel !== originalModel) {
                   optimizationDetails.push(`• **Optimized to**: \`${selectedModel}\` ✨`);
-                  optimizationDetails.push(`• _Reason: ${response.triageData.reasoning || 'Better suited for this query'}_`);
+                  optimizationDetails.push(`• **💰 Cost Savings**: ${smartOpt.costSavingsPercent || 0}%`);
+                  optimizationDetails.push(`• **⚡ Latency Savings**: ${smartOpt.latencySavingsPercent || 0}%`);
+                  optimizationDetails.push(`• _Reason: ${smartOpt.reason || response.triageData.reasoning || 'Better suited for this query'}_`);
                 } else {
-                  optimizationDetails.push(`• **Used**: \`${selectedModel || originalModel}\` (No optimization needed)`);
+                  optimizationDetails.push(`• **Used**: \`${selectedModel || originalModel}\` (Already optimal)`);
                 }
                 
                 // Show triage analysis
@@ -1228,7 +1265,8 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
                   'table': '📊 Table (Structured data with rows/columns)',
                   'html': '🌐 HTML (Rich formatted content with images/videos)',
                   'text': '📝 Text (Plain narrative)',
-                  'list': '📋 List (Bullet points or numbered)'
+                  'list': '📋 List (Bullet points or numbered)',
+                  'map': '🗺️ Interactive Map (Geographic/location data)'
                 };
                 optimizationDetails.push(`• **Recommended Format**: ${formatExplanations[formatDisplay] || formatDisplay}`);
                 
@@ -1253,13 +1291,9 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
                   optimizationDetails.push(`3. 👁️ Vision Model Routing (VLM for image analysis)`);
                 }
                 if (aiConfig.knowledgeBaseEnabled) {
-                  optimizationDetails.push(`4. 📚 Knowledge Base Integration (RAG)`);
+                  optimizationDetails.push(`${response.triageData.requires_vision ? '4' : '3'}. 📚 Knowledge Base Integration (RAG)`);
                 }
-                optimizationDetails.push(`5. 🤖 ${response.triageData.suggested_model || selectedModel || 'Selected LLM'} Processing`);
-                
-                if (response.triageData.reasoning) {
-                  optimizationDetails.push(`\n**💡 Routing Logic**: _${response.triageData.reasoning}_`);
-                }
+                optimizationDetails.push(`${response.triageData.requires_vision ? (aiConfig.knowledgeBaseEnabled ? '5' : '4') : (aiConfig.knowledgeBaseEnabled ? '4' : '3')}. 🤖 ${response.triageData.suggested_model || selectedModel || 'Selected LLM'} Processing`);
                 
                 optimizationDetails.push(`\n_AI Routing Confidence: ${Math.round((response.triageData.confidence || 0) * 100)}%_`);
                 
