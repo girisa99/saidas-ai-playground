@@ -197,7 +197,13 @@ export const useUniversalAI = () => {
         smartRoutingOptimization: metadata.smartRoutingOptimization
       };
     } catch (err: any) {
-      const errorMessage = err.message || 'Failed to generate AI response';
+      let errorMessage = (err && err.message) ? err.message : 'Failed to generate AI response';
+      const lower = String(errorMessage).toLowerCase();
+      if (lower.includes('lovable_402') || lower.includes('payment') || lower.includes('credit')) {
+        errorMessage = 'Payment required: add credits to your Lovable AI workspace.';
+      } else if (lower.includes('lovable_429') || lower.includes('rate limit') || lower.includes('too many')) {
+        errorMessage = 'Rate limit exceeded: please wait and try again.';
+      }
       setError(errorMessage);
       console.error('AI generation error:', err);
       return null;

@@ -301,9 +301,34 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const sendingRef = useRef(false);
   const { toast } = useToast();
 
-  const { generateResponse, isLoading } = useUniversalAI();
+  const { generateResponse, isLoading, error: aiError } = useUniversalAI();
   const { state, addMessage, resetConversation } = useConversationState();
   const messages = state.messages;
+
+  // Surface AI errors consistently across modes
+  useEffect(() => {
+    if (!aiError) return;
+    const msg = aiError.toLowerCase();
+    if (msg.includes('payment') || msg.includes('credit') || msg.includes('402')) {
+      toast({
+        title: 'Payment required',
+        description: 'Lovable AI credits are depleted. Please add credits to your workspace and try again.',
+        variant: 'destructive',
+      });
+    } else if (msg.includes('rate limit') || msg.includes('429')) {
+      toast({
+        title: 'Rate limit exceeded',
+        description: 'Too many requests. Please wait a minute and try again.',
+        variant: 'destructive',
+      });
+    } else {
+      toast({
+        title: 'AI error',
+        description: aiError,
+        variant: 'destructive',
+      });
+    }
+  }, [aiError]);
   
   // Fetch dynamic topics from universal knowledge base
   const { topics: dynamicTopics } = useUniversalKnowledgeTopics(context);

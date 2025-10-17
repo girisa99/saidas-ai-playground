@@ -1092,7 +1092,10 @@ async function callLovableAI(request: AIRequest, ragContext?: string) {
   
   if (!response.ok) {
     console.error('Lovable AI error:', data);
-    throw new Error(`Lovable AI error: ${data.error?.message || 'Unknown error'}`);
+    const status = response.status;
+    const message = data?.message || data?.error?.message || 'Unknown error';
+    // Encode status so outer handler can map proper HTTP code
+    throw new Error(`LOVABLE_${status}:${message}`);
   }
 
   // Robust extraction across provider variants
@@ -2178,9 +2181,30 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('AI processor error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    const raw = error instanceof Error ? error.message : String(error || 'Unknown error occurred');
+    const lower = raw.toLowerCase();
+
+    // Map Lovable AI gateway errors to clear HTTP statuses for the client
+    if (lower.startsWith('lovable_402') || lower.includes('payment') || lower.includes('not enough credits')) {
+      return new Response(JSON.stringify({ 
+        error: 'Payment required: Please add credits to your Lovable AI workspace and try again.' 
+      }), {
+        status: 402,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (lower.startsWith('lovable_429') || lower.includes('rate limit') || lower.includes('too many requests')) {
+      return new Response(JSON.stringify({ 
+        error: 'Rate limit exceeded. Please wait a minute and try again.' 
+      }), {
+        status: 429,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     return new Response(JSON.stringify({ 
-      error: errorMessage 
+      error: raw || 'Unknown error occurred' 
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
