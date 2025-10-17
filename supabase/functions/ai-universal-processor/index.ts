@@ -1519,14 +1519,53 @@ Include all available product details. Do not include prose.` },
       tool_choice: { type: 'function', function: { name: 'extract_therapy_products' } }
     };
 
-    const resp = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body)
-    });
+    // Call Gemini directly for structured extraction
+    const resp = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${geminiApiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            role: 'user',
+            parts: [{ text: `Extract a clean, deduplicated list of therapy products from the query and answer. Cover:
+1. Oncology (chemotherapy, targeted therapy, immunotherapy)
+2. Cell & Gene Therapies (CAR-T, gene therapy, cell-based treatments)
+3. Advanced Therapies (biologics, biosimilars, specialty drugs)
+Include all available product details. Return JSON only.
+
+From the following question and draft answer, extract therapy products.
+
+Question:
+${prompt}
+
+Draft Answer:
+${content}
+
+Return JSON format:
+{
+  "products": [
+    {
+      "product": "string",
+      "therapy_category": "string",
+      "dose": "string",
+      "ndc": "string",
+      "modality": "string",
+      "application": "string",
+      "manufacturer": "string",
+      "storage": "string",
+      "special_handling": "string"
+    }
+  ]
+}` }]
+          }],
+          generationConfig: {
+            temperature: 0.1,
+            responseMimeType: 'application/json'
+          }
+        })
+      }
+    );
 
     const data = await resp.json();
     if (!resp.ok) {
@@ -1534,24 +1573,15 @@ Include all available product details. Do not include prose.` },
       return [];
     }
 
-    // Try to read tool call arguments first
-    const choice = data?.choices?.[0];
-    const toolCall = choice?.message?.tool_calls?.[0] || choice?.tool_calls?.[0];
-    if (toolCall?.function?.arguments) {
+    // Parse Gemini JSON response
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    if (text) {
       try {
-        const args = JSON.parse(toolCall.function.arguments);
-        if (Array.isArray(args.products)) return args.products;
-      } catch (_) { /* fallthrough */ }
-    }
-
-    // Fallback: try to parse content as JSON
-    const text = choice?.message?.content || choice?.content || '';
-    if (typeof text === 'string') {
-      const cleaned = text.replace(/```json\n?|```/g, '').trim();
-      try {
-        const parsed = JSON.parse(cleaned);
+        const parsed = JSON.parse(text);
         if (Array.isArray(parsed?.products)) return parsed.products;
-      } catch (_) { /* ignore */ }
+      } catch (e) {
+        console.error('Failed to parse Gemini JSON:', e);
+      }
     }
 
     return [];
@@ -1809,9 +1839,10 @@ Create unified response that:
 4. Maintains context from previous conversation
 5. References earlier discussion points if relevant`;
 
-    const synthesis = await callLovableAI({
+    // Call Gemini directly for synthesis
+    const synthesis = await callGemini({
       ...request,
-      model: synthesizer.model,
+      model: 'gemini-2.0-flash-exp',
       prompt: synthPrompt,
       systemPrompt: `${context}\n\nYou are synthesizing expert opinions while maintaining conversation continuity.`
     }, context);
