@@ -139,17 +139,30 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
                     : 'bg-accent'
                 }`}>
                   {message.role === 'assistant' ? (
-                    <RichResponseRenderer content={message.content} oncologyProducts={(message as any).metadata?.oncologyProducts} />
+                    <>
+                      <RichResponseRenderer content={message.content} oncologyProducts={(message as any).metadata?.oncologyProducts} />
+                      {message.timestamp && (
+                        <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                          <Bot className="h-3 w-3" />
+                          {modelDisplayNames[primaryModel] || primaryModel}
+                          <span>•</span>
+                          {new Date(message.timestamp).toLocaleTimeString()}
+                        </div>
+                      )}
+                      {/* Smart Routing Optimization Badge */}
+                      <div className="mt-2">
+                        <RoutingOptimizationBadge
+                          triageData={(message as any).metadata?.triageData}
+                          routingReasoning={(message as any).metadata?.routingReasoning}
+                          estimatedCost={(message as any).metadata?.estimatedCost}
+                          estimatedLatency={(message as any).metadata?.estimatedLatency}
+                          modelUsed={message.model}
+                          smartRoutingOptimization={(message as any).metadata?.smartRoutingOptimization}
+                        />
+                      </div>
+                    </>
                   ) : (
                     <p className="text-sm">{message.content}</p>
-                  )}
-                  {message.role === 'assistant' && message.timestamp && (
-                    <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
-                      <Bot className="h-3 w-3" />
-                      {modelDisplayNames[primaryModel] || primaryModel}
-                      <span>•</span>
-                      {new Date(message.timestamp).toLocaleTimeString()}
-                    </div>
                   )}
                 </div>
               </div>
@@ -182,17 +195,30 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
                     : 'bg-accent'
                 }`}>
                   {message.role === 'assistant' ? (
-                    <RichResponseRenderer content={message.content} oncologyProducts={(message as any).metadata?.oncologyProducts} />
+                    <>
+                      <RichResponseRenderer content={message.content} oncologyProducts={(message as any).metadata?.oncologyProducts} />
+                      {message.timestamp && (
+                        <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                          <Bot className="h-3 w-3" />
+                          {modelDisplayNames[secondaryModel] || secondaryModel}
+                          <span>•</span>
+                          {new Date(message.timestamp).toLocaleTimeString()}
+                        </div>
+                      )}
+                      {/* Smart Routing Optimization Badge */}
+                      <div className="mt-2">
+                        <RoutingOptimizationBadge
+                          triageData={(message as any).metadata?.triageData}
+                          routingReasoning={(message as any).metadata?.routingReasoning}
+                          estimatedCost={(message as any).metadata?.estimatedCost}
+                          estimatedLatency={(message as any).metadata?.estimatedLatency}
+                          modelUsed={message.model}
+                          smartRoutingOptimization={(message as any).metadata?.smartRoutingOptimization}
+                        />
+                      </div>
+                    </>
                   ) : (
                     <p className="text-sm">{message.content}</p>
-                  )}
-                  {message.role === 'assistant' && message.timestamp && (
-                    <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
-                      <Bot className="h-3 w-3" />
-                      {modelDisplayNames[secondaryModel] || secondaryModel}
-                      <span>•</span>
-                      {new Date(message.timestamp).toLocaleTimeString()}
-                    </div>
                   )}
                 </div>
               </div>

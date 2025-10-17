@@ -300,11 +300,15 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
     // CRITICAL: Determine if split-screen is changing
     const newSplitScreen = newConfig.splitScreenEnabled || newConfig.splitScreen;
     const isSwitchingOffSplitScreen = previousSplitScreen && !newSplitScreen;
+    const isSwitchingOnSplitScreen = !previousSplitScreen && newSplitScreen;
     const isSwitchingModeFromMulti = previousMode === 'multi' && newConfig.mode !== 'multi';
+    const isSwitchingModeToMulti = previousMode !== 'multi' && newConfig.mode === 'multi';
     
-    // Clear split responses when exiting multi-mode OR disabling split-screen
-    if (isSwitchingOffSplitScreen || isSwitchingModeFromMulti) {
-      console.log('🧹 Clearing split-screen responses (mode/split-screen change)');
+    // BIDIRECTIONAL: Clear split responses when:
+    // 1. Exiting multi-mode OR disabling split-screen
+    // 2. Entering multi-mode OR enabling split-screen (clean slate)
+    if (isSwitchingOffSplitScreen || isSwitchingModeFromMulti || isSwitchingOnSplitScreen || isSwitchingModeToMulti) {
+      console.log('🧹 Clearing split-screen responses (bidirectional mode/split-screen change)');
       setSplitResponses({ primary: [], secondary: [] });
     }
     
