@@ -2246,25 +2246,28 @@ serve(async (req) => {
       // Map suggested model to provider
       const suggestedMapped = modelMapping[suggestedModel.toLowerCase()];
       if (suggestedMapped) {
-        // Calculate cost/latency savings
-        const userModelCost = getModelCost(request.model || '');
+        // Calculate cost/latency savings based on ORIGINAL model names (before mapping)
+        const userModelCost = getModelCost(userSelectedModel);
         const suggestedModelCost = getModelCost(suggestedModel);
-        const userModelLatency = getModelLatency(request.model || '');
+        const userModelLatency = getModelLatency(userSelectedModel);
         const suggestedModelLatency = getModelLatency(suggestedModel);
         
         costSavings = ((userModelCost - suggestedModelCost) / userModelCost) * 100;
         latencySavings = ((userModelLatency - suggestedModelLatency) / userModelLatency) * 100;
         
-        // Override to optimized model
-        if (mappedModel !== suggestedMapped.model) {
+        // CRITICAL FIX: Compare ORIGINAL model names, not mapped ones
+        // Override if suggested model is DIFFERENT from what user originally selected
+        if (userSelectedModel.toLowerCase() !== suggestedModel.toLowerCase()) {
           smartRoutingOverride = true;
           optimizationReason = triageData.reasoning;
-          console.log(`Smart routing OVERRIDE: ${userSelectedModel} → ${suggestedModel}`);
+          console.log(`✨ Smart routing OVERRIDE: ${userSelectedModel} → ${suggestedModel}`);
           console.log(`Reason: ${optimizationReason}`);
           console.log(`Cost savings: ${costSavings.toFixed(1)}%, Latency savings: ${latencySavings.toFixed(1)}%`);
           
           mappedModel = suggestedMapped.model;
           mappedProvider = suggestedMapped.provider;
+        } else {
+          console.log(`✅ Smart routing: User selection "${userSelectedModel}" already optimal for this query`);
         }
       }
     }
