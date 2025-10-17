@@ -1810,7 +1810,7 @@ ${conversationSummary.transcript}`
                                     )}
                                     
                                      {/* Display Treatment Center Map if relevant */}
-                                    {(message as any).metadata?.showTreatmentMap && (
+                                    {((message as any).metadata?.showTreatmentMap || (message as any).metadata?.triageData?.best_format === 'map') && (
                                       <div className="mt-4 space-y-4">
                                         {/* ALWAYS show How To Use Guide for treatment center queries */}
                                         <HowToUseGuide />

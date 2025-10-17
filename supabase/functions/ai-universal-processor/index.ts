@@ -737,7 +737,7 @@ function enhanceSystemPrompt(basePrompt: string, triage: TriageResult): string {
   } else if (triage.best_format === 'html') {
     enhanced += '\nUse rich formatting with proper structure. For processes or workflows, create a visual journey map.';
   } else if (triage.best_format === 'map') {
-    enhanced += '\nIMPORTANT: The system will automatically display an interactive Mapbox map with treatment centers. DO NOT generate any map links, Google Maps URLs, or map embeds in your response. Simply provide contextual information about the locations, filters, or search criteria that will be used. The map will be displayed automatically based on the detected context.';
+    enhanced += '\nDO NOT include any map links, Google Maps URLs, or embedded maps in your response. An interactive Mapbox map will be automatically displayed to the user showing relevant treatment centers based on their query.';
   }
   
   // Add journey map capability for process-oriented queries
