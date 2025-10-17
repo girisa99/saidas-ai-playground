@@ -280,31 +280,46 @@ export const RoutingOptimizationBadge: React.FC<RoutingOptimizationBadgeProps> =
                   
                   <div className="space-y-4 mt-4">
                     <div className="grid grid-cols-2 gap-3">
-                      {/* User's choice */}
-                      <div className="p-3 bg-muted rounded-lg border">
-                        <p className="text-xs font-semibold text-muted-foreground mb-2">Your Selection</p>
-                        <p className="font-mono text-sm font-bold mb-3">{smartRoutingOptimization.userSelectedModel}</p>
-                        <div className="space-y-1.5 text-xs">
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Estimated Cost:</span>
-                            <span className="font-semibold">$0.015 - $0.025</span>
+                      {/* User's choice - calculate dynamically */}
+                      {(() => {
+                        // Calculate metrics for user's original selection (before override)
+                        const userCost = smartRoutingOptimization.estimatedCostDollars && smartRoutingOptimization.costSavingsPercent 
+                          ? smartRoutingOptimization.estimatedCostDollars / (1 - (smartRoutingOptimization.costSavingsPercent / 100))
+                          : 0.020;
+                        const userTime = smartRoutingOptimization.estimatedTimeSec && smartRoutingOptimization.latencySavingsPercent
+                          ? smartRoutingOptimization.estimatedTimeSec / (1 - (smartRoutingOptimization.latencySavingsPercent / 100))
+                          : 1.2;
+                        // Estimate user model quality (typically lower tier than optimized)
+                        const userQuality = smartRoutingOptimization.qualityTier === 'enterprise' ? 88 :
+                                           smartRoutingOptimization.qualityTier === 'professional' ? 82 : 76;
+                        
+                        return (
+                          <div className="p-3 bg-muted rounded-lg border">
+                            <p className="text-xs font-semibold text-muted-foreground mb-2">Your Selection</p>
+                            <p className="font-mono text-sm font-bold mb-3">{smartRoutingOptimization.userSelectedModel}</p>
+                            <div className="space-y-1.5 text-xs">
+                              <div className="flex justify-between">
+                                <span className="text-muted-foreground">Estimated Cost:</span>
+                                <span className="font-semibold">${userCost.toFixed(3)}</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-muted-foreground">Response Time:</span>
+                                <span className="font-semibold">~{userTime.toFixed(1)}s</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-muted-foreground">Accuracy:</span>
+                                <span className="font-semibold">{userQuality}%</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-muted-foreground">Best For:</span>
+                                <span className="text-xs">General queries</span>
+                              </div>
+                            </div>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Response Time:</span>
-                            <span className="font-semibold">1.0 - 1.5s</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Accuracy:</span>
-                            <span className="font-semibold">88%</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Best For:</span>
-                            <span className="text-xs">General queries</span>
-                          </div>
-                        </div>
-                      </div>
+                        );
+                      })()}
                       
-                      {/* AI's choice */}
+                      {/* AI's choice - fully dynamic */}
                       <div className="p-3 bg-green-500/10 rounded-lg border border-green-500/30">
                         <p className="text-xs font-semibold text-green-600 mb-2">AI Optimization ✓</p>
                         <p className="font-mono text-sm font-bold mb-3">{smartRoutingOptimization.optimizedModel}</p>
@@ -312,24 +327,26 @@ export const RoutingOptimizationBadge: React.FC<RoutingOptimizationBadgeProps> =
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">Estimated Cost:</span>
                             <span className="font-semibold">
-                              ${smartRoutingOptimization.estimatedCostDollars?.toFixed(3) || '0.030'}
+                              ${smartRoutingOptimization.estimatedCostDollars?.toFixed(3)}
                             </span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">Response Time:</span>
                             <span className="font-semibold">
-                              ~{smartRoutingOptimization.estimatedTimeSec?.toFixed(1) || '2.2'}s
+                              ~{smartRoutingOptimization.estimatedTimeSec?.toFixed(1)}s
                             </span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">Accuracy:</span>
                             <span className="font-semibold text-green-600">
-                              {smartRoutingOptimization.accuracyConfidence || 96}%
+                              {smartRoutingOptimization.accuracyConfidence}%
                             </span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">Best For:</span>
-                            <span className="text-xs">Healthcare, Complex</span>
+                            <span className="text-xs capitalize">
+                              {smartRoutingOptimization.domain || 'General'}, {smartRoutingOptimization.complexity || 'Medium'} queries
+                            </span>
                           </div>
                         </div>
                       </div>
