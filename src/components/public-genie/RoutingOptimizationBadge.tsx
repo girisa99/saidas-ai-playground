@@ -128,16 +128,34 @@ export const RoutingOptimizationBadge: React.FC<RoutingOptimizationBadgeProps> =
           <CardContent className="pt-0 pb-3 px-3 space-y-3">
             {/* Tier 1: Always Visible - Concise Summary */}
             {smartRoutingOptimization?.override && (
-              <div className="p-2.5 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-lg border border-emerald-500/30">
+              <div className={`p-2.5 rounded-lg border ${
+                smartRoutingOptimization.costSavingsPercent < 0 
+                  ? 'bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-purple-500/30'
+                  : 'bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-emerald-500/30'
+              }`}>
                 <div className="flex items-center justify-between gap-2 text-[11px]">
                   <div className="flex items-center gap-1.5 flex-1">
-                    <Zap className="h-3.5 w-3.5 text-emerald-600 flex-shrink-0" />
-                    <span className="font-semibold text-emerald-900 dark:text-emerald-100">Optimized:</span>
+                    {smartRoutingOptimization.costSavingsPercent < 0 ? (
+                      <Target className="h-3.5 w-3.5 text-purple-600 flex-shrink-0" />
+                    ) : (
+                      <Zap className="h-3.5 w-3.5 text-emerald-600 flex-shrink-0" />
+                    )}
+                    <span className={`font-semibold ${
+                      smartRoutingOptimization.costSavingsPercent < 0 
+                        ? 'text-purple-900 dark:text-purple-100'
+                        : 'text-emerald-900 dark:text-emerald-100'
+                    }`}>
+                      {smartRoutingOptimization.costSavingsPercent < 0 ? 'Quality-Optimized:' : 'Cost-Optimized:'}
+                    </span>
                     <span className="font-mono text-orange-600 dark:text-orange-400 truncate">
                       {smartRoutingOptimization.userSelectedModel}
                     </span>
                     <span>→</span>
-                    <span className="font-mono text-green-700 dark:text-green-400 truncate">
+                    <span className={`font-mono truncate ${
+                      smartRoutingOptimization.costSavingsPercent < 0
+                        ? 'text-purple-700 dark:text-purple-400'
+                        : 'text-green-700 dark:text-green-400'
+                    }`}>
                       {smartRoutingOptimization.optimizedModel}
                     </span>
                   </div>
@@ -321,7 +339,11 @@ export const RoutingOptimizationBadge: React.FC<RoutingOptimizationBadgeProps> =
                       
                       {/* AI's choice - fully dynamic */}
                       <div className="p-3 bg-green-500/10 rounded-lg border border-green-500/30">
-                        <p className="text-xs font-semibold text-green-600 mb-2">AI Optimization ✓</p>
+                        <p className="text-xs font-semibold text-green-600 mb-2">
+                          {smartRoutingOptimization.costSavingsPercent < 0 
+                            ? '🎯 Quality-Optimized (Higher Cost, Better Accuracy)'
+                            : '⚡ AI Optimization ✓'}
+                        </p>
                         <p className="font-mono text-sm font-bold mb-3">{smartRoutingOptimization.optimizedModel}</p>
                         <div className="space-y-1.5 text-xs">
                           <div className="flex justify-between">
@@ -355,7 +377,9 @@ export const RoutingOptimizationBadge: React.FC<RoutingOptimizationBadgeProps> =
                     <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
                       <p className="text-xs font-semibold text-blue-600 mb-2">🧠 Why This Matters</p>
                       <p className="text-xs text-muted-foreground leading-relaxed">
-                        {smartRoutingOptimization.reason} The AI selected a model specialized for your query type, 
+                        {smartRoutingOptimization.reason} {smartRoutingOptimization.costSavingsPercent < 0 
+                          ? 'For critical queries like this, accuracy and reliability outweigh cost savings. The AI prioritized a higher-quality model to ensure the best possible response.'
+                          : 'The AI selected a model specialized for your query type,'}
                         optimizing for {smartRoutingOptimization.qualityTier === 'enterprise' ? 'maximum accuracy and reliability' : 
                         smartRoutingOptimization.qualityTier === 'professional' ? 'balanced performance and cost' :
                         'speed and efficiency'} in the <strong>{smartRoutingOptimization.domain || 'general'}</strong> domain.
