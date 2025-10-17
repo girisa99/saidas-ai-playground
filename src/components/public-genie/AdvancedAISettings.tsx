@@ -41,7 +41,30 @@ export interface AIConfig {
 }
 
 const modelOptions = [
-  // Large Language Models (LLMs) with Vision
+  // ========== OPENAI MODELS ==========
+  // OpenAI LLMs
+  { 
+    id: 'openai/gpt-5', 
+    name: 'GPT-5', 
+    type: 'LLM', 
+    provider: 'OpenAI', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Most advanced OpenAI model with vision',
+    learnMoreUrl: 'https://platform.openai.com/docs/models'
+  },
+  { 
+    id: 'openai/gpt-5-mini', 
+    name: 'GPT-5 Mini', 
+    type: 'LLM', 
+    provider: 'OpenAI', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Efficient GPT-5 variant with vision',
+    learnMoreUrl: 'https://platform.openai.com/docs/models'
+  },
   { 
     id: 'gpt-4o', 
     name: 'GPT-4o', 
@@ -64,6 +87,21 @@ const modelOptions = [
     description: 'Efficient vision model with good accuracy',
     learnMoreUrl: 'https://platform.openai.com/docs/models/gpt-4o-mini'
   },
+  // OpenAI SLM
+  { 
+    id: 'openai/gpt-5-nano', 
+    name: 'GPT-5 Nano', 
+    type: 'SLM', 
+    provider: 'OpenAI', 
+    category: 'Efficient',
+    vision: false,
+    medicalCapable: false,
+    description: 'Fastest, most efficient GPT-5 variant',
+    learnMoreUrl: 'https://platform.openai.com/docs/models'
+  },
+
+  // ========== ANTHROPIC (CLAUDE) MODELS ==========
+  // Claude LLMs
   { 
     id: 'claude-3-opus', 
     name: 'Claude 3 Opus', 
@@ -86,16 +124,42 @@ const modelOptions = [
     description: 'Balanced performance and cost',
     learnMoreUrl: 'https://www.anthropic.com/claude'
   },
+  // Claude SLM
   { 
     id: 'claude-3-haiku', 
     name: 'Claude 3 Haiku', 
-    type: 'LLM+Vision', 
+    type: 'SLM+Vision', 
     provider: 'Anthropic', 
-    category: 'General',
+    category: 'Efficient',
     vision: true,
     medicalCapable: false,
     description: 'Fastest Claude model with vision',
     learnMoreUrl: 'https://www.anthropic.com/claude'
+  },
+
+  // ========== GOOGLE (GEMINI) MODELS ==========
+  // Gemini LLMs
+  { 
+    id: 'google/gemini-2.5-pro', 
+    name: 'Gemini 2.5 Pro', 
+    type: 'LLM+Vision', 
+    provider: 'Google', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Most capable Gemini with vision',
+    learnMoreUrl: 'https://ai.google.dev/gemini-api/docs'
+  },
+  { 
+    id: 'google/gemini-2.5-flash', 
+    name: 'Gemini 2.5 Flash', 
+    type: 'LLM+Vision', 
+    provider: 'Google', 
+    category: 'General',
+    vision: true,
+    medicalCapable: true,
+    description: 'Balanced Gemini model with vision',
+    learnMoreUrl: 'https://ai.google.dev/gemini-api/docs'
   },
   { 
     id: 'gemini-pro-vision', 
@@ -108,27 +172,28 @@ const modelOptions = [
     description: 'Google\'s multimodal AI model',
     learnMoreUrl: 'https://ai.google.dev/gemini-api/docs'
   },
+  // Gemini SLM
   { 
-    id: 'gemini-pro', 
-    name: 'Gemini Pro', 
-    type: 'LLM', 
+    id: 'google/gemini-2.5-flash-lite', 
+    name: 'Gemini 2.5 Flash Lite', 
+    type: 'SLM+Vision', 
     provider: 'Google', 
-    category: 'General',
-    vision: false,
+    category: 'Efficient',
+    vision: true,
     medicalCapable: false,
-    description: 'Text-only Gemini model',
+    description: 'Fastest, most efficient Gemini',
     learnMoreUrl: 'https://ai.google.dev/gemini-api/docs'
   },
   
-  // Small Language Models (SLMs)
-  { id: 'phi-3.5-mini', name: 'Phi-3.5 Mini', type: 'SLM', provider: 'Microsoft', category: 'Efficient', vision: false, medicalCapable: false, description: 'Compact efficient model', learnMoreUrl: 'https://azure.microsoft.com/en-us/products/phi' },
-  { id: 'phi-3-mini', name: 'Phi-3 Mini', type: 'SLM', provider: 'Microsoft', category: 'Efficient', vision: false, medicalCapable: false, description: 'Small but capable model', learnMoreUrl: 'https://azure.microsoft.com/en-us/products/phi' },
-  { id: 'llama-3.1-8b', name: 'Llama 3.1 8B', type: 'SLM', provider: 'Meta', category: 'Efficient', vision: false, medicalCapable: false, description: 'Open-source efficient model', learnMoreUrl: 'https://llama.meta.com/' },
-  { id: 'mistral-7b', name: 'Mistral 7B', type: 'SLM', provider: 'Mistral', category: 'Efficient', vision: false, medicalCapable: false, description: 'High-performance 7B model', learnMoreUrl: 'https://mistral.ai/' },
-  { id: 'gemma-7b', name: 'Gemma 7B', type: 'SLM', provider: 'Google', category: 'Efficient', vision: false, medicalCapable: false, description: 'Google\'s lightweight model', learnMoreUrl: 'https://ai.google.dev/gemma' },
-  { id: 'qwen-7b', name: 'Qwen 7B', type: 'SLM', provider: 'Alibaba', category: 'Efficient', vision: false, medicalCapable: false, description: 'Alibaba\'s efficient model', learnMoreUrl: 'https://github.com/QwenLM/Qwen' },
+  // ========== MULTI-PROVIDER SMALL LANGUAGE MODELS ==========
+  { id: 'phi-3.5-mini', name: 'Phi-3.5 Mini', type: 'SLM', provider: 'Microsoft', category: 'Efficient', vision: false, medicalCapable: false, description: 'Compact efficient model → Routed via Gemini', learnMoreUrl: 'https://azure.microsoft.com/en-us/products/phi' },
+  { id: 'phi-3-mini', name: 'Phi-3 Mini', type: 'SLM', provider: 'Microsoft', category: 'Efficient', vision: false, medicalCapable: false, description: 'Small but capable model → Routed via Gemini', learnMoreUrl: 'https://azure.microsoft.com/en-us/products/phi' },
+  { id: 'llama-3.1-8b', name: 'Llama 3.1 8B', type: 'SLM', provider: 'Meta', category: 'Efficient', vision: false, medicalCapable: false, description: 'Open-source efficient model → Routed via Gemini', learnMoreUrl: 'https://llama.meta.com/' },
+  { id: 'mistral-7b', name: 'Mistral 7B', type: 'SLM', provider: 'Mistral', category: 'Efficient', vision: false, medicalCapable: false, description: 'High-performance 7B model → Routed via Gemini', learnMoreUrl: 'https://mistral.ai/' },
+  { id: 'gemma-7b', name: 'Gemma 7B', type: 'SLM', provider: 'Google', category: 'Efficient', vision: false, medicalCapable: false, description: 'Google\'s lightweight model → Routed via Gemini', learnMoreUrl: 'https://ai.google.dev/gemma' },
+  { id: 'qwen-7b', name: 'Qwen 7B', type: 'SLM', provider: 'Alibaba', category: 'Efficient', vision: false, medicalCapable: false, description: 'Alibaba\'s efficient model → Routed via Gemini', learnMoreUrl: 'https://github.com/QwenLM/Qwen' },
   
-  // Vision Language Models (VLMs)
+  // ========== VISION LANGUAGE MODELS (MULTI-PROVIDER) ==========
   { 
     id: 'llava-1.6', 
     name: 'LLaVA 1.6', 
@@ -137,7 +202,7 @@ const modelOptions = [
     category: 'Vision',
     vision: true,
     medicalCapable: true,
-    description: 'Open-source vision-language model',
+    description: 'Open-source vision-language → Routed via Gemini',
     learnMoreUrl: 'https://llava-vl.github.io/'
   },
   { 
@@ -148,7 +213,7 @@ const modelOptions = [
     category: 'Vision',
     vision: true,
     medicalCapable: true,
-    description: 'Advanced vision understanding',
+    description: 'Advanced vision understanding → Routed via Gemini',
     learnMoreUrl: 'https://github.com/THUDM/CogVLM'
   },
   { 
@@ -159,18 +224,18 @@ const modelOptions = [
     category: 'Vision',
     vision: true,
     medicalCapable: false,
-    description: 'Google\'s VLM based on Gemma',
+    description: 'Google\'s VLM based on Gemma → Routed via Gemini',
     learnMoreUrl: 'https://ai.google.dev/gemma/docs/paligemma'
   },
   
-  // Biotech & Healthcare Models
-  { id: 'biogpt', name: 'BioGPT', type: 'Biotech', provider: 'Microsoft', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Biomedical text generation', learnMoreUrl: 'https://github.com/microsoft/BioGPT' },
-  { id: 'med-palm-2', name: 'Med-PaLM 2', type: 'Medical', provider: 'Google', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Medical question answering', learnMoreUrl: 'https://sites.research.google/med-palm/' },
-  { id: 'clinical-bert', name: 'Clinical BERT', type: 'Medical', provider: 'MIT', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Clinical note analysis', learnMoreUrl: 'https://github.com/EmilyAlsentzer/clinicalBERT' },
-  { id: 'bioclinical-bert', name: 'BioClinical BERT', type: 'Medical', provider: 'NCBI', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Biomedical NLP', learnMoreUrl: 'https://github.com/ncbi-nlp/NCBI_BERT' },
-  { id: 'pubmedbert', name: 'PubMedBERT', type: 'Biotech', provider: 'NIH', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Trained on PubMed abstracts', learnMoreUrl: 'https://github.com/ncbi/pubmedbert' },
-  { id: 'galactica-6.7b', name: 'Galactica 6.7B', type: 'Scientific', provider: 'Meta', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Scientific knowledge model', learnMoreUrl: 'https://github.com/paperswithcode/galai' },
-  { id: 'biomistral-7b', name: 'BioMistral 7B', type: 'Medical', provider: 'Mistral', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Medical domain Mistral', learnMoreUrl: 'https://huggingface.co/BioMistral/BioMistral-7B' },
+  // ========== HEALTHCARE & BIOTECH MODELS (MULTI-PROVIDER) ==========
+  { id: 'biogpt', name: 'BioGPT', type: 'Biotech', provider: 'Microsoft', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Biomedical text generation → Routed via Gemini', learnMoreUrl: 'https://github.com/microsoft/BioGPT' },
+  { id: 'med-palm-2', name: 'Med-PaLM 2', type: 'Medical', provider: 'Google', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Medical question answering → Routed via Gemini', learnMoreUrl: 'https://sites.research.google/med-palm/' },
+  { id: 'clinical-bert', name: 'Clinical BERT', type: 'Medical', provider: 'MIT', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Clinical note analysis → Routed via Gemini', learnMoreUrl: 'https://github.com/EmilyAlsentzer/clinicalBERT' },
+  { id: 'bioclinical-bert', name: 'BioClinical BERT', type: 'Medical', provider: 'NCBI', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Biomedical NLP → Routed via Gemini', learnMoreUrl: 'https://github.com/ncbi-nlp/NCBI_BERT' },
+  { id: 'pubmedbert', name: 'PubMedBERT', type: 'Biotech', provider: 'NIH', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Trained on PubMed abstracts → Routed via Gemini', learnMoreUrl: 'https://github.com/ncbi/pubmedbert' },
+  { id: 'galactica-6.7b', name: 'Galactica 6.7B', type: 'Scientific', provider: 'Meta', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Scientific knowledge model → Routed via Gemini', learnMoreUrl: 'https://github.com/paperswithcode/galai' },
+  { id: 'biomistral-7b', name: 'BioMistral 7B', type: 'Medical', provider: 'Mistral', category: 'Healthcare', vision: false, medicalCapable: true, description: 'Medical domain Mistral → Routed via Gemini', learnMoreUrl: 'https://huggingface.co/BioMistral/BioMistral-7B' },
 ];
 
 type ModelOption = typeof modelOptions[0];
