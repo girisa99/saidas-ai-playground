@@ -951,10 +951,13 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             model: aiConfig.selectedModel,
             provider: 'primary',
             metadata: {
+              ...(primaryRes.metadata || {}),
               triageSuggestedModel: primaryRes.triageData?.suggested_model,
               best_format: primaryRes.triageData?.best_format,
               oncologyProducts: primaryRes.oncologyProducts,
-              smartRoutingOptimization: (primaryRes as any).smartRoutingOptimization
+              smartRoutingOptimization: (primaryRes as any).smartRoutingOptimization,
+              triageData: primaryRes.triageData,
+              showTreatmentMap: primaryRes.showTreatmentMap
             }
           };
           
@@ -1075,9 +1078,13 @@ I can help you navigate Technology and Healthcare topics across our Experimentat
             model: secondaryModel,
             provider: 'secondary',
             metadata: {
+              ...(secondaryRes.metadata || {}),
               triageSuggestedModel: secondaryRes.triageData?.suggested_model,
               best_format: secondaryRes.triageData?.best_format,
-              oncologyProducts: secondaryRes.oncologyProducts
+              oncologyProducts: secondaryRes.oncologyProducts,
+              smartRoutingOptimization: (secondaryRes as any).smartRoutingOptimization,
+              triageData: secondaryRes.triageData,
+              showTreatmentMap: secondaryRes.showTreatmentMap
             }
           };
           

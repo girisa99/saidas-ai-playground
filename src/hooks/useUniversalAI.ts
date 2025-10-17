@@ -46,6 +46,8 @@ interface AIResponse {
   contextualInsights?: any;
   // Smart routing optimization metadata
   smartRoutingOptimization?: any;
+  // All metadata from edge function
+  metadata?: any;
 }
 
 interface UseUniversalAIOptions {
