@@ -400,30 +400,67 @@ function suggestModel(complexity: string, domain: string, urgency: string, requi
 
 // Cost estimation (relative cost per 1K tokens, normalized)
 function getModelCost(model: string): number {
-  const costs: Record<string, number> = {
-    'google/gemini-2.5-pro': 10,
-    'google/gemini-2.5-flash': 3,
-    'google/gemini-2.5-flash-lite': 1,
-    'openai/gpt-5': 12,
-    'openai/gpt-5-mini': 4,
-    'openai/gpt-5-nano': 1.5,
-    'phi-3.5-mini': 1, // SLM, very cheap
-  };
-  return costs[model] || 5;
+  const modelLower = (model || '').toLowerCase();
+  
+  // Claude models (expensive)
+  if (modelLower.includes('claude-opus') || modelLower.includes('claude-4-opus')) return 15;
+  if (modelLower.includes('claude-sonnet-4-5') || modelLower.includes('claude-4-sonnet')) return 12;
+  if (modelLower.includes('claude-3-opus')) return 12;
+  if (modelLower.includes('claude-3-5-sonnet') || modelLower.includes('claude-sonnet')) return 10;
+  if (modelLower.includes('claude-3-haiku') || modelLower.includes('claude-haiku')) return 2;
+  
+  // OpenAI models
+  if (modelLower.includes('gpt-5') && !modelLower.includes('mini') && !modelLower.includes('nano')) return 12;
+  if (modelLower.includes('gpt-5-mini') || modelLower.includes('gpt-4o-mini')) return 4;
+  if (modelLower.includes('gpt-5-nano')) return 1.5;
+  if (modelLower.includes('gpt-4o') && !modelLower.includes('mini')) return 8;
+  if (modelLower.includes('gpt-4') && !modelLower.includes('gpt-5')) return 10;
+  if (modelLower.includes('gpt-3.5')) return 1.5;
+  
+  // Gemini models
+  if (modelLower.includes('gemini-2.5-pro') || modelLower.includes('gemini-2.0-flash-thinking')) return 10;
+  if (modelLower.includes('gemini-2.5-flash') || modelLower.includes('gemini-2.0-flash')) return 3;
+  if (modelLower.includes('gemini-2.5-flash-lite') || modelLower.includes('gemini-1.5-flash-8b')) return 1;
+  if (modelLower.includes('gemini-pro')) return 8;
+  if (modelLower.includes('gemini-flash')) return 3;
+  
+  // Small Language Models
+  if (modelLower.includes('phi-3') || modelLower.includes('llama-3.1-8b') || modelLower.includes('mistral-7b')) return 1;
+  
+  // Default fallback
+  return 5;
 }
 
 // Latency estimation (relative response time in ms, normalized)
 function getModelLatency(model: string): number {
-  const latencies: Record<string, number> = {
-    'google/gemini-2.5-pro': 2000,
-    'google/gemini-2.5-flash': 800,
-    'google/gemini-2.5-flash-lite': 400,
-    'openai/gpt-5': 2500,
-    'openai/gpt-5-mini': 1000,
-    'openai/gpt-5-nano': 500,
-    'phi-3.5-mini': 300, // SLM, very fast
-  };
-  return latencies[model] || 1000;
+  const modelLower = (model || '').toLowerCase();
+  
+  // Claude models (generally slower)
+  if (modelLower.includes('claude-opus')) return 3000;
+  if (modelLower.includes('claude-sonnet-4-5') || modelLower.includes('claude-4-sonnet')) return 2200;
+  if (modelLower.includes('claude-3-5-sonnet') || modelLower.includes('claude-sonnet')) return 2000;
+  if (modelLower.includes('claude-3-haiku') || modelLower.includes('claude-haiku')) return 800;
+  
+  // OpenAI models
+  if (modelLower.includes('gpt-5') && !modelLower.includes('mini') && !modelLower.includes('nano')) return 2500;
+  if (modelLower.includes('gpt-5-mini') || modelLower.includes('gpt-4o-mini')) return 1000;
+  if (modelLower.includes('gpt-5-nano')) return 500;
+  if (modelLower.includes('gpt-4o') && !modelLower.includes('mini')) return 1800;
+  if (modelLower.includes('gpt-4')) return 2200;
+  if (modelLower.includes('gpt-3.5')) return 700;
+  
+  // Gemini models (generally fast)
+  if (modelLower.includes('gemini-2.5-pro') || modelLower.includes('gemini-2.0-flash-thinking')) return 2000;
+  if (modelLower.includes('gemini-2.5-flash') || modelLower.includes('gemini-2.0-flash')) return 800;
+  if (modelLower.includes('gemini-2.5-flash-lite') || modelLower.includes('gemini-1.5-flash-8b')) return 400;
+  if (modelLower.includes('gemini-pro')) return 1500;
+  if (modelLower.includes('gemini-flash')) return 800;
+  
+  // Small Language Models (very fast)
+  if (modelLower.includes('phi-3') || modelLower.includes('llama-3.1-8b') || modelLower.includes('mistral-7b')) return 300;
+  
+  // Default fallback
+  return 1000;
 }
 
 // Detect provider from model name
