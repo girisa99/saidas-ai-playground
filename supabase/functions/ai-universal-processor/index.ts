@@ -2083,6 +2083,10 @@ serve(async (req) => {
 
     // Parse and validate request
     const rawData = await req.json();
+    
+    // CRITICAL: Capture original model BEFORE any processing/normalization
+    const userRequestedModel = (rawData.model || '').toString().trim();
+    
     let request: AIRequest;
     
     try {
@@ -2246,7 +2250,7 @@ serve(async (req) => {
       });
     }
     
-    // CRITICAL: Route to direct API providers (OpenAI, Claude, Gemini)
+    // Model normalization (for mapping)
     const originalModel = (request.model || '').toLowerCase();
     
     // Model mapping to direct provider models
@@ -2556,18 +2560,18 @@ serve(async (req) => {
           triageData,
           { insuranceType, priceRange, product }
         ),
-        // Smart routing optimization details (use original user model, not normalized)
+        // Smart routing optimization details (use ACTUAL user request, not normalized)
         smartRoutingOptimization: request.enableSmartRouting ? {
           override: smartRoutingOverride,
-          userSelectedModel: originalModel, // Show what user ORIGINALLY selected in UI
-          optimizedModel: request.model, // Show what AI actually used
+          userSelectedModel: userRequestedModel, // Show what user ACTUALLY selected in UI (before any processing)
+          optimizedModel: request.model, // Show what AI actually used (after routing)
           reason: optimizationReason,
           costSavingsPercent: Math.round(costSavings * 10) / 10,
           latencySavingsPercent: Math.round(latencySavings * 10) / 10,
           complexity: triageData?.complexity,
           domain: triageData?.domain,
           urgency: triageData?.urgency,
-          // Enhanced metrics for UX
+          // Enhanced metrics for UX (for the OPTIMIZED model)
           estimatedCostDollars: calculateDollarCost(request.model, 1500),
           estimatedTimeSec: getModelLatency(request.model) / 1000,
           accuracyConfidence: getModelAccuracy(request.model).confidence,
