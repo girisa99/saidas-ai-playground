@@ -313,6 +313,7 @@ ${emotionalTone === 'professional' ? 'Maintain a technical, precise tone.' : ''}
 - Offer to dive deeper into specific areas as needed`;
 }
 
+function detectUrgency(queryLower: string, complexity: string): 'low' | 'medium' | 'high' | 'critical' {
   const criticalIndicators = ['emergency', 'urgent', 'critical', 'immediately', 'asap'];
   const highIndicators = ['important', 'priority', 'soon', 'quickly'];
   
