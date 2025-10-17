@@ -101,8 +101,17 @@ class ConversationLimitService {
     });
 
     if (error) {
-      console.error('Start conversation error:', error);
-      return { allowed: false, message: 'Failed to start conversation' };
+      console.warn('Start conversation error (fail-open):', error);
+      // Fail-open to avoid blocking prompt submission on transient issues
+      this.currentSession = {
+        session_id,
+        ip_address,
+        user_email: userEmail,
+        user_name: userName,
+        context,
+        message_count: 0
+      };
+      return { allowed: true, session_id, message: 'Started locally (rate limit check unavailable)' };
     }
 
     if (data.allowed) {

@@ -713,6 +713,7 @@ useEffect(() => {
         setShowLimitModal(true);
         setConversationLimits(startResult.limits || null);
         setIsConversationAllowed(false);
+        sendingRef.current = false; // Reset sending flag on early exit
         return;
       }
     }
