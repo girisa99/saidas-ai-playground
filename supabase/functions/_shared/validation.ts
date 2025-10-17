@@ -84,7 +84,7 @@ export const MedicalImageAnalysisSchema = z.object({
     .max(200, "Session ID too long")
     .optional(),
   
-  aiModel: z.enum(['lovable', 'openai', 'claude', 'gemini'])
+  aiModel: z.enum(['openai', 'claude', 'gemini'])
   .optional()
   .default('gemini')
 });

@@ -1028,112 +1028,7 @@ async function callGemini(request: AIRequest, ragContext?: string) {
   return data.candidates[0].content.parts[0].text;
 }
 
-async function callLovableAI(request: AIRequest, ragContext?: string) {
-  // Use Lovable AI Gateway for small language models
-  const messages: any[] = [
-    { role: 'system', content: request.systemPrompt || 'You are a helpful AI assistant.' }
-  ];
-
-  if (ragContext) {
-    messages.push({
-      role: 'system',
-      content: `Relevant context from knowledge base: ${ragContext}`
-    });
-  }
-
-  // Inject previous conversation to maintain context
-  if (request.conversationHistory && Array.isArray(request.conversationHistory)) {
-    for (const m of request.conversationHistory) {
-      if (m && typeof m.content === 'string' && (m.role === 'user' || m.role === 'assistant')) {
-        messages.push({ role: m.role, content: m.content });
-      }
-    }
-  }
-
-  // Handle vision models
-  if (request.imageUrl || request.images) {
-    const content: any[] = [{ type: 'text', text: request.prompt }];
-
-    if (request.imageUrl) {
-      content.push({
-        type: 'image_url',
-        image_url: { url: request.imageUrl }
-      });
-    }
-
-    if (request.images) {
-      request.images.forEach(img => {
-        content.push({
-          type: 'image_url',
-          image_url: { url: img }
-        });
-      });
-    }
-
-    messages.push({ role: 'user', content });
-  } else {
-    messages.push({ role: 'user', content: request.prompt });
-  }
-
-  // Build request body - handle parameter differences between providers
-  const requestBody: any = {
-    model: request.model, // e.g., google/gemini-2.5-flash, openai/gpt-5-mini
-    messages,
-  };
-
-  // OpenAI models (gpt-5, gpt-4.1+, o3, o4) require max_completion_tokens and don't support temperature
-  if (request.model?.startsWith('openai/')) {
-    requestBody.max_completion_tokens = request.maxTokens || 4000;
-    // Don't set temperature for newer OpenAI models - they don't support it
-  } else {
-    // Google/Gemini models use max_tokens and temperature
-    requestBody.temperature = request.temperature || 0.7;
-    requestBody.max_tokens = request.maxTokens || 4000;
-  }
-
-  const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${lovableApiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(requestBody),
-  });
-
-  const data = await response.json();
-  
-  if (!response.ok) {
-    console.error('Lovable AI error:', data);
-    const status = response.status;
-    const message = data?.message || data?.error?.message || 'Unknown error';
-    // Encode status so outer handler can map proper HTTP code
-    throw new Error(`LOVABLE_${status}:${message}`);
-  }
-
-  // Robust extraction across provider variants
-  let content = '';
-  try {
-    const choice = Array.isArray(data.choices) ? data.choices[0] : undefined;
-    content =
-      choice?.message?.content ??
-      choice?.delta?.content ??
-      choice?.content ??
-      data.output_text ??
-      data.text ??
-      data.message?.content ??
-      '';
-  } catch (_) {
-    // ignore
-  }
-
-  if (!content || typeof content !== 'string') {
-    console.warn('Lovable AI returned empty content. Raw response snippet:', JSON.stringify(data).slice(0, 400));
-    // Fallback: try to stringify whole payload to at least show something in UI
-    content = typeof data === 'string' ? data : (data?.content || '');
-  }
-
-  return content;
-}
+// REMOVED: callLovableAI function - all calls now use direct APIs (OpenAI, Claude, Gemini)
 
 // ========== JOURNEY TRACKING ==========
 interface JourneyProgress {
@@ -1709,12 +1604,32 @@ Provide ONLY structured analysis:
 
 Format as clear, structured text for next agent.`;
 
-  const specialistResponse = await callLovableAI({
-    ...request,
-    model: strategy.agents[0].model,
-    prompt: specialistPrompt,
-    systemPrompt: `${context}\n\nMaintain all context from previous conversation.`
-  }, context);
+  // Use the specialist model (respect smart routing)
+  let specialistResponse = '';
+  const specialistModel = strategy.agents[0].model;
+  
+  if (specialistModel.includes('gpt') || specialistModel.includes('openai')) {
+    specialistResponse = await callOpenAI({
+      ...request,
+      model: 'gpt-5-2025-08-07',
+      prompt: specialistPrompt,
+      systemPrompt: `${context}\n\nMaintain all context from previous conversation.`
+    }, context);
+  } else if (specialistModel.includes('claude')) {
+    specialistResponse = await callClaude({
+      ...request,
+      model: 'claude-sonnet-4-5',
+      prompt: specialistPrompt,
+      systemPrompt: `${context}\n\nMaintain all context from previous conversation.`
+    }, context);
+  } else {
+    specialistResponse = await callGemini({
+      ...request,
+      model: 'gemini-2.0-flash-exp',
+      prompt: specialistPrompt,
+      systemPrompt: `${context}\n\nMaintain all context from previous conversation.`
+    }, context);
+  }
 
   agentResponses.push({
     agent: strategy.agents[0],
@@ -2451,17 +2366,17 @@ serve(async (req) => {
     const raw = error instanceof Error ? error.message : String(error || 'Unknown error occurred');
     const lower = raw.toLowerCase();
 
-    // Map Lovable AI gateway errors to clear HTTP statuses for the client
-    if (lower.startsWith('lovable_402') || lower.includes('payment') || lower.includes('not enough credits')) {
+    // Map API errors to clear HTTP statuses for the client
+    if (lower.includes('payment') || lower.includes('not enough credits') || lower.includes('402')) {
       return new Response(JSON.stringify({ 
-        error: 'Payment required: Please add credits to your Lovable AI workspace and try again.' 
+        error: 'Payment required: Please add credits to your AI provider account and try again.' 
       }), {
         status: 402,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    if (lower.startsWith('lovable_429') || lower.includes('rate limit') || lower.includes('too many requests')) {
+    if (lower.includes('rate limit') || lower.includes('too many requests') || lower.includes('429')) {
       return new Response(JSON.stringify({ 
         error: 'Rate limit exceeded. Please wait a minute and try again.' 
       }), {
