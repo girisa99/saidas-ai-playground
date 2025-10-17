@@ -1469,80 +1469,31 @@ function isOncologyQuery(text: string): boolean {
   return /(oncology|cell|gene|car-t|radiol|chemo|immuno|ndc|dose|manufacturer|biosimilar|modalit|advanced therap|specialty drug|biologic)/.test(t);
 }
 
-async function extractOncologyProducts(prompt: string, content: string) {
+async function extractOncologyProducts(prompt: string, content: string, preferredModel?: string, preferredProvider?: 'openai' | 'claude' | 'gemini') {
   try {
-    const body: any = {
-      model: 'google/gemini-2.5-flash',
-      messages: [
-        { role: 'system', content: `Extract a clean, deduplicated list of therapy products from the query and answer. Cover:
-- Oncology (chemotherapy, targeted therapy, immunotherapy)
-- Cell & Gene Therapies (CAR-T, gene therapy, cell-based treatments)
-- Advanced Therapies (biologics, biosimilars, specialty drugs)
-Include all available product details. Do not include prose.` },
-        { role: 'user', content: `From the following question and draft answer, extract therapy products.\n\nQuestion:\n${prompt}\n\nDraft Answer:\n${content}` }
-      ],
-      tools: [
+    // Use smart routing for structured extraction
+    // Prefer models with strong JSON support: Gemini (native), GPT-5 (tool calling), Claude (JSON mode)
+    const provider = preferredProvider || 'gemini'; // Default to Gemini for native JSON if no preference
+    const model = preferredModel || 'gemini-2.0-flash-exp';
+    
+    console.log(`Extracting oncology products using ${provider}/${model}`);
+    
+    if (provider === 'gemini' && geminiApiKey) {
+      // Gemini native JSON mode
+      const resp = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${geminiApiKey}`,
         {
-          type: 'function',
-          function: {
-            name: 'extract_therapy_products',
-            description: 'Extract oncology, cell & gene, and advanced therapy products with complete pharmaceutical details',
-            parameters: {
-              type: 'object',
-              properties: {
-                products: {
-                  type: 'array',
-                  items: {
-                    type: 'object',
-                    properties: {
-                      product: { type: 'string', description: 'Product brand or generic name' },
-                      therapy_category: { type: 'string', description: 'Oncology, Cell & Gene, Advanced Therapy, Immunotherapy, etc.' },
-                      dose: { type: 'string', description: 'Dosage with units (mg, mcg, IU, etc.)' },
-                      ndc: { type: 'string', description: 'National Drug Code' },
-                      modality: { type: 'string', description: 'IV, subcutaneous, oral, etc.' },
-                      application: { type: 'string', description: 'Indication or disease target' },
-                      manufacturer: { type: 'string', description: 'Manufacturer or sponsor' },
-                      storage: { type: 'string', description: 'Storage requirements (frozen, refrigerated, etc.)' },
-                      special_handling: { type: 'string', description: 'Special precautions or handling notes' }
-                    },
-                    required: ['product'],
-                    additionalProperties: false
-                  }
-                }
-              },
-              required: ['products'],
-              additionalProperties: false
-            }
-          }
-        }
-      ],
-      tool_choice: { type: 'function', function: { name: 'extract_therapy_products' } }
-    };
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              role: 'user',
+              parts: [{ text: `Extract therapy products from this query and answer. Return JSON only with products array.
 
-    // Call Gemini directly for structured extraction
-    const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${geminiApiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{
-            role: 'user',
-            parts: [{ text: `Extract a clean, deduplicated list of therapy products from the query and answer. Cover:
-1. Oncology (chemotherapy, targeted therapy, immunotherapy)
-2. Cell & Gene Therapies (CAR-T, gene therapy, cell-based treatments)
-3. Advanced Therapies (biologics, biosimilars, specialty drugs)
-Include all available product details. Return JSON only.
+Question: ${prompt}
+Answer: ${content}
 
-From the following question and draft answer, extract therapy products.
-
-Question:
-${prompt}
-
-Draft Answer:
-${content}
-
-Return JSON format:
+Format:
 {
   "products": [
     {
@@ -1558,33 +1509,104 @@ Return JSON format:
     }
   ]
 }` }]
-          }],
-          generationConfig: {
-            temperature: 0.1,
-            responseMimeType: 'application/json'
-          }
-        })
-      }
-    );
-
-    const data = await resp.json();
-    if (!resp.ok) {
-      console.error('Oncology extractor error:', data);
-      return [];
-    }
-
-    // Parse Gemini JSON response
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    if (text) {
-      try {
+            }],
+            generationConfig: {
+              temperature: 0.1,
+              responseMimeType: 'application/json'
+            }
+          })
+        }
+      );
+      
+      const data = await resp.json();
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      if (text) {
         const parsed = JSON.parse(text);
         if (Array.isArray(parsed?.products)) return parsed.products;
-      } catch (e) {
-        console.error('Failed to parse Gemini JSON:', e);
+      }
+    } else if (provider === 'openai' && openaiApiKey) {
+      // GPT-5 structured output via tool calling
+      const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openaiApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: model.includes('gpt') ? model : 'gpt-5-2025-08-07',
+          messages: [
+            { role: 'system', content: 'Extract therapy products with pharmaceutical details. Return structured JSON.' },
+            { role: 'user', content: `From this Q&A, extract products:\n\nQ: ${prompt}\nA: ${content}` }
+          ],
+          tools: [{
+            type: 'function',
+            function: {
+              name: 'extract_products',
+              parameters: {
+                type: 'object',
+                properties: {
+                  products: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        product: { type: 'string' },
+                        therapy_category: { type: 'string' },
+                        dose: { type: 'string' },
+                        ndc: { type: 'string' },
+                        modality: { type: 'string' },
+                        application: { type: 'string' },
+                        manufacturer: { type: 'string' }
+                      },
+                      required: ['product']
+                    }
+                  }
+                },
+                required: ['products']
+              }
+            }
+          }],
+          tool_choice: { type: 'function', function: { name: 'extract_products' } }
+        })
+      });
+      
+      const data = await resp.json();
+      const toolCall = data?.choices?.[0]?.message?.tool_calls?.[0];
+      if (toolCall?.function?.arguments) {
+        const args = JSON.parse(toolCall.function.arguments);
+        if (Array.isArray(args.products)) return args.products;
+      }
+    } else if (provider === 'claude' && claudeApiKey) {
+      // Claude JSON mode
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'x-api-key': claudeApiKey,
+          'anthropic-version': '2023-06-01',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: model.includes('claude') ? model : 'claude-sonnet-4-5',
+          max_tokens: 2000,
+          system: 'Extract therapy products. Return only valid JSON.',
+          messages: [{
+            role: 'user',
+            content: `Extract products from:\n\nQ: ${prompt}\nA: ${content}\n\nReturn JSON: {"products": [...]}`
+          }]
+        })
+      });
+      
+      const data = await resp.json();
+      const text = data?.content?.[0]?.text || '';
+      if (text) {
+        const cleaned = text.replace(/```json\n?|```/g, '').trim();
+        const parsed = JSON.parse(cleaned);
+        if (Array.isArray(parsed?.products)) return parsed.products;
       }
     }
 
     return [];
+
   } catch (e) {
     console.error('extractOncologyProducts failed:', e);
     return [];
@@ -1839,13 +1861,32 @@ Create unified response that:
 4. Maintains context from previous conversation
 5. References earlier discussion points if relevant`;
 
-    // Call Gemini directly for synthesis
-    const synthesis = await callGemini({
-      ...request,
-      model: 'gemini-2.0-flash-exp',
-      prompt: synthPrompt,
-      systemPrompt: `${context}\n\nYou are synthesizing expert opinions while maintaining conversation continuity.`
-    }, context);
+    // Use the most capable model for synthesis (from multi-agent chain or user selection)
+    const synthesizerModel = synthesizer.model;
+    
+    let synthesis: string;
+    if (synthesizerModel.includes('gpt') || synthesizerModel.includes('openai')) {
+      synthesis = await callOpenAI({
+        ...request,
+        model: synthesizerModel.includes('gpt') ? synthesizerModel : 'gpt-5-2025-08-07',
+        prompt: synthPrompt,
+        systemPrompt: `${context}\n\nYou are synthesizing expert opinions while maintaining conversation continuity.`
+      }, context);
+    } else if (synthesizerModel.includes('claude')) {
+      synthesis = await callClaude({
+        ...request,
+        model: synthesizerModel.includes('claude') ? synthesizerModel : 'claude-sonnet-4-5',
+        prompt: synthPrompt,
+        systemPrompt: `${context}\n\nYou are synthesizing expert opinions while maintaining conversation continuity.`
+      }, context);
+    } else {
+      synthesis = await callGemini({
+        ...request,
+        model: 'gemini-2.0-flash-exp',
+        prompt: synthPrompt,
+        systemPrompt: `${context}\n\nYou are synthesizing expert opinions while maintaining conversation continuity.`
+      }, context);
+    }
 
     totalCost += 0.02;
     console.log(`✅ Synthesizer (${synthesizer.purpose}) complete`);
@@ -2242,10 +2283,15 @@ serve(async (req) => {
       label_studio: !!(labelStudioApiKey && request.labelStudioProject)
     });
 
-    // Optional oncology extraction
+    // Optional oncology extraction using user's selected provider or smart routing
     let oncologyProducts: any[] | undefined = undefined;
     if (triageData?.domain === 'healthcare' && isOncologyQuery(request.prompt)) {
-      oncologyProducts = await extractOncologyProducts(request.prompt, content);
+      oncologyProducts = await extractOncologyProducts(
+        request.prompt, 
+        content, 
+        request.model, 
+        mappedProvider
+      );
       if (oncologyProducts && oncologyProducts.length === 0) {
         oncologyProducts = undefined; // keep payload clean
       }
