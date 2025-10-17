@@ -41,6 +41,7 @@ import { useUniversalKnowledgeTopics } from '@/hooks/useUniversalKnowledgeTopics
 import { useGeniePreferences } from '@/hooks/useGeniePreferences';
 import { useABTestMilestones } from '@/hooks/useABTestMilestones';
 import { ConversationLimitModal } from './ConversationLimitModal';
+import { genieMessaging } from '@/services/genieMessagingService';
 
 import { TechnologyKnowledgeBase, getTechnologyKnowledge } from '../comprehensive-knowledge/TechnologyKnowledgeBase';
 import { HealthcareKnowledgeBase, getReimbursementInfo } from './HealthcareKnowledgeBase';
@@ -587,9 +588,8 @@ useEffect(() => {
     setShowConfigWizard(false);
     setHasStartedConversation(true);
 
-    const welcomeMessage = `Hello ${info.firstName}! 🧞‍♂️ Welcome to Genie AI! 
-
-I can help you navigate Technology and Healthcare topics across our Experimentation Hub. Ask me anything to get started.`;
+    // Use dynamic welcome message from genie messaging service
+    const welcomeMessage = genieMessaging.getMessage('welcome', undefined, info.firstName);
 
     addMessage({
       role: 'assistant',
@@ -1747,14 +1747,14 @@ ${conversationSummary.transcript}`
                 </div>
               ) : (
                 <React.Fragment>
-                  {/* Welcome Back Message for Returning Users */}
+                  {/* Dynamic Welcome Back Message for Returning Users */}
                   {userInfo && messages.length === 0 && (
-                    <div className="p-4 bg-primary/10 rounded-lg border border-primary/20 mx-4 mt-4">
+                    <div className="p-4 bg-gradient-to-r from-primary/10 to-purple-500/10 rounded-lg border border-primary/20 mx-4 mt-4 shadow-sm">
                       <p className="text-sm font-medium">
-                        Welcome back, {userInfo.firstName}! 👋
+                        {genieMessaging.getMessage('greeting', undefined, userInfo.firstName)}
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
-                        Ready to continue our conversation? Ask me anything!
+                        {genieMessaging.getMessage('ready')}
                       </p>
                     </div>
                   )}
@@ -1990,7 +1990,7 @@ ${conversationSummary.transcript}`
                                 <img src={genieThinking} alt="Genie" className="h-5 w-5 rounded-full animate-pulse" />
                                 <span className="text-xs font-medium">Genie AI</span>
                               </div>
-                              <TypingIndicator />
+                              <TypingIndicator query={inputMessage} />
                             </div>
                           </div>
                         )}

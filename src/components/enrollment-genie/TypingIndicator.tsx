@@ -1,35 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles } from 'lucide-react';
 import genieThinking from '@/assets/genie-thinking.png';
+import { genieMessaging } from '@/services/genieMessagingService';
 
-const humorousMessages = [
-  "🧞‍♂️ Consulting my magical knowledge scrolls...",
-  "✨ Mixing up some AI magic for you...",
-  "🔮 Peering into the crystal ball of wisdom...",
-  "💫 Rubbing the lamp for brilliant insights...",
-  "🎭 Channeling my inner genius genie...",
-  "🌟 Brewing up a perfect response potion...",
-  "🎪 Performing some computational wizardry...",
-  "💭 Deep in thought... and it's getting crowded in here!",
-  "🎨 Painting you a masterpiece of information...",
-  "🚀 Zooming through the knowledge universe..."
-];
+interface TypingIndicatorProps {
+  query?: string; // Optional: to detect domain for contextual messages
+}
 
-export const TypingIndicator: React.FC = () => {
-  const [currentMessage, setCurrentMessage] = useState(humorousMessages[0]);
-  const [messageIndex, setMessageIndex] = useState(0);
+export const TypingIndicator: React.FC<TypingIndicatorProps> = ({ query }) => {
+  const [currentMessage, setCurrentMessage] = useState(() => 
+    genieMessaging.getMessage('thinking', query)
+  );
 
   useEffect(() => {
+    // Rotate messages every 3 seconds for variety
     const interval = setInterval(() => {
-      setMessageIndex((prev) => (prev + 1) % humorousMessages.length);
-    }, 2000);
+      setCurrentMessage(genieMessaging.getMessage('thinking', query));
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    setCurrentMessage(humorousMessages[messageIndex]);
-  }, [messageIndex]);
+  }, [query]);
 
   return (
     <div className="flex gap-3 justify-start">
