@@ -77,7 +77,24 @@ class ConversationLimitService {
       };
     }
 
-    return data as ConversationLimits;
+    // Map edge function response (allowed at root, counts nested in data.limits)
+    const mapped: ConversationLimits = {
+      allowed: Boolean((data as any)?.allowed),
+      daily_count: (data as any)?.limits?.daily_count ?? 0,
+      daily_limit: (data as any)?.limits?.daily_limit ?? 5,
+      hourly_count: (data as any)?.limits?.hourly_count ?? 0,
+      hourly_limit: (data as any)?.limits?.hourly_limit ?? 2,
+      email_daily_count: (data as any)?.limits?.email_daily_count,
+      email_daily_limit: (data as any)?.limits?.email_daily_limit,
+      email_hourly_count: (data as any)?.limits?.email_hourly_count,
+      email_hourly_limit: (data as any)?.limits?.email_hourly_limit,
+      duplicate_email_ips: (data as any)?.limits?.duplicate_email_ips,
+      reset_time: (data as any)?.reset_time ?? new Date(Date.now() + 3600000).toISOString(),
+      restriction_reason: (data as any)?.restriction_reason,
+      is_returning_user: (data as any)?.is_returning_user,
+    };
+
+    return mapped;
   }
 
   async startConversation(

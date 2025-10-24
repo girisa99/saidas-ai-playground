@@ -30,11 +30,12 @@ serve(async (req) => {
 
     const { ip_address, user_email, user_name, context, action, session_id, message_count, user_agent } = await req.json() as ConversationLimitRequest
 
+    // Resolve client IP robustly: prefer header if body missing or fallback value
+    const forwarded = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || ''
+    const headerIP = forwarded.split(',')[0]?.trim() || ''
+    const clientIP = (ip_address && ip_address !== '0.0.0.0') ? ip_address : (headerIP || '0.0.0.0')
+
     // Generate browser fingerprint hash for multi-factor detection
-    const browserFingerprint = user_agent ? 
-      await crypto.subtle.digest('SHA-256', new TextEncoder().encode(user_agent))
-        .then(hash => Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16))
-      : null
 
     // Use direct table queries instead of RPC to avoid type mismatch issues
     const now = new Date()
@@ -45,14 +46,14 @@ serve(async (req) => {
     const { count: ipDailyCount } = await supabase
       .from('conversation_tracking')
       .select('*', { count: 'exact', head: true })
-      .eq('ip_address', ip_address)
+      .eq('ip_address', clientIP)
       .gte('started_at', oneDayAgo.toISOString())
 
     // Count IP-based conversations (last hour)
     const { count: ipHourlyCount } = await supabase
       .from('conversation_tracking')
       .select('*', { count: 'exact', head: true })
-      .eq('ip_address', ip_address)
+      .eq('ip_address', clientIP)
       .gte('started_at', oneHourAgo.toISOString())
 
     // Multi-factor abuse detection
@@ -86,7 +87,7 @@ serve(async (req) => {
       const { count: comboCount } = await supabase
         .from('conversation_tracking')
         .select('*', { count: 'exact', head: true })
-        .eq('ip_address', ip_address)
+        .eq('ip_address', clientIP)
         .eq('user_email', user_email)
         .gte('started_at', oneDayAgo.toISOString())
       
@@ -121,7 +122,7 @@ serve(async (req) => {
       if ((rapidCount || 0) > 3) {
         suspiciousActivity = true
         abuseFlags.push('Rapid-fire requests detected')
-        console.warn(`⚠️ RATE ABUSE: ${rapidCount} requests in 5 minutes from IP ${ip_address}`)
+        console.warn(`⚠️ RATE ABUSE: ${rapidCount} requests in 5 minutes from IP ${clientIP}`)
       }
     }
 
@@ -228,8 +229,8 @@ serve(async (req) => {
         const { data: sessionData, error: sessionError } = await supabase
           .from('conversation_sessions')
           .upsert({
-            session_id: session_id || `${ip_address}_${Date.now()}`,
-            ip_address,
+            session_id: session_id || `${clientIP}_${Date.now()}`,
+            ip_address: clientIP,
             user_email,
             user_name,
             conversation_count: 1,
@@ -248,8 +249,8 @@ serve(async (req) => {
         const { error: trackingError } = await supabase
           .from('conversation_tracking')
           .insert({
-            session_id: session_id || `${ip_address}_${Date.now()}`,
-            ip_address,
+            session_id: session_id || `${clientIP}_${Date.now()}`,
+            ip_address: clientIP,
             user_email,
             context,
             message_count: 0,
