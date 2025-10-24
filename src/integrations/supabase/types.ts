@@ -473,7 +473,7 @@ export type Database = {
           created_at: string | null
           execution_context: Json | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           user_agent: string | null
         }
         Insert: {
@@ -487,7 +487,7 @@ export type Database = {
           created_at?: string | null
           execution_context?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_agent?: string | null
         }
         Update: {
@@ -501,7 +501,7 @@ export type Database = {
           created_at?: string | null
           execution_context?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_agent?: string | null
         }
         Relationships: [
@@ -1946,7 +1946,7 @@ export type Database = {
           endpoint_path: string
           error_details: Json | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           method: string
           request_size_bytes: number | null
           request_timestamp: string
@@ -1961,7 +1961,7 @@ export type Database = {
           endpoint_path: string
           error_details?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           method: string
           request_size_bytes?: number | null
           request_timestamp?: string
@@ -1976,7 +1976,7 @@ export type Database = {
           endpoint_path?: string
           error_details?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           method?: string
           request_size_bytes?: number | null
           request_timestamp?: string
@@ -2574,7 +2574,7 @@ export type Database = {
           error_message: string | null
           external_api_id: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           method: string
           rate_limited: boolean | null
           request_size_bytes: number | null
@@ -2591,7 +2591,7 @@ export type Database = {
           error_message?: string | null
           external_api_id: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           method: string
           rate_limited?: boolean | null
           request_size_bytes?: number | null
@@ -2608,7 +2608,7 @@ export type Database = {
           error_message?: string | null
           external_api_id?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           method?: string
           rate_limited?: boolean | null
           request_size_bytes?: number | null
@@ -2648,7 +2648,7 @@ export type Database = {
           created_at: string
           endpoint: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           method: string
           response_time_ms: number | null
           status_code: number
@@ -2659,7 +2659,7 @@ export type Database = {
           created_at?: string
           endpoint: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           method: string
           response_time_ms?: number | null
           status_code: number
@@ -2670,7 +2670,7 @@ export type Database = {
           created_at?: string
           endpoint?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           method?: string
           response_time_ms?: number | null
           status_code?: number
@@ -2908,7 +2908,7 @@ export type Database = {
           action: string
           created_at: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           new_values: Json | null
           old_values: Json | null
           record_id: string | null
@@ -2920,7 +2920,7 @@ export type Database = {
           action: string
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           new_values?: Json | null
           old_values?: Json | null
           record_id?: string | null
@@ -2932,7 +2932,7 @@ export type Database = {
           action?: string
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           new_values?: Json | null
           old_values?: Json | null
           record_id?: string | null
@@ -3919,7 +3919,7 @@ export type Database = {
       credit_application_audit: {
         Row: {
           action_type: string
-          actor_ip_address: unknown | null
+          actor_ip_address: unknown
           actor_user_agent: string | null
           actor_user_id: string | null
           additional_context: Json | null
@@ -3932,7 +3932,7 @@ export type Database = {
         }
         Insert: {
           action_type: string
-          actor_ip_address?: unknown | null
+          actor_ip_address?: unknown
           actor_user_agent?: string | null
           actor_user_id?: string | null
           additional_context?: Json | null
@@ -3945,7 +3945,7 @@ export type Database = {
         }
         Update: {
           action_type?: string
-          actor_ip_address?: unknown | null
+          actor_ip_address?: unknown
           actor_user_agent?: string | null
           actor_user_id?: string | null
           additional_context?: Json | null
@@ -4102,7 +4102,7 @@ export type Database = {
           encryption_key_id: string | null
           financial_statements: Json | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           number_of_employees: number | null
           onboarding_id: string | null
           payment_terms_requested: string | null
@@ -4152,7 +4152,7 @@ export type Database = {
           encryption_key_id?: string | null
           financial_statements?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           number_of_employees?: number | null
           onboarding_id?: string | null
           payment_terms_requested?: string | null
@@ -4202,7 +4202,7 @@ export type Database = {
           encryption_key_id?: string | null
           financial_statements?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           number_of_employees?: number | null
           onboarding_id?: string | null
           payment_terms_requested?: string | null
@@ -6836,7 +6836,7 @@ export type Database = {
           total_tokens_used: number | null
           updated_at: string | null
           user_agent: string | null
-          user_ip_address: unknown | null
+          user_ip_address: unknown
         }
         Insert: {
           average_response_time_ms?: number | null
@@ -6857,7 +6857,7 @@ export type Database = {
           total_tokens_used?: number | null
           updated_at?: string | null
           user_agent?: string | null
-          user_ip_address?: unknown | null
+          user_ip_address?: unknown
         }
         Update: {
           average_response_time_ms?: number | null
@@ -6878,7 +6878,7 @@ export type Database = {
           total_tokens_used?: number | null
           updated_at?: string | null
           user_agent?: string | null
-          user_ip_address?: unknown | null
+          user_ip_address?: unknown
         }
         Relationships: [
           {
@@ -9477,7 +9477,7 @@ export type Database = {
           action_type: string
           created_at: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           new_values: Json | null
           old_values: Json | null
           onboarding_id: string | null
@@ -9491,7 +9491,7 @@ export type Database = {
           action_type: string
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           new_values?: Json | null
           old_values?: Json | null
           onboarding_id?: string | null
@@ -9505,7 +9505,7 @@ export type Database = {
           action_type?: string
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           new_values?: Json | null
           old_values?: Json | null
           onboarding_id?: string | null
@@ -11564,7 +11564,7 @@ export type Database = {
           created_at: string
           escalation_requested: boolean | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           metadata: Json | null
           privacy_accepted: boolean | null
           session_id: string
@@ -11578,7 +11578,7 @@ export type Database = {
           created_at?: string
           escalation_requested?: boolean | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           metadata?: Json | null
           privacy_accepted?: boolean | null
           session_id: string
@@ -11592,7 +11592,7 @@ export type Database = {
           created_at?: string
           escalation_requested?: boolean | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           metadata?: Json | null
           privacy_accepted?: boolean | null
           session_id?: string
@@ -12113,7 +12113,7 @@ export type Database = {
           alert_type: string
           created_at: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           resolution_notes: string | null
           resolved_at: string | null
           resolved_by: string | null
@@ -12129,7 +12129,7 @@ export type Database = {
           alert_type: string
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           resolution_notes?: string | null
           resolved_at?: string | null
           resolved_by?: string | null
@@ -12145,7 +12145,7 @@ export type Database = {
           alert_type?: string
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           resolution_notes?: string | null
           resolved_at?: string | null
           resolved_by?: string | null
@@ -12164,7 +12164,7 @@ export type Database = {
           description: string
           event_type: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           location: Json | null
           metadata: Json | null
           resolved: boolean | null
@@ -12179,7 +12179,7 @@ export type Database = {
           description: string
           event_type: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           location?: Json | null
           metadata?: Json | null
           resolved?: boolean | null
@@ -12194,7 +12194,7 @@ export type Database = {
           description?: string
           event_type?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           location?: Json | null
           metadata?: Json | null
           resolved?: boolean | null
@@ -14183,7 +14183,7 @@ export type Database = {
           activity_type: string
           created_at: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           location: Json | null
           metadata: Json | null
           module_name: string | null
@@ -14196,7 +14196,7 @@ export type Database = {
           activity_type: string
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           location?: Json | null
           metadata?: Json | null
           module_name?: string | null
@@ -14209,7 +14209,7 @@ export type Database = {
           activity_type?: string
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           location?: Json | null
           metadata?: Json | null
           module_name?: string | null
@@ -14663,7 +14663,7 @@ export type Database = {
           country: string | null
           created_at: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           latitude: number | null
           longitude: number | null
           metadata: Json | null
@@ -14682,7 +14682,7 @@ export type Database = {
           country?: string | null
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           latitude?: number | null
           longitude?: number | null
           metadata?: Json | null
@@ -14701,7 +14701,7 @@ export type Database = {
           country?: string | null
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           latitude?: number | null
           longitude?: number | null
           metadata?: Json | null
@@ -16438,11 +16438,11 @@ export type Database = {
           idx_scan: number | null
           idx_tup_fetch: number | null
           idx_tup_read: number | null
-          index_name: unknown | null
+          index_name: unknown
           index_size_bytes: number | null
           index_size_pretty: string | null
-          schema_name: unknown | null
-          table_name: unknown | null
+          schema_name: unknown
+          table_name: unknown
         }
         Relationships: []
       }
@@ -16638,58 +16638,48 @@ export type Database = {
           idx_scan: number | null
           idx_tup_fetch: number | null
           idx_tup_read: number | null
-          index_name: unknown | null
+          index_name: unknown
           index_size_bytes: number | null
           index_size_pretty: string | null
-          schema_name: unknown | null
-          table_name: unknown | null
+          schema_name: unknown
+          table_name: unknown
         }
         Relationships: []
       }
     }
     Functions: {
-      _table_exists: {
-        Args: { p_table: string }
-        Returns: boolean
-      }
+      _table_exists: { Args: { p_table: string }; Returns: boolean }
       assign_user_role: {
         Args: { p_role_name: string; p_user_id: string }
         Returns: undefined
       }
-      auto_cleanup_sessions: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      auto_sync_demo_user_access: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      binary_quantize: {
-        Args: { "": string } | { "": unknown }
-        Returns: unknown
-      }
-      bulk_deactivate_patient_enrollments: {
-        Args:
-          | { p_deactivation_reason?: string; p_facility_id: string }
-          | { p_enrollment_ids: string[]; p_reason?: string }
-        Returns: Json
-      }
+      auto_cleanup_sessions: { Args: never; Returns: undefined }
+      auto_sync_demo_user_access: { Args: never; Returns: Json }
+      bulk_deactivate_patient_enrollments:
+        | {
+            Args: { p_enrollment_ids: string[]; p_reason?: string }
+            Returns: Json
+          }
+        | {
+            Args: { p_deactivation_reason?: string; p_facility_id: string }
+            Returns: Json
+          }
       calculate_enrollment_progress: {
         Args: { enrollment_uuid: string }
         Returns: number
       }
-      calculate_financial_risk_score: {
-        Args:
-          | {
+      calculate_financial_risk_score:
+        | { Args: { p_enrollment_id: string }; Returns: number }
+        | {
+            Args: {
               p_annual_revenue_range: string
               p_current_ratio: number
               p_days_sales_outstanding: number
               p_debt_to_equity_ratio: number
               p_years_in_operation: number
             }
-          | { p_enrollment_id: string }
-        Returns: number
-      }
+            Returns: number
+          }
       check_access_override: {
         Args: { p_ip_address: string; p_user_email?: string }
         Returns: Json
@@ -16702,51 +16692,30 @@ export type Database = {
         Args: { p_exclude_id?: string; p_name: string; p_user_id: string }
         Returns: boolean
       }
-      check_user_has_role: {
-        Args:
-          | {
+      check_user_has_role:
+        | { Args: { p_role_name: string; p_user_id: string }; Returns: boolean }
+        | {
+            Args: {
               check_user_id: string
               role_name: Database["public"]["Enums"]["user_role"]
             }
-          | { p_role_name: string; p_user_id: string }
-        Returns: boolean
-      }
-      cleanup_agent_sessions: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      cleanup_duplicate_test_cases: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+            Returns: boolean
+          }
+      cleanup_agent_sessions: { Args: never; Returns: Json }
+      cleanup_duplicate_test_cases: { Args: never; Returns: Json }
       cleanup_old_draft_agents: {
         Args: { p_confirm?: boolean; p_user_id?: string }
         Returns: Json
       }
-      cleanup_old_performance_data: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      cleanup_orphaned_role_assignments: {
-        Args: Record<PropertyKey, never>
-        Returns: number
-      }
-      cleanup_rate_limits: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_universal_save_sessions: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+      cleanup_old_performance_data: { Args: never; Returns: Json }
+      cleanup_orphaned_role_assignments: { Args: never; Returns: number }
+      cleanup_rate_limits: { Args: never; Returns: undefined }
+      cleanup_universal_save_sessions: { Args: never; Returns: Json }
       cleanup_user_agent_work: {
         Args: { p_statuses?: string[]; p_user_id?: string }
         Returns: Json
       }
-      continuous_test_generation: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+      continuous_test_generation: { Args: never; Returns: Json }
       create_patient_profile_and_role: {
         Args: {
           p_email: string
@@ -16765,26 +16734,17 @@ export type Database = {
         Args: { max_samples?: number; sample_data: Json }
         Returns: Json
       }
-      detect_system_functionality: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      detect_system_functionality: { Args: never; Returns: undefined }
       determine_risk_level: {
         Args: { p_risk_score: number }
         Returns: Database["public"]["Enums"]["risk_level"]
       }
-      ensure_demo_block_triggers: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      ensure_demo_block_triggers: { Args: never; Returns: undefined }
       execute_comprehensive_test_suite: {
         Args: { batch_size?: number; suite_type?: string }
         Returns: Json
       }
-      generate_api_key: {
-        Args: { key_type: string }
-        Returns: string
-      }
+      generate_api_key: { Args: { key_type: string }; Returns: string }
       generate_comprehensive_documentation: {
         Args: {
           functionality_id?: string
@@ -16802,20 +16762,24 @@ export type Database = {
         Args: { functionality_id?: string }
         Returns: Json
       }
-      generate_role_based_test_cases: {
-        Args:
-          | { target_role?: Database["public"]["Enums"]["user_role"] }
-          | { target_role?: string }
-        Returns: Json
-      }
+      generate_role_based_test_cases:
+        | {
+            Args: { target_role?: string }
+            Returns: {
+              error: true
+            } & "Could not choose the best candidate function between: public.generate_role_based_test_cases(target_role => text), public.generate_role_based_test_cases(target_role => user_role). Try renaming the parameters or the function itself in the database so function overloading can be resolved"
+          }
+        | {
+            Args: { target_role?: Database["public"]["Enums"]["user_role"] }
+            Returns: {
+              error: true
+            } & "Could not choose the best candidate function between: public.generate_role_based_test_cases(target_role => text), public.generate_role_based_test_cases(target_role => user_role). Try renaming the parameters or the function itself in the database so function overloading can be resolved"
+          }
       get_access_requests_recent: {
         Args: { days_back?: number; limit_count?: number }
         Returns: Json
       }
-      get_complete_schema_info: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+      get_complete_schema_info: { Args: never; Returns: Json }
       get_daily_fix_stats: {
         Args: { days_back?: number; target_user_id?: string }
         Returns: {
@@ -16826,7 +16790,7 @@ export type Database = {
         }[]
       }
       get_database_bloat_info: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           bloat_ratio: number
           dead_rows: number
@@ -16836,30 +16800,18 @@ export type Database = {
           total_size: string
         }[]
       }
-      get_dataset_statistics: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+      get_dataset_statistics: { Args: never; Returns: Json }
       get_genie_conversations_overview: {
         Args: { days_back?: number; limit_count?: number }
         Returns: Json
       }
-      get_genie_model_usage: {
-        Args: { days_back?: number }
-        Returns: Json
-      }
-      get_genie_popup_stats: {
-        Args: { days_back?: number }
-        Returns: Json
-      }
+      get_genie_model_usage: { Args: { days_back?: number }; Returns: Json }
+      get_genie_popup_stats: { Args: { days_back?: number }; Returns: Json }
       get_genie_registration_details: {
         Args: { days_back?: number }
         Returns: Json
       }
-      get_import_statistics: {
-        Args: { p_user_id?: string }
-        Returns: Json
-      }
+      get_import_statistics: { Args: { p_user_id?: string }; Returns: Json }
       get_old_draft_agents: {
         Args: { p_user_id?: string }
         Returns: {
@@ -16871,26 +16823,14 @@ export type Database = {
           updated_at: string
         }[]
       }
-      get_prepopulate_data: {
-        Args: { user_uuid: string }
-        Returns: Json
-      }
+      get_prepopulate_data: { Args: { user_uuid: string }; Returns: Json }
       get_recent_popup_events: {
         Args: { days_back?: number; limit_count?: number }
         Returns: Json
       }
-      get_retention_analytics: {
-        Args: { days_back?: number }
-        Returns: Json
-      }
-      get_session_analytics: {
-        Args: { days_back?: number }
-        Returns: Json
-      }
-      get_system_integration_status: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+      get_retention_analytics: { Args: { days_back?: number }; Returns: Json }
+      get_session_analytics: { Args: { days_back?: number }; Returns: Json }
+      get_system_integration_status: { Args: never; Returns: Json }
       get_top_knowledge_by_domain: {
         Args: { limit_count?: number; query_domain: string }
         Returns: {
@@ -16937,22 +16877,6 @@ export type Database = {
         Args: { days_back?: number }
         Returns: Json
       }
-      halfvec_avg: {
-        Args: { "": number[] }
-        Returns: unknown
-      }
-      halfvec_out: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      halfvec_send: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      halfvec_typmod_in: {
-        Args: { "": unknown[] }
-        Returns: number
-      }
       has_permission: {
         Args: { permission_name: string; user_id: string }
         Returns: boolean
@@ -16971,22 +16895,6 @@ export type Database = {
         }
         Returns: boolean
       }
-      hnsw_bit_support: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      hnsw_halfvec_support: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      hnsw_sparsevec_support: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      hnswhandler: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
       increment_knowledge_usage: {
         Args: { knowledge_id: string }
         Returns: undefined
@@ -17003,41 +16911,12 @@ export type Database = {
         Args: { user_id: string }
         Returns: undefined
       }
-      is_admin_user: {
-        Args: { check_user_id: string }
-        Returns: boolean
-      }
-      is_admin_user_safe: {
-        Args: { check_user_id: string }
-        Returns: boolean
-      }
-      is_demo_user: {
-        Args: { check_user_id?: string }
-        Returns: boolean
-      }
+      is_admin_user: { Args: { check_user_id: string }; Returns: boolean }
+      is_admin_user_safe: { Args: { check_user_id: string }; Returns: boolean }
+      is_demo_user: { Args: { check_user_id?: string }; Returns: boolean }
       is_demo_user_or_admin: {
         Args: { check_user_id?: string }
         Returns: boolean
-      }
-      ivfflat_bit_support: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      ivfflat_halfvec_support: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      ivfflathandler: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      l2_norm: {
-        Args: { "": unknown } | { "": unknown }
-        Returns: number
-      }
-      l2_normalize: {
-        Args: { "": string } | { "": unknown } | { "": unknown }
-        Returns: unknown
       }
       log_credit_application_audit: {
         Args: {
@@ -17085,16 +16964,19 @@ export type Database = {
         }
         Returns: string
       }
-      log_security_event: {
-        Args:
-          | {
+      log_security_event:
+        | {
+            Args: {
               p_description: string
               p_event_type: string
               p_metadata?: Json
               p_severity: string
               p_user_id: string
             }
-          | {
+            Returns: undefined
+          }
+        | {
+            Args: {
               p_details?: Json
               p_endpoint?: string
               p_event_type: string
@@ -17102,8 +16984,8 @@ export type Database = {
               p_severity: string
               p_user_agent?: string
             }
-        Returns: undefined
-      }
+            Returns: string
+          }
       log_sensitive_data_access: {
         Args: { operation_type: string; record_id?: string; table_name: string }
         Returns: undefined
@@ -17138,14 +17020,8 @@ export type Database = {
         }
         Returns: undefined
       }
-      optimize_database_performance: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      optimize_slow_queries: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      optimize_database_performance: { Args: never; Returns: Json }
+      optimize_slow_queries: { Args: never; Returns: undefined }
       process_rag_recommendation: {
         Args: {
           p_action: string
@@ -17164,18 +17040,9 @@ export type Database = {
         }
         Returns: Json
       }
-      run_automated_cleanup: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      run_comprehensive_system_update: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      schedule_maintenance: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      run_automated_cleanup: { Args: never; Returns: Json }
+      run_comprehensive_system_update: { Args: never; Returns: Json }
+      schedule_maintenance: { Args: never; Returns: undefined }
       search_knowledge_by_dataset: {
         Args: { dataset_name: string; limit_count?: number }
         Returns: {
@@ -17300,42 +17167,12 @@ export type Database = {
         }
         Returns: Json
       }
-      sparsevec_out: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      sparsevec_send: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      sparsevec_typmod_in: {
-        Args: { "": unknown[] }
-        Returns: number
-      }
-      sync_active_issues: {
-        Args: { issues_data: Json }
-        Returns: undefined
-      }
-      sync_real_time_testing_updates: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      sync_role_based_testing: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      test_rls_policies: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      update_api_key_usage: {
-        Args: { key_hash: string }
-        Returns: undefined
-      }
-      update_api_services_documentation: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+      sync_active_issues: { Args: { issues_data: Json }; Returns: undefined }
+      sync_real_time_testing_updates: { Args: never; Returns: Json }
+      sync_role_based_testing: { Args: never; Returns: undefined }
+      test_rls_policies: { Args: never; Returns: Json }
+      update_api_key_usage: { Args: { key_hash: string }; Returns: undefined }
+      update_api_services_documentation: { Args: never; Returns: Json }
       update_knowledge_feedback: {
         Args: { is_positive: boolean; knowledge_id: string }
         Returns: undefined
@@ -17344,10 +17181,7 @@ export type Database = {
         Args: { increment_value?: number; stat_name_param: string }
         Returns: undefined
       }
-      update_testing_suite_comprehensive: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+      update_testing_suite_comprehensive: { Args: never; Returns: Json }
       user_can_access_node_config: {
         Args: { config_id: string }
         Returns: boolean
@@ -17379,34 +17213,7 @@ export type Database = {
         Args: { data_row: Json; schema_def: Json }
         Returns: Json
       }
-      vector_avg: {
-        Args: { "": number[] }
-        Returns: string
-      }
-      vector_dims: {
-        Args: { "": string } | { "": unknown }
-        Returns: number
-      }
-      vector_norm: {
-        Args: { "": string }
-        Returns: number
-      }
-      vector_out: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      vector_send: {
-        Args: { "": string }
-        Returns: string
-      }
-      vector_typmod_in: {
-        Args: { "": unknown[] }
-        Returns: number
-      }
-      verify_jsonb_migration_integrity: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+      verify_jsonb_migration_integrity: { Args: never; Returns: Json }
     }
     Enums: {
       business_type:
