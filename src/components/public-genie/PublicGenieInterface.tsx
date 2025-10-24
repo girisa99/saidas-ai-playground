@@ -691,8 +691,8 @@ useEffect(() => {
     if (sendingRef.current) return; // Prevent double-trigger
     sendingRef.current = true;
 
-    // Check if conversation is allowed
-    if (!isConversationAllowed) {
+    // Check if conversation is allowed - but only show modal if we have limit data
+    if (!isConversationAllowed && conversationLimits) {
       setShowLimitModal(true);
       sendingRef.current = false;
       return;
@@ -717,6 +717,7 @@ useEffect(() => {
         return;
       }
     }
+
 
     // Start conversation in genieConversationService for persistence
     if (!genieConversationService.isConversationActive()) {
@@ -2252,13 +2253,17 @@ ${conversationSummary.transcript}`
         isOpen={showLimitModal}
         onClose={() => {
           setShowLimitModal(false);
-          // Allow user to continue if they still have hourly quota
-          if (conversationLimits && conversationLimits.hourly_count < conversationLimits.hourly_limit) {
+          // Always allow user to continue unless they're truly blocked
+          // If limits are null/undefined, allow by default
+          if (!conversationLimits) {
+            setIsConversationAllowed(true);
+          } else if (conversationLimits.allowed || conversationLimits.hourly_count < conversationLimits.hourly_limit) {
+            // Allow if explicitly allowed OR if hourly quota available
             setIsConversationAllowed(true);
           }
         }}
         limits={conversationLimits || {
-          allowed: false,
+          allowed: true,
           daily_count: 0,
           daily_limit: 5,
           hourly_count: 0,

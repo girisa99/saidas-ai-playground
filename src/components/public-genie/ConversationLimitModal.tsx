@@ -1,6 +1,6 @@
 import React from 'react';
 import { Clock, Shield, Info, ExternalLink, BookOpen, Code, Users } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
@@ -43,9 +43,9 @@ export const ConversationLimitModal: React.FC<ConversationLimitModalProps> = ({
                 <DialogTitle className="text-xl font-bold">
                   Conversation Limit Info
                 </DialogTitle>
-                <p className="text-sm text-muted-foreground">
+                <DialogDescription className="text-sm text-muted-foreground">
                   Understanding conversation limits
-                </p>
+                </DialogDescription>
               </div>
             </div>
             <Button onClick={onClose} size="sm" className="min-w-[100px]">
