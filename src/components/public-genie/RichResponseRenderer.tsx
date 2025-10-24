@@ -145,7 +145,7 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
     .replace(/\[PDF:\s*([^\]]+)\]/g, '📄 [View PDF: $1]');
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 overflow-hidden clear-both">
       {/* Journey Map Visualization */}
       {journeyMapData && (
         <VisualJourneyMap 
@@ -157,11 +157,11 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
 
       {/* Process Steps Visualization */}
       {processStepsData && (
-        <div className="not-prose mb-6">
-          <h3 className="text-lg font-semibold text-primary mb-4">{processStepsData.title || 'Process Steps'}</h3>
+        <div className="not-prose mb-6 overflow-hidden">
+          <h3 className="text-lg font-semibold text-primary mb-4 break-words">{processStepsData.title || 'Process Steps'}</h3>
           <div className="space-y-3">
             {processStepsData.steps.map((step, idx) => (
-              <Card key={idx} className={step.status === 'completed' ? 'border-green-500/50' : step.status === 'current' ? 'border-primary' : ''}>
+              <Card key={idx} className={`overflow-hidden ${step.status === 'completed' ? 'border-green-500/50' : step.status === 'current' ? 'border-primary' : ''}`}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
@@ -171,9 +171,9 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
                     }`}>
                       {step.status === 'completed' ? <CheckCircle2 className="h-4 w-4" /> : step.number}
                     </div>
-                    <div className="flex-1">
-                      <CardTitle className="text-base">{step.title}</CardTitle>
-                      <CardDescription className="mt-1 text-sm">{step.description}</CardDescription>
+                    <div className="flex-1 min-w-0">
+                      <CardTitle className="text-base break-words">{step.title}</CardTitle>
+                      <CardDescription className="mt-1 text-sm break-words">{step.description}</CardDescription>
                     </div>
                   </div>
                 </CardHeader>
@@ -185,12 +185,12 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
 
       {/* Video Embeds */}
       {videos.length > 0 && (
-        <div className="not-prose mb-6 space-y-4">
+        <div className="not-prose mb-6 space-y-4 overflow-hidden">
           {videos.map((video, idx) => (
             <div key={idx} className="rounded-lg overflow-hidden border border-border">
               <div className="bg-muted px-3 py-2 flex items-center gap-2">
-                <Video className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium">Video Resource</span>
+                <Video className="h-4 w-4 text-primary flex-shrink-0" />
+                <span className="text-sm font-medium break-words">Video Resource</span>
               </div>
               <div className="aspect-video">
                 <iframe
@@ -207,7 +207,7 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
 
       {/* PDF Downloads */}
       {pdfs.length > 0 && (
-        <div className="not-prose mb-6">
+        <div className="not-prose mb-6 overflow-hidden">
           <div className="space-y-2">
             {pdfs.map((pdf, idx) => (
               <a
@@ -215,11 +215,11 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
                 href={pdf.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 p-3 border border-border rounded-lg hover:bg-muted transition-colors"
+                className="flex items-center gap-3 p-3 border border-border rounded-lg hover:bg-muted transition-colors overflow-hidden"
               >
-                <FileText className="h-5 w-5 text-red-500" />
-                <span className="flex-1 font-medium">{pdf.title}</span>
-                <Download className="h-4 w-4 text-muted-foreground" />
+                <FileText className="h-5 w-5 text-red-500 flex-shrink-0" />
+                <span className="flex-1 font-medium break-words min-w-0">{pdf.title}</span>
+                <Download className="h-4 w-4 text-muted-foreground flex-shrink-0" />
               </a>
             ))}
           </div>
@@ -252,28 +252,28 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
 
       {/* Therapy Products Cards */}
       {oncologyProducts && oncologyProducts.length > 0 && (
-        <div className="not-prose mb-6">
+        <div className="not-prose mb-6 overflow-hidden">
           <h3 className="text-lg font-semibold text-primary mb-3 flex items-center gap-2">
             <span className="text-xl">💊</span>
             Therapy Products
           </h3>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {oncologyProducts.map((product, idx) => (
-              <div key={idx} className="border border-border rounded-lg p-4 bg-background hover:shadow-md transition-shadow">
-                <div className="font-semibold text-base text-foreground mb-2">{product.product}</div>
+              <div key={idx} className="border border-border rounded-lg p-4 bg-background hover:shadow-md transition-shadow overflow-hidden">
+                <div className="font-semibold text-base text-foreground mb-2 break-words">{product.product}</div>
                 {product.therapy_category && (
-                  <div className="inline-block px-2 py-1 mb-2 text-xs font-medium rounded-full bg-primary/10 text-primary">
+                  <div className="inline-block px-2 py-1 mb-2 text-xs font-medium rounded-full bg-primary/10 text-primary break-words">
                     {product.therapy_category}
                   </div>
                 )}
                 <div className="space-y-1 text-sm text-muted-foreground">
-                  {product.dose && <div><span className="font-medium text-foreground">Dose:</span> {product.dose}</div>}
-                  {product.ndc && <div><span className="font-medium text-foreground">NDC:</span> {product.ndc}</div>}
-                  {product.modality && <div><span className="font-medium text-foreground">Route:</span> {product.modality}</div>}
-                  {product.application && <div><span className="font-medium text-foreground">Indication:</span> {product.application}</div>}
-                  {product.manufacturer && <div><span className="font-medium text-foreground">Manufacturer:</span> {product.manufacturer}</div>}
-                  {product.storage && <div><span className="font-medium text-foreground">Storage:</span> {product.storage}</div>}
-                  {product.special_handling && <div className="mt-2 pt-2 border-t border-border"><span className="font-medium text-foreground">Special Handling:</span> {product.special_handling}</div>}
+                  {product.dose && <div className="break-words"><span className="font-medium text-foreground">Dose:</span> {product.dose}</div>}
+                  {product.ndc && <div className="break-words"><span className="font-medium text-foreground">NDC:</span> {product.ndc}</div>}
+                  {product.modality && <div className="break-words"><span className="font-medium text-foreground">Route:</span> {product.modality}</div>}
+                  {product.application && <div className="break-words"><span className="font-medium text-foreground">Indication:</span> {product.application}</div>}
+                  {product.manufacturer && <div className="break-words"><span className="font-medium text-foreground">Manufacturer:</span> {product.manufacturer}</div>}
+                  {product.storage && <div className="break-words"><span className="font-medium text-foreground">Storage:</span> {product.storage}</div>}
+                  {product.special_handling && <div className="mt-2 pt-2 border-t border-border break-words"><span className="font-medium text-foreground">Special Handling:</span> {product.special_handling}</div>}
                 </div>
               </div>
             ))}
@@ -282,7 +282,7 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
       )}
       
       {/* Markdown Content */}
-      <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-primary prose-a:text-primary prose-strong:text-foreground">
+      <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-primary prose-a:text-primary prose-strong:text-foreground overflow-hidden break-words">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeRaw]}
