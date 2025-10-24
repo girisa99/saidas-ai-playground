@@ -48,6 +48,9 @@ serve(async (req) => {
 
     const { userInfo, context, topic, aiConfig, messages, sessionDuration } = transcriptData;
 
+    // Sanitize topic to remove newlines and limit length for email subject
+    const cleanTopic = topic.replace(/[\r\n]+/g, ' ').trim().substring(0, 50);
+
     // Format transcript
     const transcript = messages
       .map((msg, idx) => `${idx + 1}. **${msg.role === 'user' ? 'User' : 'Genie AI'}**: ${msg.content}`)
@@ -102,7 +105,7 @@ serve(async (req) => {
 
             <div style="margin-bottom: 12px;">
               <span style="color: #475569; font-size: 14px; font-weight: 600; display: inline-block; min-width: 120px;">Topic:</span>
-              <span style="color: #1e293b; font-size: 14px;">${topic}</span>
+              <span style="color: #1e293b; font-size: 14px;">${cleanTopic}</span>
             </div>
             
             <div style="margin-bottom: 12px;">
@@ -146,8 +149,8 @@ serve(async (req) => {
             <p style="color: #475569; font-size: 16px; margin: 0 0 12px 0;"><strong>Recommended Follow-up Actions:</strong></p>
             <ul style="margin: 12px 0; padding-left: 20px;">
               <li style="color: #92400e; font-size: 14px; margin-bottom: 8px;">
-                <a href="mailto:${userInfo.email}?subject=Re: Your ${context} conversation about ${topic}" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">
-                  Follow up with ${userInfo.firstName} about their ${topic} questions
+                <a href="mailto:${userInfo.email}?subject=Re: Your ${context} conversation about ${cleanTopic}" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">
+                  Follow up with ${userInfo.firstName} about their ${cleanTopic} questions
                 </a>
               </li>
               <li style="color: #92400e; font-size: 14px; margin-bottom: 8px;">Review conversation for insights and improvement opportunities</li>
@@ -177,14 +180,14 @@ serve(async (req) => {
     const emailResponse = await resend.emails.send({
       from: 'Genie AI Hub <transcripts@genieaiexperimentationhub.tech>',
       to: [userInfo.email, 'genieaiexperimentationhub@gmail.com'],
-      subject: `Your Genie AI Conversation Transcript - ${context}/${topic}`,
+      subject: `Your Genie AI Conversation Transcript - ${context}/${cleanTopic}`,
       html: emailHtml,
       text: `
 Genie AI Conversation Transcript
 
 User: ${userInfo.firstName} ${userInfo.lastName || ''} (${userInfo.email})
 Context: ${context}
-Topic: ${topic}
+Topic: ${cleanTopic}
 AI Configuration: ${JSON.stringify(aiConfig, null, 2)}
 Session: ${new Date(conversationStats.firstMessage).toLocaleString()} - ${new Date(conversationStats.lastMessage).toLocaleString()}
 Total Messages: ${conversationStats.totalMessages} (${conversationStats.userMessages} user, ${conversationStats.assistantMessages} AI)

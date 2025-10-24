@@ -410,39 +410,20 @@ useEffect(() => {
   }
 }, [messages.length, context, selectedTopic, userInfo, dynamicTopics]);
 
-  // Check conversation limits only when user info changes and is available
+  // When user info is set, skip wizard if config already exists (removed blocking pre-check)
 useEffect(() => {
   if (!userInfo) return;
 
-  const checkLimits = async () => {
-    try {
-      const limits = await conversationLimitService.checkConversationLimits(
-        userInfo.email,
-        userInfo.firstName
-      );
-      setConversationLimits(limits);
-      setIsConversationAllowed(limits.allowed);
-      
-      // Check if user has existing configuration for this session/IP
-      const savedConfig = sessionStorage.getItem('genie_ai_config');
-      const configTimestamp = sessionStorage.getItem('genie_config_timestamp');
-      const currentTime = Date.now();
-      const oneHour = 60 * 60 * 1000;
-      
-      // Skip wizard if config exists and is less than 1 hour old
-      if (savedConfig && configTimestamp && (currentTime - parseInt(configTimestamp)) < oneHour) {
-        setShowConfigWizard(false);
-      }
-      
-      // Only show modal if conversation is not allowed and user tries to send message
-      // Don't auto-show on context switch
-    } catch (error) {
-      console.error('Failed to check conversation limits:', error);
-      setIsConversationAllowed(true);
-    }
-  };
-
-  checkLimits();
+  // Check if user has existing configuration for this session/IP
+  const savedConfig = sessionStorage.getItem('genie_ai_config');
+  const configTimestamp = sessionStorage.getItem('genie_config_timestamp');
+  const currentTime = Date.now();
+  const oneHour = 60 * 60 * 1000;
+  
+  // Skip wizard if config exists and is less than 1 hour old
+  if (savedConfig && configTimestamp && (currentTime - parseInt(configTimestamp)) < oneHour) {
+    setShowConfigWizard(false);
+  }
 }, [userInfo?.email]); // Only re-run when email changes
 
 // Clean up conversation on component unmount

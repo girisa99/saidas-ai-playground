@@ -35,7 +35,16 @@ serve(async (req) => {
     const headerIP = forwarded.split(',')[0]?.trim() || ''
     const clientIP = (ip_address && ip_address !== '0.0.0.0') ? ip_address : (headerIP || '0.0.0.0')
 
+    // Detect environment: preview (lovableproject.com) vs production (other domains)
+    const origin = req.headers.get('origin') || ''
+    const isPreview = origin.includes('lovableproject.com')
+    console.log(`🌍 Environment: ${isPreview ? 'PREVIEW' : 'PRODUCTION'} (origin: ${origin})`)
+
     // Generate browser fingerprint hash for multi-factor detection
+    const browserFingerprint = user_agent ? 
+      await crypto.subtle.digest('SHA-256', new TextEncoder().encode(user_agent))
+        .then(hash => Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16))
+      : null
 
     // Use direct table queries instead of RPC to avoid type mismatch issues
     const now = new Date()
@@ -115,7 +124,7 @@ serve(async (req) => {
       const { count: rapidCount } = await supabase
         .from('conversation_tracking')
         .select('*', { count: 'exact', head: true })
-        .eq('ip_address', ip_address)
+        .eq('ip_address', clientIP)
         .eq('user_email', user_email)
         .gte('started_at', fiveMinutesAgo.toISOString())
       
@@ -126,12 +135,16 @@ serve(async (req) => {
       }
     }
 
-    // Define limits (stricter for suspicious activity)
+    // Define limits based on environment and suspicious activity
+    // Preview: 50/hour for testing, Production: 30/hour for real users
+    const BASE_HOURLY_LIMIT = isPreview ? 50 : 30
     const DAILY_IP_LIMIT = suspiciousActivity ? 3 : 10
-    const HOURLY_IP_LIMIT = suspiciousActivity ? 2 : 5
+    const HOURLY_IP_LIMIT = suspiciousActivity ? 2 : BASE_HOURLY_LIMIT
     const DAILY_EMAIL_LIMIT = suspiciousActivity ? 5 : 20
-    const HOURLY_EMAIL_LIMIT = suspiciousActivity ? 3 : 10
+    const HOURLY_EMAIL_LIMIT = suspiciousActivity ? 3 : (isPreview ? 100 : 60)
     const IP_EMAIL_COMBO_LIMIT = 8 // Stricter limit for specific IP+email combos
+    
+    console.log(`📊 Applied limits - Hourly: ${HOURLY_IP_LIMIT}, Daily: ${DAILY_IP_LIMIT} (suspicious: ${suspiciousActivity})`)
 
     // Multi-factor limit check: IP, email, AND combo must be within limits
     const ipAllowed = (ipDailyCount || 0) < DAILY_IP_LIMIT && 
@@ -169,7 +182,7 @@ serve(async (req) => {
       email_hourly_limit: HOURLY_EMAIL_LIMIT,
       ip_email_combo_count: ipEmailComboCount,
       ip_email_combo_limit: IP_EMAIL_COMBO_LIMIT,
-      reset_time: new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString(),
+      reset_time: new Date(now.getTime() + 60 * 60 * 1000).toISOString(), // Fixed: 1 hour from now
       restriction_reason: restrictionReason,
       duplicate_email_ips: existingEmailUsers.length > 0 ? existingEmailUsers.length : 0,
       suspicious_activity: suspiciousActivity,
@@ -264,8 +277,9 @@ serve(async (req) => {
         return new Response(
           JSON.stringify({
             allowed: true,
-            session_id: session_id || `${ip_address}_${Date.now()}`,
-            message: 'Conversation started successfully'
+            session_id: session_id || `${clientIP}_${Date.now()}`,
+            message: 'Conversation started successfully',
+            limits: limitCheck // Include limits in response for client display
           }),
           { 
             headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
