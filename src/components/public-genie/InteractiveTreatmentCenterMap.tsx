@@ -899,10 +899,10 @@ export const InteractiveTreatmentCenterMap = ({
 
           {/* Map Container */}
           {mapboxToken ? (
-            <div className="relative">
+            <div className="relative isolate">
               <div 
                 ref={mapContainer} 
-                className={`rounded-lg shadow-lg ${isFullscreen ? 'h-[calc(100vh-200px)]' : 'h-[500px]'}`}
+                className={`rounded-lg shadow-lg overflow-hidden z-0 ${isFullscreen ? 'h-[calc(100vh-200px)]' : 'h-[500px]'}`}
               />
             </div>
           ) : (

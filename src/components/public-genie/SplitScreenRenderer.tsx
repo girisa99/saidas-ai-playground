@@ -116,7 +116,7 @@ export const SplitScreenRenderer: React.FC<SplitScreenRendererProps> = ({
   );
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 isolate">
       {/* Split Screen Comparison - Show FIRST */}
       <div className="grid grid-cols-2 gap-4 h-[55vh] md:h-[60vh] min-h-0">
         {/* Primary Model Column */}

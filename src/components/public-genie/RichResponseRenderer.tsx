@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import rehypeSanitize from 'rehype-sanitize';
 import { VisualJourneyMap, JourneyStep } from './VisualJourneyMap';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -285,7 +286,7 @@ export const RichResponseRenderer: React.FC<RichResponseRendererProps> = ({ cont
       <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-primary prose-a:text-primary prose-strong:text-foreground overflow-hidden break-words">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeRaw]}
+          rehypePlugins={[rehypeRaw, rehypeSanitize]}
           components={{
           img: ({ node, ...props }) => {
             const isPDF = props.src?.toLowerCase().endsWith('.pdf');
