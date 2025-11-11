@@ -9,6 +9,8 @@ import { TreatmentCenterImporter } from '@/components/admin/TreatmentCenterImpor
 import { ProductPricingImporter } from '@/components/admin/ProductPricingImporter';
 import { DataVerificationPanel } from '@/components/admin/DataVerificationPanel';
 import { PricingKnowledgeSyncButton } from '@/components/admin/PricingKnowledgeSyncButton';
+import { MCPServerManager } from '@/components/admin/MCPServerManager';
+import { LabelStudioManager } from '@/components/admin/LabelStudioManager';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -209,11 +211,12 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="website" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="website">Website Analytics</TabsTrigger>
             <TabsTrigger value="genie">Genie AI Popup Analytics</TabsTrigger>
             <TabsTrigger value="migration">Knowledge Base Migration</TabsTrigger>
             <TabsTrigger value="crawler">Knowledge Crawler</TabsTrigger>
+            <TabsTrigger value="ai-config">MCP & Label Studio</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
 
@@ -242,6 +245,13 @@ const AdminDashboard = () => {
 
           <TabsContent value="crawler">
             <KnowledgeCrawlManager />
+          </TabsContent>
+
+          <TabsContent value="ai-config">
+            <div className="space-y-6">
+              <MCPServerManager />
+              <LabelStudioManager />
+            </div>
           </TabsContent>
 
           <TabsContent value="settings">
