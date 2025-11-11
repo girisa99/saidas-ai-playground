@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Plus, Tag, TrendingUp, FileCheck, BarChart3 } from 'lucide-react';
+import { Plus, Tag, TrendingUp, Settings, Trash2, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -17,23 +17,30 @@ import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
 import { toast } from 'sonner';
+import {
+  getActiveLabelStudioProjects,
+  createLabelStudioProject,
+  updateLabelStudioProject,
+  deleteLabelStudioProject,
+  syncAnnotationsFromLabelStudio,
+  getProjectAnnotationStats,
+  type LabelStudioProject
+} from '@/services/labelStudioService';
 
-interface LabelStudioProject {
-  id: string;
-  name: string;
-  project_id: string;
-  api_url: string;
-  description?: string;
-  domain?: string;
-  is_active: boolean;
-  auto_log_conversations: boolean;
-  quality_threshold: number;
+interface ProjectStats {
+  total: number;
+  annotated: number;
+  approved_for_training: number;
+  average_quality: number;
 }
 
 export function LabelStudioManager() {
   const [projects, setProjects] = useState<LabelStudioProject[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [stats, setStats] = useState<Record<string, any>>({});
+  const [editingProject, setEditingProject] = useState<LabelStudioProject | null>(null);
+  const [stats, setStats] = useState<Record<string, ProjectStats>>({});
+  const [loading, setLoading] = useState(false);
+  const [syncingProjects, setSyncingProjects] = useState<Set<string>>(new Set());
 
   const [formData, setFormData] = useState({
     name: '',
@@ -51,19 +58,137 @@ export function LabelStudioManager() {
   }, []);
 
   const loadProjects = async () => {
-    // Will work once types are regenerated
-    toast.info('Label Studio projects will be loaded once types are synced');
+    try {
+      setLoading(true);
+      const data = await getActiveLabelStudioProjects();
+      setProjects(data);
+      
+      // Load statistics for each project
+      const statsPromises = data.map(async (project) => {
+        const projectStats = await getProjectAnnotationStats(project.id);
+        return { id: project.id, stats: projectStats };
+      });
+      
+      const statsResults = await Promise.all(statsPromises);
+      const statsMap = statsResults.reduce((acc, { id, stats }) => {
+        acc[id] = stats;
+        return acc;
+      }, {} as Record<string, ProjectStats>);
+      
+      setStats(statsMap);
+      toast.success('Label Studio projects loaded successfully');
+    } catch (error) {
+      console.error('Failed to load Label Studio projects:', error);
+      toast.error('Failed to load Label Studio projects');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async () => {
-    toast.success('Label Studio project configuration saved!');
-    setIsDialogOpen(false);
-    resetForm();
+    try {
+      const projectData = {
+        name: formData.name,
+        project_id: formData.project_id,
+        api_url: formData.api_url,
+        description: formData.description || undefined,
+        domain: formData.domain || undefined,
+        is_active: formData.is_active,
+        auto_log_conversations: formData.auto_log_conversations,
+        quality_threshold: formData.quality_threshold,
+        annotation_config: {}
+      };
+
+      if (editingProject) {
+        const success = await updateLabelStudioProject(editingProject.id, projectData);
+        if (success) {
+          toast.success('Label Studio project updated successfully');
+          await loadProjects();
+        } else {
+          toast.error('Failed to update Label Studio project');
+        }
+      } else {
+        const newProject = await createLabelStudioProject(projectData as any);
+        if (newProject) {
+          toast.success('Label Studio project created successfully');
+          await loadProjects();
+        } else {
+          toast.error('Failed to create Label Studio project');
+        }
+      }
+
+      setIsDialogOpen(false);
+      resetForm();
+    } catch (error) {
+      console.error('Error saving Label Studio project:', error);
+      toast.error('Failed to save Label Studio project');
+    }
   };
 
-  const handleSyncAnnotations = async (projectId: string) => {
-    toast.info('Syncing annotations from Label Studio...');
-    // Implementation will use labelStudioService
+  const handleDelete = async (projectId: string) => {
+    if (!confirm('Are you sure you want to delete this Label Studio project?')) {
+      return;
+    }
+
+    try {
+      const success = await deleteLabelStudioProject(projectId);
+      if (success) {
+        toast.success('Label Studio project deleted successfully');
+        await loadProjects();
+      } else {
+        toast.error('Failed to delete Label Studio project');
+      }
+    } catch (error) {
+      console.error('Error deleting Label Studio project:', error);
+      toast.error('Failed to delete Label Studio project');
+    }
+  };
+
+  const handleSyncAnnotations = async (project: LabelStudioProject) => {
+    try {
+      setSyncingProjects(prev => new Set(prev).add(project.id));
+      toast.info('Syncing annotations from Label Studio...');
+      
+      const result = await syncAnnotationsFromLabelStudio(project.project_id);
+      
+      if (result.synced > 0) {
+        toast.success(`Synced ${result.synced} annotations successfully`);
+        
+        // Refresh stats for this project
+        const projectStats = await getProjectAnnotationStats(project.id);
+        setStats(prev => ({
+          ...prev,
+          [project.id]: projectStats
+        }));
+      } else if (result.errors > 0) {
+        toast.error(`Failed to sync annotations (${result.errors} errors)`);
+      } else {
+        toast.info('No new annotations to sync');
+      }
+    } catch (error) {
+      console.error('Error syncing annotations:', error);
+      toast.error('Failed to sync annotations');
+    } finally {
+      setSyncingProjects(prev => {
+        const next = new Set(prev);
+        next.delete(project.id);
+        return next;
+      });
+    }
+  };
+
+  const handleRefreshStats = async (projectId: string) => {
+    try {
+      const projectStats = await getProjectAnnotationStats(projectId);
+      setStats(prev => ({
+        ...prev,
+        [projectId]: projectStats
+      }));
+      toast.success('Statistics refreshed');
+    } catch (error) {
+      console.error('Error refreshing stats:', error);
+      toast.error('Failed to refresh statistics');
+    }
   };
 
   const resetForm = () => {
@@ -77,6 +202,7 @@ export function LabelStudioManager() {
       quality_threshold: 0.7,
       is_active: true
     });
+    setEditingProject(null);
   };
 
   return (
@@ -99,9 +225,11 @@ export function LabelStudioManager() {
                 Add Project
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl">
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>Add Label Studio Project</DialogTitle>
+                <DialogTitle>
+                  {editingProject ? 'Edit Label Studio Project' : 'Add Label Studio Project'}
+                </DialogTitle>
                 <DialogDescription>
                   Connect a Label Studio project for conversation annotation and quality tracking
                 </DialogDescription>
@@ -203,7 +331,7 @@ export function LabelStudioManager() {
                   Cancel
                 </Button>
                 <Button onClick={handleSubmit}>
-                  Add Project
+                  {editingProject ? 'Update Project' : 'Add Project'}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -213,7 +341,12 @@ export function LabelStudioManager() {
 
       <CardContent>
         <div className="space-y-4">
-          {projects.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-12 text-muted-foreground">
+              <Tag className="w-12 h-12 mx-auto mb-4 opacity-50 animate-pulse" />
+              <p>Loading Label Studio projects...</p>
+            </div>
+          ) : projects.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
               <Tag className="w-12 h-12 mx-auto mb-4 opacity-50" />
               <p>No Label Studio projects configured yet</p>
@@ -227,14 +360,15 @@ export function LabelStudioManager() {
                 approved_for_training: 0,
                 average_quality: 0
               };
+              const isSyncing = syncingProjects.has(project.id);
 
               return (
                 <Card key={project.id}>
                   <CardContent className="pt-6">
                     <div className="space-y-4">
                       <div className="flex items-start justify-between">
-                        <div>
-                          <div className="flex items-center gap-2">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <h4 className="font-semibold">{project.name}</h4>
                             <Badge variant={project.is_active ? 'default' : 'secondary'}>
                               {project.is_active ? 'Active' : 'Inactive'}
@@ -242,22 +376,69 @@ export function LabelStudioManager() {
                             {project.auto_log_conversations && (
                               <Badge variant="outline">Auto-logging</Badge>
                             )}
+                            {project.domain && (
+                              <Badge variant="outline">{project.domain}</Badge>
+                            )}
                           </div>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-muted-foreground mt-1">
                             Project ID: {project.project_id}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {project.api_url}
                           </p>
                           {project.description && (
                             <p className="text-sm mt-2">{project.description}</p>
                           )}
                         </div>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleSyncAnnotations(project.project_id)}
-                        >
-                          <TrendingUp className="w-4 h-4 mr-2" />
-                          Sync
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleRefreshStats(project.id)}
+                            title="Refresh Statistics"
+                          >
+                            <RefreshCw className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleSyncAnnotations(project)}
+                            disabled={isSyncing}
+                            title="Sync Annotations"
+                          >
+                            <TrendingUp className={`w-4 h-4 mr-2 ${isSyncing ? 'animate-spin' : ''}`} />
+                            {isSyncing ? 'Syncing...' : 'Sync'}
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              setEditingProject(project);
+                              setFormData({
+                                name: project.name,
+                                project_id: project.project_id,
+                                api_url: project.api_url,
+                                description: project.description || '',
+                                domain: project.domain || '',
+                                auto_log_conversations: project.auto_log_conversations,
+                                quality_threshold: project.quality_threshold,
+                                is_active: project.is_active
+                              });
+                              setIsDialogOpen(true);
+                            }}
+                            title="Edit Project"
+                          >
+                            <Settings className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleDelete(project.id)}
+                            title="Delete Project"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
                       </div>
 
                       {/* Annotation Statistics */}
@@ -276,7 +457,9 @@ export function LabelStudioManager() {
                         </div>
                         <div>
                           <p className="text-2xl font-bold">
-                            {(projectStats.average_quality * 100).toFixed(0)}%
+                            {projectStats.average_quality > 0 
+                              ? (projectStats.average_quality * 100).toFixed(0) + '%'
+                              : 'N/A'}
                           </p>
                           <p className="text-xs text-muted-foreground">Avg Quality</p>
                         </div>
@@ -290,6 +473,20 @@ export function LabelStudioManager() {
                             <span>{Math.round((projectStats.annotated / projectStats.total) * 100)}%</span>
                           </div>
                           <Progress value={(projectStats.annotated / projectStats.total) * 100} />
+                        </div>
+                      )}
+
+                      {/* Training Approval Progress */}
+                      {projectStats.annotated > 0 && (
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-xs">
+                            <span>Training Approval</span>
+                            <span>{Math.round((projectStats.approved_for_training / projectStats.annotated) * 100)}%</span>
+                          </div>
+                          <Progress 
+                            value={(projectStats.approved_for_training / projectStats.annotated) * 100}
+                            className="h-2"
+                          />
                         </div>
                       )}
                     </div>
