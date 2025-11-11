@@ -7291,6 +7291,62 @@ export type Database = {
         }
         Relationships: []
       }
+      genie_query_analysis: {
+        Row: {
+          analyzed_at: string | null
+          complexity_score: number | null
+          conversation_id: string | null
+          created_at: string | null
+          detected_domain: string | null
+          detected_intent: string | null
+          id: string
+          query_text: string
+          recommended_model: string | null
+          requires_mcp: boolean | null
+          requires_rag: boolean | null
+          token_estimate: number | null
+          user_id: string | null
+        }
+        Insert: {
+          analyzed_at?: string | null
+          complexity_score?: number | null
+          conversation_id?: string | null
+          created_at?: string | null
+          detected_domain?: string | null
+          detected_intent?: string | null
+          id?: string
+          query_text: string
+          recommended_model?: string | null
+          requires_mcp?: boolean | null
+          requires_rag?: boolean | null
+          token_estimate?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          analyzed_at?: string | null
+          complexity_score?: number | null
+          conversation_id?: string | null
+          created_at?: string | null
+          detected_domain?: string | null
+          detected_intent?: string | null
+          id?: string
+          query_text?: string
+          recommended_model?: string | null
+          requires_mcp?: boolean | null
+          requires_rag?: boolean | null
+          token_estimate?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "genie_query_analysis_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "genie_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       genie_rate_limits: {
         Row: {
           block_reason: string | null
@@ -7343,6 +7399,103 @@ export type Database = {
             columns: ["brand_config_id"]
             isOneToOne: false
             referencedRelation: "genie_brand_configs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      genie_response_confidence: {
+        Row: {
+          completeness_score: number | null
+          confidence_score: number | null
+          conversation_id: string | null
+          created_at: string | null
+          factual_accuracy: number | null
+          id: string
+          message_index: number
+          model_used: string | null
+          reasoning_quality: number | null
+          sources_used: Json | null
+          token_usage: Json | null
+        }
+        Insert: {
+          completeness_score?: number | null
+          confidence_score?: number | null
+          conversation_id?: string | null
+          created_at?: string | null
+          factual_accuracy?: number | null
+          id?: string
+          message_index: number
+          model_used?: string | null
+          reasoning_quality?: number | null
+          sources_used?: Json | null
+          token_usage?: Json | null
+        }
+        Update: {
+          completeness_score?: number | null
+          confidence_score?: number | null
+          conversation_id?: string | null
+          created_at?: string | null
+          factual_accuracy?: number | null
+          id?: string
+          message_index?: number
+          model_used?: string | null
+          reasoning_quality?: number | null
+          sources_used?: Json | null
+          token_usage?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "genie_response_confidence_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "genie_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      genie_token_budgets: {
+        Row: {
+          allocated_tokens: number
+          budget_period: string | null
+          conversation_id: string | null
+          created_at: string | null
+          id: string
+          remaining_tokens: number | null
+          reset_at: string | null
+          updated_at: string | null
+          used_tokens: number | null
+          user_id: string | null
+        }
+        Insert: {
+          allocated_tokens: number
+          budget_period?: string | null
+          conversation_id?: string | null
+          created_at?: string | null
+          id?: string
+          remaining_tokens?: number | null
+          reset_at?: string | null
+          updated_at?: string | null
+          used_tokens?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          allocated_tokens?: number
+          budget_period?: string | null
+          conversation_id?: string | null
+          created_at?: string | null
+          id?: string
+          remaining_tokens?: number | null
+          reset_at?: string | null
+          updated_at?: string | null
+          used_tokens?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "genie_token_budgets_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "genie_conversations"
             referencedColumns: ["id"]
           },
         ]
@@ -13897,12 +14050,14 @@ export type Database = {
           differential_diagnosis: string[] | null
           domain: string
           embedding: string | null
+          embedding_model: string | null
           finding_category: string | null
           finding_name: string
           id: string
           is_approved: boolean | null
           key_features: Json | null
           last_cited_at: string | null
+          last_embedded_at: string | null
           metadata: Json | null
           modality: string | null
           negative_feedback_count: number | null
@@ -13925,12 +14080,14 @@ export type Database = {
           differential_diagnosis?: string[] | null
           domain: string
           embedding?: string | null
+          embedding_model?: string | null
           finding_category?: string | null
           finding_name: string
           id?: string
           is_approved?: boolean | null
           key_features?: Json | null
           last_cited_at?: string | null
+          last_embedded_at?: string | null
           metadata?: Json | null
           modality?: string | null
           negative_feedback_count?: number | null
@@ -13953,12 +14110,14 @@ export type Database = {
           differential_diagnosis?: string[] | null
           domain?: string
           embedding?: string | null
+          embedding_model?: string | null
           finding_category?: string | null
           finding_name?: string
           id?: string
           is_approved?: boolean | null
           key_features?: Json | null
           last_cited_at?: string | null
+          last_embedded_at?: string | null
           metadata?: Json | null
           modality?: string | null
           negative_feedback_count?: number | null
@@ -17071,23 +17230,39 @@ export type Database = {
           similarity: number
         }[]
       }
-      search_knowledge_semantic: {
-        Args: {
-          match_count?: number
-          match_threshold?: number
-          query_embedding: string
-        }
-        Returns: {
-          clinical_context: string
-          content_type: string
-          description: string
-          domain: string
-          finding_name: string
-          id: string
-          metadata: Json
-          similarity: number
-        }[]
-      }
+      search_knowledge_semantic:
+        | {
+            Args: {
+              match_count?: number
+              match_threshold?: number
+              query_embedding: string
+            }
+            Returns: {
+              clinical_context: string
+              content_type: string
+              description: string
+              domain: string
+              finding_name: string
+              id: string
+              metadata: Json
+              similarity: number
+            }[]
+          }
+        | {
+            Args: {
+              filter_domain?: string
+              match_count?: number
+              match_threshold?: number
+              query_embedding: string
+            }
+            Returns: {
+              content_summary: string
+              description: string
+              domain: string
+              id: string
+              similarity: number
+            }[]
+          }
       search_medical_imaging_knowledge: {
         Args: {
           filter_modality?: string
@@ -17182,6 +17357,10 @@ export type Database = {
         Returns: undefined
       }
       update_testing_suite_comprehensive: { Args: never; Returns: Json }
+      update_token_usage: {
+        Args: { p_conversation_id: string; p_tokens_used: number }
+        Returns: undefined
+      }
       user_can_access_node_config: {
         Args: { config_id: string }
         Returns: boolean
