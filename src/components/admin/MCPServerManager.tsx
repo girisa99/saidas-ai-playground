@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Plus, Server, Activity, Settings, Trash2 } from 'lucide-react';
+import { Plus, Server, Activity, Settings, Trash2, Play, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -17,28 +17,30 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from 'sonner';
-
-interface MCPServer {
-  id: string;
-  name: string;
-  endpoint_url: string;
-  authentication_type: 'none' | 'api_key' | 'oauth' | 'bearer';
-  is_active: boolean;
-  health_check_url?: string;
-  timeout_seconds: number;
-  description?: string;
-  supported_domains?: string[];
-}
+import {
+  getActiveMCPServers,
+  createMCPServer,
+  updateMCPServer,
+  deleteMCPServer,
+  checkMCPServerHealth,
+  callMCPServer,
+  type MCPServer,
+  type MCPHealthStatus
+} from '@/services/mcpService';
 
 export function MCPServerManager() {
   const [servers, setServers] = useState<MCPServer[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isTestDialogOpen, setIsTestDialogOpen] = useState(false);
   const [editingServer, setEditingServer] = useState<MCPServer | null>(null);
+  const [testingServer, setTestingServer] = useState<MCPServer | null>(null);
+  const [healthStatus, setHealthStatus] = useState<Record<string, MCPHealthStatus>>({});
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
     endpoint_url: '',
-    authentication_type: 'none' as const,
+    authentication_type: 'none' as 'none' | 'api_key' | 'oauth' | 'bearer',
     api_key: '',
     health_check_url: '',
     timeout_seconds: 30,
@@ -47,19 +49,149 @@ export function MCPServerManager() {
     is_active: true
   });
 
+  const [testFormData, setTestFormData] = useState({
+    query: '',
+    context: '',
+    result: null as any,
+    error: null as string | null,
+    loading: false
+  });
+
   useEffect(() => {
     loadServers();
   }, []);
 
   const loadServers = async () => {
-    // Will work once types are regenerated
-    toast.info('MCP servers will be loaded once types are synced');
+    try {
+      setLoading(true);
+      const data = await getActiveMCPServers();
+      setServers(data);
+      toast.success('MCP servers loaded successfully');
+    } catch (error) {
+      console.error('Failed to load MCP servers:', error);
+      toast.error('Failed to load MCP servers');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async () => {
-    toast.success('MCP server configuration saved!');
-    setIsDialogOpen(false);
-    resetForm();
+    try {
+      const serverData = {
+        name: formData.name,
+        endpoint_url: formData.endpoint_url,
+        authentication_type: formData.authentication_type,
+        api_key: formData.api_key || undefined,
+        health_check_url: formData.health_check_url || undefined,
+        timeout_seconds: formData.timeout_seconds,
+        description: formData.description || undefined,
+        supported_domains: formData.supported_domains 
+          ? formData.supported_domains.split(',').map(d => d.trim()).filter(Boolean)
+          : undefined,
+        is_active: formData.is_active,
+        metadata: {}
+      };
+
+      if (editingServer) {
+        const success = await updateMCPServer(editingServer.id, serverData);
+        if (success) {
+          toast.success('MCP server updated successfully');
+          await loadServers();
+        } else {
+          toast.error('Failed to update MCP server');
+        }
+      } else {
+        const newServer = await createMCPServer(serverData as any);
+        if (newServer) {
+          toast.success('MCP server created successfully');
+          await loadServers();
+        } else {
+          toast.error('Failed to create MCP server');
+        }
+      }
+
+      setIsDialogOpen(false);
+      resetForm();
+    } catch (error) {
+      console.error('Error saving MCP server:', error);
+      toast.error('Failed to save MCP server');
+    }
+  };
+
+  const handleDelete = async (serverId: string) => {
+    if (!confirm('Are you sure you want to delete this MCP server?')) {
+      return;
+    }
+
+    try {
+      const success = await deleteMCPServer(serverId);
+      if (success) {
+        toast.success('MCP server deleted successfully');
+        await loadServers();
+      } else {
+        toast.error('Failed to delete MCP server');
+      }
+    } catch (error) {
+      console.error('Error deleting MCP server:', error);
+      toast.error('Failed to delete MCP server');
+    }
+  };
+
+  const handleHealthCheck = async (server: MCPServer) => {
+    try {
+      toast.info('Checking server health...');
+      const status = await checkMCPServerHealth(server);
+      setHealthStatus(prev => ({ ...prev, [server.id]: status }));
+      
+      if (status.status === 'healthy') {
+        toast.success(`Server is healthy (${status.response_time_ms}ms)`);
+      } else if (status.status === 'degraded') {
+        toast.warning(`Server is degraded (${status.response_time_ms}ms)`);
+      } else {
+        toast.error(`Server is down: ${status.error_message}`);
+      }
+    } catch (error) {
+      console.error('Error checking health:', error);
+      toast.error('Failed to check server health');
+    }
+  };
+
+  const handleTestServer = async () => {
+    if (!testingServer) return;
+
+    try {
+      setTestFormData(prev => ({ ...prev, loading: true, error: null, result: null }));
+      
+      const result = await callMCPServer(
+        testingServer,
+        testFormData.query,
+        testFormData.context || undefined
+      );
+
+      if (result.success) {
+        setTestFormData(prev => ({ 
+          ...prev, 
+          result: result.context,
+          loading: false 
+        }));
+        toast.success(`Server responded in ${result.response_time_ms}ms`);
+      } else {
+        setTestFormData(prev => ({ 
+          ...prev, 
+          error: result.error || 'Unknown error',
+          loading: false 
+        }));
+        toast.error(result.error || 'Server call failed');
+      }
+    } catch (error) {
+      console.error('Error testing server:', error);
+      setTestFormData(prev => ({ 
+        ...prev, 
+        error: error instanceof Error ? error.message : 'Unknown error',
+        loading: false 
+      }));
+      toast.error('Failed to test server');
+    }
   };
 
   const resetForm = () => {
@@ -75,6 +207,18 @@ export function MCPServerManager() {
       is_active: true
     });
     setEditingServer(null);
+  };
+
+  const openTestDialog = (server: MCPServer) => {
+    setTestingServer(server);
+    setTestFormData({
+      query: '',
+      context: '',
+      result: null,
+      error: null,
+      loading: false
+    });
+    setIsTestDialogOpen(true);
   };
 
   return (
@@ -227,7 +371,12 @@ export function MCPServerManager() {
 
       <CardContent>
         <div className="space-y-4">
-          {servers.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-12 text-muted-foreground">
+              <Server className="w-12 h-12 mx-auto mb-4 opacity-50 animate-pulse" />
+              <p>Loading MCP servers...</p>
+            </div>
+          ) : servers.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
               <Server className="w-12 h-12 mx-auto mb-4 opacity-50" />
               <p>No MCP servers configured yet</p>
@@ -238,19 +387,30 @@ export function MCPServerManager() {
               <Card key={server.id}>
                 <CardContent className="pt-6">
                   <div className="flex items-start justify-between">
-                    <div className="space-y-1">
+                    <div className="space-y-1 flex-1">
                       <div className="flex items-center gap-2">
                         <h4 className="font-semibold">{server.name}</h4>
                         <Badge variant={server.is_active ? 'default' : 'secondary'}>
                           {server.is_active ? 'Active' : 'Inactive'}
                         </Badge>
+                        {healthStatus[server.id] && (
+                          <Badge 
+                            variant={
+                              healthStatus[server.id].status === 'healthy' ? 'default' :
+                              healthStatus[server.id].status === 'degraded' ? 'secondary' : 'destructive'
+                            }
+                          >
+                            <Clock className="w-3 h-3 mr-1" />
+                            {healthStatus[server.id].response_time_ms}ms
+                          </Badge>
+                        )}
                       </div>
                       <p className="text-sm text-muted-foreground">{server.endpoint_url}</p>
                       {server.description && (
                         <p className="text-sm mt-2">{server.description}</p>
                       )}
                       {server.supported_domains && server.supported_domains.length > 0 && (
-                        <div className="flex gap-1 mt-2">
+                        <div className="flex gap-1 mt-2 flex-wrap">
                           {server.supported_domains.map((domain) => (
                             <Badge key={domain} variant="outline" className="text-xs">
                               {domain}
@@ -260,16 +420,50 @@ export function MCPServerManager() {
                       )}
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => openTestDialog(server)}
+                        title="Test Server"
+                      >
+                        <Play className="w-4 h-4" />
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => handleHealthCheck(server)}
+                        title="Health Check"
+                      >
                         <Activity className="w-4 h-4" />
                       </Button>
-                      <Button variant="outline" size="sm" onClick={() => {
-                        setEditingServer(server);
-                        setIsDialogOpen(true);
-                      }}>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => {
+                          setEditingServer(server);
+                          setFormData({
+                            name: server.name,
+                            endpoint_url: server.endpoint_url,
+                            authentication_type: server.authentication_type,
+                            api_key: '',
+                            health_check_url: server.health_check_url || '',
+                            timeout_seconds: server.timeout_seconds,
+                            description: server.description || '',
+                            supported_domains: server.supported_domains?.join(', ') || '',
+                            is_active: server.is_active
+                          });
+                          setIsDialogOpen(true);
+                        }}
+                        title="Edit Server"
+                      >
                         <Settings className="w-4 h-4" />
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => handleDelete(server.id)}
+                        title="Delete Server"
+                      >
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
@@ -280,6 +474,75 @@ export function MCPServerManager() {
           )}
         </div>
       </CardContent>
+
+      {/* Test MCP Server Dialog */}
+      <Dialog open={isTestDialogOpen} onOpenChange={setIsTestDialogOpen}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Test MCP Server: {testingServer?.name}</DialogTitle>
+            <DialogDescription>
+              Send a test query to the MCP server and view the response
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="test_query">Query *</Label>
+              <Textarea
+                id="test_query"
+                placeholder="What are the latest clinical trials for diabetes treatment?"
+                value={testFormData.query}
+                onChange={(e) => setTestFormData({ ...testFormData, query: e.target.value })}
+                rows={3}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="test_context">Additional Context (optional)</Label>
+              <Textarea
+                id="test_context"
+                placeholder='{"patient_age": 45, "condition": "type_2_diabetes"}'
+                value={testFormData.context}
+                onChange={(e) => setTestFormData({ ...testFormData, context: e.target.value })}
+                rows={3}
+              />
+            </div>
+
+            {testFormData.result && (
+              <div className="space-y-2">
+                <Label>Response</Label>
+                <pre className="bg-muted p-4 rounded-lg text-sm overflow-auto max-h-64">
+                  {JSON.stringify(testFormData.result, null, 2)}
+                </pre>
+              </div>
+            )}
+
+            {testFormData.error && (
+              <div className="space-y-2">
+                <Label className="text-destructive">Error</Label>
+                <div className="bg-destructive/10 text-destructive p-4 rounded-lg text-sm">
+                  {testFormData.error}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => setIsTestDialogOpen(false)}
+            >
+              Close
+            </Button>
+            <Button 
+              onClick={handleTestServer}
+              disabled={!testFormData.query || testFormData.loading}
+            >
+              {testFormData.loading ? 'Testing...' : 'Test Server'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }
