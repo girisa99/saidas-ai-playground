@@ -42,7 +42,7 @@ export interface ConversationAnnotation {
 export async function getActiveLabelStudioProjects(domain?: string): Promise<LabelStudioProject[]> {
   try {
     let query = supabase
-      .from('label_studio_projects')
+      .from('label_studio_projects' as any)
       .select('*')
       .eq('is_active', true);
 
@@ -53,7 +53,7 @@ export async function getActiveLabelStudioProjects(domain?: string): Promise<Lab
     const { data, error } = await query.order('name');
 
     if (error) throw error;
-    return data || [];
+    return (data as any[]) || [];
   } catch (error) {
     console.error('Failed to fetch Label Studio projects:', error);
     return [];
@@ -66,13 +66,13 @@ export async function getActiveLabelStudioProjects(domain?: string): Promise<Lab
 export async function getLabelStudioProject(projectId: string): Promise<LabelStudioProject | null> {
   try {
     const { data, error } = await supabase
-      .from('label_studio_projects')
+      .from('label_studio_projects' as any)
       .select('*')
       .eq('project_id', projectId)
       .single();
 
     if (error) throw error;
-    return data;
+    return data as any;
   } catch (error) {
     console.error('Failed to fetch Label Studio project:', error);
     return null;
@@ -87,13 +87,13 @@ export async function createLabelStudioProject(
 ): Promise<LabelStudioProject | null> {
   try {
     const { data, error } = await supabase
-      .from('label_studio_projects')
-      .insert(project)
+      .from('label_studio_projects' as any)
+      .insert(project as any)
       .select()
       .single();
 
     if (error) throw error;
-    return data;
+    return data as any;
   } catch (error) {
     console.error('Failed to create Label Studio project:', error);
     return null;
@@ -109,8 +109,8 @@ export async function updateLabelStudioProject(
 ): Promise<boolean> {
   try {
     const { error } = await supabase
-      .from('label_studio_projects')
-      .update(updates)
+      .from('label_studio_projects' as any)
+      .update(updates as any)
       .eq('id', id);
 
     if (error) throw error;
@@ -127,7 +127,7 @@ export async function updateLabelStudioProject(
 export async function deleteLabelStudioProject(id: string): Promise<boolean> {
   try {
     const { error } = await supabase
-      .from('label_studio_projects')
+      .from('label_studio_projects' as any)
       .delete()
       .eq('id', id);
 
@@ -171,12 +171,12 @@ export async function logConversationToLabelStudio(
     const taskId = result.task_ids?.[0] || result[0]?.id;
 
     // Record in our database
-    await supabase.from('conversation_annotations').insert({
+    await supabase.from('conversation_annotations' as any).insert({
       conversation_id: conversationId,
       label_studio_project_id: project.id,
       label_studio_task_id: taskId,
       annotations: { task_data: taskData }
-    });
+    } as any);
 
     return { success: true, taskId };
   } catch (error) {
@@ -196,13 +196,13 @@ export async function getConversationAnnotations(
 ): Promise<ConversationAnnotation[]> {
   try {
     const { data, error } = await supabase
-      .from('conversation_annotations')
+      .from('conversation_annotations' as any)
       .select('*, label_studio_projects(*)')
       .eq('conversation_id', conversationId)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-    return data || [];
+    return (data as any[]) || [];
   } catch (error) {
     console.error('Failed to fetch conversation annotations:', error);
     return [];
@@ -249,7 +249,7 @@ export async function syncAnnotationsFromLabelStudio(
       try {
         // Update or insert annotation
         await supabase
-          .from('conversation_annotations')
+          .from('conversation_annotations' as any)
           .upsert({
             label_studio_task_id: task.id.toString(),
             label_studio_project_id: project.id,
@@ -258,7 +258,7 @@ export async function syncAnnotationsFromLabelStudio(
             annotator_notes: latestAnnotation.result?.notes,
             is_approved_for_training: checkTrainingApproval(latestAnnotation.result),
             annotated_at: latestAnnotation.completed_at || new Date().toISOString()
-          }, {
+          } as any, {
             onConflict: 'label_studio_task_id'
           });
 
@@ -321,18 +321,19 @@ export async function getProjectAnnotationStats(
 }> {
   try {
     const { data, error } = await supabase
-      .from('conversation_annotations')
+      .from('conversation_annotations' as any)
       .select('quality_score, is_approved_for_training')
       .eq('label_studio_project_id', projectId);
 
     if (error) throw error;
 
-    const total = data.length;
-    const annotated = data.filter(a => a.quality_score !== null).length;
-    const approved = data.filter(a => a.is_approved_for_training).length;
-    const avgQuality = data
-      .filter(a => a.quality_score !== null)
-      .reduce((sum, a) => sum + (a.quality_score || 0), 0) / (annotated || 1);
+    const annotations = (data as any[]) || [];
+    const total = annotations.length;
+    const annotated = annotations.filter((a: any) => a.quality_score !== null).length;
+    const approved = annotations.filter((a: any) => a.is_approved_for_training).length;
+    const avgQuality = annotations
+      .filter((a: any) => a.quality_score !== null)
+      .reduce((sum: number, a: any) => sum + (a.quality_score || 0), 0) / (annotated || 1);
 
     return {
       total,

@@ -46,7 +46,7 @@ export interface MCPContextResult {
 export async function getActiveMCPServers(domain?: string): Promise<MCPServer[]> {
   try {
     let query = supabase
-      .from('mcp_servers')
+      .from('mcp_servers' as any)
       .select('*')
       .eq('is_active', true);
 
@@ -57,7 +57,7 @@ export async function getActiveMCPServers(domain?: string): Promise<MCPServer[]>
     const { data, error } = await query.order('name');
 
     if (error) throw error;
-    return data || [];
+    return (data as any[]) || [];
   } catch (error) {
     console.error('Failed to fetch MCP servers:', error);
     return [];
@@ -70,7 +70,7 @@ export async function getActiveMCPServers(domain?: string): Promise<MCPServer[]>
 export async function getAgentMCPServers(agentId: string): Promise<MCPServer[]> {
   try {
     const { data, error } = await supabase
-      .from('agent_mcp_assignments')
+      .from('agent_mcp_assignments' as any)
       .select(`
         mcp_server:mcp_servers(*)
       `)
@@ -93,13 +93,13 @@ export async function getAgentMCPServers(agentId: string): Promise<MCPServer[]> 
 export async function createMCPServer(server: Omit<MCPServer, 'id' | 'created_at' | 'updated_at'>): Promise<MCPServer | null> {
   try {
     const { data, error } = await supabase
-      .from('mcp_servers')
-      .insert(server)
+      .from('mcp_servers' as any)
+      .insert(server as any)
       .select()
       .single();
 
     if (error) throw error;
-    return data;
+    return data as any;
   } catch (error) {
     console.error('Failed to create MCP server:', error);
     return null;
@@ -112,8 +112,8 @@ export async function createMCPServer(server: Omit<MCPServer, 'id' | 'created_at
 export async function updateMCPServer(id: string, updates: Partial<MCPServer>): Promise<boolean> {
   try {
     const { error } = await supabase
-      .from('mcp_servers')
-      .update(updates)
+      .from('mcp_servers' as any)
+      .update(updates as any)
       .eq('id', id);
 
     if (error) throw error;
@@ -130,7 +130,7 @@ export async function updateMCPServer(id: string, updates: Partial<MCPServer>): 
 export async function deleteMCPServer(id: string): Promise<boolean> {
   try {
     const { error } = await supabase
-      .from('mcp_servers')
+      .from('mcp_servers' as any)
       .delete()
       .eq('id', id);
 
@@ -152,13 +152,13 @@ export async function assignMCPToAgent(
 ): Promise<boolean> {
   try {
     const { error } = await supabase
-      .from('agent_mcp_assignments')
+      .from('agent_mcp_assignments' as any)
       .insert({
         agent_id: agentId,
         mcp_server_id: mcpServerId,
         priority,
         is_enabled: true
-      });
+      } as any);
 
     if (error) throw error;
     return true;
@@ -174,7 +174,7 @@ export async function assignMCPToAgent(
 export async function removeMCPFromAgent(agentId: string, mcpServerId: string): Promise<boolean> {
   try {
     const { error } = await supabase
-      .from('agent_mcp_assignments')
+      .from('agent_mcp_assignments' as any)
       .delete()
       .eq('agent_id', agentId)
       .eq('mcp_server_id', mcpServerId);
@@ -211,11 +211,11 @@ export async function checkMCPServerHealth(server: MCPServer): Promise<MCPHealth
     const status = response.ok ? 'healthy' : 'degraded';
 
     // Log health check
-    await supabase.from('mcp_server_health').insert({
+    await supabase.from('mcp_server_health' as any).insert({
       mcp_server_id: server.id,
       status,
       response_time_ms: responseTime
-    });
+    } as any);
 
     return {
       server_id: server.id,
@@ -228,12 +228,12 @@ export async function checkMCPServerHealth(server: MCPServer): Promise<MCPHealth
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
     // Log failed health check
-    await supabase.from('mcp_server_health').insert({
+    await supabase.from('mcp_server_health' as any).insert({
       mcp_server_id: server.id,
       status: 'down',
       response_time_ms: responseTime,
       error_message: errorMessage
-    });
+    } as any);
 
     return {
       server_id: server.id,
@@ -251,14 +251,14 @@ export async function checkMCPServerHealth(server: MCPServer): Promise<MCPHealth
 export async function getMCPHealthHistory(serverId: string, limit: number = 10): Promise<MCPHealthStatus[]> {
   try {
     const { data, error } = await supabase
-      .from('mcp_server_health')
+      .from('mcp_server_health' as any)
       .select('*')
       .eq('mcp_server_id', serverId)
       .order('checked_at', { ascending: false })
       .limit(limit);
 
     if (error) throw error;
-    return data || [];
+    return (data as any[]) || [];
   } catch (error) {
     console.error('Failed to fetch MCP health history:', error);
     return [];
