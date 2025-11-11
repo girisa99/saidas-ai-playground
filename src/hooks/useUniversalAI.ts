@@ -59,7 +59,9 @@ interface AIRequestExtended extends AIRequest {
   useRAG?: boolean;
   knowledgeBase?: boolean;
   useMCP?: boolean;
+  mcpServers?: string[]; // MCP server IDs
   labelStudio?: boolean;
+  labelStudioProject?: string; // Label Studio project ID
   context?: string;
   enableSmartRouting?: boolean;
   enableMultiAgent?: boolean; // NEW: Enable multi-agent collaboration
@@ -107,7 +109,9 @@ export const useUniversalAI = () => {
           useRAG: request.useRAG,
           knowledgeBase: request.knowledgeBase,
           useMCP: request.useMCP,
+          mcpServers: request.mcpServers, // Pass MCP server IDs
           labelStudio: request.labelStudio,
+          labelStudioProject: request.labelStudioProject, // Pass Label Studio project ID
           context: request.context,
           enableSmartRouting: request.enableSmartRouting,
           enableMultiAgent: request.enableMultiAgent,

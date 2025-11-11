@@ -32,8 +32,8 @@ interface AIRequest {
   imageUrl?: string;
   images?: string[];
   useMCP?: boolean;
-  mcpServers?: string[];
-  labelStudioProject?: string;
+  mcpServers?: string[]; // MCP server IDs (not URLs)
+  labelStudioProject?: string; // Label Studio project ID
   enableSmartRouting?: boolean;
   enableMultiAgent?: boolean; // NEW: Enable multi-agent collaboration
   conversationHistory?: Array<{ role: string; content: string }>;
@@ -1405,35 +1405,97 @@ async function suggestKnowledgeUpdates(prompt: string, response: string, context
   }
 }
 
-async function callMCPServer(serverUrl: string, prompt: string, context?: string): Promise<any> {
-  // Model Context Protocol integration
+/**
+ * Fetch active MCP servers from database and call them
+ */
+async function callMCPServers(serverIds: string[], prompt: string, context?: string): Promise<string> {
   try {
-    const response = await fetch(serverUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        method: 'tools/call',
-        params: {
-          name: 'process_context',
-          arguments: {
-            prompt,
-            context: context || ''
+    console.log('Fetching MCP servers from database:', serverIds);
+    
+    // Query database for active MCP servers
+    const { data: servers, error } = await supabase
+      .from('mcp_servers' as any)
+      .select('*')
+      .in('id', serverIds)
+      .eq('is_active', true);
+    
+    if (error) {
+      console.error('Failed to fetch MCP servers:', error);
+      return '';
+    }
+    
+    if (!servers || servers.length === 0) {
+      console.log('No active MCP servers found');
+      return '';
+    }
+    
+    console.log(`Calling ${servers.length} MCP servers...`);
+    
+    // Call each server
+    const mcpResults = await Promise.all(
+      servers.map(async (server: any) => {
+        try {
+          const endpoint = server.endpoint_url || server.connection_config?.endpoint_url;
+          if (!endpoint) {
+            console.error(`No endpoint for MCP server ${server.name}`);
+            return null;
           }
+          
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              ...(server.authentication_type === 'bearer' && server.connection_config?.api_key ? {
+                'Authorization': `Bearer ${server.connection_config.api_key}`
+              } : {})
+            },
+            body: JSON.stringify({
+              method: 'tools/call',
+              params: {
+                name: 'process_context',
+                arguments: {
+                  prompt,
+                  context: context || '',
+                  domain: context || 'general'
+                }
+              }
+            })
+          });
+          
+          if (!response.ok) {
+            console.error(`MCP server ${server.name} error: ${response.status}`);
+            return null;
+          }
+          
+          const result = await response.json();
+          console.log(`✓ MCP server ${server.name} responded`);
+          return {
+            server: server.name,
+            type: server.type,
+            result
+          };
+        } catch (error) {
+          console.error(`Failed to call MCP server ${server.name}:`, error);
+          return null;
         }
       })
-    });
-
-    if (!response.ok) {
-      console.error(`MCP server error: ${serverUrl}`);
-      return null;
+    );
+    
+    // Combine valid results
+    const validResults = mcpResults.filter(r => r !== null);
+    if (validResults.length === 0) {
+      return '';
     }
-
-    return await response.json();
+    
+    const mcpContext = validResults
+      .map(r => `[${r.server} - ${r.type}]\n${JSON.stringify(r.result, null, 2)}`)
+      .join('\n\n---\n\n');
+    
+    console.log(`✓ MCP context generated from ${validResults.length} servers`);
+    return mcpContext;
   } catch (error) {
-    console.error(`Failed to call MCP server ${serverUrl}:`, error);
-    return null;
+    console.error('MCP servers error:', error);
+    return '';
   }
 }
 
@@ -1448,7 +1510,35 @@ async function logToLabelStudio(
   triageData: any,
   conversationId?: string
 ) {
-  if (!labelStudioApiKey || !labelStudioUrl || !request.labelStudioProject) {
+  if (!labelStudioApiKey || !labelStudioUrl) {
+    return null;
+  }
+  
+  // Fetch active Label Studio project from database if not provided
+  let projectId = request.labelStudioProject;
+  if (!projectId) {
+    try {
+      const { data: projects, error } = await supabase
+        .from('label_studio_projects' as any)
+        .select('project_id')
+        .eq('is_active', true)
+        .limit(1)
+        .single();
+      
+      if (error || !projects) {
+        console.log('No active Label Studio project found');
+        return null;
+      }
+      
+      projectId = projects.project_id;
+      console.log('Using active Label Studio project:', projectId);
+    } catch (error) {
+      console.error('Failed to fetch Label Studio project:', error);
+      return null;
+    }
+  }
+  
+  if (!projectId) {
     return null;
   }
 
@@ -1516,7 +1606,7 @@ async function logToLabelStudio(
 
     // 2. RETRIEVE FEEDBACK - Check for completed annotations (Active Learning)
     const annotationsResponse = await fetch(
-      `${labelStudioUrl}/api/projects/${request.labelStudioProject}/expert_annotations`,
+      `${labelStudioUrl}/api/projects/${projectId}/expert_annotations`,
       {
         headers: {
           'Authorization': `Token ${labelStudioApiKey}`,
@@ -2132,19 +2222,11 @@ serve(async (req) => {
       console.log('RAG context found:', ragContext.length > 0);
     }
 
-    // Process MCP servers if enabled
+    // Process MCP servers if enabled (fetch from database using IDs)
     let mcpContext = '';
     if (request.useMCP && request.mcpServers && request.mcpServers.length > 0) {
       console.log('Processing MCP servers:', request.mcpServers.length);
-      const mcpResults = await Promise.all(
-        request.mcpServers.map(server => callMCPServer(server, request.prompt, request.context))
-      );
-      
-      const validResults = mcpResults.filter(r => r !== null);
-      if (validResults.length > 0) {
-        mcpContext = validResults.map(r => JSON.stringify(r)).join('\n\n');
-        console.log('MCP context generated');
-      }
+      mcpContext = await callMCPServers(request.mcpServers, request.prompt, request.context);
     }
 
     // Combine RAG and MCP context

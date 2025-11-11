@@ -226,6 +226,10 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
   const [showConfigWizard, setShowConfigWizard] = useState(false);
   const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
   const [ipAddress, setIpAddress] = useState<string | null>(null);
+  
+  // MCP and Label Studio configuration state
+  const [activeMCPServers, setActiveMCPServers] = useState<string[]>([]);
+  const [activeLabelStudioProject, setActiveLabelStudioProject] = useState<string | null>(null);
 
   // Persist context across the session
   useEffect(() => {
@@ -356,7 +360,43 @@ export const PublicGenieInterface: React.FC<PublicGenieInterfaceProps> = ({ isOp
         variant: 'destructive',
       });
     }
-  }, [aiError]);
+  }, [aiError, toast]);
+
+  // Fetch active MCP servers and Label Studio project on mount
+  useEffect(() => {
+    const fetchMCPAndLabelStudioConfig = async () => {
+      try {
+        // Fetch active MCP servers
+        const { data: mcpServers, error: mcpError } = await supabase
+          .from('mcp_servers' as any)
+          .select('id')
+          .eq('is_active', true);
+        
+        if (!mcpError && mcpServers && mcpServers.length > 0) {
+          const serverIds = mcpServers.map((s: any) => s.id);
+          setActiveMCPServers(serverIds);
+          console.log('✓ Loaded', serverIds.length, 'active MCP servers');
+        }
+        
+        // Fetch active Label Studio project
+        const { data: lsProjects, error: lsError } = await supabase
+          .from('label_studio_projects' as any)
+          .select('project_id')
+          .eq('is_active', true)
+          .limit(1)
+          .single();
+        
+        if (!lsError && lsProjects && (lsProjects as any).project_id) {
+          setActiveLabelStudioProject((lsProjects as any).project_id);
+          console.log('✓ Loaded active Label Studio project:', (lsProjects as any).project_id);
+        }
+      } catch (error) {
+        console.error('Failed to fetch MCP/Label Studio config:', error);
+      }
+    };
+    
+    fetchMCPAndLabelStudioConfig();
+  }, []);
   
   // Fetch dynamic topics from universal knowledge base
   const { topics: dynamicTopics } = useUniversalKnowledgeTopics(context);
@@ -839,7 +879,9 @@ useEffect(() => {
             useRAG: aiConfig.ragEnabled,
             knowledgeBase: aiConfig.knowledgeBase || aiConfig.knowledgeBaseEnabled,
             useMCP: aiConfig.mcpEnabled,
-            labelStudio: false,
+            mcpServers: aiConfig.mcpEnabled ? activeMCPServers : undefined,
+            labelStudio: !!activeLabelStudioProject,
+            labelStudioProject: activeLabelStudioProject || undefined,
             context: context || 'general',
             enableSmartRouting: true,
             enableMultiAgent: false,
@@ -860,7 +902,9 @@ useEffect(() => {
             useRAG: aiConfig.ragEnabled,
             knowledgeBase: aiConfig.knowledgeBase || aiConfig.knowledgeBaseEnabled,
             useMCP: aiConfig.mcpEnabled,
-            labelStudio: false,
+            mcpServers: aiConfig.mcpEnabled ? activeMCPServers : undefined,
+            labelStudio: !!activeLabelStudioProject,
+            labelStudioProject: activeLabelStudioProject || undefined,
             context: context || 'general',
             enableSmartRouting: true,
             enableMultiAgent: false,
@@ -1187,7 +1231,9 @@ useEffect(() => {
           useRAG: aiConfig.ragEnabled,
           knowledgeBase: aiConfig.knowledgeBase || aiConfig.knowledgeBaseEnabled,
           useMCP: aiConfig.mcpEnabled,
-          labelStudio: false,
+          mcpServers: aiConfig.mcpEnabled ? activeMCPServers : undefined,
+          labelStudio: !!activeLabelStudioProject,
+          labelStudioProject: activeLabelStudioProject || undefined,
           context: context || 'general',
           enableSmartRouting: true,
           enableMultiAgent: aiConfig.multiAgentEnabled || false,
