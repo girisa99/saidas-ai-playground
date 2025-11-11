@@ -1,8 +1,9 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
-import { User, Sparkles } from 'lucide-react';
+import { User, Sparkles, Plug } from 'lucide-react';
 import genieFloating from '@/assets/genie-floating.png';
 import { MessageFeedback } from './MessageFeedback';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface ConversationMessage {
   role: 'user' | 'assistant';
@@ -65,6 +66,21 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
               <Badge variant="outline" className="text-xs">
                 {message.model}
               </Badge>
+            )}
+            {!isUser && message.metadata?.mcpContext && (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                      <Plug className="w-3 h-3" />
+                      MCP Active
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="text-xs">Enhanced with MCP server context</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             )}
           </div>
           
