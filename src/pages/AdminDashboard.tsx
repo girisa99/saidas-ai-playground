@@ -4,6 +4,7 @@ import { WebsiteAnalyticsSection } from '@/components/admin/WebsiteAnalyticsSect
 import { GeniePopupAnalyticsSection } from '@/components/admin/GeniePopupAnalyticsSection';
 import { KnowledgeBaseMigration } from '@/components/admin/KnowledgeBaseMigration';
 import { KnowledgeCrawlManager } from '@/components/admin/KnowledgeCrawlManager';
+import { KnowledgeEmbeddingsManager } from '@/components/admin/KnowledgeEmbeddingsManager';
 import { MapboxTokenManager } from '@/components/admin/MapboxTokenManager';
 import { TreatmentCenterImporter } from '@/components/admin/TreatmentCenterImporter';
 import { ProductPricingImporter } from '@/components/admin/ProductPricingImporter';
@@ -244,7 +245,10 @@ const AdminDashboard = () => {
           </TabsContent>
 
           <TabsContent value="crawler">
-            <KnowledgeCrawlManager />
+            <div className="space-y-6">
+              <KnowledgeEmbeddingsManager />
+              <KnowledgeCrawlManager />
+            </div>
           </TabsContent>
 
           <TabsContent value="ai-config">
