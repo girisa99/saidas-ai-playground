@@ -90,3 +90,6 @@ verify_jwt = true
 
 [functions.generate-embeddings]
 verify_jwt = false
+
+[functions.generate-knowledge-embeddings-batch]
+verify_jwt = true

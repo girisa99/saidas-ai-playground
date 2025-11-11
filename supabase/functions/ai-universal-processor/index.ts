@@ -2164,6 +2164,155 @@ Create unified response that:
   };
 }
 
+/**
+ * PHASE 1: Query Analysis - Save query analysis to database for AI Intelligence
+ */
+async function saveQueryAnalysis(
+  conversationId: string | undefined,
+  userId: string | undefined,
+  queryText: string,
+  triageData: TriageResult | null
+) {
+  if (!conversationId || !triageData) return;
+  
+  try {
+    await supabase.from('genie_query_analysis').insert({
+      conversation_id: conversationId,
+      user_id: userId,
+      query_text: queryText,
+      detected_intent: triageData.best_format,
+      detected_domain: triageData.domain,
+      complexity_score: triageData.complexity === 'simple' ? 0.3 : triageData.complexity === 'medium' ? 0.6 : 0.9,
+      requires_rag: triageData.keywords.length > 0,
+      requires_mcp: false,
+      recommended_model: triageData.suggested_model,
+      token_estimate: Math.ceil(queryText.split(' ').length * 1.3) + 500,
+    });
+    console.log('✅ Query analysis saved');
+  } catch (error) {
+    console.error('Failed to save query analysis:', error);
+  }
+}
+
+/**
+ * PHASE 1: Confidence Scoring - Calculate and save response confidence metrics
+ */
+async function saveConfidenceScore(
+  conversationId: string | undefined,
+  messageIndex: number,
+  responseText: string,
+  triageData: TriageResult | null,
+  ragUsed: boolean,
+  mcpUsed: boolean,
+  modelUsed: string,
+  tokenUsage: any
+) {
+  if (!conversationId) return;
+  
+  try {
+    // Calculate confidence metrics
+    const responseLength = responseText.length;
+    const hasStructuredFormat = responseText.includes('\n-') || responseText.includes('1.') || responseText.includes('|');
+    const hasCitations = responseText.toLowerCase().includes('source') || responseText.toLowerCase().includes('reference');
+    
+    // Confidence scoring algorithm
+    let confidence = 0.7; // Base confidence
+    if (triageData && triageData.confidence > 0.8) confidence += 0.1;
+    if (ragUsed) confidence += 0.1;
+    if (mcpUsed) confidence += 0.05;
+    if (hasStructuredFormat) confidence += 0.05;
+    if (responseLength > 200) confidence += 0.05;
+    if (hasCitations) confidence += 0.05;
+    confidence = Math.min(confidence, 1.0);
+    
+    const reasoning_quality = triageData?.confidence || 0.8;
+    const factual_accuracy = ragUsed ? 0.9 : 0.75;
+    const completeness_score = responseLength > 500 ? 0.9 : responseLength > 200 ? 0.75 : 0.6;
+    
+    await supabase.from('genie_response_confidence').insert({
+      conversation_id: conversationId,
+      message_index: messageIndex,
+      confidence_score: confidence,
+      reasoning_quality,
+      factual_accuracy,
+      completeness_score,
+      sources_used: { rag: ragUsed, mcp: mcpUsed },
+      model_used: modelUsed,
+      token_usage: tokenUsage,
+    });
+    console.log(`✅ Confidence score saved: ${confidence.toFixed(2)}`);
+  } catch (error) {
+    console.error('Failed to save confidence score:', error);
+  }
+}
+
+/**
+ * PHASE 1: Token Budget Enforcement - Check and update token budgets
+ */
+async function checkTokenBudget(
+  conversationId: string | undefined,
+  userId: string | undefined,
+  estimatedTokens: number
+): Promise<{ allowed: boolean; remaining: number }> {
+  if (!conversationId || !userId) {
+    return { allowed: true, remaining: -1 }; // No budget enforcement if missing IDs
+  }
+  
+  try {
+    // Get or create token budget for this conversation
+    const { data: budgets, error } = await supabase
+      .from('genie_token_budgets')
+      .select('*')
+      .eq('conversation_id', conversationId)
+      .single();
+    
+    if (error || !budgets) {
+      // Create default budget (10k tokens per conversation)
+      await supabase.from('genie_token_budgets').insert({
+        user_id: userId,
+        conversation_id: conversationId,
+        allocated_tokens: 10000,
+        used_tokens: 0,
+        budget_period: 'conversation',
+      });
+      return { allowed: true, remaining: 10000 - estimatedTokens };
+    }
+    
+    const remaining = budgets.allocated_tokens - budgets.used_tokens;
+    
+    if (remaining < estimatedTokens) {
+      console.log(`❌ Token budget exceeded: ${remaining} remaining, ${estimatedTokens} needed`);
+      return { allowed: false, remaining };
+    }
+    
+    console.log(`✅ Token budget OK: ${remaining} remaining`);
+    return { allowed: true, remaining };
+  } catch (error) {
+    console.error('Failed to check token budget:', error);
+    return { allowed: true, remaining: -1 }; // Allow on error
+  }
+}
+
+/**
+ * Update token usage after processing
+ */
+async function updateTokenUsage(
+  conversationId: string | undefined,
+  actualTokensUsed: number
+) {
+  if (!conversationId) return;
+  
+  try {
+    await supabase.rpc('update_token_usage', {
+      p_conversation_id: conversationId,
+      p_tokens_used: actualTokensUsed,
+    });
+    console.log(`✅ Token usage updated: ${actualTokensUsed} tokens`);
+  } catch (error) {
+    console.error('Failed to update token usage:', error);
+  }
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -2243,6 +2392,36 @@ serve(async (req) => {
         request.conversationHistory
       );
       console.log('Triage result:', triageData);
+    }
+    
+    // ========== PHASE 1: QUERY ANALYSIS & TOKEN BUDGET ==========
+    const conversationId = rawData.conversationId;
+    const userId = rawData.userId;
+    const messageIndex = rawData.messageIndex || 0;
+    
+    // Save query analysis to database
+    await saveQueryAnalysis(conversationId, userId, request.prompt, triageData);
+    
+    // Check token budget before processing
+    const estimatedTokens = triageData ? 
+      estimateTokenUsage(triageData, ragContext.length > 0, request.useMCP) : 
+      Math.ceil(request.prompt.split(' ').length * 1.5) + 500;
+    
+    const budgetCheck = await checkTokenBudget(conversationId, userId, estimatedTokens);
+    
+    if (!budgetCheck.allowed) {
+      return new Response(
+        JSON.stringify({ 
+          error: `Token budget exceeded. You have ${budgetCheck.remaining} tokens remaining in this conversation.`,
+          budgetExceeded: true,
+          remaining: budgetCheck.remaining,
+          needed: estimatedTokens
+        }),
+        { 
+          status: 402,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
     }
     
     // ========== STEP 3: Multi-Agent Collaboration ==========
@@ -2505,6 +2684,25 @@ serve(async (req) => {
         throw new Error(`Unsupported provider: ${mappedProvider}. Only OpenAI, Claude, and Gemini are supported.`);
     }
 
+    // ========== PHASE 1: CONFIDENCE SCORING & TOKEN USAGE ==========
+    // Calculate actual token usage (approximate based on response length)
+    const actualTokens = Math.ceil((request.prompt.length + content.length) / 4); // Rough estimate: 1 token ≈ 4 chars
+    
+    // Save confidence score for this response
+    await saveConfidenceScore(
+      conversationId,
+      messageIndex,
+      content,
+      triageData,
+      ragContext.length > 0,
+      mcpContext.length > 0,
+      request.model,
+      { prompt_tokens: Math.ceil(request.prompt.length / 4), completion_tokens: Math.ceil(content.length / 4), total_tokens: actualTokens }
+    );
+    
+    // Update token usage in budget
+    await updateTokenUsage(conversationId, actualTokens);
+    
     // Track journey progression based on conversation context
     const journeyProgress = await trackJourneyProgress(request.prompt, triageData, request.conversationHistory);
     
