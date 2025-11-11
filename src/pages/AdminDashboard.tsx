@@ -5,6 +5,7 @@ import { GeniePopupAnalyticsSection } from '@/components/admin/GeniePopupAnalyti
 import { KnowledgeBaseMigration } from '@/components/admin/KnowledgeBaseMigration';
 import { KnowledgeCrawlManager } from '@/components/admin/KnowledgeCrawlManager';
 import { KnowledgeEmbeddingsManager } from '@/components/admin/KnowledgeEmbeddingsManager';
+import { DeploymentManager } from '@/components/admin/DeploymentManager';
 import { MapboxTokenManager } from '@/components/admin/MapboxTokenManager';
 import { TreatmentCenterImporter } from '@/components/admin/TreatmentCenterImporter';
 import { ProductPricingImporter } from '@/components/admin/ProductPricingImporter';
@@ -212,11 +213,12 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="website" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="website">Website Analytics</TabsTrigger>
             <TabsTrigger value="genie">Genie AI Popup Analytics</TabsTrigger>
             <TabsTrigger value="migration">Knowledge Base Migration</TabsTrigger>
             <TabsTrigger value="crawler">Knowledge Crawler</TabsTrigger>
+            <TabsTrigger value="deployments">Deployments</TabsTrigger>
             <TabsTrigger value="ai-config">MCP & Label Studio</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
@@ -249,6 +251,10 @@ const AdminDashboard = () => {
               <KnowledgeEmbeddingsManager />
               <KnowledgeCrawlManager />
             </div>
+          </TabsContent>
+
+          <TabsContent value="deployments">
+            <DeploymentManager />
           </TabsContent>
 
           <TabsContent value="ai-config">

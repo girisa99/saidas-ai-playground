@@ -7056,71 +7056,77 @@ export type Database = {
       }
       genie_deployments: {
         Row: {
-          active_conversations: number | null
-          average_response_time_ms: number | null
-          brand_config_id: string
+          archived_at: string | null
+          avg_confidence_score: number | null
+          changelog: string | null
+          configuration: Json
           created_at: string | null
           deployed_at: string | null
-          deployed_by: string | null
-          deployment_name: string
-          deployment_type: string
-          deployment_url: string | null
-          error_rate: number | null
-          health_status: string | null
+          deployment_status: string | null
+          description: string | null
           id: string
           is_active: boolean | null
-          last_health_check: string | null
-          metadata: Json | null
+          knowledge_base_snapshot: Json | null
+          mcp_servers_snapshot: Json | null
+          model_config: Json | null
+          name: string
+          parent_deployment_id: string | null
           total_conversations: number | null
-          total_requests: number | null
+          total_tokens_used: number | null
           updated_at: string | null
+          user_id: string
+          version: number
         }
         Insert: {
-          active_conversations?: number | null
-          average_response_time_ms?: number | null
-          brand_config_id: string
+          archived_at?: string | null
+          avg_confidence_score?: number | null
+          changelog?: string | null
+          configuration: Json
           created_at?: string | null
           deployed_at?: string | null
-          deployed_by?: string | null
-          deployment_name: string
-          deployment_type: string
-          deployment_url?: string | null
-          error_rate?: number | null
-          health_status?: string | null
+          deployment_status?: string | null
+          description?: string | null
           id?: string
           is_active?: boolean | null
-          last_health_check?: string | null
-          metadata?: Json | null
+          knowledge_base_snapshot?: Json | null
+          mcp_servers_snapshot?: Json | null
+          model_config?: Json | null
+          name: string
+          parent_deployment_id?: string | null
           total_conversations?: number | null
-          total_requests?: number | null
+          total_tokens_used?: number | null
           updated_at?: string | null
+          user_id: string
+          version?: number
         }
         Update: {
-          active_conversations?: number | null
-          average_response_time_ms?: number | null
-          brand_config_id?: string
+          archived_at?: string | null
+          avg_confidence_score?: number | null
+          changelog?: string | null
+          configuration?: Json
           created_at?: string | null
           deployed_at?: string | null
-          deployed_by?: string | null
-          deployment_name?: string
-          deployment_type?: string
-          deployment_url?: string | null
-          error_rate?: number | null
-          health_status?: string | null
+          deployment_status?: string | null
+          description?: string | null
           id?: string
           is_active?: boolean | null
-          last_health_check?: string | null
-          metadata?: Json | null
+          knowledge_base_snapshot?: Json | null
+          mcp_servers_snapshot?: Json | null
+          model_config?: Json | null
+          name?: string
+          parent_deployment_id?: string | null
           total_conversations?: number | null
-          total_requests?: number | null
+          total_tokens_used?: number | null
           updated_at?: string | null
+          user_id?: string
+          version?: number
         }
         Relationships: [
           {
-            foreignKeyName: "genie_deployments_brand_config_id_fkey"
-            columns: ["brand_config_id"]
+            foreignKeyName: "genie_deployments_parent_deployment_id_fkey"
+            columns: ["parent_deployment_id"]
             isOneToOne: false
-            referencedRelation: "genie_brand_configs"
+            referencedRelation: "genie_deployments"
             referencedColumns: ["id"]
           },
         ]
@@ -16808,6 +16814,14 @@ export type Database = {
     }
     Functions: {
       _table_exists: { Args: { p_table: string }; Returns: boolean }
+      activate_genie_deployment: {
+        Args: { p_deployment_id: string; p_user_id: string }
+        Returns: Json
+      }
+      archive_deployment: {
+        Args: { p_deployment_id: string }
+        Returns: boolean
+      }
       assign_user_role: {
         Args: { p_role_name: string; p_user_id: string }
         Returns: undefined
@@ -16875,6 +16889,15 @@ export type Database = {
         Returns: Json
       }
       continuous_test_generation: { Args: never; Returns: Json }
+      create_deployment_version: {
+        Args: {
+          p_changelog?: string
+          p_configuration: Json
+          p_name: string
+          p_parent_id: string
+        }
+        Returns: string
+      }
       create_patient_profile_and_role: {
         Args: {
           p_email: string
