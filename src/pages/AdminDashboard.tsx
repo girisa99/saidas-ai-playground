@@ -6,6 +6,9 @@ import { KnowledgeBaseMigration } from '@/components/admin/KnowledgeBaseMigratio
 import { KnowledgeCrawlManager } from '@/components/admin/KnowledgeCrawlManager';
 import { KnowledgeEmbeddingsManager } from '@/components/admin/KnowledgeEmbeddingsManager';
 import { DeploymentManager } from '@/components/admin/DeploymentManager';
+import { DeploymentTester } from '@/components/admin/DeploymentTester';
+import { DeploymentAnalytics } from '@/components/admin/DeploymentAnalytics';
+import { getUserDeployments, GenieDeployment } from '@/services/deploymentService';
 import { MapboxTokenManager } from '@/components/admin/MapboxTokenManager';
 import { TreatmentCenterImporter } from '@/components/admin/TreatmentCenterImporter';
 import { ProductPricingImporter } from '@/components/admin/ProductPricingImporter';
@@ -30,11 +33,22 @@ const AdminDashboard = () => {
   const [knowledgeBaseCount, setKnowledgeBaseCount] = useState<number>(0);
   const [sessionAnalytics, setSessionAnalytics] = useState<any>(null);
   const [retentionAnalytics, setRetentionAnalytics] = useState<any>(null);
+  const [deployments, setDeployments] = useState<GenieDeployment[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
     loadDashboardData();
+    loadDeployments();
   }, []);
+
+  const loadDeployments = async () => {
+    try {
+      const data = await getUserDeployments();
+      setDeployments(data);
+    } catch (error) {
+      console.error('Failed to load deployments:', error);
+    }
+  };
 
   const loadDashboardData = async () => {
     setLoading(true);
@@ -219,6 +233,8 @@ const AdminDashboard = () => {
             <TabsTrigger value="migration" className="whitespace-nowrap">Knowledge Base Migration</TabsTrigger>
             <TabsTrigger value="crawler" className="whitespace-nowrap">Knowledge Crawler</TabsTrigger>
             <TabsTrigger value="deployments" className="whitespace-nowrap">Deployments</TabsTrigger>
+            <TabsTrigger value="deployment-testing" className="whitespace-nowrap">Testing</TabsTrigger>
+            <TabsTrigger value="deployment-analytics" className="whitespace-nowrap">Analytics</TabsTrigger>
             <TabsTrigger value="ai-config" className="whitespace-nowrap">MCP & Label Studio</TabsTrigger>
             <TabsTrigger value="settings" className="whitespace-nowrap">Settings</TabsTrigger>
           </TabsList>
@@ -255,6 +271,14 @@ const AdminDashboard = () => {
 
           <TabsContent value="deployments">
             <DeploymentManager />
+          </TabsContent>
+
+          <TabsContent value="deployment-testing">
+            <DeploymentTester deployments={deployments} />
+          </TabsContent>
+
+          <TabsContent value="deployment-analytics">
+            <DeploymentAnalytics deployments={deployments} />
           </TabsContent>
 
           <TabsContent value="ai-config">

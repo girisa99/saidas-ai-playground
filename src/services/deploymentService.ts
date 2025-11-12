@@ -7,6 +7,8 @@ export interface GenieDeployment {
   description?: string;
   version: number;
   is_active: boolean;
+  is_enabled: boolean; // Whether deployment can accept requests
+  api_key?: string; // API key for external authentication
   configuration: any;
   knowledge_base_snapshot?: any;
   mcp_servers_snapshot?: any;
@@ -14,6 +16,7 @@ export interface GenieDeployment {
   deployment_status: 'draft' | 'active' | 'archived';
   deployed_at?: string;
   archived_at?: string;
+  last_used_at?: string; // Last time deployment was used
   parent_deployment_id?: string;
   changelog?: string;
   total_conversations: number;
