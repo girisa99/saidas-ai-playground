@@ -213,14 +213,14 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="website" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-7">
-            <TabsTrigger value="website">Website Analytics</TabsTrigger>
-            <TabsTrigger value="genie">Genie AI Popup Analytics</TabsTrigger>
-            <TabsTrigger value="migration">Knowledge Base Migration</TabsTrigger>
-            <TabsTrigger value="crawler">Knowledge Crawler</TabsTrigger>
-            <TabsTrigger value="deployments">Deployments</TabsTrigger>
-            <TabsTrigger value="ai-config">MCP & Label Studio</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
+          <TabsList className="inline-flex w-full overflow-x-auto flex-nowrap justify-start">
+            <TabsTrigger value="website" className="whitespace-nowrap">Website Analytics</TabsTrigger>
+            <TabsTrigger value="genie" className="whitespace-nowrap">Genie AI Popup Analytics</TabsTrigger>
+            <TabsTrigger value="migration" className="whitespace-nowrap">Knowledge Base Migration</TabsTrigger>
+            <TabsTrigger value="crawler" className="whitespace-nowrap">Knowledge Crawler</TabsTrigger>
+            <TabsTrigger value="deployments" className="whitespace-nowrap">Deployments</TabsTrigger>
+            <TabsTrigger value="ai-config" className="whitespace-nowrap">MCP & Label Studio</TabsTrigger>
+            <TabsTrigger value="settings" className="whitespace-nowrap">Settings</TabsTrigger>
           </TabsList>
 
           <TabsContent value="website">
