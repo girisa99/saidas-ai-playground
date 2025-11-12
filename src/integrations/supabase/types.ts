@@ -753,6 +753,7 @@ export type Database = {
           conversation_data: Json
           created_at: string
           current_journey_stage_id: string | null
+          deployment_id: string | null
           healthcare_context: Json | null
           id: string
           journey_completed_at: string | null
@@ -770,6 +771,7 @@ export type Database = {
           conversation_data?: Json
           created_at?: string
           current_journey_stage_id?: string | null
+          deployment_id?: string | null
           healthcare_context?: Json | null
           id?: string
           journey_completed_at?: string | null
@@ -787,6 +789,7 @@ export type Database = {
           conversation_data?: Json
           created_at?: string
           current_journey_stage_id?: string | null
+          deployment_id?: string | null
           healthcare_context?: Json | null
           id?: string
           journey_completed_at?: string | null
@@ -800,6 +803,13 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "agent_conversations_deployment_id_fkey"
+            columns: ["deployment_id"]
+            isOneToOne: false
+            referencedRelation: "genie_deployments"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "fk_agent_conversations_agent"
             columns: ["agent_id"]
@@ -7056,6 +7066,7 @@ export type Database = {
       }
       genie_deployments: {
         Row: {
+          api_key: string | null
           archived_at: string | null
           avg_confidence_score: number | null
           changelog: string | null
@@ -7066,6 +7077,7 @@ export type Database = {
           description: string | null
           id: string
           is_active: boolean | null
+          is_enabled: boolean | null
           knowledge_base_snapshot: Json | null
           mcp_servers_snapshot: Json | null
           model_config: Json | null
@@ -7078,6 +7090,7 @@ export type Database = {
           version: number
         }
         Insert: {
+          api_key?: string | null
           archived_at?: string | null
           avg_confidence_score?: number | null
           changelog?: string | null
@@ -7088,6 +7101,7 @@ export type Database = {
           description?: string | null
           id?: string
           is_active?: boolean | null
+          is_enabled?: boolean | null
           knowledge_base_snapshot?: Json | null
           mcp_servers_snapshot?: Json | null
           model_config?: Json | null
@@ -7100,6 +7114,7 @@ export type Database = {
           version?: number
         }
         Update: {
+          api_key?: string | null
           archived_at?: string | null
           avg_confidence_score?: number | null
           changelog?: string | null
@@ -7110,6 +7125,7 @@ export type Database = {
           description?: string | null
           id?: string
           is_active?: boolean | null
+          is_enabled?: boolean | null
           knowledge_base_snapshot?: Json | null
           mcp_servers_snapshot?: Json | null
           model_config?: Json | null
