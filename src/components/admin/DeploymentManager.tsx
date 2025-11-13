@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Rocket, Plus, Archive, Copy, GitBranch, Play, Pause, Trash2, Clock, Code2, Eye, EyeOff, Key } from 'lucide-react';
+import { Rocket, Plus, Archive, Copy, GitBranch, Play, Pause, Trash2, Clock, Code2, Eye, EyeOff, Key, Wand2 } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   getUserDeployments,
@@ -27,11 +27,13 @@ import {
   copyToClipboard,
 } from '@/services/deploymentEmbedService';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import DeploymentConfigurationWizard from './DeploymentConfigurationWizard';
 
 export const DeploymentManager: React.FC = () => {
   const [deployments, setDeployments] = useState<GenieDeployment[]>([]);
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [showWizard, setShowWizard] = useState(false);
   const [newDeploymentName, setNewDeploymentName] = useState('');
   const [newDeploymentDesc, setNewDeploymentDesc] = useState('');
 
@@ -360,13 +362,14 @@ export const DeploymentManager: React.FC = () => {
             </CardDescription>
           </div>
 
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button className="gap-2">
-                <Plus className="w-4 h-4" />
-                New Deployment
-              </Button>
-            </DialogTrigger>
+          <div className="flex gap-2">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" className="gap-2">
+                  <Plus className="w-4 h-4" />
+                  Quick Create
+                </Button>
+              </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Create New Deployment</DialogTitle>
@@ -397,6 +400,11 @@ export const DeploymentManager: React.FC = () => {
               </div>
             </DialogContent>
           </Dialog>
+          <Button onClick={() => setShowWizard(true)} className="gap-2">
+            <Wand2 className="w-4 h-4" />
+            Configuration Wizard
+          </Button>
+          </div>
         </div>
       </CardHeader>
       <CardContent>
@@ -436,6 +444,11 @@ export const DeploymentManager: React.FC = () => {
           </Tabs>
         )}
       </CardContent>
+      <DeploymentConfigurationWizard
+        open={showWizard}
+        onClose={() => setShowWizard(false)}
+        onSuccess={loadDeployments}
+      />
     </Card>
   );
 };
