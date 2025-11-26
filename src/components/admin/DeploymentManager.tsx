@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Rocket, Plus, Archive, Copy, GitBranch, Play, Pause, Trash2, Clock, Code2, Eye, EyeOff, Key, Wand2 } from 'lucide-react';
+import { Rocket, Plus, Archive, Copy, GitBranch, Play, Pause, Trash2, Clock, Code2, Eye, EyeOff, Key, Wand2, History } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   getUserDeployments,
@@ -28,12 +28,14 @@ import {
 } from '@/services/deploymentEmbedService';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import DeploymentConfigurationWizard from './DeploymentConfigurationWizard';
+import { DeploymentVersionHistory } from './DeploymentVersionHistory';
 
 export const DeploymentManager: React.FC = () => {
   const [deployments, setDeployments] = useState<GenieDeployment[]>([]);
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
   const [showWizard, setShowWizard] = useState(false);
+  const [selectedDeploymentForHistory, setSelectedDeploymentForHistory] = useState<GenieDeployment | null>(null);
   const [newDeploymentName, setNewDeploymentName] = useState('');
   const [newDeploymentDesc, setNewDeploymentDesc] = useState('');
 
@@ -239,6 +241,11 @@ export const DeploymentManager: React.FC = () => {
               <Button size="sm" variant="outline" onClick={() => handleGenerateAPIKey(deployment.id)} className="gap-1">
                 <Key className="w-3 h-3" />
                 API Key
+              </Button>
+
+              <Button size="sm" variant="outline" onClick={() => setSelectedDeploymentForHistory(deployment)} className="gap-1">
+                <History className="w-3 h-3" />
+                Versions
               </Button>
 
               <Button size="sm" variant="outline" onClick={() => handleClone(deployment.id, deployment.name)} className="gap-1">
@@ -449,6 +456,20 @@ export const DeploymentManager: React.FC = () => {
         onClose={() => setShowWizard(false)}
         onSuccess={loadDeployments}
       />
+      
+      <Dialog open={!!selectedDeploymentForHistory} onOpenChange={(open) => !open && setSelectedDeploymentForHistory(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          {selectedDeploymentForHistory && (
+            <DeploymentVersionHistory
+              deployment={selectedDeploymentForHistory}
+              onVersionCreated={() => {
+                loadDeployments();
+                setSelectedDeploymentForHistory(null);
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 };
