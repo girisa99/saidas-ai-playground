@@ -866,6 +866,832 @@ if (requiresVision) {
 - Product cards
 - Pricing comparisons
 
+### 9. Smart Routing & Optimization
+
+**Location:** `src/services/aiTriageService.ts`, `src/utils/modelRouter.ts`
+
+**Purpose:** Intelligent model selection based on query complexity and requirements
+
+**Features:**
+- **Automatic Model Selection** - Analyzes query to select optimal model
+- **Cost Optimization** - Uses smaller models for simple queries
+- **Performance Optimization** - Routes to faster models when speed matters
+- **Vision Detection** - Automatically uses vision-capable models for images
+
+**Routing Logic:**
+```typescript
+interface RoutingDecision {
+  model: string;
+  reasoning: string;
+  confidence: number;
+  fallbackModel?: string;
+}
+
+// Example routing decisions:
+// Simple FAQ → gemini-2.5-flash-lite (fastest, cheapest)
+// Complex reasoning → gemini-2.5-pro (most capable)
+// Image analysis → gemini-2.5-pro (vision support)
+// Medical imaging → gemini-2.5-pro + specialized processing
+```
+
+**Optimization Badge:**
+**Location:** `src/components/public-genie/RoutingOptimizationBadge.tsx`
+
+Displays model selection reasoning to users:
+- Model selected
+- Reason for selection
+- Confidence level
+- Token usage estimate
+
+### 10. Split-Screen Multi-Model Comparison
+
+**Location:** `src/components/public-genie/SplitScreenRenderer.tsx`
+
+**Purpose:** Compare responses from multiple AI models simultaneously
+
+**Features:**
+- Side-by-side comparison (2-4 models)
+- Synchronized scrolling
+- Performance metrics (speed, tokens, cost)
+- Quality comparison
+- Copy best response
+- Export comparison report
+
+**Supported Configurations:**
+- Gemini Flash vs Gemini Pro
+- Gemini vs GPT-5
+- Multiple model variants
+- Custom model combinations
+
+**Use Cases:**
+- Quality assurance
+- Model evaluation
+- Cost-benefit analysis
+- Response benchmarking
+
+### 11. Healthcare-Specific Features
+
+#### Treatment Center Integration
+
+**Location:** `src/components/public-genie/InteractiveTreatmentCenterMap.tsx`
+
+**Features:**
+- Interactive maps with Mapbox integration
+- Treatment center search and filtering
+- Distance calculation
+- Insurance verification
+- Specialization matching
+- Real-time availability
+- Direct contact integration
+
+**Data Sources:**
+- `treatment_centers` table
+- `treatment-centers-enhanced.csv`
+- Crawled treatment center data
+
+**Treatment Center Display:**
+**Location:** `src/components/public-genie/TreatmentCenterDetails.tsx`
+
+Shows detailed center information:
+- Name, address, contact
+- Services offered
+- Insurance accepted
+- Specializations
+- Ratings and reviews
+- Distance from user
+- Directions
+
+#### Medical Image Analysis
+
+**Location:** `src/components/public-genie/MedicalImageUploader.tsx`
+**Service:** `src/services/medicalImageAnalysisService.ts`
+**Edge Function:** `supabase/functions/analyze-medical-image/index.ts`
+
+**Capabilities:**
+- DICOM format support
+- X-ray analysis
+- MRI/CT scan analysis
+- Ultrasound analysis
+- Report generation
+- Annotation support
+- Comparison with previous scans
+
+**Vision Model Integration:**
+**Location:** `src/components/public-genie/VisionModelIndicator.tsx`
+
+Indicates when vision models are active:
+- Model name (gemini-2.5-pro)
+- Image processing status
+- Confidence level
+- Analysis type
+
+#### Product & Pricing Display
+
+**Location:** `src/components/public-genie/ProductPricingOverview.tsx`
+
+**Features:**
+- Product catalog display
+- Dynamic pricing
+- Insurance coverage information
+- Price comparison
+- Treatment cost estimation
+- Financial assistance options
+
+**Pricing Comparison:**
+**Location:** `src/components/public-genie/PricingComparisonCard.tsx`
+
+Side-by-side pricing comparison:
+- Base prices
+- Insurance adjustments
+- Out-of-pocket costs
+- Payment plans
+- Financing options
+
+**Therapeutic Selector:**
+**Location:** `src/components/public-genie/ProductTherapeuticSelector.tsx`
+
+Category-based product selection:
+- Browse by therapeutic area
+- Filter by insurance
+- Sort by price
+- View alternatives
+
+#### Healthcare Knowledge Base
+
+**Location:** `src/components/public-genie/HealthcareKnowledgeBase.tsx`
+
+Specialized healthcare knowledge:
+- Treatment protocols
+- Drug interactions
+- Insurance policies
+- Medical terminology
+- Facility information
+- Provider networks
+
+### 12. Vision & Multimodal Support
+
+**Vision Model Capabilities:**
+- Image upload and analysis
+- Medical image interpretation
+- Document OCR
+- Chart/graph reading
+- Handwriting recognition
+- Visual question answering
+
+**Supported Image Types:**
+- DICOM (medical imaging)
+- JPEG, PNG, WebP
+- PDF documents
+- Scanned documents
+- Screenshots
+
+**Image Processing Pipeline:**
+```
+Upload → Validation → Preprocessing → Model Selection → Analysis → Report
+```
+
+### 13. Context Switching
+
+**Location:** `src/components/public-genie/ContextSwitcher.tsx`
+
+**Available Contexts:**
+
+1. **Healthcare Context**
+   - Medical terminology
+   - Treatment center focus
+   - Insurance information
+   - Clinical protocols
+
+2. **Technology Context**
+   - Technical documentation
+   - API references
+   - Code examples
+   - System architecture
+
+3. **Education Context**
+   - Learning resources
+   - Course information
+   - Certification programs
+   - Academic support
+
+4. **Business Context**
+   - ROI calculations
+   - Business metrics
+   - Market analysis
+   - Strategic planning
+
+5. **General Context**
+   - Broad knowledge base
+   - Common questions
+   - General assistance
+
+**Context Effects:**
+- Changes system prompt
+- Adjusts knowledge base filters
+- Modifies topic suggestions
+- Alters response style
+
+### 14. Topic Suggestions & Contextual Help
+
+**Location:** `src/components/public-genie/ContextualTopicSuggester.tsx`
+
+**Features:**
+- Context-aware suggestions
+- Popular topics
+- Related questions
+- Quick actions
+- Topic history
+- Trending topics
+
+**Suggestion Types:**
+- Follow-up questions
+- Related topics
+- Common workflows
+- Quick links
+- Helpful resources
+
+**Topic Popover:**
+**Location:** `src/components/public-genie/TopicSuggestionPopover.tsx`
+
+Inline topic suggestions while typing:
+- Auto-complete
+- Suggested queries
+- Historical queries
+- Popular queries
+
+### 15. RAG (Retrieval Augmented Generation) System
+
+**RAG Knowledge Panel:**
+**Location:** `src/components/public-genie/RAGKnowledgePanel.tsx`
+
+**Features:**
+- Shows retrieved knowledge sources
+- Relevance scores
+- Source citations
+- Confidence indicators
+- Knowledge base health metrics
+
+**Source Citations:**
+**Location:** `src/components/public-genie/SourceCitations.tsx`
+
+**Display Format:**
+- Source title
+- Excerpt
+- Relevance score
+- Last updated
+- Link to full source
+
+**Knowledge Base Service:**
+**Location:** `src/services/universalKnowledgeService.ts`
+
+**Capabilities:**
+- Vector similarity search
+- Semantic retrieval
+- Multi-source aggregation
+- Real-time updates
+- Citation tracking
+
+**RAG Configuration:**
+```typescript
+interface RAGConfig {
+  enabled: boolean;
+  topK: number; // Number of sources to retrieve (default: 5)
+  minSimilarity: number; // Minimum similarity threshold (0-1)
+  includeCategories: string[];
+  excludeCategories: string[];
+  maxContextLength: number; // Max tokens from RAG
+}
+```
+
+### 16. AI Intelligence Panel
+
+**Location:** `src/components/public-genie/AIIntelligencePanel.tsx`
+
+**Purpose:** Show AI's reasoning and decision-making process
+
+**Displayed Information:**
+- Model selected and why
+- Confidence level
+- Knowledge sources used
+- Processing steps
+- Token usage
+- Response time
+- Cost estimation
+
+**Benefits:**
+- Transparency
+- Trust building
+- Quality assurance
+- Debugging support
+
+### 17. AI Recommendations Panel
+
+**Location:** `src/components/public-genie/AIRecommendationsPanel.tsx`
+
+**Purpose:** Proactive suggestions based on conversation context
+
+**Recommendation Types:**
+
+1. **Next Steps**
+   - Suggested actions
+   - Related resources
+   - Follow-up questions
+
+2. **Resources**
+   - Documentation links
+   - Video tutorials
+   - Knowledge articles
+
+3. **Contacts**
+   - Treatment centers
+   - Support contacts
+   - Specialists
+
+4. **Tools**
+   - Calculators
+   - Forms
+   - Assessment tools
+
+### 18. Human Escalation
+
+**Location:** `src/components/public-genie/HumanEscalationForm.tsx`
+
+**Trigger Conditions:**
+- Low confidence responses
+- Unresolved queries after N turns
+- Explicit user request
+- Complex medical questions
+- Emergency situations
+
+**Escalation Form:**
+- Contact information
+- Issue summary
+- Conversation context
+- Urgency level
+- Preferred contact method
+
+**Escalation Workflow:**
+```
+Low Confidence → Suggest Escalation → User Confirms → Form → Ticket Created → Human Notified
+```
+
+### 19. Conversation Management
+
+**Session Manager:**
+**Location:** `src/components/public-genie/SessionManager.tsx`
+
+**Features:**
+- Session persistence
+- Auto-save conversations
+- Resume conversations
+- Export conversation history
+- Share conversations
+- Delete conversations
+
+**Conversation Limits:**
+**Location:** `src/components/public-genie/ConversationLimitModal.tsx`
+
+**Limit Types:**
+- Anonymous user limits
+- Authenticated user limits
+- Rate limiting
+- Token limits
+- Message limits
+
+**Limit Display:**
+- Current usage
+- Limit thresholds
+- Reset timers
+- Upgrade options
+
+### 20. Privacy & Public Features
+
+**Public Privacy Banner:**
+**Location:** `src/components/public-genie/PublicPrivacyBanner.tsx`
+
+**Information:**
+- Data collection practices
+- Privacy policy link
+- Cookie usage
+- Terms of service
+- User rights
+
+**How to Use Guide:**
+**Location:** `src/components/public-genie/HowToUseGuide.tsx`
+
+**Content:**
+- Getting started
+- Basic features
+- Advanced features
+- Tips and tricks
+- Keyboard shortcuts
+- FAQ
+
+**Multi-Model Guide:**
+**Location:** `src/components/public-genie/MultiModelGuide.tsx`
+
+**Explains:**
+- Available models
+- Model strengths
+- When to use each
+- Cost comparison
+- Performance comparison
+
+### 21. Journey & Workflow Mapping
+
+**Visual Journey Map:**
+**Location:** `src/components/public-genie/VisualJourneyMap.tsx`
+
+**Purpose:** Guide users through complex workflows
+
+**Features:**
+- Step-by-step visualization
+- Progress tracking
+- Interactive stages
+- Decision points
+- Completion status
+
+**Use Cases:**
+- Treatment enrollment
+- Insurance verification
+- Facility selection
+- Care planning
+
+### 22. Launch Readiness
+
+**Launch Readiness Report:**
+**Location:** `src/components/public-genie/LaunchReadinessReport.tsx`
+
+**Checks:**
+- Knowledge base completeness
+- Model configuration
+- Rate limits set
+- Analytics configured
+- Error handling tested
+- Performance benchmarks met
+
+**Readiness Score:**
+- Knowledge coverage: 0-100%
+- Configuration completeness: 0-100%
+- Testing coverage: 0-100%
+- Overall readiness: 0-100%
+
+### 23. Advanced AI Settings
+
+**Location:** `src/components/public-genie/AdvancedAISettings.tsx`
+
+**Configurable Parameters:**
+
+**Model Settings:**
+- Temperature (0.0 - 2.0)
+- Max tokens (100 - 32000)
+- Top P (0.0 - 1.0)
+- Frequency penalty
+- Presence penalty
+
+**RAG Settings:**
+- Enable/disable RAG
+- Number of sources (1-10)
+- Minimum similarity
+- Knowledge base filters
+
+**Response Settings:**
+- Streaming enable/disable
+- Response format
+- Citation style
+- Language preference
+
+**Safety Settings:**
+- Content filtering
+- PII detection
+- Medical disclaimer
+- Legal disclaimer
+
+### 24. Contact Center Optimization
+
+**Location:** `src/components/public-genie/ContactCenterOptimizer.tsx`
+
+**Purpose:** Reduce support load through intelligent deflection
+
+**Features:**
+- Intent detection
+- Auto-resolution suggestions
+- Knowledge base search
+- FAQ matching
+- Ticket creation (when needed)
+
+**Metrics Tracked:**
+- Deflection rate
+- Resolution rate
+- Escalation rate
+- Time saved
+- Cost savings
+
+### 25. Experimentation & A/B Testing
+
+**Experimentation Banner:**
+**Location:** `src/components/public-genie/ExperimentationBanner.tsx`
+
+**Features:**
+- Variant testing
+- Model comparison
+- Feature flags
+- Gradual rollout
+- Performance tracking
+
+**A/B Test Types:**
+- Model variants
+- System prompt variants
+- UI variations
+- Feature toggles
+
+### 26. Message Feedback
+
+**Location:** `src/components/enrollment-genie/MessageFeedback.tsx`
+
+**Feedback Types:**
+- Thumbs up/down
+- Star rating (1-5)
+- Text feedback
+- Issue reporting
+
+**Feedback Data Collected:**
+- Helpful/not helpful
+- Accuracy rating
+- Response quality
+- Speed satisfaction
+- Overall experience
+
+**Feedback Usage:**
+- Model improvement
+- Knowledge base updates
+- Feature prioritization
+- Quality metrics
+
+---
+
+## Language Model (LLM) Configuration
+
+### Supported LLM Providers
+
+#### 1. Google Gemini (Primary)
+
+**Models Available:**
+
+**gemini-2.5-pro:**
+- **Purpose:** Complex reasoning, multimodal tasks
+- **Context Window:** 1M tokens
+- **Strengths:** Vision, reasoning, large context
+- **Best For:** Medical imaging, complex queries, detailed analysis
+- **Cost:** Highest
+- **Latency:** Moderate
+
+**gemini-2.5-flash:**
+- **Purpose:** Balanced performance (DEFAULT MODEL)
+- **Context Window:** 1M tokens
+- **Strengths:** Speed, cost, versatility
+- **Best For:** General conversations, RAG queries
+- **Cost:** Medium
+- **Latency:** Low
+
+**gemini-2.5-flash-lite:**
+- **Purpose:** High-speed, low-cost
+- **Context Window:** 1M tokens
+- **Strengths:** Speed, cost-efficiency
+- **Best For:** Simple queries, classification, FAQs
+- **Cost:** Lowest
+- **Latency:** Minimal
+
+**gemini-2.5-flash-image:**
+- **Purpose:** Image generation
+- **Capabilities:** Text-to-image
+- **Best For:** Creating visuals, diagrams, illustrations
+
+**gemini-3-pro-preview:**
+- **Purpose:** Next-generation (preview)
+- **Features:** Enhanced capabilities
+- **Status:** Early access
+
+#### 2. OpenAI GPT (via Gateway)
+
+**Models Available:**
+
+**gpt-5:**
+- **Purpose:** Premium reasoning
+- **Context Window:** 128K tokens
+- **Strengths:** Nuanced understanding, accuracy
+- **Best For:** Critical decisions, high-stakes queries
+- **Cost:** Highest
+- **Latency:** Higher
+
+**gpt-5-mini:**
+- **Purpose:** Balanced OpenAI option
+- **Context Window:** 128K tokens
+- **Strengths:** Good performance, reasonable cost
+- **Best For:** When OpenAI specific features needed
+- **Cost:** Medium-high
+- **Latency:** Moderate
+
+**gpt-5-nano:**
+- **Purpose:** Fast OpenAI option
+- **Context Window:** 128K tokens
+- **Strengths:** Speed, cost
+- **Best For:** High-volume simple tasks
+- **Cost:** Medium
+- **Latency:** Low
+
+### Model Selection Strategy
+
+**Automatic Selection Algorithm:**
+
+```typescript
+function selectOptimalModel(query: Query): ModelSelection {
+  // Vision required?
+  if (query.hasImages) {
+    return {
+      model: 'google/gemini-2.5-pro',
+      reason: 'Vision capabilities required'
+    };
+  }
+  
+  // Complexity assessment
+  const complexity = assessComplexity(query);
+  
+  if (complexity === 'high') {
+    return {
+      model: 'google/gemini-2.5-pro',
+      reason: 'Complex reasoning required'
+    };
+  }
+  
+  if (complexity === 'low') {
+    return {
+      model: 'google/gemini-2.5-flash-lite',
+      reason: 'Simple query - optimize for speed and cost'
+    };
+  }
+  
+  // Default balanced option
+  return {
+    model: 'google/gemini-2.5-flash',
+    reason: 'Balanced performance for general query'
+  };
+}
+```
+
+**Complexity Factors:**
+- Query length
+- Technical terms
+- Medical terminology
+- Multiple questions
+- Contextual references
+- Required reasoning depth
+
+### Small Language Model (SLM) Support
+
+**Purpose:** Efficient processing for specific use cases
+
+**Gemini Flash Lite as SLM:**
+- Optimized for simple tasks
+- Classification
+- Sentiment analysis
+- Intent detection
+- Quick FAQs
+- Simple translations
+
+**Benefits:**
+- 10x faster responses
+- 5x lower cost
+- Sufficient for 60% of queries
+- Better user experience
+
+**Use Cases:**
+- "What are your hours?"
+- "Where are you located?"
+- "Do you accept insurance?"
+- Simple yes/no questions
+- Basic navigation
+
+### Model Configuration per Deployment
+
+**Deployment-Level Settings:**
+
+```typescript
+interface ModelConfig {
+  // Primary model
+  defaultModel: string;
+  
+  // Fallback chain
+  fallbackModels: string[];
+  
+  // Model-specific settings
+  modelSettings: {
+    [model: string]: {
+      temperature: number;
+      maxTokens: number;
+      topP: number;
+      frequencyPenalty: number;
+      presencePenalty: number;
+    };
+  };
+  
+  // Routing rules
+  routingRules: {
+    vision: string; // Model for image queries
+    complex: string; // Model for complex queries
+    simple: string; // Model for simple queries
+  };
+  
+  // Cost optimization
+  costOptimization: {
+    enabled: boolean;
+    preferCheaperModels: boolean;
+    maxCostPerQuery: number;
+  };
+}
+```
+
+### LLM API Integration
+
+**Lovable AI Gateway:**
+- Endpoint: `https://ai.gateway.lovable.dev/v1/chat/completions`
+- Authentication: `LOVABLE_API_KEY` (auto-provisioned)
+- Protocol: OpenAI-compatible API
+- Streaming: Server-Sent Events (SSE)
+
+**Request Format:**
+```typescript
+{
+  model: "google/gemini-2.5-flash",
+  messages: [
+    { role: "system", content: "System prompt" },
+    { role: "user", content: "User query" }
+  ],
+  temperature: 0.7,
+  max_tokens: 2000,
+  stream: true
+}
+```
+
+**Response Format (Streaming):**
+```
+data: {"choices":[{"delta":{"content":"Hello"}}]}
+data: {"choices":[{"delta":{"content":" there"}}]}
+data: {"choices":[{"delta":{"content":"!"}}]}
+data: [DONE]
+```
+
+### Token Management
+
+**Token Tracking:**
+- Input tokens counted
+- Output tokens counted
+- Total per conversation
+- Total per deployment
+- Cost calculation
+
+**Token Optimization:**
+- Compress system prompts
+- Limit context window
+- Truncate old messages
+- Summarize long conversations
+- Cache common responses
+
+### Error Handling & Fallbacks
+
+**Error Types:**
+
+1. **Rate Limit (429)**
+   - Wait and retry
+   - Switch to alternate model
+   - Queue request
+
+2. **Payment Required (402)**
+   - Notify user
+   - Suggest credit addition
+   - Graceful degradation
+
+3. **Model Unavailable (503)**
+   - Fallback to alternate model
+   - Retry with backoff
+   - Error message to user
+
+4. **Context Too Long (400)**
+   - Truncate conversation
+   - Summarize history
+   - Switch to larger context model
+
+**Fallback Chain Example:**
+```
+gemini-2.5-pro (primary)
+  ↓ (if unavailable)
+gemini-2.5-flash
+  ↓ (if unavailable)
+gpt-5-mini
+  ↓ (if unavailable)
+Error message + human escalation
+```
+
 ---
 
 ## Deployment System
@@ -1220,6 +2046,527 @@ Generate embeddings for knowledge entries
   ]
 }
 ```
+
+---
+
+## Additional Components & Utilities
+
+### Products and Centers Hub
+
+**Location:** `src/components/public-genie/ProductsAndCentersHub.tsx`
+
+**Purpose:** Unified interface for products and treatment centers
+
+**Features:**
+- Tabbed interface (Products | Centers)
+- Search and filter
+- Category navigation
+- Distance-based sorting
+- Insurance filtering
+- Quick actions
+
+**Integration:**
+- Seamlessly embedded in conversations
+- Context-aware recommendations
+- Direct booking/contact options
+
+### Product-Centered Flow
+
+**Location:** `src/components/public-genie/ProductCenteredFlow.tsx`
+
+**Purpose:** Guide users through product selection journey
+
+**Steps:**
+1. **Need Assessment** - Understand requirements
+2. **Product Discovery** - Show relevant products
+3. **Comparison** - Side-by-side comparison
+4. **Insurance Check** - Coverage verification
+5. **Purchase/Enrollment** - Complete transaction
+
+### Knowledge-Powered FAQ
+
+**Location:** `src/components/public-genie/KnowledgePoweredFAQ.tsx`
+
+**Features:**
+- Dynamic FAQ generation from knowledge base
+- Search functionality
+- Category-based organization
+- Auto-expanding answers
+- Related questions
+- Citation sources
+
+**FAQ Categories:**
+- Getting Started
+- Services & Products
+- Insurance & Billing
+- Locations & Hours
+- Clinical Information
+- Technical Support
+
+### Conversation Utilities
+
+**Location:** `src/components/public-genie/ConversationUtils.tsx`
+
+**Utility Functions:**
+
+```typescript
+// Message formatting
+formatMessage(message: Message): FormattedMessage
+
+// Conversation summary
+summarizeConversation(messages: Message[]): Summary
+
+// Export conversations
+exportConversation(conversationId: string, format: 'json' | 'pdf' | 'txt'): File
+
+// Search conversations
+searchConversations(query: string, filters: SearchFilters): Conversation[]
+
+// Conversation analytics
+analyzeConversation(conversationId: string): ConversationAnalytics
+```
+
+### Configuration Wizard Advanced Features
+
+**Location:** `src/components/public-genie/ConfigurationWizard.tsx`
+
+**Step 1: RAG & Knowledge Base**
+- Knowledge source selection
+- Upload documents
+- Crawl websites
+- Import from databases
+- CSV/JSON import
+- Embedding generation
+- Vector index creation
+
+**Step 2: AI Model Configuration**
+- Provider selection (Google/OpenAI)
+- Model selection with comparison
+- Temperature slider with preview
+- Max tokens configuration
+- Advanced parameters (Top P, penalties)
+- Cost estimation per query
+- Performance preview
+
+**Step 3: MCP Server Integration**
+- Available servers list
+- Server configuration
+- Authentication setup
+- Endpoint configuration
+- Test connection
+- Scope settings
+
+**Step 4: System Behavior**
+- System prompt editor with templates
+- Response style (formal/casual/technical)
+- Safety settings
+- Content filtering
+- PII handling
+- Disclaimer configuration
+
+**Step 5: User Experience**
+- Theme customization
+- Welcome message
+- Suggested prompts
+- Conversation limits
+- Rate limiting rules
+- Escalation settings
+
+**Step 6: Review & Deploy**
+- Configuration preview
+- Validation checks
+- Cost estimates
+- Performance predictions
+- Deployment options (draft/active)
+- Generate embed codes
+
+### Typing Indicator
+
+**Location:** `src/components/enrollment-genie/TypingIndicator.tsx`
+
+**Features:**
+- Animated dots
+- "Genie is thinking..." message
+- Processing status
+- Model indication (when using specific model)
+- Estimated time remaining
+
+### Conversation Message Component
+
+**Location:** `src/components/enrollment-genie/ConversationMessage.tsx`
+
+**Message Types:**
+- User messages
+- Assistant messages
+- System messages
+- Error messages
+- Information messages
+
+**Message Features:**
+- Markdown rendering
+- Code syntax highlighting
+- Copy to clipboard
+- Edit message
+- Regenerate response
+- Feedback buttons
+- Timestamp
+- Token count
+- Confidence indicator
+
+### Technology Knowledge Base
+
+**Location:** `src/components/public-genie/TechnologyKnowledgeBase.tsx`
+
+**Technical Documentation:**
+- API documentation
+- SDK references
+- Integration guides
+- Code examples
+- Troubleshooting
+- Best practices
+
+**Categories:**
+- Getting Started
+- API Reference
+- SDKs & Libraries
+- Integrations
+- Deployment
+- Security
+- Performance
+
+### Pricing Display
+
+**Location:** `src/components/public-genie/PricingDisplay.tsx`
+
+**Display Modes:**
+- Simple list view
+- Comparison table
+- Card grid
+- Detailed breakdown
+
+**Pricing Components:**
+- Base price
+- Insurance coverage
+- Out-of-pocket estimate
+- Payment plans
+- Financial assistance
+- Total cost calculator
+
+### Treatment Center Map Component
+
+**Location:** `src/components/public-genie/TreatmentCenterMap.tsx`
+
+**Map Features:**
+- Interactive Mapbox GL map
+- Cluster markers
+- Individual center markers
+- Distance circles
+- Routing/directions
+- Street view integration
+- Real-time updates
+
+**Map Controls:**
+- Zoom in/out
+- Geolocation
+- Search by address
+- Filter by services
+- Sort by distance
+- Show/hide clusters
+
+**Map Data:**
+- Center locations (lat/lng)
+- Service indicators
+- Availability status
+- Rating indicators
+- Distance labels
+
+### Examples & Templates
+
+**Location:** `src/components/examples/UniversalKnowledgeExamples.tsx`
+
+**Example Categories:**
+
+1. **Healthcare Examples:**
+   - Treatment inquiry
+   - Insurance verification
+   - Appointment scheduling
+   - Medical records request
+   - Prescription refills
+
+2. **Product Examples:**
+   - Product search
+   - Price comparison
+   - Feature questions
+   - Availability check
+   - Order status
+
+3. **Technical Examples:**
+   - API integration
+   - Troubleshooting
+   - Configuration help
+   - Error resolution
+   - Best practices
+
+4. **Business Examples:**
+   - ROI calculation
+   - Cost analysis
+   - Market research
+   - Competitive analysis
+   - Strategic planning
+
+### Conversation State Management
+
+**Hook:** `src/hooks/useConversationState.ts`
+
+**State Management:**
+```typescript
+interface ConversationState {
+  messages: Message[];
+  isLoading: boolean;
+  error: Error | null;
+  conversationId: string;
+  metadata: ConversationMetadata;
+  context: ConversationContext;
+}
+
+// Actions
+const {
+  sendMessage,
+  regenerateResponse,
+  editMessage,
+  clearConversation,
+  loadConversation,
+  exportConversation
+} = useConversationState();
+```
+
+### Universal AI Hook
+
+**Hook:** `src/hooks/useUniversalAI.ts`
+
+**Purpose:** Unified interface for all AI interactions
+
+**Features:**
+```typescript
+const {
+  // Send message
+  sendMessage,
+  
+  // Streaming state
+  isStreaming,
+  currentResponse,
+  
+  // Configuration
+  setModel,
+  setTemperature,
+  setMaxTokens,
+  
+  // RAG
+  enableRAG,
+  setRAGSources,
+  
+  // Context
+  addContext,
+  clearContext,
+  
+  // Error handling
+  error,
+  retry
+} = useUniversalAI(config);
+```
+
+### Universal Knowledge Topics
+
+**Hook:** `src/hooks/useUniversalKnowledgeTopics.ts`
+
+**Purpose:** Manage knowledge base topics dynamically
+
+**Features:**
+```typescript
+const {
+  topics,
+  loadTopics,
+  searchTopics,
+  getPopularTopics,
+  getRelatedTopics,
+  topicsByCategory
+} = useUniversalKnowledgeTopics();
+```
+
+### Visitor Tracking
+
+**Hook:** `src/hooks/useVisitorTracking.ts`
+
+**Purpose:** Track anonymous and authenticated visitors
+
+**Tracked Events:**
+- Page views
+- Conversation starts
+- Message sends
+- Feature usage
+- Time on page
+- Exit points
+
+**Privacy Compliant:**
+- No PII collection
+- Respects DNT
+- GDPR compliant
+- Cookie consent
+
+### AB Test Milestones
+
+**Hook:** `src/hooks/useABTestMilestones.ts`
+
+**Purpose:** Track experiment variants and outcomes
+
+**Features:**
+- Variant assignment
+- Event tracking
+- Conversion tracking
+- Statistical significance
+- Export results
+
+---
+
+## Healthcare-Specific Implementation Details
+
+### Treatment Center Data Pipeline
+
+**Data Sources:**
+1. **CSV Import** - `treatment-centers-enhanced.csv`
+2. **Web Crawling** - Automated center discovery
+3. **Manual Entry** - Admin dashboard input
+4. **API Integration** - Third-party provider data
+
+**Data Structure:**
+```typescript
+interface TreatmentCenter {
+  id: string;
+  name: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+  };
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  contact: {
+    phone: string;
+    email: string;
+    website: string;
+  };
+  services: string[];
+  specializations: string[];
+  insurance: string[];
+  ratings: {
+    overall: number;
+    cleanliness: number;
+    staff: number;
+    effectiveness: number;
+  };
+  availability: {
+    beds_available: number;
+    accepting_patients: boolean;
+    waiting_list: boolean;
+  };
+  metadata: {
+    verified: boolean;
+    last_updated: string;
+    source: string;
+  };
+}
+```
+
+**Treatment Center Service:**
+
+**Location:** `src/services/treatmentCenterService.ts`
+
+Key functions for treatment center operations including location-based search, service filtering, insurance verification, and availability checking.
+
+**Treatment Center Crawler:**
+
+**Component:** `src/components/admin/TreatmentCenterCrawler.tsx`
+**Edge Function:** `supabase/functions/crawl-treatment-centers/index.ts`
+
+Automatically discovers and indexes treatment centers from various sources.
+
+### Medical Image Analysis System
+
+**Supported Modalities:**
+- X-Ray, CT Scan, MRI, Ultrasound
+- Mammography, PET Scan
+- DICOM format support
+
+**Analysis Service:**
+
+**Location:** `src/services/medicalImageAnalysisService.ts`
+
+Provides medical image analysis using vision-capable AI models (Gemini 2.5 Pro).
+
+**DICOM Parser:**
+
+**Utility:** `src/utils/dicomParser.ts`
+
+Handles DICOM medical imaging format parsing and conversion.
+
+### Product Pricing System
+
+**Pricing Service:**
+
+**Location:** `src/services/productPricingService.ts`
+
+Manages product pricing, insurance adjustments, and payment plan calculations.
+
+**Pricing Components:**
+- Base pricing
+- Insurance coverage calculation
+- Out-of-pocket estimation
+- Payment plan generation
+- Financial assistance matching
+
+**Pricing Data Sync:**
+
+**Component:** `src/components/admin/PricingKnowledgeSyncButton.tsx`
+**Edge Function:** `supabase/functions/sync-pricing-to-knowledge/index.ts`
+
+Syncs pricing information to knowledge base for RAG-powered queries.
+
+### Insurance Verification
+
+Comprehensive insurance verification system that:
+- Verifies coverage status
+- Calculates cost estimates
+- Checks pre-authorization requirements
+- Generates verification reports
+
+### Healthcare Knowledge Base
+
+**Knowledge Categories:**
+- Clinical Information
+- Insurance & Billing
+- Facility Information
+- Patient Resources
+
+**Population:**
+
+**Edge Function:** `supabase/functions/populate-healthcare-knowledge/index.ts`
+
+Automatically populates healthcare-specific knowledge from trusted sources.
+
+### Healthcare Compliance
+
+**HIPAA Compliance:**
+- No PHI storage in conversations
+- Encrypted transmission
+- Audit logging
+- Access controls
+
+**Medical Disclaimer:**
+Always displayed to inform users that AI provides general information only, not medical advice.
 
 ---
 
