@@ -71,6 +71,14 @@ interface WizardProps {
   onSuccess: () => void;
 }
 
+interface Agent {
+  id: string;
+  name: string;
+  description: string | null;
+  status: string | null;
+  agent_type: string | null;
+}
+
 interface KnowledgeBaseEntry {
   id: string;
   finding_name: string | null;
@@ -159,7 +167,12 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
   const [mcpServers, setMcpServers] = useState<MCPServer[]>([]);
   const [selectedMcpServers, setSelectedMcpServers] = useState<string[]>([]);
 
-  const totalSteps = 7;
+  // Step 7 (Optional): Agent Linking
+  const [agents, setAgents] = useState<Agent[]>([]);
+  const [selectedAgentId, setSelectedAgentId] = useState<string | null>(null);
+  const [enableAgentLink, setEnableAgentLink] = useState(false);
+
+  const totalSteps = 8; // Updated to 8 steps
 
   // Load all data on mount
   useEffect(() => {
@@ -174,6 +187,7 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
       loadKnowledgeBase(),
       loadMcpServers(),
       loadTreatmentCenterCount(),
+      loadAgents(),
     ]);
     setLoadingData(false);
   };
@@ -219,6 +233,22 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
       }
     } catch (error) {
       console.error("Error loading treatment center count:", error);
+    }
+  };
+
+  const loadAgents = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('agents')
+        .select('id, name, description, status, agent_type')
+        .eq('status', 'active')
+        .order('name');
+      
+      if (error) throw error;
+      setAgents(data || []);
+    } catch (error) {
+      console.error('Error loading agents:', error);
+      toast.error('Failed to load agents');
     }
   };
 
@@ -299,6 +329,7 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
         knowledge_base_snapshot: knowledgeSnapshot,
         mcp_servers_snapshot: mcpSnapshot,
         model_config: modelConfig,
+        agent_id: enableAgentLink && selectedAgentId ? selectedAgentId : null, // Hybrid: optional agent link
       });
 
       toast.success("Deployment created successfully!");
@@ -1213,16 +1244,116 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
         return (
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-4">
+              <Cpu className="w-5 h-5 text-primary" />
+              <h3 className="text-lg font-semibold">Agent Linking (Optional)</h3>
+            </div>
+            
+            <Card className="p-4 bg-muted/30">
+              <p className="text-sm text-muted-foreground mb-4">
+                Link this deployment to an existing agent to inherit advanced capabilities like actions, workflows, and agent-specific configurations.
+              </p>
+              
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <Label>Enable Agent Linking</Label>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Standalone conversational AI vs. Agent-powered deployment
+                  </p>
+                </div>
+                <Switch
+                  checked={enableAgentLink}
+                  onCheckedChange={setEnableAgentLink}
+                />
+              </div>
+            </Card>
+
+            {enableAgentLink && (
+              loadingData ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                </div>
+              ) : agents.length === 0 ? (
+                <Card className="p-6 text-center">
+                  <Cpu className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                  <p className="text-sm text-muted-foreground">
+                    No active agents available
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Create an agent first to enable agent linking
+                  </p>
+                </Card>
+              ) : (
+                <div className="space-y-3">
+                  <Label>Select Agent</Label>
+                  <RadioGroup value={selectedAgentId || ''} onValueChange={setSelectedAgentId}>
+                    <ScrollArea className="h-[300px] pr-4">
+                      {agents.map((agent) => (
+                        <div key={agent.id} className="mb-3">
+                          <Card className={`cursor-pointer transition-colors ${
+                            selectedAgentId === agent.id ? 'border-primary bg-primary/5' : 'hover:border-primary/50'
+                          }`}>
+                            <CardContent className="p-4 flex items-start gap-3">
+                              <RadioGroupItem value={agent.id} id={`agent-${agent.id}`} />
+                              <label htmlFor={`agent-${agent.id}`} className="flex-1 cursor-pointer">
+                                <div className="flex items-center gap-2">
+                                  <h4 className="font-medium">{agent.name}</h4>
+                                  <Badge variant="secondary" className="text-xs">
+                                    {agent.agent_type || 'Standard'}
+                                  </Badge>
+                                  {agent.status === 'active' && (
+                                    <span className="w-2 h-2 rounded-full bg-green-500" />
+                                  )}
+                                </div>
+                                {agent.description && (
+                                  <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                                    {agent.description}
+                                  </p>
+                                )}
+                              </label>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      ))}
+                    </ScrollArea>
+                  </RadioGroup>
+
+                  {selectedAgentId && (
+                    <Card className="p-4 bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800">
+                      <div className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-green-600 mt-0.5" />
+                        <div className="text-sm text-green-800 dark:text-green-200">
+                          <p className="font-medium">Agent capabilities will be inherited:</p>
+                          <ul className="list-disc list-inside mt-2 space-y-1 text-xs">
+                            <li>Agent actions and workflows</li>
+                            <li>Advanced MCP server integrations</li>
+                            <li>Agent-specific configurations</li>
+                            <li>Custom prompts and behavior</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </Card>
+                  )}
+                </div>
+              )
+            )}
+          </div>
+        );
+
+      case 8:
+        return (
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-4">
               <Check className="w-5 h-5 text-primary" />
               <h3 className="text-lg font-semibold">Review Configuration</h3>
             </div>
 
             <Tabs defaultValue="basic" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="basic">Basic</TabsTrigger>
                 <TabsTrigger value="knowledge">Knowledge</TabsTrigger>
                 <TabsTrigger value="model">Model</TabsTrigger>
                 <TabsTrigger value="data">Data Sources</TabsTrigger>
+                <TabsTrigger value="agent">Agent</TabsTrigger>
               </TabsList>
 
               <TabsContent value="basic" className="space-y-4 mt-4">
@@ -1330,6 +1461,30 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
                   </CardContent>
                 </Card>
               </TabsContent>
+
+              <TabsContent value="agent" className="space-y-4 mt-4">
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base">Agent Linking</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2 text-sm">
+                    <div><span className="font-medium">Agent Linking:</span> {enableAgentLink ? 'Enabled' : 'Disabled (Standalone)'}</div>
+                    {enableAgentLink && selectedAgentId && (
+                      <div>
+                        <span className="font-medium">Linked Agent:</span> {agents.find(a => a.id === selectedAgentId)?.name || 'Unknown'}
+                        <Badge variant="secondary" className="ml-2 text-xs">
+                          {agents.find(a => a.id === selectedAgentId)?.agent_type || 'Standard'}
+                        </Badge>
+                      </div>
+                    )}
+                    {!enableAgentLink && (
+                      <p className="text-xs text-muted-foreground">
+                        Deployment will use standalone conversational AI without agent capabilities
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
             </Tabs>
           </div>
         );
@@ -1346,6 +1501,7 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
     "Data Sources",
     "AI Model",
     "MCP Servers",
+    "Agent Linking",
     "Review"
   ];
 
