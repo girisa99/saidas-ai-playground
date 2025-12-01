@@ -238,7 +238,8 @@ export function MCPServerManager() {
               MCP Server Configuration
             </CardTitle>
             <CardDescription>
-              Configure MCP servers using the official SDK. Default local servers (Filesystem, Memory, Postgres) are pre-configured.
+              Configure MCP (Model Context Protocol) servers to provide additional context to your agents.
+              HTTP-based remote MCP servers can be configured here. Local MCP servers require backend integration.
             </CardDescription>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

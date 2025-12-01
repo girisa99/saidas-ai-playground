@@ -6,8 +6,6 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
-import { Client } from '@modelcontextprotocol/sdk/client/index.js';
-import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 
 // Default local MCP servers that come pre-configured
 export const DEFAULT_MCP_SERVERS = [
@@ -314,37 +312,9 @@ export async function getMCPHealthHistory(serverId: string, limit: number = 10):
 }
 
 /**
- * Create MCP client for local servers using SDK
+ * Note: Local MCP servers with stdio transport require Node.js and must be handled
+ * by backend edge functions. Browser-based frontend can only use HTTP-based MCP servers.
  */
-async function createMCPClient(server: MCPServer): Promise<Client | null> {
-  try {
-    // Check if it's a local MCP server
-    if (server.endpoint_url.startsWith('local://') && server.metadata?.transport === 'stdio') {
-      const transport = new StdioClientTransport({
-        command: server.metadata.command,
-        args: server.metadata.args
-      });
-
-      const client = new Client(
-        {
-          name: server.name,
-          version: '1.0.0'
-        },
-        {
-          capabilities: {}
-        }
-      );
-
-      await client.connect(transport);
-      return client;
-    }
-    
-    return null;
-  } catch (error) {
-    console.error('Failed to create MCP client:', error);
-    return null;
-  }
-}
 
 /**
  * Retrieve context from an MCP server using SDK or HTTP
@@ -357,39 +327,13 @@ export async function callMCPServer(
   const startTime = Date.now();
   
   try {
-    // Try SDK-based connection for local servers
+    // Local MCP servers require backend processing
+    // For now, we only support HTTP-based MCP servers in the browser
     if (server.endpoint_url.startsWith('local://')) {
-      const client = await createMCPClient(server);
-      
-      if (client) {
-        try {
-          // List available resources
-          const resources = await client.listResources();
-          
-          // Call tools if available
-          const tools = await client.listTools();
-          
-          const responseTime = Date.now() - startTime;
-          
-          return {
-            server_id: server.id,
-            server_name: server.name,
-            context: {
-              resources: resources.resources,
-              tools: tools.tools,
-              query,
-              timestamp: new Date().toISOString()
-            },
-            response_time_ms: responseTime,
-            success: true
-          };
-        } finally {
-          await client.close();
-        }
-      }
+      throw new Error('Local MCP servers must be accessed via backend edge functions');
     }
 
-    // Fallback to HTTP for remote servers
+    // HTTP-based MCP servers
     const headers: Record<string, string> = {
       'Content-Type': 'application/json'
     };
