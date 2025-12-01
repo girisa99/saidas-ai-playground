@@ -883,7 +883,11 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
                       <ul className="list-disc list-inside space-y-1 ml-2">
                         <li>Intent-based model routing (SLM → Healthcare → LLM → Vision)</li>
                         <li>Optimization transparency (rationale, cost, latency)</li>
+                        <li>Context persistence across messages (full conversation history)</li>
+                        <li>Intelligent context switching (healthcare ↔ technology detection)</li>
+                        <li>KB/RAG-aware topic suggestions from knowledge base</li>
                         <li>Milestone suggestions (at 3, 5, 7 messages)</li>
+                        <li>Proactive conversation guidance based on intent</li>
                         <li>Emotional intelligence & tone adaptation</li>
                         <li>Contextual humor (when appropriate)</li>
                         <li>Rich media rendering (images, tables, HTML, journey maps)</li>
@@ -1280,6 +1284,14 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
                     <div><span className="font-medium">Max Tokens:</span> {maxTokens}</div>
                     <div><span className="font-medium">AI Mode:</span> {aiMode === 'default' ? 'Default' : aiMode === 'single' ? 'Single Agent' : 'Multi-Agent'}</div>
                     <div><span className="font-medium">Smart Routing:</span> {enableSmartRouting ? 'Enabled ✨' : 'Disabled'}</div>
+                    {enableSmartRouting && (
+                      <div className="pl-4 text-xs text-muted-foreground border-l-2 border-primary/30 mt-2">
+                        <p>• Context persistence & switching detection</p>
+                        <p>• KB/RAG topic suggestions</p>
+                        <p>• Proactive conversation guidance</p>
+                        <p>• Emotional intelligence & rich media</p>
+                      </div>
+                    )}
                     <div><span className="font-medium">Vision:</span> {enableVision ? 'Enabled' : 'Disabled'}</div>
                     <div><span className="font-medium">Split Screen:</span> {enableSplitScreen ? 'Enabled' : 'Disabled'}</div>
                     {enableSplitScreen && splitScreenModels.length > 0 && (
