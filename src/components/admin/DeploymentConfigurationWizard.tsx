@@ -12,13 +12,58 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { createDeployment } from "@/services/deploymentService";
 import { 
   ChevronRight, ChevronLeft, Check, Loader2, Database, Brain, Server, Settings,
-  Building2, DollarSign, MapPin, Plus, Trash2, Link, Globe, FileText, Sparkles
+  Building2, DollarSign, MapPin, Plus, Trash2, Link, Globe, FileText, Sparkles,
+  Eye, Cpu, Stethoscope, Zap
 } from "lucide-react";
+
+// Complete model options matching Genie AI system
+const MODEL_OPTIONS = {
+  llm: [
+    { id: 'google/gemini-2.5-pro', name: 'Gemini 2.5 Pro', provider: 'Google', description: 'Top-tier multimodal, complex reasoning', vision: true },
+    { id: 'google/gemini-2.5-flash', name: 'Gemini 2.5 Flash', provider: 'Google', description: 'Balanced cost & performance', vision: true },
+    { id: 'openai/gpt-5', name: 'GPT-5', provider: 'OpenAI', description: 'Powerful reasoning, long context', vision: true },
+    { id: 'openai/gpt-5-mini', name: 'GPT-5 Mini', provider: 'OpenAI', description: 'Lower cost, strong performance', vision: true },
+    { id: 'claude-sonnet-4-5', name: 'Claude Sonnet 4.5', provider: 'Anthropic', description: 'Superior reasoning & intelligence', vision: true },
+    { id: 'claude-3-opus', name: 'Claude 3 Opus', provider: 'Anthropic', description: 'Most capable Claude with vision', vision: true },
+    { id: 'claude-3-sonnet', name: 'Claude 3 Sonnet', provider: 'Anthropic', description: 'Balanced performance and cost', vision: true },
+    { id: 'gpt-4o', name: 'GPT-4o', provider: 'OpenAI', description: 'Advanced multimodal model', vision: true },
+    { id: 'gpt-4o-mini', name: 'GPT-4o Mini', provider: 'OpenAI', description: 'Efficient vision model', vision: true },
+  ],
+  slm: [
+    { id: 'google/gemini-2.5-flash-lite', name: 'Gemini 2.5 Flash Lite', provider: 'Google', description: 'Fastest, cheapest Gemini' },
+    { id: 'openai/gpt-5-nano', name: 'GPT-5 Nano', provider: 'OpenAI', description: 'Speed & cost optimized' },
+    { id: 'claude-3-haiku', name: 'Claude 3 Haiku', provider: 'Anthropic', description: 'Fastest Claude model' },
+    { id: 'phi-3.5-mini', name: 'Phi-3.5 Mini', provider: 'Microsoft', description: 'Compact efficient model' },
+    { id: 'phi-3-mini', name: 'Phi-3 Mini', provider: 'Microsoft', description: 'Small but capable' },
+    { id: 'llama-3.1-8b', name: 'Llama 3.1 8B', provider: 'Meta', description: 'Open-source efficient' },
+    { id: 'mistral-7b', name: 'Mistral 7B', provider: 'Mistral', description: 'High-performance 7B' },
+    { id: 'gemma-7b', name: 'Gemma 7B', provider: 'Google', description: 'Lightweight model' },
+    { id: 'qwen-7b', name: 'Qwen 7B', provider: 'Alibaba', description: 'Efficient multilingual' },
+  ],
+  vlm: [
+    { id: 'google/gemini-2.0-flash-vision', name: 'Gemini 2.0 Flash Vision', provider: 'Google', description: 'Fast vision processing' },
+    { id: 'gemini-pro-vision', name: 'Gemini Pro Vision', provider: 'Google', description: 'Multimodal AI model' },
+    { id: 'gpt-4-vision', name: 'GPT-4 Vision', provider: 'OpenAI', description: 'Advanced image analysis' },
+    { id: 'llava-1.6', name: 'LLaVA 1.6', provider: 'LAION', description: 'Open-source VLM' },
+    { id: 'cogvlm', name: 'CogVLM', provider: 'Tsinghua', description: 'Advanced vision understanding' },
+    { id: 'paligemma', name: 'PaliGemma', provider: 'Google', description: 'VLM based on Gemma' },
+  ],
+  healthcare: [
+    { id: 'med-palm-2', name: 'Med-PaLM 2', provider: 'Google', description: 'Medical question answering' },
+    { id: 'biogpt', name: 'BioGPT', provider: 'Microsoft', description: 'Biomedical text generation' },
+    { id: 'clinical-bert', name: 'Clinical BERT', provider: 'MIT', description: 'Clinical note analysis' },
+    { id: 'bioclinical-bert', name: 'BioClinical BERT', provider: 'NCBI', description: 'Biomedical NLP' },
+    { id: 'pubmedbert', name: 'PubMedBERT', provider: 'NIH', description: 'PubMed abstracts trained' },
+    { id: 'biomistral-7b', name: 'BioMistral 7B', provider: 'Mistral', description: 'Medical domain Mistral' },
+    { id: 'galactica-6.7b', name: 'Galactica 6.7B', provider: 'Meta', description: 'Scientific knowledge' },
+  ],
+};
 
 interface WizardProps {
   open: boolean;
@@ -100,12 +145,13 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
   const [treatmentCenterCount, setTreatmentCenterCount] = useState(0);
 
   // Step 5: Model Configuration
-  const [modelProvider, setModelProvider] = useState("google");
-  const [modelName, setModelName] = useState("gemini-2.5-flash");
+  const [selectedModelId, setSelectedModelId] = useState("google/gemini-2.5-flash");
+  const [modelCategory, setModelCategory] = useState<'llm' | 'slm' | 'vlm' | 'healthcare'>('llm');
   const [temperature, setTemperature] = useState("0.7");
   const [maxTokens, setMaxTokens] = useState("2000");
   const [enableVision, setEnableVision] = useState(false);
   const [enableSplitScreen, setEnableSplitScreen] = useState(false);
+  const [splitScreenModels, setSplitScreenModels] = useState<string[]>([]);
 
   // Step 6: MCP Servers
   const [mcpServers, setMcpServers] = useState<MCPServer[]>([]);
@@ -221,12 +267,13 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
         : null;
 
       const modelConfig = {
-        provider: modelProvider,
-        model: modelName,
+        model: selectedModelId,
+        category: modelCategory,
         temperature: parseFloat(temperature),
         max_tokens: parseInt(maxTokens),
         enable_vision: enableVision,
         enable_split_screen: enableSplitScreen,
+        split_screen_models: enableSplitScreen ? splitScreenModels : [],
       };
 
       const brandConfig = {
@@ -278,12 +325,13 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
       healthcareKnowledge: true,
       medicalImaging: false,
     });
-    setModelProvider("google");
-    setModelName("gemini-2.5-flash");
+    setSelectedModelId("google/gemini-2.5-flash");
+    setModelCategory('llm');
     setTemperature("0.7");
     setMaxTokens("2000");
     setEnableVision(false);
     setEnableSplitScreen(false);
+    setSplitScreenModels([]);
     onClose();
   };
 
@@ -699,6 +747,12 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
         );
 
       case 5:
+        const getSelectedModel = () => {
+          const allModels = [...MODEL_OPTIONS.llm, ...MODEL_OPTIONS.slm, ...MODEL_OPTIONS.vlm, ...MODEL_OPTIONS.healthcare];
+          return allModels.find(m => m.id === selectedModelId);
+        };
+        const currentModel = getSelectedModel();
+        
         return (
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-4">
@@ -706,52 +760,68 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
               <h3 className="text-lg font-semibold">AI Model Configuration</h3>
             </div>
             
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="model-provider">Provider</Label>
-                <Select value={modelProvider} onValueChange={setModelProvider}>
-                  <SelectTrigger id="model-provider">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="google">Google (Gemini)</SelectItem>
-                    <SelectItem value="openai">OpenAI (GPT)</SelectItem>
-                    <SelectItem value="anthropic">Anthropic (Claude)</SelectItem>
-                  </SelectContent>
-                </Select>
+            <Tabs value={modelCategory} onValueChange={(v: any) => setModelCategory(v)} className="w-full">
+              <TabsList className="grid w-full grid-cols-4">
+                <TabsTrigger value="llm" className="gap-1">
+                  <Brain className="w-3 h-3" />
+                  <span className="hidden sm:inline">LLM</span>
+                </TabsTrigger>
+                <TabsTrigger value="slm" className="gap-1">
+                  <Zap className="w-3 h-3" />
+                  <span className="hidden sm:inline">SLM</span>
+                </TabsTrigger>
+                <TabsTrigger value="vlm" className="gap-1">
+                  <Eye className="w-3 h-3" />
+                  <span className="hidden sm:inline">Vision</span>
+                </TabsTrigger>
+                <TabsTrigger value="healthcare" className="gap-1">
+                  <Stethoscope className="w-3 h-3" />
+                  <span className="hidden sm:inline">Medical</span>
+                </TabsTrigger>
+              </TabsList>
+
+              {(['llm', 'slm', 'vlm', 'healthcare'] as const).map((category) => (
+                <TabsContent key={category} value={category} className="mt-4">
+                  <ScrollArea className="h-[200px]">
+                    <RadioGroup value={selectedModelId} onValueChange={setSelectedModelId}>
+                      <div className="space-y-2">
+                        {MODEL_OPTIONS[category].map((model) => (
+                          <Card 
+                            key={model.id} 
+                            className={`cursor-pointer transition-colors ${selectedModelId === model.id ? 'border-primary bg-primary/5' : 'hover:border-primary/50'}`}
+                            onClick={() => setSelectedModelId(model.id)}
+                          >
+                            <CardContent className="p-3 flex items-center gap-3">
+                              <RadioGroupItem value={model.id} id={model.id} />
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <span className="font-medium text-sm">{model.name}</span>
+                                  <Badge variant="outline" className="text-xs">{model.provider}</Badge>
+                                  {'vision' in model && model.vision && (
+                                    <Badge variant="secondary" className="text-xs">Vision</Badge>
+                                  )}
+                                </div>
+                                <p className="text-xs text-muted-foreground">{model.description}</p>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </RadioGroup>
+                  </ScrollArea>
+                </TabsContent>
+              ))}
+            </Tabs>
+
+            {currentModel && (
+              <div className="p-3 bg-muted/50 rounded-lg">
+                <p className="text-sm">
+                  <span className="font-medium">Selected:</span> {currentModel.name} ({currentModel.provider})
+                </p>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="model-name">Model</Label>
-                <Select value={modelName} onValueChange={setModelName}>
-                  <SelectTrigger id="model-name">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {modelProvider === "google" && (
-                      <>
-                        <SelectItem value="gemini-2.5-pro">Gemini 2.5 Pro (LLM)</SelectItem>
-                        <SelectItem value="gemini-2.5-flash">Gemini 2.5 Flash (SLM)</SelectItem>
-                        <SelectItem value="gemini-2.5-flash-lite">Gemini 2.5 Flash Lite (SLM)</SelectItem>
-                        <SelectItem value="gemini-2.0-flash-vision">Gemini 2.0 Flash Vision (VLM)</SelectItem>
-                      </>
-                    )}
-                    {modelProvider === "openai" && (
-                      <>
-                        <SelectItem value="gpt-4o">GPT-4o (LLM)</SelectItem>
-                        <SelectItem value="gpt-4o-mini">GPT-4o Mini (SLM)</SelectItem>
-                        <SelectItem value="gpt-4-vision">GPT-4 Vision (VLM)</SelectItem>
-                      </>
-                    )}
-                    {modelProvider === "anthropic" && (
-                      <>
-                        <SelectItem value="claude-3.5-sonnet">Claude 3.5 Sonnet (LLM)</SelectItem>
-                        <SelectItem value="claude-3-haiku">Claude 3 Haiku (SLM)</SelectItem>
-                      </>
-                    )}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+            )}
+
+            <Separator />
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -812,6 +882,33 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
                   onCheckedChange={setEnableSplitScreen}
                 />
               </div>
+
+              {enableSplitScreen && (
+                <div className="space-y-2 p-3 border rounded-lg">
+                  <Label>Select Additional Models for Comparison</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[...MODEL_OPTIONS.llm.slice(0, 4), ...MODEL_OPTIONS.slm.slice(0, 2)].map((model) => (
+                      model.id !== selectedModelId && (
+                        <div key={model.id} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`split-${model.id}`}
+                            checked={splitScreenModels.includes(model.id)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                setSplitScreenModels([...splitScreenModels, model.id].slice(0, 3));
+                              } else {
+                                setSplitScreenModels(splitScreenModels.filter(id => id !== model.id));
+                              }
+                            }}
+                          />
+                          <label htmlFor={`split-${model.id}`} className="text-xs">{model.name}</label>
+                        </div>
+                      )
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground">Max 3 models for comparison</p>
+                </div>
+              )}
             </div>
           </div>
         );
@@ -969,12 +1066,15 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
                     <CardTitle className="text-base">AI Model</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
-                    <div><span className="font-medium">Provider:</span> {modelProvider}</div>
-                    <div><span className="font-medium">Model:</span> {modelName}</div>
+                    <div><span className="font-medium">Model:</span> {selectedModelId}</div>
+                    <div><span className="font-medium">Category:</span> {modelCategory.toUpperCase()}</div>
                     <div><span className="font-medium">Temperature:</span> {temperature}</div>
                     <div><span className="font-medium">Max Tokens:</span> {maxTokens}</div>
                     <div><span className="font-medium">Vision:</span> {enableVision ? 'Enabled' : 'Disabled'}</div>
                     <div><span className="font-medium">Split Screen:</span> {enableSplitScreen ? 'Enabled' : 'Disabled'}</div>
+                    {enableSplitScreen && splitScreenModels.length > 0 && (
+                      <div><span className="font-medium">Comparison Models:</span> {splitScreenModels.join(', ')}</div>
+                    )}
                   </CardContent>
                 </Card>
               </TabsContent>
