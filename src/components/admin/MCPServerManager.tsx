@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Plus, Server, Activity, Settings, Trash2, Play, Clock } from 'lucide-react';
+import { Plus, Server, Activity, Settings, Trash2, Play, Clock, Database, Globe, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -144,6 +144,22 @@ export function MCPServerManager() {
     }
   };
 
+  const handleEdit = (server: MCPServer) => {
+    setEditingServer(server);
+    setFormData({
+      name: server.name,
+      endpoint_url: server.endpoint_url,
+      authentication_type: server.authentication_type,
+      api_key: '',
+      health_check_url: server.health_check_url || '',
+      timeout_seconds: server.timeout_seconds,
+      description: server.description || '',
+      supported_domains: server.supported_domains?.join(', ') || '',
+      is_active: server.is_active
+    });
+    setIsDialogOpen(true);
+  };
+
   const handleHealthCheck = async (server: MCPServer) => {
     try {
       toast.info('Checking server health...');
@@ -228,6 +244,16 @@ export function MCPServerManager() {
     setIsTestDialogOpen(true);
   };
 
+  // Categorize servers
+  const supabaseServers = servers.filter(s => s.endpoint_url?.includes('supabase') || s.name?.toLowerCase().includes('supabase'));
+  const localStorageServers = servers.filter(s => s.endpoint_url?.startsWith('local://') || s.name?.toLowerCase().includes('local storage'));
+  const externalServers = servers.filter(s => 
+    !s.endpoint_url?.includes('supabase') && 
+    !s.endpoint_url?.startsWith('local://') && 
+    !s.name?.toLowerCase().includes('supabase') &&
+    !s.name?.toLowerCase().includes('local storage')
+  );
+
   return (
     <Card>
       <CardHeader>
@@ -239,7 +265,7 @@ export function MCPServerManager() {
             </CardTitle>
             <CardDescription>
               Configure MCP (Model Context Protocol) servers to provide additional context to your agents.
-              HTTP-based remote MCP servers can be configured here. Local MCP servers require backend integration.
+              Includes Supabase integration, local storage servers, and external HTTP-based servers.
             </CardDescription>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -378,109 +404,258 @@ export function MCPServerManager() {
       </CardHeader>
 
       <CardContent>
-        <div className="space-y-4">
-          {loading ? (
-            <div className="text-center py-12 text-muted-foreground">
-              <Server className="w-12 h-12 mx-auto mb-4 opacity-50 animate-pulse" />
-              <p>Loading MCP servers...</p>
-            </div>
-          ) : servers.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">
-              <Server className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <p>No MCP servers configured yet</p>
-              <p className="text-sm">Add your first MCP server to enable external context enrichment</p>
-            </div>
-          ) : (
-            servers.map((server) => (
-              <Card key={server.id}>
-                <CardContent className="pt-6">
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-6 h-6 animate-spin" />
+          </div>
+        ) : servers.length === 0 ? (
+          <div className="text-center py-12 text-muted-foreground">
+            <Server className="w-12 h-12 mx-auto mb-4 opacity-50" />
+            <p>No MCP servers configured</p>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {/* Supabase Servers */}
+            {supabaseServers.length > 0 && (
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Database className="w-4 h-4 text-green-600" />
+                  <h4 className="font-semibold text-sm">Supabase Integration</h4>
+                  <Badge variant="secondary" className="text-xs">{supabaseServers.length}</Badge>
+                </div>
+                <div className="space-y-2">
+                  {supabaseServers.map((server) => (
+              <Card key={server.id} className="border-l-4 border-l-green-600">
+                <CardContent className="p-4">
                   <div className="flex items-start justify-between">
-                    <div className="space-y-1 flex-1">
-                      <div className="flex items-center gap-2">
-                        <h4 className="font-semibold">{server.name}</h4>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="font-semibold">{server.name}</h3>
                         <Badge variant={server.is_active ? 'default' : 'secondary'}>
                           {server.is_active ? 'Active' : 'Inactive'}
                         </Badge>
                         {healthStatus[server.id] && (
                           <Badge 
-                            variant={
-                              healthStatus[server.id].status === 'healthy' ? 'default' :
-                              healthStatus[server.id].status === 'degraded' ? 'secondary' : 'destructive'
-                            }
+                            variant={healthStatus[server.id].status === 'healthy' ? 'default' : 'destructive'}
+                            className="gap-1"
                           >
-                            <Clock className="w-3 h-3 mr-1" />
-                            {healthStatus[server.id].response_time_ms}ms
+                            <Activity className="w-3 h-3" />
+                            {healthStatus[server.id].status}
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground">{server.endpoint_url}</p>
-                      {server.description && (
-                        <p className="text-sm mt-2">{server.description}</p>
-                      )}
-                      {server.supported_domains && server.supported_domains.length > 0 && (
-                        <div className="flex gap-1 mt-2 flex-wrap">
-                          {server.supported_domains.map((domain) => (
-                            <Badge key={domain} variant="outline" className="text-xs">
-                              {domain}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
+                      <p className="text-sm text-muted-foreground mb-2">{server.description}</p>
+                      <div className="flex flex-wrap gap-2 text-xs">
+                        <span className="flex items-center gap-1">
+                          <Server className="w-3 h-3" />
+                          {server.endpoint_url}
+                        </span>
+                        {server.authentication_type && (
+                          <Badge variant="outline" className="text-xs">
+                            {server.authentication_type}
+                          </Badge>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => openTestDialog(server)}
-                        title="Test Server"
-                      >
-                        <Play className="w-4 h-4" />
-                      </Button>
-                      <Button 
-                        variant="outline" 
+                    <div className="flex gap-2 ml-4">
+                      <Button
+                        variant="ghost"
                         size="sm"
                         onClick={() => handleHealthCheck(server)}
-                        title="Health Check"
                       >
                         <Activity className="w-4 h-4" />
                       </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        onClick={() => {
-                          setEditingServer(server);
-                          setFormData({
-                            name: server.name,
-                            endpoint_url: server.endpoint_url,
-                            authentication_type: server.authentication_type,
-                            api_key: '',
-                            health_check_url: server.health_check_url || '',
-                            timeout_seconds: server.timeout_seconds,
-                            description: server.description || '',
-                            supported_domains: server.supported_domains?.join(', ') || '',
-                            is_active: server.is_active
-                          });
-                          setIsDialogOpen(true);
-                        }}
-                        title="Edit Server"
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEdit(server)}
                       >
                         <Settings className="w-4 h-4" />
                       </Button>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => openTestDialog(server)}
+                      >
+                        <Play className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
                         size="sm"
                         onClick={() => handleDelete(server.id)}
-                        title="Delete Server"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-4 h-4 text-destructive" />
                       </Button>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            ))
-          )}
-        </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Local Storage Servers */}
+            {localStorageServers.length > 0 && (
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Database className="w-4 h-4 text-blue-600" />
+                  <h4 className="font-semibold text-sm">Local Storage Servers</h4>
+                  <Badge variant="secondary" className="text-xs">{localStorageServers.length}</Badge>
+                </div>
+                <div className="space-y-2">
+                  {localStorageServers.map((server) => (
+              <Card key={server.id} className="border-l-4 border-l-blue-600">
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="font-semibold">{server.name}</h3>
+                        <Badge variant={server.is_active ? 'default' : 'secondary'}>
+                          {server.is_active ? 'Active' : 'Inactive'}
+                        </Badge>
+                        {healthStatus[server.id] && (
+                          <Badge 
+                            variant={healthStatus[server.id].status === 'healthy' ? 'default' : 'destructive'}
+                            className="gap-1"
+                          >
+                            <Activity className="w-3 h-3" />
+                            {healthStatus[server.id].status}
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-2">{server.description}</p>
+                      <div className="flex flex-wrap gap-2 text-xs">
+                        <span className="flex items-center gap-1">
+                          <Server className="w-3 h-3" />
+                          {server.endpoint_url}
+                        </span>
+                        {server.authentication_type && (
+                          <Badge variant="outline" className="text-xs">
+                            {server.authentication_type}
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex gap-2 ml-4">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleHealthCheck(server)}
+                      >
+                        <Activity className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEdit(server)}
+                      >
+                        <Settings className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => openTestDialog(server)}
+                      >
+                        <Play className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(server.id)}
+                      >
+                        <Trash2 className="w-4 h-4 text-destructive" />
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* External Servers */}
+            {externalServers.length > 0 && (
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Globe className="w-4 h-4 text-purple-600" />
+                  <h4 className="font-semibold text-sm">External Servers</h4>
+                  <Badge variant="secondary" className="text-xs">{externalServers.length}</Badge>
+                </div>
+                <div className="space-y-2">
+                  {externalServers.map((server) => (
+              <Card key={server.id} className="border-l-4 border-l-purple-600">
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="font-semibold">{server.name}</h3>
+                        <Badge variant={server.is_active ? 'default' : 'secondary'}>
+                          {server.is_active ? 'Active' : 'Inactive'}
+                        </Badge>
+                        {healthStatus[server.id] && (
+                          <Badge 
+                            variant={healthStatus[server.id].status === 'healthy' ? 'default' : 'destructive'}
+                            className="gap-1"
+                          >
+                            <Activity className="w-3 h-3" />
+                            {healthStatus[server.id].status}
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-2">{server.description}</p>
+                      <div className="flex flex-wrap gap-2 text-xs">
+                        <span className="flex items-center gap-1">
+                          <Server className="w-3 h-3" />
+                          {server.endpoint_url}
+                        </span>
+                        {server.authentication_type && (
+                          <Badge variant="outline" className="text-xs">
+                            {server.authentication_type}
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex gap-2 ml-4">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleHealthCheck(server)}
+                      >
+                        <Activity className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEdit(server)}
+                      >
+                        <Settings className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => openTestDialog(server)}
+                      >
+                        <Play className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(server.id)}
+                      >
+                        <Trash2 className="w-4 h-4 text-destructive" />
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </CardContent>
 
       {/* Test MCP Server Dialog */}
