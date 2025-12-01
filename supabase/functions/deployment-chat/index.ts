@@ -77,17 +77,19 @@ serve(async (req) => {
     // Call the universal AI processor with deployment configuration
     const aiRequest = {
       provider: config.provider || 'gemini',
-      model: config.model || 'gemini-2.0-flash-exp',
+      model: config.model_config?.model || config.model || 'google/gemini-2.5-flash',
       prompt: message,
       systemPrompt: config.systemPrompt || 'You are a helpful AI assistant.',
-      temperature: config.temperature || 0.7,
-      maxTokens: config.maxTokens || 1000,
+      temperature: config.model_config?.temperature || config.temperature || 0.7,
+      maxTokens: config.model_config?.max_tokens || config.maxTokens || 1000,
       useRAG: config.useRAG || false,
       useMCP: config.useMCP || false,
-      enableSmartRouting: config.enableSmartRouting || false,
-      enableMultiAgent: config.enableMultiAgent || false,
+      enableSmartRouting: config.model_config?.enable_smart_routing !== false, // Default TRUE
+      enableMultiAgent: config.model_config?.ai_mode === 'multi', // Multi-agent if mode is 'multi'
+      aiMode: config.model_config?.ai_mode || 'default',
       conversationId: conversationId,
       sessionId: sessionId,
+      conversationHistory: [], // Can be enhanced with full history later
     };
 
     // Invoke ai-universal-processor
@@ -130,12 +132,24 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({
-        response: aiResponse.response,
-        model: aiResponse.model,
+        response: aiResponse.content || aiResponse.response,
+        model: aiResponse.modelUsed || aiResponse.model,
         confidence: aiResponse.confidence,
         tokensUsed: aiResponse.tokensUsed,
         conversationId: aiResponse.conversationId,
         deploymentName: deployment.name,
+        // Smart routing & optimization metadata
+        smartRoutingOptimization: aiResponse.metadata?.smartRoutingOptimization,
+        triageData: aiResponse.metadata?.triageData,
+        routingReasoning: aiResponse.routingReasoning || aiResponse.metadata?.routingReasoning,
+        estimatedCost: aiResponse.estimatedCost || aiResponse.metadata?.estimatedCost,
+        estimatedLatency: aiResponse.estimatedLatency || aiResponse.metadata?.estimatedLatency,
+        // Multi-agent metadata
+        collaborationMode: aiResponse.collaborationMode || aiResponse.metadata?.collaborationMode,
+        agentCount: aiResponse.agentCount || aiResponse.metadata?.agentCount,
+        consensusScore: aiResponse.consensusScore || aiResponse.metadata?.consensusScore,
+        // All metadata for rich features
+        metadata: aiResponse.metadata,
       }),
       { 
         status: 200, 

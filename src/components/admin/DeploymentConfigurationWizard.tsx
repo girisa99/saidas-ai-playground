@@ -152,6 +152,8 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
   const [enableVision, setEnableVision] = useState(false);
   const [enableSplitScreen, setEnableSplitScreen] = useState(false);
   const [splitScreenModels, setSplitScreenModels] = useState<string[]>([]);
+  const [enableSmartRouting, setEnableSmartRouting] = useState(true); // Smart routing & rich features
+  const [aiMode, setAiMode] = useState<'default' | 'single' | 'multi'>('default'); // AI collaboration mode
 
   // Step 6: MCP Servers
   const [mcpServers, setMcpServers] = useState<MCPServer[]>([]);
@@ -274,6 +276,8 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
         enable_vision: enableVision,
         enable_split_screen: enableSplitScreen,
         split_screen_models: enableSplitScreen ? splitScreenModels : [],
+        enable_smart_routing: enableSmartRouting,
+        ai_mode: aiMode,
       };
 
       const brandConfig = {
@@ -859,6 +863,77 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
               
               <div className="flex items-center justify-between">
                 <div>
+                  <Label>Enable Smart Routing & Rich Features</Label>
+                  <p className="text-xs text-muted-foreground">
+                    AI optimization, suggestions, humor, empathy, rich media (images, tables, HTML)
+                  </p>
+                </div>
+                <Switch
+                  checked={enableSmartRouting}
+                  onCheckedChange={setEnableSmartRouting}
+                />
+              </div>
+
+              {enableSmartRouting && (
+                <Card className="p-4 bg-primary/5 border-primary/20">
+                  <div className="flex items-start gap-3">
+                    <Sparkles className="w-5 h-5 text-primary mt-0.5" />
+                    <div className="space-y-2 text-xs text-muted-foreground">
+                      <p className="font-medium text-foreground">Smart Routing includes:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-2">
+                        <li>Intent-based model routing (SLM → Healthcare → LLM → Vision)</li>
+                        <li>Optimization transparency (rationale, cost, latency)</li>
+                        <li>Milestone suggestions (at 3, 5, 7 messages)</li>
+                        <li>Emotional intelligence & tone adaptation</li>
+                        <li>Contextual humor (when appropriate)</li>
+                        <li>Rich media rendering (images, tables, HTML, journey maps)</li>
+                      </ul>
+                    </div>
+                  </div>
+                </Card>
+              )}
+
+              <Separator />
+
+              <div className="space-y-2">
+                <Label>AI Collaboration Mode</Label>
+                <RadioGroup value={aiMode} onValueChange={(value: 'default' | 'single' | 'multi') => setAiMode(value)}>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3 p-3 border rounded-lg hover:border-primary/50 transition-colors">
+                      <RadioGroupItem value="default" id="mode-default" />
+                      <label htmlFor="mode-default" className="flex-1 cursor-pointer">
+                        <div className="font-medium">Default Mode</div>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Single AI model with smart routing optimization
+                        </p>
+                      </label>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 border rounded-lg hover:border-primary/50 transition-colors">
+                      <RadioGroupItem value="single" id="mode-single" />
+                      <label htmlFor="mode-single" className="flex-1 cursor-pointer">
+                        <div className="font-medium">Single Agent Mode</div>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          One specialized agent with role-based expertise
+                        </p>
+                      </label>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 border rounded-lg hover:border-primary/50 transition-colors">
+                      <RadioGroupItem value="multi" id="mode-multi" />
+                      <label htmlFor="mode-multi" className="flex-1 cursor-pointer">
+                        <div className="font-medium">Multi-Agent Mode</div>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Collaborative agents with consensus scoring & voting
+                        </p>
+                      </label>
+                    </div>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between">
+                <div>
                   <Label>Enable Vision (Image Analysis)</Label>
                   <p className="text-xs text-muted-foreground">
                     Allow image uploads for medical/document analysis
@@ -1203,6 +1278,8 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
                     <div><span className="font-medium">Category:</span> {modelCategory.toUpperCase()}</div>
                     <div><span className="font-medium">Temperature:</span> {temperature}</div>
                     <div><span className="font-medium">Max Tokens:</span> {maxTokens}</div>
+                    <div><span className="font-medium">AI Mode:</span> {aiMode === 'default' ? 'Default' : aiMode === 'single' ? 'Single Agent' : 'Multi-Agent'}</div>
+                    <div><span className="font-medium">Smart Routing:</span> {enableSmartRouting ? 'Enabled ✨' : 'Disabled'}</div>
                     <div><span className="font-medium">Vision:</span> {enableVision ? 'Enabled' : 'Disabled'}</div>
                     <div><span className="font-medium">Split Screen:</span> {enableSplitScreen ? 'Enabled' : 'Disabled'}</div>
                     {enableSplitScreen && splitScreenModels.length > 0 && (
