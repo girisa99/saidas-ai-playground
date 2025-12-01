@@ -914,6 +914,15 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
         );
 
       case 6:
+        const supabaseMcpServers = mcpServers.filter(s => s.server_id?.includes('supabase') || s.name?.toLowerCase().includes('supabase'));
+        const localStorageMcpServers = mcpServers.filter(s => s.type === 'local' || s.name?.toLowerCase().includes('local storage'));
+        const externalMcpServers = mcpServers.filter(s => 
+          !s.server_id?.includes('supabase') && 
+          s.type !== 'local' &&
+          !s.name?.toLowerCase().includes('supabase') &&
+          !s.name?.toLowerCase().includes('local storage')
+        );
+
         return (
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-4">
@@ -932,7 +941,7 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
               </div>
             ) : (
               <ScrollArea className="h-[400px] pr-4">
-                <div className="space-y-2">
+                <div className="space-y-6">
                   {mcpServers.length === 0 ? (
                     <Card className="p-6 text-center">
                       <Server className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
@@ -944,7 +953,17 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
                       </p>
                     </Card>
                   ) : (
-                    mcpServers.map((server) => (
+                    <>
+                      {/* Supabase Integration */}
+                      {supabaseMcpServers.length > 0 && (
+                        <div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <Database className="w-4 h-4 text-green-600" />
+                            <h4 className="font-semibold text-sm">Supabase Integration</h4>
+                            <Badge variant="secondary" className="text-xs">{supabaseMcpServers.length}</Badge>
+                          </div>
+                          <div className="space-y-2">
+                            {supabaseMcpServers.map((server) => (
                       <Card
                         key={server.id}
                         className={`cursor-pointer transition-colors ${
@@ -985,7 +1004,121 @@ export default function DeploymentConfigurationWizard({ open, onClose, onSuccess
                           </div>
                         </CardContent>
                       </Card>
-                    ))
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Local Storage Servers */}
+                      {localStorageMcpServers.length > 0 && (
+                        <div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <Database className="w-4 h-4 text-blue-600" />
+                            <h4 className="font-semibold text-sm">Local Storage Servers</h4>
+                            <Badge variant="secondary" className="text-xs">{localStorageMcpServers.length}</Badge>
+                          </div>
+                          <div className="space-y-2">
+                            {localStorageMcpServers.map((server) => (
+                      <Card
+                        key={server.id}
+                        className={`cursor-pointer transition-colors border-l-4 border-l-blue-600 ${
+                          selectedMcpServers.includes(server.id)
+                            ? "border-primary bg-primary/5"
+                            : "hover:border-primary/50"
+                        }`}
+                        onClick={() => toggleMcpServer(server.id)}
+                      >
+                        <CardContent className="p-4 flex items-start gap-3">
+                          <Checkbox
+                            checked={selectedMcpServers.includes(server.id)}
+                            onCheckedChange={() => toggleMcpServer(server.id)}
+                          />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <h4 className="font-medium">{server.name ?? 'Unnamed Server'}</h4>
+                              {server.status === 'active' && (
+                                <span className="w-2 h-2 rounded-full bg-green-500" />
+                              )}
+                            </div>
+                            <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+                              {server.description}
+                            </p>
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              <Badge variant="outline">{server.type ?? 'unknown'}</Badge>
+                              {Array.isArray(server.capabilities) && server.capabilities.slice(0, 3).map((cap: string, i: number) => (
+                                <Badge key={i} variant="secondary" className="text-xs">
+                                  {cap}
+                                </Badge>
+                              ))}
+                              {server.reliability_score && (
+                                <Badge variant="default" className="text-xs bg-green-600">
+                                  {server.reliability_score}/10 reliability
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* External Servers */}
+                      {externalMcpServers.length > 0 && (
+                        <div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <Globe className="w-4 h-4 text-purple-600" />
+                            <h4 className="font-semibold text-sm">External Servers</h4>
+                            <Badge variant="secondary" className="text-xs">{externalMcpServers.length}</Badge>
+                          </div>
+                          <div className="space-y-2">
+                            {externalMcpServers.map((server) => (
+                      <Card
+                        key={server.id}
+                        className={`cursor-pointer transition-colors border-l-4 border-l-purple-600 ${
+                          selectedMcpServers.includes(server.id)
+                            ? "border-primary bg-primary/5"
+                            : "hover:border-primary/50"
+                        }`}
+                        onClick={() => toggleMcpServer(server.id)}
+                      >
+                        <CardContent className="p-4 flex items-start gap-3">
+                          <Checkbox
+                            checked={selectedMcpServers.includes(server.id)}
+                            onCheckedChange={() => toggleMcpServer(server.id)}
+                          />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <h4 className="font-medium">{server.name ?? 'Unnamed Server'}</h4>
+                              {server.status === 'active' && (
+                                <span className="w-2 h-2 rounded-full bg-green-500" />
+                              )}
+                            </div>
+                            <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+                              {server.description}
+                            </p>
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              <Badge variant="outline">{server.type ?? 'unknown'}</Badge>
+                              {Array.isArray(server.capabilities) && server.capabilities.slice(0, 3).map((cap: string, i: number) => (
+                                <Badge key={i} variant="secondary" className="text-xs">
+                                  {cap}
+                                </Badge>
+                              ))}
+                              {server.reliability_score && (
+                                <Badge variant="default" className="text-xs bg-green-600">
+                                  {server.reliability_score}/10 reliability
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               </ScrollArea>
