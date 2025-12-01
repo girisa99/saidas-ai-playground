@@ -41,7 +41,7 @@ serve(async (req) => {
       );
     }
 
-    const { deploymentId, message, conversationId, sessionId } = await req.json();
+    const { deploymentId, message, conversationId, sessionId, currentContext } = await req.json();
 
     if (!deploymentId || !message) {
       return new Response(
@@ -49,6 +49,14 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+
+    console.log('📨 Deployment chat request:', { 
+      deploymentId, 
+      conversationId, 
+      sessionId,
+      currentContext,
+      messageLength: message.length 
+    });
 
     // Verify deployment exists and is enabled
     const { data: deployment, error: deploymentError } = await supabase
@@ -73,24 +81,78 @@ serve(async (req) => {
 
     // Extract configuration from deployment
     const config = deployment.configuration || {};
+    const modelConfig = deployment.model_config || {};
+    
+    // Fetch conversation history for context persistence
+    let conversationHistory: Array<{ role: string; content: string }> = [];
+    
+    if (conversationId) {
+      console.log('🔍 Fetching conversation history for:', conversationId);
+      
+      const { data: existingConversation } = await supabase
+        .from('agent_conversations')
+        .select('conversation_data')
+        .eq('id', conversationId)
+        .single();
+      
+      if (existingConversation?.conversation_data?.messages) {
+        conversationHistory = existingConversation.conversation_data.messages.slice(-10); // Last 10 messages
+        console.log('✅ Loaded conversation history:', conversationHistory.length, 'messages');
+      }
+    }
+    
+    // Fetch KB/RAG topics for context-aware suggestions
+    const knowledgeBaseIds = config.knowledgeBaseIds || [];
+    let availableTopics: string[] = [];
+    
+    if (knowledgeBaseIds.length > 0 && modelConfig.enable_smart_routing) {
+      console.log('📚 Fetching KB topics for suggestions...');
+      
+      const { data: kbEntries } = await supabase
+        .from('universal_knowledge_base')
+        .select('finding_name, domain, content_type')
+        .in('id', knowledgeBaseIds)
+        .limit(50);
+      
+      if (kbEntries) {
+        availableTopics = kbEntries
+          .map(e => e.finding_name)
+          .filter(Boolean)
+          .slice(0, 20);
+        console.log('✅ Loaded', availableTopics.length, 'KB topics for suggestions');
+      }
+    }
     
     // Call the universal AI processor with deployment configuration
     const aiRequest = {
       provider: config.provider || 'gemini',
-      model: config.model_config?.model || config.model || 'google/gemini-2.5-flash',
+      model: modelConfig.model || config.model || 'google/gemini-2.5-flash',
       prompt: message,
       systemPrompt: config.systemPrompt || 'You are a helpful AI assistant.',
-      temperature: config.model_config?.temperature || config.temperature || 0.7,
-      maxTokens: config.model_config?.max_tokens || config.maxTokens || 1000,
-      useRAG: config.useRAG || false,
-      useMCP: config.useMCP || false,
-      enableSmartRouting: config.model_config?.enable_smart_routing !== false, // Default TRUE
-      enableMultiAgent: config.model_config?.ai_mode === 'multi', // Multi-agent if mode is 'multi'
-      aiMode: config.model_config?.ai_mode || 'default',
+      temperature: modelConfig.temperature || config.temperature || 0.7,
+      maxTokens: modelConfig.max_tokens || config.maxTokens || 1000,
+      useRAG: config.useRAG || knowledgeBaseIds.length > 0,
+      knowledgeBase: knowledgeBaseIds.length > 0,
+      useMCP: config.useMCP || (config.mcpServerIds?.length > 0),
+      mcpServers: config.mcpServerIds || [],
+      enableSmartRouting: modelConfig.enable_smart_routing !== false, // Default TRUE
+      enableMultiAgent: modelConfig.ai_mode === 'multi',
+      aiMode: modelConfig.ai_mode || 'default',
       conversationId: conversationId,
       sessionId: sessionId,
-      conversationHistory: [], // Can be enhanced with full history later
+      conversationHistory: conversationHistory, // Full context persistence
+      context: currentContext || 'general', // Context switching support
+      availableTopics: availableTopics, // KB-aware topic suggestions
     };
+    
+    console.log('🚀 Calling AI processor with:', {
+      model: aiRequest.model,
+      aiMode: aiRequest.aiMode,
+      smartRouting: aiRequest.enableSmartRouting,
+      useRAG: aiRequest.useRAG,
+      historyLength: conversationHistory.length,
+      topicsCount: availableTopics.length
+    });
 
     // Invoke ai-universal-processor
     const { data: aiResponse, error: aiError } = await supabase.functions.invoke(
@@ -116,19 +178,48 @@ serve(async (req) => {
       })
       .eq('id', deploymentId);
 
-    // Log conversation for analytics
-    await supabase.from('agent_conversations').insert({
-      user_id: deployment.user_id,
-      agent_id: null, // Deployment-based, not agent-based
-      deployment_id: deploymentId,
-      conversation_data: {
-        message,
-        response: aiResponse.response,
-        model: aiResponse.model,
-        confidence: aiResponse.confidence,
-      },
-      session_id: sessionId || crypto.randomUUID(),
-    });
+    // Update or create conversation record with full history
+    const updatedHistory = [
+      ...conversationHistory,
+      { role: 'user', content: message },
+      { role: 'assistant', content: aiResponse.content || aiResponse.response }
+    ];
+    
+    if (conversationId) {
+      // Update existing conversation
+      await supabase
+        .from('agent_conversations')
+        .update({
+          conversation_data: {
+            messages: updatedHistory,
+            currentContext: currentContext,
+            metadata: aiResponse.metadata,
+          },
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', conversationId);
+      
+      console.log('✅ Updated conversation history:', conversationId);
+    } else {
+      // Create new conversation
+      const { data: newConvo } = await supabase
+        .from('agent_conversations')
+        .insert({
+          user_id: deployment.user_id,
+          agent_id: null,
+          deployment_id: deploymentId,
+          conversation_data: {
+            messages: updatedHistory,
+            currentContext: currentContext,
+            metadata: aiResponse.metadata,
+          },
+          session_id: sessionId || crypto.randomUUID(),
+        })
+        .select('id')
+        .single();
+      
+      console.log('✅ Created new conversation:', newConvo?.id);
+    }
 
     return new Response(
       JSON.stringify({
@@ -136,7 +227,7 @@ serve(async (req) => {
         model: aiResponse.modelUsed || aiResponse.model,
         confidence: aiResponse.confidence,
         tokensUsed: aiResponse.tokensUsed,
-        conversationId: aiResponse.conversationId,
+        conversationId: conversationId || aiResponse.conversationId,
         deploymentName: deployment.name,
         // Smart routing & optimization metadata
         smartRoutingOptimization: aiResponse.metadata?.smartRoutingOptimization,
@@ -148,6 +239,10 @@ serve(async (req) => {
         collaborationMode: aiResponse.collaborationMode || aiResponse.metadata?.collaborationMode,
         agentCount: aiResponse.agentCount || aiResponse.metadata?.agentCount,
         consensusScore: aiResponse.consensusScore || aiResponse.metadata?.consensusScore,
+        // Context switching & topic suggestions
+        detectedContext: aiResponse.metadata?.detectedContext || currentContext,
+        suggestedTopics: availableTopics.length > 0 ? availableTopics.slice(0, 5) : [],
+        contextSwitchDetected: aiResponse.metadata?.contextSwitchDetected,
         // All metadata for rich features
         metadata: aiResponse.metadata,
       }),
