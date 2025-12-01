@@ -13,6 +13,7 @@ export interface GenieDeployment {
   knowledge_base_snapshot?: any;
   mcp_servers_snapshot?: any;
   model_config?: any;
+  agent_id?: string | null; // Optional link to agent (hybrid architecture)
   deployment_status: 'draft' | 'active' | 'archived';
   deployed_at?: string;
   archived_at?: string;
@@ -101,6 +102,7 @@ export async function createDeployment(deployment: {
   knowledge_base_snapshot?: any;
   mcp_servers_snapshot?: any;
   model_config?: any;
+  agent_id?: string | null; // Optional agent linking for hybrid architecture
 }): Promise<GenieDeployment | null> {
   const { data: user } = await supabase.auth.getUser();
   
@@ -118,6 +120,7 @@ export async function createDeployment(deployment: {
       knowledge_base_snapshot: deployment.knowledge_base_snapshot,
       mcp_servers_snapshot: deployment.mcp_servers_snapshot,
       model_config: deployment.model_config,
+      agent_id: deployment.agent_id || null, // Hybrid: optional agent link
     })
     .select()
     .single();

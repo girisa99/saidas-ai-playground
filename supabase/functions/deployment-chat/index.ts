@@ -61,11 +61,12 @@ serve(async (req) => {
     // Verify deployment exists and is enabled
     const { data: deployment, error: deploymentError } = await supabase
       .from('genie_deployments')
-      .select('*')
+      .select('*, agents(*)')
       .eq('id', deploymentId)
       .single();
 
     if (deploymentError || !deployment) {
+      console.error('Deployment fetch error:', deploymentError);
       return new Response(
         JSON.stringify({ error: 'Invalid deployment ID' }),
         { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -79,9 +80,31 @@ serve(async (req) => {
       );
     }
 
+    console.log('✅ Deployment loaded:', {
+      name: deployment.name,
+      hasAgent: !!deployment.agent_id,
+      agentName: deployment.agents?.name
+    });
+
     // Extract configuration from deployment
     const config = deployment.configuration || {};
     const modelConfig = deployment.model_config || {};
+    const linkedAgent = deployment.agents; // Agent data if linked (hybrid mode)
+    
+    // If agent is linked, merge agent configuration with deployment config
+    if (linkedAgent) {
+      console.log('🔗 Agent linked to deployment:', linkedAgent.name);
+      
+      // Agent system prompt takes precedence
+      if (linkedAgent.system_prompt) {
+        modelConfig.systemPrompt = linkedAgent.system_prompt;
+      }
+      
+      // Merge agent configuration with deployment config
+      if (linkedAgent.configuration) {
+        Object.assign(config, linkedAgent.configuration);
+      }
+    }
     
     // Fetch conversation history for context persistence
     let conversationHistory: Array<{ role: string; content: string }> = [];

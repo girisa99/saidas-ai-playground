@@ -7066,6 +7066,7 @@ export type Database = {
       }
       genie_deployments: {
         Row: {
+          agent_id: string | null
           api_key: string | null
           archived_at: string | null
           avg_confidence_score: number | null
@@ -7090,6 +7091,7 @@ export type Database = {
           version: number
         }
         Insert: {
+          agent_id?: string | null
           api_key?: string | null
           archived_at?: string | null
           avg_confidence_score?: number | null
@@ -7114,6 +7116,7 @@ export type Database = {
           version?: number
         }
         Update: {
+          agent_id?: string | null
           api_key?: string | null
           archived_at?: string | null
           avg_confidence_score?: number | null
@@ -7138,6 +7141,13 @@ export type Database = {
           version?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "genie_deployments_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "genie_deployments_parent_deployment_id_fkey"
             columns: ["parent_deployment_id"]
