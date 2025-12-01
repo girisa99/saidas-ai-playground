@@ -17,10 +17,11 @@ import { PricingKnowledgeSyncButton } from '@/components/admin/PricingKnowledgeS
 import { MCPServerManager } from '@/components/admin/MCPServerManager';
 import { LabelStudioManager } from '@/components/admin/LabelStudioManager';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
-import { Activity } from 'lucide-react';
+import { Activity, Server } from 'lucide-react';
 
 const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -232,11 +233,11 @@ const AdminDashboard = () => {
             <TabsTrigger value="genie" className="whitespace-nowrap">Genie AI Popup Analytics</TabsTrigger>
             <TabsTrigger value="migration" className="whitespace-nowrap">Knowledge Base Migration</TabsTrigger>
             <TabsTrigger value="crawler" className="whitespace-nowrap">Knowledge Crawler</TabsTrigger>
+            <TabsTrigger value="ai-config" className="whitespace-nowrap">MCP & Label Studio</TabsTrigger>
             <TabsTrigger value="deployments" className="whitespace-nowrap">Deployments</TabsTrigger>
             <TabsTrigger value="deployment-testing" className="whitespace-nowrap">Testing</TabsTrigger>
             <TabsTrigger value="deployment-analytics" className="whitespace-nowrap">Analytics</TabsTrigger>
-            <TabsTrigger value="ai-config" className="whitespace-nowrap">MCP & Label Studio</TabsTrigger>
-            <TabsTrigger value="settings" className="whitespace-nowrap">Settings</TabsTrigger>
+            <TabsTrigger value="settings" className="whitespace-nowrap">Data Management</TabsTrigger>
           </TabsList>
 
           <TabsContent value="website">
@@ -269,6 +270,25 @@ const AdminDashboard = () => {
             </div>
           </TabsContent>
 
+          <TabsContent value="ai-config">
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Server className="w-5 h-5" />
+                    MCP & Label Studio Configuration
+                  </CardTitle>
+                  <CardDescription>
+                    Configure Model Context Protocol servers and Label Studio integration. 
+                    These configurations will be available when creating new deployments.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+              <MCPServerManager />
+              <LabelStudioManager />
+            </div>
+          </TabsContent>
+
           <TabsContent value="deployments">
             <DeploymentManager />
           </TabsContent>
@@ -281,15 +301,16 @@ const AdminDashboard = () => {
             <DeploymentAnalytics deployments={deployments} />
           </TabsContent>
 
-          <TabsContent value="ai-config">
-            <div className="space-y-6">
-              <MCPServerManager />
-              <LabelStudioManager />
-            </div>
-          </TabsContent>
-
           <TabsContent value="settings">
             <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Data Management & Configuration</CardTitle>
+                  <CardDescription>
+                    Import and manage data sources: treatment centers, product pricing, maps configuration, and sync knowledge base data.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
               <DataVerificationPanel />
               <PricingKnowledgeSyncButton />
               <ProductPricingImporter />
