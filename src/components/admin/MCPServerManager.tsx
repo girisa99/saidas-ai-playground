@@ -42,6 +42,7 @@ export function MCPServerManager() {
   const [formData, setFormData] = useState({
     name: '',
     endpoint_url: '',
+    server_category: 'external_http' as 'supabase' | 'local_storage' | 'external_http',
     authentication_type: 'none' as 'none' | 'api_key' | 'oauth' | 'bearer',
     api_key: '',
     health_check_url: '',
@@ -145,10 +146,18 @@ export function MCPServerManager() {
   };
 
   const handleEdit = (server: MCPServer) => {
+    const inferredCategory: 'supabase' | 'local_storage' | 'external_http' =
+      server.endpoint_url?.includes('supabase') || server.name?.toLowerCase().includes('supabase')
+        ? 'supabase'
+        : server.endpoint_url?.startsWith('local://') || server.name?.toLowerCase().includes('local')
+        ? 'local_storage'
+        : 'external_http';
+
     setEditingServer(server);
     setFormData({
       name: server.name,
       endpoint_url: server.endpoint_url,
+      server_category: inferredCategory,
       authentication_type: server.authentication_type,
       api_key: '',
       health_check_url: server.health_check_url || '',
@@ -221,6 +230,7 @@ export function MCPServerManager() {
     setFormData({
       name: '',
       endpoint_url: '',
+      server_category: 'external_http',
       authentication_type: 'none',
       api_key: '',
       health_check_url: '',
@@ -287,6 +297,40 @@ export function MCPServerManager() {
 
               <div className="space-y-4 py-4">
                 <div className="space-y-2">
+                  <Label htmlFor="server_category">Server Category</Label>
+                  <Select
+                    value={formData.server_category}
+                    onValueChange={(value: 'supabase' | 'local_storage' | 'external_http') => {
+                      setFormData((prev) => {
+                        const next = { ...prev, server_category: value };
+                        if (!editingServer) {
+                          if (value === 'supabase') {
+                            next.endpoint_url = 'https://YOUR-SUPABASE-EDGE-FUNCTION/mcp';
+                          } else if (value === 'local_storage') {
+                            next.endpoint_url = 'local://filesystem';
+                          } else {
+                            next.endpoint_url = 'https://mcp-server.example.com/context';
+                          }
+                        }
+                        return next;
+                      });
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select MCP server category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="supabase">Supabase (Postgres MCP)</SelectItem>
+                      <SelectItem value="local_storage">Local Storage (Filesystem / Memory)</SelectItem>
+                      <SelectItem value="external_http">External HTTP / n8n MCP</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground">
+                    Choose whether this MCP server connects to Supabase, local storage, or an external HTTP endpoint (e.g. n8n MCP).
+                  </p>
+                </div>
+
+                <div className="space-y-2">
                   <Label htmlFor="name">Server Name *</Label>
                   <Input
                     id="name"
@@ -300,7 +344,13 @@ export function MCPServerManager() {
                   <Label htmlFor="endpoint_url">Endpoint URL *</Label>
                   <Input
                     id="endpoint_url"
-                    placeholder="https://mcp-server.example.com/context"
+                    placeholder={
+                      formData.server_category === 'supabase'
+                        ? 'https://YOUR-SUPABASE-EDGE-FUNCTION/mcp'
+                        : formData.server_category === 'local_storage'
+                        ? 'local://filesystem or local://memory'
+                        : 'https://mcp-server.example.com/context (e.g. n8n MCP URL)'
+                    }
                     value={formData.endpoint_url}
                     onChange={(e) => setFormData({ ...formData, endpoint_url: e.target.value })}
                   />
