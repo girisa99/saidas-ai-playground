@@ -24,6 +24,8 @@ import {
   deleteMCPServer,
   checkMCPServerHealth,
   callMCPServer,
+  initializeDefaultMCPServers,
+  DEFAULT_MCP_SERVERS,
   type MCPServer,
   type MCPHealthStatus
 } from '@/services/mcpService';
@@ -58,8 +60,13 @@ export function MCPServerManager() {
   });
 
   useEffect(() => {
-    loadServers();
+    initializeDefaults();
   }, []);
+
+  const initializeDefaults = async () => {
+    await initializeDefaultMCPServers();
+    await loadServers();
+  };
 
   const loadServers = async () => {
     try {
@@ -231,7 +238,7 @@ export function MCPServerManager() {
               MCP Server Configuration
             </CardTitle>
             <CardDescription>
-              Manage external context providers via Model Context Protocol
+              Configure MCP servers using the official SDK. Default local servers (Filesystem, Memory, Postgres) are pre-configured.
             </CardDescription>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
