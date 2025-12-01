@@ -2,10 +2,58 @@
  * MCP (Model Context Protocol) Service
  * 
  * Manages MCP server configurations, health monitoring, and context retrieval.
- * Enables AI models to access external context from various sources.
+ * Uses official MCP SDK for proper protocol implementation.
  */
 
 import { supabase } from '@/integrations/supabase/client';
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
+
+// Default local MCP servers that come pre-configured
+export const DEFAULT_MCP_SERVERS = [
+  {
+    name: 'Filesystem MCP (Local)',
+    endpoint_url: 'local://filesystem',
+    authentication_type: 'none' as const,
+    timeout_seconds: 30,
+    description: 'Access local filesystem for file operations and knowledge retrieval',
+    supported_domains: ['filesystem', 'documents', 'local_data'],
+    is_active: false,
+    metadata: {
+      transport: 'stdio',
+      command: 'npx',
+      args: ['-y', '@modelcontextprotocol/server-filesystem', '/tmp/mcp-data']
+    }
+  },
+  {
+    name: 'Memory MCP (Local)',
+    endpoint_url: 'local://memory',
+    authentication_type: 'none' as const,
+    timeout_seconds: 30,
+    description: 'In-memory key-value store for temporary context',
+    supported_domains: ['memory', 'cache', 'session'],
+    is_active: false,
+    metadata: {
+      transport: 'stdio',
+      command: 'npx',
+      args: ['-y', '@modelcontextprotocol/server-memory']
+    }
+  },
+  {
+    name: 'Postgres MCP (Supabase)',
+    endpoint_url: 'local://postgres',
+    authentication_type: 'none' as const,
+    timeout_seconds: 30,
+    description: 'Connect to Supabase Postgres database for structured data access',
+    supported_domains: ['database', 'sql', 'structured_data'],
+    is_active: false,
+    metadata: {
+      transport: 'stdio',
+      command: 'npx',
+      args: ['-y', '@modelcontextprotocol/server-postgres']
+    }
+  }
+];
 
 export interface MCPServer {
   id: string;
@@ -266,7 +314,40 @@ export async function getMCPHealthHistory(serverId: string, limit: number = 10):
 }
 
 /**
- * Retrieve context from an MCP server (called by edge function)
+ * Create MCP client for local servers using SDK
+ */
+async function createMCPClient(server: MCPServer): Promise<Client | null> {
+  try {
+    // Check if it's a local MCP server
+    if (server.endpoint_url.startsWith('local://') && server.metadata?.transport === 'stdio') {
+      const transport = new StdioClientTransport({
+        command: server.metadata.command,
+        args: server.metadata.args
+      });
+
+      const client = new Client(
+        {
+          name: server.name,
+          version: '1.0.0'
+        },
+        {
+          capabilities: {}
+        }
+      );
+
+      await client.connect(transport);
+      return client;
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Failed to create MCP client:', error);
+    return null;
+  }
+}
+
+/**
+ * Retrieve context from an MCP server using SDK or HTTP
  */
 export async function callMCPServer(
   server: MCPServer,
@@ -276,6 +357,39 @@ export async function callMCPServer(
   const startTime = Date.now();
   
   try {
+    // Try SDK-based connection for local servers
+    if (server.endpoint_url.startsWith('local://')) {
+      const client = await createMCPClient(server);
+      
+      if (client) {
+        try {
+          // List available resources
+          const resources = await client.listResources();
+          
+          // Call tools if available
+          const tools = await client.listTools();
+          
+          const responseTime = Date.now() - startTime;
+          
+          return {
+            server_id: server.id,
+            server_name: server.name,
+            context: {
+              resources: resources.resources,
+              tools: tools.tools,
+              query,
+              timestamp: new Date().toISOString()
+            },
+            response_time_ms: responseTime,
+            success: true
+          };
+        } finally {
+          await client.close();
+        }
+      }
+    }
+
+    // Fallback to HTTP for remote servers
     const headers: Record<string, string> = {
       'Content-Type': 'application/json'
     };
@@ -326,5 +440,28 @@ export async function callMCPServer(
       success: false,
       error: errorMessage
     };
+  }
+}
+
+/**
+ * Initialize default MCP servers if not already created
+ */
+export async function initializeDefaultMCPServers(): Promise<void> {
+  try {
+    for (const defaultServer of DEFAULT_MCP_SERVERS) {
+      // Check if server already exists
+      const { data: existing } = await supabase
+        .from('mcp_servers' as any)
+        .select('id')
+        .eq('name', defaultServer.name)
+        .single();
+
+      if (!existing) {
+        await createMCPServer(defaultServer as any);
+        console.log(`Created default MCP server: ${defaultServer.name}`);
+      }
+    }
+  } catch (error) {
+    console.error('Failed to initialize default MCP servers:', error);
   }
 }
