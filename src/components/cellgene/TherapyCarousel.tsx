@@ -20,9 +20,13 @@ export const TherapyCarousel = () => {
     <section className="py-16 px-4 bg-gradient-to-b from-background to-muted/30">
       <div className="container mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <Badge variant="outline" className="mb-4"><Sparkles className="w-3 h-3 mr-1" />Advanced Therapeutics</Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Therapeutic Modalities</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">Explore cutting-edge cell and gene therapies powered by AI-driven insights</p>
+          <Badge variant="outline" className="mb-4"><Sparkles className="w-3 h-3 mr-1" />CGAT Knowledge Base</Badge>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Therapeutic Modalities in CGAT</h2>
+          <p className="text-muted-foreground max-w-3xl mx-auto">
+            Explore the diverse therapeutic approaches within Cell and Gene Advanced Therapies—from CAR-T cell engineering 
+            to gene editing, personalized medicine, and targeted radiopharmaceuticals. Each modality represents a unique 
+            pathway to treating disease at its source.
+          </p>
         </motion.div>
 
         <Carousel opts={{ align: "start", loop: true }} className="w-full max-w-6xl mx-auto">
