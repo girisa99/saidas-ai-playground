@@ -11,7 +11,11 @@ import {
   Dna,
   HeartPulse,
   Atom,
-  Radiation
+  Radiation,
+  ArrowUpRight,
+  BookOpen,
+  Layers,
+  Download
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -38,6 +42,12 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
 
   const Icon = getIcon(therapy.icon);
 
+  const handleLinkClick = (url: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -54,26 +64,34 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
         className="relative w-full max-w-4xl max-h-[90vh] bg-card border border-border rounded-2xl shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className={`relative p-6 bg-gradient-to-r ${therapy.gradient}`}>
+        {/* Header with Image */}
+        <div className="relative h-48 md:h-56">
+          <img 
+            src={therapy.image} 
+            alt={therapy.title}
+            className="w-full h-full object-cover"
+          />
+          <div className={`absolute inset-0 bg-gradient-to-t ${therapy.gradient} opacity-70`} />
+          <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+          
           <Button
             variant="ghost"
             size="icon"
-            className="absolute top-4 right-4 text-white/80 hover:text-white hover:bg-white/20"
+            className="absolute top-4 right-4 text-white/80 hover:text-white hover:bg-white/20 z-10"
             onClick={onClose}
           >
             <X className="w-5 h-5" />
           </Button>
           
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+          <div className="absolute bottom-4 left-6 right-6 flex items-end gap-4">
+            <div className={`p-3 bg-gradient-to-br ${therapy.gradient} rounded-xl shadow-lg`}>
               <Icon className="w-8 h-8 text-white" />
             </div>
-            <div className="space-y-2">
-              <h2 className="text-2xl md:text-3xl font-bold text-white">
+            <div className="space-y-1 flex-1">
+              <h2 className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg">
                 {therapy.title}
               </h2>
-              <p className="text-white/80 max-w-2xl">
+              <p className="text-white/90 text-sm md:text-base max-w-2xl drop-shadow">
                 {therapy.shortDescription}
               </p>
             </div>
@@ -81,22 +99,40 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
         </div>
 
         {/* Content */}
-        <ScrollArea className="h-[calc(90vh-200px)]">
+        <ScrollArea className="h-[calc(90vh-224px)]">
           <div className="p-6">
             <Tabs defaultValue="overview" className="w-full">
               <TabsList className="grid w-full grid-cols-4 mb-6">
-                <TabsTrigger value="overview">Overview</TabsTrigger>
-                <TabsTrigger value="applications">Applications</TabsTrigger>
-                <TabsTrigger value="differentiators">Differentiators</TabsTrigger>
-                <TabsTrigger value="resources">Resources</TabsTrigger>
+                <TabsTrigger value="overview" className="text-xs md:text-sm">
+                  <BookOpen className="w-4 h-4 mr-1.5 hidden sm:block" />
+                  Overview
+                </TabsTrigger>
+                <TabsTrigger value="applications" className="text-xs md:text-sm">
+                  <Target className="w-4 h-4 mr-1.5 hidden sm:block" />
+                  Applications
+                </TabsTrigger>
+                <TabsTrigger value="differentiators" className="text-xs md:text-sm">
+                  <Layers className="w-4 h-4 mr-1.5 hidden sm:block" />
+                  Differentiators
+                </TabsTrigger>
+                <TabsTrigger value="resources" className="text-xs md:text-sm">
+                  <FileText className="w-4 h-4 mr-1.5 hidden sm:block" />
+                  Resources
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="overview" className="space-y-6">
                 {/* Full Description */}
-                <div className="prose prose-sm dark:prose-invert max-w-none">
-                  <p className="text-muted-foreground leading-relaxed">
-                    {therapy.fullDescription}
-                  </p>
+                <div className="space-y-3">
+                  <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground">
+                    <BookOpen className="w-5 h-5 text-primary" />
+                    About {therapy.title}
+                  </h3>
+                  <div className="p-4 bg-muted/30 rounded-xl">
+                    <p className="text-muted-foreground leading-relaxed">
+                      {therapy.fullDescription}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Key Highlights */}
@@ -105,31 +141,44 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
                     <Sparkles className="w-5 h-5 text-primary" />
                     Key Highlights
                   </h3>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                     {therapy.highlights.map((highlight, idx) => (
-                      <Badge 
-                        key={idx} 
-                        variant="secondary"
-                        className="px-3 py-1"
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: idx * 0.05 }}
+                        className={`p-3 rounded-xl bg-gradient-to-br ${therapy.gradient} bg-opacity-10 border border-border/50`}
                       >
-                        {highlight}
-                      </Badge>
+                        <Badge 
+                          variant="secondary"
+                          className="w-full justify-center text-center whitespace-normal h-auto py-1.5"
+                        >
+                          {highlight}
+                        </Badge>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
 
-                {/* URL */}
+                {/* Official URL */}
                 {therapy.url && (
-                  <div className="p-4 bg-muted/50 rounded-xl">
-                    <a 
-                      href={therapy.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-primary hover:underline"
+                  <div className="p-4 bg-primary/5 border border-primary/20 rounded-xl">
+                    <button 
+                      onClick={(e) => handleLinkClick(therapy.url, e)}
+                      className="flex items-center gap-3 text-primary hover:underline w-full text-left group"
                     >
-                      <ExternalLink className="w-4 h-4" />
-                      Learn more at {new URL(therapy.url).hostname}
-                    </a>
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <ExternalLink className="w-5 h-5" />
+                      </div>
+                      <div className="flex-1">
+                        <span className="font-medium">Official Resource</span>
+                        <p className="text-sm text-muted-foreground">
+                          {new URL(therapy.url).hostname}
+                        </p>
+                      </div>
+                      <ArrowUpRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </button>
                   </div>
                 )}
               </TabsContent>
@@ -137,8 +186,11 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
               <TabsContent value="applications" className="space-y-4">
                 <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground">
                   <Target className="w-5 h-5 text-primary" />
-                  Clinical Applications
+                  Clinical Applications for {therapy.title}
                 </h3>
+                <p className="text-sm text-muted-foreground">
+                  These are the key therapeutic areas where {therapy.title.toLowerCase()} has demonstrated significant clinical impact.
+                </p>
                 <div className="grid gap-3">
                   {therapy.applications.map((app, idx) => (
                     <motion.div
@@ -146,10 +198,17 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.05 }}
-                      className="flex items-start gap-3 p-4 bg-muted/30 rounded-xl hover:bg-muted/50 transition-colors"
+                      className="flex items-start gap-4 p-4 bg-muted/30 rounded-xl hover:bg-muted/50 transition-colors border border-transparent hover:border-primary/20"
                     >
-                      <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-foreground">{app}</span>
+                      <div className={`p-2 rounded-lg bg-gradient-to-br ${therapy.gradient}`}>
+                        <CheckCircle2 className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <span className="text-foreground font-medium">{app}</span>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Active research and clinical applications
+                        </p>
+                      </div>
                     </motion.div>
                   ))}
                 </div>
@@ -158,20 +217,44 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
               <TabsContent value="differentiators" className="space-y-4">
                 <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground">
                   <Lightbulb className="w-5 h-5 text-primary" />
-                  Key Differentiators
+                  What Makes {therapy.title} Unique
                 </h3>
-                <div className="grid gap-3">
+                <p className="text-sm text-muted-foreground">
+                  Key differentiating factors that set {therapy.title.toLowerCase()} apart from conventional treatments.
+                </p>
+                <div className="grid gap-4">
                   {therapy.differentiators.map((diff, idx) => (
                     <motion.div
                       key={idx}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.05 }}
-                      className="p-4 bg-gradient-to-r from-primary/5 to-transparent border-l-2 border-primary rounded-r-xl"
+                      className={`p-4 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-l-4 rounded-r-xl`}
+                      style={{ borderLeftColor: `hsl(var(--primary))` }}
                     >
-                      <span className="text-foreground font-medium">{diff}</span>
+                      <div className="flex items-start gap-3">
+                        <div className={`p-1.5 rounded-full bg-gradient-to-br ${therapy.gradient}`}>
+                          <Lightbulb className="w-4 h-4 text-white" />
+                        </div>
+                        <div>
+                          <span className="text-foreground font-medium">{diff}</span>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Unique advantage in therapeutic outcomes
+                          </p>
+                        </div>
+                      </div>
                     </motion.div>
                   ))}
+                </div>
+                
+                {/* Comparison Summary */}
+                <div className="mt-6 p-4 bg-muted/50 rounded-xl border border-border">
+                  <h4 className="font-semibold text-foreground mb-2">Why Choose {therapy.title}?</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {therapy.title} offers {therapy.differentiators.length} key advantages over traditional approaches, 
+                    including {therapy.differentiators[0].toLowerCase()} and {therapy.differentiators[1]?.toLowerCase() || 'innovative solutions'}. 
+                    These differentiators make it particularly effective for {therapy.applications[0].toLowerCase()}.
+                  </p>
                 </div>
               </TabsContent>
 
@@ -180,30 +263,34 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
                 <div className="space-y-3">
                   <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground">
                     <Link2 className="w-5 h-5 text-primary" />
-                    References
+                    Scientific References
                   </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Peer-reviewed publications and official resources for {therapy.title.toLowerCase()}.
+                  </p>
                   <div className="grid gap-2">
                     {therapy.references.map((ref, idx) => (
-                      <a
+                      <motion.button
                         key={idx}
-                        href={ref.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-between p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors group"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.05 }}
+                        onClick={(e) => handleLinkClick(ref.url, e)}
+                        className="flex items-center justify-between p-4 bg-muted/30 rounded-xl hover:bg-muted/50 transition-colors group text-left w-full border border-transparent hover:border-primary/30"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="p-2 bg-primary/10 rounded-lg">
+                          <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
                             <Link2 className="w-4 h-4 text-primary" />
                           </div>
                           <div>
-                            <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                            <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors block">
                               {ref.title}
                             </span>
                             <p className="text-xs text-muted-foreground">{ref.source}</p>
                           </div>
                         </div>
-                        <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary" />
-                      </a>
+                        <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                      </motion.button>
                     ))}
                   </div>
                 </div>
@@ -212,34 +299,59 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
                 <div className="space-y-3">
                   <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground">
                     <FileText className="w-5 h-5 text-primary" />
-                    Attachments & Documents
+                    Documents & Resources
                   </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Guidelines, protocols, and educational materials for {therapy.title.toLowerCase()}.
+                  </p>
                   <div className="grid gap-2">
                     {therapy.attachments.map((attachment, idx) => (
-                      <a
+                      <motion.button
                         key={idx}
-                        href={attachment.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-between p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors group"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.05 }}
+                        onClick={(e) => handleLinkClick(attachment.url, e)}
+                        className="flex items-center justify-between p-4 bg-muted/30 rounded-xl hover:bg-muted/50 transition-colors group text-left w-full border border-transparent hover:border-accent/30"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="p-2 bg-accent/10 rounded-lg">
-                            <FileText className="w-4 h-4 text-accent" />
+                          <div className="p-2 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
+                            <Download className="w-4 h-4 text-accent" />
                           </div>
                           <div>
-                            <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                            <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors block">
                               {attachment.title}
                             </span>
                             <p className="text-xs text-muted-foreground">{attachment.type}</p>
                           </div>
                         </div>
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs group-hover:border-primary/50">
                           {attachment.type}
                         </Badge>
-                      </a>
+                      </motion.button>
                     ))}
                   </div>
+                </div>
+
+                {/* Main URL CTA */}
+                <div className="p-4 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-xl">
+                  <button 
+                    onClick={(e) => handleLinkClick(therapy.url, e)}
+                    className="flex items-center gap-3 w-full text-left group"
+                  >
+                    <div className={`p-3 rounded-xl bg-gradient-to-br ${therapy.gradient}`}>
+                      <ExternalLink className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <span className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                        Visit Official {therapy.title} Resource
+                      </span>
+                      <p className="text-sm text-muted-foreground">
+                        Access comprehensive information at {new URL(therapy.url).hostname}
+                      </p>
+                    </div>
+                    <ArrowUpRight className="w-5 h-5 text-primary" />
+                  </button>
                 </div>
               </TabsContent>
             </Tabs>
