@@ -25,7 +25,7 @@ export const NavigationHeader = () => {
     { to: "/technology", label: "Tech Stack", icon: Wrench },
     { to: "/business-use-cases", label: "Gartner Business Solutions", icon: Briefcase },
     { to: "/case-studies", label: "Validated Case Studies", icon: Trophy },
-    { to: "https://geniecellgene.com", label: "CellGene", icon: Dna, external: true },
+    { to: "/cellgene", label: "CellGene", icon: Dna },
   ];
 
   const isActivePath = (path: string) => {
@@ -60,7 +60,7 @@ export const NavigationHeader = () => {
             <div className="flex items-center gap-1 whitespace-nowrap">
               {navItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = !item.external && isActivePath(item.to);
+                const isActive = isActivePath(item.to);
                 
                 const getCompactLabel = (label: string) => {
                   const labels: Record<string, string> = {
@@ -74,22 +74,6 @@ export const NavigationHeader = () => {
                   };
                   return labels[label] || label;
                 };
-                
-                if (item.external) {
-                  return (
-                    <a
-                      key={item.to}
-                      href={item.to}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 text-foreground/70 hover:text-foreground hover:bg-muted/60"
-                    >
-                      <Icon className="w-4 h-4 flex-shrink-0" />
-                      <span className="whitespace-nowrap">{getCompactLabel(item.label)}</span>
-                      <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-60" />
-                    </a>
-                  );
-                }
                 
                 return (
                   <Link
@@ -153,24 +137,7 @@ export const NavigationHeader = () => {
               <nav className="space-y-2">
                 {navItems.map((item) => {
                   const Icon = item.icon;
-                  const isActive = !item.external && isActivePath(item.to);
-                  
-                  if (item.external) {
-                    return (
-                      <a
-                        key={item.to}
-                        href={item.to}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 text-foreground/70 hover:text-foreground hover:bg-muted/60"
-                      >
-                        <Icon className="w-5 h-5 flex-shrink-0" />
-                        <span className="font-medium">{item.label}</span>
-                        <ExternalLink className="w-4 h-4 flex-shrink-0 opacity-60 ml-auto" />
-                      </a>
-                    );
-                  }
+                  const isActive = isActivePath(item.to);
                   
                   return (
                     <Link

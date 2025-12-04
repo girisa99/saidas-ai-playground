@@ -14,6 +14,7 @@ const Journey = lazy(() => import("./pages/Journey"));
 const About = lazy(() => import("./pages/About"));
 const TechnologyStack = lazy(() => import("./pages/TechnologyStack"));
 const CaseStudies = lazy(() => import("./pages/CaseStudies"));
+const CellGene = lazy(() => import("./pages/CellGene"));
 const Docs = lazy(() => import("./pages/Docs"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Privacy = lazy(() => import("./pages/Privacy"));
@@ -47,6 +48,7 @@ const AppContent = () => {
           <Route path="/about" element={<About />} />
           <Route path="/technology" element={<TechnologyStack />} />
           <Route path="/case-studies" element={<CaseStudies />} />
+          <Route path="/cellgene" element={<CellGene />} />
           <Route path="/business-use-cases" element={<BusinessUseCases />} />
           
           <Route path="/docs" element={<Docs />} />
