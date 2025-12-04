@@ -135,28 +135,28 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
                   </div>
                 </div>
 
-                {/* Key Highlights */}
+                {/* Key Highlights - Expandable */}
                 <div className="space-y-3">
                   <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground">
                     <Sparkles className="w-5 h-5 text-primary" />
                     Key Highlights
                   </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                  <p className="text-sm text-muted-foreground">Click on each to learn more.</p>
+                  <div className="grid gap-2">
                     {therapy.highlights.map((highlight, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: idx * 0.05 }}
-                        className={`p-3 rounded-xl bg-gradient-to-br ${therapy.gradient} bg-opacity-10 border border-border/50`}
-                      >
-                        <Badge 
-                          variant="secondary"
-                          className="w-full justify-center text-center whitespace-normal h-auto py-1.5"
-                        >
-                          {highlight}
-                        </Badge>
-                      </motion.div>
+                      <div key={idx} className="p-3 bg-muted/30 rounded-xl border border-border/50 hover:bg-muted/50 transition-colors">
+                        <span className="font-medium text-foreground">{highlight.name}</span>
+                        <p className="text-xs text-muted-foreground mt-1">{highlight.description}</p>
+                        {highlight.keyPoints && (
+                          <ul className="mt-2 space-y-1">
+                            {highlight.keyPoints.slice(0, 2).map((point, i) => (
+                              <li key={i} className="text-xs text-muted-foreground flex items-center gap-1">
+                                <CheckCircle2 className="w-3 h-3 text-primary" />{point}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -164,18 +164,11 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
                 {/* Official URL */}
                 {therapy.url && (
                   <div className="p-4 bg-primary/5 border border-primary/20 rounded-xl">
-                    <button 
-                      onClick={(e) => handleLinkClick(therapy.url, e)}
-                      className="flex items-center gap-3 text-primary hover:underline w-full text-left group"
-                    >
-                      <div className="p-2 bg-primary/10 rounded-lg">
-                        <ExternalLink className="w-5 h-5" />
-                      </div>
+                    <button onClick={(e) => handleLinkClick(therapy.url, e)} className="flex items-center gap-3 text-primary hover:underline w-full text-left group">
+                      <div className="p-2 bg-primary/10 rounded-lg"><ExternalLink className="w-5 h-5" /></div>
                       <div className="flex-1">
                         <span className="font-medium">Official Resource</span>
-                        <p className="text-sm text-muted-foreground">
-                          {new URL(therapy.url).hostname}
-                        </p>
+                        <p className="text-sm text-muted-foreground">{new URL(therapy.url).hostname}</p>
                       </div>
                       <ArrowUpRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </button>
@@ -188,28 +181,27 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
                   <Target className="w-5 h-5 text-primary" />
                   Clinical Applications for {therapy.title}
                 </h3>
-                <p className="text-sm text-muted-foreground">
-                  These are the key therapeutic areas where {therapy.title.toLowerCase()} has demonstrated significant clinical impact.
-                </p>
-                <div className="grid gap-3">
+                <p className="text-sm text-muted-foreground">Click on each application for detailed information.</p>
+                <div className="grid gap-2">
                   {therapy.applications.map((app, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.05 }}
-                      className="flex items-start gap-4 p-4 bg-muted/30 rounded-xl hover:bg-muted/50 transition-colors border border-transparent hover:border-primary/20"
-                    >
-                      <div className={`p-2 rounded-lg bg-gradient-to-br ${therapy.gradient}`}>
-                        <CheckCircle2 className="w-5 h-5 text-white" />
+                    <div key={idx} className="p-4 bg-muted/30 rounded-xl border border-border/50 hover:bg-muted/50 transition-colors">
+                      <div className="flex items-start gap-3">
+                        <div className={`p-2 rounded-lg bg-gradient-to-br ${therapy.gradient}`}><CheckCircle2 className="w-4 h-4 text-white" /></div>
+                        <div className="flex-1">
+                          <span className="font-medium text-foreground">{app.name}</span>
+                          <p className="text-sm text-muted-foreground mt-1">{app.description}</p>
+                          {app.keyPoints && (
+                            <ul className="mt-2 grid gap-1">
+                              {app.keyPoints.map((point, i) => (
+                                <li key={i} className="text-xs text-muted-foreground flex items-center gap-1.5">
+                                  <CheckCircle2 className="w-3 h-3 text-primary shrink-0" />{point}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <span className="text-foreground font-medium">{app}</span>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          Active research and clinical applications
-                        </p>
-                      </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </TabsContent>
@@ -219,31 +211,27 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
                   <Lightbulb className="w-5 h-5 text-primary" />
                   What Makes {therapy.title} Unique
                 </h3>
-                <p className="text-sm text-muted-foreground">
-                  Key differentiating factors that set {therapy.title.toLowerCase()} apart from conventional treatments.
-                </p>
-                <div className="grid gap-4">
+                <p className="text-sm text-muted-foreground">Click on each differentiator for details.</p>
+                <div className="grid gap-2">
                   {therapy.differentiators.map((diff, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.05 }}
-                      className={`p-4 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-l-4 rounded-r-xl`}
-                      style={{ borderLeftColor: `hsl(var(--primary))` }}
-                    >
+                    <div key={idx} className="p-4 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-l-4 rounded-r-xl" style={{ borderLeftColor: `hsl(var(--primary))` }}>
                       <div className="flex items-start gap-3">
-                        <div className={`p-1.5 rounded-full bg-gradient-to-br ${therapy.gradient}`}>
-                          <Lightbulb className="w-4 h-4 text-white" />
-                        </div>
-                        <div>
-                          <span className="text-foreground font-medium">{diff}</span>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            Unique advantage in therapeutic outcomes
-                          </p>
+                        <div className={`p-1.5 rounded-full bg-gradient-to-br ${therapy.gradient}`}><Lightbulb className="w-4 h-4 text-white" /></div>
+                        <div className="flex-1">
+                          <span className="font-medium text-foreground">{diff.name}</span>
+                          <p className="text-sm text-muted-foreground mt-1">{diff.description}</p>
+                          {diff.keyPoints && (
+                            <ul className="mt-2 grid gap-1">
+                              {diff.keyPoints.map((point, i) => (
+                                <li key={i} className="text-xs text-muted-foreground flex items-center gap-1.5">
+                                  <CheckCircle2 className="w-3 h-3 text-primary shrink-0" />{point}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
                 
@@ -251,9 +239,8 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
                 <div className="mt-6 p-4 bg-muted/50 rounded-xl border border-border">
                   <h4 className="font-semibold text-foreground mb-2">Why Choose {therapy.title}?</h4>
                   <p className="text-sm text-muted-foreground">
-                    {therapy.title} offers {therapy.differentiators.length} key advantages over traditional approaches, 
-                    including {therapy.differentiators[0].toLowerCase()} and {therapy.differentiators[1]?.toLowerCase() || 'innovative solutions'}. 
-                    These differentiators make it particularly effective for {therapy.applications[0].toLowerCase()}.
+                    {therapy.title} offers {therapy.differentiators.length} key advantages over traditional approaches. 
+                    These differentiators make it particularly effective for various therapeutic applications.
                   </p>
                 </div>
               </TabsContent>

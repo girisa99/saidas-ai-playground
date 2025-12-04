@@ -48,14 +48,14 @@ export const TherapyCarousel = () => {
                         <div className="space-y-1.5">
                           <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Key Highlights</h4>
                           <div className="flex flex-wrap gap-1">
-                            {therapy.highlights.slice(0, 3).map((highlight, idx) => (<Badge key={idx} variant="secondary" className="text-xs">{highlight}</Badge>))}
+                            {therapy.highlights.slice(0, 3).map((highlight, idx) => (<Badge key={idx} variant="secondary" className="text-xs">{highlight.name}</Badge>))}
                             {therapy.highlights.length > 3 && <Badge variant="outline" className="text-xs">+{therapy.highlights.length - 3} more</Badge>}
                           </div>
                         </div>
                         <div className="space-y-1.5">
                           <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Applications</h4>
                           <ul className="space-y-1">
-                            {therapy.applications.slice(0, 2).map((app, idx) => (<li key={idx} className="flex items-center gap-2 text-xs text-muted-foreground"><CheckCircle2 className="w-3 h-3 text-primary flex-shrink-0" /><span className="line-clamp-1">{app}</span></li>))}
+                            {therapy.applications.slice(0, 2).map((app, idx) => (<li key={idx} className="flex items-center gap-2 text-xs text-muted-foreground"><CheckCircle2 className="w-3 h-3 text-primary flex-shrink-0" /><span className="line-clamp-1">{app.name}</span></li>))}
                           </ul>
                         </div>
                         <div className="flex items-center justify-between pt-2 border-t border-border/50">
