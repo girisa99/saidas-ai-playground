@@ -101,40 +101,44 @@ export const therapyData: TherapyType[] = [
     ],
     differentiators: [
       {
-        name: "Living Drugs That Adapt",
-        description: "Unlike traditional drugs, cell therapies are living entities that can sense their environment, proliferate when needed, and adapt their response. CAR-T cells can expand in vivo when encountering tumor cells and persist as memory cells.",
-        keyPoints: ["Dynamic response to disease", "In vivo proliferation and persistence", "Memory cell formation for long-term protection", "Self-amplifying therapeutic effect"]
+        name: "vs. Traditional Oncology",
+        description: "Unlike conventional chemotherapy or targeted therapies that require repeated dosing, CAR-T and other cell therapies offer one-time treatments. Traditional oncology drugs kill rapidly dividing cells non-specifically, while cell therapies precisely target tumor antigens with living cells that persist and adapt.",
+        keyPoints: ["One-time infusion vs. repeated cycles", "Living cells vs. static molecules", "Adaptive immune memory vs. no memory", "Potential cure vs. disease management"]
       },
       {
-        name: "Potential for Curative Treatment",
-        description: "Cell therapies offer the possibility of one-time treatments that can cure disease rather than managing symptoms. Patients achieving complete remission from CAR-T therapy may never need additional treatment.",
-        keyPoints: ["Single infusion treatment paradigm", "Durable complete responses possible", "Eliminates need for chronic therapy", "Cost-effective over patient lifetime"]
+        name: "vs. Cardiology Treatments",
+        description: "Cardiac medications (beta-blockers, ACE inhibitors, statins) manage symptoms and slow progression but cannot regenerate damaged heart tissue. Cell therapy using cardiac stem cells or iPSC-derived cardiomyocytes aims to actually repair and regenerate heart muscle after infarction.",
+        keyPoints: ["Regeneration vs. symptom management", "Tissue repair vs. pharmacological support", "Potential reversal vs. disease slowing", "One-time treatment vs. lifelong medication"]
       },
       {
-        name: "Personalized From Patient's Cells",
-        description: "Autologous cell therapies use the patient's own cells, eliminating rejection risk and ensuring perfect HLA matching. This personalization maximizes safety and efficacy for each individual.",
-        keyPoints: ["No risk of rejection", "Patient-specific tumor targeting", "Personalized neoantigen recognition", "Optimal safety profile"]
+        name: "vs. Infectious Disease Drugs",
+        description: "Antibiotics and antivirals target pathogens directly and require full treatment courses. Cell therapies can create lasting immunity or repair immune deficiencies. CAR-T has been explored for HIV, potentially offering functional cure vs. lifelong antiretroviral therapy.",
+        keyPoints: ["Immune system enhancement vs. direct pathogen attack", "Durable protection vs. treatment courses", "Addresses chronic infections differently", "Potential functional cures"]
       },
       {
-        name: "AI-Optimized Manufacturing",
-        description: "Artificial intelligence enhances cell therapy manufacturing through process optimization, quality prediction, and real-time monitoring. AI algorithms can predict cell product potency and optimize expansion protocols.",
-        keyPoints: ["Predictive quality control", "Process parameter optimization", "Automated cell counting and viability", "Reduced manufacturing failures"]
+        name: "vs. Autoimmune Treatments",
+        description: "Traditional immunosuppressants broadly suppress the immune system, increasing infection risk. CAR-T targeting autoimmune B cells or Treg therapies can selectively reset immune dysregulation, potentially achieving drug-free remission in lupus and other autoimmune diseases.",
+        keyPoints: ["Selective immune reset vs. broad suppression", "Drug-free remission potential", "Addresses root cause of autoimmunity", "Lower long-term infection risk"]
       },
       {
-        name: "Real-Time Quality Monitoring",
-        description: "Advanced analytics enable continuous monitoring of cell therapy products throughout manufacturing. This ensures consistent quality and allows intervention before batch failures.",
-        keyPoints: ["Continuous process monitoring", "Early detection of deviations", "Release testing automation", "Digital batch records"]
+        name: "Manufacturing Complexity",
+        description: "Unlike pills or injectable biologics made in large batches, cell therapies often require patient-specific manufacturing with strict chain-of-custody, specialized facilities, and rapid turnaround. This creates unique supply chain and cost challenges that traditional pharma doesn't face.",
+        keyPoints: ["Patient-specific vs. batch manufacturing", "Living product vs. stable molecules", "Cold chain logistics critical", "Higher manufacturing complexity and cost"]
       }
     ],
     url: "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products",
     references: [
       { title: "FDA Approved Cellular and Gene Therapy Products", url: "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/approved-cellular-and-gene-therapy-products", source: "FDA" },
       { title: "Cell Therapy Manufacturing Advances", url: "https://www.nature.com/articles/s41587-022-01571-4", source: "Nature Biotechnology" },
-      { title: "CAR-T Cell Therapy Overview", url: "https://www.cancer.gov/about-cancer/treatment/research/car-t-cells", source: "National Cancer Institute" }
+      { title: "CAR-T Cell Therapy Overview", url: "https://www.cancer.gov/about-cancer/treatment/research/car-t-cells", source: "National Cancer Institute" },
+      { title: "Cell Therapy in Autoimmune Disease", url: "https://www.nature.com/articles/s41591-023-02536-z", source: "Nature Medicine" },
+      { title: "Solid Tumor CAR-T Development", url: "https://www.cell.com/cancer-cell/fulltext/S1535-6108(23)00329-X", source: "Cancer Cell" }
     ],
     attachments: [
       { title: "FDA Guidance: CAR-T Cell Therapy", url: "https://www.fda.gov/media/156894/download", type: "PDF" },
-      { title: "Cell Therapy Clinical Trial Database", url: "https://clinicaltrials.gov/search?cond=Cell%20Therapy", type: "Database" }
+      { title: "Cell Therapy Clinical Trial Database", url: "https://clinicaltrials.gov/search?cond=Cell%20Therapy", type: "Database" },
+      { title: "ISCT Cell Therapy Standards", url: "https://isctglobal.org/standards/", type: "Standards" },
+      { title: "ARM Gene, Cell & RNA Therapy Landscape", url: "https://alliancerm.org/sector-report/", type: "Report" }
     ]
   },
   {
@@ -211,39 +215,41 @@ export const therapyData: TherapyType[] = [
     ],
     differentiators: [
       {
-        name: "One-Time Lifelong Treatment",
-        description: "Gene therapy can provide lasting benefits from a single treatment by permanently adding or editing genes. This contrasts with chronic therapies requiring lifelong administration.",
-        keyPoints: ["Single administration paradigm", "Durable gene expression", "Reduces treatment burden", "Potential lifetime cost savings"]
+        name: "vs. Traditional Oncology",
+        description: "Chemotherapy attacks rapidly dividing cells indiscriminately, requiring repeated cycles. Gene therapy can permanently modify cancer cells or immune cells to fight cancer. Oncolytic viruses selectively infect and destroy cancer cells while sparing normal tissue.",
+        keyPoints: ["Permanent genetic modification vs. temporary effects", "Selective targeting vs. broad toxicity", "Potential one-time vs. repeated dosing", "Addresses genetic drivers directly"]
       },
       {
-        name: "Addresses Root Cause",
-        description: "Rather than treating symptoms, gene therapy corrects the underlying genetic defect. This can prevent disease progression and complications.",
-        keyPoints: ["Corrects genetic mutations", "Prevents disease progression", "May reverse existing damage", "True disease modification"]
+        name: "vs. Chronic Disease Medications",
+        description: "Conditions like hemophilia require lifelong factor replacement infusions. Gene therapy delivering the missing gene (e.g., Hemgenix for Factor IX) can provide years of endogenous factor production from a single treatment, transforming disease management.",
+        keyPoints: ["Endogenous production vs. exogenous replacement", "Single treatment vs. lifelong infusions", "Natural physiological levels", "Freedom from treatment burden"]
       },
       {
-        name: "Precision Targeted Delivery",
-        description: "Vector engineering enables targeting specific tissues and cell types. AAV serotypes and engineered capsids direct therapy to where it's needed.",
-        keyPoints: ["Tissue-specific promoters", "Engineered capsids for targeting", "Reduced off-target effects", "Optimized biodistribution"]
+        name: "vs. Neurological Drugs",
+        description: "Neurodegenerative diseases like Parkinson's are managed with dopamine replacement (L-DOPA) that loses efficacy over time. Gene therapy delivering genes for dopamine production or protective factors could provide sustained benefit without dose-limiting side effects.",
+        keyPoints: ["Targeted CNS delivery", "Sustained therapeutic effect", "Addresses progression vs. symptom masking", "Potential disease modification"]
       },
       {
-        name: "AI-Guided Vector Design",
-        description: "Machine learning accelerates vector optimization, predicting capsid properties, tropism, and immunogenicity. This speeds development and improves safety.",
-        keyPoints: ["Capsid library screening", "Immunogenicity prediction", "Tissue targeting optimization", "Manufacturing optimization"]
+        name: "vs. Rare Disease Treatments",
+        description: "Many rare genetic diseases have no treatment or only enzyme replacement therapy requiring frequent infusions. Gene therapy provides the missing gene, enabling the body to produce the enzyme itself continuously.",
+        keyPoints: ["Produces missing proteins naturally", "One-time vs. lifelong ERT", "Better tissue penetration", "Potentially curative"]
       },
       {
-        name: "Reduced Immunogenicity",
-        description: "Engineering approaches reduce immune responses to vectors, potentially enabling redosing or treatment of patients with pre-existing antibodies.",
-        keyPoints: ["Capsid engineering to evade antibodies", "Immunosuppression protocols", "Alternative delivery routes", "Next-generation vectors"]
+        name: "Manufacturing & Delivery Complexity",
+        description: "Unlike small molecules or even antibodies, gene therapy requires specialized vector manufacturing, complex quality testing, and often specialized administration (intrathecal, subretinal). This creates unique challenges distinct from traditional pharma.",
+        keyPoints: ["Vector manufacturing expertise required", "Specialized administration routes", "Complex release testing", "Cold chain and stability challenges"]
       }
     ],
     url: "https://www.genome.gov/genetics-glossary/Gene-Therapy",
     references: [
       { title: "Gene Therapy Clinical Trials Database", url: "https://clinicaltrials.gov/search?cond=Gene%20Therapy", source: "ClinicalTrials.gov" },
-      { title: "CRISPR-Cas9 Gene Editing Review", url: "https://www.nature.com/articles/s41576-019-0166-5", source: "Nature Reviews Genetics" }
+      { title: "CRISPR-Cas9 Gene Editing Review", url: "https://www.nature.com/articles/s41576-019-0166-5", source: "Nature Reviews Genetics" },
+      { title: "Gene Therapy in Neurology", url: "https://www.nature.com/articles/s41582-021-00588-8", source: "Nature Reviews Neurology" }
     ],
     attachments: [
       { title: "FDA Gene Therapy Guidance Documents", url: "https://www.fda.gov/vaccines-blood-biologics/biologics-guidances/cellular-gene-therapy-guidances", type: "Guidance" },
-      { title: "NIH Gene Therapy Resources", url: "https://www.genome.gov/genetics-glossary/Gene-Therapy", type: "Resource" }
+      { title: "NIH Gene Therapy Resources", url: "https://www.genome.gov/genetics-glossary/Gene-Therapy", type: "Resource" },
+      { title: "ASGCT Gene Therapy Pipeline", url: "https://asgct.org/research/news/november-2023/gene-cell-and-rna-therapy-landscape", type: "Database" }
     ]
   },
   {
@@ -320,38 +326,41 @@ export const therapyData: TherapyType[] = [
     ],
     differentiators: [
       {
-        name: "Multi-Modality Combination",
-        description: "ATMPs can combine multiple therapeutic approaches - cells, genes, scaffolds, and devices - for enhanced efficacy that single modalities cannot achieve.",
-        keyPoints: ["Synergistic therapeutic effects", "Addresses multiple disease aspects", "Customizable combinations", "Enhanced functional outcomes"]
+        name: "vs. Traditional Surgery",
+        description: "Conventional surgery uses prosthetics or donor tissue with rejection risks. Tissue-engineered products using patient's own cells create biocompatible, living replacements that integrate and grow with the body, potentially lasting a lifetime.",
+        keyPoints: ["Living tissue vs. synthetic prosthetics", "No rejection risk with autologous", "Grows and adapts with patient", "True biological integration"]
       },
       {
-        name: "Personalized Tissue Solutions",
-        description: "ATMPs can be manufactured from patient's own cells, ensuring immunological compatibility and personalized fit for the patient's specific anatomy.",
-        keyPoints: ["Autologous cell sourcing", "Patient-specific design", "Perfect immunological match", "Customized to anatomy"]
+        name: "vs. Transplantation",
+        description: "Organ transplants face donor shortages and lifelong immunosuppression. ATMPs like engineered tissues, xenotransplants, and bioprinted organs could provide unlimited supply without immunosuppression, addressing the transplant waiting list crisis.",
+        keyPoints: ["Unlimited supply potential", "No donor dependency", "Reduced/eliminated immunosuppression", "Personalized to patient"]
       },
       {
-        name: "AI-Driven Bioprinting",
-        description: "Artificial intelligence optimizes bioprinting parameters, predicts printability, and designs complex structures. This accelerates development and improves outcomes.",
-        keyPoints: ["Print parameter optimization", "Structure design automation", "Quality prediction", "Process monitoring"]
+        name: "vs. Regenerative Injections (PRP, etc.)",
+        description: "PRP and simple cell injections have limited evidence and passive mechanisms. Advanced tissue engineering provides structured, functional tissue replacements with proven efficacy for cartilage repair, skin grafts, and more.",
+        keyPoints: ["Structured tissue vs. cell suspensions", "Proven clinical efficacy", "Regulatory-approved products", "Defined manufacturing processes"]
       },
       {
-        name: "Real-Time Quality Assessment",
-        description: "Advanced imaging and sensing technologies enable non-destructive quality assessment of ATMPs during and after manufacturing.",
-        keyPoints: ["Non-destructive testing", "Live/dead cell assessment", "Structural integrity analysis", "Release criteria automation"]
+        name: "vs. Medical Devices",
+        description: "Implantable devices have finite lifespans and foreign body responses. Tissue-engineered products integrate biologically, reducing complications like infection, wear, and the need for revision surgeries.",
+        keyPoints: ["Biological vs. mechanical function", "Self-healing potential", "Reduced foreign body response", "Potentially permanent solution"]
       },
       {
-        name: "Scalable Manufacturing",
-        description: "Innovations in bioreactor design, automation, and process control are enabling scale-up of ATMP manufacturing from bench to commercial production.",
-        keyPoints: ["Automated bioreactors", "Closed system processing", "Process analytical technology", "Cost reduction strategies"]
+        name: "Regulatory & Manufacturing Distinction",
+        description: "ATMPs require specialized regulatory pathways (EMA's ATMP classification, FDA's RMAT) and manufacturing that combines pharma GMP with tissue processing expertise. This creates unique development and commercial challenges.",
+        keyPoints: ["Specialized regulatory pathways", "Combined pharma + tissue expertise", "Hospital exemption considerations", "Complex supply chain requirements"]
       }
     ],
     url: "https://www.ema.europa.eu/en/human-regulatory/overview/advanced-therapy-medicinal-products-overview",
     references: [
       { title: "EMA ATMP Guidelines", url: "https://www.ema.europa.eu/en/human-regulatory/overview/advanced-therapy-medicinal-products-overview", source: "EMA" },
-      { title: "3D Bioprinting in Medicine", url: "https://www.nature.com/articles/s41578-019-0099-2", source: "Nature Materials" }
+      { title: "3D Bioprinting in Medicine", url: "https://www.nature.com/articles/s41578-019-0099-2", source: "Nature Materials" },
+      { title: "Xenotransplantation Progress", url: "https://www.nature.com/articles/s41591-022-01755-6", source: "Nature Medicine" }
     ],
     attachments: [
-      { title: "EMA ATMP Classification Procedure", url: "https://www.ema.europa.eu/en/human-regulatory/marketing-authorisation/advanced-therapies/advanced-therapy-classification", type: "Procedure" }
+      { title: "EMA ATMP Classification Procedure", url: "https://www.ema.europa.eu/en/human-regulatory/marketing-authorisation/advanced-therapies/advanced-therapy-classification", type: "Procedure" },
+      { title: "FDA RMAT Designation", url: "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/regenerative-medicine-advanced-therapy-designation", type: "Guidance" },
+      { title: "ISSCR Guidelines for Stem Cell Research", url: "https://www.isscr.org/guidelines", type: "Guidelines" }
     ]
   },
   {
@@ -428,38 +437,41 @@ export const therapyData: TherapyType[] = [
     ],
     differentiators: [
       {
-        name: "Individual Molecular Profiling",
-        description: "Comprehensive molecular analysis of each patient's disease provides the foundation for truly personalized treatment. This includes genomics, transcriptomics, proteomics, and metabolomics.",
-        keyPoints: ["Multi-omic profiling", "Tumor and germline analysis", "Pathway activation mapping", "Dynamic monitoring"]
+        name: "vs. One-Size-Fits-All Medicine",
+        description: "Traditional medicine gives the same treatment to all patients with a diagnosis. Precision medicine recognizes that two patients with 'breast cancer' may have completely different molecular drivers requiring different treatments.",
+        keyPoints: ["Molecular subtyping guides therapy", "Right drug for right patient", "Avoids ineffective treatments", "Higher response rates"]
       },
       {
-        name: "AI-Powered Prediction",
-        description: "Artificial intelligence synthesizes complex patient data to predict optimal treatments and outcomes with accuracy beyond human capability.",
-        keyPoints: ["Machine learning models", "Integration of diverse data", "Continuous learning", "Clinical decision support"]
+        name: "vs. Trial-and-Error Prescribing",
+        description: "Conventional prescribing often involves trying multiple drugs until one works. Pharmacogenomics and biomarkers enable selecting the most likely effective therapy upfront, reducing time to effective treatment.",
+        keyPoints: ["Evidence-based drug selection", "Reduced treatment failures", "Faster time to response", "Lower healthcare costs"]
       },
       {
-        name: "Continuous Optimization",
-        description: "Treatment is continuously optimized based on response monitoring and evolving understanding of the patient's disease, not fixed at initial diagnosis.",
-        keyPoints: ["Real-time monitoring", "Adaptive therapy", "Response-guided changes", "Learning health systems"]
+        name: "vs. Population-Based Dosing",
+        description: "Standard dosing assumes average drug metabolism. Precision dosing accounts for individual variations in drug metabolism (CYP450 variants) to optimize efficacy while minimizing toxicity.",
+        keyPoints: ["Individualized dose optimization", "Genetic metabolism prediction", "Reduced adverse events", "Therapeutic drug monitoring"]
       },
       {
-        name: "Reduced Adverse Events",
-        description: "By matching treatments to patients most likely to respond, precision medicine reduces exposure to ineffective therapies and their associated side effects.",
-        keyPoints: ["Avoiding ineffective treatments", "Pharmacogenomic safety", "Better risk-benefit ratio", "Improved quality of life"]
+        name: "vs. Reactive Medicine",
+        description: "Traditional medicine treats disease after it develops. Precision prevention uses genetic risk scores and biomarkers to identify high-risk individuals for proactive intervention before disease onset.",
+        keyPoints: ["Predictive risk assessment", "Early intervention opportunity", "Prevention over treatment", "Reduced disease burden"]
       },
       {
-        name: "Cost-Effective Targeting",
-        description: "Despite higher upfront testing costs, precision medicine can be more cost-effective by avoiding ineffective treatments and complications.",
-        keyPoints: ["Reduced failed therapy costs", "Earlier effective treatment", "Prevention of complications", "Value-based healthcare alignment"]
+        name: "Data & AI Infrastructure Requirements",
+        description: "Precision medicine requires robust data infrastructure—genomic databases, EHR integration, AI algorithms, and real-time analytics—that differs significantly from traditional clinical workflows.",
+        keyPoints: ["Multi-omic data integration", "AI/ML interpretation tools", "Clinical decision support systems", "Continuous learning systems"]
       }
     ],
     url: "https://www.cancer.gov/about-cancer/treatment/types/precision-medicine",
     references: [
       { title: "All of Us Precision Medicine Initiative", url: "https://allofus.nih.gov/", source: "NIH All of Us" },
-      { title: "CPIC Pharmacogenomics Guidelines", url: "https://cpicpgx.org/", source: "CPIC" }
+      { title: "CPIC Pharmacogenomics Guidelines", url: "https://cpicpgx.org/", source: "CPIC" },
+      { title: "Precision Oncology Review", url: "https://www.nature.com/articles/s41571-021-00578-1", source: "Nature Reviews Clinical Oncology" }
     ],
     attachments: [
-      { title: "FDA Precision Medicine Resources", url: "https://www.fda.gov/science-research/science-and-research-special-topics/precision-medicine", type: "Resource" }
+      { title: "FDA Precision Medicine Resources", url: "https://www.fda.gov/science-research/science-and-research-special-topics/precision-medicine", type: "Resource" },
+      { title: "PharmGKB Drug-Gene Interactions", url: "https://www.pharmgkb.org/", type: "Database" },
+      { title: "NCCN Biomarker Testing Guidelines", url: "https://www.nccn.org/guidelines/guidelines-detail?category=2&id=1477", type: "Guidelines" }
     ]
   },
   {
@@ -536,38 +548,41 @@ export const therapyData: TherapyType[] = [
     ],
     differentiators: [
       {
-        name: "Systemic Metastasis Treatment",
-        description: "Unlike external beam radiation, radioligand therapy is administered systemically and seeks out metastases throughout the body. This enables treatment of widespread disease.",
-        keyPoints: ["Treats all sites simultaneously", "Reaches microscopic disease", "No need to identify all lesions", "Whole-body treatment approach"]
+        name: "vs. External Beam Radiation",
+        description: "EBRT requires daily hospital visits over weeks and irradiates normal tissue in the beam path. Radioligand therapy is administered in a few infusions, targets only cells expressing the receptor, and can treat metastases throughout the body simultaneously.",
+        keyPoints: ["Systemic vs. local treatment", "Fewer treatment sessions", "Targets all metastases at once", "Reduced collateral damage"]
       },
       {
-        name: "Theranostic Approach",
-        description: "The same targeting molecule can be used for both diagnosis and therapy by changing the radioisotope. This enables patient selection and response monitoring.",
-        keyPoints: ["Confirm target expression first", "Select likely responders", "Monitor treatment response", "Personalized treatment planning"]
+        name: "vs. Chemotherapy",
+        description: "Chemotherapy affects all rapidly dividing cells, causing broad toxicity (hair loss, GI issues, myelosuppression). Radioligand therapy targets specific receptors, limiting exposure primarily to tumor cells expressing those targets.",
+        keyPoints: ["Receptor-specific targeting", "Reduced systemic toxicity", "Different side effect profile", "Effective after chemo failure"]
       },
       {
-        name: "AI-Optimized Dosimetry",
-        description: "Artificial intelligence enhances dosimetry calculations, predicting organ doses and optimizing treatment plans for maximum efficacy and safety.",
-        keyPoints: ["Automated dose calculation", "Organ dose prediction", "Treatment optimization", "Safety monitoring"]
+        name: "vs. Targeted Therapies",
+        description: "Small molecule inhibitors require continuous dosing and often develop resistance. Radioligand therapy delivers radiation that kills cells regardless of downstream pathway resistance, and is given in limited treatment cycles.",
+        keyPoints: ["Cell killing vs. pathway inhibition", "Overcomes signaling resistance", "Limited treatment duration", "Different mechanism of action"]
       },
       {
-        name: "Minimal Healthy Tissue Damage",
-        description: "Targeted delivery concentrates radiation at tumor sites while limiting exposure to healthy organs. This is especially true for alpha emitters with their short range.",
-        keyPoints: ["Tumor-selective accumulation", "Limited bystander damage", "Alpha particles: high precision", "Manageable side effect profile"]
+        name: "vs. Immunotherapy",
+        description: "Checkpoint inhibitors work by unleashing immune response, which can cause autoimmune side effects. Radioligand therapy directly destroys tumor cells via radiation. The two can be complementary, with radiation potentially enhancing immune recognition.",
+        keyPoints: ["Direct cell killing mechanism", "Different toxicity profile", "Potential synergy with immunotherapy", "Effective in immunotherapy-resistant tumors"]
       },
       {
-        name: "Treatment-Resistant Cancer",
-        description: "Radioligand therapy can be effective in cancers that have become resistant to other treatments. The mechanism of cell killing differs from chemotherapy or targeted agents.",
-        keyPoints: ["Alternative mechanism of action", "Overcomes some resistance", "Effective after multiple prior therapies", "Option when others fail"]
+        name: "Theranostic Precision Advantage",
+        description: "The theranostic approach—using the same molecule for imaging and therapy—enables confirmation of target expression before treatment. No other modality offers this 'see it, then treat it' capability.",
+        keyPoints: ["Pre-treatment target confirmation", "Patient selection optimization", "Response monitoring built-in", "Truly personalized dosimetry"]
       }
     ],
     url: "https://www.snmmi.org/AboutSNMMI/Content.aspx?ItemNumber=35042",
     references: [
       { title: "VISION Trial Results (Lu-177 PSMA)", url: "https://www.nejm.org/doi/full/10.1056/NEJMoa2107322", source: "NEJM" },
-      { title: "Theranostics in Nuclear Medicine", url: "https://jnm.snmjournals.org/content/60/9/1209", source: "JNM" }
+      { title: "Theranostics in Nuclear Medicine", url: "https://jnm.snmjournals.org/content/60/9/1209", source: "JNM" },
+      { title: "Alpha Therapy Development", url: "https://www.thelancet.com/journals/lanonc/article/PIIS1470-2045(21)00276-0/fulltext", source: "Lancet Oncology" }
     ],
     attachments: [
-      { title: "SNMMI Radioligand Therapy Guidelines", url: "https://www.snmmi.org/ClinicalPractice/content.aspx?ItemNumber=6991", type: "Guidelines" }
+      { title: "SNMMI Radioligand Therapy Guidelines", url: "https://www.snmmi.org/ClinicalPractice/content.aspx?ItemNumber=6991", type: "Guidelines" },
+      { title: "EANM Dosimetry Guidance", url: "https://www.eanm.org/publications/guidelines/", type: "Guidelines" },
+      { title: "Clinical Trials in Radioligand Therapy", url: "https://clinicaltrials.gov/search?cond=radioligand%20therapy", type: "Database" }
     ]
   }
 ];
