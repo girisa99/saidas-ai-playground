@@ -3,12 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
 import { 
   Building2, TrendingUp, Beaker, DollarSign, 
   Globe, Microscope, Factory, FlaskConical, Dna,
-  Award, Activity, MapPin, Zap, Atom, HeartPulse,
-  Sparkles, Filter, ChevronDown
+  Award, MapPin, Zap, Atom, HeartPulse,
+  Sparkles, Filter, ChevronDown, AlertTriangle,
+  TrendingDown, XCircle, ArrowRightLeft, Clock
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -30,6 +30,55 @@ interface ManufacturerData {
   commercialProducts?: string[];
   clinicalStage?: 'Phase 1' | 'Phase 2' | 'Phase 3' | 'Approved' | 'Pre-clinical';
 }
+
+interface ChallengeData {
+  name: string;
+  status: 'shutdown' | 'struggling' | 'acquired' | 'pivoted' | 'layoffs';
+  year: string;
+  reason: string;
+  details: string;
+  modality: string;
+  previousValuation?: string;
+  employees?: string;
+  logoInitials: string;
+}
+
+// Companies that have shut down, been acquired, or are struggling
+const SHUTDOWNS_AND_CHALLENGES: ChallengeData[] = [
+  { name: "Graphite Bio", status: "shutdown", year: "2023", reason: "Clinical Hold", details: "Shut down after FDA clinical hold on lead gene therapy program for sickle cell disease due to safety concerns", modality: "Gene Therapy", previousValuation: "$1.2B (peak)", employees: "120 laid off", logoInitials: "GRPH" },
+  { name: "Rubius Therapeutics", status: "shutdown", year: "2023", reason: "Clinical Failures", details: "Ceased operations after multiple clinical disappointments in red cell therapeutics platform", modality: "Cell Therapy", previousValuation: "$800M (IPO)", employees: "170 laid off", logoInitials: "RUBY" },
+  { name: "LogicBio Therapeutics", status: "acquired", year: "2023", reason: "Cash Runway", details: "Acquired by Alexion/AstraZeneca for $68M after running low on cash; originally valued at $400M+", modality: "Gene Therapy", previousValuation: "$400M", logoInitials: "LOGC" },
+  { name: "Athenex", status: "shutdown", year: "2023", reason: "FDA Rejection", details: "Filed for bankruptcy after FDA rejected lead cancer drug; closed CGT operations", modality: "Cell Therapy", previousValuation: "$2B (peak)", employees: "600+ laid off", logoInitials: "ATNX" },
+  { name: "Puma Biotechnology", status: "struggling", year: "2024", reason: "Commercial Challenges", details: "Significant layoffs and restructuring due to disappointing commercial performance", modality: "Personalized Medicine", employees: "50% reduction", logoInitials: "PBYI" },
+  { name: "Solid Biosciences", status: "struggling", year: "2023", reason: "Clinical Setbacks", details: "Multiple clinical holds and safety concerns in DMD gene therapy program; major workforce reduction", modality: "Gene Therapy", employees: "40% reduction", logoInitials: "SLDB" },
+  { name: "Passage Bio", status: "pivoted", year: "2023", reason: "Strategic Shift", details: "Discontinued multiple gene therapy programs; pivoting to focus on fewer assets", modality: "Gene Therapy", employees: "35% reduction", logoInitials: "PASG" },
+  { name: "Taysha Gene Therapies", status: "struggling", year: "2023", reason: "Cash Constraints", details: "Major restructuring and program prioritization due to funding challenges", modality: "Gene Therapy", employees: "60% reduction", logoInitials: "TSHA" },
+  { name: "Genprex", status: "struggling", year: "2024", reason: "Funding Issues", details: "Struggling to advance gene therapy programs due to limited cash runway", modality: "Gene Therapy", previousValuation: "$500M (peak)", logoInitials: "GNPX" },
+  { name: "Cellectis", status: "layoffs", year: "2024", reason: "Cost Reduction", details: "Major workforce reduction to extend runway; focusing on key allogeneic CAR-T programs", modality: "Cell Therapy", employees: "30% reduction", logoInitials: "CLLS" },
+  { name: "Tmunity Therapeutics", status: "acquired", year: "2023", reason: "Strategic Exit", details: "Acquired by Gilead; couldn't sustain as independent company despite strong science", modality: "Cell Therapy", logoInitials: "TMUN" },
+  { name: "Vor Biopharma", status: "struggling", year: "2024", reason: "Clinical Delays", details: "Workforce reduction and program prioritization amid challenging CGT market", modality: "Cell Therapy", employees: "25% reduction", logoInitials: "VOR" },
+  { name: "Lyell Immunopharma", status: "layoffs", year: "2024", reason: "Strategic Refocus", details: "Significant restructuring to focus resources on lead programs", modality: "Cell Therapy", employees: "35% reduction", logoInitials: "LYEL" },
+  { name: "Compass Pathways", status: "struggling", year: "2024", reason: "Regulatory Uncertainty", details: "Facing challenges in psychedelic-assisted therapy regulatory pathway", modality: "Personalized Medicine", logoInitials: "CMPS" },
+];
+
+// Market pressure trends and statistics
+const MARKET_TRENDS = [
+  { metric: "CGT Biotech Shutdowns (2023-2024)", value: "15+", change: "+200%", trend: "up", description: "Companies ceased operations vs 2021-2022" },
+  { metric: "Industry Layoffs (2023)", value: "8,000+", change: "+150%", trend: "up", description: "CGT sector job cuts across all companies" },
+  { metric: "VC Funding Decline", value: "-45%", change: "vs 2021", trend: "down", description: "Year-over-year decrease in CGT investments" },
+  { metric: "Clinical Holds (2023)", value: "25+", change: "+80%", trend: "up", description: "FDA clinical holds on CGT programs" },
+  { metric: "M&A Activity", value: "12", change: "-30%", trend: "down", description: "Major CGT acquisitions completed" },
+  { metric: "Average Time to Market", value: "12+ years", change: "+2 years", trend: "up", description: "From discovery to FDA approval" },
+];
+
+const INDUSTRY_PRESSURES = [
+  { title: "Manufacturing Complexity", severity: "high", description: "High costs and technical challenges in viral vector and cell processing production", impact: "60% of CGT companies cite manufacturing as top challenge" },
+  { title: "Reimbursement Uncertainty", severity: "high", description: "Payers struggling with $1M+ one-time therapy pricing models", impact: "Only 40% of approved CGTs have broad payer coverage" },
+  { title: "Clinical Safety Concerns", severity: "medium", description: "Increased FDA scrutiny following adverse events in multiple trials", impact: "25+ clinical holds issued in 2023" },
+  { title: "Talent Shortage", severity: "medium", description: "Limited pool of experienced CGT researchers and manufacturing specialists", impact: "Average time-to-fill for CGT roles: 6+ months" },
+  { title: "Supply Chain Fragility", severity: "medium", description: "Dependency on limited raw material suppliers and CDMOs", impact: "Single-source dependencies for 70% of critical materials" },
+  { title: "Regulatory Complexity", severity: "medium", description: "Evolving global regulatory frameworks create uncertainty", impact: "Average 18-month delay for international approvals" },
+];
 
 const COMPREHENSIVE_MANUFACTURERS: ManufacturerData[] = [
   // Major Pharma
@@ -103,6 +152,14 @@ const TYPE_CONFIG: Record<string, { label: string; icon: React.ElementType; colo
   research: { label: 'Research', icon: Beaker, color: 'text-genie-accent', bg: 'bg-genie-accent/20' },
   vc: { label: 'VC/Investor', icon: TrendingUp, color: 'text-destructive', bg: 'bg-destructive/20' },
   cdmo: { label: 'CDMO', icon: Factory, color: 'text-success', bg: 'bg-success/20' },
+};
+
+const STATUS_CONFIG: Record<string, { label: string; icon: React.ElementType; color: string; bg: string }> = {
+  shutdown: { label: 'Shutdown', icon: XCircle, color: 'text-destructive', bg: 'bg-destructive/20' },
+  struggling: { label: 'Struggling', icon: TrendingDown, color: 'text-warning', bg: 'bg-warning/20' },
+  acquired: { label: 'Acquired', icon: ArrowRightLeft, color: 'text-genie-primary', bg: 'bg-genie-primary/20' },
+  pivoted: { label: 'Pivoted', icon: ArrowRightLeft, color: 'text-genie-cyan', bg: 'bg-genie-cyan/20' },
+  layoffs: { label: 'Major Layoffs', icon: TrendingDown, color: 'text-warning', bg: 'bg-warning/20' },
 };
 
 const MODALITY_CONFIG = {
@@ -299,18 +356,22 @@ export const ManufacturerInfographic: React.FC = () => {
         </Card>
         
         <Tabs defaultValue="rankings" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-muted/50">
-            <TabsTrigger value="rankings" className="data-[state=active]:bg-genie-primary/10 data-[state=active]:text-genie-primary">
+          <TabsList className="grid w-full grid-cols-5 bg-muted/50">
+            <TabsTrigger value="rankings" className="data-[state=active]:bg-genie-primary/10 data-[state=active]:text-genie-primary text-xs">
               Rankings
             </TabsTrigger>
-            <TabsTrigger value="modalities" className="data-[state=active]:bg-genie-primary/10 data-[state=active]:text-genie-primary">
-              By Modality
+            <TabsTrigger value="challenges" className="data-[state=active]:bg-destructive/10 data-[state=active]:text-destructive text-xs">
+              <AlertTriangle className="h-3 w-3 mr-1" />
+              Challenges
             </TabsTrigger>
-            <TabsTrigger value="geography" className="data-[state=active]:bg-genie-primary/10 data-[state=active]:text-genie-primary">
+            <TabsTrigger value="modalities" className="data-[state=active]:bg-genie-primary/10 data-[state=active]:text-genie-primary text-xs">
+              Modalities
+            </TabsTrigger>
+            <TabsTrigger value="geography" className="data-[state=active]:bg-genie-primary/10 data-[state=active]:text-genie-primary text-xs">
               Geography
             </TabsTrigger>
-            <TabsTrigger value="explore" className="data-[state=active]:bg-genie-primary/10 data-[state=active]:text-genie-primary">
-              Explore All
+            <TabsTrigger value="explore" className="data-[state=active]:bg-genie-primary/10 data-[state=active]:text-genie-primary text-xs">
+              Explore
             </TabsTrigger>
           </TabsList>
           
@@ -428,6 +489,137 @@ export const ManufacturerInfographic: React.FC = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
+            </Card>
+          </TabsContent>
+          
+          {/* Market Challenges Tab */}
+          <TabsContent value="challenges" className="space-y-6">
+            {/* Market Pressure Statistics */}
+            <Card className="bg-card border-destructive/20">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg text-foreground">
+                  <TrendingDown className="h-5 w-5 text-destructive" />
+                  CGAT Market Pressure Indicators (2023-2024)
+                </CardTitle>
+                <CardDescription>Key metrics showing industry challenges and market sentiment</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-3 gap-4">
+                  {MARKET_TRENDS.map((trend, idx) => (
+                    <motion.div
+                      key={trend.metric}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.05 }}
+                      className="p-4 rounded-lg bg-muted/30 border border-border/50"
+                    >
+                      <div className="text-xs text-muted-foreground mb-1">{trend.metric}</div>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-2xl font-bold text-foreground">{trend.value}</span>
+                        <span className={`text-sm font-medium ${trend.trend === 'up' ? 'text-destructive' : 'text-warning'}`}>
+                          {trend.change}
+                        </span>
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1">{trend.description}</div>
+                    </motion.div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Industry Pressures */}
+            <Card className="bg-card border-warning/20">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg text-foreground">
+                  <AlertTriangle className="h-5 w-5 text-warning" />
+                  Key Industry Pressures
+                </CardTitle>
+                <CardDescription>Major challenges affecting CGAT companies</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {INDUSTRY_PRESSURES.map((pressure, idx) => (
+                    <motion.div
+                      key={pressure.title}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.05 }}
+                      className="p-4 rounded-lg bg-muted/30 border border-border/50"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge variant="outline" className={`text-xs ${pressure.severity === 'high' ? 'bg-destructive/20 text-destructive border-destructive/30' : 'bg-warning/20 text-warning border-warning/30'}`}>
+                          {pressure.severity === 'high' ? 'High Impact' : 'Medium Impact'}
+                        </Badge>
+                        <span className="font-medium text-foreground text-sm">{pressure.title}</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground mb-2">{pressure.description}</p>
+                      <div className="text-xs text-genie-primary font-medium">{pressure.impact}</div>
+                    </motion.div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Shutdowns & Struggling Companies */}
+            <Card className="bg-card border-destructive/20">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg text-foreground">
+                  <XCircle className="h-5 w-5 text-destructive" />
+                  Company Shutdowns, Pivots & Layoffs
+                </CardTitle>
+                <CardDescription>Organizations that have closed, been acquired, or significantly restructured</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ScrollArea className="h-[400px]">
+                  <div className="space-y-3">
+                    {SHUTDOWNS_AND_CHALLENGES.map((company, idx) => {
+                      const statusConfig = STATUS_CONFIG[company.status];
+                      const StatusIcon = statusConfig.icon;
+                      
+                      return (
+                        <motion.div
+                          key={company.name}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: idx * 0.03 }}
+                          className="p-4 rounded-lg bg-muted/30 border border-border/50 hover:border-destructive/30 transition-all"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className={`w-12 h-12 rounded-full ${statusConfig.bg} border border-border/50 flex items-center justify-center font-bold ${statusConfig.color} text-sm`}>
+                              {company.logoInitials.slice(0, 2)}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className="font-semibold text-foreground">{company.name}</span>
+                                <Badge variant="outline" className={`${statusConfig.bg} ${statusConfig.color} border-transparent text-[10px]`}>
+                                  <StatusIcon className="h-2.5 w-2.5 mr-1" />
+                                  {statusConfig.label}
+                                </Badge>
+                                <Badge variant="secondary" className="text-[10px]">
+                                  <Clock className="h-2.5 w-2.5 mr-1" />
+                                  {company.year}
+                                </Badge>
+                              </div>
+                              <div className="text-xs text-muted-foreground mt-1">
+                                <span className="font-medium text-warning">{company.reason}</span> • {company.modality}
+                              </div>
+                              <p className="text-xs text-muted-foreground mt-2">{company.details}</p>
+                              <div className="flex gap-3 mt-2">
+                                {company.previousValuation && (
+                                  <span className="text-xs text-destructive">Peak: {company.previousValuation}</span>
+                                )}
+                                {company.employees && (
+                                  <span className="text-xs text-warning">{company.employees}</span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </ScrollArea>
+              </CardContent>
             </Card>
           </TabsContent>
           
