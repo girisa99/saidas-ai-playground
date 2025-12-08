@@ -220,21 +220,21 @@ export const TherapeuticComparisonSection = () => {
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <Card className={`h-full border-border/50 ${
-                        model.type.includes("1:1") ? "bg-purple-500/5 border-purple-500/30" :
-                        model.type.includes("SelectMany") ? "bg-blue-500/5 border-blue-500/30" :
-                        "bg-green-500/5 border-green-500/30"
+                    <Card className={`h-full border-border/50 ${
+                        model.type.includes("1:1") ? "bg-genie-teal/5 border-genie-teal/30" :
+                        model.type.includes("SelectMany") ? "bg-primary/5 border-primary/30" :
+                        "bg-success/5 border-success/30"
                       }`}>
                         <CardHeader>
                           <div className="flex items-center gap-3">
                             <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                              model.type.includes("1:1") ? "bg-purple-500/20" :
-                              model.type.includes("SelectMany") ? "bg-blue-500/20" :
-                              "bg-green-500/20"
+                              model.type.includes("1:1") ? "bg-genie-teal/20" :
+                              model.type.includes("SelectMany") ? "bg-primary/20" :
+                              "bg-success/20"
                             }`}>
-                              {model.type.includes("1:1") ? <Users className="w-6 h-6 text-purple-500" /> :
-                               model.type.includes("SelectMany") ? <Network className="w-6 h-6 text-blue-500" /> :
-                               <Package2 className="w-6 h-6 text-green-500" />}
+                              {model.type.includes("1:1") ? <Users className="w-6 h-6 text-genie-teal" /> :
+                               model.type.includes("SelectMany") ? <Network className="w-6 h-6 text-primary" /> :
+                               <Package2 className="w-6 h-6 text-success" />}
                             </div>
                             <div>
                               <CardTitle className="text-base">{model.type}</CardTitle>

@@ -26,16 +26,17 @@ const iconMap: Record<string, React.ElementType> = {
   Radiation, RefreshCw
 };
 
+// Using semantic design tokens for consistent theming
 const phaseColors = {
-  'pre-infusion': 'from-blue-500 to-cyan-500',
-  'infusion': 'from-purple-500 to-pink-500',
-  'post-infusion': 'from-green-500 to-emerald-500'
+  'pre-infusion': 'from-primary to-genie-cyan',
+  'infusion': 'from-genie-teal to-genie-accent',
+  'post-infusion': 'from-success to-genie-teal'
 };
 
 const phaseBgColors = {
-  'pre-infusion': 'bg-blue-500/10 border-blue-500/30',
-  'infusion': 'bg-purple-500/10 border-purple-500/30',
-  'post-infusion': 'bg-green-500/10 border-green-500/30'
+  'pre-infusion': 'bg-primary/10 border-primary/30',
+  'infusion': 'bg-genie-teal/10 border-genie-teal/30',
+  'post-infusion': 'bg-success/10 border-success/30'
 };
 
 interface StageCardProps {
@@ -90,9 +91,9 @@ const StageCard = ({ stage, index, isLast }: StageCardProps) => {
             <Badge 
               variant="secondary" 
               className={`text-xs mb-2 ${
-                stage.phase === 'pre-infusion' ? 'bg-blue-500/20 text-blue-700 dark:text-blue-300' :
-                stage.phase === 'infusion' ? 'bg-purple-500/20 text-purple-700 dark:text-purple-300' :
-                'bg-green-500/20 text-green-700 dark:text-green-300'
+                stage.phase === 'pre-infusion' ? 'bg-primary/20 text-primary' :
+                stage.phase === 'infusion' ? 'bg-genie-teal/20 text-genie-teal' :
+                'bg-success/20 text-success'
               }`}
             >
               {stage.phase.replace('-', ' ').toUpperCase()}
@@ -263,15 +264,15 @@ const ProcessFlowDiagram = ({ flow }: ProcessFlowDiagramProps) => {
       {/* Phase Legend */}
       <div className="flex flex-wrap justify-center gap-4">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-gradient-to-r from-blue-500 to-cyan-500" />
+          <div className="w-4 h-4 rounded bg-gradient-to-r from-primary to-genie-cyan" />
           <span className="text-sm text-muted-foreground">Pre-Infusion ({preInfusionStages.length} stages)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-gradient-to-r from-purple-500 to-pink-500" />
+          <div className="w-4 h-4 rounded bg-gradient-to-r from-genie-teal to-genie-accent" />
           <span className="text-sm text-muted-foreground">Infusion ({infusionStages.length} stages)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-gradient-to-r from-green-500 to-emerald-500" />
+          <div className="w-4 h-4 rounded bg-gradient-to-r from-success to-genie-teal" />
           <span className="text-sm text-muted-foreground">Post-Infusion ({postInfusionStages.length} stages)</span>
         </div>
       </div>
@@ -299,21 +300,21 @@ const ProcessFlowDiagram = ({ flow }: ProcessFlowDiagramProps) => {
             <p className="text-xs text-muted-foreground">Total Stages</p>
           </CardContent>
         </Card>
-        <Card className="border-border/50 bg-blue-500/10">
+        <Card className="border-border/50 bg-primary/10">
           <CardContent className="py-4 text-center">
-            <p className="text-2xl font-bold text-blue-500">{preInfusionStages.length}</p>
+            <p className="text-2xl font-bold text-primary">{preInfusionStages.length}</p>
             <p className="text-xs text-muted-foreground">Pre-Infusion</p>
           </CardContent>
         </Card>
-        <Card className="border-border/50 bg-purple-500/10">
+        <Card className="border-border/50 bg-genie-teal/10">
           <CardContent className="py-4 text-center">
-            <p className="text-2xl font-bold text-purple-500">{infusionStages.length}</p>
+            <p className="text-2xl font-bold text-genie-teal">{infusionStages.length}</p>
             <p className="text-xs text-muted-foreground">Infusion</p>
           </CardContent>
         </Card>
-        <Card className="border-border/50 bg-green-500/10">
+        <Card className="border-border/50 bg-success/10">
           <CardContent className="py-4 text-center">
-            <p className="text-2xl font-bold text-green-500">{postInfusionStages.length}</p>
+            <p className="text-2xl font-bold text-success">{postInfusionStages.length}</p>
             <p className="text-xs text-muted-foreground">Post-Infusion</p>
           </CardContent>
         </Card>
@@ -375,11 +376,11 @@ export const PatientJourneyDiagram = () => {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Pre-Infusion */}
-            <Card className="border-blue-500/30 bg-blue-500/5">
+            <Card className="border-primary/30 bg-primary/5">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                    <ClipboardList className="w-4 h-4 text-white" />
+                <CardTitle className="flex items-center gap-2 text-primary">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-genie-cyan flex items-center justify-center">
+                    <ClipboardList className="w-4 h-4 text-primary-foreground" />
                   </div>
                   Pre-Infusion Phase
                 </CardTitle>
@@ -397,13 +398,13 @@ export const PatientJourneyDiagram = () => {
                       "Lymphodepletion conditioning"
                     ].map((item, idx) => (
                       <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="pt-2 border-t border-blue-500/20">
+                <div className="pt-2 border-t border-primary/20">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
                     <HeartHandshake className="w-3 h-3 inline mr-1" />
                     Hub Services Role
@@ -415,21 +416,21 @@ export const PatientJourneyDiagram = () => {
                     <Badge variant="outline" className="text-xs">Slot Coordination</Badge>
                   </div>
                 </div>
-                <div className="pt-2 border-t border-blue-500/20">
+                <div className="pt-2 border-t border-primary/20">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
                     <DollarSign className="w-3 h-3 inline mr-1" />
                     Financial Activities
                   </h4>
                   <ul className="space-y-1">
                     {stageReimbursementConsiderations["pre-infusion"].activities.slice(0, 4).map((item, idx) => (
-                      <li key={idx} className="text-xs text-green-600 dark:text-green-400 flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                      <li key={idx} className="text-xs text-success flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-success mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="pt-2 border-t border-blue-500/20">
+                <div className="pt-2 border-t border-primary/20">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
                     <Truck className="w-3 h-3 inline mr-1" />
                     3PL/Distribution
@@ -440,11 +441,11 @@ export const PatientJourneyDiagram = () => {
             </Card>
 
             {/* Infusion */}
-            <Card className="border-purple-500/30 bg-purple-500/5">
+            <Card className="border-genie-teal/30 bg-genie-teal/5">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-purple-600 dark:text-purple-400">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                    <Syringe className="w-4 h-4 text-white" />
+                <CardTitle className="flex items-center gap-2 text-genie-teal">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-genie-teal to-genie-accent flex items-center justify-center">
+                    <Syringe className="w-4 h-4 text-accent-foreground" />
                   </div>
                   Infusion Phase
                 </CardTitle>
@@ -462,13 +463,13 @@ export const PatientJourneyDiagram = () => {
                       "REMS documentation completion"
                     ].map((item, idx) => (
                       <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-genie-teal mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="pt-2 border-t border-purple-500/20">
+                <div className="pt-2 border-t border-genie-teal/20">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
                     <HeartHandshake className="w-3 h-3 inline mr-1" />
                     Hub Services Role
@@ -479,21 +480,21 @@ export const PatientJourneyDiagram = () => {
                     <Badge variant="outline" className="text-xs">Infusion Confirmation</Badge>
                   </div>
                 </div>
-                <div className="pt-2 border-t border-purple-500/20">
+                <div className="pt-2 border-t border-genie-teal/20">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
                     <DollarSign className="w-3 h-3 inline mr-1" />
                     Financial Activities
                   </h4>
                   <ul className="space-y-1">
                     {stageReimbursementConsiderations["infusion"].activities.map((item, idx) => (
-                      <li key={idx} className="text-xs text-green-600 dark:text-green-400 flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                      <li key={idx} className="text-xs text-success flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-success mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="pt-2 border-t border-purple-500/20">
+                <div className="pt-2 border-t border-genie-teal/20">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
                     <Truck className="w-3 h-3 inline mr-1" />
                     3PL/Distribution
@@ -504,11 +505,11 @@ export const PatientJourneyDiagram = () => {
             </Card>
 
             {/* Post-Infusion */}
-            <Card className="border-green-500/30 bg-green-500/5">
+            <Card className="border-success/30 bg-success/5">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-green-600 dark:text-green-400">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
-                    <HeartPulse className="w-4 h-4 text-white" />
+                <CardTitle className="flex items-center gap-2 text-success">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-success to-genie-teal flex items-center justify-center">
+                    <HeartPulse className="w-4 h-4 text-success-foreground" />
                   </div>
                   Post-Infusion Phase
                 </CardTitle>
@@ -526,13 +527,13 @@ export const PatientJourneyDiagram = () => {
                       "Long-term follow-up (15 years)"
                     ].map((item, idx) => (
                       <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-success mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="pt-2 border-t border-green-500/20">
+                <div className="pt-2 border-t border-success/20">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
                     <HeartHandshake className="w-3 h-3 inline mr-1" />
                     Hub Services Role
@@ -544,21 +545,21 @@ export const PatientJourneyDiagram = () => {
                     <Badge variant="outline" className="text-xs">Long-term Follow-up</Badge>
                   </div>
                 </div>
-                <div className="pt-2 border-t border-green-500/20">
+                <div className="pt-2 border-t border-success/20">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
                     <DollarSign className="w-3 h-3 inline mr-1" />
                     Financial Activities
                   </h4>
                   <ul className="space-y-1">
                     {stageReimbursementConsiderations["post-infusion"].activities.slice(0, 4).map((item, idx) => (
-                      <li key={idx} className="text-xs text-green-600 dark:text-green-400 flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                      <li key={idx} className="text-xs text-success flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-success mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="pt-2 border-t border-green-500/20">
+                <div className="pt-2 border-t border-success/20">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
                     <Building2 className="w-3 h-3 inline mr-1" />
                     Specialty Pharmacy
@@ -666,17 +667,17 @@ const ReimbursementSection = ({ activeModality }: { activeModality: string }) =>
                     ))}
                   </ul>
                 </div>
-                <div className="pt-2 border-t border-amber-500/20">
-                  <h4 className="text-xs font-semibold uppercase mb-2 text-green-600">Pros</h4>
+                <div className="pt-2 border-t border-warning/20">
+                  <h4 className="text-xs font-semibold uppercase mb-2 text-success">Pros</h4>
                   <div className="flex flex-wrap gap-1 mb-2">
                     {modalityData.pricingModels.wac.pros.map((pro, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs bg-green-500/10">{pro}</Badge>
+                      <Badge key={idx} variant="outline" className="text-xs bg-success/10">{pro}</Badge>
                     ))}
                   </div>
-                  <h4 className="text-xs font-semibold uppercase mb-2 text-red-600">Cons</h4>
+                  <h4 className="text-xs font-semibold uppercase mb-2 text-destructive">Cons</h4>
                   <div className="flex flex-wrap gap-1">
                     {modalityData.pricingModels.wac.cons.map((con, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs bg-red-500/10">{con}</Badge>
+                      <Badge key={idx} variant="outline" className="text-xs bg-destructive/10">{con}</Badge>
                     ))}
                   </div>
                 </div>
@@ -694,10 +695,10 @@ const ReimbursementSection = ({ activeModality }: { activeModality: string }) =>
             </Card>
 
             {/* PAP */}
-            <Card className="border-green-500/30 bg-green-500/5">
+            <Card className="border-success/30 bg-success/5">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-green-600 dark:text-green-400 text-lg">
-                  <Badge className="bg-green-500 text-white">PAP</Badge>
+                <CardTitle className="flex items-center gap-2 text-success text-lg">
+                  <Badge className="bg-success text-success-foreground">PAP</Badge>
                   Patient Assistance Program
                 </CardTitle>
               </CardHeader>
@@ -710,34 +711,34 @@ const ReimbursementSection = ({ activeModality }: { activeModality: string }) =>
                   <ul className="space-y-1">
                     {pricingModelEducation.pap.keyPoints.map((point, idx) => (
                       <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-success mt-1.5 flex-shrink-0" />
                         {point}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="pt-2 border-t border-green-500/20">
+                <div className="pt-2 border-t border-success/20">
                   <h4 className="text-xs font-semibold uppercase mb-2">CGAT Specifics</h4>
                   <ul className="space-y-1">
                     {pricingModelEducation.pap.cgSpecifics.map((point, idx) => (
-                      <li key={idx} className="text-xs text-green-600 dark:text-green-400 flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                      <li key={idx} className="text-xs text-success flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-success mt-1.5 flex-shrink-0" />
                         {point}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="pt-2 border-t border-green-500/20">
-                  <h4 className="text-xs font-semibold uppercase mb-2 text-green-600">Pros</h4>
+                <div className="pt-2 border-t border-success/20">
+                  <h4 className="text-xs font-semibold uppercase mb-2 text-success">Pros</h4>
                   <div className="flex flex-wrap gap-1 mb-2">
                     {modalityData.pricingModels.pap.pros.map((pro, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs bg-green-500/10">{pro}</Badge>
+                      <Badge key={idx} variant="outline" className="text-xs bg-success/10">{pro}</Badge>
                     ))}
                   </div>
-                  <h4 className="text-xs font-semibold uppercase mb-2 text-red-600">Cons</h4>
+                  <h4 className="text-xs font-semibold uppercase mb-2 text-destructive">Cons</h4>
                   <div className="flex flex-wrap gap-1">
                     {modalityData.pricingModels.pap.cons.map((con, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs bg-red-500/10">{con}</Badge>
+                      <Badge key={idx} variant="outline" className="text-xs bg-destructive/10">{con}</Badge>
                     ))}
                   </div>
                 </div>
@@ -755,10 +756,10 @@ const ReimbursementSection = ({ activeModality }: { activeModality: string }) =>
             </Card>
 
             {/* 340B */}
-            <Card className="border-blue-500/30 bg-blue-500/5">
+            <Card className="border-primary/30 bg-primary/5">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-blue-600 dark:text-blue-400 text-lg">
-                  <Badge className="bg-blue-500 text-white">340B</Badge>
+                <CardTitle className="flex items-center gap-2 text-primary text-lg">
+                  <Badge className="bg-primary text-primary-foreground">340B</Badge>
                   Drug Pricing Program
                 </CardTitle>
               </CardHeader>
@@ -771,38 +772,38 @@ const ReimbursementSection = ({ activeModality }: { activeModality: string }) =>
                   <ul className="space-y-1">
                     {pricingModelEducation["340b"].keyPoints.map((point, idx) => (
                       <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
                         {point}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="pt-2 border-t border-blue-500/20">
+                <div className="pt-2 border-t border-primary/20">
                   <h4 className="text-xs font-semibold uppercase mb-2">CGAT Specifics</h4>
                   <ul className="space-y-1">
                     {pricingModelEducation["340b"].cgSpecifics.map((point, idx) => (
-                      <li key={idx} className="text-xs text-blue-600 dark:text-blue-400 flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
+                      <li key={idx} className="text-xs text-primary flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
                         {point}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="pt-2 border-t border-blue-500/20">
-                  <h4 className="text-xs font-semibold uppercase mb-2 text-green-600">Pros</h4>
+                <div className="pt-2 border-t border-primary/20">
+                  <h4 className="text-xs font-semibold uppercase mb-2 text-success">Pros</h4>
                   <div className="flex flex-wrap gap-1 mb-2">
                     {modalityData.pricingModels["340b"].pros.map((pro, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs bg-green-500/10">{pro}</Badge>
+                      <Badge key={idx} variant="outline" className="text-xs bg-success/10">{pro}</Badge>
                     ))}
                   </div>
-                  <h4 className="text-xs font-semibold uppercase mb-2 text-red-600">Cons</h4>
+                  <h4 className="text-xs font-semibold uppercase mb-2 text-destructive">Cons</h4>
                   <div className="flex flex-wrap gap-1">
                     {modalityData.pricingModels["340b"].cons.map((con, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs bg-red-500/10">{con}</Badge>
+                      <Badge key={idx} variant="outline" className="text-xs bg-destructive/10">{con}</Badge>
                     ))}
                   </div>
                 </div>
-                <div className="pt-2 border-t border-blue-500/20">
+                <div className="pt-2 border-t border-primary/20">
                   <h4 className="text-xs font-semibold uppercase mb-2">Supported Centers</h4>
                   <div className="flex flex-wrap gap-1">
                     {modalityData.pricingModels["340b"].supportedCenters.map((center, idx) => (
