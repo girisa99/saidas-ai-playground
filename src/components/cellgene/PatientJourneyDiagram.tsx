@@ -10,9 +10,15 @@ import {
   HeartPulse, Home, Calendar, Dna, ClipboardList, Target, TestTube,
   Radiation, RefreshCw, ArrowRight, Users, Clock, AlertCircle,
   ChevronDown, ChevronUp, Workflow, Truck, Building2, HeartHandshake,
-  ExternalLink, Network, Timer
+  ExternalLink, Network, Timer, DollarSign, CreditCard, Plane, 
+  Shield, HelpCircle, TrendingUp, Info, FileText, Phone
 } from "lucide-react";
 import { patientJourneyStages, ProcessFlow, JourneyStage } from "@/data/cellgeneTherapeuticComparison";
+import { 
+  modalityReimbursementData, 
+  pricingModelEducation,
+  stageReimbursementConsiderations 
+} from "@/data/cellgeneReimbursementData";
 
 const iconMap: Record<string, React.ElementType> = {
   Search, Stethoscope, Droplets, Factory, Activity, Pill, Syringe,
@@ -357,7 +363,7 @@ export const PatientJourneyDiagram = () => {
           ))}
         </Tabs>
 
-        {/* Phase-Specific Considerations with Ecosystem Integration */}
+        {/* Phase-Specific Considerations with Ecosystem & Reimbursement Integration */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -411,6 +417,20 @@ export const PatientJourneyDiagram = () => {
                 </div>
                 <div className="pt-2 border-t border-blue-500/20">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
+                    <DollarSign className="w-3 h-3 inline mr-1" />
+                    Financial Activities
+                  </h4>
+                  <ul className="space-y-1">
+                    {stageReimbursementConsiderations["pre-infusion"].activities.slice(0, 4).map((item, idx) => (
+                      <li key={idx} className="text-xs text-green-600 dark:text-green-400 flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-2 border-t border-blue-500/20">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
                     <Truck className="w-3 h-3 inline mr-1" />
                     3PL/Distribution
                   </h4>
@@ -458,6 +478,20 @@ export const PatientJourneyDiagram = () => {
                     <Badge variant="outline" className="text-xs">REMS Compliance</Badge>
                     <Badge variant="outline" className="text-xs">Infusion Confirmation</Badge>
                   </div>
+                </div>
+                <div className="pt-2 border-t border-purple-500/20">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
+                    <DollarSign className="w-3 h-3 inline mr-1" />
+                    Financial Activities
+                  </h4>
+                  <ul className="space-y-1">
+                    {stageReimbursementConsiderations["infusion"].activities.map((item, idx) => (
+                      <li key={idx} className="text-xs text-green-600 dark:text-green-400 flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
                 <div className="pt-2 border-t border-purple-500/20">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
@@ -512,6 +546,20 @@ export const PatientJourneyDiagram = () => {
                 </div>
                 <div className="pt-2 border-t border-green-500/20">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
+                    <DollarSign className="w-3 h-3 inline mr-1" />
+                    Financial Activities
+                  </h4>
+                  <ul className="space-y-1">
+                    {stageReimbursementConsiderations["post-infusion"].activities.slice(0, 4).map((item, idx) => (
+                      <li key={idx} className="text-xs text-green-600 dark:text-green-400 flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-2 border-t border-green-500/20">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
                     <Building2 className="w-3 h-3 inline mr-1" />
                     Specialty Pharmacy
                   </h4>
@@ -521,7 +569,513 @@ export const PatientJourneyDiagram = () => {
             </Card>
           </div>
         </motion.div>
+
+        {/* Reimbursement & Financial Support Section */}
+        <ReimbursementSection activeModality={activeModality} />
       </div>
     </section>
+  );
+};
+
+// Reimbursement Section Component
+const ReimbursementSection = ({ activeModality }: { activeModality: string }) => {
+  const [activeTab, setActiveTab] = useState("pricing");
+  
+  const modalityData = modalityReimbursementData.find(
+    m => m.modality.toLowerCase().includes(activeModality.toLowerCase().replace(" cell therapy", "").replace(" therapy", ""))
+  ) || modalityReimbursementData[0];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="mt-16"
+    >
+      <div className="text-center mb-8">
+        <Badge variant="outline" className="mb-4">
+          <DollarSign className="w-3 h-3 mr-1" />
+          Financial Support & Reimbursement
+        </Badge>
+        <h3 className="text-2xl font-bold text-foreground mb-2">
+          Reimbursement Guide for {modalityData.modality}
+        </h3>
+        <p className="text-muted-foreground max-w-2xl mx-auto text-sm">
+          Average Cost: <span className="font-semibold text-primary">{modalityData.averageCost}</span>
+        </p>
+      </div>
+
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-2 md:grid-cols-5 mb-8 h-auto">
+          <TabsTrigger value="pricing" className="text-xs py-2">
+            <DollarSign className="w-3 h-3 mr-1" />
+            WAC/PAP/340B
+          </TabsTrigger>
+          <TabsTrigger value="manufacturer" className="text-xs py-2">
+            <Building2 className="w-3 h-3 mr-1" />
+            Manufacturer PAP
+          </TabsTrigger>
+          <TabsTrigger value="copay" className="text-xs py-2">
+            <CreditCard className="w-3 h-3 mr-1" />
+            Copay & Alt Funding
+          </TabsTrigger>
+          <TabsTrigger value="travel" className="text-xs py-2">
+            <Plane className="w-3 h-3 mr-1" />
+            Travel & Logistics
+          </TabsTrigger>
+          <TabsTrigger value="insurance" className="text-xs py-2">
+            <Shield className="w-3 h-3 mr-1" />
+            Insurance & Trends
+          </TabsTrigger>
+        </TabsList>
+
+        {/* Pricing Models Tab */}
+        <TabsContent value="pricing">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* WAC */}
+            <Card className="border-amber-500/30 bg-amber-500/5">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-amber-600 dark:text-amber-400 text-lg">
+                  <Badge className="bg-amber-500 text-white">WAC</Badge>
+                  Wholesale Acquisition Cost
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-muted-foreground">{pricingModelEducation.wac.definition}</p>
+                <div>
+                  <h4 className="text-xs font-semibold uppercase mb-2 flex items-center gap-1">
+                    <Info className="w-3 h-3" /> Key Points
+                  </h4>
+                  <ul className="space-y-1">
+                    {pricingModelEducation.wac.keyPoints.map((point, idx) => (
+                      <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-2 border-t border-amber-500/20">
+                  <h4 className="text-xs font-semibold uppercase mb-2">CGAT Specifics</h4>
+                  <ul className="space-y-1">
+                    {pricingModelEducation.wac.cgSpecifics.map((point, idx) => (
+                      <li key={idx} className="text-xs text-amber-600 dark:text-amber-400 flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-2 border-t border-amber-500/20">
+                  <h4 className="text-xs font-semibold uppercase mb-2 text-green-600">Pros</h4>
+                  <div className="flex flex-wrap gap-1 mb-2">
+                    {modalityData.pricingModels.wac.pros.map((pro, idx) => (
+                      <Badge key={idx} variant="outline" className="text-xs bg-green-500/10">{pro}</Badge>
+                    ))}
+                  </div>
+                  <h4 className="text-xs font-semibold uppercase mb-2 text-red-600">Cons</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {modalityData.pricingModels.wac.cons.map((con, idx) => (
+                      <Badge key={idx} variant="outline" className="text-xs bg-red-500/10">{con}</Badge>
+                    ))}
+                  </div>
+                </div>
+                {pricingModelEducation.wac.reference && (
+                  <a 
+                    href={pricingModelEducation.wac.reference} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-xs text-primary hover:underline flex items-center gap-1"
+                  >
+                    <ExternalLink className="w-3 h-3" /> Reference
+                  </a>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* PAP */}
+            <Card className="border-green-500/30 bg-green-500/5">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-green-600 dark:text-green-400 text-lg">
+                  <Badge className="bg-green-500 text-white">PAP</Badge>
+                  Patient Assistance Program
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-muted-foreground">{pricingModelEducation.pap.definition}</p>
+                <div>
+                  <h4 className="text-xs font-semibold uppercase mb-2 flex items-center gap-1">
+                    <Info className="w-3 h-3" /> Key Points
+                  </h4>
+                  <ul className="space-y-1">
+                    {pricingModelEducation.pap.keyPoints.map((point, idx) => (
+                      <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-2 border-t border-green-500/20">
+                  <h4 className="text-xs font-semibold uppercase mb-2">CGAT Specifics</h4>
+                  <ul className="space-y-1">
+                    {pricingModelEducation.pap.cgSpecifics.map((point, idx) => (
+                      <li key={idx} className="text-xs text-green-600 dark:text-green-400 flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-2 border-t border-green-500/20">
+                  <h4 className="text-xs font-semibold uppercase mb-2 text-green-600">Pros</h4>
+                  <div className="flex flex-wrap gap-1 mb-2">
+                    {modalityData.pricingModels.pap.pros.map((pro, idx) => (
+                      <Badge key={idx} variant="outline" className="text-xs bg-green-500/10">{pro}</Badge>
+                    ))}
+                  </div>
+                  <h4 className="text-xs font-semibold uppercase mb-2 text-red-600">Cons</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {modalityData.pricingModels.pap.cons.map((con, idx) => (
+                      <Badge key={idx} variant="outline" className="text-xs bg-red-500/10">{con}</Badge>
+                    ))}
+                  </div>
+                </div>
+                {pricingModelEducation.pap.reference && (
+                  <a 
+                    href={pricingModelEducation.pap.reference} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-xs text-primary hover:underline flex items-center gap-1"
+                  >
+                    <ExternalLink className="w-3 h-3" /> Reference
+                  </a>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* 340B */}
+            <Card className="border-blue-500/30 bg-blue-500/5">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-blue-600 dark:text-blue-400 text-lg">
+                  <Badge className="bg-blue-500 text-white">340B</Badge>
+                  Drug Pricing Program
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-muted-foreground">{pricingModelEducation["340b"].definition}</p>
+                <div>
+                  <h4 className="text-xs font-semibold uppercase mb-2 flex items-center gap-1">
+                    <Info className="w-3 h-3" /> Key Points
+                  </h4>
+                  <ul className="space-y-1">
+                    {pricingModelEducation["340b"].keyPoints.map((point, idx) => (
+                      <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-2 border-t border-blue-500/20">
+                  <h4 className="text-xs font-semibold uppercase mb-2">CGAT Specifics</h4>
+                  <ul className="space-y-1">
+                    {pricingModelEducation["340b"].cgSpecifics.map((point, idx) => (
+                      <li key={idx} className="text-xs text-blue-600 dark:text-blue-400 flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-2 border-t border-blue-500/20">
+                  <h4 className="text-xs font-semibold uppercase mb-2 text-green-600">Pros</h4>
+                  <div className="flex flex-wrap gap-1 mb-2">
+                    {modalityData.pricingModels["340b"].pros.map((pro, idx) => (
+                      <Badge key={idx} variant="outline" className="text-xs bg-green-500/10">{pro}</Badge>
+                    ))}
+                  </div>
+                  <h4 className="text-xs font-semibold uppercase mb-2 text-red-600">Cons</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {modalityData.pricingModels["340b"].cons.map((con, idx) => (
+                      <Badge key={idx} variant="outline" className="text-xs bg-red-500/10">{con}</Badge>
+                    ))}
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-blue-500/20">
+                  <h4 className="text-xs font-semibold uppercase mb-2">Supported Centers</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {modalityData.pricingModels["340b"].supportedCenters.map((center, idx) => (
+                      <Badge key={idx} variant="secondary" className="text-xs">{center}</Badge>
+                    ))}
+                  </div>
+                </div>
+                {pricingModelEducation["340b"].reference && (
+                  <a 
+                    href={pricingModelEducation["340b"].reference} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-xs text-primary hover:underline flex items-center gap-1"
+                  >
+                    <ExternalLink className="w-3 h-3" /> Reference
+                  </a>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        {/* Manufacturer Programs Tab */}
+        <TabsContent value="manufacturer">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {modalityData.manufacturerPrograms.map((program, idx) => (
+              <Card key={idx} className="border-primary/30">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center justify-between">
+                    <span>{program.manufacturer}</span>
+                    {program.website && (
+                      <a 
+                        href={program.website} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-primary"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
+                  </CardTitle>
+                  <p className="text-sm font-medium text-muted-foreground">{program.program}</p>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h4 className="text-xs font-semibold uppercase mb-2">Coverage</h4>
+                    <p className="text-sm text-foreground">{program.coverage}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-semibold uppercase mb-2">Eligibility</h4>
+                    <p className="text-sm text-muted-foreground">{program.eligibility}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-semibold uppercase mb-2">Services Included</h4>
+                    <div className="flex flex-wrap gap-1">
+                      {program.services.map((service, sidx) => (
+                        <Badge key={sidx} variant="outline" className="text-xs">{service}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="pt-2 border-t">
+                    <div className="flex items-center gap-2 text-sm">
+                      <Phone className="w-4 h-4 text-primary" />
+                      <span className="font-mono">{program.contact}</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        {/* Copay & Alternative Funding Tab */}
+        <TabsContent value="copay">
+          <div className="space-y-8">
+            {/* Copay Programs */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <CreditCard className="w-5 h-5 text-primary" />
+                Copay Assistance Programs
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {modalityData.copayPrograms.map((program, idx) => (
+                  <Card key={idx} className="border-green-500/30 bg-green-500/5">
+                    <CardContent className="pt-4 space-y-3">
+                      <div className="flex items-start justify-between">
+                        <h5 className="font-semibold text-sm">{program.name}</h5>
+                        {program.website && (
+                          <a 
+                            href={program.website} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-primary"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </div>
+                      <p className="text-xs text-muted-foreground">Sponsor: {program.sponsor}</p>
+                      <div className="bg-primary/10 rounded px-2 py-1">
+                        <p className="text-xs font-semibold text-primary">{program.maxBenefit}</p>
+                      </div>
+                      <p className="text-xs text-muted-foreground">{program.eligibility}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Alternative Funding */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <HelpCircle className="w-5 h-5 text-primary" />
+                Alternative Funding Sources
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {modalityData.alternativeFunding.map((source, idx) => (
+                  <Card key={idx} className="border-amber-500/30 bg-amber-500/5">
+                    <CardContent className="pt-4 space-y-3">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h5 className="font-semibold text-sm">{source.source}</h5>
+                          <Badge variant="outline" className="text-xs mt-1">{source.type}</Badge>
+                        </div>
+                        {source.website && (
+                          <a 
+                            href={source.website} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-primary"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground">{source.description}</p>
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                          <span className="font-semibold">Coverage:</span>
+                          <p className="text-muted-foreground">{source.coverage}</p>
+                        </div>
+                        <div>
+                          <span className="font-semibold">Eligibility:</span>
+                          <p className="text-muted-foreground">{source.eligibility}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </div>
+        </TabsContent>
+
+        {/* Travel & Logistics Tab */}
+        <TabsContent value="travel">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {modalityData.travelSupport.map((program, idx) => (
+              <Card key={idx} className="border-cyan-500/30 bg-cyan-500/5">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Plane className="w-5 h-5 text-cyan-500" />
+                      {program.program}
+                    </div>
+                    {program.website && (
+                      <a 
+                        href={program.website} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-primary"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground">Sponsor: {program.sponsor}</p>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h4 className="text-xs font-semibold uppercase mb-2">Coverage Includes</h4>
+                    <div className="flex flex-wrap gap-1">
+                      {program.coverage.map((item, cidx) => (
+                        <Badge key={cidx} variant="secondary" className="text-xs">{item}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-semibold uppercase mb-2">Eligibility</h4>
+                    <p className="text-sm text-muted-foreground">{program.eligibility}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-semibold uppercase mb-2">Services</h4>
+                    <ul className="space-y-1">
+                      {program.services.map((service, sidx) => (
+                        <li key={sidx} className="text-xs text-muted-foreground flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-1.5 flex-shrink-0" />
+                          {service}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        {/* Insurance & Trends Tab */}
+        <TabsContent value="insurance">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Insurance Considerations */}
+            <Card className="border-purple-500/30 bg-purple-500/5">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <Shield className="w-5 h-5 text-purple-500" />
+                  Insurance Considerations
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  {modalityData.insuranceConsiderations.map((item, idx) => (
+                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Reimbursement Challenges */}
+            <Card className="border-red-500/30 bg-red-500/5">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <AlertCircle className="w-5 h-5 text-red-500" />
+                  Reimbursement Challenges
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  {modalityData.reimbursementChallenges.map((item, idx) => (
+                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Industry Trends */}
+            <Card className="border-green-500/30 bg-green-500/5">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <TrendingUp className="w-5 h-5 text-green-500" />
+                  Industry Trends
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  {modalityData.reimbursementTrends.map((item, idx) => (
+                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+      </Tabs>
+    </motion.div>
   );
 };

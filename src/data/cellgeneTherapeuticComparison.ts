@@ -70,6 +70,40 @@ export interface EcosystemComponent {
   journeyIntegration: string[];
 }
 
+export interface ReimbursementInfo {
+  pricingModels?: {
+    wac?: string;
+    pap?: string;
+    "340b"?: string;
+    government?: string;
+    commercial?: string;
+  };
+  patientAssistance?: {
+    program: string;
+    provider: string;
+    coverage: string;
+    eligibility: string;
+    website?: string;
+  }[];
+  copayAssistance?: {
+    program: string;
+    maxBenefit: string;
+    eligibility: string;
+    website?: string;
+  }[];
+  alternativeFunding?: {
+    source: string;
+    description: string;
+    contact?: string;
+  }[];
+  travelLogistics?: {
+    type: string;
+    coverage: string;
+    provider?: string;
+  }[];
+  insuranceConsiderations?: string[];
+}
+
 export interface JourneyStage {
   id: string;
   name: string;
@@ -83,6 +117,7 @@ export interface JourneyStage {
   ecosystemConnections?: string[];
   hubServices?: string[];
   distributionRole?: string;
+  reimbursement?: ReimbursementInfo;
 }
 
 export interface ProcessFlow {
