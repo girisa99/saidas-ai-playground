@@ -14,6 +14,20 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
+// Countries for dropdown
+const COUNTRIES = [
+  { code: 'US', name: 'United States' },
+  { code: 'CA', name: 'Canada' },
+  { code: 'UK', name: 'United Kingdom' },
+  { code: 'DE', name: 'Germany' },
+  { code: 'FR', name: 'France' },
+  { code: 'IT', name: 'Italy' },
+  { code: 'ES', name: 'Spain' },
+  { code: 'AU', name: 'Australia' },
+  { code: 'JP', name: 'Japan' },
+  { code: 'OTHER', name: 'Other' },
+];
+
 // US States for dropdown
 const US_STATES = [
   { code: '', name: 'All States' },
@@ -34,6 +48,16 @@ const US_STATES = [
   { code: 'TX', name: 'Texas' }, { code: 'UT', name: 'Utah' }, { code: 'VT', name: 'Vermont' },
   { code: 'VA', name: 'Virginia' }, { code: 'WA', name: 'Washington' }, { code: 'WV', name: 'West Virginia' },
   { code: 'WI', name: 'Wisconsin' }, { code: 'WY', name: 'Wyoming' }, { code: 'DC', name: 'Washington DC' }
+];
+
+// Canadian Provinces
+const CA_PROVINCES = [
+  { code: '', name: 'All Provinces' },
+  { code: 'AB', name: 'Alberta' }, { code: 'BC', name: 'British Columbia' }, { code: 'MB', name: 'Manitoba' },
+  { code: 'NB', name: 'New Brunswick' }, { code: 'NL', name: 'Newfoundland' }, { code: 'NS', name: 'Nova Scotia' },
+  { code: 'ON', name: 'Ontario' }, { code: 'PE', name: 'Prince Edward Island' }, { code: 'QC', name: 'Quebec' },
+  { code: 'SK', name: 'Saskatchewan' }, { code: 'NT', name: 'Northwest Territories' }, { code: 'NU', name: 'Nunavut' },
+  { code: 'YT', name: 'Yukon' }
 ];
 
 interface InteractiveTreatmentCenterMapProps {
@@ -67,6 +91,7 @@ export const InteractiveTreatmentCenterMap = ({
   const [selectedTherapeuticAreas, setSelectedTherapeuticAreas] = useState<string[]>([]);
   const [selectedManufacturers, setSelectedManufacturers] = useState<string[]>([]);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<string>('US');
   const [selectedState, setSelectedState] = useState<string>(state || '');
   const [userZipCode, setUserZipCode] = useState<string>(zipCode || '');
   const [maxResults, setMaxResults] = useState<number>(50);
@@ -82,7 +107,13 @@ export const InteractiveTreatmentCenterMap = ({
   const [isMapInitialized, setIsMapInitialized] = useState(false);
   const [clusterZoomLevel, setClusterZoomLevel] = useState(3.5);
   const [userZipCoords, setUserZipCoords] = useState<{lat: number; lng: number} | null>(null);
-
+  
+  // Get states/provinces based on selected country
+  const getRegions = () => {
+    if (selectedCountry === 'US') return US_STATES;
+    if (selectedCountry === 'CA') return CA_PROVINCES;
+    return [];
+  };
   // Simple localStorage-backed geocode cache
   const getGeocodeCache = (): Record<string, { lat: number; lng: number }> => {
     try {
@@ -678,9 +709,14 @@ export const InteractiveTreatmentCenterMap = ({
                 {clinicalTrial && (
                   <Badge variant="secondary">Trial: {clinicalTrial}</Badge>
                 )}
+                {selectedCountry && (
+                  <Badge variant="secondary" className="gap-1">
+                    Country: {COUNTRIES.find(c => c.code === selectedCountry)?.name || selectedCountry}
+                  </Badge>
+                )}
                 {selectedState && (
                   <Badge variant="secondary" className="gap-1">
-                    State: {US_STATES.find(s => s.code === selectedState)?.name || selectedState}
+                    {selectedCountry === 'CA' ? 'Province' : 'State'}: {getRegions().find(s => s.code === selectedState)?.name || selectedState}
                     <X className="h-3 w-3 cursor-pointer" onClick={() => setSelectedState('')} />
                   </Badge>
                 )}
@@ -691,23 +727,49 @@ export const InteractiveTreatmentCenterMap = ({
             </div>
           )}
 
-          {/* Location Search Section */}
+          {/* Step 1: Location Search */}
           <div className="p-4 bg-muted/30 rounded-lg border space-y-4">
-            <Label className="font-semibold flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-primary" />
-              Location Search
-            </Label>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              {/* State Dropdown */}
+            <div className="flex items-center justify-between">
+              <Label className="font-semibold flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-primary" />
+                Step 1: Select Location
+              </Label>
+              <Badge variant="outline" className="text-xs">Required</Badge>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+              {/* Country Dropdown */}
               <div className="space-y-1">
-                <Label className="text-xs text-muted-foreground">State</Label>
-                <Select value={selectedState} onValueChange={setSelectedState}>
+                <Label className="text-xs text-muted-foreground">Country</Label>
+                <Select value={selectedCountry} onValueChange={(v) => { setSelectedCountry(v); setSelectedState(''); }}>
                   <SelectTrigger className="bg-background">
-                    <SelectValue placeholder="Select state" />
+                    <SelectValue placeholder="Select country" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background z-50">
+                    {COUNTRIES.map(c => (
+                      <SelectItem key={c.code} value={c.code}>
+                        {c.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* State/Province Dropdown - only show for US/CA */}
+              <div className="space-y-1">
+                <Label className="text-xs text-muted-foreground">
+                  {selectedCountry === 'CA' ? 'Province' : 'State/Region'}
+                </Label>
+                <Select 
+                  value={selectedState} 
+                  onValueChange={setSelectedState}
+                  disabled={!['US', 'CA'].includes(selectedCountry)}
+                >
+                  <SelectTrigger className="bg-background">
+                    <SelectValue placeholder={`Select ${selectedCountry === 'CA' ? 'province' : 'state'}`} />
                   </SelectTrigger>
                   <SelectContent className="max-h-60 bg-background z-50">
-                    {US_STATES.map(s => (
-                      <SelectItem key={s.code} value={s.code || 'all'}>
+                    {getRegions().map(s => (
+                      <SelectItem key={s.code || 'all'} value={s.code || 'all'}>
                         {s.name}
                       </SelectItem>
                     ))}
@@ -715,12 +777,14 @@ export const InteractiveTreatmentCenterMap = ({
                 </Select>
               </div>
 
-              {/* Zip Code Search */}
+              {/* Zip/Postal Code Search */}
               <div className="space-y-1">
-                <Label className="text-xs text-muted-foreground">Zip Code (for distance)</Label>
+                <Label className="text-xs text-muted-foreground">
+                  {selectedCountry === 'US' ? 'Zip Code' : 'Postal Code'} (for distance)
+                </Label>
                 <div className="flex gap-2">
                   <Input
-                    placeholder="Enter zip code"
+                    placeholder={selectedCountry === 'US' ? 'e.g., 10001' : 'Postal code'}
                     value={userZipCode}
                     onChange={(e) => setUserZipCode(e.target.value)}
                     className="bg-background"
@@ -729,6 +793,7 @@ export const InteractiveTreatmentCenterMap = ({
                     size="sm" 
                     onClick={handleZipSearch}
                     disabled={!userZipCode || !mapboxToken}
+                    className="shrink-0"
                   >
                     <Search className="h-4 w-4" />
                   </Button>
@@ -737,7 +802,7 @@ export const InteractiveTreatmentCenterMap = ({
 
               {/* Results Limit */}
               <div className="space-y-1">
-                <Label className="text-xs text-muted-foreground">Show Results</Label>
+                <Label className="text-xs text-muted-foreground">Max Results</Label>
                 <Select value={maxResults.toString()} onValueChange={(v) => setMaxResults(parseInt(v))}>
                   <SelectTrigger className="bg-background">
                     <SelectValue />
@@ -754,8 +819,16 @@ export const InteractiveTreatmentCenterMap = ({
             </div>
           </div>
 
-          {/* Treatment Filters */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {/* Step 2: Treatment Filters */}
+          <div className="p-4 bg-muted/30 rounded-lg border space-y-4">
+            <div className="flex items-center justify-between">
+              <Label className="font-semibold flex items-center gap-2">
+                <Filter className="h-4 w-4 text-primary" />
+                Step 2: Filter by Treatment
+              </Label>
+              <Badge variant="outline" className="text-xs">Optional</Badge>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {/* Therapeutic Areas Filter */}
             <Popover>
               <PopoverTrigger asChild>
@@ -941,6 +1014,7 @@ export const InteractiveTreatmentCenterMap = ({
                 </div>
               </PopoverContent>
             </Popover>
+            </div>
           </div>
 
           {/* Active Filter Tags */}
