@@ -17,6 +17,22 @@ export interface ClinicalTrial {
   expectedCompletion?: string;
 }
 
+export interface PricingBreakdown {
+  wac: string; // Wholesale Acquisition Cost
+  pap?: string; // Patient Assistance Program
+  b340?: string; // 340B Program
+  government?: string; // Government/Medicare
+  commercial?: string; // Commercial Insurance
+}
+
+export interface DosingInfo {
+  numberOfDoses: string;
+  interval?: string;
+  leadTime?: string;
+  administration: string;
+  specialNotes?: string;
+}
+
 export interface CommercialProduct {
   id: string;
   brandName: string;
@@ -29,7 +45,8 @@ export interface CommercialProduct {
   therapyType: string;
   icdCodes: string[];
   url: string;
-  price?: string;
+  pricing: PricingBreakdown;
+  dosing: DosingInfo;
 }
 
 export interface Manufacturer {
@@ -50,6 +67,42 @@ export interface ExperimentationArea {
   organizations: string[];
   status: string;
 }
+
+// Pricing Guide Information
+export const pricingGuide = {
+  wac: {
+    name: "WAC (Wholesale Acquisition Cost)",
+    description: "The manufacturer's list price to wholesalers or direct purchasers, before any discounts or rebates.",
+    benefits: ["Standardized benchmark price", "Transparent baseline for negotiations", "Used for government price calculations"],
+    limitations: ["Rarely reflects actual transaction price", "Does not include rebates or discounts", "Highest price point in the system"],
+    whoItSupports: ["Provides pricing transparency baseline", "Reference for all other pricing models"],
+    industryTrends: "WAC prices for cell/gene therapies range from $373,000 to $3.5M, with outcomes-based contracts emerging."
+  },
+  pap: {
+    name: "PAP (Patient Assistance Programs)",
+    description: "Manufacturer-sponsored programs providing free or reduced-cost medications to eligible patients.",
+    benefits: ["Free or deeply discounted medications", "Income-based eligibility", "Covers uninsured/underinsured patients", "No impact on hospital 340B status"],
+    limitations: ["Eligibility requirements vary", "May require annual re-enrollment", "Documentation burden", "Coverage gaps during enrollment"],
+    whoItSupports: ["Uninsured patients", "Underinsured patients", "Patients in Medicare coverage gap"],
+    industryTrends: "Most CGAT manufacturers offer robust PAP programs with 80-100% cost coverage for eligible patients."
+  },
+  b340: {
+    name: "340B Drug Pricing Program",
+    description: "Federal program requiring drug manufacturers to provide outpatient drugs at discounted prices to eligible healthcare organizations.",
+    benefits: ["25-50% discount from WAC", "Stretches limited healthcare resources", "Supports safety-net providers", "Revenue generation for qualifying hospitals"],
+    limitations: ["Limited to 340B-covered entities", "Complex compliance requirements", "Cannot combine with other federal discounts", "Manufacturer participation varies"],
+    whoItSupports: ["Community health centers", "Disproportionate share hospitals", "Ryan White clinics", "Treatment centers serving vulnerable populations"],
+    industryTrends: "340B participation is expanding for CGAT therapies, though some manufacturers have restricted access."
+  },
+  comparison: {
+    overview: "WAC represents the starting point, 340B offers institutional discounts (25-50% off), and PAP provides patient-level assistance (up to 100% coverage).",
+    prosConsTable: [
+      { model: "WAC", pros: "Transparent baseline", cons: "Highest cost", bestFor: "Benchmarking" },
+      { model: "340B", pros: "Significant savings for eligible entities", cons: "Complex compliance", bestFor: "Safety-net providers" },
+      { model: "PAP", pros: "Can cover full cost", cons: "Patient eligibility varies", bestFor: "Individual patient assistance" }
+    ]
+  }
+};
 
 // ==================== CELL THERAPY DATA ====================
 export const cellTherapyClinicalTrials: ClinicalTrial[] = [
@@ -162,7 +215,19 @@ export const cellTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "CAR-T Cell Therapy",
     icdCodes: ["C91.00", "C83.30", "C82.90"],
     url: "https://www.novartis.com/us-en/products/kymriah",
-    price: "$475,000"
+    pricing: {
+      wac: "~$475,000 (Approximate)",
+      pap: "Novartis Patient Assistance covers up to 100% for eligible patients",
+      b340: "~$356,000 (25% discount)",
+      government: "~$380,000 (Medicare)",
+      commercial: "~$50,000-$100,000 OOP max"
+    },
+    dosing: {
+      numberOfDoses: "Single infusion",
+      leadTime: "3-4 weeks (manufacturing)",
+      administration: "IV infusion at certified treatment center",
+      specialNotes: "Requires leukapheresis, lymphodepleting chemotherapy prior"
+    }
   },
   {
     id: "cp-cell-002",
@@ -176,7 +241,19 @@ export const cellTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "CAR-T Cell Therapy",
     icdCodes: ["C83.30", "C82.90"],
     url: "https://www.yescarta.com",
-    price: "$424,000"
+    pricing: {
+      wac: "~$424,000 (Approximate)",
+      pap: "Kite Konnect program covers eligible uninsured patients",
+      b340: "~$318,000 (25% discount)",
+      government: "~$340,000 (Medicare)",
+      commercial: "Variable by plan, copay assistance available"
+    },
+    dosing: {
+      numberOfDoses: "Single infusion",
+      leadTime: "2-3 weeks (manufacturing)",
+      administration: "IV infusion, REMS-certified center required",
+      specialNotes: "Faster turnaround than some competitors"
+    }
   },
   {
     id: "cp-cell-003",
@@ -190,7 +267,19 @@ export const cellTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "CAR-T Cell Therapy",
     icdCodes: ["C83.10", "C91.00"],
     url: "https://www.tecartus.com",
-    price: "$373,000"
+    pricing: {
+      wac: "~$373,000 (Approximate)",
+      pap: "Kite Konnect patient support program",
+      b340: "~$280,000 (25% discount)",
+      government: "~$298,000 (Medicare)",
+      commercial: "Copay programs available"
+    },
+    dosing: {
+      numberOfDoses: "Single infusion",
+      leadTime: "2-3 weeks",
+      administration: "IV infusion at REMS-certified center",
+      specialNotes: "T-cell enrichment process differs from Yescarta"
+    }
   },
   {
     id: "cp-cell-004",
@@ -204,7 +293,20 @@ export const cellTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "CAR-T Cell Therapy",
     icdCodes: ["C83.30", "C83.80"],
     url: "https://www.breyanzi.com",
-    price: "$410,300"
+    pricing: {
+      wac: "~$410,300 (Approximate)",
+      pap: "BMS Access Support covers eligible patients",
+      b340: "~$308,000 (25% discount)",
+      government: "~$328,000 (Medicare)",
+      commercial: "Copay assistance up to $25,000/year"
+    },
+    dosing: {
+      numberOfDoses: "Single infusion (2 components)",
+      interval: "CD4+ and CD8+ infused sequentially",
+      leadTime: "3-4 weeks",
+      administration: "IV infusion, defined CD4/CD8 composition",
+      specialNotes: "1:1 CD4:CD8 ratio provides consistent dosing"
+    }
   },
   {
     id: "cp-cell-005",
@@ -218,13 +320,25 @@ export const cellTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "BCMA CAR-T Cell Therapy",
     icdCodes: ["C90.00"],
     url: "https://www.abecma.com",
-    price: "$419,500"
+    pricing: {
+      wac: "~$419,500 (Approximate)",
+      pap: "BMS Access Support program",
+      b340: "~$315,000 (25% discount)",
+      government: "~$336,000 (Medicare)",
+      commercial: "Variable, specialty pharmacy coordination"
+    },
+    dosing: {
+      numberOfDoses: "Single infusion",
+      leadTime: "4-5 weeks (manufacturing)",
+      administration: "IV infusion at REMS-certified center",
+      specialNotes: "First BCMA-targeted CAR-T approved"
+    }
   },
   {
     id: "cp-cell-006",
     brandName: "Carvykti",
     genericName: "Ciltacabtagene autoleucel",
-    manufacturer: "Janssen (Johnson & Johnson) / Legend Biotech",
+    manufacturer: "Janssen (J&J) / Legend Biotech",
     ndcCode: "57894-150-01",
     approvalDate: "2022-02-28",
     indication: "Multiple Myeloma",
@@ -232,7 +346,19 @@ export const cellTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "BCMA CAR-T Cell Therapy",
     icdCodes: ["C90.00"],
     url: "https://www.carvykti.com",
-    price: "$465,000"
+    pricing: {
+      wac: "~$465,000 (Approximate)",
+      pap: "Janssen CarePath covers eligible patients",
+      b340: "~$349,000 (25% discount)",
+      government: "~$372,000 (Medicare)",
+      commercial: "Copay assistance available"
+    },
+    dosing: {
+      numberOfDoses: "Single infusion",
+      leadTime: "4-6 weeks (manufacturing)",
+      administration: "IV infusion at certified treatment center",
+      specialNotes: "Dual-epitope BCMA binding, deeper responses reported"
+    }
   },
   {
     id: "cp-cell-007",
@@ -246,7 +372,19 @@ export const cellTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "TIL Therapy",
     icdCodes: ["C43.9"],
     url: "https://www.amtagvi.com",
-    price: "$515,000"
+    pricing: {
+      wac: "~$515,000 (Approximate)",
+      pap: "Iovance patient assistance program in development",
+      b340: "~$386,000 (25% discount)",
+      government: "Coverage determination pending",
+      commercial: "Limited data, newly approved"
+    },
+    dosing: {
+      numberOfDoses: "Single infusion (average 7-22B cells)",
+      leadTime: "~22 days (manufacturing from tumor sample)",
+      administration: "IV infusion following lymphodepletion",
+      specialNotes: "First TIL therapy approved, requires tumor resection"
+    }
   }
 ];
 
@@ -475,7 +613,20 @@ export const geneTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "AAV Gene Replacement",
     icdCodes: ["H35.50", "H35.52"],
     url: "https://www.luxturna.com",
-    price: "$850,000 (both eyes)"
+    pricing: {
+      wac: "~$850,000 (Both eyes, Approximate)",
+      pap: "Spark Therapeutics patient support program",
+      b340: "~$637,500 (25% discount)",
+      government: "~$680,000 (Medicare)",
+      commercial: "Outcomes-based contracts available"
+    },
+    dosing: {
+      numberOfDoses: "2 doses (one per eye)",
+      interval: "Minimum 6 days between eyes",
+      leadTime: "1-2 weeks",
+      administration: "Subretinal injection (surgical procedure)",
+      specialNotes: "Each eye treated separately by retinal surgeon"
+    }
   },
   {
     id: "cp-gene-002",
@@ -489,7 +640,19 @@ export const geneTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "AAV9 Gene Replacement",
     icdCodes: ["G12.0", "G12.1"],
     url: "https://www.zolgensma.com",
-    price: "$2,125,000"
+    pricing: {
+      wac: "~$2,125,000 (Approximate)",
+      pap: "Novartis Gene Therapies Patient Services",
+      b340: "~$1,594,000 (25% discount)",
+      government: "Medicaid best price applies",
+      commercial: "5-year payment plan available, outcomes-based"
+    },
+    dosing: {
+      numberOfDoses: "Single dose (one-time)",
+      leadTime: "2-4 weeks for preparation",
+      administration: "IV infusion over ~60 minutes",
+      specialNotes: "Weight-based dosing, corticosteroid pre-treatment required"
+    }
   },
   {
     id: "cp-gene-003",
@@ -503,7 +666,19 @@ export const geneTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "AAV5 Gene Therapy",
     icdCodes: ["D67"],
     url: "https://www.hemgenix.com",
-    price: "$3,500,000"
+    pricing: {
+      wac: "~$3,500,000 (Approximate - Highest priced drug)",
+      pap: "CSL Behring patient assistance available",
+      b340: "~$2,625,000 (25% discount)",
+      government: "Outcomes-based agreements with payers",
+      commercial: "Long-term value contracts, eliminates lifelong Factor IX costs"
+    },
+    dosing: {
+      numberOfDoses: "Single dose (one-time, potentially curative)",
+      leadTime: "3-4 weeks for insurance authorization",
+      administration: "IV infusion over 1-2 hours",
+      specialNotes: "Pre-existing AAV5 antibodies may preclude treatment"
+    }
   },
   {
     id: "cp-gene-004",
@@ -516,8 +691,20 @@ export const geneTherapyCommercialProducts: CommercialProduct[] = [
     disease: "Sickle Cell Disease",
     therapyType: "CRISPR/Cas9 Gene Editing",
     icdCodes: ["D57.1", "D56.1"],
-    url: "https://www.vertex.com",
-    price: "$2,200,000"
+    url: "https://www.vertex.com/casgevy",
+    pricing: {
+      wac: "~$2,200,000 (Approximate)",
+      pap: "Vertex GPS patient support program",
+      b340: "~$1,650,000 (25% discount)",
+      government: "State Medicaid coverage varies",
+      commercial: "Value-based contracts being negotiated"
+    },
+    dosing: {
+      numberOfDoses: "Single infusion (autologous edited cells)",
+      leadTime: "~4 months (cell collection, editing, manufacturing)",
+      administration: "IV infusion after myeloablative conditioning",
+      specialNotes: "First CRISPR therapy approved, requires stem cell transplant protocol"
+    }
   },
   {
     id: "cp-gene-005",
@@ -530,8 +717,20 @@ export const geneTherapyCommercialProducts: CommercialProduct[] = [
     disease: "Sickle Cell Disease",
     therapyType: "Lentiviral Gene Addition",
     icdCodes: ["D57.1"],
-    url: "https://www.bluebirdbio.com",
-    price: "$3,100,000"
+    url: "https://www.bluebirdbio.com/lyfgenia",
+    pricing: {
+      wac: "~$3,100,000 (Approximate)",
+      pap: "bluebird bio Patient Services",
+      b340: "~$2,325,000 (25% discount)",
+      government: "Outcomes-based arrangements offered",
+      commercial: "Pay-over-time and outcomes contracts"
+    },
+    dosing: {
+      numberOfDoses: "Single infusion",
+      leadTime: "~3-4 months (manufacturing)",
+      administration: "IV infusion after myeloablative busulfan",
+      specialNotes: "Gene addition therapy (different mechanism than Casgevy)"
+    }
   },
   {
     id: "cp-gene-006",
@@ -545,7 +744,19 @@ export const geneTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "AAV Micro-dystrophin",
     icdCodes: ["G71.01"],
     url: "https://www.elevidys.com",
-    price: "$3,200,000"
+    pricing: {
+      wac: "~$3,200,000 (Approximate)",
+      pap: "Sarepta SareptAssist program",
+      b340: "~$2,400,000 (25% discount)",
+      government: "Coverage varies, confirmatory trials ongoing",
+      commercial: "Outcomes-based warranty available"
+    },
+    dosing: {
+      numberOfDoses: "Single dose (one-time)",
+      leadTime: "2-4 weeks",
+      administration: "IV infusion over 1-2 hours",
+      specialNotes: "Accelerated approval, ages 4-5 initially, expanded to 4-7"
+    }
   },
   {
     id: "cp-gene-007",
@@ -559,7 +770,19 @@ export const geneTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "AAV5 Gene Therapy",
     icdCodes: ["D66"],
     url: "https://www.roctavian.com",
-    price: "$2,900,000"
+    pricing: {
+      wac: "~$2,900,000 (Approximate)",
+      pap: "BioMarin RareConnections program",
+      b340: "~$2,175,000 (25% discount)",
+      government: "Value-based agreements in place",
+      commercial: "Outcomes-based payment over 5 years"
+    },
+    dosing: {
+      numberOfDoses: "Single dose (one-time)",
+      leadTime: "2-3 weeks",
+      administration: "IV infusion, weight-based",
+      specialNotes: "Pre-existing AAV5 antibodies tested prior"
+    }
   }
 ];
 
@@ -737,7 +960,20 @@ export const advancedTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "Tissue Engineered Product",
     icdCodes: ["H18.89", "T26.1"],
     url: "https://www.ema.europa.eu/en/medicines/human/EPAR/holoclar",
-    price: "€80,000"
+    pricing: {
+      wac: "~€80,000 (Approximate, EU only)",
+      pap: "Hospital/national health system coverage",
+      b340: "N/A (EU product)",
+      government: "Covered by EU national health systems",
+      commercial: "Reimbursement varies by country"
+    },
+    dosing: {
+      numberOfDoses: "1-2 applications",
+      interval: "Second treatment if needed after evaluation",
+      leadTime: "2-3 weeks (cell culture)",
+      administration: "Surgical implantation on cornea",
+      specialNotes: "First stem cell therapy approved in EU"
+    }
   },
   {
     id: "cp-adv-002",
@@ -751,7 +987,19 @@ export const advancedTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "Matrix-Assisted ACI",
     icdCodes: ["M94.26", "S83.3"],
     url: "https://www.maci.com",
-    price: "$40,000"
+    pricing: {
+      wac: "~$40,000 (Approximate)",
+      pap: "Vericel patient assistance available",
+      b340: "~$30,000 (25% discount)",
+      government: "Medicare coverage with prior auth",
+      commercial: "Most commercial plans cover"
+    },
+    dosing: {
+      numberOfDoses: "Single implantation",
+      leadTime: "6 weeks (biopsy to implant)",
+      administration: "Surgical implantation (arthrotomy or arthroscopy)",
+      specialNotes: "Requires prior cartilage biopsy, 2-stage procedure"
+    }
   },
   {
     id: "cp-adv-003",
@@ -765,7 +1013,20 @@ export const advancedTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "Cultured Skin Graft",
     icdCodes: ["T31.90", "L98.493"],
     url: "https://www.vcel.com/epicel",
-    price: "$15,000-$150,000"
+    pricing: {
+      wac: "~$15,000-$150,000 (Approximate, varies by coverage area)",
+      pap: "Vericel support for coverage navigation",
+      b340: "Variable based on burn center status",
+      government: "Medicare/Medicaid coverage available",
+      commercial: "Coverage varies, often approved for severe burns"
+    },
+    dosing: {
+      numberOfDoses: "Multiple grafts as needed",
+      interval: "Every 2-3 weeks as wound heals",
+      leadTime: "16-21 days (cell expansion)",
+      administration: "Surgical application to prepared wound bed",
+      specialNotes: "Requires 2-3 cm² skin biopsy, grafts shipped fresh"
+    }
   },
   {
     id: "cp-adv-004",
@@ -779,7 +1040,19 @@ export const advancedTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "Bioengineered Skin Substitute",
     icdCodes: ["T30.0", "T31.0"],
     url: "https://www.stratagraft.com",
-    price: "$45,000"
+    pricing: {
+      wac: "~$45,000 (Approximate per unit)",
+      pap: "Mallinckrodt patient support",
+      b340: "~$34,000 (25% discount)",
+      government: "Medicare coverage available",
+      commercial: "Prior authorization typically required"
+    },
+    dosing: {
+      numberOfDoses: "Single application per wound area",
+      leadTime: "Off-the-shelf (no manufacturing delay)",
+      administration: "Surgical application to partial-thickness burns",
+      specialNotes: "Allogeneic - no patient biopsy needed, immediate availability"
+    }
   }
 ];
 
@@ -800,8 +1073,8 @@ export const advancedTherapyManufacturers: Manufacturer[] = [
     name: "Organovo",
     type: "biotech",
     headquarters: "San Diego, CA, USA",
-    specializations: ["3D Bioprinting", "Liver Tissue"],
-    therapeuticAreas: ["Drug Discovery", "Organ Repair"],
+    specializations: ["3D Bioprinting", "Organ Models"],
+    therapeuticAreas: ["Drug Development", "Transplantation"],
     website: "https://www.organovo.com",
     clinicalTrials: 5
   },
@@ -810,8 +1083,8 @@ export const advancedTherapyManufacturers: Manufacturer[] = [
     name: "eGenesis",
     type: "biotech",
     headquarters: "Cambridge, MA, USA",
-    specializations: ["Xenotransplantation", "Gene Editing"],
-    therapeuticAreas: ["Organ Transplantation", "End-Stage Organ Disease"],
+    specializations: ["Xenotransplantation", "Gene-Edited Organs"],
+    therapeuticAreas: ["Organ Failure", "Transplantation"],
     website: "https://www.egenesisbio.com",
     clinicalTrials: 4
   },
@@ -820,66 +1093,66 @@ export const advancedTherapyManufacturers: Manufacturer[] = [
     name: "United Therapeutics",
     type: "biotech",
     headquarters: "Silver Spring, MD, USA",
-    specializations: ["Xenotransplantation", "Organ Manufacturing"],
-    therapeuticAreas: ["Pulmonary Hypertension", "Organ Transplant"],
+    specializations: ["Organ Manufacturing", "Pulmonary Arterial Hypertension"],
+    therapeuticAreas: ["Lung Disease", "Transplantation"],
     website: "https://www.unither.com",
-    clinicalTrials: 12
+    clinicalTrials: 15
   },
   {
     id: "mfr-adv-005",
-    name: "Wake Forest Institute for Regenerative Medicine",
-    type: "research",
-    headquarters: "Winston-Salem, NC, USA",
-    specializations: ["Organ Bioengineering", "3D Bioprinting"],
-    therapeuticAreas: ["Urology", "Wound Healing"],
-    website: "https://www.wakehealth.edu/wfirm",
-    clinicalTrials: 20
+    name: "Medpace",
+    type: "cro",
+    headquarters: "Cincinnati, OH, USA",
+    specializations: ["Clinical Research", "Regulatory Affairs"],
+    therapeuticAreas: ["Advanced Therapies", "Rare Diseases"],
+    website: "https://www.medpace.com",
+    clinicalTrials: 120
   }
 ];
 
 export const advancedTherapyExperimentationAreas: ExperimentationArea[] = [
-  { area: "Organ Bioprinting", description: "Creating functional organs using 3D bioprinting", organizations: ["Organovo", "BICO", "Cellink"], status: "Preclinical/Phase 1" },
-  { area: "Xenotransplantation", description: "Gene-edited pig organs for human transplant", organizations: ["eGenesis", "United Therapeutics", "Revivicor"], status: "Phase 1 Trials" },
-  { area: "Organ-on-Chip", description: "Microfluidic devices mimicking organ function", organizations: ["Emulate", "Mimetas", "TissUse"], status: "Commercial/Research" },
-  { area: "Whole Organ Engineering", description: "Decellularized scaffolds recellularized with patient cells", organizations: ["Harvard WFIRM", "MIT"], status: "Preclinical" }
+  { area: "3D Bioprinted Organs", description: "Creating transplantable organs using bioprinting technology", organizations: ["Organovo", "CELLINK", "Aspect Biosystems"], status: "Research/Phase 1" },
+  { area: "Xenotransplantation", description: "Using gene-edited animal organs for human transplant", organizations: ["eGenesis", "United Therapeutics", "Revivicor"], status: "Phase 1 Trials" },
+  { area: "Organoids for Drug Testing", description: "Patient-derived mini-organs for personalized medicine", organizations: ["Hubrecht", "Emulate", "DefiniGEN"], status: "Commercial/Research" },
+  { area: "Decellularized Scaffolds", description: "Using biological scaffolds to regenerate tissues", organizations: ["Miromatrix", "Harvard", "Wake Forest"], status: "Phase 1/2 Trials" }
 ];
 
-// ==================== PERSONALIZED THERAPY DATA ====================
+// ==================== PERSONALIZED MEDICINE DATA ====================
 export const personalizedTherapyClinicalTrials: ClinicalTrial[] = [
   {
     id: "ct-pers-001",
-    title: "Neoantigen Cancer Vaccine + Pembrolizumab",
-    nctNumber: "NCT03289962",
+    title: "Personalized mRNA Cancer Vaccine",
+    nctNumber: "NCT04161755",
     phase: "Phase 2",
     status: "Active",
-    sponsor: "BioNTech",
-    cro: "ICON",
-    therapyName: "BNT122 (Autogene cevumeran)",
-    treatment: "Personalized mRNA Cancer Vaccine",
+    sponsor: "BioNTech / Genentech (Roche)",
+    cro: "Covance",
+    therapyName: "Autogene cevumeran (BNT122)",
+    treatment: "Individualized Neoantigen mRNA Vaccine",
     disease: "Pancreatic Cancer",
     locations: ["United States", "Europe"],
-    url: "https://clinicaltrials.gov/study/NCT03289962",
-    startDate: "2019-04",
+    url: "https://clinicaltrials.gov/study/NCT04161755",
+    startDate: "2019-12",
     expectedCompletion: "2025-12"
   },
   {
     id: "ct-pers-002",
-    title: "Tumor-Informed ctDNA Monitoring for Colorectal Cancer",
-    nctNumber: "NCT04264702",
-    phase: "Phase 3",
-    status: "Recruiting",
-    sponsor: "Natera",
-    therapyName: "Signatera",
-    treatment: "Personalized ctDNA Monitoring",
-    disease: "Colorectal Cancer",
+    title: "ctDNA-Guided Adjuvant Therapy in Colon Cancer",
+    nctNumber: "NCT04068103",
+    phase: "Phase 2/3",
+    status: "Active",
+    sponsor: "SWOG Cancer Research Network",
+    therapyName: "Signatera MRD Test",
+    treatment: "ctDNA-Directed Chemotherapy Decision",
+    disease: "Stage II-III Colon Cancer",
     locations: ["United States"],
-    url: "https://clinicaltrials.gov/study/NCT04264702",
-    startDate: "2020-03",
-    expectedCompletion: "2026-06"
+    url: "https://clinicaltrials.gov/study/NCT04068103",
+    startDate: "2019-10",
+    expectedCompletion: "2027-06"
   },
   {
     id: "ct-pers-003",
-    title: "Pharmacogenomic-Guided Dosing in Depression",
+    title: "Pharmacogenomics-Guided Antidepressant Selection",
     nctNumber: "NCT03150238",
     phase: "Phase 4",
     status: "Completed",
@@ -922,7 +1195,19 @@ export const personalizedTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "Companion Diagnostic",
     icdCodes: ["Z15.01", "Z85.89"],
     url: "https://www.foundationmedicine.com",
-    price: "$3,200-$5,800"
+    pricing: {
+      wac: "~$3,200-$5,800 (Approximate)",
+      pap: "Foundation Medicine patient support",
+      b340: "Available to qualifying facilities",
+      government: "Medicare coverage for approved indications",
+      commercial: "Most major insurers cover"
+    },
+    dosing: {
+      numberOfDoses: "Single test per tumor sample",
+      leadTime: "10-14 business days for results",
+      administration: "Tissue biopsy or blood sample",
+      specialNotes: "324-gene panel, identifies treatment options"
+    }
   },
   {
     id: "cp-pers-002",
@@ -936,7 +1221,20 @@ export const personalizedTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "Personalized ctDNA Monitoring",
     icdCodes: ["Z85.89", "Z12.11"],
     url: "https://www.signatera.com",
-    price: "$2,500-$4,000"
+    pricing: {
+      wac: "~$2,500-$4,000 (Approximate per test)",
+      pap: "Natera Compass patient assistance",
+      b340: "Available through qualifying providers",
+      government: "Medicare coverage expanding",
+      commercial: "Growing insurance coverage"
+    },
+    dosing: {
+      numberOfDoses: "Multiple tests over surveillance period",
+      interval: "Every 3-6 months post-treatment",
+      leadTime: "2 weeks for results",
+      administration: "Blood draw",
+      specialNotes: "Personalized to patient's tumor mutations, tracks recurrence"
+    }
   },
   {
     id: "cp-pers-003",
@@ -950,7 +1248,19 @@ export const personalizedTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "Pharmacogenomics",
     icdCodes: ["F32.9", "F41.1"],
     url: "https://www.genesight.com",
-    price: "$2,000"
+    pricing: {
+      wac: "~$2,000 (Approximate)",
+      pap: "GeneSight patient assistance available",
+      b340: "N/A",
+      government: "Medicare covers with dx criteria",
+      commercial: "Most insurers cover with PA"
+    },
+    dosing: {
+      numberOfDoses: "Single test (lifetime value)",
+      leadTime: "3-5 business days",
+      administration: "Cheek swab",
+      specialNotes: "Tests drug-gene interactions for 60+ medications"
+    }
   },
   {
     id: "cp-pers-004",
@@ -964,7 +1274,19 @@ export const personalizedTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "Prognostic Test",
     icdCodes: ["C50.919", "Z85.3"],
     url: "https://www.oncotypeiq.com",
-    price: "$4,175"
+    pricing: {
+      wac: "~$4,175 (Approximate)",
+      pap: "Exact Sciences patient support",
+      b340: "Available to 340B entities",
+      government: "Medicare covers, NCCN guideline supported",
+      commercial: "Widely covered for indicated patients"
+    },
+    dosing: {
+      numberOfDoses: "Single test per tumor",
+      leadTime: "10-14 days",
+      administration: "Tumor tissue sample",
+      specialNotes: "Guides chemotherapy decision in early breast cancer"
+    }
   }
 ];
 
@@ -1108,7 +1430,20 @@ export const radioligandTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "PSMA-Targeted Radioligand Therapy",
     icdCodes: ["C61", "C79.82"],
     url: "https://www.pluvicto.com",
-    price: "$42,500 per dose (6 doses)"
+    pricing: {
+      wac: "~$42,500 per dose (Approximate)",
+      pap: "Novartis Patient Assistance Foundation",
+      b340: "~$32,000 per dose (25% discount)",
+      government: "Medicare Part B coverage",
+      commercial: "Prior authorization required, specialty pharmacy"
+    },
+    dosing: {
+      numberOfDoses: "6 doses (full course)",
+      interval: "Every 6 weeks",
+      leadTime: "Supply chain dependent (isotope half-life 6.7 days)",
+      administration: "IV infusion at certified nuclear medicine facility",
+      specialNotes: "Total treatment ~$255,000, requires PSMA PET scan first"
+    }
   },
   {
     id: "cp-radio-002",
@@ -1122,7 +1457,20 @@ export const radioligandTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "Somatostatin Receptor-Targeted RLT",
     icdCodes: ["C25.4", "C17.9"],
     url: "https://www.lutathera.com",
-    price: "$47,600 per dose (4 doses)"
+    pricing: {
+      wac: "~$47,600 per dose (Approximate)",
+      pap: "Novartis Patient Assistance",
+      b340: "~$35,700 per dose (25% discount)",
+      government: "Medicare coverage available",
+      commercial: "Specialty pharmacy distribution"
+    },
+    dosing: {
+      numberOfDoses: "4 doses (full course)",
+      interval: "Every 8 weeks",
+      leadTime: "Isotope scheduling required",
+      administration: "IV infusion with amino acid co-infusion (kidney protection)",
+      specialNotes: "Total treatment ~$190,400, amino acids given before/during infusion"
+    }
   },
   {
     id: "cp-radio-003",
@@ -1136,7 +1484,20 @@ export const radioligandTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "MIBG-Targeted Radiotherapy",
     icdCodes: ["C74.10", "C75.5"],
     url: "https://www.azedra.com",
-    price: "$800,000 (2 doses)"
+    pricing: {
+      wac: "~$400,000 per dose (Approximate)",
+      pap: "Lantheus patient support program",
+      b340: "~$300,000 per dose (25% discount)",
+      government: "Coverage may require appeal",
+      commercial: "Highly specialized, case-by-case coverage"
+    },
+    dosing: {
+      numberOfDoses: "2 doses",
+      interval: "90 days apart minimum",
+      leadTime: "Extensive coordination required",
+      administration: "IV infusion, requires radiation isolation",
+      specialNotes: "Total ~$800,000, requires specialized radiation safety protocols"
+    }
   },
   {
     id: "cp-radio-004",
@@ -1150,7 +1511,20 @@ export const radioligandTherapyCommercialProducts: CommercialProduct[] = [
     therapyType: "Alpha-Emitting Bone-Targeted Therapy",
     icdCodes: ["C61", "C79.51"],
     url: "https://www.xofigo.com",
-    price: "$12,000 per dose (6 doses)"
+    pricing: {
+      wac: "~$12,000 per dose (Approximate)",
+      pap: "Bayer Patient Assistance Program",
+      b340: "~$9,000 per dose (25% discount)",
+      government: "Medicare Part B coverage",
+      commercial: "Generally covered for indicated patients"
+    },
+    dosing: {
+      numberOfDoses: "6 doses",
+      interval: "Every 4 weeks",
+      leadTime: "Generally available",
+      administration: "IV injection over 1 minute",
+      specialNotes: "Total ~$72,000, alpha emitter with bone-seeking properties"
+    }
   }
 ];
 
@@ -1182,19 +1556,19 @@ export const radioligandTherapyManufacturers: Manufacturer[] = [
     name: "Lantheus Holdings",
     type: "biotech",
     headquarters: "Bedford, MA, USA",
-    specializations: ["Diagnostic Imaging", "Radioligand Therapy"],
-    therapeuticAreas: ["Prostate Cancer", "Cardiology"],
+    specializations: ["Diagnostic Imaging", "Radiopharmaceuticals"],
+    therapeuticAreas: ["Oncology", "Cardiology"],
     website: "https://www.lantheus.com",
-    products: ["Pylarify", "Azedra"],
-    clinicalTrials: 15
+    products: ["Azedra", "Pylarify"],
+    clinicalTrials: 20
   },
   {
     id: "mfr-radio-004",
     name: "Fusion Pharmaceuticals",
     type: "biotech",
-    headquarters: "Hamilton, Canada",
-    specializations: ["Targeted Alpha Therapy", "Actinium-225"],
-    therapeuticAreas: ["Solid Tumors", "Prostate Cancer"],
+    headquarters: "Hamilton, ON, Canada",
+    specializations: ["Targeted Alpha Therapy", "Next-Gen Radiopharmaceuticals"],
+    therapeuticAreas: ["Solid Tumors"],
     website: "https://www.fusionpharma.com",
     clinicalTrials: 8
   },
@@ -1204,30 +1578,20 @@ export const radioligandTherapyManufacturers: Manufacturer[] = [
     type: "biotech",
     headquarters: "Indianapolis, IN, USA",
     specializations: ["Radioligand Therapy", "Theranostics"],
-    therapeuticAreas: ["Prostate Cancer", "Neuroendocrine"],
+    therapeuticAreas: ["Prostate Cancer", "Other Solid Tumors"],
     website: "https://www.pointbiopharma.com",
-    clinicalTrials: 6
-  },
-  {
-    id: "mfr-radio-006",
-    name: "Telix Pharmaceuticals",
-    type: "biotech",
-    headquarters: "Melbourne, Australia",
-    specializations: ["Molecularly Targeted Radiation", "Theranostics"],
-    therapeuticAreas: ["Renal Cancer", "Prostate Cancer", "Glioblastoma"],
-    website: "https://www.telixpharma.com",
-    clinicalTrials: 12
+    clinicalTrials: 10
   }
 ];
 
 export const radioligandTherapyExperimentationAreas: ExperimentationArea[] = [
-  { area: "Targeted Alpha Therapy", description: "Alpha-emitting isotopes for higher potency with less off-target damage", organizations: ["Fusion", "Actinium Pharma", "RadioMedix"], status: "Phase 1/2 Trials" },
-  { area: "FAP-Targeted RLT", description: "Fibroblast Activation Protein targeting for broad solid tumor applicability", organizations: ["Clovis", "Novartis", "3B Pharma"], status: "Phase 1/2 Trials" },
-  { area: "Theranostic Pairs", description: "Companion diagnostics matching imaging and therapy isotopes", organizations: ["Lantheus", "Novartis", "Telix"], status: "Commercial/Expanding" },
-  { area: "Brain Tumor RLT", description: "Crossing blood-brain barrier with radioligands", organizations: ["Y-mAbs", "Telix"], status: "Preclinical/Phase 1" }
+  { area: "Next-Gen Alpha Emitters", description: "Actinium-225 and other alpha emitters for enhanced tumor killing", organizations: ["Fusion", "Actinium Pharma", "RadioMedix"], status: "Phase 1/2 Trials" },
+  { area: "FAP-Targeted RLT", description: "Targeting fibroblast activation protein in tumor microenvironment", organizations: ["Clovis", "Novartis", "Telix"], status: "Phase 1/2 Trials" },
+  { area: "Theranostic Pairs", description: "Matching diagnostic imaging with therapy using same targets", organizations: ["Novartis", "Lantheus", "Curium"], status: "Commercial Expansion" },
+  { area: "Combination RLT", description: "Combining radioligand therapy with immunotherapy or chemotherapy", organizations: ["Novartis", "Bayer", "Academic Centers"], status: "Phase 2 Trials" }
 ];
 
-// ==================== AGGREGATE DATA BY MODALITY ====================
+// ==================== COMBINED DATA BY MODALITY ====================
 export const clinicalDataByModality = {
   'cell-therapy': {
     clinicalTrials: cellTherapyClinicalTrials,
@@ -1247,7 +1611,7 @@ export const clinicalDataByModality = {
     manufacturers: advancedTherapyManufacturers,
     experimentationAreas: advancedTherapyExperimentationAreas
   },
-  'personalized-therapy': {
+  'personalized-medicine': {
     clinicalTrials: personalizedTherapyClinicalTrials,
     commercialProducts: personalizedTherapyCommercialProducts,
     manufacturers: personalizedTherapyManufacturers,
