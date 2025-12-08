@@ -5,13 +5,36 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { getTreatmentCentersForMap, searchTreatmentCenters, TreatmentCenter, loadEnhancedCenters } from '@/services/treatmentCenterService';
-import { MapPin, Maximize2, Minimize2, Filter, X, DollarSign } from 'lucide-react';
+import { MapPin, Maximize2, Minimize2, Filter, X, DollarSign, Search, ChevronDown } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { TreatmentCenterDetails } from './TreatmentCenterDetails';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+// US States for dropdown
+const US_STATES = [
+  { code: '', name: 'All States' },
+  { code: 'AL', name: 'Alabama' }, { code: 'AK', name: 'Alaska' }, { code: 'AZ', name: 'Arizona' },
+  { code: 'AR', name: 'Arkansas' }, { code: 'CA', name: 'California' }, { code: 'CO', name: 'Colorado' },
+  { code: 'CT', name: 'Connecticut' }, { code: 'DE', name: 'Delaware' }, { code: 'FL', name: 'Florida' },
+  { code: 'GA', name: 'Georgia' }, { code: 'HI', name: 'Hawaii' }, { code: 'ID', name: 'Idaho' },
+  { code: 'IL', name: 'Illinois' }, { code: 'IN', name: 'Indiana' }, { code: 'IA', name: 'Iowa' },
+  { code: 'KS', name: 'Kansas' }, { code: 'KY', name: 'Kentucky' }, { code: 'LA', name: 'Louisiana' },
+  { code: 'ME', name: 'Maine' }, { code: 'MD', name: 'Maryland' }, { code: 'MA', name: 'Massachusetts' },
+  { code: 'MI', name: 'Michigan' }, { code: 'MN', name: 'Minnesota' }, { code: 'MS', name: 'Mississippi' },
+  { code: 'MO', name: 'Missouri' }, { code: 'MT', name: 'Montana' }, { code: 'NE', name: 'Nebraska' },
+  { code: 'NV', name: 'Nevada' }, { code: 'NH', name: 'New Hampshire' }, { code: 'NJ', name: 'New Jersey' },
+  { code: 'NM', name: 'New Mexico' }, { code: 'NY', name: 'New York' }, { code: 'NC', name: 'North Carolina' },
+  { code: 'ND', name: 'North Dakota' }, { code: 'OH', name: 'Ohio' }, { code: 'OK', name: 'Oklahoma' },
+  { code: 'OR', name: 'Oregon' }, { code: 'PA', name: 'Pennsylvania' }, { code: 'RI', name: 'Rhode Island' },
+  { code: 'SC', name: 'South Carolina' }, { code: 'SD', name: 'South Dakota' }, { code: 'TN', name: 'Tennessee' },
+  { code: 'TX', name: 'Texas' }, { code: 'UT', name: 'Utah' }, { code: 'VT', name: 'Vermont' },
+  { code: 'VA', name: 'Virginia' }, { code: 'WA', name: 'Washington' }, { code: 'WV', name: 'West Virginia' },
+  { code: 'WI', name: 'Wisconsin' }, { code: 'WY', name: 'Wyoming' }, { code: 'DC', name: 'Washington DC' }
+];
 
 interface InteractiveTreatmentCenterMapProps {
   filterByType?: string;
@@ -44,6 +67,10 @@ export const InteractiveTreatmentCenterMap = ({
   const [selectedTherapeuticAreas, setSelectedTherapeuticAreas] = useState<string[]>([]);
   const [selectedManufacturers, setSelectedManufacturers] = useState<string[]>([]);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  const [selectedState, setSelectedState] = useState<string>(state || '');
+  const [userZipCode, setUserZipCode] = useState<string>(zipCode || '');
+  const [maxResults, setMaxResults] = useState<number>(50);
+  const [filterSearch, setFilterSearch] = useState({ area: '', mfg: '', product: '' });
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [mapboxToken, setMapboxToken] = useState<string>(() => {
     try {
@@ -92,18 +119,21 @@ export const InteractiveTreatmentCenterMap = ({
     return null;
   };
 
-  // Geocode user's zip code if provided
-  useEffect(() => {
-    if (!zipCode || !mapboxToken) return;
-    const geocodeZip = async () => {
-      const coords = await geocodeAddress(zipCode);
-      if (coords) {
-        setUserZipCoords(coords);
-        console.log(`📍 User zip ${zipCode} geocoded to:`, coords);
-      }
-    };
-    geocodeZip();
-  }, [zipCode, mapboxToken]);
+  // Geocode user's zip code when search is triggered
+  const handleZipSearch = async () => {
+    if (!userZipCode || !mapboxToken) return;
+    const coords = await geocodeAddress(userZipCode);
+    if (coords) {
+      setUserZipCoords(coords);
+      console.log(`📍 User zip ${userZipCode} geocoded to:`, coords);
+      // Fly to user's location
+      map.current?.flyTo({
+        center: [coords.lng, coords.lat],
+        zoom: 8,
+        duration: 1500
+      });
+    }
+  };
 
   // Helper: calculate distance in miles between two lat/lng points
   const calculateDistance = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
@@ -162,6 +192,9 @@ export const InteractiveTreatmentCenterMap = ({
 
   // Filter centers based on selections (including props + UI selections) with distance sorting
   const filteredCenters = useMemo(() => {
+    // Use UI state if set, otherwise fall back to props
+    const activeState = selectedState || state || '';
+    
     // Merge explicit props with user-selected filters so props act as defaults
     const requiredAreas = selectedTherapeuticAreas.length > 0 
       ? selectedTherapeuticAreas 
@@ -190,17 +223,12 @@ export const InteractiveTreatmentCenterMap = ({
       return true;
     });
 
-    // Then apply location filter if provided, with graceful fallback
+    // Then apply location filter if provided
     const matchState = (centerState?: string) => {
-      if (!state) return true;
-      const MAP: Record<string, string> = {
-        'GEORGIA': 'GA', 'MASSACHUSETTS': 'MA', 'CALIFORNIA': 'CA', 'NEW YORK': 'NY', 'FLORIDA': 'FL', 'TEXAS': 'TX',
-        'ARIZONA': 'AZ','ALABAMA': 'AL','ALASKA': 'AK','ARKANSAS': 'AR','COLORADO': 'CO','CONNECTICUT': 'CT','DELAWARE': 'DE','HAWAII': 'HI','IDAHO': 'ID','ILLINOIS': 'IL','INDIANA': 'IN','IOWA': 'IA','KANSAS': 'KS','KENTUCKY': 'KY','LOUISIANA': 'LA','MAINE': 'ME','MARYLAND': 'MD','MICHIGAN': 'MI','MINNESOTA': 'MN','MISSISSIPPI': 'MS','MISSOURI': 'MO','MONTANA': 'MT','NEBRASKA': 'NE','NEVADA': 'NV','NEW HAMPSHIRE': 'NH','NEW JERSEY': 'NJ','NEW MEXICO': 'NM','NORTH CAROLINA': 'NC','NORTH DAKOTA': 'ND','OHIO': 'OH','OKLAHOMA': 'OK','OREGON': 'OR','PENNSYLVANIA': 'PA','RHODE ISLAND': 'RI','SOUTH CAROLINA': 'SC','SOUTH DAKOTA': 'SD','TENNESSEE': 'TN','UTAH': 'UT','VERMONT': 'VT','VIRGINIA': 'VA','WASHINGTON': 'WA','WEST VIRGINIA': 'WV','WISCONSIN': 'WI','WYOMING': 'WY','DISTRICT OF COLUMBIA': 'DC','WASHINGTON DC': 'DC','WASHINGTON D.C.': 'DC','DC': 'DC','D.C.': 'DC'
-      };
-      const desired = (state || '').trim().toUpperCase();
-      const desiredAbbr = desired.length === 2 ? desired : (MAP[desired] || desired);
+      if (!activeState) return true;
       const cs = (centerState || '').trim().toUpperCase();
-      return cs === desiredAbbr || cs === desired;
+      const desired = activeState.toUpperCase();
+      return cs === desired || cs.startsWith(desired);
     };
 
     const matchCity = (centerCity?: string) => {
@@ -210,15 +238,10 @@ export const InteractiveTreatmentCenterMap = ({
 
     let byLocation = base.filter(c => matchState(c.state) && matchCity(c.city));
 
-    // Fallback: if city-level yields none but state provided, show state-level
-    if (byLocation.length === 0 && city && state) {
-      byLocation = base.filter(c => matchState(c.state));
-    }
-
     // Final fallback: if nothing after location filters, return product/therapy-only set
-    const finalSet = byLocation.length > 0 ? byLocation : base;
+    const finalSet = byLocation.length > 0 ? byLocation : (activeState ? [] : base);
 
-    // Sort by distance if zip code provided
+    // Sort by distance if zip code coordinates available
     if (userZipCoords && finalSet.length > 0) {
       return finalSet
         .map(c => ({
@@ -228,11 +251,12 @@ export const InteractiveTreatmentCenterMap = ({
             : 999999
         }))
         .sort((a, b) => a.distance - b.distance)
-        .slice(0, 50); // Show top 50 nearest centers to reduce overcrowding
+        .slice(0, maxResults);
     }
 
-    return finalSet;
-  }, [allCenters, selectedTherapeuticAreas, selectedManufacturers, selectedProducts, therapeuticArea, product, manufacturer, state, city, userZipCoords]);
+    // Apply max results limit
+    return finalSet.slice(0, maxResults);
+  }, [allCenters, selectedTherapeuticAreas, selectedManufacturers, selectedProducts, therapeuticArea, product, manufacturer, selectedState, state, city, userZipCoords, maxResults]);
 
   // Load treatment centers on mount
   useEffect(() => {
@@ -568,8 +592,10 @@ export const InteractiveTreatmentCenterMap = ({
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
-              <MapPin className="h-5 w-5" />
-              Treatment Centers {state && `in ${state}`}{city && ` - ${city}`}
+              <MapPin className="h-5 w-5 text-primary" />
+              Treatment Centers 
+              {(selectedState || state) && ` in ${US_STATES.find(s => s.code === (selectedState || state))?.name || selectedState || state}`}
+              {city && ` - ${city}`}
             </CardTitle>
             <Button
               variant="ghost"
@@ -582,19 +608,19 @@ export const InteractiveTreatmentCenterMap = ({
           
           {/* Disclaimer Banner */}
           {filteredCenters.length > 0 && (
-            <div className="mt-3 p-4 bg-amber-50 dark:bg-amber-950/20 border-l-4 border-amber-500 rounded-md">
-              <p className="text-sm text-amber-900 dark:text-amber-200 font-medium mb-1">
+            <div className="mt-3 p-4 bg-warning/10 border-l-4 border-warning rounded-md">
+              <p className="text-sm text-warning-foreground font-medium mb-1">
                 ⚠️ Experimental Data - Verification Required
               </p>
-              <p className="text-xs text-amber-800 dark:text-amber-300">
+              <p className="text-xs text-muted-foreground">
                 This information is for educational purposes. Treatment center data may not be current. 
                 {product && ` Contact the ${product} manufacturer or`} your healthcare provider to verify 
                 locations, availability, and enrollment criteria for {product || therapeuticArea || 'treatment'}.
               </p>
-              <p className="text-xs text-amber-700 dark:text-amber-400 mt-2">
-                Found {filteredCenters.length} location{filteredCenters.length !== 1 ? 's' : ''} 
-                {state && ` in ${state}`}{city && ` near ${city}`}
-                {zipCode && userZipCoords && ` (sorted by distance from ${zipCode})`}
+              <p className="text-xs text-muted-foreground mt-2">
+                Showing {filteredCenters.length} of {allCenters.length} locations
+                {(selectedState || state) && ` in ${US_STATES.find(s => s.code === (selectedState || state))?.name || selectedState || state}`}
+                {userZipCoords && userZipCode && ` (sorted by distance from ${userZipCode})`}
               </p>
             </div>
           )}
@@ -633,10 +659,10 @@ export const InteractiveTreatmentCenterMap = ({
           )}
 
           {/* Active Filters Display */}
-          {(therapeuticArea || product || manufacturer || clinicalTrial || state || city) && (
-            <div className="p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
+          {(therapeuticArea || product || manufacturer || clinicalTrial || selectedState || city) && (
+            <div className="p-3 bg-primary/5 rounded-lg border border-primary/20">
               <div className="flex items-center gap-2 text-sm font-medium mb-2">
-                <Filter className="h-4 w-4" />
+                <Filter className="h-4 w-4 text-primary" />
                 Active Filters:
               </div>
               <div className="flex flex-wrap gap-2">
@@ -652,8 +678,11 @@ export const InteractiveTreatmentCenterMap = ({
                 {clinicalTrial && (
                   <Badge variant="secondary">Trial: {clinicalTrial}</Badge>
                 )}
-                {state && (
-                  <Badge variant="secondary">State: {state}</Badge>
+                {selectedState && (
+                  <Badge variant="secondary" className="gap-1">
+                    State: {US_STATES.find(s => s.code === selectedState)?.name || selectedState}
+                    <X className="h-3 w-3 cursor-pointer" onClick={() => setSelectedState('')} />
+                  </Badge>
                 )}
                 {city && (
                   <Badge variant="secondary">City: {city}</Badge>
@@ -662,23 +691,86 @@ export const InteractiveTreatmentCenterMap = ({
             </div>
           )}
 
-          {/* Advanced Filters */}
+          {/* Location Search Section */}
+          <div className="p-4 bg-muted/30 rounded-lg border space-y-4">
+            <Label className="font-semibold flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-primary" />
+              Location Search
+            </Label>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {/* State Dropdown */}
+              <div className="space-y-1">
+                <Label className="text-xs text-muted-foreground">State</Label>
+                <Select value={selectedState} onValueChange={setSelectedState}>
+                  <SelectTrigger className="bg-background">
+                    <SelectValue placeholder="Select state" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-60 bg-background z-50">
+                    {US_STATES.map(s => (
+                      <SelectItem key={s.code} value={s.code || 'all'}>
+                        {s.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Zip Code Search */}
+              <div className="space-y-1">
+                <Label className="text-xs text-muted-foreground">Zip Code (for distance)</Label>
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Enter zip code"
+                    value={userZipCode}
+                    onChange={(e) => setUserZipCode(e.target.value)}
+                    className="bg-background"
+                  />
+                  <Button 
+                    size="sm" 
+                    onClick={handleZipSearch}
+                    disabled={!userZipCode || !mapboxToken}
+                  >
+                    <Search className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Results Limit */}
+              <div className="space-y-1">
+                <Label className="text-xs text-muted-foreground">Show Results</Label>
+                <Select value={maxResults.toString()} onValueChange={(v) => setMaxResults(parseInt(v))}>
+                  <SelectTrigger className="bg-background">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background z-50">
+                    <SelectItem value="25">25 centers</SelectItem>
+                    <SelectItem value="50">50 centers</SelectItem>
+                    <SelectItem value="100">100 centers</SelectItem>
+                    <SelectItem value="200">200 centers</SelectItem>
+                    <SelectItem value="500">All centers</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          {/* Treatment Filters */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {/* Therapeutic Areas Filter */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className="w-full justify-between">
+                <Button variant="outline" className="w-full justify-between bg-background">
                   <span className="truncate">
                     {selectedTherapeuticAreas.length > 0 
                       ? `${selectedTherapeuticAreas.length} Therapeutic Area${selectedTherapeuticAreas.length > 1 ? 's' : ''}`
                       : 'Therapeutic Areas'}
                   </span>
-                  <Filter className="ml-2 h-4 w-4 opacity-50" />
+                  <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-80 p-4" align="start">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between mb-3">
+              <PopoverContent className="w-80 p-4 bg-background z-50" align="start">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
                     <Label className="font-semibold">Therapeutic Areas</Label>
                     {selectedTherapeuticAreas.length > 0 && (
                       <Button 
@@ -691,27 +783,35 @@ export const InteractiveTreatmentCenterMap = ({
                       </Button>
                     )}
                   </div>
-                  <div className="max-h-60 overflow-y-auto space-y-2">
-                    {therapeuticAreas.map(area => (
-                      <div key={area} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`area-${area}`}
-                          checked={selectedTherapeuticAreas.includes(area)}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              setSelectedTherapeuticAreas([...selectedTherapeuticAreas, area]);
-                            } else {
-                              setSelectedTherapeuticAreas(selectedTherapeuticAreas.filter(a => a !== area));
-                            }
-                          }}
-                        />
-                        <label htmlFor={`area-${area}`} className="text-sm cursor-pointer flex-1">
-                          {area}
-                        </label>
-                      </div>
-                    ))}
-                    {therapeuticAreas.length === 0 && (
-                      <p className="text-sm text-muted-foreground">No therapeutic areas available</p>
+                  <Input
+                    placeholder="Search areas..."
+                    value={filterSearch.area}
+                    onChange={(e) => setFilterSearch(prev => ({ ...prev, area: e.target.value }))}
+                    className="h-8"
+                  />
+                  <div className="max-h-48 overflow-y-auto space-y-2">
+                    {therapeuticAreas
+                      .filter(area => area.toLowerCase().includes(filterSearch.area.toLowerCase()))
+                      .map(area => (
+                        <div key={area} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`area-${area}`}
+                            checked={selectedTherapeuticAreas.includes(area)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                setSelectedTherapeuticAreas([...selectedTherapeuticAreas, area]);
+                              } else {
+                                setSelectedTherapeuticAreas(selectedTherapeuticAreas.filter(a => a !== area));
+                              }
+                            }}
+                          />
+                          <label htmlFor={`area-${area}`} className="text-sm cursor-pointer flex-1">
+                            {area}
+                          </label>
+                        </div>
+                      ))}
+                    {therapeuticAreas.filter(area => area.toLowerCase().includes(filterSearch.area.toLowerCase())).length === 0 && (
+                      <p className="text-sm text-muted-foreground py-2">No matching areas</p>
                     )}
                   </div>
                 </div>
@@ -721,18 +821,18 @@ export const InteractiveTreatmentCenterMap = ({
             {/* Manufacturers Filter */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className="w-full justify-between">
+                <Button variant="outline" className="w-full justify-between bg-background">
                   <span className="truncate">
                     {selectedManufacturers.length > 0 
                       ? `${selectedManufacturers.length} Manufacturer${selectedManufacturers.length > 1 ? 's' : ''}`
                       : 'Manufacturers'}
                   </span>
-                  <Filter className="ml-2 h-4 w-4 opacity-50" />
+                  <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-80 p-4" align="start">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between mb-3">
+              <PopoverContent className="w-80 p-4 bg-background z-50" align="start">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
                     <Label className="font-semibold">Manufacturers</Label>
                     {selectedManufacturers.length > 0 && (
                       <Button 
@@ -745,27 +845,35 @@ export const InteractiveTreatmentCenterMap = ({
                       </Button>
                     )}
                   </div>
-                  <div className="max-h-60 overflow-y-auto space-y-2">
-                    {manufacturers.map(mfg => (
-                      <div key={mfg} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`mfg-${mfg}`}
-                          checked={selectedManufacturers.includes(mfg)}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              setSelectedManufacturers([...selectedManufacturers, mfg]);
-                            } else {
-                              setSelectedManufacturers(selectedManufacturers.filter(m => m !== mfg));
-                            }
-                          }}
-                        />
-                        <label htmlFor={`mfg-${mfg}`} className="text-sm cursor-pointer flex-1">
-                          {mfg}
-                        </label>
-                      </div>
-                    ))}
-                    {manufacturers.length === 0 && (
-                      <p className="text-sm text-muted-foreground">No manufacturers available</p>
+                  <Input
+                    placeholder="Search manufacturers..."
+                    value={filterSearch.mfg}
+                    onChange={(e) => setFilterSearch(prev => ({ ...prev, mfg: e.target.value }))}
+                    className="h-8"
+                  />
+                  <div className="max-h-48 overflow-y-auto space-y-2">
+                    {manufacturers
+                      .filter(mfg => mfg.toLowerCase().includes(filterSearch.mfg.toLowerCase()))
+                      .map(mfg => (
+                        <div key={mfg} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`mfg-${mfg}`}
+                            checked={selectedManufacturers.includes(mfg)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                setSelectedManufacturers([...selectedManufacturers, mfg]);
+                              } else {
+                                setSelectedManufacturers(selectedManufacturers.filter(m => m !== mfg));
+                              }
+                            }}
+                          />
+                          <label htmlFor={`mfg-${mfg}`} className="text-sm cursor-pointer flex-1">
+                            {mfg}
+                          </label>
+                        </div>
+                      ))}
+                    {manufacturers.filter(mfg => mfg.toLowerCase().includes(filterSearch.mfg.toLowerCase())).length === 0 && (
+                      <p className="text-sm text-muted-foreground py-2">No matching manufacturers</p>
                     )}
                   </div>
                 </div>
@@ -775,18 +883,18 @@ export const InteractiveTreatmentCenterMap = ({
             {/* Products Filter */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className="w-full justify-between">
+                <Button variant="outline" className="w-full justify-between bg-background">
                   <span className="truncate">
                     {selectedProducts.length > 0 
                       ? `${selectedProducts.length} Product${selectedProducts.length > 1 ? 's' : ''}`
                       : 'Products/Treatments'}
                   </span>
-                  <Filter className="ml-2 h-4 w-4 opacity-50" />
+                  <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-80 p-4" align="start">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between mb-3">
+              <PopoverContent className="w-80 p-4 bg-background z-50" align="start">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
                     <Label className="font-semibold">Products/Treatments</Label>
                     {selectedProducts.length > 0 && (
                       <Button 
@@ -799,27 +907,35 @@ export const InteractiveTreatmentCenterMap = ({
                       </Button>
                     )}
                   </div>
-                  <div className="max-h-60 overflow-y-auto space-y-2">
-                    {products.map(prod => (
-                      <div key={prod} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`prod-${prod}`}
-                          checked={selectedProducts.includes(prod)}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              setSelectedProducts([...selectedProducts, prod]);
-                            } else {
-                              setSelectedProducts(selectedProducts.filter(p => p !== prod));
-                            }
-                          }}
-                        />
-                        <label htmlFor={`prod-${prod}`} className="text-sm cursor-pointer flex-1">
-                          {prod}
-                        </label>
-                      </div>
-                    ))}
-                    {products.length === 0 && (
-                      <p className="text-sm text-muted-foreground">No products available</p>
+                  <Input
+                    placeholder="Search products..."
+                    value={filterSearch.product}
+                    onChange={(e) => setFilterSearch(prev => ({ ...prev, product: e.target.value }))}
+                    className="h-8"
+                  />
+                  <div className="max-h-48 overflow-y-auto space-y-2">
+                    {products
+                      .filter(prod => prod.toLowerCase().includes(filterSearch.product.toLowerCase()))
+                      .map(prod => (
+                        <div key={prod} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`prod-${prod}`}
+                            checked={selectedProducts.includes(prod)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                setSelectedProducts([...selectedProducts, prod]);
+                              } else {
+                                setSelectedProducts(selectedProducts.filter(p => p !== prod));
+                              }
+                            }}
+                          />
+                          <label htmlFor={`prod-${prod}`} className="text-sm cursor-pointer flex-1">
+                            {prod}
+                          </label>
+                        </div>
+                      ))}
+                    {products.filter(prod => prod.toLowerCase().includes(filterSearch.product.toLowerCase())).length === 0 && (
+                      <p className="text-sm text-muted-foreground py-2">No matching products</p>
                     )}
                   </div>
                 </div>
@@ -858,20 +974,21 @@ export const InteractiveTreatmentCenterMap = ({
                   />
                 </Badge>
               ))}
-              {(selectedTherapeuticAreas.length > 0 || selectedManufacturers.length > 0 || selectedProducts.length > 0) && (
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => {
-                    setSelectedTherapeuticAreas([]);
-                    setSelectedManufacturers([]);
-                    setSelectedProducts([]);
-                  }}
-                  className="h-7 text-xs"
-                >
-                  Clear All
-                </Button>
-              )}
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => {
+                  setSelectedTherapeuticAreas([]);
+                  setSelectedManufacturers([]);
+                  setSelectedProducts([]);
+                  setSelectedState('');
+                  setUserZipCode('');
+                  setUserZipCoords(null);
+                }}
+                className="h-7 text-xs"
+              >
+                Clear All
+              </Button>
             </div>
           )}
 
@@ -889,11 +1006,11 @@ export const InteractiveTreatmentCenterMap = ({
                 </span>
               )}
             </div>
-            {filteredCenters.some(c => c.products_drugs?.length) && (
-              <Button variant="ghost" size="sm" className="gap-2">
-                <DollarSign className="h-4 w-4" />
-                View Pricing
-              </Button>
+            {userZipCoords && userZipCode && (
+              <Badge variant="outline" className="gap-1">
+                <MapPin className="h-3 w-3" />
+                Sorted by distance from {userZipCode}
+              </Badge>
             )}
           </div>
 
