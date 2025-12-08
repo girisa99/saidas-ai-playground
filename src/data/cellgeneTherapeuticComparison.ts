@@ -1260,6 +1260,249 @@ export const patientJourneyStages: ProcessFlow[] = [
         distributionRole: "Ongoing nuclear pharmacy coordination for each cycle"
       }
     ]
+  },
+  {
+    modality: "Advanced Therapies",
+    orderModel: {
+      type: '1:selectmany',
+      description: "Novel therapeutic modalities including mRNA, exosome, and combination immunotherapies with varied manufacturing",
+      leadTime: "Variable: 1-6 weeks depending on product type",
+      characteristics: ["Multiple platform technologies", "Emerging regulatory pathways", "Combination approaches", "Varied storage requirements"]
+    },
+    totalLeadTime: "2-8 weeks depending on therapy type and availability",
+    stages: [
+      {
+        id: "adv-1",
+        name: "Patient Eligibility & Platform Selection",
+        phase: "pre-infusion",
+        duration: "1-2 weeks",
+        leadTime: "Day 0-14",
+        activities: [
+          "Comprehensive disease assessment and staging",
+          "Biomarker testing for platform selection (mRNA, exosome, combination)",
+          "Prior treatment history and response evaluation",
+          "Genetic and molecular profiling",
+          "Platform-specific eligibility criteria review",
+          "Clinical trial enrollment consideration if applicable"
+        ],
+        stakeholders: ["Oncologist/Specialist", "Molecular Pathologist", "Clinical Trial Coordinator", "Hub Services"],
+        criticalFactors: ["Biomarker expression", "Prior therapy response", "Platform availability", "Trial eligibility"],
+        icon: "Search",
+        ecosystemConnections: ["Treatment Centers", "Hub Services", "Diagnostic Labs"],
+        hubServices: ["Eligibility verification", "Platform matching", "Prior authorization initiation"],
+        distributionRole: "Diagnostic sample logistics"
+      },
+      {
+        id: "adv-2",
+        name: "Pre-treatment Workup & Product Coordination",
+        phase: "pre-infusion",
+        duration: "1-3 weeks",
+        leadTime: "Day 14-35",
+        activities: [
+          "Comprehensive baseline assessments",
+          "Immune status evaluation",
+          "Organ function assessment (cardiac, hepatic, renal)",
+          "Product-specific screening (antibody testing for certain platforms)",
+          "Treatment protocol education",
+          "Insurance authorization completion",
+          "Product ordering and delivery coordination"
+        ],
+        stakeholders: ["Treatment Team", "Pharmacist", "Financial Counselor", "Hub Services"],
+        criticalFactors: ["Organ function adequacy", "Insurance approval", "Product availability"],
+        icon: "ClipboardList",
+        ecosystemConnections: ["Treatment Centers", "Hub Services", "Specialty Pharmacy"],
+        hubServices: ["Benefits verification", "Financial assistance", "Product coordination"],
+        distributionRole: "Variable: cold chain or ambient depending on platform"
+      },
+      {
+        id: "adv-3",
+        name: "Advanced Therapy Administration",
+        phase: "infusion",
+        duration: "1-3 days (varies by platform)",
+        leadTime: "Treatment Day 0",
+        activities: [
+          "Pre-medication protocol (varies by platform)",
+          "Product preparation and verification",
+          "Administration (IV, intratumoral, intrathecal varies)",
+          "Real-time monitoring for acute reactions",
+          "Post-administration observation",
+          "Documentation and lot tracking",
+          "Initial response assessment scheduling"
+        ],
+        stakeholders: ["Treatment Team", "Nursing", "Pharmacy", "Safety Monitor"],
+        criticalFactors: ["Administration route accuracy", "Acute reaction management", "Product integrity"],
+        icon: "Syringe",
+        ecosystemConnections: ["Treatment Centers", "3PL Logistics", "Manufacturer"],
+        hubServices: ["Administration confirmation", "Safety monitoring", "Documentation"],
+        distributionRole: "Platform-specific delivery requirements"
+      },
+      {
+        id: "adv-4",
+        name: "Post-Administration Monitoring",
+        phase: "post-infusion",
+        duration: "4-12 weeks",
+        leadTime: "Day +1 to Week +12",
+        activities: [
+          "Platform-specific toxicity monitoring",
+          "Immune-related adverse event assessment",
+          "Efficacy biomarker tracking",
+          "Imaging response assessment",
+          "Supportive care management",
+          "Quality of life evaluation",
+          "Next treatment cycle planning if applicable"
+        ],
+        stakeholders: ["Treatment Team", "Lab", "Radiology", "Hub Services"],
+        criticalFactors: ["Delayed immune reactions", "Efficacy signals", "Cumulative toxicity"],
+        icon: "Activity",
+        ecosystemConnections: ["Treatment Centers", "Specialty Pharmacy", "Hub Services"],
+        hubServices: ["Toxicity monitoring", "Response tracking", "Care coordination"],
+        distributionRole: "Specialty pharmacy for supportive medications"
+      },
+      {
+        id: "adv-5",
+        name: "Long-term Follow-up & Maintenance",
+        phase: "post-infusion",
+        duration: "Years (platform-dependent)",
+        leadTime: "Month 3 onwards",
+        activities: [
+          "Response durability assessment",
+          "Long-term safety monitoring",
+          "Maintenance therapy if indicated",
+          "Registry participation and data submission",
+          "Secondary malignancy screening",
+          "Quality of life tracking",
+          "Platform-specific long-term protocols"
+        ],
+        stakeholders: ["Specialist", "Primary Care", "Registry", "Hub Services"],
+        criticalFactors: ["Response durability", "Late-onset toxicities", "Registry compliance"],
+        icon: "Calendar",
+        ecosystemConnections: ["Treatment Centers", "Hub Services", "Registry", "Primary Care"],
+        hubServices: ["Long-term coordination", "Registry management", "Care transitions"],
+        distributionRole: "Ongoing supportive care medications"
+      }
+    ]
+  },
+  {
+    modality: "Personalized Medicine",
+    orderModel: {
+      type: '1:1',
+      description: "Individualized therapies based on patient's specific genetic, molecular, and biomarker profile",
+      leadTime: "2-6 weeks from profiling to treatment initiation",
+      characteristics: ["Comprehensive molecular profiling", "Biomarker-driven selection", "Targeted therapy matching", "Adaptive treatment protocols"]
+    },
+    totalLeadTime: "4-10 weeks from initial assessment to optimized treatment",
+    stages: [
+      {
+        id: "pm-1",
+        name: "Comprehensive Molecular Profiling",
+        phase: "pre-infusion",
+        duration: "2-3 weeks",
+        leadTime: "Day 0-21",
+        activities: [
+          "Tumor tissue acquisition (biopsy or archived sample)",
+          "Next-generation sequencing (NGS) panel testing",
+          "Whole exome/genome sequencing if indicated",
+          "RNA expression profiling",
+          "Liquid biopsy (ctDNA analysis)",
+          "Pharmacogenomic testing",
+          "Germline genetic testing if applicable"
+        ],
+        stakeholders: ["Oncologist", "Molecular Pathologist", "Genetic Counselor", "Lab Services"],
+        criticalFactors: ["Sample quality", "Turnaround time", "Panel comprehensiveness", "Insurance coverage"],
+        icon: "Dna",
+        ecosystemConnections: ["Diagnostic Labs", "Treatment Centers", "Hub Services"],
+        hubServices: ["Test ordering coordination", "Insurance authorization", "Results tracking"],
+        distributionRole: "Sample logistics to specialized genomics laboratories"
+      },
+      {
+        id: "pm-2",
+        name: "Molecular Tumor Board & Treatment Selection",
+        phase: "pre-infusion",
+        duration: "1-2 weeks",
+        leadTime: "Day 21-35",
+        activities: [
+          "Molecular tumor board case presentation",
+          "Actionable mutation identification",
+          "Targeted therapy matching (approved or trial)",
+          "Clinical trial eligibility assessment",
+          "Treatment prioritization and sequencing",
+          "Patient counseling on personalized options",
+          "Treatment decision documentation"
+        ],
+        stakeholders: ["Molecular Tumor Board", "Medical Oncologist", "Clinical Trialist", "Pharmacist", "Genetic Counselor"],
+        criticalFactors: ["Actionable findings", "Drug availability", "Trial access", "Patient preference"],
+        icon: "Target",
+        ecosystemConnections: ["Treatment Centers", "Clinical Trials", "Pharma"],
+        hubServices: ["Trial matching", "Drug access programs", "Prior authorization"],
+        distributionRole: "N/A - decision phase"
+      },
+      {
+        id: "pm-3",
+        name: "Personalized Treatment Initiation",
+        phase: "infusion",
+        duration: "1-7 days (varies by therapy)",
+        leadTime: "Treatment Day 0",
+        activities: [
+          "Baseline assessments and organ function",
+          "Targeted therapy initiation (oral or IV)",
+          "Dose adjustment based on pharmacogenomics",
+          "Drug-drug interaction review",
+          "Patient education on therapy management",
+          "Monitoring plan establishment",
+          "Response assessment scheduling"
+        ],
+        stakeholders: ["Oncologist", "Pharmacist", "Nursing", "Patient Navigator"],
+        criticalFactors: ["Correct drug selection", "Appropriate dosing", "Interaction management"],
+        icon: "Pill",
+        ecosystemConnections: ["Treatment Centers", "Specialty Pharmacy", "Hub Services"],
+        hubServices: ["Drug delivery coordination", "Copay assistance", "Adherence support"],
+        distributionRole: "Specialty pharmacy: targeted therapy delivery (oral or IV)"
+      },
+      {
+        id: "pm-4",
+        name: "Response Monitoring & Adaptation",
+        phase: "post-infusion",
+        duration: "Ongoing (q4-12 weeks)",
+        leadTime: "Week 4 onwards",
+        activities: [
+          "Response imaging (CT, PET, MRI as appropriate)",
+          "Circulating tumor DNA (ctDNA) monitoring",
+          "Toxicity assessment and management",
+          "Dose modifications based on tolerance",
+          "Resistance mechanism evaluation if progression",
+          "Re-biopsy consideration for molecular evolution",
+          "Treatment adaptation based on response"
+        ],
+        stakeholders: ["Oncologist", "Radiologist", "Molecular Lab", "Hub Services"],
+        criticalFactors: ["Response assessment accuracy", "Resistance detection", "Treatment adaptation timing"],
+        icon: "Activity",
+        ecosystemConnections: ["Treatment Centers", "Diagnostic Labs", "Hub Services"],
+        hubServices: ["Response tracking", "Re-authorization", "Therapy adjustment coordination"],
+        distributionRole: "Ongoing specialty pharmacy support"
+      },
+      {
+        id: "pm-5",
+        name: "Long-term Management & Genomic Reassessment",
+        phase: "post-infusion",
+        duration: "Years",
+        leadTime: "Ongoing",
+        activities: [
+          "Continued targeted therapy or maintenance",
+          "Serial molecular monitoring for evolution",
+          "Clinical trial consideration for novel targets",
+          "Germline implications follow-up",
+          "Family cascade testing coordination",
+          "Long-term survivorship planning",
+          "Registry and real-world data contribution"
+        ],
+        stakeholders: ["Oncologist", "Genetic Counselor", "Primary Care", "Registry"],
+        criticalFactors: ["Molecular evolution tracking", "Novel target emergence", "Long-term toxicity"],
+        icon: "Calendar",
+        ecosystemConnections: ["Treatment Centers", "Genomics Labs", "Clinical Trials", "Primary Care"],
+        hubServices: ["Longitudinal care coordination", "Trial matching", "Family support"],
+        distributionRole: "Ongoing targeted therapy supply"
+      }
+    ]
   }
 ];
 
