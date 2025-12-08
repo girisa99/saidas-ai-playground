@@ -3,6 +3,7 @@ import { CellGeneHero } from "@/components/cellgene/CellGeneHero";
 import { TherapyCarousel } from "@/components/cellgene/TherapyCarousel";
 import { TherapeuticComparisonSection } from "@/components/cellgene/TherapeuticComparisonSection";
 import { PatientJourneyDiagram } from "@/components/cellgene/PatientJourneyDiagram";
+import { TreatmentCenterSection } from "@/components/cellgene/TreatmentCenterSection";
 import { Footer } from "@/components/Footer";
 
 const CellGene = () => {
@@ -13,6 +14,7 @@ const CellGene = () => {
       <TherapyCarousel />
       <TherapeuticComparisonSection />
       <PatientJourneyDiagram />
+      <TreatmentCenterSection />
       <Footer />
     </div>
   );
