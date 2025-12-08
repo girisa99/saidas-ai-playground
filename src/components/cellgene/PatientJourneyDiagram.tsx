@@ -348,10 +348,10 @@ export const PatientJourneyDiagram = () => {
         </motion.div>
 
         <Tabs value={activeModality} onValueChange={setActiveModality} className="w-full">
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 mb-8">
+          <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-2 md:grid-cols-5 mb-8 h-auto">
             {patientJourneyStages.map((flow) => (
-              <TabsTrigger key={flow.modality} value={flow.modality} className="text-xs md:text-sm">
-                {flow.modality.replace(" Therapy", "").replace(" Cell", "")}
+              <TabsTrigger key={flow.modality} value={flow.modality} className="text-xs md:text-sm py-2">
+                {flow.modality.replace(" Therapy", "").replace(" Cell", "").replace(" Medicine", "")}
               </TabsTrigger>
             ))}
           </TabsList>

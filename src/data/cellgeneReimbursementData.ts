@@ -745,6 +745,405 @@ export const modalityReimbursementData: ModalityReimbursement[] = [
       "Manufacturing capacity expansion underway",
       "Earlier line therapy positioning increasing utilization"
     ]
+  },
+  {
+    modality: "Advanced Therapies",
+    averageCost: "$50,000 - $500,000 (varies by platform and indication)",
+    pricingModels: {
+      wac: {
+        type: "WAC",
+        description: "Advanced therapies WAC varies widely: mRNA vaccines $100-500/dose, exosome therapies $50K-200K, combination immunotherapies $100K-500K",
+        pros: [
+          "Emerging platform technologies",
+          "Potential for scalable manufacturing",
+          "Multiple administration routes"
+        ],
+        cons: [
+          "Limited long-term outcomes data",
+          "Evolving regulatory landscape",
+          "Variable manufacturing costs"
+        ],
+        eligibility: "All purchasers/payers",
+        trends: [
+          "Rapid platform development post-COVID",
+          "Increased investment in manufacturing",
+          "Combination approaches growing",
+          "Real-world evidence requirements"
+        ],
+        supportedCenters: ["Academic medical centers", "Specialized treatment facilities"],
+        reference: "https://www.nature.com/articles/s41587-023-01664-0"
+      },
+      pap: {
+        type: "PAP",
+        description: "Manufacturer assistance programs for novel advanced therapies - availability varies by product maturity",
+        pros: [
+          "Coverage for eligible patients",
+          "Often includes clinical trial access",
+          "Comprehensive support services"
+        ],
+        cons: [
+          "Limited program availability for newer platforms",
+          "Strict eligibility criteria",
+          "May require trial participation"
+        ],
+        eligibility: "Income criteria, medical eligibility, often clinical trial enrollment",
+        trends: [
+          "Expanded access programs increasing",
+          "Compassionate use pathways",
+          "Foundation partnerships growing"
+        ],
+        supportedCenters: ["Clinical trial sites", "Specialized centers"],
+        reference: "https://www.accessdata.fda.gov/scripts/cder/daf/"
+      },
+      "340b": {
+        type: "340B",
+        description: "340B eligibility varies by advanced therapy type and administration setting",
+        pros: [
+          "Significant savings when eligible",
+          "Supports safety-net providers",
+          "Enables access expansion"
+        ],
+        cons: [
+          "Complex eligibility determination",
+          "Site-of-care requirements",
+          "Manufacturer restrictions may apply"
+        ],
+        eligibility: "340B covered entities; eligibility varies by product",
+        trends: [
+          "Evolving interpretations for novel therapies",
+          "Policy discussions ongoing",
+          "Compliance requirements developing"
+        ],
+        supportedCenters: ["340B eligible hospitals", "Safety-net healthcare systems"],
+        reference: "https://www.hrsa.gov/opa"
+      }
+    },
+    manufacturerPrograms: [
+      {
+        manufacturer: "Moderna (mRNA Therapeutics)",
+        program: "Moderna Patient Support",
+        coverage: "Access programs for mRNA therapeutic candidates",
+        eligibility: "Clinical trial eligibility or expanded access criteria",
+        services: ["Clinical trial matching", "Access coordination", "Patient support"],
+        contact: "1-866-663-3762",
+        website: "https://www.modernatx.com/patients"
+      },
+      {
+        manufacturer: "BioNTech (mRNA/Immunotherapy)",
+        program: "BioNTech Access Programs",
+        coverage: "Support for mRNA-based therapeutic access",
+        eligibility: "Product-specific criteria",
+        services: ["Trial enrollment support", "Access programs", "Patient resources"],
+        contact: "Contact via website",
+        website: "https://www.biontech.com"
+      },
+      {
+        manufacturer: "Exosome Therapeutics Companies",
+        program: "Various emerging programs",
+        coverage: "Clinical trial access primarily",
+        eligibility: "Trial-specific criteria",
+        services: ["Trial matching", "Compassionate use", "Patient navigation"],
+        contact: "Company-specific",
+        website: "https://clinicaltrials.gov"
+      }
+    ],
+    copayPrograms: [
+      {
+        name: "CancerCare Financial Assistance",
+        sponsor: "CancerCare",
+        maxBenefit: "Variable grants for cancer treatment costs",
+        eligibility: "Cancer diagnosis, income criteria",
+        enrollment: "https://www.cancercare.org",
+        website: "https://www.cancercare.org/financial_assistance"
+      },
+      {
+        name: "HealthWell Foundation",
+        sponsor: "Independent Foundation",
+        maxBenefit: "Disease-specific funds available",
+        eligibility: "<500% FPL, specific diagnosis",
+        enrollment: "https://www.healthwellfoundation.org",
+        website: "https://www.healthwellfoundation.org"
+      }
+    ],
+    alternativeFunding: [
+      {
+        source: "Clinical Trial Access",
+        type: "Research participation",
+        description: "Many advanced therapies available through clinical trials with treatment costs covered",
+        coverage: "Product and protocol-related costs",
+        eligibility: "Meet trial inclusion criteria",
+        website: "https://clinicaltrials.gov"
+      },
+      {
+        source: "Expanded Access/Compassionate Use",
+        type: "FDA regulatory pathway",
+        description: "Pre-approval access for serious conditions when no alternatives exist",
+        coverage: "Product provided; may have associated costs",
+        eligibility: "Serious condition, no alternatives, physician request",
+        website: "https://www.fda.gov/news-events/expanded-access"
+      },
+      {
+        source: "Right to Try",
+        type: "Federal law pathway",
+        description: "Access to investigational drugs for terminally ill patients",
+        coverage: "Manufacturer-dependent",
+        eligibility: "Terminal diagnosis, exhausted approved options",
+        website: "https://www.fda.gov/patients/learn-about-expanded-access-and-other-treatment-options/right-try"
+      }
+    ],
+    travelSupport: [
+      {
+        program: "Clinical Trial Travel Support",
+        sponsor: "Various (trial-specific)",
+        coverage: ["Travel to trial sites", "Lodging assistance", "Meal per diem"],
+        eligibility: "Trial participants",
+        services: ["Trial visit coordination", "Travel reimbursement"],
+        website: "https://clinicaltrials.gov"
+      },
+      {
+        program: "American Cancer Society Hope Lodge",
+        sponsor: "ACS",
+        coverage: ["Free lodging near treatment centers"],
+        eligibility: "Cancer patients traveling for treatment",
+        services: ["Housing", "Transportation assistance"],
+        website: "https://www.cancer.org/support-programs-and-services/patient-lodging/hope-lodge.html"
+      }
+    ],
+    insuranceConsiderations: [
+      "Coverage varies significantly by therapy type and indication",
+      "Many advanced therapies still in clinical development",
+      "Prior authorization requirements extensive",
+      "Medical necessity documentation critical",
+      "Appeals common for novel therapies",
+      "Commercial coverage improving as evidence accumulates",
+      "Medicare coverage decisions pending for many platforms"
+    ],
+    reimbursementChallenges: [
+      "Limited established billing codes for novel platforms",
+      "Evolving regulatory and coverage landscape",
+      "Long-term outcomes data still accumulating",
+      "Manufacturing scalability affecting pricing",
+      "Site-of-care limitations for specialized administration"
+    ],
+    reimbursementTrends: [
+      "Accelerated approval pathways increasing access",
+      "Real-world evidence requirements growing",
+      "Value-based contracting discussions emerging",
+      "Platform-agnostic coverage policies developing",
+      "International collaboration on pricing frameworks"
+    ]
+  },
+  {
+    modality: "Personalized Medicine",
+    averageCost: "$5,000 - $50,000+ for genomic testing; $10,000 - $300,000/year for targeted therapies",
+    pricingModels: {
+      wac: {
+        type: "WAC",
+        description: "Targeted therapy WAC varies: oral TKIs $10K-20K/month, immunotherapies $15K-30K/dose, ADCs $20K-40K/dose",
+        pros: [
+          "Precision targeting improves outcomes",
+          "Biomarker-driven patient selection",
+          "Growing evidence base"
+        ],
+        cons: [
+          "Chronic therapy costs accumulate",
+          "Companion diagnostic costs",
+          "Resistance development requires adaptation"
+        ],
+        eligibility: "All purchasers/payers",
+        trends: [
+          "Biomarker-based coverage policies",
+          "Companion diagnostic requirements",
+          "Value-based pricing discussions",
+          "Real-world outcomes tracking"
+        ],
+        supportedCenters: ["All oncology treatment centers"],
+        reference: "https://www.personalizedmedicinecoalition.org/"
+      },
+      pap: {
+        type: "PAP",
+        description: "Extensive manufacturer PAPs for targeted therapies - most major oncology drugs have programs",
+        pros: [
+          "Broad availability across targeted agents",
+          "Often includes genomic testing coverage",
+          "Ongoing monthly support"
+        ],
+        cons: [
+          "Income restrictions apply",
+          "Cannot use with government insurance",
+          "Requires ongoing eligibility verification"
+        ],
+        eligibility: "<400% FPL typically, meet medical criteria",
+        trends: [
+          "Comprehensive hub programs",
+          "Digital enrollment options",
+          "Integrated testing and treatment support"
+        ],
+        supportedCenters: ["All participating treatment centers"],
+        reference: "https://www.needymeds.org/"
+      },
+      "340b": {
+        type: "340B",
+        description: "340B pricing available for most targeted oral and IV therapies at covered entities",
+        pros: [
+          "Significant ongoing cost savings",
+          "Supports chronic therapy affordability",
+          "Available for both oral and IV therapies"
+        ],
+        cons: [
+          "Must fill through 340B entity pharmacy",
+          "Contract pharmacy restrictions increasing",
+          "Compliance complexity"
+        ],
+        eligibility: "340B covered entities with appropriate pharmacy arrangements",
+        trends: [
+          "Oral oncology 340B utilization growing",
+          "Contract pharmacy litigation ongoing",
+          "Manufacturer restrictions expanding"
+        ],
+        supportedCenters: ["340B hospitals", "Safety-net oncology programs", "FQHC oncology"],
+        reference: "https://www.hrsa.gov/opa"
+      }
+    },
+    manufacturerPrograms: [
+      {
+        manufacturer: "Foundation Medicine/Roche",
+        program: "FoundationOne Patient Support",
+        coverage: "Genomic testing coverage, prior authorization support",
+        eligibility: "Cancer diagnosis, insurance criteria",
+        services: ["Test coverage assistance", "PA support", "Financial assistance"],
+        contact: "1-888-988-3639",
+        website: "https://www.foundationmedicine.com/patient-portal"
+      },
+      {
+        manufacturer: "Pfizer (Multiple targeted agents)",
+        program: "Pfizer Oncology Together",
+        coverage: "Copay assistance, PAP for targeted therapies",
+        eligibility: "Product-specific criteria",
+        services: ["Benefits verification", "Copay cards", "Patient assistance", "Nurse support"],
+        contact: "1-877-744-5675",
+        website: "https://www.pfizeroncologytogether.com/"
+      },
+      {
+        manufacturer: "AstraZeneca (Tagrisso, Lynparza, etc.)",
+        program: "AZ&Me Prescription Savings",
+        coverage: "Free medication for eligible patients",
+        eligibility: "Income criteria, US resident",
+        services: ["PAP enrollment", "Copay assistance", "Patient support"],
+        contact: "1-800-292-6363",
+        website: "https://www.azandmeapp.com/"
+      },
+      {
+        manufacturer: "Bristol Myers Squibb (Opdivo, etc.)",
+        program: "BMS Access Support",
+        coverage: "PAP, copay support, treatment coordination",
+        eligibility: "Product and income criteria",
+        services: ["Benefits investigation", "Financial assistance", "Care coordination"],
+        contact: "1-800-861-0048",
+        website: "https://www.bmsaccesssupport.com/"
+      }
+    ],
+    copayPrograms: [
+      {
+        name: "PAN Foundation Precision Medicine Fund",
+        sponsor: "PAN Foundation",
+        maxBenefit: "Variable based on fund availability",
+        eligibility: "<400% FPL, specific cancer types",
+        enrollment: "https://www.panfoundation.org",
+        website: "https://www.panfoundation.org"
+      },
+      {
+        name: "LLS Co-Pay Assistance Program",
+        sponsor: "Leukemia & Lymphoma Society",
+        maxBenefit: "Up to $10,000/year",
+        eligibility: "Blood cancer diagnosis, income criteria",
+        enrollment: "https://www.lls.org",
+        website: "https://www.lls.org/support-resources/financial-support"
+      },
+      {
+        name: "Good Days Foundation",
+        sponsor: "Independent Foundation",
+        maxBenefit: "Copay and premium assistance",
+        eligibility: "Diagnosis and income criteria",
+        enrollment: "https://www.mygooddays.org",
+        website: "https://www.mygooddays.org"
+      },
+      {
+        name: "Patient Advocate Foundation Co-Pay Relief",
+        sponsor: "PAF",
+        maxBenefit: "Disease-specific funds",
+        eligibility: "Income criteria and diagnosis",
+        enrollment: "https://www.copays.org",
+        website: "https://www.copays.org"
+      }
+    ],
+    alternativeFunding: [
+      {
+        source: "Genomic Testing Assistance Programs",
+        type: "Manufacturer programs",
+        description: "Coverage for NGS and companion diagnostic testing when insurance denies",
+        coverage: "Full or reduced cost testing",
+        eligibility: "Insurance denial or uninsured",
+        website: "https://www.foundationmedicine.com/patient-portal"
+      },
+      {
+        source: "Clinical Trial Access",
+        type: "Research participation",
+        description: "Access to novel targeted agents through clinical trials",
+        coverage: "Drug and protocol costs covered",
+        eligibility: "Actionable mutation, meet trial criteria",
+        website: "https://clinicaltrials.gov"
+      },
+      {
+        source: "Manufacturer Compassionate Use",
+        type: "Pre-approval access",
+        description: "Access to targeted therapies not yet approved for specific mutations",
+        coverage: "Drug provided by manufacturer",
+        eligibility: "No approved options, physician request",
+        website: "https://www.fda.gov/news-events/expanded-access"
+      }
+    ],
+    travelSupport: [
+      {
+        program: "Manufacturer Travel Programs",
+        sponsor: "Various (drug-specific)",
+        coverage: ["Travel to treatment centers", "Lodging", "Meal allowance"],
+        eligibility: "Patients on specific targeted therapies",
+        services: ["Travel booking", "Reimbursement processing"],
+        website: "Check specific drug support programs"
+      },
+      {
+        program: "CancerCare Transportation Assistance",
+        sponsor: "CancerCare",
+        coverage: ["Local transportation", "Travel costs for treatment"],
+        eligibility: "Cancer diagnosis",
+        services: ["Financial grants", "Resource navigation"],
+        website: "https://www.cancercare.org/financial_assistance"
+      }
+    ],
+    insuranceConsiderations: [
+      "NGS testing coverage varies by payer and indication",
+      "Companion diagnostic coverage required for many targeted therapies",
+      "Prior authorization required for most targeted agents",
+      "Step therapy requirements common for oral TKIs",
+      "Medicare covers NGS for advanced cancer (LCD)",
+      "Commercial plans increasingly covering broad genomic testing",
+      "Specialty pharmacy required for oral oncology agents"
+    ],
+    reimbursementChallenges: [
+      "Genomic testing coverage inconsistent",
+      "Prior authorization delays can impact care",
+      "Accumulating costs of chronic oral therapies",
+      "Frequent therapy changes due to resistance",
+      "Off-label use coverage challenges"
+    ],
+    reimbursementTrends: [
+      "Expanded NGS coverage policies",
+      "Tumor-agnostic approvals changing landscape",
+      "Liquid biopsy coverage improving",
+      "Value-based arrangements for chronic therapies",
+      "Digital tools for PA automation"
+    ]
   }
 ];
 
