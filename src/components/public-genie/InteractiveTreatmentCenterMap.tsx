@@ -108,6 +108,73 @@ const MANUFACTURER_PROGRAMS: Record<string, { name: string; programs: { name: st
       { name: 'Zynteglo & Skysona Support', description: 'Gene therapy patient programs', benefits: ['Comprehensive travel support', 'Extended stay assistance', 'Caregiver support'], contact: '1-833-999-6378' },
     ]
   },
+  'Regeneron': {
+    name: 'Regeneron',
+    programs: [
+      { name: 'Regeneron Patient Assistance', description: 'Comprehensive patient support programs', benefits: ['Copay assistance', 'Free medication programs', 'Insurance support'], contact: '1-844-734-6643', url: 'https://www.regeneron.com/patients' },
+      { name: 'Regeneron Clinical Trials', description: 'Access to investigational treatments', benefits: ['Clinical trial enrollment', 'Travel support for trials', 'Study coordinator support'], contact: '1-844-734-6643' },
+    ]
+  },
+  'Orca Bio': {
+    name: 'Orca Bio',
+    programs: [
+      { name: 'Orca Bio Patient Support', description: 'High-precision cell therapy support', benefits: ['Treatment coordination', 'Travel assistance', 'Caregiver support'], contact: '1-650-289-4450', url: 'https://www.orcabio.com' },
+    ]
+  },
+  'Cabaletta Bio': {
+    name: 'Cabaletta Bio',
+    programs: [
+      { name: 'CABA Patient Support', description: 'Autoimmune CAR-T therapy support', benefits: ['Clinical trial access', 'Travel coordination', 'Case management'], contact: '1-215-966-6259', url: 'https://www.cabalettabio.com' },
+    ]
+  },
+  'Sarepta Therapeutics': {
+    name: 'Sarepta Therapeutics',
+    programs: [
+      { name: 'SareptAssist', description: 'Gene therapy patient support for DMD', benefits: ['Treatment coordination', 'Insurance navigation', 'Copay assistance', 'Travel support'], contact: '1-888-727-3782', url: 'https://www.sarepta.com/patients' },
+    ]
+  },
+  'Vertex Pharmaceuticals': {
+    name: 'Vertex Pharmaceuticals',
+    programs: [
+      { name: 'Vertex GPS (Guidance & Patient Support)', description: 'Comprehensive patient services', benefits: ['Financial assistance', 'Insurance support', 'Treatment coordination'], contact: '1-877-752-5933', url: 'https://www.vrtx.com/patients' },
+    ]
+  },
+  'CRISPR Therapeutics': {
+    name: 'CRISPR Therapeutics',
+    programs: [
+      { name: 'Casgevy Patient Support', description: 'Gene editing therapy support', benefits: ['Treatment center coordination', 'Travel assistance', 'Financial counseling'], contact: '1-877-CASGEVY', url: 'https://www.crisprtx.com' },
+    ]
+  },
+  'Iovance Biotherapeutics': {
+    name: 'Iovance Biotherapeutics',
+    programs: [
+      { name: 'Amtagvi Patient Support', description: 'TIL therapy patient assistance', benefits: ['Treatment coordination', 'Travel support', 'Case management'], contact: '1-844-468-2623', url: 'https://www.iovance.com' },
+    ]
+  },
+  'Legend Biotech': {
+    name: 'Legend Biotech',
+    programs: [
+      { name: 'Legend Patient Support', description: 'Carvykti patient assistance (with J&J)', benefits: ['Travel assistance', 'Lodging support', 'Caregiver resources'], contact: '1-844-CARVYKTI', url: 'https://www.legendbiotech.com' },
+    ]
+  },
+  'Allogene Therapeutics': {
+    name: 'Allogene Therapeutics',
+    programs: [
+      { name: 'Allogene Clinical Access', description: 'Allogeneic CAR-T clinical trial support', benefits: ['Trial enrollment assistance', 'Travel coordination', 'Patient education'], contact: '1-650-457-2700', url: 'https://www.allogene.com' },
+    ]
+  },
+  'BioMarin': {
+    name: 'BioMarin',
+    programs: [
+      { name: 'BioMarin RareConnections', description: 'Gene therapy and rare disease support', benefits: ['Treatment coordination', 'Financial assistance', 'Travel support'], contact: '1-866-906-6100', url: 'https://www.biomarin.com/patients' },
+    ]
+  },
+  'Ultragenyx': {
+    name: 'Ultragenyx',
+    programs: [
+      { name: 'Ultragenyx Patient Support', description: 'Rare disease therapy assistance', benefits: ['Insurance support', 'Copay assistance', 'Treatment coordination'], contact: '1-888-756-8657', url: 'https://www.ultragenyx.com/patients' },
+    ]
+  },
 };
 
 // Cross-Border Treatment Information

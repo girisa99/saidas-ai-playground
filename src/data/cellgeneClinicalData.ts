@@ -466,6 +466,76 @@ export const cellTherapyManufacturers: Manufacturer[] = [
   },
   {
     id: "mfr-cell-008",
+    name: "Orca Bio",
+    type: "biotech",
+    headquarters: "Menlo Park, CA, USA",
+    specializations: ["High-Precision Cell Therapy", "Transplant"],
+    therapeuticAreas: ["Blood Cancers", "Transplant"],
+    website: "https://www.orcabio.com",
+    clinicalTrials: 5
+  },
+  {
+    id: "mfr-cell-009",
+    name: "Cabaletta Bio",
+    type: "biotech",
+    headquarters: "Philadelphia, PA, USA",
+    specializations: ["Autoimmune CAR-T", "CAAR-T Technology"],
+    therapeuticAreas: ["Lupus", "Multiple Sclerosis", "Autoimmune"],
+    website: "https://www.cabalettabio.com",
+    clinicalTrials: 4
+  },
+  {
+    id: "mfr-cell-010",
+    name: "Regeneron",
+    type: "biotech",
+    headquarters: "Tarrytown, NY, USA",
+    specializations: ["Cell Therapy", "Gene Therapy", "Antibodies"],
+    therapeuticAreas: ["Oncology", "Ophthalmology", "Autoimmune"],
+    website: "https://www.regeneron.com",
+    clinicalTrials: 32
+  },
+  {
+    id: "mfr-cell-011",
+    name: "Poseida Therapeutics",
+    type: "biotech",
+    headquarters: "San Diego, CA, USA",
+    specializations: ["Allogeneic CAR-T", "Gene Editing"],
+    therapeuticAreas: ["Hematological Malignancies", "Solid Tumors"],
+    website: "https://www.poseida.com",
+    clinicalTrials: 8
+  },
+  {
+    id: "mfr-cell-012",
+    name: "Autolus Therapeutics",
+    type: "biotech",
+    headquarters: "London, UK",
+    specializations: ["Next-Gen CAR-T", "Programmable T-cells"],
+    therapeuticAreas: ["Leukemia", "Lymphoma"],
+    website: "https://www.autolus.com",
+    clinicalTrials: 8
+  },
+  {
+    id: "mfr-cell-013",
+    name: "Caribou Biosciences",
+    type: "biotech",
+    headquarters: "Berkeley, CA, USA",
+    specializations: ["Allogeneic CAR-T", "chRDNA Gene Editing"],
+    therapeuticAreas: ["Blood Cancers"],
+    website: "https://www.cariboubio.com",
+    clinicalTrials: 4
+  },
+  {
+    id: "mfr-cell-014",
+    name: "Compass Therapeutics",
+    type: "biotech",
+    headquarters: "Cambridge, MA, USA",
+    specializations: ["NK Cell Therapy", "Immuno-Oncology"],
+    therapeuticAreas: ["Solid Tumors", "Oncology"],
+    website: "https://www.compasstherapeutics.com",
+    clinicalTrials: 5
+  },
+  {
+    id: "mfr-cell-015",
     name: "IQVIA",
     type: "cro",
     headquarters: "Durham, NC, USA",
@@ -475,7 +545,7 @@ export const cellTherapyManufacturers: Manufacturer[] = [
     clinicalTrials: 200
   },
   {
-    id: "mfr-cell-009",
+    id: "mfr-cell-016",
     name: "PPD (Thermo Fisher)",
     type: "cro",
     headquarters: "Wilmington, NC, USA",
@@ -485,7 +555,7 @@ export const cellTherapyManufacturers: Manufacturer[] = [
     clinicalTrials: 150
   },
   {
-    id: "mfr-cell-010",
+    id: "mfr-cell-017",
     name: "MD Anderson Cancer Center",
     type: "research",
     headquarters: "Houston, TX, USA",
@@ -493,14 +563,46 @@ export const cellTherapyManufacturers: Manufacturer[] = [
     therapeuticAreas: ["Oncology"],
     website: "https://www.mdanderson.org",
     clinicalTrials: 85
+  },
+  {
+    id: "mfr-cell-018",
+    name: "Memorial Sloan Kettering",
+    type: "research",
+    headquarters: "New York, NY, USA",
+    specializations: ["CAR-T Development", "Oncology Research"],
+    therapeuticAreas: ["Cancer"],
+    website: "https://www.mskcc.org",
+    clinicalTrials: 75
+  },
+  {
+    id: "mfr-cell-019",
+    name: "Fred Hutchinson Cancer Center",
+    type: "research",
+    headquarters: "Seattle, WA, USA",
+    specializations: ["BMT", "CAR-T", "Immunotherapy"],
+    therapeuticAreas: ["Blood Cancers"],
+    website: "https://www.fredhutch.org",
+    clinicalTrials: 65
+  },
+  {
+    id: "mfr-cell-020",
+    name: "Lonza",
+    type: "biotech",
+    headquarters: "Basel, Switzerland",
+    specializations: ["Manufacturing", "Viral Vectors", "Cell Therapy CDMO"],
+    therapeuticAreas: ["Cell Therapy", "Gene Therapy"],
+    website: "https://www.lonza.com",
+    clinicalTrials: 0
   }
 ];
 
 export const cellTherapyExperimentationAreas: ExperimentationArea[] = [
-  { area: "Solid Tumor CAR-T", description: "Adapting CAR-T success from blood cancers to solid tumors", organizations: ["Novartis", "BMS", "Kite"], status: "Phase 1/2 Trials" },
-  { area: "Allogeneic (Off-the-Shelf)", description: "Creating universal donor cell therapies", organizations: ["Allogene", "CRISPR Therapeutics", "Caribou"], status: "Phase 1/2 Trials" },
-  { area: "iPSC-derived Cells", description: "Manufacturing cells from induced pluripotent stem cells", organizations: ["Fate Therapeutics", "Cynata"], status: "Phase 1 Trials" },
-  { area: "Autoimmune CAR-T", description: "Using CAR-T to reset immune system in autoimmune diseases", organizations: ["Cabaletta", "Kyverna"], status: "Phase 1/2 Trials" }
+  { area: "Solid Tumor CAR-T", description: "Adapting CAR-T success from blood cancers to solid tumors", organizations: ["Novartis", "BMS", "Kite", "Regeneron", "Autolus"], status: "Phase 1/2 Trials" },
+  { area: "Allogeneic (Off-the-Shelf)", description: "Creating universal donor cell therapies", organizations: ["Allogene", "CRISPR Therapeutics", "Caribou", "Poseida", "Orca Bio"], status: "Phase 1/2 Trials" },
+  { area: "iPSC-derived Cells", description: "Manufacturing cells from induced pluripotent stem cells", organizations: ["Fate Therapeutics", "Cynata", "Orca Bio"], status: "Phase 1 Trials" },
+  { area: "Autoimmune CAR-T", description: "Using CAR-T to reset immune system in autoimmune diseases", organizations: ["Cabaletta Bio", "Kyverna", "BMS", "Novartis"], status: "Phase 1/2 Trials" },
+  { area: "NK Cell Therapy", description: "Natural killer cell-based immunotherapy", organizations: ["Fate Therapeutics", "Compass Therapeutics", "Nkarta"], status: "Phase 1/2 Trials" },
+  { area: "TIL Therapy Expansion", description: "Expanding TIL therapy beyond melanoma", organizations: ["Iovance", "BMS", "Instil Bio"], status: "Phase 1/2 Trials" }
 ];
 
 // ==================== GENE THERAPY DATA ====================
