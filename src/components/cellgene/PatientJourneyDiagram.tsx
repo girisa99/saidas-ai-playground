@@ -9,7 +9,8 @@ import {
   Search, Stethoscope, Droplets, Factory, Activity, Pill, Syringe, 
   HeartPulse, Home, Calendar, Dna, ClipboardList, Target, TestTube,
   Radiation, RefreshCw, ArrowRight, Users, Clock, AlertCircle,
-  ChevronDown, ChevronUp, Workflow
+  ChevronDown, ChevronUp, Workflow, Truck, Building2, HeartHandshake,
+  ExternalLink, Network, Timer
 } from "lucide-react";
 import { patientJourneyStages, ProcessFlow, JourneyStage } from "@/data/cellgeneTherapeuticComparison";
 
@@ -58,7 +59,7 @@ const StageCard = ({ stage, index, isLast }: StageCardProps) => {
       )}
 
       <Card 
-        className={`w-64 md:w-72 flex-shrink-0 border ${phaseBgColors[stage.phase]} backdrop-blur-sm hover:shadow-lg transition-all cursor-pointer group`}
+        className={`w-72 md:w-80 flex-shrink-0 border ${phaseBgColors[stage.phase]} backdrop-blur-sm hover:shadow-lg transition-all cursor-pointer group`}
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <CardHeader className="pb-2 pt-4">
@@ -66,10 +67,18 @@ const StageCard = ({ stage, index, isLast }: StageCardProps) => {
             <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${phaseColors[stage.phase]} flex items-center justify-center shadow-lg`}>
               <Icon className="w-5 h-5 text-white" />
             </div>
-            <Badge variant="outline" className="text-xs">
-              <Clock className="w-3 h-3 mr-1" />
-              {stage.duration}
-            </Badge>
+            <div className="flex flex-col items-end gap-1">
+              <Badge variant="outline" className="text-xs">
+                <Clock className="w-3 h-3 mr-1" />
+                {stage.duration}
+              </Badge>
+              {stage.leadTime && (
+                <Badge variant="secondary" className="text-xs bg-primary/10">
+                  <Timer className="w-3 h-3 mr-1" />
+                  {stage.leadTime}
+                </Badge>
+              )}
+            </div>
           </div>
           <div className="mt-3">
             <Badge 
@@ -139,6 +148,47 @@ const StageCard = ({ stage, index, isLast }: StageCardProps) => {
                     ))}
                   </ul>
                 </div>
+
+                {/* Hub Services */}
+                {stage.hubServices && stage.hubServices.length > 0 && (
+                  <div>
+                    <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1">
+                      <HeartHandshake className="w-3 h-3" /> Hub Services
+                    </h4>
+                    <ul className="space-y-1">
+                      {stage.hubServices.map((service, idx) => (
+                        <li key={idx} className="text-xs text-muted-foreground flex items-start gap-1.5">
+                          <span className="w-1 h-1 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                          {service}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Distribution Role */}
+                {stage.distributionRole && (
+                  <div>
+                    <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1">
+                      <Truck className="w-3 h-3" /> Distribution
+                    </h4>
+                    <p className="text-xs text-muted-foreground">{stage.distributionRole}</p>
+                  </div>
+                )}
+
+                {/* Ecosystem Connections */}
+                {stage.ecosystemConnections && stage.ecosystemConnections.length > 0 && (
+                  <div>
+                    <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1">
+                      <Network className="w-3 h-3" /> Ecosystem
+                    </h4>
+                    <div className="flex flex-wrap gap-1">
+                      {stage.ecosystemConnections.map((conn, idx) => (
+                        <Badge key={idx} variant="secondary" className="text-xs">{conn}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
@@ -172,6 +222,38 @@ const ProcessFlowDiagram = ({ flow }: ProcessFlowDiagramProps) => {
 
   return (
     <div className="space-y-8">
+      {/* Order Model & Lead Time Summary */}
+      <Card className="border-primary/30 bg-primary/5 max-w-4xl mx-auto">
+        <CardContent className="py-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center">
+              <Badge variant="secondary" className="mb-2">{flow.orderModel.type}</Badge>
+              <p className="text-sm font-medium text-foreground">Order Model</p>
+              <p className="text-xs text-muted-foreground mt-1">{flow.orderModel.description}</p>
+            </div>
+            <div className="text-center">
+              <Badge variant="outline" className="mb-2">
+                <Clock className="w-3 h-3 mr-1" />
+                {flow.totalLeadTime}
+              </Badge>
+              <p className="text-sm font-medium text-foreground">Total Lead Time</p>
+              <p className="text-xs text-muted-foreground mt-1">From referral to treatment completion</p>
+            </div>
+            <div className="text-center">
+              <div className="flex flex-wrap gap-1 justify-center mb-2">
+                {flow.orderModel.characteristics.slice(0, 2).map((char, idx) => (
+                  <Badge key={idx} variant="outline" className="text-xs">{char}</Badge>
+                ))}
+              </div>
+              <p className="text-sm font-medium text-foreground">Key Characteristics</p>
+              {flow.orderModel.characteristics.length > 2 && (
+                <p className="text-xs text-muted-foreground mt-1">+{flow.orderModel.characteristics.length - 2} more</p>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Phase Legend */}
       <div className="flex flex-wrap justify-center gap-4">
         <div className="flex items-center gap-2">
@@ -255,8 +337,7 @@ export const PatientJourneyDiagram = () => {
           </h2>
           <p className="text-muted-foreground max-w-3xl mx-auto">
             Explore the detailed patient journey for each CGAT modality—from initial identification through 
-            long-term follow-up. Understanding these workflows is essential for treatment centers, manufacturers, 
-            and healthcare providers.
+            long-term follow-up. Each stage includes lead times, hub services integration, and ecosystem connections.
           </p>
         </motion.div>
 
@@ -264,7 +345,7 @@ export const PatientJourneyDiagram = () => {
           <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 mb-8">
             {patientJourneyStages.map((flow) => (
               <TabsTrigger key={flow.modality} value={flow.modality} className="text-xs md:text-sm">
-                {flow.modality.replace(" Therapy", "")}
+                {flow.modality.replace(" Therapy", "").replace(" Cell", "")}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -276,7 +357,7 @@ export const PatientJourneyDiagram = () => {
           ))}
         </Tabs>
 
-        {/* Pre/Infusion/Post Activities Summary */}
+        {/* Phase-Specific Considerations with Ecosystem Integration */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -284,7 +365,7 @@ export const PatientJourneyDiagram = () => {
           className="mt-12"
         >
           <h3 className="text-xl font-semibold text-foreground text-center mb-6">
-            Phase-Specific Considerations Across All Modalities
+            Phase-Specific Considerations & Ecosystem Integration
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Pre-Infusion */}
@@ -297,23 +378,44 @@ export const PatientJourneyDiagram = () => {
                   Pre-Infusion Phase
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <ul className="space-y-2">
-                  {[
-                    "Patient identification & eligibility screening",
-                    "Comprehensive health workup",
-                    "Cell collection (leukapheresis) if applicable",
-                    "Product manufacturing & QC",
-                    "Bridging therapy if needed",
-                    "Lymphodepletion conditioning",
-                    "Insurance & logistics coordination"
-                  ].map((item, idx) => (
-                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+              <CardContent className="space-y-4">
+                <div>
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">Activities</h4>
+                  <ul className="space-y-1">
+                    {[
+                      "Patient identification & eligibility screening",
+                      "Insurance pre-authorization & benefits verification",
+                      "Cell collection (leukapheresis) coordination",
+                      "Manufacturing slot scheduling",
+                      "Bridging therapy management",
+                      "Lymphodepletion conditioning"
+                    ].map((item, idx) => (
+                      <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-2 border-t border-blue-500/20">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
+                    <HeartHandshake className="w-3 h-3 inline mr-1" />
+                    Hub Services Role
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    <Badge variant="outline" className="text-xs">Benefits Verification</Badge>
+                    <Badge variant="outline" className="text-xs">Prior Auth</Badge>
+                    <Badge variant="outline" className="text-xs">Financial Assistance</Badge>
+                    <Badge variant="outline" className="text-xs">Slot Coordination</Badge>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-blue-500/20">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
+                    <Truck className="w-3 h-3 inline mr-1" />
+                    3PL/Distribution
+                  </h4>
+                  <p className="text-xs text-muted-foreground">Apheresis product pickup → cryogenic transport → manufacturing facility delivery</p>
+                </div>
               </CardContent>
             </Card>
 
@@ -327,23 +429,43 @@ export const PatientJourneyDiagram = () => {
                   Infusion Phase
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <ul className="space-y-2">
-                  {[
-                    "Product preparation & verification",
-                    "Pre-medication administration",
-                    "Cell/gene therapy infusion",
-                    "Real-time vital monitoring",
-                    "Immediate adverse event management",
-                    "Documentation & chain of custody",
-                    "Emergency response readiness"
-                  ].map((item, idx) => (
-                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+              <CardContent className="space-y-4">
+                <div>
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">Activities</h4>
+                  <ul className="space-y-1">
+                    {[
+                      "Product receipt & chain of custody verification",
+                      "Final patient assessment",
+                      "Pre-medication administration",
+                      "Cell/gene therapy infusion",
+                      "Real-time vital monitoring",
+                      "REMS documentation completion"
+                    ].map((item, idx) => (
+                      <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-2 border-t border-purple-500/20">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
+                    <HeartHandshake className="w-3 h-3 inline mr-1" />
+                    Hub Services Role
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    <Badge variant="outline" className="text-xs">Product Delivery Tracking</Badge>
+                    <Badge variant="outline" className="text-xs">REMS Compliance</Badge>
+                    <Badge variant="outline" className="text-xs">Infusion Confirmation</Badge>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-purple-500/20">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
+                    <Truck className="w-3 h-3 inline mr-1" />
+                    3PL/Distribution
+                  </h4>
+                  <p className="text-xs text-muted-foreground">Just-in-time cryogenic delivery → bedside thaw → lot number verification</p>
+                </div>
               </CardContent>
             </Card>
 
@@ -357,23 +479,44 @@ export const PatientJourneyDiagram = () => {
                   Post-Infusion Phase
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <ul className="space-y-2">
-                  {[
-                    "Acute toxicity monitoring (CRS, ICANS)",
-                    "Supportive care management",
-                    "Recovery & stabilization",
-                    "Response assessment",
-                    "Discharge planning",
-                    "Long-term follow-up (15 years)",
-                    "Registry participation & data collection"
-                  ].map((item, idx) => (
-                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+              <CardContent className="space-y-4">
+                <div>
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">Activities</h4>
+                  <ul className="space-y-1">
+                    {[
+                      "Acute toxicity monitoring (CRS, ICANS)",
+                      "Tocilizumab/steroid intervention if needed",
+                      "Recovery & stabilization",
+                      "Response assessment",
+                      "Discharge planning",
+                      "Long-term follow-up (15 years)"
+                    ].map((item, idx) => (
+                      <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-2 border-t border-green-500/20">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
+                    <HeartHandshake className="w-3 h-3 inline mr-1" />
+                    Hub Services Role
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    <Badge variant="outline" className="text-xs">Adverse Event Tracking</Badge>
+                    <Badge variant="outline" className="text-xs">IVIG Coordination</Badge>
+                    <Badge variant="outline" className="text-xs">Registry Compliance</Badge>
+                    <Badge variant="outline" className="text-xs">Long-term Follow-up</Badge>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-green-500/20">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-2">
+                    <Building2 className="w-3 h-3 inline mr-1" />
+                    Specialty Pharmacy
+                  </h4>
+                  <p className="text-xs text-muted-foreground">Tocilizumab access → IVIG replacement → supportive care medications</p>
+                </div>
               </CardContent>
             </Card>
           </div>
