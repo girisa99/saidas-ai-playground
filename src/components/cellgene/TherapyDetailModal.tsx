@@ -428,7 +428,7 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
                       FDA/EMA Approved Products
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      Commercial products with NDC codes, ICD codes, and manufacturer information.
+                      Commercial products with pricing (WAC, PAP, 340B), dosing, and manufacturer information.
                     </p>
                     <div className="grid gap-3">
                       {modalityData.commercialProducts.map((product: CommercialProduct, idx: number) => (
@@ -439,17 +439,41 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
                           transition={{ delay: idx * 0.05 }}
                           className="p-4 bg-muted/30 rounded-xl border border-border/50"
                         >
-                          <div className="flex justify-between items-start mb-2">
+                          <div className="flex justify-between items-start mb-3">
                             <div>
                               <h4 className="font-semibold text-foreground">{product.brandName}</h4>
                               <p className="text-xs text-muted-foreground">{product.genericName}</p>
                             </div>
-                            {product.price && (
-                              <Badge variant="outline" className="text-xs bg-primary/5">
-                                {product.price}
-                              </Badge>
-                            )}
+                            <Badge variant="outline" className="text-xs bg-primary/5">
+                              {product.pricing.wac}
+                            </Badge>
                           </div>
+                          
+                          {/* Dosing Information */}
+                          <div className="p-2 bg-accent/10 rounded-lg mb-3">
+                            <p className="text-xs font-medium text-foreground mb-1">Dosing & Administration</p>
+                            <div className="grid grid-cols-2 gap-1 text-xs text-muted-foreground">
+                              <span>• Doses: {product.dosing.numberOfDoses}</span>
+                              {product.dosing.interval && <span>• Interval: {product.dosing.interval}</span>}
+                              {product.dosing.leadTime && <span>• Lead Time: {product.dosing.leadTime}</span>}
+                              <span className="col-span-2">• {product.dosing.administration}</span>
+                              {product.dosing.specialNotes && (
+                                <span className="col-span-2 text-primary/80 italic">Note: {product.dosing.specialNotes}</span>
+                              )}
+                            </div>
+                          </div>
+                          
+                          {/* Pricing Breakdown */}
+                          <div className="p-2 bg-secondary/20 rounded-lg mb-3">
+                            <p className="text-xs font-medium text-foreground mb-1">Pricing Models (Approximate)</p>
+                            <div className="grid gap-1 text-xs text-muted-foreground">
+                              <div className="flex justify-between"><span>WAC:</span><span>{product.pricing.wac}</span></div>
+                              {product.pricing.b340 && <div className="flex justify-between"><span>340B:</span><span>{product.pricing.b340}</span></div>}
+                              {product.pricing.pap && <div className="flex justify-between"><span>PAP:</span><span className="text-right max-w-[200px]">{product.pricing.pap}</span></div>}
+                              {product.pricing.government && <div className="flex justify-between"><span>Government:</span><span>{product.pricing.government}</span></div>}
+                            </div>
+                          </div>
+
                           <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground mb-2">
                             <div className="flex items-center gap-1">
                               <Building2 className="w-3 h-3" />
@@ -487,6 +511,34 @@ export const TherapyDetailModal = ({ therapy, onClose }: TherapyDetailModalProps
                           </button>
                         </motion.div>
                       ))}
+                    </div>
+                    
+                    {/* Pricing Guide Section */}
+                    <div className="mt-6 p-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-xl border border-border">
+                      <h4 className="font-semibold text-foreground mb-3">Understanding WAC, PAP & 340B Pricing</h4>
+                      <div className="grid md:grid-cols-3 gap-3 text-xs">
+                        <div className="p-2 bg-background/50 rounded-lg">
+                          <p className="font-medium text-primary">WAC (Wholesale Acquisition Cost)</p>
+                          <p className="text-muted-foreground mt-1">Manufacturer list price before discounts. Highest price point, used as benchmark.</p>
+                          <p className="text-green-600 mt-1">✓ Transparent baseline</p>
+                          <p className="text-red-500">✗ Rarely reflects actual cost</p>
+                        </div>
+                        <div className="p-2 bg-background/50 rounded-lg">
+                          <p className="font-medium text-primary">340B Program</p>
+                          <p className="text-muted-foreground mt-1">Federal program providing 25-50% discounts to safety-net healthcare providers.</p>
+                          <p className="text-green-600 mt-1">✓ Supports treatment centers</p>
+                          <p className="text-red-500">✗ Complex compliance</p>
+                        </div>
+                        <div className="p-2 bg-background/50 rounded-lg">
+                          <p className="font-medium text-primary">PAP (Patient Assistance)</p>
+                          <p className="text-muted-foreground mt-1">Manufacturer programs offering free/reduced-cost medications to eligible patients.</p>
+                          <p className="text-green-600 mt-1">✓ Can cover 100% of cost</p>
+                          <p className="text-red-500">✗ Eligibility requirements</p>
+                        </div>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-3 italic">
+                        Industry Trend: Outcomes-based contracts are emerging for high-cost CGAT therapies, linking payment to clinical results.
+                      </p>
                     </div>
                   </div>
                 )}
