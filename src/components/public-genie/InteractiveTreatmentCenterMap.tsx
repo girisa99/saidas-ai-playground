@@ -13,20 +13,117 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Globe, Plane, Phone, ExternalLink, Heart, Building, DollarSign as Dollar } from 'lucide-react';
 
-// Countries for dropdown
+// Comprehensive Global Countries
 const COUNTRIES = [
-  { code: 'US', name: 'United States' },
-  { code: 'CA', name: 'Canada' },
-  { code: 'UK', name: 'United Kingdom' },
-  { code: 'DE', name: 'Germany' },
-  { code: 'FR', name: 'France' },
-  { code: 'IT', name: 'Italy' },
-  { code: 'ES', name: 'Spain' },
-  { code: 'AU', name: 'Australia' },
-  { code: 'JP', name: 'Japan' },
-  { code: 'OTHER', name: 'Other' },
+  // North America
+  { code: 'US', name: 'United States', region: 'North America' },
+  { code: 'CA', name: 'Canada', region: 'North America' },
+  { code: 'MX', name: 'Mexico', region: 'North America' },
+  // Europe
+  { code: 'UK', name: 'United Kingdom', region: 'Europe' },
+  { code: 'DE', name: 'Germany', region: 'Europe' },
+  { code: 'FR', name: 'France', region: 'Europe' },
+  { code: 'IT', name: 'Italy', region: 'Europe' },
+  { code: 'ES', name: 'Spain', region: 'Europe' },
+  { code: 'NL', name: 'Netherlands', region: 'Europe' },
+  { code: 'BE', name: 'Belgium', region: 'Europe' },
+  { code: 'CH', name: 'Switzerland', region: 'Europe' },
+  { code: 'AT', name: 'Austria', region: 'Europe' },
+  { code: 'SE', name: 'Sweden', region: 'Europe' },
+  { code: 'NO', name: 'Norway', region: 'Europe' },
+  { code: 'DK', name: 'Denmark', region: 'Europe' },
+  { code: 'FI', name: 'Finland', region: 'Europe' },
+  { code: 'IE', name: 'Ireland', region: 'Europe' },
+  { code: 'PL', name: 'Poland', region: 'Europe' },
+  { code: 'CZ', name: 'Czech Republic', region: 'Europe' },
+  { code: 'PT', name: 'Portugal', region: 'Europe' },
+  { code: 'GR', name: 'Greece', region: 'Europe' },
+  // Asia-Pacific
+  { code: 'JP', name: 'Japan', region: 'Asia-Pacific' },
+  { code: 'AU', name: 'Australia', region: 'Asia-Pacific' },
+  { code: 'NZ', name: 'New Zealand', region: 'Asia-Pacific' },
+  { code: 'SG', name: 'Singapore', region: 'Asia-Pacific' },
+  { code: 'KR', name: 'South Korea', region: 'Asia-Pacific' },
+  { code: 'CN', name: 'China', region: 'Asia-Pacific' },
+  { code: 'HK', name: 'Hong Kong', region: 'Asia-Pacific' },
+  { code: 'TW', name: 'Taiwan', region: 'Asia-Pacific' },
+  { code: 'IN', name: 'India', region: 'Asia-Pacific' },
+  { code: 'TH', name: 'Thailand', region: 'Asia-Pacific' },
+  { code: 'MY', name: 'Malaysia', region: 'Asia-Pacific' },
+  { code: 'PH', name: 'Philippines', region: 'Asia-Pacific' },
+  // Middle East
+  { code: 'IL', name: 'Israel', region: 'Middle East' },
+  { code: 'AE', name: 'United Arab Emirates', region: 'Middle East' },
+  { code: 'SA', name: 'Saudi Arabia', region: 'Middle East' },
+  { code: 'QA', name: 'Qatar', region: 'Middle East' },
+  { code: 'TR', name: 'Turkey', region: 'Middle East' },
+  // Latin America
+  { code: 'BR', name: 'Brazil', region: 'Latin America' },
+  { code: 'AR', name: 'Argentina', region: 'Latin America' },
+  { code: 'CL', name: 'Chile', region: 'Latin America' },
+  { code: 'CO', name: 'Colombia', region: 'Latin America' },
+  { code: 'PE', name: 'Peru', region: 'Latin America' },
+  // Africa
+  { code: 'ZA', name: 'South Africa', region: 'Africa' },
+  { code: 'EG', name: 'Egypt', region: 'Africa' },
 ];
+
+// Manufacturer Patient Support Programs
+const MANUFACTURER_PROGRAMS: Record<string, { name: string; programs: { name: string; description: string; benefits: string[]; contact: string; url?: string }[] }> = {
+  'Novartis': {
+    name: 'Novartis',
+    programs: [
+      { name: 'Kymriah CAR-T Patient Support', description: 'Comprehensive support for Kymriah patients', benefits: ['Travel assistance up to $10,000', 'Lodging support', 'Caregiver stipend', 'Financial counseling'], contact: '1-844-4KYMRIAH', url: 'https://www.novartis.com/patients' },
+      { name: 'Patient Assistance Foundation', description: 'Financial assistance for qualifying patients', benefits: ['Copay assistance', 'Free medication programs', 'Insurance navigation'], contact: '1-800-277-2254' },
+    ]
+  },
+  'Gilead': {
+    name: 'Gilead',
+    programs: [
+      { name: 'Yescarta & Tecartus Support', description: 'CAR-T therapy patient support', benefits: ['Travel & lodging up to $15,000', 'Caregiver support', 'Case management'], contact: '1-844-YESCARTA' },
+      { name: 'Advancing Access', description: 'Patient assistance program', benefits: ['Copay support', 'Insurance assistance', 'Free drug program'], contact: '1-800-226-2056' },
+    ]
+  },
+  'Bristol-Myers Squibb': {
+    name: 'Bristol-Myers Squibb',
+    programs: [
+      { name: 'Breyanzi & Abecma Support', description: 'Cell therapy patient programs', benefits: ['Travel reimbursement', 'Lodging assistance', 'Meal stipends'], contact: '1-800-721-8909' },
+      { name: 'BMS Access Support', description: 'Comprehensive patient support', benefits: ['Copay assistance', 'Insurance help', 'Financial guidance'], contact: '1-800-721-8909' },
+    ]
+  },
+  'Johnson & Johnson': {
+    name: 'Johnson & Johnson',
+    programs: [
+      { name: 'Carvykti Patient Support', description: 'BCMA CAR-T patient assistance', benefits: ['Travel coverage', 'Caregiver lodging', 'Living expenses'], contact: '1-844-CARVYKTI' },
+      { name: 'Janssen CarePath', description: 'Patient support program', benefits: ['Copay savings', 'Insurance navigation', 'Affordability solutions'], contact: '1-877-CarePath' },
+    ]
+  },
+  'bluebird bio': {
+    name: 'bluebird bio',
+    programs: [
+      { name: 'Zynteglo & Skysona Support', description: 'Gene therapy patient programs', benefits: ['Comprehensive travel support', 'Extended stay assistance', 'Caregiver support'], contact: '1-833-999-6378' },
+    ]
+  },
+};
+
+// Cross-Border Treatment Information
+const CROSS_BORDER_INFO = {
+  contacts: [
+    { region: 'North America', organization: 'International Patient Services', description: 'Cross-border treatment coordination US/Canada/Mexico', phone: '+1-800-555-0123', email: 'international@cgat-support.org' },
+    { region: 'Europe', organization: 'EU Cross-Border Healthcare', description: 'EU directive support for CGAT treatments', phone: '+32-2-555-0123', email: 'eucare@cgat-europe.org' },
+    { region: 'Asia-Pacific', organization: 'APAC Medical Tourism Council', description: 'Treatment center referrals across Asia-Pacific', phone: '+65-6555-0123', email: 'apac@cgat-asia.org' },
+    { region: 'Middle East', organization: 'Gulf Health Bridge', description: 'Medical treatment coordination for MENA region', phone: '+971-4-555-0123', email: 'gulf@cgat-mena.org' },
+  ],
+  considerations: [
+    { title: 'Insurance & Coverage', items: ['Pre-authorization requirements', 'Out-of-network coverage options', 'International insurance riders', 'Government reimbursement programs'] },
+    { title: 'Travel & Logistics', items: ['Medical visa requirements', 'Certified treatment center proximity', 'Caregiver accommodation needs', 'Post-treatment follow-up planning'] },
+    { title: 'Medical Coordination', items: ['Treatment records transfer', 'Local oncologist coordination', 'Language interpretation services', 'Emergency contact protocols'] },
+  ]
+};
 
 // US States for dropdown
 const US_STATES = [
@@ -731,24 +828,29 @@ export const InteractiveTreatmentCenterMap = ({
           <div className="p-4 bg-muted/30 rounded-lg border space-y-4">
             <div className="flex items-center justify-between">
               <Label className="font-semibold flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-primary" />
+                <Globe className="h-4 w-4 text-primary" />
                 Step 1: Select Location
               </Label>
               <Badge variant="outline" className="text-xs">Required</Badge>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-              {/* Country Dropdown */}
+              {/* Country Dropdown - Grouped by Region */}
               <div className="space-y-1">
                 <Label className="text-xs text-muted-foreground">Country</Label>
                 <Select value={selectedCountry} onValueChange={(v) => { setSelectedCountry(v); setSelectedState(''); }}>
                   <SelectTrigger className="bg-background">
                     <SelectValue placeholder="Select country" />
                   </SelectTrigger>
-                  <SelectContent className="bg-background z-50">
-                    {COUNTRIES.map(c => (
-                      <SelectItem key={c.code} value={c.code}>
-                        {c.name}
-                      </SelectItem>
+                  <SelectContent className="bg-background z-50 max-h-80">
+                    {['North America', 'Europe', 'Asia-Pacific', 'Middle East', 'Latin America', 'Africa'].map(region => (
+                      <div key={region}>
+                        <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground bg-muted/50">{region}</div>
+                        {COUNTRIES.filter(c => c.region === region).map(c => (
+                          <SelectItem key={c.code} value={c.code}>
+                            {c.name}
+                          </SelectItem>
+                        ))}
+                      </div>
                     ))}
                   </SelectContent>
                 </Select>
@@ -760,7 +862,7 @@ export const InteractiveTreatmentCenterMap = ({
                   {selectedCountry === 'CA' ? 'Province' : 'State/Region'}
                 </Label>
                 <Select 
-                  value={selectedState} 
+                  value={selectedState}
                   onValueChange={setSelectedState}
                   disabled={!['US', 'CA'].includes(selectedCountry)}
                 >
@@ -1109,6 +1211,133 @@ export const InteractiveTreatmentCenterMap = ({
               onClose={() => setSelectedCenter(null)} 
             />
           )}
+
+          {/* Cross-Border Support & Reimbursement Section */}
+          <Card className="mt-6 border-primary/20">
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <Plane className="h-5 w-5 text-primary" />
+                Cross-Border Treatment & Patient Support Programs
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Tabs defaultValue="programs" className="w-full">
+                <TabsList className="grid w-full grid-cols-3 mb-4">
+                  <TabsTrigger value="programs">Manufacturer Programs</TabsTrigger>
+                  <TabsTrigger value="crossborder">Cross-Border Support</TabsTrigger>
+                  <TabsTrigger value="considerations">Key Considerations</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="programs" className="space-y-4">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Major CGAT manufacturers offer comprehensive patient support programs including travel assistance, 
+                    lodging support, and financial assistance. Contact these programs for treatment availability in your region.
+                  </p>
+                  <Accordion type="single" collapsible className="w-full">
+                    {Object.entries(MANUFACTURER_PROGRAMS).map(([key, mfg]) => (
+                      <AccordionItem key={key} value={key}>
+                        <AccordionTrigger className="text-left">
+                          <div className="flex items-center gap-2">
+                            <Building className="h-4 w-4 text-primary" />
+                            {mfg.name}
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          <div className="space-y-4 pl-6">
+                            {mfg.programs.map((prog, idx) => (
+                              <div key={idx} className="p-3 bg-muted/30 rounded-lg space-y-2">
+                                <h4 className="font-medium">{prog.name}</h4>
+                                <p className="text-sm text-muted-foreground">{prog.description}</p>
+                                <div className="flex flex-wrap gap-1">
+                                  {prog.benefits.map((benefit, i) => (
+                                    <Badge key={i} variant="secondary" className="text-xs">{benefit}</Badge>
+                                  ))}
+                                </div>
+                                <div className="flex items-center gap-4 text-sm pt-2">
+                                  <span className="flex items-center gap-1">
+                                    <Phone className="h-3 w-3" /> {prog.contact}
+                                  </span>
+                                  {prog.url && (
+                                    <a href={prog.url} target="_blank" rel="noopener noreferrer" 
+                                       className="flex items-center gap-1 text-primary hover:underline">
+                                      <ExternalLink className="h-3 w-3" /> Website
+                                    </a>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </TabsContent>
+
+                <TabsContent value="crossborder" className="space-y-4">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    If CGAT treatments are not available in your country, these organizations can help coordinate 
+                    cross-border treatment options and navigate international healthcare requirements.
+                  </p>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    {CROSS_BORDER_INFO.contacts.map((contact, idx) => (
+                      <Card key={idx} className="p-4 bg-muted/20">
+                        <div className="flex items-start gap-3">
+                          <div className="p-2 rounded-lg bg-primary/10">
+                            <Globe className="h-4 w-4 text-primary" />
+                          </div>
+                          <div className="flex-1 space-y-1">
+                            <Badge variant="outline" className="text-xs mb-1">{contact.region}</Badge>
+                            <h4 className="font-medium text-sm">{contact.organization}</h4>
+                            <p className="text-xs text-muted-foreground">{contact.description}</p>
+                            <div className="flex flex-col gap-1 text-xs pt-2">
+                              <span className="flex items-center gap-1">
+                                <Phone className="h-3 w-3" /> {contact.phone}
+                              </span>
+                              <span className="text-primary">{contact.email}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="considerations" className="space-y-4">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Important factors to consider when seeking CGAT treatment in another country or region.
+                  </p>
+                  <div className="grid gap-4 md:grid-cols-3">
+                    {CROSS_BORDER_INFO.considerations.map((cat, idx) => (
+                      <Card key={idx} className="p-4 bg-muted/20">
+                        <h4 className="font-medium text-sm mb-3 flex items-center gap-2">
+                          {idx === 0 && <Dollar className="h-4 w-4 text-primary" />}
+                          {idx === 1 && <Plane className="h-4 w-4 text-primary" />}
+                          {idx === 2 && <Heart className="h-4 w-4 text-primary" />}
+                          {cat.title}
+                        </h4>
+                        <ul className="space-y-2">
+                          {cat.items.map((item, i) => (
+                            <li key={i} className="text-xs text-muted-foreground flex items-start gap-2">
+                              <span className="text-primary">•</span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </Card>
+                    ))}
+                  </div>
+                </TabsContent>
+              </Tabs>
+
+              <div className="mt-4 p-3 bg-warning/10 border border-warning/20 rounded-lg">
+                <p className="text-xs text-muted-foreground">
+                  <strong>Disclaimer:</strong> Contact information and program details are for educational purposes only. 
+                  Always verify current program availability, eligibility criteria, and benefits directly with manufacturers 
+                  or healthcare providers. Cross-border treatment involves complex regulatory, insurance, and medical considerations.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
         </CardContent>
       </Card>
     </div>
