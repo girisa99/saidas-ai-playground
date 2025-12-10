@@ -16868,7 +16868,6 @@ export type Database = {
         Returns: number
       }
       calculate_financial_risk_score:
-        | { Args: { p_enrollment_id: string }; Returns: number }
         | {
             Args: {
               p_annual_revenue_range: string
@@ -16879,6 +16878,7 @@ export type Database = {
             }
             Returns: number
           }
+        | { Args: { p_enrollment_id: string }; Returns: number }
       check_access_override: {
         Args: { p_ip_address: string; p_user_email?: string }
         Returns: Json
@@ -16892,7 +16892,6 @@ export type Database = {
         Returns: boolean
       }
       check_user_has_role:
-        | { Args: { p_role_name: string; p_user_id: string }; Returns: boolean }
         | {
             Args: {
               check_user_id: string
@@ -16900,6 +16899,7 @@ export type Database = {
             }
             Returns: boolean
           }
+        | { Args: { p_role_name: string; p_user_id: string }; Returns: boolean }
       cleanup_agent_sessions: { Args: never; Returns: Json }
       cleanup_duplicate_test_cases: { Args: never; Returns: Json }
       cleanup_old_draft_agents: {
@@ -17175,16 +17175,6 @@ export type Database = {
       log_security_event:
         | {
             Args: {
-              p_description: string
-              p_event_type: string
-              p_metadata?: Json
-              p_severity: string
-              p_user_id: string
-            }
-            Returns: undefined
-          }
-        | {
-            Args: {
               p_details?: Json
               p_endpoint?: string
               p_event_type: string
@@ -17193,6 +17183,16 @@ export type Database = {
               p_user_agent?: string
             }
             Returns: string
+          }
+        | {
+            Args: {
+              p_description: string
+              p_event_type: string
+              p_metadata?: Json
+              p_severity: string
+              p_user_id: string
+            }
+            Returns: undefined
           }
       log_sensitive_data_access: {
         Args: { operation_type: string; record_id?: string; table_name: string }
@@ -17304,6 +17304,21 @@ export type Database = {
       search_knowledge_semantic:
         | {
             Args: {
+              filter_domain?: string
+              match_count?: number
+              match_threshold?: number
+              query_embedding: string
+            }
+            Returns: {
+              content_summary: string
+              description: string
+              domain: string
+              id: string
+              similarity: number
+            }[]
+          }
+        | {
+            Args: {
               match_count?: number
               match_threshold?: number
               query_embedding: string
@@ -17316,21 +17331,6 @@ export type Database = {
               finding_name: string
               id: string
               metadata: Json
-              similarity: number
-            }[]
-          }
-        | {
-            Args: {
-              filter_domain?: string
-              match_count?: number
-              match_threshold?: number
-              query_embedding: string
-            }
-            Returns: {
-              content_summary: string
-              description: string
-              domain: string
-              id: string
               similarity: number
             }[]
           }
