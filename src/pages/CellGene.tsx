@@ -1,6 +1,7 @@
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { CellGeneHero } from "@/components/cellgene/CellGeneHero";
 import { TherapyCarousel } from "@/components/cellgene/TherapyCarousel";
+import { IndustryOutlook2025 } from "@/components/cellgene/IndustryOutlook2025";
 import { TherapeuticComparisonSection } from "@/components/cellgene/TherapeuticComparisonSection";
 import { ManufacturerInfographic } from "@/components/cellgene/ManufacturerInfographic";
 import { PatientJourneyDiagram } from "@/components/cellgene/PatientJourneyDiagram";
@@ -13,6 +14,7 @@ const CellGene = () => {
       <NavigationHeader />
       <CellGeneHero />
       <TherapyCarousel />
+      <IndustryOutlook2025 />
       <ManufacturerInfographic />
       <TherapeuticComparisonSection />
       <PatientJourneyDiagram />

@@ -4550,6 +4550,81 @@ export type Database = {
         }
         Relationships: []
       }
+      document_processing_jobs: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          current_stage: string | null
+          document_type: string | null
+          error_message: string | null
+          export_format: string | null
+          export_status: string | null
+          export_targets: string[] | null
+          exported_at: string | null
+          extracted_metadata: Json | null
+          extracted_text: string | null
+          file_name: string
+          file_path: string
+          id: string
+          mime_type: string | null
+          processing_config: Json | null
+          progress: number
+          stage_message: string | null
+          stages: Json | null
+          status: string
+          user_id: string | null
+          validation_status: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          current_stage?: string | null
+          document_type?: string | null
+          error_message?: string | null
+          export_format?: string | null
+          export_status?: string | null
+          export_targets?: string[] | null
+          exported_at?: string | null
+          extracted_metadata?: Json | null
+          extracted_text?: string | null
+          file_name: string
+          file_path: string
+          id?: string
+          mime_type?: string | null
+          processing_config?: Json | null
+          progress?: number
+          stage_message?: string | null
+          stages?: Json | null
+          status?: string
+          user_id?: string | null
+          validation_status?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          current_stage?: string | null
+          document_type?: string | null
+          error_message?: string | null
+          export_format?: string | null
+          export_status?: string | null
+          export_targets?: string[] | null
+          exported_at?: string | null
+          extracted_metadata?: Json | null
+          extracted_text?: string | null
+          file_name?: string
+          file_path?: string
+          id?: string
+          mime_type?: string | null
+          processing_config?: Json | null
+          progress?: number
+          stage_message?: string | null
+          stages?: Json | null
+          status?: string
+          user_id?: string | null
+          validation_status?: string | null
+        }
+        Relationships: []
+      }
       document_processing_queue: {
         Row: {
           created_at: string
